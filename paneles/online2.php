@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @Projektas: MightMedia TVS
+ * @Puslapis: www.coders.lt
+ * @$Author$
+ * @copyright CodeRS ©2008
+ * @license GNU General Public License v2
+ * @$Revision$
+ * @$Date$
+ **/
+
+$sql = mysql_fetch_assoc(mysql_query1("SELECT count(id) as svec, 
+(SELECT count(id) FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE `timestamp`>'" . $timeout . "' AND user!='Svečias') as users, 
+(SELECT count(id) FROM " . LENTELES_PRIESAGA . "users) as useriai, 
+(SELECT `nick` FROM " . LENTELES_PRIESAGA . "users order by id DESC LIMIT 1 ) as useris,
+(SELECT `id` FROM " . LENTELES_PRIESAGA . "users order by id DESC  LIMIT 1 ) as userid,
+(SELECT `levelis` FROM " . LENTELES_PRIESAGA . "users order by id DESC  LIMIT 1 ) as lvl
+ FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE `timestamp`>'" . $timeout . "' AND user='Svečias'
+"));
+
+$text = '<blockquote>
+<strong>' . $lang['online']['users'] . ':</strong><br>
+' . $lang['online']['usrs'] . ': ' . (int)$sql['users'] . '<br>
+' . $lang['online']['guests'] . ': ' . (int)$sql['svec'] . '<br>
+<strong>' . $lang['online']['info'] . ':</strong><br>
+' . $lang['online']['registeredmembers'] . ': ' . (int)$sql['useriai'] . '<br>
+' . $lang['online']['lastregistered'] . ': <br />' . user($sql['useris'], $sql['userid'], $sql['lvl']) . '
+ </blockquote>';
+unset($sql);
+
+?>
