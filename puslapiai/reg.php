@@ -98,6 +98,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'registracija' && $conf['Regi
 	if (strlen($vardas) > 15) {
 		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['usrtoolong']}<br />";
 	}
+	if(preg_match('/^[\p{L}0-9]+$/u', $vardas)){
+		$error.="<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['only_letters_numbers']}<br />";
+	}
 	if ($pass != $pass2) {
 		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['badpass']}<br />";
 	}
@@ -110,6 +113,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'registracija' && $conf['Regi
 	if (!check_email($email)) {
 		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['bademail']}<br />";
 	}
+	
 	if (check_email($email)) {
 		$minfo = mysql_num_rows(mysql_query1("SELECT * FROM " . LENTELES_PRIESAGA . "users WHERE email=" . escape($email) . ""));
 		if ($minfo != 0) {

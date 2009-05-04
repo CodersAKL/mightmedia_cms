@@ -137,6 +137,7 @@ $lang['reg']['secuarity'] = 'Apsaugos kodas';
 $lang['reg']['faction'] = 'Tauta';
 $lang['reg']['register'] = 'Registruotis';
 $lang['reg']['bademail'] = 'Blogas el. paštas';
+$lang['reg']['only_letters_numbers']='Vartotojo varde galima naudoti tik skaičius ir raides.';
 $lang['reg']['badpass'] = 'Blogas slaptažodžio pakartojimas';
 $lang['reg']['takenusername'] = 'Vardas užimtas';
 $lang['reg']['registered'] = 'Jūs užregistruotas, galite prisijungti';

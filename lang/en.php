@@ -143,6 +143,7 @@ $lang['reg']['secuarity'] = 'Secuarity code';
 $lang['reg']['faction'] = 'Faction';
 $lang['reg']['register'] = 'Register';
 $lang['reg']['bademail'] = 'Bad email adress';
+$lang['reg']['only_letters_numbers']='Only letters and numbers allowed in username.';//kažkas tokio :)
 $lang['reg']['badpass'] = 'Wrong password confirmation';
 $lang['reg']['takenusername'] = 'Username is taken.';
 $lang['reg']['registered'] = 'You are registered, now you can log in';
