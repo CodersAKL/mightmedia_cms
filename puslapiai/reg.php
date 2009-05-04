@@ -82,7 +82,8 @@ $error = '';
 $sekme=false;
 if (isset($_POST['action']) && $_POST['action'] == 'registracija' && $conf['Registracija'] == 1) {
 	//if (!preg_match("[^[a-zA-Z0-9_-]+$]", $user)) && !preg_match('/[^A-Za-z0-9]/', $_POST['nick'])
-	$vardas = htmlentities($_POST['nick'], ENT_QUOTES, 'UTF-8');
+	//$vardas = htmlentities($_POST['nick'], ENT_QUOTES, 'UTF-8');
+	$vardas = input($_POST['nick']);
 	$kode = strip_tags(strtoupper($_POST['kode']));
 	$pass = $_POST['pass'];
 	$pass2 = $_POST['pass2'];

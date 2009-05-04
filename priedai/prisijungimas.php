@@ -70,7 +70,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'prisijungimas') {
 	//Jeigu prisijungimo bandymai nevirsyjo limito
 	if (!isset($_SESSION['login_error']) || $_SESSION['login_error'] <= $conf['Bandymai']) {
 
-		$strUsername = htmlentities($_POST['vartotojas'], ENT_QUOTES, 'UTF-8'); // Vartotojo vardas
+		$strUsername = input($_POST['vartotojas']); // Vartotojo vardas
 		$strPassword = koduoju($_POST['slaptazodis']); // Slaptazodis
 		$linformacija3 = mysql_fetch_assoc(mysql_query1("SELECT `id`,`levelis`,`pass`,`nick`,`login_data`,`login_before`,(SELECT `mod` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `teises`=levelis)as `mod` FROM `" . LENTELES_PRIESAGA . "users` WHERE hex(nick)=hex(" . escape($strUsername) . ") AND password(pass)=password('" . $strPassword . "') LIMIT 1"));
 
