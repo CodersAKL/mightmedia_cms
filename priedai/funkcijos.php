@@ -1027,7 +1027,7 @@ function versija($failas = false) {
 	if (!$failas) {
 		$svnid = '$Rev$';
 		$scid = utf8_substr($svnid, 6);
-		return apvalinti((intval(utf8_substr($scid, 0, strlen($scid) - 2)) / 1000) + 1.26, 2);
+		return apvalinti((intval(utf8_substr($scid, 0, strlen($scid) - 2)) / 5000) + '1.26', 2);
 	} else {
 		//Nuskaityti faila ir paimti su regexp versijos numeri
 		return '$Rev$';
