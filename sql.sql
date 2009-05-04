@@ -307,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `naujienos` (
 --
 
 INSERT INTO `naujienos` (`id`, `pavadinimas`, `kategorija`, `naujiena`, `daugiau`, `data`, `autorius`, `kom`, `rodoma`) VALUES 
-(1, 'Sveikiname įdiegus MightMedia TVS', 0, 'Jūs sėkmingai įdiegėte <a target="_blank" href="http://code.google.com/p/mightmedia">MightMedia TVS</a> . Jos autoriai <a target="_blank" href="http://code.google.com/p/coders/"><strong>CodeRS</strong></a> . Prašome nepasisavinti autorinių teisių, priešingu atveju jūs pažeisite GNU teises.', 'Kiekvienam puslapyje privalomas užrašas apačioje "<a target="_blank" href="http://www.coders.lt/">MightMedia</a>" su nuoroda į <a target="_blank" href="http://www.coders.lt/">http://code.google.com/p/mightmedia</a>\r\n', 1213129845, 'Admin', 'taip', 'TAIP');
+(1, 'Sveikiname įdiegus MightMedia TVS', 0, 'Jūs sėkmingai įdiegėte <a target="_blank" href="http://www.mightmedia.lt">MightMedia TVS</a> . Jos autoriai <a target="_blank" href="http://code.google.com/p/coders/"><strong>CodeRS</strong></a> . Prašome nepasisavinti autorinių teisių, priešingu atveju jūs pažeisite GNU teises.', 'Kiekvienam puslapyje privalomas užrašas apačioje "<a target="_blank" href="http://www.mightmedia.lt/">MightMedia</a>" su nuoroda į <a target="_blank" href="http://www.mightmedia.lt/">http://www.mightmedia.lt</a>\r\n', 1213129845, 'Admin', 'taip', 'TAIP');
 
 -- --------------------------------------------------------
 
@@ -354,7 +354,7 @@ INSERT INTO `nustatymai` (`id`, `key`, `val`) VALUES
 (2, 'Apie', '<br />'),
 (3, 'Keywords', ''),
 (4, 'Render', '1'),
-(5, 'Copyright', '<a href="http://code.google.com/p/mightmedia/">MightMedia TVS</a>'),
+(5, 'Copyright', '<a href="http://www.mightmedia.lt" target="_blank">MightMedia TVS</a>'),
 (6, 'Pastas', 'info@mrcbug.com'),
 (7, 'Registracija', '1'),
 (8, 'Palaikymas', '0'),
