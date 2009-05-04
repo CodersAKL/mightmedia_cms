@@ -72,6 +72,7 @@ $lang['user']['logout'] = 'Log out';
 $lang['user']['user'] = 'Username';
 $lang['user']['password'] = 'Password';
 $lang['user']['login'] = 'Login';
+$lang['user']['login_remember'] = 'Remember me';
 $lang['user']['cantlogin'] = 'You can not login now, try again after';
 $lang['user']['registration'] = 'Register';
 $lang['user']['pass_forget'] = 'Forgot your password?';

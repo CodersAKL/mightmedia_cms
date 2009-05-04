@@ -69,6 +69,7 @@ $lang['user']['logout'] = 'Atsijungti';
 $lang['user']['user'] = 'Vartotojas';
 $lang['user']['password'] = 'Slaptažodis';
 $lang['user']['login'] = 'Prisijungti';
+$lang['user']['login_remember'] = 'Prisiminti';
 $lang['user']['cantlogin'] = 'Jūs nebegalite jungtis, bandykite po ';
 $lang['user']['registration'] = 'Registracija';
 $lang['user']['pass_forget'] = 'Pamiršau';
