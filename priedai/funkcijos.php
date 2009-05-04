@@ -239,28 +239,29 @@ while ($row = mysql_fetch_assoc($sql)) {
 function user($user, $id = 0, $level = 0, $extra = false) {
 	//kadangi vëjai gaunas jeigu nikas su utf-8 simboliais, tai pm sistema pakeiciu
 	global $lang, $conf;
-	if ($user == '') {
+	if ($user == '' || $user == $lang['system']['guest']) {
 		$user = $lang['system']['guest'];
-	}
-	if (isset($conf['puslapiai']['view_user.php']['id'])) {
-		//Jeigu galiam ziuret vartotojo profili tada nickas paspaudziamas
-		if ($level > 0 && $id > 0) {
-			return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="?id,' . $conf['puslapiai']['view_user.php']['id'] . ';m,' . (int)$id . '" title="' . input($user) . '<br />' . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
-		}
-		if ($level == 0 || $id == 0) {
-			return '<a href="?id,' . $conf['puslapiai']['view_user.php']['id'] . ';m,' . (int)$id . '" title="' . input($user) . '<br />' . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\" alt=\"pm\" border=\"0\" style=\"vertical-align:middle\" class=\"middle\" /></a>" : "");
-		}
-
+		return $lang['system']['guest'];
 	} else {
-		//Kitu atveju nickas nepaspaudziamas
-		if ($level == 0 || $id == 0) {
-			return '<a href="#" onclick="return false" title="' . input($user) . '<br /> ' . $extra . '">' . $user . '</a>';
+		if (isset($conf['puslapiai']['view_user.php']['id'])) {
+			//Jeigu galiam ziuret vartotojo profili tada nickas paspaudziamas
+			if ($level > 0 && $id > 0) {
+				return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="?id,' . $conf['puslapiai']['view_user.php']['id'] . ';m,' . (int)$id . '" title="' . input($user) . '<br />' . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
+			}
+			if ($level == 0 || $id == 0) {
+				return '<a href="?id,' . $conf['puslapiai']['view_user.php']['id'] . ';m,' . (int)$id . '" title="' . input($user) . '<br />' . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\" alt=\"pm\" border=\"0\" style=\"vertical-align:middle\" class=\"middle\" /></a>" : "");
+			}
+
 		} else {
-			return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" /> ' : '') . ' <a href="#" onclick="return false" title="' . input($user) . '<br/>' . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\" alt=\"pm\" style=\"vertical-align:middle\" border=\"0\" /></a>" : "");
+			//Kitu atveju nickas nepaspaudziamas
+			if ($level == 0 || $id == 0) {
+				return '<a href="#" onclick="return false" title="' . input($user) . '<br /> ' . $extra . '">' . $user . '</a>';
+			} else {
+				return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" /> ' : '') . ' <a href="#" onclick="return false" title="' . input($user) . '<br/>' . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\" alt=\"pm\" style=\"vertical-align:middle\" border=\"0\" /></a>" : "");
+			}
+
 		}
-
 	}
-
 }
 
 
@@ -1026,7 +1027,7 @@ function versija($failas = false) {
 	if (!$failas) {
 		$svnid = '$Rev$';
 		$scid = utf8_substr($svnid, 6);
-		return apvalinti(intval(utf8_substr($scid, 0, strlen($scid) - 2))/1000,2);
+		return apvalinti(intval(utf8_substr($scid, 0, strlen($scid) - 2)) / 1000, 2);
 	} else {
 		//Nuskaityti faila ir paimti su regexp versijos numeri
 		return '$Rev$';
@@ -1065,9 +1066,9 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 		$id = md5(uniqid());
 	}
 
-//$adr="http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-$adr="../../../";
-$stilius=$adr.'stiliai/' . input(strip_tags($conf['Stilius'])) . '/default.css';
+	//$adr="http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
+	$adr = "../../../";
+	$stilius = $adr . 'stiliai/' . input(strip_tags($conf['Stilius'])) . '/default.css';
 	/*   //Editorius - SPAW2
 	if ($tipas === 'spaw' && is_file('javascript/htmlarea/spaw2/spaw.inc.php')) {
 	if ($dydis === 'standartinis') {
@@ -1116,38 +1117,38 @@ $stilius=$adr.'stiliai/' . input(strip_tags($conf['Stilius'])) . '/default.css';
 	}
 	}
 
-		elseif($tipas === 'jquery'){*/
-		if($tipas=='dsrte'){
-	require_once 'javascript/htmlarea/dsrte/lib/dsrte.php';
+	elseif($tipas === 'jquery'){*/
+	if ($tipas == 'dsrte') {
+		require_once 'javascript/htmlarea/dsrte/lib/dsrte.php';
 
-	// compress HTML
-	$return = '<link rel="stylesheet" href="javascript/htmlarea/dsrte/lib/dsrte.css" type="text/css" />
+		// compress HTML
+		$return = '<link rel="stylesheet" href="javascript/htmlarea/dsrte/lib/dsrte.css" type="text/css" />
        <script type="text/javascript"><!--
         // keyboard shortcut keys for current language
         var ctrlb="b",ctrli="i",ctrlu="u";
         //-->
     </script>';
-	if (is_array($id)) {
-		foreach ($id as $key => $val) {
-			$dsrte = new dsRTE($key);
-			$return .= $dsrte->getScripts() . $dsrte->getHTML(isset($value[$key]) ? $value[$key] : $val);
+		if (is_array($id)) {
+			foreach ($id as $key => $val) {
+				$dsrte = new dsRTE($key);
+				$return .= $dsrte->getScripts() . $dsrte->getHTML(isset($value[$key]) ? $value[$key] : $val);
+			}
+		} else {
+			$dsrte = new dsRTE($id);
+			$return .= $dsrte->getScripts() . $dsrte->getHTML($value ? $value : "");
 		}
 	} else {
-		$dsrte = new dsRTE($id);
-		$return .= $dsrte->getScripts() . $dsrte->getHTML($value ? $value : "");
-	}
-	}else{
-	$return=<<<HTML
+		$return = <<< HTML
 	<link type="text/css" rel="stylesheet" href="javascript/htmlarea/jquery.rte1_2/jquery.rte.css" />
 	<script type="text/javascript" src="javascript/htmlarea/jquery.rte1_2/jquery.rte.js"></script>
 <script type="text/javascript" src="javascript/htmlarea/jquery.rte1_2/jquery.rte.tb.js"></script>
 <script type="text/javascript" src="javascript/htmlarea/jquery.rte1_2/jquery.ocupload-1.1.4.js"></script>
 HTML;
-if (is_array($id)) {
-		foreach ($id as $key => $val) {
-			//$dsrte = new dsRTE($key);
-			//$return .= $dsrte->getScripts() . $dsrte->getHTML(isset($value[$key]) ? $value[$key] : $val);
-			$return.=<<<HTML
+		if (is_array($id)) {
+			foreach ($id as $key => $val) {
+				//$dsrte = new dsRTE($key);
+				//$return .= $dsrte->getScripts() . $dsrte->getHTML(isset($value[$key]) ? $value[$key] : $val);
+				$return .= <<< HTML
 			<script type="text/javascript">
 $(document).ready(function() {
       $('.{$key}').rte({
@@ -1167,9 +1168,9 @@ $(document).ready(function() {
 </script>
 <textarea name="{$key}" style="width:100%" class="{$key}" method="post" action="#">{$value[$key]}</textarea>
 HTML;
-		}
-	} else {
-	$return.=<<<HTML
+			}
+		} else {
+			$return .= <<< HTML
 			<script type="text/javascript">
 $(document).ready(function() {
       $('.{$id}').rte({
@@ -1190,12 +1191,12 @@ $(document).ready(function() {
 </script>
 <textarea name="{$id}"  style="width:100%" class="{$id}" method="post" action="#">{$value}</textarea>
 HTML;
-		//$dsrte = new dsRTE($id);
-		//$return .= $dsrte->getScripts() . $dsrte->getHTML($value ? $value : "");
-	}	
-	
-}
-	
+			//$dsrte = new dsRTE($id);
+			//$return .= $dsrte->getScripts() . $dsrte->getHTML($value ? $value : "");
+		}
+
+	}
+
 	return $return;
 	/*}
 	//Editorius - Tiny_MCE
