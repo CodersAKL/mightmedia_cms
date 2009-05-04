@@ -97,7 +97,7 @@ if (isset($_POST['next_msyql'])) {
 
 		// Sukuriamos visos MySQL leneteles is SVN Trunk
 		if (!file_exists('sql.sql')) {
-			$sql = file_get_contents('http://mightmedia.googlecode.com/svn/trunk/sql.sql');
+			$sql = file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql.sql');
 		} else {
 			$sql = file_get_contents('sql.sql');
 		}
@@ -261,8 +261,7 @@ foreach ($menu_pavad as $key => $value) {
 ?>
                 </ul>
                 <hr />
-                Produktas: <a href="http://www.coders.lt/mightmedia/" target="_blank">MightMedia TVS</a><br />
-                Autorius: <a href="http://www.coders.lt" target="_blank">CodeRS</a></div>
+                Produktas: <a href="http://www.mightmedia.lt/" target="_blank">MightMedia TVS</a><br />
         </td>
         <td valign="top">
         <div class="title">MightMedia TVS įdiegimas</div>
@@ -335,7 +334,7 @@ if ($step == 3) {
 ?>
         <h2>MySQL Duomenų bazės nustatymai</h2>
                 Žemiau pateiktuose laukeliuose suveskite savo MySQL serverio prisijungimus. Prisijungimai yra reikalingi norint sukurti MightMedia TVS sistemos lenteles nurodytoje duomenų bazėje. <br /><br />
-                Suvedę visus reikiamus duomenis spauskite <strong>"Tikrinti"</strong>. Jei prisijungimas sėkmingai pavyko tuomet išvysite papildomą mygtuką sukurti lenteles <b>"Sukurti"</b>.<br /><br />
+                Suvedę visus reikiamus duomenis spauskite <strong>"Sukurti lenteles"</strong>. Jei prisijungimas sėkmingai pavyko tuomet išvysite papildomą mygtuką <b>"Toliau"</b>.<br /><br />
                 Atlikę visus veiksmus išvysite sekantį mygtuką pereiti į kitą Meniu punktą. Jei bent vienas iš žingsnių nepavyks jums bus draudžiama tęsti įdiegimą.
                 <form name="mysql" method="post">
                 <table border="0" width="100%">
