@@ -30,11 +30,12 @@ if (is_file('priedai/conf.php') && filesize('priedai/conf.php') > 1) {
 	header('location: setup.php');
 	exit();
 } else {
-	die(klaida('Sistemos klaida', 'Atsipraљome svetaine neidiegta. Truksta sisteminiu failu.'));
+	die(klaida('Sistemos klaida / System error', 'Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.'));
 }
 include_once ('priedai/prisijungimas.php');
+if(!isset($conf)){
 include_once ('priedai/funkcijos.php');
-
+}
 /* Puslapiu aprasymas */
 if (isset($url['id']) && !empty($url['id']) && isnum($url['id'])) {
 	$pslid = (int)$url['id'];
@@ -78,7 +79,7 @@ if ($conf['Palaikymas'] == 1) {
 include_once ("priedai/header.php");
 //Tikrinam ar setup.php failas paљalintas. Saugumo sumetimais
 if (is_file('setup.php') && defined('LEVEL') && LEVEL == 1 && !@unlink('setup.php')) {
-	klaida('Demesio', '<h3>Neiљtrintas setup.php failas.</h3> Tai saugumo spraga. Praљome paљalinkite љi faila iљ serverio arba pakeiskite jo pavadinima.');
+	klaida('Demesio / Warning', '<h3>Neištrintas setup.php failas.</h3> Tai saugumo spraga. Prašome pašalinkite šį failą iš serverio arba pakeiskite jo pavadinimą. /Please, remove setup.php file from server.');
 }
 include_once ('stiliai/' . $conf['Stilius'] . '/index.php');
 mysql_close($prisijungimas_prie_mysql);
