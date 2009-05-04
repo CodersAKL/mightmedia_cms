@@ -609,9 +609,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `balsai` int(11) NOT NULL default '0',
   `balsavo` text collate utf8_lithuanian_ci NOT NULL,
   `pm_viso` int(11) NOT NULL default '50',
-  `reg_data` int(10) NOT NULL,
-  `login_data` int(10) NOT NULL,
-  `login_before` int(10) NOT NULL,
+  `reg_data` int(10) default NULL,
+  `login_data` int(10) default NULL,
+  `login_before` int(10) default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `nick` (`nick`),
   UNIQUE KEY `email` (`email`)
