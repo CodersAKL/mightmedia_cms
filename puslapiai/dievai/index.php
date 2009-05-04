@@ -17,11 +17,10 @@ include_once ("priedai/prisijungimas.php");
 if (!isset($_SESSION['username'])) {
     admin_login_form();
 }
-// jei neprisijungęs arba jei ne adminas
+// Jei lanktytojas neprisijungęs arba, jei nėra administratorius
 elseif (!defined("LEVEL") || LEVEL > 1 || !defined("OK") || !isset($_SESSION['username'])) {
     redirect("?home");
 }
-
 
 if (isset($url['a']) && isnum($url['a']) && $url['a'] > 0) {
     $aid = (int)$url['a'];
@@ -34,6 +33,7 @@ if (isset($url['id']) && isnum($url['id']) && $url['id'] > 0) {
     $id = 0;
 }
 
+// index.php -> pokalbiai.php
 $puslapis = "pokalbiai.php";
 
 if (isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
@@ -126,11 +126,6 @@ if (isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
                 $puslapis = "paneles.php";
                 break;
             }
-            /*case 10:
-            {
-            $puslapis = "komentarai.php";
-            break;
-            }*/
         case 11:
             {
                 $puslapis = "banai.php";
@@ -167,15 +162,18 @@ if (isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
                 break;
             }
     }
-
-    lentele('MightMedia TVS Naujienos','<iframe src="http://code.assembla.com/mightmedia/subversion/node/blob/naujienos.html" width="100%" height="100" frameborder="0"></iframe>');
-    //Įkeliam puslapį
-    if (file_exists(dirname(__file__) . "/" . $puslapis)) {
+	
+	if($puslapis == 'pokalbiai.php'){
+		lentele('MightMedia TVS Naujienos','<iframe src="http://code.assembla.com/mightmedia/subversion/node/blob/naujienos.html" width="100%" height="100" frameborder="0"></iframe>');
+	}
+	
+    // Įkeliamas puslapis
+    if (file_exists(dirname(__file__) . "/" . $puslapis)){
         include_once (dirname(__file__) . "/" . $puslapis);
     } else {
         klaida("{$lang['system']['error']}", "{$lang['system']['nopage']}");
     }
-} elseif (isset($_POST['action']) && $_POST['action'] == 'prisijungimas') {
+} elseif (isset($_POST['action']) && $_POST['action'] == 'prisijungimas'){
     klaida($lang['system']['warning'], $lang['system']['notadmin']);
 }
 ?>
