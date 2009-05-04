@@ -38,7 +38,7 @@ echo $text;
 	        </td>
           </tr>
          <tr>
-           <th scope="col" style="background-image:url(stiliai/<?php echo urlencode($conf['Stilius']); ?>/images/hdr_bg.jpg)"><a href="<?php echo adresas(); ?>"><img src="stiliai/<?php echo $conf['Stilius']; ?>/images/hdr_left.jpg" border="0" align="left" /></a><img src="stiliai/<?php
+           <th scope="col" style="background-image:url(stiliai/<?php echo urlencode($conf['Stilius']); ?>/images/hdr_bg.jpg)"><a href="?"><img src="stiliai/<?php echo $conf['Stilius']; ?>/images/hdr_left.jpg" border="0" align="left" /></a><img src="stiliai/<?php
 
 echo $conf['Stilius'];
 
