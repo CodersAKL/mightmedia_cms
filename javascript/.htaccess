@@ -1,0 +1,17 @@
+<FilesMatch "\.(php|php3|php4)$">
+Deny from All
+</FilesMatch>
+
+<FilesMatch "uploader.php">
+Allow from all
+</FilesMatch>
+
+<FilesMatch "styles.php">
+Allow from all
+</FilesMatch>
+
+#Betkokie bandymai atverti faila forsuoja parsisiuntima
+<Files *.*>
+#ForceType applicaton/octet-stream
+</Files>
+

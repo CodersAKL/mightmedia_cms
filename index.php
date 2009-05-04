@@ -1,0 +1,88 @@
+<?php
+
+/**
+ * @Projektas: MightMedia TVS
+ * @Puslapis: www.coders.lt
+ * @$Author$
+ * @copyright CodeRS ©2008
+ * @license GNU General Public License v2
+ * @$Revision$
+ * @$Date$
+ **/
+
+ob_start();
+header("Cache-control: public");
+header("Content-type: text/html; charset=utf-8");
+header('P3P: CP="NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM"');
+if (!isset($_SESSION))
+	session_start();
+
+//kad rodytu per kiek laiko sugeneravo koda
+$m1 = explode(" ", microtime());
+$stime = $m1[1] + $m1[0];
+
+//Iterpiam nustatymu faila jei ne perkialiam i instaliacija
+clearstatcache();
+
+if (is_file('priedai/conf.php') && filesize('priedai/conf.php') > 1) {
+	include_once ("priedai/conf.php");
+} elseif (is_file('setup.php')) {
+	header('location: setup.php');
+	exit();
+} else {
+	die(klaida('Sistemos klaida', 'Atsipraљome svetaine neidiegta. Truksta sisteminiu failu.'));
+}
+include_once ('priedai/prisijungimas.php');
+include_once ('priedai/funkcijos.php');
+
+/* Puslapiu aprasymas */
+if (isset($url['id']) && !empty($url['id']) && isnum($url['id'])) {
+	$pslid = (int)$url['id'];
+} else {
+	$pslid = $conf['puslapiai'][$conf['pirminis']]['id'];
+	$page = 'puslapiai/' . str_replace(".php", "", $conf['pirminis']);
+	$page_pavadinimas = $conf['puslapiai'][$conf['pirminis']]['pavadinimas'];
+	$_GET['id'] = $pslid;
+	$url['id'] = $pslid;
+}
+if (isset($pslid) && isnum($pslid) && $pslid > 0) {
+	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int)$pslid) . " LIMIT 1") or die(mysql_error());
+	if (mysql_num_rows($sql1) > 0) {
+		$sql1 = mysql_fetch_assoc($sql1);
+		if (isset($_SESSION['level']) && ($_SESSION['level'] == $sql1['teises'] || $_SESSION['level'] == 1 || $sql1['teises'] == 0)) {
+			$page = 'puslapiai/' . str_replace(".php", "", $sql1['file']);
+			$page_pavadinimas = $sql1['pavadinimas'];
+		} else {
+			$page = "puslapiai/klaida";
+			$page_pavadinimas = '404 - ' . $lang['system']['pagenotfounfd'] . '';
+		}
+		if (!file_exists($page . '.php')) {
+			$page = "puslapiai/klaida";
+			$page_pavadinimas = '404 - ' . $lang['system']['pagenotfounfd'] . '';
+		}
+	} else {
+		$page = "puslapiai/klaida";
+		$page_pavadinimas = '404 - ' . $lang['system']['pagenotfounfd'] . '';
+	}
+	if ($pslid == 999) {
+		$page = "puslapiai/dievai/index";
+		$page_pavadinimas = $lang['user']['administration'];
+	}
+}
+//Jei svetaine uzdaryta remontui ir jei jungiasi ne administratorius
+if ($conf['Palaikymas'] == 1) {
+	if (!isset($_SESSION['id']) || $_SESSION['level'] != 1) {
+		redirect("remontas.php");
+	}
+}
+include_once ("priedai/header.php");
+//Tikrinam ar setup.php failas paљalintas. Saugumo sumetimais
+if (is_file('setup.php') && defined('LEVEL') && LEVEL == 1 && !@unlink('setup.php')) {
+	klaida('Demesio', '<h3>Neiљtrintas setup.php failas.</h3> Tai saugumo spraga. Praљome paљalinkite љi faila iљ serverio arba pakeiskite jo pavadinima.');
+}
+include_once ('stiliai/' . $conf['Stilius'] . '/index.php');
+mysql_close($prisijungimas_prie_mysql);
+ob_end_flush();
+
+
+?>

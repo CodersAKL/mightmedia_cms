@@ -1,0 +1,7 @@
+deny from all
+<FilesMatch "\.(gif|jpe?g|png|js|css|swf)$">
+Allow from All
+</FilesMatch>
+<Files req.php>
+Allow from all
+</Files>
