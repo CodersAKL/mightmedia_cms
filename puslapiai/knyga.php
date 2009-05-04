@@ -102,6 +102,7 @@ $forma = '
 ';
 
 hide($lang['guestbook']['write'], $forma, 'knyga', false);
+if(strlen($text)<1){$text=$lang['guestbook']['empty'];}
 lentele($lang['guestbook']['guestbook'], $text);
 
 if ($viso > $limit) {

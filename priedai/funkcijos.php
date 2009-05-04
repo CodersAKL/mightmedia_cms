@@ -279,7 +279,7 @@ function mysql_query1($query) {
 }
 
 /**
- * Nuskaitom turinÄ¯ iÅ¡ adreso
+ * Nuskaitom turin¯ iÅ¡ adreso
  *
  * @param string $url
  * @return string
@@ -352,8 +352,8 @@ function puslapiai($start, $count, $total, $range = 0) {
 		$res .= "<center>\n";
 		if ($idx_back >= 0) {
 			if ($cur_page > ($range + 1))
-				$res .= "<a href='" . url("p,0") . "'>[<u>Â«Â«</u>]</a>\n";
-			$res .= "<a href='" . url("p,$idx_back") . "'>[<u>Â«</u>]</a>\n";
+				$res .= "<a href='" . url("p,0") . "'>[<u>««</u>]</a>\n";
+			$res .= "<a href='" . url("p,$idx_back") . "'>[<u>«</u>]</a>\n";
 		}
 		$idx_fst = max($cur_page - $range, 1);
 		$idx_lst = min($cur_page + $range, $pg_cnt);
@@ -370,9 +370,9 @@ function puslapiai($start, $count, $total, $range = 0) {
 			}
 		}
 		if ($idx_next < $total) {
-			$res .= "<a href='" . url("p,$idx_next") . "'>[<u>Â»</u>]</a>\n";
+			$res .= "<a href='" . url("p,$idx_next") . "'>[<u>»</u>]</a>\n";
 			if ($cur_page < ($pg_cnt - $range)) {
-				$res .= "<a href='" . url("p," . ($pg_cnt - 1) * $count . "") . "'>[<u>Â»Â»</u>]</a>\n";
+				$res .= "<a href='" . url("p," . ($pg_cnt - 1) * $count . "") . "'>[<u>»»</u>]</a>\n";
 			}
 		}
 		$res .= "</center>\n";
@@ -381,9 +381,9 @@ function puslapiai($start, $count, $total, $range = 0) {
 }
 
 /**
- * Tikrina ar kintamasis teigiamas skaiÄius
+ * Tikrina ar kintamasis teigiamas skaičius
  *
- * @param SkaiÄius $value
+ * @param Skaičius $value
  * @return 1 arba NULL
  */
 function isNum($value) {
@@ -391,7 +391,7 @@ function isNum($value) {
 }
 
 /**
- * GraÅ¾ina lankytojo IP
+ * Grąžina lankytojo IP
  *
  * @return string
  */
@@ -414,9 +414,9 @@ function getip() {
 }
 
 /**
- * Sugeneruojam atsitiktinÄ™ frazÄ™
+ * Sugeneruojam atsitiktinė frazė
  *
- * @param frazÄ—s ilgis $i
+ * @param frazės ilgis $i
  * @return string
  */
 function random_name($i = 10) {
@@ -433,7 +433,7 @@ function random_name($i = 10) {
 }
 
 /**
- * Sutvarko SQL uÅ¾klausÄ…
+ * Sutvarko SQL užklausa
  *
  * @param string $sql
  * @return escaped string
@@ -453,7 +453,7 @@ function escape($sql) {
 }
 
 /**
- * Sutvarkom stringÄ… saugiam atvaizdavimui
+ * Sutvarkom stringų saugiam atvaizdavimui
  * sito reikia jei nori grainti i inputa informacija.
  * daznai tai buna su visokiais \\\'? ir pan
  *
@@ -470,7 +470,7 @@ function input($s) {
 ////////////////////////////////////////////////////////
 
 /**
- * IÅ¡ QUERY_STRING padarom masyvÄ…
+ * Iš QUERY_STRING padarom masyvą
  *
  * @param QUERY_STRING $params
  * @return array
@@ -499,7 +499,7 @@ function url_arr($params) {
 }
 
 /**
- * IÅ¡ masyvo padarom Ä¯ QUERY_STRING
+ * Iš masyvo padarom į QUERY_STRING
  * dekui: "sliekas_kanibalas" uz patobulinima
  *
  * @param array $params
@@ -517,7 +517,7 @@ function arr_url($params, $str = '') {
 }
 
 /**
- * Papildo nuorodÄ… naujais kintamaisiais
+ * Papildo nuorodą naujais kintamaisiais
  * Esant reikalui atnaujina esamus
  *
  * @param string $str
@@ -540,7 +540,7 @@ function url($str, $link = '') {
 /////////////////////////////////////////////////////////////
 
 /**
- * NarÅ¡yklÄ—s peradresavimas
+ * Naršyklių peradresavimas
  *
  * @param adresas $location
  * @param header/meta/script $type
@@ -558,7 +558,7 @@ function redirect($location, $type = "header") {
 }
 
 /**
- * GraÅ¾ina amÅ¾iÅ³, nurodÅ¾ius datÄ…
+ * Grąžina amžių, nurodžius datą
  *
  * @param 0000-00-00 $data
  * @return int
@@ -575,7 +575,7 @@ function amzius($data) {
 }
 
 /**
- * UÅ¾koduoja problematiÅ¡kus simbolius
+ * Užkoduoja problematiškus simbolius
  *
  * @param tekstas/string $text
  * @param true/false $striptags
@@ -629,8 +629,8 @@ function isImage1($img) {
 }
 
 /**
- * SulauÅ¾o Å¾odÄ¯ jei jis per ilgas
- * lauÅ¾o net jei Å¾odis turi tarpus
+ * Sulaužo žodį jei jis per ilgas
+ * lauÅ¾o net jei žodis turi tarpus
  *
  * @param tekstas $text
  * @param ilgis $chars
@@ -642,8 +642,8 @@ function wrap1($text, $chars = 25) {
 }
 
 /**
- * SulauÅ¾o per ilgus Å¾odÅ¾ius
- * tik jei jis yra be tarpÅ³
+ * Sulaužo per ilgus žodžius
+ * tik jei jis yra be tarpų
  *
  * @param tekstas $string
  * @param ilgis $width
@@ -691,8 +691,7 @@ function linkas($str) {
 }
 
 // apvalinti:
-// suapvalina nurodyta skaiÄiu
-// (iÅ¡esmÄ—s veikia kaip ceil() tik leidÅ¾ia nurodyti deÅ¡imtainÄ™)
+
 function apvalinti($sk, $kiek = 2) {
 	if ($kiek < 0) {
 		$kiek = 0;
@@ -866,7 +865,7 @@ function menesis($men) {
 	} else {
 		$ieskom = array("December", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November");
 	}
-	$keiciam = array("Gruodis", "Sausis", "Vasaris", "Kovas", "Balandis", "GeguÅ¾Ä—", "BirÅ¾elis", "Liepa", "RugpjÅ«tis", "RugsÄ—jis", "Spalis", "Lapkritis");
+	$keiciam = array("Gruodis", "Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa", "Rugpjūtis", "Rugsėjis", "Spalis", "Lapkritis");
 	return str_replace($ieskom, $keiciam, $men);
 }
 

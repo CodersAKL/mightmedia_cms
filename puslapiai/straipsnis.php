@@ -22,7 +22,7 @@ if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
 $limit = 50;
 $text = '';
 
-//Kategoriju sarašas
+//Kategorijų sąrašas
 $sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai'  ORDER BY `pavadinimas`");
 if ($sqlas && mysql_num_rows($sqlas) > 0 && !isset($url['m'])) {
 	while ($sql = mysql_fetch_assoc($sqlas)) {
@@ -34,15 +34,15 @@ if ($sqlas && mysql_num_rows($sqlas) > 0 && !isset($url['m'])) {
 			$info[] = array(" " => "<img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' />", "{$lang['category']['about']}" => "<h2><a href='?id," . $url['id'] . ";k," . $sql['id'] . "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br>", "{$lang['category']['articles']}" => $sqlkiek, );
 		}
 	}
-}
-include_once ("priedai/class.php");
-$bla = new Table();
-if (isset($info)) {
-	lentele("{$lang['system']['categories']}", $bla->render($info), false);
-}
-//pabaiga
+	include_once ("priedai/class.php");
+	$bla = new Table();
+	if (isset($info)) {
+		lentele("{$lang['system']['categories']}", $bla->render($info), false);
+	}
 
-//Jei pasirinkta kategorija
+}
+//Kategorijų sąrašo pabaiga
+//Jei pasirinkta kategoriją
 if ($k >= 0 && empty($url['m'])) {
 
 	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' 
@@ -70,6 +70,8 @@ if ($k >= 0 && empty($url['m'])) {
 		}
 		unset($text, $row, $sql);
 
+	} else {
+		klaida($lang['system']['warning'], $lang['system']['no_content']);
 	}
 } elseif (!empty($url['m'])) {
 

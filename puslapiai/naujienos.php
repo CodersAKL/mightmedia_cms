@@ -108,6 +108,7 @@ if ($kid != 0) {
             	while($susijusios=mysql_fetch_assoc($susijus)){
             		$naujienos.="<li><a href=\"?id,".$_GET['id'].";k,".$susijusios['id']."\">".$susijusios['pavadinimas']."</a> (".date('Y-m-d H:i:s', $susijusios['data']).")</li>";
             	}
+            	$naujienos.="</ul>";
             	lentele($lang['news']['related'],$naujienos);
             }
 			//Rodom komentarus

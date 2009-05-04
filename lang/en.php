@@ -14,6 +14,7 @@ $lang['system']['nopage'] = 'Page not exists!';
 $lang['system']['pages'] = 'Pages';
 $lang['system']['pagenotfounfd'] = 'Page not found';
 $lang['system']['forbidden'] = 'Forbidden';
+$lang['system']['no_content'] = 'No content.';
 $lang['system']['badcookie'] = 'Bad cookie';
 $lang['system']['wronginfo'] = 'Wrong username/password';
 $lang['system']['nologin'] = 'You can\'t login for';
@@ -520,6 +521,7 @@ $lang['guestbook']['code'] = 'Code';
 $lang['guestbook']['submit'] = 'Submit';
 $lang['guestbook']['deleted'] = 'Message deleted';
 $lang['guestbook']['Editmessage'] = 'Edit message';
+$lang['guestbook']['empty'] = 'Book empty';
 $lang['guestbook']['messageupdated'] = 'Message updated';
 //poll
 $lang['poll']['archive'] = 'Poll archive';

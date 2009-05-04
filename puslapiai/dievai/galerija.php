@@ -87,11 +87,7 @@ if (mysql_num_rows($sql) > 0)
 
     }
 }
-else
-{
-    $kategorijos[] = "{$lang['system']['nocategories']}";
-
-}
+$kategorijos[0] = "--";
 if (isset($_GET['p']))
 {
     $result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "galerija` SET rodoma='TAIP' 

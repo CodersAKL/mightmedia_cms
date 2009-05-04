@@ -113,8 +113,7 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
     FROM
   `" . LENTELES_PRIESAGA . "d_forumai`
     inner Join `" . LENTELES_PRIESAGA . "d_temos` ON `" . LENTELES_PRIESAGA . "d_forumai`.`id`=`" . LENTELES_PRIESAGA . "d_temos`.`fid` 
-	ORDER by `" . LENTELES_PRIESAGA . "d_forumai`.`place` ASC, `" . LENTELES_PRIESAGA . "d_temos`.`place` ASC
-") or die(mysql_error());
+	ORDER by `" . LENTELES_PRIESAGA . "d_forumai`.`place` ASC, `" . LENTELES_PRIESAGA . "d_temos`.`place` ASC") or die(mysql_error());
 	//$info = array();
 	if (mysql_num_rows($sqlis) > 0) {
 		while ($kat = mysql_fetch_assoc($sqlis)) {
@@ -123,13 +122,13 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 			//temø kategorijoj
 			$temos = (int)$kat['temos'];
 			//nustatom ar yra naujø praneðimø
-			if ((!isset($_COOKIE['sub_' . $kat['temid']]) && (int)$kat['last_data'] > 0) || (isset($_COOKIE['sub_' . $kat['temid']]) && (int)$_COOKIE['sub_' . $kat['temid']] < $zinutes)) {
+			if ((!isset($_COOKIE['sub_' . $kat['temid']]) && (int)$kat['last_data'] > 0 && $zinutes > 0) || (isset($_COOKIE['sub_' . $kat['temid']]) && (int)$_COOKIE['sub_' . $kat['temid']] < $zinutes)) {
 				$extra = "<img src='images/forum/folder_new.gif' alt='new' />";
 			} else {
 				$extra = "<img src='images/forum/folder.gif' alt='{$lang['forum']['topic']}' />";
 			}
 			//subkategorijø atvaizdavimo formatas
-			$info[$kat['katid']][] = array("#" => $extra, "{$lang['forum']['forum']}" => "<div style='width:200px;'><a href='?id," . $url['id'] . ";s," . $kat['temid'] . "'>" . $kat['pav'] . "</a> <i style='font-size:9px;width:auto;'>" . $kat['aprasymas'] . "</i></div>", "{$lang['forum']['topics']}" => $temos, "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" => $kat['last_nick'] . ' - ' . (($kat['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $kat['last_data']))));
+			$info[$kat['katid']][] = array("#" => $extra, "{$lang['forum']['forum']}" => "<div style='width:200px;display:block;'><a href='?id," . $url['id'] . ";s," . $kat['temid'] . "'>" . $kat['pav'] . "</a> <i style='font-size:9px;width:auto;display:block;'>" . $kat['aprasymas'] . "</i></div>", "{$lang['forum']['topics']}" => $temos, "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" => (($zinutes>0)? $kat['last_nick'] . ' - ' . (($kat['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $kat['last_data']))):'-'));
 			$blai = new Table();
 			$subai[$kat['katid']] = $blai->render($info[$kat['katid']]);
 			$kateg[$kat['katid']] = $kat['kategorija'];
@@ -140,6 +139,8 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 			lentele($name, $subai[$t]);
 		}
 
+	}else{
+		klaida($lang['system']['warning'],$lang['system']['nocategories']);
 	}
 }
 
@@ -164,7 +165,7 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 
 			if ($temos['uzrakinta'] == 'taip') {
 				$extra = "<img src='images/forum/locked.png' alt='{$lang['forum']['locked']}' />";
-			} elseif ((!isset($_COOKIE['nauji_' . $temos['id']]) && (int)$temos['last_data'] != '0000000000') || $_COOKIE['nauji_' . $temos['id'] . ''] < $zinutes) {
+			} elseif ((!isset($_COOKIE['nauji_' . $temos['id']]) && (int)$temos['last_data'] != '0000000000' && $zinutes > 0) || $_COOKIE['nauji_' . $temos['id'] . ''] < $zinutes) {
 				$extra = "<img src='images/forum/theme_new.png' alt='new' />";
 			} else {
 
@@ -176,7 +177,7 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 				$sticky = "";
 			}
 
-			$info[] = array("#" => $extra . $sticky, "{$lang['forum']['topic']}" => "<div style='width:auto;'><a href='?id," . $url['id'] . ";s," . $sid . ";t," . $temos['id'] . "' style='display:block'>" . $temos['pav'] . "</a></div>", "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" => $temos['last_nick'] . ' - ' . (($temos['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $temos['last_data'])))); //' . naujas($row['last_data']) . '
+			$info[] = array("#" => $extra . $sticky, "{$lang['forum']['topic']}" => "<div style='width:auto;'><a href='?id," . $url['id'] . ";s," . $sid . ";t," . $temos['id'] . "' style='display:block'>" . $temos['pav'] . "</a></div>", "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" =>(($zinutes>0)?$temos['last_nick'] . ' - ' . (($temos['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $temos['last_data']))):'-')); //' . naujas($row['last_data']) . '
 
 		}
 
