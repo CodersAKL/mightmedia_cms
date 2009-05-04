@@ -484,7 +484,7 @@ if ($step == 5) {
 ?>
                 <h2>Pabaiga</h2>
                                 Sveikiname įdiegus MightMedia TVS (Turinio Valdymo Sistemą).<br />
-                                Spauskite "Pabaigti" galutinai užbaigti instaliaciją. Po to ištrinkite <b>setup.php</b> failą iš savo FTP serverio.<br /><br />
+                                Spauskite "Pabaigti" galutinai užbaigti instaliaciją. Bus ištrintas <b>setup.php</b> failas. Dėl visa ko - patikrinkite prisijungę prie FTP serverio.<br /><br />
                                 <form name="finish_install" method="post">
                                 <center><input name="finish" type="submit" value="Pabaigti" /></center>
                                 </form>
