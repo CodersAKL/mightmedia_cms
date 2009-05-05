@@ -115,7 +115,7 @@ function puslapis($puslapis, $extra = false) {
 }
 
 /**
- * UÅ¾drausti IP ant serverio
+ * Uždrausti IP ant serverio
  *
  * @param string $kodel
  */
@@ -187,7 +187,7 @@ if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
 
 
 /**
- * VartotojÅ³ lygiai
+ * Vartotojų lygiai
  * @return array
  */
 unset($sql, $row);
@@ -266,7 +266,7 @@ function user($user, $id = 0, $level = 0, $extra = false) {
 
 
 /**
- * MySQL uÅ¾klausoms
+ * MySQL užklausoms
  *
  * @param sql string $query
  * @return resource
@@ -280,7 +280,7 @@ function mysql_query1($query) {
 }
 
 /**
- * Nuskaitom turin¯ iÅ¡ adreso
+ * Nuskaitom turin¯ iš adreso
  *
  * @param string $url
  * @return string
@@ -296,7 +296,7 @@ function http_get($url) {
 }
 
 /**
- * Gaunam informacijÄ… iÅ¡ XML
+ * Gaunam informaciją iš XML
  *
  * @param string $xml
  * @param string $tag
@@ -321,7 +321,7 @@ function get_tag_contents($xml, $tag) {
 }
 
 /**
- * SuskaiÄiuojam kiek nurodytoje lentelÄ—je yra Ä¯raÅ¡Å³
+ * SuskaiÄiuojam kiek nurodytoje lentelÄ—je yra Ä¯rašų
  *
  * @param string $table
  * @param string $where
@@ -631,7 +631,7 @@ function isImage1($img) {
 
 /**
  * Sulaužo žodį jei jis per ilgas
- * lauÅ¾o net jei žodis turi tarpus
+ * laužo net jei žodis turi tarpus
  *
  * @param tekstas $text
  * @param ilgis $chars
@@ -784,7 +784,7 @@ function procentai($reikia, $yra, $zenklas = false) {
 	return $return;
 }
 
-//Insert SQL - supaprastina duomenÅ³ Ä¯terpimÄ…, paduodam lentlÄ—s pavadinimÄ… ir kitu argumentu asociatyvÅ³ masyvÄ…
+//Insert SQL - supaprastina duomenų Ä¯terpimą, paduodam lentlÄ—s pavadinimą ir kitu argumentu asociatyvų masyvą
 function insert($table, $array) {
 	return 'INSERT INTO `' . LENTELES_PRIESAGA . $table . '` (' . implode(', ', array_keys($array)) . ') VALUES (' . implode(', ', array_map('escape', $array)) . ')';
 }
@@ -870,7 +870,7 @@ function menesis($men) {
 	return str_replace($ieskom, $keiciam, $men);
 }
 
-// grÄ…Å¾ina failus iÅ¡ nurodytos direktorijos ir sukiÅ¡a Ä¯ masyvÄ…
+// grąžina failus iš nurodytos direktorijos ir sukiša Ä¯ masyvą
 function getFiles($path, $denny = '.htaccess|index.php|index.html|index.htm|index.php3|conf.php') {
 	$denny = explode('|', $denny);
 	$path = urldecode($path);
@@ -925,7 +925,7 @@ function getFiles($path, $denny = '.htaccess|index.php|index.html|index.htm|inde
 	return $sortedFiles;
 }
 
-//Grazina direktorijÅ³ saraÅ¡Ä…
+//Grazina direktorijų sarašą
 function getDirs($dir) {
 	if ($handle = opendir($dir)) {
 		while (false !== ($file = readdir($handle))) {
@@ -1013,7 +1013,7 @@ function get_browser_info() {
 }
 
 /**
- * GraÅ¾ina patvirtinimo kodÄ…
+ * Gražina patvirtinimo kodą
  *
  * @return HTML
  */
@@ -1022,7 +1022,7 @@ function kodas() {
 	return "<img src=\"priedai/human.php\" style=\"cursor: pointer;\" onclick='this.src=\"priedai/human.php?\"+Math.random()' id=\"captcha\" alt=\"code\" title=\"{$lang['system']['refresh']}\" />";
 }
 
-/** GraÅ¾ina versijos numerÄ¯ */
+/** Gražina versijos numerÄ¯ */
 function versija($failas = false) {
 	if (!$failas) {
 		$svnid = '$Rev$';
@@ -1050,7 +1050,7 @@ function sendcompressedcontent($content) {
 // compress HTML BLOGAS DUOMENŲ SUSPAUDIMO BŪDAS
 //ob_start('sendcompressedcontent');
 /**
- * Editorius skirtas vaizdÅ¾iai redaguoti html
+ * Editorius skirtas vaizdžiai redaguoti html
  *
  * @example echo editorius('tiny_mce','mini');
  * @example echo editorius('spaw','standartinis',array('Glaustai'=>'Glaustai','Placiau'=>'PlaÄiau'),array('Glaustai'=>'Naujiena glaustai','Placiau'=>'Naujiena plaÄiau'));
