@@ -135,7 +135,7 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['edit'])
 
     $naujiena = safe_html(str_replace(array("&#39;","<br>"), array("'","<br />"), $_POST['naujiena']), $tags);
     $placiau = safe_html(str_replace(array("&#39;","<br>"), array("'","<br />"), $_POST['placiau']), $tags);
-    $komentaras = (isset($_POST['kom']) && $_POST['kom'] == $lang['admin']['yes'] ? $lang['admin']['yes'] : $lang['admin']['no']);
+    $komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'taip' ? 'taip' : 'ne');
     $kategorija = (int)$_POST['kategorija'];
     $pavadinimas = strip_tags($_POST['pav']);
     $id = ceil((int)$_POST['news_id']);
@@ -164,7 +164,7 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_crea
 
     $naujiena = safe_html(str_replace(array("&#39;","<br>"), array("'","<br />"), $_POST['naujiena']), $tags);
     $placiau = safe_html(str_replace(array("&#39;","<br>"), array("'","<br />"), $_POST['placiau']), $tags);
-    $komentaras = (isset($_POST['kom']) && $_POST['kom'] == $lang['admin']['yes'] ? $lang['admin']['yes'] : $lang['admin']['no']);
+    $komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'taip' ? 'taip' : 'ne');
     $pavadinimas = input(strip_tags($_POST['pav']));
     $kategorija = (int)$_POST['kategorija'];
 
@@ -219,8 +219,7 @@ if (isset($_GET['v']))
         if ($i = 1)
         {
             $kom = array('taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no']);
-            $naujiena = array("Form" => array("action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pavadinimas'] : ''), "name" => "pav", "style" => "width:100%"), $lang['admin']['Comments'] => array("type" => "select", "selected" => input((isset
-                ($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input", "style" => "width:100%"), "{$lang['admin']['news_category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "style" => "width:100%", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')), "{$lang['admin']['news_text']}:" =>
+            $naujiena = array("Form" => array("action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pavadinimas'] : ''), "name" => "pav", "style" => "width:100%"), $lang['admin']['Comments'] => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input", "style" => "width:100%"), "{$lang['admin']['news_category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "style" => "width:100%", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')), "{$lang['admin']['news_text']}:" =>
                 array("type" => "string", "value" => editorius('jquery', 'standartinis', array('naujiena' => $lang['admin']['news_preface'], 'placiau' => $lang['admin']['news_more']), array('naujiena' => (isset($extra)) ? $extra['naujiena'] : $lang['admin']['news_preface'], 'placiau' => (isset($extra)) ? $extra['daugiau'] : $lang['admin']['news_more']))), (isset($extra)) ? $lang['admin']['edit'] :
                 $lang['admin']['news_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create']), );
             if (isset($extra))
