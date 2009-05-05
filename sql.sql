@@ -38,18 +38,18 @@ CREATE TABLE IF NOT EXISTS `admin_chat` (
 
 CREATE TABLE IF NOT EXISTS `balsavimas` (
   `id` int(11) NOT NULL auto_increment,
-  `info` set('vis','nar') collate utf8_lithuanian_ci NOT NULL,
+  `info` set('vis','nar') collate utf8_lithuanian_ci default NULL,
   `ips` text collate utf8_lithuanian_ci,
-  `nariai` text collate utf8_lithuanian_ci NOT NULL,
-  `autorius` int(11) NOT NULL,
-  `laikas` int(10) NOT NULL,
+  `nariai` text collate utf8_lithuanian_ci default NULL,
+  `autorius` int(11) default NULL,
+  `laikas` int(10) default NULL,
   `ijungtas` set('TAIP','NE') collate utf8_lithuanian_ci NOT NULL default 'TAIP',
-  `klausimas` text collate utf8_lithuanian_ci NOT NULL,
-  `pirmas` text collate utf8_lithuanian_ci NOT NULL,
-  `antras` text collate utf8_lithuanian_ci NOT NULL,
-  `trecias` text collate utf8_lithuanian_ci NOT NULL,
-  `ketvirtas` text collate utf8_lithuanian_ci NOT NULL,
-  `penktas` text collate utf8_lithuanian_ci NOT NULL,
+  `klausimas` text collate utf8_lithuanian_ci default NULL,
+  `pirmas` text collate utf8_lithuanian_ci default NULL,
+  `antras` text collate utf8_lithuanian_ci default NULL,
+  `trecias` text collate utf8_lithuanian_ci default NULL,
+  `ketvirtas` text collate utf8_lithuanian_ci default NULL,
+  `penktas` text collate utf8_lithuanian_ci default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
@@ -63,9 +63,9 @@ CREATE TABLE IF NOT EXISTS `balsavimas` (
 
 CREATE TABLE IF NOT EXISTS `23_chat_box` (
   `id` int(11) NOT NULL auto_increment,
-  `nikas` varchar(150) collate utf8_lithuanian_ci NOT NULL,
-  `msg` varchar(250) collate utf8_lithuanian_ci NOT NULL,
-  `time` datetime NOT NULL,
+  `nikas` varchar(150) collate utf8_lithuanian_ci default NULL,
+  `msg` varchar(250) collate utf8_lithuanian_ci default NULL,
+  `time` datetime default NULL,
   `niko_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
@@ -76,8 +76,8 @@ CREATE TABLE IF NOT EXISTS `23_chat_box` (
 
 CREATE TABLE IF NOT EXISTS `duk` (
   `id` int(11) NOT NULL auto_increment,
-  `klausimas` varchar(200) collate utf8_lithuanian_ci NOT NULL,
-  `atsakymas` text collate utf8_lithuanian_ci NOT NULL,
+  `klausimas` varchar(200) collate utf8_lithuanian_ci default NULL,
+  `atsakymas` text collate utf8_lithuanian_ci default NULL,
   `order` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
@@ -92,8 +92,8 @@ CREATE TABLE IF NOT EXISTS `duk` (
 
 CREATE TABLE IF NOT EXISTS `d_forumai` (
   `id` int(11) NOT NULL auto_increment,
-  `pav` varchar(100) collate utf8_lithuanian_ci NOT NULL,
-  `place` int(11) NOT NULL,
+  `pav` varchar(100) collate utf8_lithuanian_ci default NULL,
+  `place` int(11) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
@@ -110,10 +110,10 @@ CREATE TABLE IF NOT EXISTS `d_forumai` (
 CREATE TABLE IF NOT EXISTS `d_straipsniai` (
   `id` int(11) NOT NULL auto_increment,
   `tid` int(11) NOT NULL,
-  `pav` varchar(100) collate utf8_lithuanian_ci NOT NULL,
-  `last_data` int(10) NOT NULL,
-  `last_nick` varchar(25) collate utf8_lithuanian_ci NOT NULL,
-  `autorius` varchar(25) collate utf8_lithuanian_ci NOT NULL,
+  `pav` varchar(100) collate utf8_lithuanian_ci default NULL,
+  `last_data` int(10) default NULL,
+  `last_nick` varchar(25) collate utf8_lithuanian_ci default NULL,
+  `autorius` varchar(25) collate utf8_lithuanian_ci default NULL,
   `uzrakinta` set('taip','ne') collate utf8_lithuanian_ci NOT NULL default 'ne',
   `sticky` int(1) NOT NULL default 0,
   PRIMARY KEY  (`id`)
@@ -129,12 +129,12 @@ CREATE TABLE IF NOT EXISTS `d_straipsniai` (
 
 CREATE TABLE IF NOT EXISTS `d_temos` (
   `id` int(11) NOT NULL auto_increment,
-  `fid` int(11) NOT NULL,
-  `pav` varchar(100) collate utf8_lithuanian_ci NOT NULL,
-  `aprasymas` varchar(255) collate utf8_lithuanian_ci NOT NULL,
-  `last_data` int(10) NOT NULL,
-  `last_nick` varchar(25) collate utf8_lithuanian_ci NOT NULL,
-  `place` int(11) NOT NULL,
+  `fid` int(11) default NULL,
+  `pav` varchar(100) collate utf8_lithuanian_ci default NULL,
+  `aprasymas` varchar(255) collate utf8_lithuanian_ci default NULL,
+  `last_data` int(10) default NULL,
+  `last_nick` varchar(25) collate utf8_lithuanian_ci default NULL,
+  `place` int(11) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
@@ -152,11 +152,11 @@ CREATE TABLE IF NOT EXISTS `d_temos` (
 
 CREATE TABLE IF NOT EXISTS `d_zinute` (
   `id` int(11) NOT NULL auto_increment,
-  `tid` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
-  `nick` int(11) NOT NULL,
-  `zinute` text collate utf8_lithuanian_ci NOT NULL,
-  `laikas` int(10) NOT NULL,
+  `tid` int(11) default NULL,
+  `sid` int(11) default NULL,
+  `nick` int(11) default NULL,
+  `zinute` text collate utf8_lithuanian_ci default NULL,
+  `laikas` int(10) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
@@ -176,9 +176,9 @@ CREATE TABLE IF NOT EXISTS `galerija` (
   `foto` text collate utf8_lithuanian_ci,
   `apie` longtext collate utf8_lithuanian_ci,
   `autorius` int(6) NOT NULL default '0',
-  `data` int(10) NOT NULL,
+  `data` int(10) default NULL,
   `categorija` int(3) default '1',
-  `teises` varchar(2) collate utf8_lithuanian_ci NOT NULL,
+  `teises` varchar(2) collate utf8_lithuanian_ci default NULL,
   `rodoma` varchar(4) collate utf8_lithuanian_ci NOT NULL default 'NE',
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
@@ -194,14 +194,14 @@ CREATE TABLE IF NOT EXISTS `galerija` (
 
 CREATE TABLE IF NOT EXISTS `grupes` (
   `id` int(3) NOT NULL auto_increment,
-  `pavadinimas` varchar(128) collate utf8_lithuanian_ci NOT NULL,
-  `aprasymas` mediumtext collate utf8_lithuanian_ci NOT NULL,
+  `pavadinimas` varchar(128) collate utf8_lithuanian_ci default NULL,
+  `aprasymas` mediumtext collate utf8_lithuanian_ci default NULL,
   `teises` int(2) NOT NULL default '1',
-  `pav` varchar(256) collate utf8_lithuanian_ci NOT NULL,
+  `pav` varchar(256) collate utf8_lithuanian_ci default NULL,
   `path` varchar(150) collate utf8_lithuanian_ci NOT NULL default '0',
-  `kieno` varchar(255) collate utf8_lithuanian_ci NOT NULL,
+  `kieno` varchar(255) collate utf8_lithuanian_ci default NULL,
   `place` int(11) NOT NULL default 1,
-  `mod` text collate utf8_lithuanian_ci NOT NULL,
+  `mod` text collate utf8_lithuanian_ci default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
@@ -217,14 +217,14 @@ CREATE TABLE IF NOT EXISTS `grupes` (
 
 CREATE TABLE IF NOT EXISTS `kas_prisijunges` (
   `id` int(11) NOT NULL,
-  `uid` varchar(11) collate utf8_lithuanian_ci NOT NULL,
+  `uid` varchar(11) collate utf8_lithuanian_ci default NULL,
   `timestamp` int(15) NOT NULL default '0',
-  `ip` varchar(40) collate utf8_lithuanian_ci NOT NULL,
-  `file` varchar(100) collate utf8_lithuanian_ci NOT NULL,
+  `ip` varchar(40) collate utf8_lithuanian_ci default NULL,
+  `file` varchar(100) collate utf8_lithuanian_ci default NULL,
   `user` varchar(100) collate utf8_lithuanian_ci default NULL,
-  `agent` varchar(255) collate utf8_lithuanian_ci NOT NULL,
+  `agent` varchar(255) collate utf8_lithuanian_ci default NULL,
   `ref` varchar(100) collate utf8_lithuanian_ci default NULL,
-  `clicks` float default NULL,
+  `clicks` float NOT NULL default '0',
   PRIMARY KEY  (`uid`),
   KEY `ip` (`ip`),
   KEY `file` (`file`),
@@ -241,9 +241,9 @@ CREATE TABLE IF NOT EXISTS `kas_prisijunges` (
 
 CREATE TABLE IF NOT EXISTS `knyga` (
   `id` int(11) NOT NULL auto_increment,
-  `nikas` varchar(150) collate utf8_lithuanian_ci NOT NULL,
-  `msg` varchar(250) collate utf8_lithuanian_ci NOT NULL,
-  `time` int(10) NOT NULL,
+  `nikas` varchar(150) collate utf8_lithuanian_ci default NULL,
+  `msg` varchar(250) collate utf8_lithuanian_ci default NULL,
+  `time` int(10) default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `msg` (`msg`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
@@ -260,10 +260,10 @@ CREATE TABLE IF NOT EXISTS `kom` (
   `id` int(11) NOT NULL auto_increment,
   `kid` int(11) NOT NULL default '0',
   `pid` varchar(255) collate utf8_lithuanian_ci NOT NULL default '0',
-  `zinute` text collate utf8_lithuanian_ci NOT NULL,
-  `nick` char(50) collate utf8_lithuanian_ci NOT NULL,
+  `zinute` text collate utf8_lithuanian_ci default NULL,
+  `nick` char(50) collate utf8_lithuanian_ci default NULL,
   `nick_id` int(11) NOT NULL default '0',
-  `data` int(10) NOT NULL,
+  `data` int(10) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
@@ -274,8 +274,8 @@ CREATE TABLE IF NOT EXISTS `kom` (
 
 CREATE TABLE IF NOT EXISTS `logai` (
   `id` int(10) NOT NULL auto_increment,
-  `action` text collate utf8_lithuanian_ci NOT NULL,
-  `time` int(10) NOT NULL,
+  `action` text collate utf8_lithuanian_ci default NULL,
+  `time` int(10) default NULL,
   `ip` varchar(15) collate utf8_lithuanian_ci NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
@@ -291,12 +291,12 @@ CREATE TABLE IF NOT EXISTS `logai` (
 
 CREATE TABLE IF NOT EXISTS `naujienos` (
   `id` int(11) NOT NULL auto_increment,
-  `pavadinimas` varchar(100) collate utf8_lithuanian_ci NOT NULL,
+  `pavadinimas` varchar(100) collate utf8_lithuanian_ci default NULL,
   `kategorija` int(2) NOT NULL default '1',
-  `naujiena` mediumtext collate utf8_lithuanian_ci NOT NULL,
-  `daugiau` text collate utf8_lithuanian_ci NOT NULL,
-  `data` int(10) NOT NULL,
-  `autorius` varchar(25) collate utf8_lithuanian_ci NOT NULL,
+  `naujiena` mediumtext collate utf8_lithuanian_ci default NULL,
+  `daugiau` text collate utf8_lithuanian_ci default NULL,
+  `data` int(10) default NULL,
+  `autorius` varchar(25) collate utf8_lithuanian_ci default NULL,
   `kom` set('taip','ne') collate utf8_lithuanian_ci NOT NULL default 'taip',
   `rodoma` varchar(4) collate utf8_lithuanian_ci NOT NULL default 'NE',
   PRIMARY KEY  (`id`)
@@ -321,12 +321,12 @@ CREATE TABLE IF NOT EXISTS `nuorodos` (
   `url` varchar(200) collate utf8_lithuanian_ci NOT NULL default 'http://',
   `pavadinimas` varchar(200) character set utf8 collate utf8_lithuanian_ci NOT NULL default '0',
   `click` int(11) NOT NULL default '0',
-  `nick` int(5) NOT NULL,
-  `date` int(10) NOT NULL,
-  `apie` text character set utf8 collate utf8_lithuanian_ci NOT NULL,
+  `nick` int(5) default NULL,
+  `date` int(10) default NULL,
+  `apie` text character set utf8 collate utf8_lithuanian_ci default NULL,
   `active` varchar(4) collate utf8_lithuanian_ci NOT NULL default 'NE',
   `balsai` int(255) NOT NULL default '0',
-  `balsavo` text character set utf8 collate utf8_lithuanian_ci NOT NULL,
+  `balsavo` text character set utf8 collate utf8_lithuanian_ci default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `url` (`url`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
@@ -340,8 +340,8 @@ CREATE TABLE IF NOT EXISTS `nuorodos` (
 
 CREATE TABLE IF NOT EXISTS `nustatymai` (
   `id` int(6) NOT NULL auto_increment,
-  `key` varchar(128) collate utf8_lithuanian_ci NOT NULL,
-  `val` text collate utf8_lithuanian_ci NOT NULL,
+  `key` varchar(128) collate utf8_lithuanian_ci default NULL,
+  `val` text collate utf8_lithuanian_ci default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
@@ -378,9 +378,9 @@ INSERT INTO `nustatymai` (`key`, `val`) VALUES
 
 CREATE TABLE IF NOT EXISTS `page` (
   `id` int(11) NOT NULL auto_increment,
-  `pavadinimas` varchar(100) collate utf8_lithuanian_ci NOT NULL,
-  `file` varchar(50) collate utf8_lithuanian_ci NOT NULL,
-  `place` int(11) NOT NULL,
+  `pavadinimas` varchar(100) collate utf8_lithuanian_ci default NULL,
+  `file` varchar(50) collate utf8_lithuanian_ci default NULL,
+  `place` int(11) default NULL,
   `show` enum('Y','N') collate utf8_lithuanian_ci NOT NULL default 'Y',
   `teises` int(30) NOT NULL default '0',
   PRIMARY KEY  (`id`)
@@ -415,9 +415,9 @@ INSERT INTO `page` (`pavadinimas`, `file`, `place`, `show`, `teises`) VALUES
 
 CREATE TABLE IF NOT EXISTS `panel` (
   `id` int(11) NOT NULL auto_increment,
-  `panel` varchar(100) collate utf8_lithuanian_ci NOT NULL,
-  `file` varchar(50) collate utf8_lithuanian_ci NOT NULL,
-  `place` int(11) NOT NULL,
+  `panel` varchar(100) collate utf8_lithuanian_ci default NULL,
+  `file` varchar(50) collate utf8_lithuanian_ci default NULL,
+  `place` int(11) default NULL,
   `align` enum('R','L') collate utf8_lithuanian_ci NOT NULL default 'L',
   `show` enum('Y','N') collate utf8_lithuanian_ci NOT NULL default 'Y',
   `teises` int(30) NOT NULL default '0',
@@ -443,12 +443,12 @@ INSERT INTO `panel` (`panel`, `file`, `place`, `align`, `show`, `teises`) VALUES
 
 CREATE TABLE IF NOT EXISTS `private_msg` (
   `id` int(11) NOT NULL auto_increment,
-  `from` varchar(25) collate utf8_lithuanian_ci NOT NULL,
-  `to` varchar(25) collate utf8_lithuanian_ci NOT NULL,
+  `from` varchar(25) collate utf8_lithuanian_ci default NULL,
+  `to` varchar(25) collate utf8_lithuanian_ci default NULL,
   `title` varchar(100) collate utf8_lithuanian_ci NOT NULL default '...',
-  `msg` text collate utf8_lithuanian_ci NOT NULL,
+  `msg` text collate utf8_lithuanian_ci default NULL,
   `read` set('YES','NO') collate utf8_lithuanian_ci NOT NULL default 'NO',
-  `date` int(10) NOT NULL,
+  `date` int(10) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
@@ -465,9 +465,9 @@ CREATE TABLE IF NOT EXISTS `private_msg` (
 
 CREATE TABLE IF NOT EXISTS `ratings` (
   `id` int(11) NOT NULL auto_increment,
-  `rating_id` varchar(80) NOT NULL,
-  `rating_num` int(11) NOT NULL,
-  `IP` varchar(25) NOT NULL,
+  `rating_id` varchar(80) default NULL,
+  `rating_num` int(11) default NULL,
+  `IP` varchar(25) default NULL,
   `psl` varchar(255) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
@@ -485,9 +485,9 @@ CREATE TABLE IF NOT EXISTS `ratings` (
 --
 
 CREATE TABLE IF NOT EXISTS `salis` (
-  `iso` char(2) collate utf8_lithuanian_ci NOT NULL,
-  `name` varchar(80) collate utf8_lithuanian_ci NOT NULL,
-  `printable_name` varchar(80) collate utf8_lithuanian_ci NOT NULL,
+  `iso` char(2) collate utf8_lithuanian_ci default NULL,
+  `name` varchar(80) collate utf8_lithuanian_ci default NULL,
+  `printable_name` varchar(80) collate utf8_lithuanian_ci default NULL,
   `iso3` char(3) collate utf8_lithuanian_ci default NULL,
   `numcode` smallint(6) default NULL,
   PRIMARY KEY  (`iso`)
@@ -515,9 +515,9 @@ CREATE TABLE IF NOT EXISTS `siuntiniai` (
   `foto` text collate utf8_lithuanian_ci,
   `apie` longtext collate utf8_lithuanian_ci,
   `autorius` int(6) NOT NULL default '0',
-  `data` int(10) NOT NULL,
+  `data` int(10) default NULL,
   `categorija` int(3) default '1',
-  `teises` varchar(2) collate utf8_lithuanian_ci NOT NULL,
+  `teises` varchar(2) collate utf8_lithuanian_ci default NULL,
   `rodoma` varchar(4) collate utf8_lithuanian_ci NOT NULL default 'NE',
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
@@ -532,15 +532,15 @@ CREATE TABLE IF NOT EXISTS `siuntiniai` (
 
 CREATE TABLE IF NOT EXISTS `straipsniai` (
   `id` int(11) NOT NULL auto_increment,
-  `pid` int(11) NOT NULL,
-  `pav` varchar(255) collate utf8_lithuanian_ci NOT NULL,
-  `t_text` text collate utf8_lithuanian_ci NOT NULL,
-  `f_text` longtext collate utf8_lithuanian_ci NOT NULL,
-  `date` int(11) NOT NULL,
-  `autorius` varchar(25) collate utf8_lithuanian_ci NOT NULL,
-  `autorius_id` int(11) NOT NULL,
-  `vote` int(11) NOT NULL,
-  `click` int(11) NOT NULL,
+  `pid` int(11) default NULL,
+  `pav` varchar(255) collate utf8_lithuanian_ci default NULL,
+  `t_text` text collate utf8_lithuanian_ci default NULL,
+  `f_text` longtext collate utf8_lithuanian_ci default NULL,
+  `date` int(11) default NULL,
+  `autorius` varchar(25) collate utf8_lithuanian_ci default NULL,
+  `autorius_id` int(11) default NULL,
+  `vote` int(11) default NULL,
+  `click` int(11) default NULL,
   `kom` varchar(4) collate utf8_lithuanian_ci NOT NULL default 'ne',
   `rodoma` varchar(4) collate utf8_lithuanian_ci NOT NULL default 'NE',
   `kat` int(125) default 0,
@@ -560,8 +560,8 @@ CREATE TABLE IF NOT EXISTS `straipsniai` (
 
 CREATE TABLE IF NOT EXISTS `s_punktai` (
   `id` int(11) NOT NULL auto_increment,
-  `pav` varchar(255) collate utf8_lithuanian_ci NOT NULL,
-  `sid` int(11) NOT NULL,
+  `pav` varchar(255) collate utf8_lithuanian_ci default NULL,
+  `sid` int(11) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
@@ -581,10 +581,10 @@ INSERT INTO `s_punktai` (`pav`, `sid`) VALUES
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL auto_increment,
   `ip` int(10) unsigned default NULL,
-  `nick` varchar(15) collate utf8_lithuanian_ci NOT NULL,
+  `nick` varchar(15) collate utf8_lithuanian_ci default NULL,
   `levelis` int(2) NOT NULL default '3',
-  `pass` varchar(32) collate utf8_lithuanian_ci NOT NULL,
-  `email` varchar(50) collate utf8_lithuanian_ci NOT NULL,
+  `pass` varchar(32) collate utf8_lithuanian_ci default NULL,
+  `email` varchar(50) collate utf8_lithuanian_ci default NULL,
   `slaptas` char(32) collate utf8_lithuanian_ci default NULL,
   `icq` varchar(50) collate utf8_lithuanian_ci default NULL,
   `msn` varchar(50) collate utf8_lithuanian_ci default NULL,
