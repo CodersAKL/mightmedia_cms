@@ -198,7 +198,7 @@ else {
 
 	} else {
 
-		klaida($lang['system']['warning'], "{$lang['download']['no']}.");
+		klaida($lang['system']['warning'], "{$lang['download']['no']}.<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
 
 	}
 
