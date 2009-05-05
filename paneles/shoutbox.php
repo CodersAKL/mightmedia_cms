@@ -14,7 +14,7 @@ if (isset($_POST['chat_box']) && !empty($_POST['chat_box']) && !empty($_POST['ch
 	$nick = $_SESSION['username'];
 	$nick_id = $_SESSION['id'];
 	mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "chat_box` (`nikas`, `msg`, `time`, `niko_id`) VALUES (" . escape($nick) . ", " . escape($msg) . ", NOW(), " . escape($nick_id) . ");");
-	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "chat_box` WHERE time < (NOW() - INTERVAL 31 DAY)");
+	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "chat_box` WHERE time < (".time()." - INTERVAL 31 DAY)");
 }
 function chatbox() {
 	global $conf, $lang;
