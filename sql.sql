@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `admin_chat` (
   `msg` longtext collate utf8_lithuanian_ci NOT NULL,
   `date` int(10) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `balsavimas` (
   `ketvirtas` text collate utf8_lithuanian_ci NOT NULL,
   `penktas` text collate utf8_lithuanian_ci NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 
 
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `23_chat_box` (
   `time` datetime NOT NULL,
   `niko_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=49 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 --
 -- Sukurta duomenų struktūra lentelei `duk`
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `duk` (
   `atsakymas` text collate utf8_lithuanian_ci NOT NULL,
   `order` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 
 
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `d_forumai` (
   `pav` varchar(100) collate utf8_lithuanian_ci NOT NULL,
   `place` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 
 
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `d_straipsniai` (
   `uzrakinta` set('taip','ne') collate utf8_lithuanian_ci NOT NULL default 'ne',
   `sticky` int(1) NOT NULL default 0,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 
 
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `d_temos` (
   `last_nick` varchar(25) collate utf8_lithuanian_ci NOT NULL,
   `place` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 --
 -- Sukurta duomenų kopija lentelei `d_temos`
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `d_zinute` (
   `zinute` text collate utf8_lithuanian_ci NOT NULL,
   `laikas` int(10) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=22 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 
 
@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `galerija` (
   `teises` varchar(2) collate utf8_lithuanian_ci NOT NULL,
   `rodoma` varchar(4) collate utf8_lithuanian_ci NOT NULL default 'NE',
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=29 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 
 
@@ -203,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `grupes` (
   `place` int(11) NOT NULL default 1,
   `mod` text collate utf8_lithuanian_ci NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=36 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 
 
@@ -246,7 +246,7 @@ CREATE TABLE IF NOT EXISTS `knyga` (
   `time` int(10) NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `msg` (`msg`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
 
 
 
@@ -265,7 +265,7 @@ CREATE TABLE IF NOT EXISTS `kom` (
   `nick_id` int(11) NOT NULL default '0',
   `data` int(10) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=72 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 
 --
@@ -278,7 +278,7 @@ CREATE TABLE IF NOT EXISTS `logai` (
   `time` int(10) NOT NULL,
   `ip` varchar(15) collate utf8_lithuanian_ci NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=87 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 
 
@@ -300,14 +300,14 @@ CREATE TABLE IF NOT EXISTS `naujienos` (
   `kom` set('taip','ne') collate utf8_lithuanian_ci NOT NULL default 'taip',
   `rodoma` varchar(4) collate utf8_lithuanian_ci NOT NULL default 'NE',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=15 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 --
 -- Sukurta duomenų kopija lentelei `naujienos`
 --
 
-INSERT INTO `naujienos` (`id`, `pavadinimas`, `kategorija`, `naujiena`, `daugiau`, `data`, `autorius`, `kom`, `rodoma`) VALUES 
-(1, 'Sveikiname įdiegus MightMedia TVS', 0, 'Jūs sėkmingai įdiegėte <a target="_blank" href="http://www.mightmedia.lt">MightMedia TVS</a> . Jos autoriai <a target="_blank" href="http://code.google.com/p/coders/"><strong>CodeRS</strong></a> . Prašome nepasisavinti autorinių teisių, priešingu atveju jūs pažeisite GNU teises.', 'Kiekvienam puslapyje privalomas užrašas apačioje "<a target="_blank" href="http://www.mightmedia.lt/">MightMedia</a>" su nuoroda į <a target="_blank" href="http://www.mightmedia.lt/">http://www.mightmedia.lt</a>\r\n', 1213129845, 'Admin', 'taip', 'TAIP');
+INSERT INTO `naujienos` (`pavadinimas`, `kategorija`, `naujiena`, `daugiau`, `data`, `autorius`, `kom`, `rodoma`) VALUES 
+('Sveikiname įdiegus MightMedia TVS', 0, 'Jūs sėkmingai įdiegėte <a target="_blank" href="http://www.mightmedia.lt">MightMedia TVS</a> . Jos autoriai <a target="_blank" href="http://code.google.com/p/coders/"><strong>CodeRS</strong></a> . Prašome nepasisavinti autorinių teisių, priešingu atveju jūs pažeisite GNU teises.', 'Kiekvienam puslapyje privalomas užrašas apačioje "<a target="_blank" href="http://www.mightmedia.lt/">MightMedia</a>" su nuoroda į <a target="_blank" href="http://www.mightmedia.lt/">http://www.mightmedia.lt</a>\r\n', 1213129845, 'Admin', 'taip', 'TAIP');
 
 -- --------------------------------------------------------
 
@@ -329,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `nuorodos` (
   `balsavo` text character set utf8 collate utf8_lithuanian_ci NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `url` (`url`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 
 -- --------------------------------------------------------
@@ -343,33 +343,33 @@ CREATE TABLE IF NOT EXISTS `nustatymai` (
   `key` varchar(128) collate utf8_lithuanian_ci NOT NULL,
   `val` text collate utf8_lithuanian_ci NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=22 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 --
 -- Sukurta duomenų kopija lentelei `nustatymai`
 --
 
-INSERT INTO `nustatymai` (`id`, `key`, `val`) VALUES
-(1, 'Pavadinimas', 'MightMedia TVS'),
-(2, 'Apie', '<br />'),
-(3, 'Keywords', ''),
-(4, 'Render', '1'),
-(5, 'Copyright', '<a href="http://www.mightmedia.lt" target="_blank">MightMedia TVS</a>'),
-(6, 'Pastas', 'info@mrcbug.com'),
-(7, 'Registracija', '1'),
-(8, 'Palaikymas', '0'),
-(9, 'Maintenance', 'Remontuojame<br />'),
-(10, 'Chat_limit', '5'),
-(11, 'News_limit', '5'),
-(12, 'Stilius', 'default'),
-(13, 'Bandymai', '3'),
-(14, 'fotodyd', '450'),
-(15, 'minidyd', '150'),
-(16, 'galbalsuot', '1'),
-(17, 'fotoperpsl', '10'),
-(18, 'galkom', '1'),
-(19, 'pirminis', 'naujienos.php'),
-(20, 'kalba', 'lt.php');
+INSERT INTO `nustatymai` (`key`, `val`) VALUES
+('Pavadinimas', 'MightMedia TVS'),
+('Apie', '<br />'),
+('Keywords', ''),
+('Render', '1'),
+('Copyright', '<a href="http://www.mightmedia.lt" target="_blank">MightMedia TVS</a>'),
+('Pastas', 'info@mrcbug.com'),
+('Registracija', '1'),
+('Palaikymas', '0'),
+('Maintenance', 'Remontuojame<br />'),
+('Chat_limit', '5'),
+('News_limit', '5'),
+('Stilius', 'default'),
+('Bandymai', '3'),
+('fotodyd', '450'),
+('minidyd', '150'),
+('galbalsuot', '1'),
+('fotoperpsl', '10'),
+('galkom', '1'),
+('pirminis', 'naujienos.php'),
+('kalba', 'lt.php');
 -- --------------------------------------------------------
 
 --
@@ -384,28 +384,28 @@ CREATE TABLE IF NOT EXISTS `page` (
   `show` enum('Y','N') collate utf8_lithuanian_ci NOT NULL default 'Y',
   `teises` int(30) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=71 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 --
 -- Sukurta duomenų kopija lentelei `page`
 --
 
-INSERT INTO `page` (`id`, `pavadinimas`, `file`, `place`, `show`, `teises`) VALUES
-(1, 'Forumas', 'frm.php', 4, 'Y', 0),
-(2, 'Naujienos', 'naujienos.php', 3, 'Y', 0),
-(3, 'Apie', 'apie.php', 2, 'Y', 0),
-(4, 'Registracija', 'reg.php', 0, 'N', 0),
-(5, 'Nuorodos', 'nuorodos.php', 0, 'Y', 0),
-(6, 'Slaptažodis', 'slaptazodzio_priminimas.php', 2, 'N', 0),
-(7, 'Profilio redagavimas', 'edit_user.php', 1, 'N', 0),
-(8, 'Paieška', 'search.php', 6, 'Y', 0),
-(9, 'Kontaktai', 'kontaktas.php', 7, 'Y', 0),
-(10, 'Prisijungę', 'online.php', 1, 'Y', 0),
-(11, 'Archyvas', 'deze.php', 0, 'N', 0),
-(12, 'Asmeniniai pranešimai', 'pm.php', 0, 'N', 0),
-(13, 'Profilis', 'view_user.php', 0, 'N', 0),
-(14, 'Nariai', 'nariai.php', 0, 'Y', 0),
-(15, 'Straipsniai', 'straipsnis.php', 0, 'Y', 0);
+INSERT INTO `page` (`pavadinimas`, `file`, `place`, `show`, `teises`) VALUES
+('Forumas', 'frm.php', 4, 'Y', 0),
+('Naujienos', 'naujienos.php', 3, 'Y', 0),
+('Apie', 'apie.php', 2, 'Y', 0),
+('Registracija', 'reg.php', 0, 'N', 0),
+('Nuorodos', 'nuorodos.php', 0, 'Y', 0),
+('Slaptažodis', 'slaptazodzio_priminimas.php', 2, 'N', 0),
+('Profilio redagavimas', 'edit_user.php', 1, 'N', 0),
+('Paieška', 'search.php', 6, 'Y', 0),
+('Kontaktai', 'kontaktas.php', 7, 'Y', 0),
+('Prisijungę', 'online.php', 1, 'Y', 0),
+('Archyvas', 'deze.php', 0, 'N', 0),
+('Asmeniniai pranešimai', 'pm.php', 0, 'N', 0),
+('Profilis', 'view_user.php', 0, 'N', 0),
+('Nariai', 'nariai.php', 0, 'Y', 0),
+('Straipsniai', 'straipsnis.php', 0, 'Y', 0);
 
 -- --------------------------------------------------------
 
@@ -422,17 +422,17 @@ CREATE TABLE IF NOT EXISTS `panel` (
   `show` enum('Y','N') collate utf8_lithuanian_ci NOT NULL default 'Y',
   `teises` int(30) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=37 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 --
 -- Sukurta duomenų kopija lentelei `panel`
 --
 
-INSERT INTO `panel` (`id`, `panel`, `file`, `place`, `align`, `show`, `teises`) VALUES
-(1, 'Narys', 'vartotojas.php', 1, 'L', 'Y', 0),
-(2, 'Meniu', 'meniu.php', 2, 'L', 'Y', 0);
-(3, 'Kalendorius', 'kalendorius.php', 1, 'R', 'Y', 0);
-(4, 'Rėksnių dėžė', 'shoutbox.php', 2, 'R', 'Y', 0);
+INSERT INTO `panel` (`panel`, `file`, `place`, `align`, `show`, `teises`) VALUES
+('Narys', 'vartotojas.php', 1, 'L', 'Y', 0),
+('Meniu', 'meniu.php', 2, 'L', 'Y', 0);
+('Kalendorius', 'kalendorius.php', 3, 'R', 'Y', 0);
+('Rėksnių dėžė', 'shoutbox.php', 4, 'R', 'Y', 0);
 
 
 -- --------------------------------------------------------
@@ -450,7 +450,7 @@ CREATE TABLE IF NOT EXISTS `private_msg` (
   `read` set('YES','NO') collate utf8_lithuanian_ci NOT NULL default 'NO',
   `date` int(10) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=23 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 --
 -- Sukurta duomenų kopija lentelei `private_msg`
@@ -470,7 +470,7 @@ CREATE TABLE IF NOT EXISTS `ratings` (
   `IP` varchar(25) NOT NULL,
   `psl` varchar(255) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=68 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 --
 -- Sukurta duomenų kopija lentelei `ratings`
@@ -520,7 +520,7 @@ CREATE TABLE IF NOT EXISTS `siuntiniai` (
   `teises` varchar(2) collate utf8_lithuanian_ci NOT NULL,
   `rodoma` varchar(4) collate utf8_lithuanian_ci NOT NULL default 'NE',
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 
 
@@ -545,7 +545,7 @@ CREATE TABLE IF NOT EXISTS `straipsniai` (
   `rodoma` varchar(4) collate utf8_lithuanian_ci NOT NULL default 'NE',
   `kat` int(125) default 0,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 --
 -- Sukurta duomenų kopija lentelei `straipsniai`
@@ -563,14 +563,14 @@ CREATE TABLE IF NOT EXISTS `s_punktai` (
   `pav` varchar(255) collate utf8_lithuanian_ci NOT NULL,
   `sid` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 --
 -- Sukurta duomenų kopija lentelei `s_punktai`
 --
 
-INSERT INTO `s_punktai` (`id`, `pav`, `sid`) VALUES
-(1, 'Atviras Kodas', 1);
+INSERT INTO `s_punktai` (`pav`, `sid`) VALUES
+('Atviras Kodas', 1);
 
 -- --------------------------------------------------------
 
@@ -596,16 +596,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `miestas` varchar(20) collate utf8_lithuanian_ci NOT NULL,
   `vardas` varchar(15) collate utf8_lithuanian_ci NOT NULL,
   `pavarde` varchar(25) collate utf8_lithuanian_ci NOT NULL,
-  `amzius` int(2) NOT NULL,
   `gim_data` date NOT NULL,
   `parasas` text collate utf8_lithuanian_ci NOT NULL,
   `forum_temos` int(11) NOT NULL default '0',
   `forum_atsakyta` int(11) NOT NULL default '0',
   `taskai` decimal(11,0) NOT NULL default '0',
-  `atsiusta_straipsniu` int(11) NOT NULL default '0',
-  `atsiusta_pamoku` int(11) NOT NULL default '0',
-  `atsiusta_scriptu` int(11) NOT NULL default '0',
-  `atsiusta_naujienu` int(11) NOT NULL default '0',
   `balsai` int(11) NOT NULL default '0',
   `balsavo` text collate utf8_lithuanian_ci NOT NULL,
   `pm_viso` int(11) NOT NULL default '50',
@@ -615,12 +610,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `nick` (`nick`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 --
 -- Sukurta duomenų kopija lentelei `users`
 --
 
-INSERT INTO `users` (`id`, `ip`, `nick`, `levelis`, `pass`, `email`, `slaptas`, `icq`, `msn`, `skype`, `yahoo`, `aim`, `url`, `salis`, `miestas`, `vardas`, `pavarde`, `amzius`, `gim_data`, `parasas`, `forum_temos`, `forum_atsakyta`, `taskai`, `atsiusta_straipsniu`, `atsiusta_pamoku`, `atsiusta_scriptu`, `atsiusta_naujienu`, `balsai`, `balsavo`, `pm_viso`, `reg_data`, `login_data`) VALUES
-(1, 2130706433, 'Admin', 1, '21232f297a57a5a743894a0e4a801fc3', 'info@mrcbug.com', NULL, '', '', '', '', '', '', 'LT', '', '', '', 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, '', 50, 2008, 1213131454);
+INSERT INTO `users` (`nick`, `levelis`, `pass`, `email`, `salis`, `parasas`, `pm_viso`) VALUES
+('Admin', 1, '21232f297a57a5a743894a0e4a801fc3', 'info@mrcbug.com', 'LT', 'Svetainės administratorius', 500);
 
