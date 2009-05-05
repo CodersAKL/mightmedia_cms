@@ -124,7 +124,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'registracija' && $conf['Regi
 	if ($_SESSION['code'] != $kode) {
 		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['wrongcode']}<br>";
 	}
-	if (strlen($error) == 0) {
+	if (strlen($error) < 2) {
 		if (mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "users` ( `id` , `nick` , `levelis` , `pass` , `email` , `reg_data` , `login_data` )
 					VALUES (
 					NULL , " . escape($vardas) . ", '2', " . escape(koduoju($pass)) . " , " . escape($email) . ", '" . time() . "' , '" . time() . "'
