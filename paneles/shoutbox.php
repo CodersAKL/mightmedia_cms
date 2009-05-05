@@ -54,9 +54,9 @@ $i=0;
 		';
 	}
 
-	if (isset($_SESSION['username']) && isset($conf['puslapiai']['deze.php']['id'])) {
+	//if (isset($_SESSION['username']) && isset($conf['puslapiai']['deze.php']['id'])) {
 		$chat_box .= "<a href='?id," . $conf['puslapiai']['deze.php']['id'] . "' >{$lang['sb']['archive']}</a>";
-	}
+	//}
 	return $chat_box . '</blockquote>';
 }
 
