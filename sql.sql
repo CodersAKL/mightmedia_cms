@@ -430,8 +430,8 @@ CREATE TABLE IF NOT EXISTS `panel` (
 
 INSERT INTO `panel` (`panel`, `file`, `place`, `align`, `show`, `teises`) VALUES
 ('Narys', 'vartotojas.php', 1, 'L', 'Y', 0),
-('Meniu', 'meniu.php', 2, 'L', 'Y', 0);
-('Kalendorius', 'kalendorius.php', 3, 'R', 'Y', 0);
+('Meniu', 'meniu.php', 2, 'L', 'Y', 0),
+('Kalendorius', 'kalendorius.php', 3, 'R', 'Y', 0),
 ('Rėksnių dėžė', 'shoutbox.php', 4, 'R', 'Y', 0);
 
 
@@ -586,23 +586,23 @@ CREATE TABLE IF NOT EXISTS `users` (
   `pass` varchar(32) collate utf8_lithuanian_ci NOT NULL,
   `email` varchar(50) collate utf8_lithuanian_ci NOT NULL,
   `slaptas` char(32) collate utf8_lithuanian_ci default NULL,
-  `icq` varchar(50) collate utf8_lithuanian_ci NOT NULL,
-  `msn` varchar(50) collate utf8_lithuanian_ci NOT NULL,
-  `skype` varchar(50) collate utf8_lithuanian_ci NOT NULL,
-  `yahoo` varchar(50) collate utf8_lithuanian_ci NOT NULL,
-  `aim` varchar(50) collate utf8_lithuanian_ci NOT NULL,
-  `url` varchar(50) collate utf8_lithuanian_ci NOT NULL,
-  `salis` varchar(3) collate utf8_lithuanian_ci NOT NULL,
-  `miestas` varchar(20) collate utf8_lithuanian_ci NOT NULL,
-  `vardas` varchar(15) collate utf8_lithuanian_ci NOT NULL,
-  `pavarde` varchar(25) collate utf8_lithuanian_ci NOT NULL,
-  `gim_data` date NOT NULL,
-  `parasas` text collate utf8_lithuanian_ci NOT NULL,
+  `icq` varchar(50) collate utf8_lithuanian_ci default NULL,
+  `msn` varchar(50) collate utf8_lithuanian_ci default NULL,
+  `skype` varchar(50) collate utf8_lithuanian_ci default NULL,
+  `yahoo` varchar(50) collate utf8_lithuanian_ci default NULL,
+  `aim` varchar(50) collate utf8_lithuanian_ci default NULL,
+  `url` varchar(50) collate utf8_lithuanian_ci default NULL,
+  `salis` varchar(3) collate utf8_lithuanian_ci default 'LT',
+  `miestas` varchar(20) collate utf8_lithuanian_ci default NULL,
+  `vardas` varchar(15) collate utf8_lithuanian_ci default NULL,
+  `pavarde` varchar(25) collate utf8_lithuanian_ci default NULL,
+  `gim_data` date default NULL,
+  `parasas` text collate utf8_lithuanian_ci default NULL,
   `forum_temos` int(11) NOT NULL default '0',
   `forum_atsakyta` int(11) NOT NULL default '0',
   `taskai` decimal(11,0) NOT NULL default '0',
   `balsai` int(11) NOT NULL default '0',
-  `balsavo` text collate utf8_lithuanian_ci NOT NULL,
+  `balsavo` text collate utf8_lithuanian_ci default NULL,
   `pm_viso` int(11) NOT NULL default '50',
   `reg_data` int(10) default NULL,
   `login_data` int(10) default NULL,
