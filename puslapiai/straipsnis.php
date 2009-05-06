@@ -70,9 +70,7 @@ if ($k >= 0 && empty($url['m'])) {
 		}
 		unset($text, $row, $sql);
 
-	} else {
-		klaida($lang['system']['warning'], $lang['system']['no_content']);
-	}
+	} 
 } elseif (!empty($url['m'])) {
 
 
@@ -91,5 +89,7 @@ if ($k >= 0 && empty($url['m'])) {
 	}
 	komentarai($url['m'], true);
 }
-
+if (kiek("straipsniai", "WHERE rodoma='TAIP'") == 0) {
+		klaida($lang['system']['warning'], $lang['system']['no_content']);
+	}
 ?>
