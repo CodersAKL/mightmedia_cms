@@ -173,7 +173,10 @@ function countAction(countnow) {
 }
 
 $(document).ready(function(){
-  $("input[type='submit']").click(function(){
-    this.disabled=true;
-  });
+	$('form').submit(function(){
+		$(':submit, :button',this).click(function(){
+			this.disabled=true;
+			return false;
+		})
+	});
 });
