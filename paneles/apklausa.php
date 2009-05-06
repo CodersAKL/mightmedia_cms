@@ -23,7 +23,7 @@ if (isset($sql['klausimas'])) {
 		$userid = $_SESSION['id'] . ";";
 	} else {
 		$userid = "";
-		$narys = 0;
+		$narys = $_SERVER['REMOTE_ADDR'];
 	}
 
 	$ipasai = explode(";", $sql['ips']);
@@ -52,10 +52,9 @@ if (isset($sql['klausimas'])) {
 		$rezultatai = "";
 	}
 
+	if (!in_array($_SERVER['REMOTE_ADDR'], $ipasai) && !in_array($narys, $nariai)) {
 
-	if (!in_array($_SERVER['REMOTE_ADDR'], $ipasai)) {
-
-		if (!in_array($narys, $nariai)) {
+		
 			$text = '<blockquote><center><b>' . $sql['klausimas'] . '</b></center><br/>
 			<form name="vote" action="" method="post">';
 			if (!empty($ats[1][0])) {
@@ -73,8 +72,9 @@ if (isset($sql['klausimas'])) {
 			if (!empty($ats[5][0])) {
 				$text .= '<label name="balsas"><input name="balsas" value="' . $ats[5][0] . '" type="radio">' . $ats[5][0] . '</label><br>';
 			}
+			
 			//visu balsavimas
-			if (($sql['info'] == 'vis') || ($sql['info'] == 'nar' && isset($_SESSION['username']))) {
+			if ($sql['info'] == 'vis' || ($sql['info'] == 'nar' && isset($_SESSION['username']))) {
 				if (isset($_POST['balsas']) && $_POST['vote'] == $lang['poll']['vote']) {
 					if ($_POST['balsas'] == $ats[1][0]) {
 						$stulp = 'pirmas';
@@ -107,9 +107,7 @@ if (isset($sql['klausimas'])) {
 				$text .= '</br>' . $lang['poll']['cant'] . '.</form>';
 			}
 
-		} else {
-			$text = $rezultatai;
-		}
+		
 	} else {
 		$text = $rezultatai;
 	}
