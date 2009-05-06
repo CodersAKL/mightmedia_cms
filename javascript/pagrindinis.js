@@ -171,3 +171,9 @@ function countAction(countnow) {
 	}
 	setTimeout("countAction("+countnow+")",1000)
 }
+
+$(document).ready(function(){
+  $("input[type='submit']").click(function(){
+    this.disabled=true;
+  });
+});
