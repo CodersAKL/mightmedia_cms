@@ -50,7 +50,7 @@ $i=0;
 		if(is_int($i/2))$tr="2"; else $tr="";
 		$chat_box .= '<div class="tr'.$tr.'">	
 		' . user($row['nick'], $row['niko_id'], $row['levelis']) . $extras . ' <br />
-			' . wrap(smile(bbchat($row['msg'])), 18) . '<br /></div>
+			' . smile(bbchat(wrap($row['msg'], 18))) . '<br /></div>
 		';
 	}
 
