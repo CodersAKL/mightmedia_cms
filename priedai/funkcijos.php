@@ -233,7 +233,7 @@ unset($levels, $sql, $row);
  */
 $sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
 while ($row = mysql_fetch_assoc($sql)) {
-	$conf['puslapiai'][$row['file']] = array('id' => $row['id'], 'pavadinimas' => $row['pavadinimas'], 'file' => $row['file'], 'place' => (int)$row['place'], 'show' => $row['show']);
+	$conf['puslapiai'][$row['file']] = array('id' => $row['id'], 'pavadinimas' => $row['pavadinimas'], 'file' => $row['file'], 'place' => (int)$row['place'], 'show' => $row['show'], 'teises' => $row['teises']);
 }
 
 /**

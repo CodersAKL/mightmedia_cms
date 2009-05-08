@@ -226,7 +226,7 @@ HTML;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="icon" href="http://mrcbug.com/animated_favicon.gif" type="image/gif" />
+<link rel="shortcut icon" href="favicon.ico" />
 <meta name="resource-type" content="document" />
 <meta name="distribution" content="global" />
 <meta name="author" content="CodeRS - MightMedia TVS scripts www.coders.lt" />

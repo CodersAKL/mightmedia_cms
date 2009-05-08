@@ -36,25 +36,30 @@ function chatbox() {
 	$extras = '';
 	$chat = mysql_query1("SELECT SQL_CACHE `" . LENTELES_PRIESAGA . "chat_box`.*,`" . LENTELES_PRIESAGA . "users`.`nick`,`" . LENTELES_PRIESAGA . "users`.`levelis`
 FROM `" . LENTELES_PRIESAGA . "chat_box` Inner Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "chat_box`.`niko_id` = `" . LENTELES_PRIESAGA . "users`.`id`
-ORDER BY `time` DESC LIMIT " . escape((int)$conf['Chat_limit']));
+ORDER BY `time` DESC LIMIT " . escape((int)$conf['Chat_limit'])) or die(mysql_error());
 $i=0;
-	while ($row = mysql_fetch_assoc($chat)) {
-	$i++;
-		if ($_SESSION['level']==1||(isset($_SESSION['mod'])&& strlen($_SESSION['mod'])>1)&& isset($conf['puslapiai']['deze.php']['id'])) {
-			$extras = "
-			<a title='{$lang['admin']['delete']}' href='?id," . $conf['puslapiai']['deze.php']['id'] . ";d," . $row['id'] . "'><img src='images/icons/control_delete_small.png' alt='[d]' class='middle' border='0' /></a>
-			<a title='{$lang['admin']['edit']}' href='?id," . $conf['puslapiai']['deze.php']['id'] . ";r," . $row['id'] . "'><img src='images/icons/brightness_small_low.png' alt='[r]' class='middle' border='0' /></a>
-			
-		";
-		}
-		if(is_int($i/2))$tr="2"; else $tr="";
-		$chat_box .= '<div class="tr'.$tr.'">	
-		' . user($row['nick'], $row['niko_id'], $row['levelis']) . $extras . ' <br />
-			' . smile(bbchat(wrap($row['msg'], 18))) . '<br /></div>
-		';
-	}
 
-	if (puslapis('deze.php']['id'])) {
+  if (mysql_num_rows($chat) > 0) {
+    while ($row = mysql_fetch_assoc($chat)) {
+    $i++;
+      if ($_SESSION['level']==1||(isset($_SESSION['mod'])&& strlen($_SESSION['mod'])>1)&& isset($conf['puslapiai']['deze.php']['id'])) {
+        $extras = "
+        <a title='{$lang['admin']['delete']}' href='?id," . $conf['puslapiai']['deze.php']['id'] . ";d," . $row['id'] . "'><img src='images/icons/control_delete_small.png' alt='[d]' class='middle' border='0' /></a>
+        <a title='{$lang['admin']['edit']}' href='?id," . $conf['puslapiai']['deze.php']['id'] . ";r," . $row['id'] . "'><img src='images/icons/brightness_small_low.png' alt='[r]' class='middle' border='0' /></a>
+        
+      ";
+      }
+      if(is_int($i/2))$tr="2"; else $tr="";
+      $chat_box .= '<div class="tr'.$tr.'">	
+      ' . user($row['nick'], $row['niko_id'], $row['levelis']) . $extras . ' <br />
+        ' . smile(bbchat(wrap($row['msg'], 18))) . '<br /></div>
+      ';
+    }
+	} else {
+    $chat_box .= '';
+   }
+
+	if (puslapis('deze.php')) {
 		$chat_box .= "<a href='?id," . $conf['puslapiai']['deze.php']['id'] . "' >{$lang['sb']['archive']}</a>";
 	}
 	return $chat_box . '</blockquote>';

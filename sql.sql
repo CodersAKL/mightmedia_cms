@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `balsavimas` (
 -- Sukurta duomenų struktūra lentelei `chat_box`
 --
 
-CREATE TABLE IF NOT EXISTS `23_chat_box` (
+CREATE TABLE IF NOT EXISTS `chat_box` (
   `id` int(11) NOT NULL auto_increment,
   `nikas` varchar(150) collate utf8_lithuanian_ci default NULL,
   `msg` varchar(250) collate utf8_lithuanian_ci default NULL,
