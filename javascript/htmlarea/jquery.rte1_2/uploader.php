@@ -1,6 +1,25 @@
 <?php
 
+if (!isset($_SESSION))
+	session_start();
+
 $rootas='../../../';
+include_once($rootas.'priedai/conf.php');
+
+include_once($rootas.'lang/lt.php');
+
+include_once ($rootas."priedai/prisijungimas.php");
+if (!isset($_SESSION['username'])) {
+    admin_login_form();
+}
+
+//Extra login
+if (!isset($_SERVER['PHP_AUTH_USER']) || $_SERVER['PHP_AUTH_USER']!=$admin_name || $_SERVER['PHP_AUTH_PW']!=$admin_pass) {
+	header("WWW-Authenticate: Basic realm=\"AdminAccess\"");
+	header("HTTP/1.0 401 Unauthorized");
+	die(klaida("Admin priėjimas uždraustas","Jūs mėginate patekti į tik administratoriams skirtą vietą. Betkokie mėginimai atspėti slaptažodį yra registruojami. <br/>p.s. Nekenčiu bomžų ir tai faktas"));
+}
+
 $dir = 'siuntiniai/images';
 echo upload_process($dir);
 
