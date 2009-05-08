@@ -53,7 +53,7 @@ $i=0;
 			' . smile(bbchat(wrap($row['msg'], 18))) . '<br /></div>
 		';
 	}
-
+echo $conf['puslapiai']['deze.php']['teises'];
 	if (isset($_SESSION['username']) && isset($conf['puslapiai']['deze.php']['id'])) {
 		$chat_box .= "<a href='?id," . $conf['puslapiai']['deze.php']['id'] . "' >{$lang['sb']['archive']}</a>";
 	}

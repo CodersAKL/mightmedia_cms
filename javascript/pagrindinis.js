@@ -1,71 +1,3 @@
-/*function $(e){if(typeof e=='string')e=document.getElementById(e);return e};
-function collect(a,f){var n=[];for(var i=0;i<a.length;i++){var v=f(a[i]);if(v!=null)n.push(v)}return n};
-
-ajax={};
-ajax.x=function(){try{return new ActiveXObject('Msxml2.XMLHTTP')}catch(e){try{return new ActiveXObject('Microsoft.XMLHTTP')}catch(e){return new XMLHttpRequest()}}};
-ajax.serialize=function(f){var g=function(n){return f.getElementsByTagName(n)};var nv=function(e){if(e.name)return encodeURIComponent(e.name)+'='+encodeURIComponent(e.value);else return ''};var i=collect(g('input'),function(i){if((i.type!='radio'&&i.type!='checkbox')||i.checked)return nv(i)});var s=collect(g('select'),nv);var t=collect(g('textarea'),nv);return i.concat(s).concat(t).join('&');};
-ajax.send=function(u,f,m,a){var x=ajax.x();x.open(m,u,true);x.onreadystatechange=function(){if(x.readyState==4)f(x.responseText)};if(m=='POST')x.setRequestHeader('Content-type','application/x-www-form-urlencoded');x.send(a)};
-ajax.get=function(url,func){ajax.send(url,func,'GET')};
-ajax.gets=function(url){var x=ajax.x();x.open('GET',url,false);x.send(null);return x.responseText};
-ajax.post=function(url,func,args){ajax.send(url,func,'POST',args)};
-ajax.update=function(url,elm){var e=$(elm);var f=function(r){e.innerHTML=r};ajax.get(url,f)};
-ajax.submit=function(url,elm,frm){var e=$(elm);var f=function(r){e.innerHTML=r};ajax.post(url,f,ajax.serialize(frm))};
-
-
-
-function display(src){
-	html='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Photo</title></head><body style="margin:0;" onLoad="resize('+img.height+','+img.height+')"><div><img src="'+src+'" /></div><script>function resize(w,h){if(parseInt(navigator.appVersion)>3){if(navigator.appName=="Netscape"){popup.outerWidth=w;popup.outerHeight=h;}else{popup.resizeTo(w,h);}}}</script></body>';
-	var img = new Image();
-	img.src = src; 
-	var leftPos = (screen.availWidth - img.width) / 2;
-	var topPos = (screen.availHeight - img.height) / 2;
-	popup=window.open('','image','toolbar=0,location=0,directories=0,menuBar=0,scrollbars=0,resizable=1,width=' + img.width + ',height=' + img.height + ',left=' + leftPos + ',top=' + topPos);
-	popup.document.open();
-	popup.document.write(html);
-	popup.document.body.focus();
-	popup.document.close();
-
-};
-
-//POPUPS
-function popImage(imageURL,imageTitle){
-	PositionX = 10;
-	PositionY = 10;
-	defaultWidth  = 1;
-	defaultHeight = 1;
-
-	//kinda important
-	var AutoClose = true;
-	
-  var imgWin = window.open('','_blank','scrollbars=no,resizable=1,width='+defaultWidth+',height='+defaultHeight+',left='+PositionX+',top='+PositionY);
-  if( !imgWin ) { return true; } //popup blockers should not cause errors
-  imgWin.document.write('<html><head><title>'+imageTitle+'<\/title><script type="text\/javascript">\n'+
-    'function resizeWinTo() {\n'+
-    'if( !document.images.length ) { document.images[0] = document.layers[0].images[0]; }'+
-    'var oH = document.images[0].height, oW = document.images[0].width;\n'+
-    'if( !oH || window.doneAlready ) { return; }\n'+ //in case images are disabled
-    'window.doneAlready = true;\n'+ //for Safari and Opera
-    'var x = window; x.resizeTo( oW + 200, oH + 200 );\n'+
-    'var myW = 0, myH = 0, d = x.document.documentElement, b = x.document.body;\n'+
-    'if( x.innerWidth ) { myW = x.innerWidth; myH = x.innerHeight; }\n'+
-    'else if( d && d.clientWidth ) { myW = d.clientWidth; myH = d.clientHeight; }\n'+
-    'else if( b && b.clientWidth ) { myW = b.clientWidth; myH = b.clientHeight; }\n'+
-    'if( window.opera && !document.childNodes ) { myW += 16; }\n'+
-    'x.resizeTo( oW = oW + ( ( oW + 200 ) - myW ), oH = oH + ( (oH + 200 ) - myH ) );\n'+
-    'var scW = screen.availWidth ? screen.availWidth : screen.width;\n'+
-    'var scH = screen.availHeight ? screen.availHeight : screen.height;\n'+
-    'if( !window.opera ) { x.moveTo(Math.round((scW-oW)/2),Math.round((scH-oH)/2)); }\n'+
-    '}\n'+
-    '<\/script>'+
-    '<\/head><body onload="resizeWinTo();"'+(AutoClose?' onblur="self.close();"':'')+'>'+
-    (document.layers?('<layer left="0" top="0">'):('<div style="position:absolute;left:0px;top:0px;display:table;">'))+
-    '<img src="'+imageURL+'" alt="Loading image ..." title="" onload="resizeWinTo();">'+
-    (document.layers?'<\/layer>':'<\/div>')+'<\/body><\/html>');
-  imgWin.document.close();
-  if( imgWin.focus ) { imgWin.focus(); }
-  return false;
-}
-*/
 /* BBCODE */
 function mail(user, domain){window.location = 'mailto:'+user+'@'+domain;}
 function flip( rid ) {
@@ -179,4 +111,6 @@ $(document).ready(function(){
 			return false;
 		})
 	});
+
 });
+

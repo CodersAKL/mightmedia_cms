@@ -100,16 +100,23 @@ function adresas() {
 }
 
 /**
- * Patikrina ar puslapis egzistuoja ir grazina puslapio ID
+ * Patikrina ar puslapis egzistuoja ir ar vartotojas turi teise ji matyti bei grazinam puslapio ID
  * @param string $puslapis
  */
 function puslapis($puslapis, $extra = false) {
 	global $conf;
-	if (isset($conf['puslapiai'][$puslapis]['id']) && !empty($conf['puslapiai'][$puslapis]['id']) && is_file(dirname(__file__) . '/puslapiai/' . $puslapis)) {
-		if ($extra && isset($conf['puslapiai'][$puslapis][$extra]))
-			return $conf['puslapiai'][$puslapis][$extra]; //Jei reikalinga kita informacija apie puslapi - grazinam ja.
-		else
-			return (int)$conf['puslapiai'][$puslapis]['id'];
+	if (isset($conf['puslapiai'][$puslapis]['id']) && !empty($conf['puslapiai'][$puslapis]['id']) && is_file(dirname(__file__) . '/../puslapiai/' . $puslapis)) {
+		
+		if ($conf['puslapiai'][$puslapis]['teises'] == 0 || LEVEL == $conf['puslapiai'][$puslapis]['teises'] || LEVEL == 1) {
+		
+      if ($extra && isset($conf['puslapiai'][$puslapis][$extra]))
+        return $conf['puslapiai'][$puslapis][$extra]; //Jei reikalinga kita informacija apie puslapi - grazinam ja.
+      else
+        return (int)$conf['puslapiai'][$puslapis]['id'];
+		} else {
+      return false;
+    }
+			
 	} else
 		return false;
 }
