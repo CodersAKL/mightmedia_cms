@@ -1,4 +1,26 @@
 <?php
+
+if (!isset($_SESSION))
+	session_start();
+
+$rootas='../../../';
+include_once($rootas.'priedai/conf.php');
+
+include_once($rootas.'lang/lt.php');
+
+include_once ($rootas."priedai/prisijungimas.php");
+if (!isset($_SESSION['username'])) {
+    admin_login_form();
+}
+
+//Extra login
+if (!isset($_SERVER['PHP_AUTH_USER']) || $_SERVER['PHP_AUTH_USER']!=$admin_name || $_SERVER['PHP_AUTH_PW']!=$admin_pass) {
+	header("WWW-Authenticate: Basic realm=\"AdminAccess\"");
+	header("HTTP/1.0 401 Unauthorized");
+	die(klaida("Admin priëjimas uþdraustas","Jûs mëginate patekti á tik administratoriams skirtà vietà. Betkokie mëginimai atspëti slaptaþodá yra registruojami. <br/>p.s. Nekenèiu bomþø ir tai faktas"));
+}
+
+
 /**
  * Damn Small Rich Text Editor v0.2.4 for jQuery
  * by Roi Avidan <roi@avidansoft.com>
@@ -48,7 +70,7 @@ function to_json( $arr )
 }
 
 // where you want to save your uploaded images
-$uploadPath = '../../../siuntiniai/images';
+$uploadPath = $rootas.'siuntiniai/images';
 if ($_FILES["file"]["type"] == "image/gif"
 || $_FILES["file"]["type"] == "image/jpeg"
 || $_FILES["file"]["type"] == "image/pjpeg"
