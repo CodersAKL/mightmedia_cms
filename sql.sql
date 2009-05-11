@@ -382,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `page` (
   `file` varchar(50) collate utf8_lithuanian_ci default NULL,
   `place` int(11) default NULL,
   `show` enum('Y','N') collate utf8_lithuanian_ci NOT NULL default 'Y',
-  `teises` varchar(150) collate utf8_lithuanian_ci NOT NULL default 'i:0;',
+  `teises` varchar(150) collate utf8_lithuanian_ci NOT NULL default 'a:1:{i:0;s:1:"0";}',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
@@ -390,22 +390,22 @@ CREATE TABLE IF NOT EXISTS `page` (
 -- Sukurta duomenų kopija lentelei `page`
 --
 
-INSERT INTO `page` (`pavadinimas`, `file`, `place`, `show`, `teises`) VALUES
-('Forumas', 'frm.php', 4, 'Y', 0),
-('Naujienos', 'naujienos.php', 3, 'Y', 0),
-('Apie', 'apie.php', 2, 'Y', 0),
-('Registracija', 'reg.php', 0, 'N', 0),
-('Nuorodos', 'nuorodos.php', 0, 'Y', 0),
-('Slaptažodis', 'slaptazodzio_priminimas.php', 2, 'N', 0),
-('Profilio redagavimas', 'edit_user.php', 1, 'N', 0),
-('Paieška', 'search.php', 6, 'Y', 0),
-('Kontaktai', 'kontaktas.php', 7, 'Y', 0),
-('Prisijungę', 'online.php', 1, 'Y', 0),
-('Archyvas', 'deze.php', 0, 'N', 0),
-('Asmeniniai pranešimai', 'pm.php', 0, 'N', 0),
-('Profilis', 'view_user.php', 0, 'N', 0),
-('Nariai', 'nariai.php', 0, 'Y', 0),
-('Straipsniai', 'straipsnis.php', 0, 'Y', 0);
+INSERT INTO `page` (`pavadinimas`, `file`, `place`, `show`) VALUES
+('Forumas', 'frm.php', 4, 'Y'),
+('Naujienos', 'naujienos.php', 3, 'Y'),
+('Apie', 'apie.php', 2, 'Y'),
+('Registracija', 'reg.php', 0, 'N'),
+('Nuorodos', 'nuorodos.php', 0, 'Y'),
+('Slaptažodis', 'slaptazodzio_priminimas.php', 2, 'N'),
+('Profilio redagavimas', 'edit_user.php', 1, 'N'),
+('Paieška', 'search.php', 6, 'Y'),
+('Kontaktai', 'kontaktas.php', 7, 'Y'),
+('Prisijungę', 'online.php', 1, 'Y'),
+('Archyvas', 'deze.php', 0, 'N'),
+('Asmeniniai pranešimai', 'pm.php', 0, 'N'),
+('Profilis', 'view_user.php', 0, 'N'),
+('Nariai', 'nariai.php', 0, 'Y'),
+('Straipsniai', 'straipsnis.php', 0, 'Y');
 
 -- --------------------------------------------------------
 
