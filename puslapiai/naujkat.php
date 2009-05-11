@@ -43,7 +43,13 @@ if (isset($info)) {
 	lentele("{$lang['system']['categories']}", $bla->render($info), false);
 }
 //Rodom naujienas esancias kategorijoj
-$sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija`='" . $k . "' AND `rodoma`='TAIP' ORDER BY `data` DESC LIMIT $p, $limit");
+
+	$sql = mysql_query1("
+			SELECT SQL_CACHE *, (SELECT SQL_CACHE COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
+			FROM `" . LENTELES_PRIESAGA . "naujienos`
+			WHERE `rodoma`= 'TAIP' AND `kategorija`=$k
+			ORDER BY `data` DESC
+			LIMIT {$p},{$limit}") or die(mysql_error());
 $viso = mysql_num_rows($sql);
 if ($viso > 0) {
 	$sqlas = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "' AND `kieno`='naujienos' ORDER BY `pavadinimas` LIMIT 1");
@@ -54,15 +60,20 @@ if ($viso > 0) {
 	if ($k >= 0) {
 		if (mysql_num_rows($sql) > 0) {
 			if (LEVEL >= $sqlas['teises'] || LEVEL == 1 || LEVEL == 2) {
-        
-        $text = '<ul>';
+
+				//$text = '<ul>';
 				while ($row = mysql_fetch_assoc($sql)) {
 					if (isset($conf['puslapiai']['naujienos.php']['id'])) {
-						$text .= "<li><a href=?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . ">" . $row['pavadinimas'] . "</a></li>\n";
+						//$text .= "<li><a href=?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . ">" . $row['pavadinimas'] . "</a></li>\n";
+						if (isset($conf['puslapiai']['naujienos.php']['id'])) {
+							$extra = "<div style='float: right;'>" . (($row['kom'] == 'taip') ? "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>{$lang['news']['read']} • {$lang['news']['comments']} (" . $row['viso'] . ")</a>" : "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>{$lang['news']['read']}</a>") . "</div><br />";
+						}
+						lentele($row['pavadinimas'], "<table><tr valign='top'><td>" . $row['naujiena'] . "</td></tr></table>" . $extra, false, array(menesis((int)date('m', strtotime(date('Y-m-d H:i:s ', $row['data'])))), (int)date('d', strtotime(date('Y-m-d H:i:s ', $row['data'])))));
+
 					}
 				}
-				$text .= '</ul>';
-				lentele((isset($sqlas['pavadinimas']) ? $sqlas['pavadinimas'] : $lang['category']['-']), $text, false);
+				//$text .= '</ul>';
+				//lentele((isset($sqlas['pavadinimas']) ? $sqlas['pavadinimas'] : $lang['category']['-']), $text, false);
 			} else {
 				klaida($lang['system']['warning'], "{$lang['category']['cant']}.");
 			}

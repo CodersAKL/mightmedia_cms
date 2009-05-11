@@ -41,7 +41,7 @@ $box="";
 foreach($kur as $name=>$check){
 $box.="<label><input type=\"checkbox\" name=\"$name\" value=\"$name\"/> $check</label><br /> ";
 }
-$box.="<label><input type='checkbox' name='vis' onclick='checkedAll(\"search\");'/> {$lang['search']['everything']}<label>";
+$box.="<label><input type='checkbox' name='vis' onclick='checkedAll(\"search\");'/> {$lang['search']['everything']}</label>";
 //Paieškos forma
 $search = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "search", "name" => "search"), " " => array("type" => "text", "value" => (isset($_POST['s']) ? input($_POST['s']) : ''), "name" => "s", "style" => "width:100%"), "{$lang['search']['for']}:" => array("type" => "string", "value" => $box), "" => array("type" => "submit", "class" => "submit", "name" => "subsearch", "value" => $lang['search']['search']));
 $text = '';
