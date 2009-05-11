@@ -24,25 +24,17 @@
 /*
  *	Getting the mode for further differentiation
  */
-if (!isset($_SESSION))
+//if (!isset($_SESSION))
 session_start();
-
-$rootas='../../../../../';
-include_once($rootas.'priedai/conf.php');
-
-include_once($rootas.'lang/lt.php');
-
-include_once ($rootas."priedai/prisijungimas.php");
-if (!isset($_SESSION['username'])) {
-admin_login_form();
+//$rootas='../../../../../';
+//include_once('../../../../../priedai/conf.php');
+//include_once($rootas.'lang/lt.php');
+//include_once ("../../../../../priedai/prisijungimas.php");
+if(!isset($_SESSION['username'])) {
+//admin_login_form();
+exit();
 }
-
-//Extra login
-/*if (!isset($_SERVER['PHP_AUTH_USER']) || $_SERVER['PHP_AUTH_USER']!=$admin_name || $_SERVER['PHP_AUTH_PW']!=$admin_pass) {
-header("WWW-Authenticate: Basic realm=\"AdminAccess\"");
-header("HTTP/1.0 401 Unauthorized");
-die(klaida("Tik administracijai","Eik velniop..."));
-}*/
+unset($conf,$host,$pass,$db,$user,$url);
 if(isset($_REQUEST['mode'])) $insertMode=$_REQUEST['mode'];
 	if(!isset($insertMode)) $insertMode="image";
 

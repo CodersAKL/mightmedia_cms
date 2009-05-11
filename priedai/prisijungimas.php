@@ -24,7 +24,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 		$_SESSION['username'] = $linformacija['nick'];
 		$_SESSION['password'] = $linformacija['pass'];
 		$_SESSION['id'] = (int)$linformacija['id'];
-		$_SESSION['lankesi'] = $linformacija['login_before'];
+		//$_SESSION['lankesi'] = $linformacija['login_before'];
 		$_SESSION['level'] = $linformacija['levelis'];
 		$_SESSION['mod'] = $linformacija['mod'];
 	} else {
