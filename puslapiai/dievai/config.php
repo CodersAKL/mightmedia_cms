@@ -80,8 +80,8 @@ $nustatymai = array("Form" => array("action" => "", "method" => "post",
     "Registracija"), "{$lang['admin']['maintenance']}?:" => array("type" => "select",
     "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"),
     "selected" => input($conf['Palaikymas']), "name" => "Palaikymas"), "{$lang['admin']['maintenancetext']}:" =>
-    array("type" => "string", "value" => editorius('spaw', 'mini', 'Maintenance', (isset
-    ($conf['Maintenance']) ? $conf['Maintenance'] : ''))),
+    array("type" => "textarea", "name"=>"Maintenance","value" =>  (isset
+    ($conf['Maintenance']) ? $conf['Maintenance'] : ''),"style"=>"width:100%;","extra"=>"rows=5"),
     //"Kiek rodyti ChatBox pranešimu?:"=>array("type"=>"select","value"=>array("5"=>"5","10"=>"10","15"=>"15","20"=>"20","25"=>"25","30"=>"30","35"=>"35","40"=>"40"),"selected"=>input($conf['Chat_limit']),"name"=>"Chat_limit"),
     "{$lang['admin']['newsperpage']}:" => array("type" => "select", "value" => array
     ("5" => "5", "10" => "10", "15" => "15", "20" => "20", "25" => "25", "30" =>

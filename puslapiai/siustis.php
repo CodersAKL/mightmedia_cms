@@ -198,13 +198,13 @@ else {
 
 	} else {
 
-		klaida($lang['system']['warning'], "{$lang['download']['no']}.");
+		klaida($lang['system']['warning'], "{$lang['download']['no']}.<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
 
 	}
 
 	unset($bla, $info, $sql, $sql_d, $vid);
 }
 if (kiek("siuntiniai", "WHERE rodoma='TAIP'") < 0)
-	klaida($lang['system']['warning'], $lang['system']['no_content']);
+	klaida($lang['system']['warning'], $lang['system']['no_content']."<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
 
 ?>

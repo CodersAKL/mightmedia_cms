@@ -1073,177 +1073,101 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 		$id = md5(uniqid());
 	}
 
-	//$adr="http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-	$adr = "../../../";
-	$stilius = $adr . 'stiliai/' . input(strip_tags($conf['Stilius'])) . '/default.css';
-	/*   //Editorius - SPAW2
-	if ($tipas === 'spaw' && is_file('javascript/htmlarea/spaw2/spaw.inc.php')) {
-	if ($dydis === 'standartinis') {
-	include ("javascript/htmlarea/spaw2/spaw.inc.php");
-	if (is_array($id)) {
-	$spaw = new SpawEditor(array_shift(array_keys($id)), (isset($value) ? $value[array_shift
-	(array_keys($id))] : ''));
-	} else
-	$spaw = new SpawEditor($id);
-	$new_dir = array('dir' => 'images/naujienos/', 'caption' => 'Paveiksliukai',
-	'params' => array('allowed_filetypes' => array('images')));
-	$spaw->setConfigValueElement('PG_SPAWFM_DIRECTORIES', sizeof($spaw->
-	getConfigValue('PG_SPAWFM_DIRECTORIES')), $new_dir);
-	$new_dir = array('dir' => 'siuntiniai/', 'caption' => 'Siuntiniai', 'params' =>
-	array('allowed_filetypes' => array('documents', 'audio', 'video', 'archives',
-	'flash', 'images')));
-	$spaw->setConfigValueElement('PG_SPAWFM_DIRECTORIES', sizeof($spaw->
-	getConfigValue('PG_SPAWFM_DIRECTORIES')), $new_dir);
-	SpawConfig::setStaticConfigValue('default_height', '200px');
-	SpawConfig::setStaticConfigItem('base_href', adresas(), SPAW_CFG_TRANSFER_JS);
-	if (is_array($id)) {
-	foreach ($id as $key => $val) {
-	$spaw->addPage(new SpawEditorPage($key, $val, (isset($value[$key]) ? $value[$key] :
-	'')));
-	}
-	}
-	$spaw->setConfigValueElement('PG_SPAWFM_SETTINGS', 'allow_upload', true);
-	$spaw->setConfigValueElement('PG_SPAWFM_SETTINGS', 'allow_modify', false);
-	return $spaw->getHtml();
-	} else {
-	include ("javascript/htmlarea/spaw2/spaw.inc.php");
-	SpawConfig::setStaticConfigItem('base_href', adresas(), SPAW_CFG_TRANSFER_JS);
-	$new_dir = array('dir' => 'images/naujienos/', 'caption' => 'Paveiksliukai',
-	'params' => array('allowed_filetypes' => array('images'), 'allow_upload' => true,
-	'default_dir' => true, 'max_upload_filesize' => 1048576));
-	$irankiai = array('format' => 'format_mini', 'edit' => 'edit', 'insert' =>
-	'insert', );
-	SpawConfig::setStaticConfigItem('toolbarset_mini', $irankiai);
-	// $spaw = new SPAW_Wysiwyg($id /*name*/ //, $value /*value*/, 'lt' /*language*/,
-	//   'mini' /*toolbar mode*/, '' /*theme*/, '100%' /*width*/, '150px' /*height*/ );
-	/* $spaw->setConfigValueElement('PG_SPAWFM_SETTINGS', 'allow_upload', false);
-	$spaw->setConfigValueElement('PG_SPAWFM_SETTINGS', 'allow_modify', false);
-	$spaw->setConfigValueElement('PG_SPAWFM_DIRECTORIES', sizeof($spaw->
-	getConfigValue('PG_SPAWFM_DIRECTORIES')), $new_dir);
-	return $spaw->getHtml();
-	}
-	}
-
-	elseif($tipas === 'jquery'){*/
-	if ($tipas == 'dsrte') {
-		require_once 'javascript/htmlarea/dsrte/lib/dsrte.php';
-
-		// compress HTML
-		$return = '<link rel="stylesheet" href="javascript/htmlarea/dsrte/lib/dsrte.css" type="text/css" />
-       <script type="text/javascript"><!--
-        // keyboard shortcut keys for current language
-        var ctrlb="b",ctrli="i",ctrlu="u";
-        //-->
-    </script>';
-		if (is_array($id)) {
+if (is_array($id)) {
 			foreach ($id as $key => $val) {
-				$dsrte = new dsRTE($key);
-				$return .= $dsrte->getScripts() . $dsrte->getHTML(isset($value[$key]) ? $value[$key] : $val);
+			$arr[$val]="'$key'";
 			}
-		} else {
-			$dsrte = new dsRTE($id);
-			$return .= $dsrte->getScripts() . $dsrte->getHTML($value ? $value : "");
-		}
-	} else {
-		$return = <<< HTML
-	<link type="text/css" rel="stylesheet" href="javascript/htmlarea/jquery.rte1_2/jquery.rte.css" />
-	<script type="text/javascript" src="javascript/htmlarea/jquery.rte1_2/jquery.rte.js"></script>
-<script type="text/javascript" src="javascript/htmlarea/jquery.rte1_2/jquery.rte.tb.js"></script>
-<script type="text/javascript" src="javascript/htmlarea/jquery.rte1_2/jquery.ocupload-1.1.4.js"></script>
-HTML;
+			$areos=implode($arr,",");
+			}else{
+			$areos="'$id'";
+			}
+		$return =' <script type="text/javascript">
+   
+    _editor_url  = "javascript/htmlarea/Xinha_0.95/"
+    _editor_lang = "en"; 
+    </script>
+
+  <!-- Load up the actual editor core -->
+  <script type="text/javascript" src="javascript/htmlarea/Xinha_0.95/XinhaCore.js"></script>
+  
+  <script type="text/javascript">
+    xinha_editors = null;
+    xinha_init    = null;
+    xinha_config  = null;
+    xinha_plugins = null;
+    
+
+    xinha_init = xinha_init ? xinha_init : function()
+    {
+      
+
+      xinha_plugins = xinha_plugins ? xinha_plugins :
+      [
+        \'CharacterMap\', \'Linker\', \'Abbreviation\', \'ContextMenu\','.((isset($_SESSION['level'])&&$_SESSION['level']==1)?'\'ExtendedFileManager\',':'').'\'HorizontalRule\',\'InsertAnchor\',\'InsertPicture\',\'SuperClean\',\'Stylist\'
+
+      ];
+             // THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
+             if(!Xinha.loadPlugins(xinha_plugins, xinha_init)) return;
+
+     
+
+      xinha_editors = xinha_editors ? xinha_editors :
+      [
+        '.$areos.'
+      ];
+
+     
+       xinha_config = xinha_config ? xinha_config : new Xinha.Config();
+       xinha_config.fullPage = false;
+       xinha_config.showLoading = false;
+       xinha_config.CharacterMap.mode = \'popup\';
+       //xinha_config.stylistLoadStylesheet(\'stiliai/'.input($conf['Stilius']).'/default.css\');
+       //xinha_config.pageStyleSheets = [\'stiliai/'.input($conf['Stilius']).'/default.css\'];
+       xinha_config.htmlRemoveTags = /body|head|html/;
+      
+      
+       xinha_editors   = Xinha.makeEditors(xinha_editors, xinha_config, xinha_plugins);
+
+     
+
+      Xinha.startEditors(xinha_editors);
+      window.onload = null;
+    }
+
+    window.onload   = xinha_init;
+  </script>
+
+  ';
+		
 		if (is_array($id)) {
 			foreach ($id as $key => $val) {
-				//$dsrte = new dsRTE($key);
-				//$return .= $dsrte->getScripts() . $dsrte->getHTML(isset($value[$key]) ? $value[$key] : $val);
-				$return .= <<< HTML
-			<script type="text/javascript">
-$(document).ready(function() {
-      $('.{$key}').rte({
-	            baseurl:'$adr', 
-	            css: ['{$stilius}'],
-				height: 150,
-                controls_rte: rte_toolbar,
-                controls_html: html_toolbar
-        });     
- 
+			
+				
+ $return.= <<<HTML
 
-       //arr is array of RTEm you can use api as you want.
  
+ 
+  <textarea id="{$key}" name="{$key}" style="width:100%;height:320px;">
+    {$value[$key]}
+    </textarea>
 
-});
- 
-</script>
-<textarea name="{$key}" style="width:100%" class="{$key}" method="post" action="#">{$value[$key]}</textarea>
+
 HTML;
 			}
 		} else {
-			$return .= <<< HTML
-			<script type="text/javascript">
-$(document).ready(function() {
-      $('.{$id}').rte({
-	            baseurl:'$adr', 
-                css: ['{$stilius}'],
-                height: 150,
-				frame_class: 'frameBody',
-                controls_rte: rte_toolbar,
-                controls_html: html_toolbar
-        });     
- 
+$return.= <<<HTML
+		  <textarea id="{$id}" name="{$id}" style="width:100%;height:320px;">
+    {$value}
+    </textarea>
 
-       //arr is array of RTEm you can use api as you want.
- 
-
-});
- 
-</script>
-<textarea name="{$id}"  style="width:100%" class="{$id}" method="post" action="#">{$value}</textarea>
 HTML;
-			//$dsrte = new dsRTE($id);
-			//$return .= $dsrte->getScripts() . $dsrte->getHTML($value ? $value : "");
-		}
+ 
+	}	
 
-	}
+	
 
 	return $return;
-	/*}
-	//Editorius - Tiny_MCE
-	elseif (is_file('javascript/htmlarea/tiny_mce/tiny_mce.js')) {
-	if ($dydis === 'standartinis') {
-	$return = '<script language="javascript" type="text/javascript" src="javascript/htmlarea/tiny_mce/tiny_mce.js"></script><script language="JavaScript">tinyMCE.init({mode:"exact",language:"lt",elements:"' . (is_array
-	($id) ? implode(',', array_keys($id)) : $id) .
-	'",theme:"advanced",theme_advanced_resizing:true,theme_advanced_resize_horizontal:false,theme_advanced_path_location:"bottom",force_p_newlines:"false",height:"350",plugin_insertdate_dateFormat:"%Y-%m-%d",plugin_insertdate_timeFormat:"%H:%M:%S",plugins:"inlinepopups,emotions,advimage,media,table,insertdatetime,style",content_css:"stiliai/' .
-	$conf['Stilius'] . '/default.css",theme_advanced_buttons1:"bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,undo,redo,link,unlink",theme_advanced_buttons2_add:"separator,insertdate,separator,forecolor,backcolor,separator,emotions,media",theme_advanced_buttons3:"tablecontrols",theme_advanced_buttons4:"styleselect,fontsizeselect,formatselect",theme_advanced_toolbar_location:"top",theme_advanced_toolbar_align:"left",theme_advanced_statusbar_location:"bottom",invalid_elements:"script,object,applet,iframe",extended_valid_elements:"a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",theme_advanced_disable:"help",apply_source_formatting:true,tab_focus:":prev,:next",entity_encoding:"raw"});</script>';
-	if (is_array($id)) {
-	foreach ($id as $key => $val) {
-	$return .= '<textarea rows="3" id="' . $key . '" name="' . $key .
-	'" style="width:100%">' . (isset($value[$key]) ? $value[$key] : $val) .
-	'</textarea>';
-	}
-	} else {
-	$return .= '<textarea rows="3" id="' . $id . '" name="' . $id .
-	'" style="width:100%">' . $value . '</textarea>';
-	}
-	return $return;
-	} else {
-	$return = '<script language="javascript" type="text/javascript" src="javascript/htmlarea/tiny_mce/tiny_mce.js"></script><script language="JavaScript">tinyMCE.init({mode : "exact",language : "lt",elements : "' . (is_array
-	($id) ? implode(',', array_keys($id)) : $id) .
-	'",theme : "simple",apply_source_formatting : true,tab_focus : ":prev,:next",entity_encoding: "raw"});</script>';
-
-	if (is_array($id)) {
-	foreach ($id as $key => $val) {
-	$return .= '<textarea rows="3" id="' . $key . '" name="' . $value[$key] .
-	'" style="width:100%">' . (isset($value[$key]) ? $value[$key] : $val) .
-	'</textarea>';
-	}
-	} else {
-	$return .= '<textarea rows="3" id="' . $id . '" name="' .$value[$key].
-	'" style="width:100%">' . $value . '</textarea>';
-	}
-	return $return;
-	}
-	}*/
 }
-
 if (!function_exists('scandir')) {
 	function scandir($directory, $sorting_order = 0) {
 		$dh = opendir($directory);

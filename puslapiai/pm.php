@@ -39,38 +39,13 @@ if (isset($url['a']) && isnum($url['a']) && $url['a'] >= 0) {
 } else {
 	$a = 0;
 } //inbox arba outbox
-if (isset($url['o']) && !empty($url['o']) && $url['o'] != null) {
-	$order = input($url['o']);
-} else {
 	$order = 'date';
-} //lygiavimas
+ //lygiavimas
 if (isset($url['s']) && !empty($url['s']) && $url['s'] != null) {
 	$s = input($url['s']);
 }
 
-//paieska
-switch ($order) {
-	case "{$lang['user']['pm_time']}:":
-		{
-			$order = "date";
-			break;
-		}
-	case "{$lang['user']['pm_from']}:":
-		{
-			$order = "from";
-			break;
-		}
-	case "{$lang['user']['pm_subject']}:":
-		{
-			$order = "title";
-			break;
-		}
-	default:
-		{
-			$order = "date";
-			break;
-		}
-}
+
 $limit = 30;
 $uzeris = mysql_fetch_assoc(mysql_query1("SELECT `pm_viso`,`nick` FROM " . LENTELES_PRIESAGA . "users WHERE nick='" . $_SESSION['username'] . "'"));
 $pm_sk = kiek("private_msg", "WHERE `to`=" . escape($uzeris['nick']));
@@ -164,7 +139,7 @@ if (isset($url['n'])) {
 		// ############### Jei nera paspaustas atsakyti mygtukas sukuriam paprasta forma #################
 		//if (isset($error) && !empty($error)) { msg("Dėmesio!",$error); }
 		if (isset($user) && (int)$pid > 0) {
-			$sql = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape($user) . " AND `id`=" . escape($pid) . ""));
+			$sql = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape($user) . " AND `id`=" . escape($pid) . " AND `to`=" . escape($_SESSION['username']) . ""));
 			if ($sql['read'] == "NO") {
 				mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "private_msg` SET `read`='YES' WHERE `id`=" . escape($pid));
 			}

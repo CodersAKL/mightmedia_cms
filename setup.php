@@ -195,9 +195,9 @@ if(mysql_num_rows(\$sql) > 1) while(\$row = mysql_fetch_assoc(\$sql)) \$conf[\$r
 unset(\$row,\$sql,\$user,\$host,\$pass,\$db);
 //kalba
 if (isset(\$conf['kalba'])) {
-    include_once ('lang/' . \$conf['kalba'] . '');
+    include_once (realpath(dirname(__file__)) . '/../lang/' . \$conf['kalba'] . '');
 } else {
-    include_once ('lang/lt.php');
+    include_once (realpath(dirname(__file__)) . '/../lang/lt.php');
 }
 //Jeigu nepavyko nuskaityti nustatymų
 if (!isset(\$conf) || empty(\$conf)) die("<center><h1>Klaida 3</h1><br/>Svetainė laikinai neveikia. <h4>Prašome užsukti vėliau</h4></center>");
@@ -205,7 +205,7 @@ if (!isset(\$conf) || empty(\$conf)) die("<center><h1>Klaida 3</h1><br/>Svetain�
 //Stiliaus funkcijos
 include_once(realpath(dirname(__file__))."/../stiliai/".\$conf['Stilius']."/sfunkcijos.php");
 // Inkludinam tai ko mums reikia
-include_once("funkcijos.php");
+include_once(realpath(dirname(__file__))."/funkcijos.php");
 ?>
 HTML;
 	//if (is_writable($chmod_files[0])) {
