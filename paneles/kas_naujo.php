@@ -28,7 +28,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	if (isset($conf['puslapiai']['naujienos.php']['id'])) {
 		$q = mysql_query1("SELECT ``id`, `pavadinimas` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `data`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' ORDER BY `data` DESC LIMIT 10");
 		if (@mysql_num_rows($q) > 0) {
-			$text .= "<hr/><b>{$lang['new']['news']}:</b><br/>";
+			$text .= "<b>{$lang['new']['news']}:</b><br/>";
 			while ($row = mysql_fetch_assoc($q)) {
 				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>" . trimlink(input($row['pavadinimas']), 20) . "</a><br />\n";
 			}
@@ -38,7 +38,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	if (isset($conf['puslapiai']['galerija.php']['id'])) {
 		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `data`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' ORDER BY `data` DESC LIMIT 10");
 		if (@mysql_num_rows($q) > 0) {
-			$text .= "<hr/><b>{$lang['new']['gallery']}:</b><br/>";
+			$text .= "<b>{$lang['new']['gallery']}:</b><br/>";
 			while ($row = mysql_fetch_assoc($q)) {
 				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['ID'] . ";'>" . trimlink(input($row['pavadinimas']), 20) . "</a><br />\n";
 			}
@@ -48,7 +48,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	if (isset($conf['puslapiai']['siustis.php']['id'])) {
 		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas`, `categorija` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `data`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' ORDER BY `data` DESC LIMIT 10");
 		if (@mysql_num_rows($q) > 0) {
-			$text .= "<hr/><b>{$lang['new']['downloads']}:</b><br/>";
+			$text .= "<b>{$lang['new']['downloads']}:</b><br/>";
 			while ($row = mysql_fetch_assoc($q)) {
 				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['siustis.php']['id'] . ";k," . $row['categorija'] . ";v," . $row['ID'] . "'>" . trimlink(input($row['pavadinimas']), 20) . "</a><br />\n";
 			}
@@ -58,7 +58,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
 		$q = mysql_query1("SELECT `id`, `t_text`, `pav`, `kat` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `date`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP'  ORDER BY `date` DESC LIMIT 10");
 		if (@mysql_num_rows($q) > 0) {
-			$text .= "<hr/><b>{$lang['new']['articles']}:</b><br/>";
+			$text .= "<b>{$lang['new']['articles']}:</b><br/>";
 			while ($row = mysql_fetch_assoc($q)) {
 				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] . "'>" . trimlink(input($row['pav']), 20) . "</a><br />\n";
 			}
@@ -67,7 +67,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	//komentarai
 	$q = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `data`>=" . escape($_SESSION['lankesi']) . " ORDER BY `data` DESC LIMIT 10");
 	if (@mysql_num_rows($q) > 0) {
-		$text .= "<hr/><b>{$lang['new']['comments']}:</b><br/>";
+		$text .= "<b>{$lang['new']['comments']}:</b><br/>";
 		while ($row = mysql_fetch_assoc($q)) {
 			if ($row['pid'] == 'puslapiai/naujienos' && isset($conf['puslapiai']['naujienos.php']['id'])) {
 				//$extra = "Naujienos";
@@ -101,7 +101,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 
 			$file = str_replace('puslapiai/', '', $row['pid']);
 			if (isset($conf['puslapiai'][$file . ".php"]['id'])) {
-				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['' . $file . '.php']['id'] . ";" . $link . "#" . $row['id'] . "' title=\"<b></b><br/>{$lang['new']['author']}: <b>" . $row['nick'] . "</b><br/>{$lang['new']['date']}: <b>" . date('Y-m-d H:i:s ', $row['data']) . "</b><br/>\">" . trimlink(input($row['zinute']), 20) . "</a><br />\n";
+				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['' . $file . '.php']['id'] . ";" . $link . "#" . $row['id'] . "' title=\"{$lang['new']['author']}: <b>" . $row['nick'] . "</b><br/>{$lang['new']['date']}: <b>" . date('Y-m-d H:i:s ', $row['data']) . "</b><br/>\">" . trimlink(input($row['zinute']), 20) . "</a><br />\n";
 			}
 		}
 	}
