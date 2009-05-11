@@ -62,8 +62,9 @@ if (isset($info)) {
 //pabaiga
 
 if ($k >= 0) {
-
-	$q = mysql_query1("SELECT `" . LENTELES_PRIESAGA . "nuorodos`.`id`,
+	$teis = mysql_fetch_assoc(mysql_query1("SELECT teises FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "'"));
+	if (teises($teis['teises'], $_SESSION['level'])) {
+		$q = mysql_query1("SELECT `" . LENTELES_PRIESAGA . "nuorodos`.`id`,
 		`" . LENTELES_PRIESAGA . "nuorodos`.`url`,
 		`" . LENTELES_PRIESAGA . "nuorodos`.`pavadinimas`,
 		`" . LENTELES_PRIESAGA . "nuorodos`.`click`,
@@ -73,23 +74,24 @@ if ($k >= 0) {
 FROM `" . LENTELES_PRIESAGA . "nuorodos` 
 Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "nuorodos`.`nick` = `" . LENTELES_PRIESAGA . "users`.`id` WHERE `" . LENTELES_PRIESAGA . "nuorodos`.`cat`='" . $k . "' AND `" . LENTELES_PRIESAGA . "nuorodos`.`active`='TAIP'
 ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC") or die(mysql_error());
-	if (mysql_num_rows($q) > 0) {
-		include_once ("priedai/class.php");
-
-		$bla = new Table();
-		$info = array();
-
-		while ($sql = mysql_fetch_assoc($q)) {
-			$extra = '';
+		if (mysql_num_rows($q) > 0) {
 			include_once ("priedai/class.php");
-			include_once ("priedai/rating_functions.php");
 
-			$info[] = array("{$lang['admin']['link']}:" => '' . $extra . ' <a href="?id,' . $url['id'] . ';k,' . $url['k'] . ';w,' . $sql['id'] . '" title="<center><b>' . $sql['url'] . '</b><br/><img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br/>
+			$bla = new Table();
+			$info = array();
+
+			while ($sql = mysql_fetch_assoc($q)) {
+				$extra = '';
+				include_once ("priedai/class.php");
+				include_once ("priedai/rating_functions.php");
+
+				$info[] = array("{$lang['admin']['link']}:" => '' . $extra . ' <a href="?id,' . $url['id'] . ';k,' . $url['k'] . ';w,' . $sql['id'] . '" title="<center><b>' . $sql['url'] . '</b><br/><img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br/>
                 ' . $lang['admin']['links_author'] . ': <b>' . $sql['nick'] . '</b><br/>' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . '</b><br/>' . $lang['admin']['links_clicks'] . ': <b>' . $sql['click'] . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['links_about']}:" => $sql['apie'], "{$lang['admin']['links_rate']}:" => '' . pullRating($sql['id'], false, false, false) . '', );
 
 
+			}
+			lentele($lang['admin']['links_links'], $bla->render($info));
 		}
-		lentele($lang['admin']['links_links'], $bla->render($info));
 	}
 }
 

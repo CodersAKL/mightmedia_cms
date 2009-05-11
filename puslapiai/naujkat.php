@@ -44,7 +44,7 @@ if (isset($info)) {
 }
 //Rodom naujienas esancias kategorijoj
 
-	$sql = mysql_query1("
+$sql = mysql_query1("
 			SELECT SQL_CACHE *, (SELECT SQL_CACHE COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
 			FROM `" . LENTELES_PRIESAGA . "naujienos`
 			WHERE `rodoma`= 'TAIP' AND `kategorija`=$k
@@ -59,7 +59,7 @@ if ($viso > 0) {
 	}
 	if ($k >= 0) {
 		if (mysql_num_rows($sql) > 0) {
-			if (LEVEL >= $sqlas['teises'] || LEVEL == 1 || LEVEL == 2) {
+			if (teises($sqlas['teises'], $_SESSION['level']) || LEVEL == 1) {
 
 				//$text = '<ul>';
 				while ($row = mysql_fetch_assoc($sql)) {

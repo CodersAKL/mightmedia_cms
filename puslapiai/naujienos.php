@@ -63,7 +63,7 @@ if ($kid == 0) {
 
 			}
 			$pav .= "<td>";
-			lentele($row['pavadinimas'], $pav . $row['naujiena'] . "</td></tr></table>".$extra, false, array(menesis((int)date('m', strtotime(date('Y-m-d H:i:s ', $row['data'])))), (int)date('d', strtotime(date('Y-m-d H:i:s ', $row['data'])))));
+			lentele($row['pavadinimas'], $pav . $row['naujiena'] . "</td></tr></table>" . $extra, false, array(menesis((int)date('m', strtotime(date('Y-m-d H:i:s ', $row['data'])))), (int)date('d', strtotime(date('Y-m-d H:i:s ', $row['data'])))));
 		}
 	} else {
 		lentele("{$lang['news']['news']}", "{$lang['news']['nonews']}");
@@ -90,7 +90,7 @@ if ($kid != 0) {
 		if (!isset($sql['teises'])) {
 			$sql['teises'] = 0;
 		}
-		if ((isset($sql['teises']) && $sql['teises'] == 0) || ($_SESSION['level'] == 2 || $_SESSION['level'] == 1) || $_SESSION['level'] == $sql['teises']) {
+		if (teises($sql['teises'], $_SESSION['level'])) {
 			$title = $sql['pavadinimas'];
 			$text = "<div class='naujiena'>" . $sql['naujiena'] . "";
 			if (!empty($sql['daugiau'])) {
@@ -101,16 +101,16 @@ if ($kid != 0) {
 
 			//Atvaizduojam naujieną, likę argumentai - mėnesis žodžiais ir diena skaičiumi
 			lentele($title, $text, false, array(menesis((int)date('m', strtotime($sql['data']))), (int)date('d', strtotime($sql['data']))));
-            //Susijusios naujienos
-            $susijus=mysql_query1("SELECT * FROM `".LENTELES_PRIESAGA."naujienos` WHERE `kategorija`=".escape($sql['kategorija'])." AND `id`!=".escape($_GET['k'])." ORDER by `data` DESC LIMIT 50");
-            if(mysql_num_rows($susijus)>0){
-            	$naujienos="<ul id=\"naujienos\">";
-            	while($susijusios=mysql_fetch_assoc($susijus)){
-            		$naujienos.="<li><a href=\"?id,".$_GET['id'].";k,".$susijusios['id']."\">".$susijusios['pavadinimas']."</a> (".date('Y-m-d H:i:s', $susijusios['data']).")</li>";
-            	}
-            	$naujienos.="</ul>";
-            	lentele($lang['news']['related'],$naujienos);
-            }
+			//Susijusios naujienos
+			$susijus = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija`=" . escape($sql['kategorija']) . " AND `id`!=" . escape($_GET['k']) . " ORDER by `data` DESC LIMIT 50");
+			if (mysql_num_rows($susijus) > 0) {
+				$naujienos = "<ul id=\"naujienos\">";
+				while ($susijusios = mysql_fetch_assoc($susijus)) {
+					$naujienos .= "<li><a href=\"?id," . $_GET['id'] . ";k," . $susijusios['id'] . "\">" . $susijusios['pavadinimas'] . "</a> (" . date('Y-m-d H:i:s', $susijusios['data']) . ")</li>";
+				}
+				$naujienos .= "</ul>";
+				lentele($lang['news']['related'], $naujienos);
+			}
 			//Rodom komentarus
 			if ($sql['kom'] == 'taip') {
 				include ("priedai/komentarai.php");

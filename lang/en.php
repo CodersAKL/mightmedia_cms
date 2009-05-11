@@ -1,4 +1,5 @@
 <?php
+
 //system
 $lang['system']['error'] = 'Error!';
 $lang['system']['delete_confirm'] = 'Are you sure you want to delete this?';
@@ -119,8 +120,7 @@ $lang['user']['edit_secondname'] = 'Second name';
 $lang['user']['edit_name'] = 'Name';
 $lang['user']['edit_mainsettings'] = 'Main settings';
 $lang['user']['edit_avatar'] = 'Avatar';
-$lang['user']['edit_avatarcontent'] =
-    "Want to change, or put a picture? Register at <a href=\"http://site.gravatar.com/signup\" target=\"_blank\">site.gravatar.com</a>. Use this email:";
+$lang['user']['edit_avatarcontent'] = "Want to change, or put a picture? Register at <a href=\"http://site.gravatar.com/signup\" target=\"_blank\">site.gravatar.com</a>. Use this email:";
 $lang['user']['edit_city'] = 'City';
 $lang['user']['edit_country'] = 'Country';
 $lang['user']['edit_locality'] = 'Locality';
@@ -143,7 +143,7 @@ $lang['reg']['secuarity'] = 'Secuarity code';
 $lang['reg']['faction'] = 'Faction';
 $lang['reg']['register'] = 'Register';
 $lang['reg']['bademail'] = 'Bad email adress';
-$lang['reg']['only_letters_numbers']='Only letters and numbers allowed in username.';//kažkas tokio :)
+$lang['reg']['only_letters_numbers'] = 'Only letters and numbers allowed in username.'; //kažkas tokio :)
 $lang['reg']['badpass'] = 'Wrong password confirmation';
 $lang['reg']['takenusername'] = 'Username is taken.';
 $lang['reg']['registered'] = 'You are registered, now you can log in';
@@ -210,6 +210,7 @@ $lang['faq']['delete'] = 'Delete';
 $lang['faq']['submit'] = 'Submit';
 $lang['faq']['new'] = 'Add New FAQ';
 //admin
+$lang['admin']['for_guests'] = 'Guests';
 $lang['admin']['lang'] = 'Language';
 $lang['admin']['conf'] = 'Configuration';
 $lang['admin']['links'] = 'Links';
@@ -638,4 +639,6 @@ $lang['download']['title'] = 'Title';
 $lang['download']['no'] = 'No downloads';
 $lang['download']['cant'] = 'You cant download this file';
 $lang['download']['notfound'] = 'File not found';
+$lang['download']['notallowed'] = 'You are not allowed to download from here.';
+
 ?>

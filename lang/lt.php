@@ -1,4 +1,5 @@
 <?php
+
 $lang['system']['error'] = 'Klaida!';
 $lang['system']['delete_confirm'] = 'Ar tikrai norite ištrinti?';
 $lang['system']['systemerror'] = 'Sistemos klaida!';
@@ -114,8 +115,7 @@ $lang['user']['edit_secondname'] = 'Pavardė';
 $lang['user']['edit_name'] = 'Vardas';
 $lang['user']['edit_mainsettings'] = 'Pagrindiniai nustatymai';
 $lang['user']['edit_avatar'] = 'Paveikslėlis';
-$lang['user']['edit_avatarcontent'] =
-    "Norite pasikeisti, arba užsidėti paveiksliuką? Užsiregistruokite svetainėje <a href=\"http://site.gravatar.com/signup\" target=\"_blank\">site.gravatar.com</a>. Registruodamiesi naudokite šį el. paštą:";
+$lang['user']['edit_avatarcontent'] = "Norite pasikeisti, arba užsidėti paveiksliuką? Užsiregistruokite svetainėje <a href=\"http://site.gravatar.com/signup\" target=\"_blank\">site.gravatar.com</a>. Registruodamiesi naudokite šį el. paštą:";
 $lang['user']['edit_city'] = 'Miestas';
 $lang['user']['edit_country'] = 'Šalis';
 $lang['user']['edit_locality'] = 'Vieta';
@@ -137,7 +137,7 @@ $lang['reg']['secuarity'] = 'Apsaugos kodas';
 $lang['reg']['faction'] = 'Tauta';
 $lang['reg']['register'] = 'Registruotis';
 $lang['reg']['bademail'] = 'Blogas el. paštas';
-$lang['reg']['only_letters_numbers']='Vartotojo varde galima naudoti tik skaičius ir raides.';
+$lang['reg']['only_letters_numbers'] = 'Vartotojo varde galima naudoti tik skaičius ir raides.';
 $lang['reg']['badpass'] = 'Blogas slaptažodžio pakartojimas';
 $lang['reg']['takenusername'] = 'Vardas užimtas';
 $lang['reg']['registered'] = 'Jūs užregistruotas, galite prisijungti';
@@ -219,6 +219,7 @@ $lang['admin']['port'] = 'Portas';
 $lang['admin']['action'] = 'Veiksmas';
 $lang['admin']['added'] = 'Pridėta';
 $lang['admin']['what_moderate'] = 'Leisti moderuoti (Jei ne moderatorių grupė palikite tuščią):';
+$lang['admin']['for_guests'] = 'Svečiams';
 $lang['admin']['why'] = 'Kodėl?';
 $lang['admin']['banned'] = 'uždraustas';
 $lang['admin']['unbaned'] = 'draudimas nuimtas';
@@ -248,8 +249,7 @@ $lang['admin']['yes'] = 'Taip';
 $lang['admin']['no'] = 'Ne';
 $lang['admin']['copyright'] = 'Autorinis tekstas';
 $lang['admin']['email'] = 'El. paštas';
-$lang['admin']['allow registration'] =
-    'Leisti registruots? (reg.php turi būti įjungtas)';
+$lang['admin']['allow registration'] = 'Leisti registruots? (reg.php turi būti įjungtas)';
 $lang['admin']['maintenance'] = 'Remontas';
 $lang['admin']['maintenancetext'] = 'Remonto pranešimas';
 $lang['admin']['newsperpage'] = 'Kiek naujienų puslapyje?';
@@ -600,4 +600,6 @@ $lang['download']['title'] = 'Pavadinimas';
 $lang['download']['no'] = 'Siuntinių nėra';
 $lang['download']['cant'] = 'Jūs neturite teisės siųstis šį failą';
 $lang['download']['notfound'] = 'Failas nerastas';
+$lang['download']['notallowed'] = 'Jums neleid=iama matyti šių failų.';
+
 ?>

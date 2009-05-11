@@ -112,7 +112,7 @@ if (empty($url['m'])) {
 
 	$sqlas = mysql_fetch_assoc($sqlas);
 
-	if (defined('LEVEL') && LEVEL >= $sqlas['teises'] || (LEVEL == 1 || LEVEL == 2)) {
+	if (defined('LEVEL') && teises($sqlas['teises'], $_SESSION['level']) || LEVEL == 2) {
 		$text .= "
 			
     
@@ -151,7 +151,7 @@ if (empty($url['m'])) {
 		</div>
 		";
 
-		$foto=true;
+			$foto = true;
 			//<b>{$lang['admin']['gallery_author']}:</b> " . $autorius . "<br />
 		}
 		$text .= '</td>
@@ -199,7 +199,7 @@ if (!empty($url['m'])) {
 
 	$row = mysql_fetch_assoc($sql);
 	if (!empty($row['file']) && isset($row['file'])) {
-		if (defined('LEVEL') && LEVEL >= $row['teises'] || ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('galerija.php', unserialize($_SESSION['mod']))) || LEVEL == 1)) {
+		if (defined('LEVEL') && teises($row['teises'], $_SESSION['level']) || ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('galerija.php', unserialize($_SESSION['mod']))))) {
 
 			$nuoroda = mysql_fetch_assoc(mysql_query1("SELECT id
 FROM " . LENTELES_PRIESAGA . "galerija WHERE id > '" . $url['m'] . "' AND `categorija`='" . $row['kid'] . "'order by id ASC LIMIT 1"));

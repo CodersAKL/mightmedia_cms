@@ -69,7 +69,7 @@ function kategorija($kieno, $leidimas = false) {
 		foreach ($lygiai as $key) {
 			$teises[$key] = $conf['level'][$key]['pavadinimas'];
 		}
-		$teises[0] = $lang['system']['allcanread'];
+		$teises[0] = $lang['admin']['for_guests'];
 	} else {
 
 		for ($i = 1; $i <= 20; $i++) {
@@ -93,17 +93,17 @@ function kategorija($kieno, $leidimas = false) {
 		$pavadinimas = strip_tags($_POST['Pavadinimas']);
 		$aprasymas = safe_html(str_replace(array("&#39;"), array("'"), $_POST['Aprasymas']));
 		$pav = input(htmlspecialchars($_POST['Pav']));
-		$moderuoti = ((isset($_POST['punktai']))?serialize($_POST['punktai']):'');
+		$moderuoti = ((isset($_POST['punktai'])) ? serialize($_POST['punktai']) : '');
 
 		if (isset($_POST['Teises'])) {
-			$teises = (int)$_POST['Teises'];
+			$teises = serialize($_POST['Teises']);
 		} else {
-			$teises = 0;
+			$teises = serialize(0);
 		}
 
 		$path = @mysql_fetch_assoc(mysql_query1("Select * from`" . LENTELES_PRIESAGA . "grupes` WHERE id=" . $_POST['path'] . " Limit 1"));
 		if ($path) {
-			$teises = $path['teises'];
+			$teises = serialize($path['teises']);
 		}
 		if ($path['path'] == 0) {
 			$pathas = $path['id'];
@@ -149,8 +149,8 @@ function kategorija($kieno, $leidimas = false) {
 		$aprasymas = safe_html(str_replace(array("&#39;"), array("'"), $_POST['Aprasymas']));
 		$pav = input(strip_tags($_POST['Pav']));
 		$id = ceil((int)$_POST['Kategorijos_id']);
-		$teises = (int)$_POST['Teises'];
-		$moderuoti =((isset($_POST['punktai']))?serialize($_POST['punktai']):'');
+		$teises = serialize($_POST['Teises']);
+		$moderuoti = ((isset($_POST['punktai'])) ? serialize($_POST['punktai']) : '');
 		$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "grupes` SET
 			`pavadinimas` = " . escape($pavadinimas) . ",
 			`aprasymas` = " . escape($aprasymas) . ",
@@ -227,12 +227,12 @@ function kategorija($kieno, $leidimas = false) {
 			//trinama kategorija
 			//Jei turi subkategoriju, perkeliam
 			$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`like%" . escape($_POST['Kategorijos_id']) . ",%");
-		  if(mysql_num_rows($sql)>0){
-			while ($row = mysql_fetch_assoc($sql)) {
-				//echo $row['path'];
-				$update = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "grupes` set path=" . str_replace(escape($_POST['Kategorijos_id']) . ",", "", $row['path']) . " WHERE id=" . $row['id'] . "");
+			if (mysql_num_rows($sql) > 0) {
+				while ($row = mysql_fetch_assoc($sql)) {
+					//echo $row['path'];
+					$update = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "grupes` set path=" . str_replace(escape($_POST['Kategorijos_id']) . ",", "", $row['path']) . " WHERE id=" . $row['id'] . "");
+				}
 			}
-		  }
 			//perkelimo pabaiga
 			$result2 = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "grupes` 
 			WHERE `id`=" . escape($_POST['Kategorijos_id']) . ";
@@ -308,10 +308,14 @@ HTML;
 			}
 			if ($leidimas == true && $vartotojai == false && $_GET['v'] == 2) {
 
-				$kategorijos[$textas] = array("type" => "select", "value" => $teises, "name" => "Teises", "class" => "input", "style" => "width:100%", "selected" => (isset($extra['teises']) ? input($extra['teises']) : ''));
+				$box = "";
+				foreach ($teises as $name => $check) {
+					$box .= "<label><input type=\"checkbox\" " . (isset($extra) && in_array($name, unserialize($extra['teises'])) ? "checked" : "") . " name=\"Teises[]\" value=\"$name\"/> $check</label><br /> ";
+				}
+				$kategorijos[$textas] = array("type" => "string", "value" => $box);
 
 			} else {
-				$kategorijos[""] = array("type" => "hidden", "name" => "Teises", "value" => (isset($extra['teises']) ? input($extra['teises']) : ''));
+				$kategorijos[""] = array("type" => "hidden", "name" => "Teises", "value" => (isset($extra['teises']) ? input(unserialize($extra['teises'])) : ''));
 			}
 			$kategorijos[" "] = array("type" => "hidden", "name" => "Kategorijos_id", "value" => (isset($extra['id']) ? input($extra['id']) : ''));
 			lentele($lang['system']['categories'], '<center><h2>' . $lang['system']['picture'] . ':</h2><div class="avataras"><img src="' . $dir . '/' . (isset($extra['pav']) ? $extra['pav'] : 'Universal.png') . '" id="kategorijos_img" /></div></center>' . $bla->form($kategorijos));

@@ -37,11 +37,11 @@ if (isset($conf['puslapiai']['reg.php']['id'])) {
 $kur['kom'] = $lang['search']['comments'];
 $kur['page'] = $lang['search']['pages'];
 //$kur['vis'] = $lang['search']['everything'];
-$box="";
-foreach($kur as $name=>$check){
-$box.="<label><input type=\"checkbox\" name=\"$name\" value=\"$name\"/> $check</label><br /> ";
+$box = "";
+foreach ($kur as $name => $check) {
+	$box .= "<label><input type=\"checkbox\" name=\"$name\" value=\"$name\"/> $check</label><br /> ";
 }
-$box.="<label><input type='checkbox' name='vis' onclick='checkedAll(\"search\");'/> {$lang['search']['everything']}</label>";
+$box .= "<label><input type='checkbox' name='vis' onclick='checkedAll(\"search\");'/> {$lang['search']['everything']}</label>";
 //Paieškos forma
 $search = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "search", "name" => "search"), " " => array("type" => "text", "value" => (isset($_POST['s']) ? input($_POST['s']) : ''), "name" => "s", "style" => "width:100%"), "{$lang['search']['for']}:" => array("type" => "string", "value" => $box), "" => array("type" => "submit", "class" => "submit", "name" => "subsearch", "value" => $lang['search']['search']));
 $text = '';
@@ -54,8 +54,8 @@ $i = 0;
 //print_r($_POST);
 if (isset($_POST['s'])) {
 	if (strlen(str_replace(array(" ", "\r", "\n", "<", ">", "\"", "'", "."), "", $_POST['s'])) >= 3) {
-		if ((isset($_POST['naujienos'])||isset($_POST['vis']))&& isset($conf['puslapiai']['naujienos.php']['id'])) {
-			$sqlas3 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `pavadinimas` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' OR `naujiena` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' LIMIT 0,100") or die(klaida( mysql_error()));
+		if ((isset($_POST['naujienos']) || isset($_POST['vis'])) && isset($conf['puslapiai']['naujienos.php']['id'])) {
+			$sqlas3 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `pavadinimas` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' OR `naujiena` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' LIMIT 0,100") or die(klaida(mysql_error()));
 			if (mysql_num_rows($sqlas3) > 0) {
 				$text .= "<b>{$lang['search']['news']}</b><br />";
 			}
@@ -64,8 +64,8 @@ if (isset($_POST['s'])) {
 				$text .= "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row3['id'] . "'>" . trimlink(input($row3['pavadinimas']), 40) . "...</a><br />";
 			}
 		}
-		if ((isset($_POST['frmt'])||isset($_POST['vis'])) && isset($conf['puslapiai']['frm.php']['id'])) {
-			$sqlas4 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `pav` LIKE " . escape("%" . $_POST['s'] . "%") . "LIMIT 0,100") or die(klaida( mysql_error()));
+		if ((isset($_POST['frmt']) || isset($_POST['vis'])) && isset($conf['puslapiai']['frm.php']['id'])) {
+			$sqlas4 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `pav` LIKE " . escape("%" . $_POST['s'] . "%") . "LIMIT 0,100") or die(klaida(mysql_error()));
 			if (mysql_num_rows($sqlas4) > 0) {
 				$text .= "<b>{$lang['search']['forum_topics']}</b><br />";
 			}
@@ -74,8 +74,8 @@ if (isset($_POST['s'])) {
 				$text .= "<a href='?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row4['id'] . ";s," . $row4['tid'] . "'>" . trimlink(input($row4['pav']), 40) . "...</a><br />";
 			}
 		}
-		if ((isset($_POST['frm'])||isset($_POST['vis'])) && isset($conf['puslapiai']['frm.php']['id'])) {
-			$sqlas5 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `zinute` LIKE " . escape("%" . $_POST['s'] . "%") . "LIMIT 0,100") or die(klaida( mysql_error()));
+		if ((isset($_POST['frm']) || isset($_POST['vis'])) && isset($conf['puslapiai']['frm.php']['id'])) {
+			$sqlas5 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `zinute` LIKE " . escape("%" . $_POST['s'] . "%") . "LIMIT 0,100") or die(klaida(mysql_error()));
 			if (mysql_num_rows($sqlas5) > 0) {
 				$text .= "<b>{$lang['search']['forum_messages']}</b><br />";
 			}
@@ -85,8 +85,8 @@ if (isset($_POST['s'])) {
 			}
 
 		}
-		if ((isset($_POST['str'])||isset($_POST['vis'])) && isset($conf['puslapiai']['straipsnis.php']['id'])) {
-			$sqlas6 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `t_text` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' or `f_text` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' or `pav` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' LIMIT 0,100") or die(klaida( mysql_error()));
+		if ((isset($_POST['str']) || isset($_POST['vis'])) && isset($conf['puslapiai']['straipsnis.php']['id'])) {
+			$sqlas6 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `t_text` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' or `f_text` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' or `pav` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' LIMIT 0,100") or die(klaida(mysql_error()));
 			if (mysql_num_rows($sqlas6) > 0) {
 				$text .= "<b>{$lang['search']['articles']}</b><br />";
 			}
@@ -96,8 +96,8 @@ if (isset($_POST['s'])) {
 			}
 
 		}
-		if ((isset($_POST['siunt'])||isset($_POST['vis'])) && isset($conf['puslapiai']['siustis.php']['id'])) {
-			$sqlas7 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE  `pavadinimas` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' or `apie` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' LIMIT 0,100") or die(klaida( mysql_error()));
+		if ((isset($_POST['siunt']) || isset($_POST['vis'])) && isset($conf['puslapiai']['siustis.php']['id'])) {
+			$sqlas7 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE  `pavadinimas` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' or `apie` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' LIMIT 0,100") or die(klaida(mysql_error()));
 			if (mysql_num_rows($sqlas7) > 0) {
 				$text .= "<b>{$lang['search']['downloads']}</b><br />";
 			}
@@ -107,8 +107,8 @@ if (isset($_POST['s'])) {
 			}
 
 		}
-		if ((isset($_POST['galerija'])||isset($_POST['vis'])) && isset($conf['puslapiai']['galerija.php']['id'])) {
-			$sqlas7 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `pavadinimas` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' or `apie` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' LIMIT 0,100") or die(klaida( mysql_error()));
+		if ((isset($_POST['galerija']) || isset($_POST['vis'])) && isset($conf['puslapiai']['galerija.php']['id'])) {
+			$sqlas7 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `pavadinimas` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' or `apie` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `rodoma`='TAIP' LIMIT 0,100") or die(klaida(mysql_error()));
 			if (mysql_num_rows($sqlas7) > 0) {
 				$text .= "<b>{$lang['search']['images']}</b><br />";
 			}
@@ -118,33 +118,33 @@ if (isset($_POST['s'])) {
 			}
 
 		}
-if ((isset($_POST['memb'])||isset($_POST['vis']))&& isset($conf['puslapiai']['reg.php']['id'])) {
-			$sqlas9 = mysql_query1("SELECT id,nick,levelis FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick` LIKE " . escape("%" . $_POST['s'] . "%") . "") or die(klaida( mysql_error()));
+		if ((isset($_POST['memb']) || isset($_POST['vis'])) && isset($conf['puslapiai']['reg.php']['id'])) {
+			$sqlas9 = mysql_query1("SELECT id,nick,levelis FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick` LIKE " . escape("%" . $_POST['s'] . "%") . "") or die(klaida(mysql_error()));
 			if (mysql_num_rows($sqlas9) > 0) {
 				$text .= "<b>{$lang['search']['members']}</b><br />";
 			}
 			while ($row9 = mysql_fetch_assoc($sqlas9)) {
 				$i++;
-				
-				$text .= user($row9['nick'],$row9['id'],$row9['levelis'])."<br />";
+
+				$text .= user($row9['nick'], $row9['id'], $row9['levelis']) . "<br />";
 			}
 
 		}
-if (isset($_POST['page'])||isset($_POST['vis'])) {
-			$sqlas10 = mysql_query1("SELECT id,pavadinimas FROM `" . LENTELES_PRIESAGA . "page` WHERE `pavadinimas` LIKE " . escape("%" . $_POST['s'] . "%") . "") or die(klaida( mysql_error()));
+		if (isset($_POST['page']) || isset($_POST['vis'])) {
+			$sqlas10 = mysql_query1("SELECT id,pavadinimas FROM `" . LENTELES_PRIESAGA . "page` WHERE `pavadinimas` LIKE " . escape("%" . $_POST['s'] . "%") . "") or die(klaida(mysql_error()));
 			if (mysql_num_rows($sqlas10) > 0) {
 				$text .= "<b>{$lang['search']['pages']}</b><br />";
 			}
 			while ($row10 = mysql_fetch_assoc($sqlas10)) {
 				$i++;
-				
+
 				$text .= "<a href=\"?id,{$row10['id']}\">{$row10['pavadinimas']}</a><br />";
 			}
 
-		}	
-		
-		if (isset($_POST['kom'])||isset($_POST['vis'])) {
-			$sqlas2 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `zinute` LIKE " . escape("%" . $_POST['s'] . "%") . "LIMIT 0,100") or die(klaida( mysql_error()));
+		}
+
+		if (isset($_POST['kom']) || isset($_POST['vis'])) {
+			$sqlas2 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `zinute` LIKE " . escape("%" . $_POST['s'] . "%") . "LIMIT 0,100") or die(klaida(mysql_error()));
 			if (mysql_num_rows($sqlas2) > 0) {
 				$text .= "<b>{$lang['search']['comments']}</b><br />";
 			}

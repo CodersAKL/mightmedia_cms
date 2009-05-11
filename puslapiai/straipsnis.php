@@ -82,14 +82,17 @@ if ($k >= 0 && empty($url['m'])) {
 	$row = mysql_fetch_assoc($sql);
 	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $row['kat'] . "' AND `kieno`='straipsniai' ORDER BY `pavadinimas` LIMIT 1") or die(mysql_error());
 	$sqlas = mysql_fetch_assoc($sqlas);
-	if ($sql && $_SESSION['level'] >= $sqlas['teises']) {
+	if ($sql && teises($sql['teises'], $_SESSION['level'])) {
 		$text = "<blockquote><i>" . $row['t_text'] . "</i><br><hr></hr><br>\n
 		" . $row['f_text'] . "</blockquote>
 		<hr />{$lang['article']['date']}: " . date('Y-m-d H:i:s ', $row['date']) . "; {$lang['article']['author']}: <b>" . $row['autorius'] . "</b>";
 		lentele($row['pav'], $text);
 		include ("priedai/komentarai.php");
+
+		komentarai($url['m'], true);
+	} else {
+		klaida($lang['system']['warning'], "{$lang['article']['cant']}.");
 	}
-	komentarai($url['m'], true);
 }
 
 ?>

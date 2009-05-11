@@ -106,21 +106,26 @@ function adresas() {
 function puslapis($puslapis, $extra = false) {
 	global $conf;
 	if (isset($conf['puslapiai'][$puslapis]['id']) && !empty($conf['puslapiai'][$puslapis]['id']) && is_file(dirname(__file__) . '/../puslapiai/' . $puslapis)) {
-		
-		if ($conf['puslapiai'][$puslapis]['teises'] == 0 || LEVEL == $conf['puslapiai'][$puslapis]['teises'] || LEVEL == 1) {
-		
-      if ($extra && isset($conf['puslapiai'][$puslapis][$extra]))
-        return $conf['puslapiai'][$puslapis][$extra]; //Jei reikalinga kita informacija apie puslapi - grazinam ja.
-      else
-        return (int)$conf['puslapiai'][$puslapis]['id'];
+
+		if ((is_array(@unserialize($conf['puslapiai'][$puslapis]['teises'])) && in_array(LEVEL, unserialize($conf['puslapiai'][$puslapis]['teises']))) || LEVEL == 1) {
+
+			if ($extra && isset($conf['puslapiai'][$puslapis][$extra]))
+				return $conf['puslapiai'][$puslapis][$extra]; //Jei reikalinga kita informacija apie puslapi - grazinam ja.
+			else
+				return (int)$conf['puslapiai'][$puslapis]['id'];
 		} else {
-      return false;
-    }
-			
+			return false;
+		}
+
 	} else
 		return false;
 }
-
+function teises($mas, $lvl) {
+	if ($lvl==0||$lvl==1||(is_array(@unserialize($mas)) && in_array($lvl, unserialize($mas))))
+		return true;
+	else
+		return false;
+}
 /**
  * Uždrausti IP ant serverio
  *
@@ -1073,15 +1078,15 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 		$id = md5(uniqid());
 	}
 
-if (is_array($id)) {
-			foreach ($id as $key => $val) {
-			$arr[$val]="'$key'";
-			}
-			$areos=implode($arr,",");
-			}else{
-			$areos="'$id'";
-			}
-		$return =' <script type="text/javascript">
+	if (is_array($id)) {
+		foreach ($id as $key => $val) {
+			$arr[$val] = "'$key'";
+		}
+		$areos = implode($arr, ",");
+	} else {
+		$areos = "'$id'";
+	}
+	$return = ' <script type="text/javascript">
    
     _editor_url  = "javascript/htmlarea/Xinha_0.95/"
     _editor_lang = "en"; 
@@ -1103,7 +1108,7 @@ if (is_array($id)) {
 
       xinha_plugins = xinha_plugins ? xinha_plugins :
       [
-        \'CharacterMap\', \'Linker\', \'Abbreviation\', \'ContextMenu\','.((isset($_SESSION['level'])&&$_SESSION['level']==1)?'\'ExtendedFileManager\',':'').'\'HorizontalRule\',\'InsertAnchor\',\'InsertPicture\',\'SuperClean\',\'Stylist\'
+        \'CharacterMap\', \'Linker\', \'Abbreviation\', \'ContextMenu\',' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ? '\'ExtendedFileManager\',' : '') . '\'HorizontalRule\',\'InsertAnchor\',\'InsertPicture\',\'SuperClean\',\'Stylist\'
 
       ];
              // THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
@@ -1113,7 +1118,7 @@ if (is_array($id)) {
 
       xinha_editors = xinha_editors ? xinha_editors :
       [
-        '.$areos.'
+        ' . $areos . '
       ];
 
      
@@ -1121,8 +1126,8 @@ if (is_array($id)) {
        xinha_config.fullPage = false;
        xinha_config.showLoading = false;
        xinha_config.CharacterMap.mode = \'popup\';
-       //xinha_config.stylistLoadStylesheet(\'stiliai/'.input($conf['Stilius']).'/default.css\');
-       //xinha_config.pageStyleSheets = [\'stiliai/'.input($conf['Stilius']).'/default.css\'];
+       //xinha_config.stylistLoadStylesheet(\'stiliai/' . input($conf['Stilius']) . '/default.css\');
+       //xinha_config.pageStyleSheets = [\'stiliai/' . input($conf['Stilius']) . '/default.css\'];
        xinha_config.htmlRemoveTags = /body|head|html/;
       
       
@@ -1138,12 +1143,12 @@ if (is_array($id)) {
   </script>
 
   ';
-		
-		if (is_array($id)) {
-			foreach ($id as $key => $val) {
-			
-				
- $return.= <<<HTML
+
+	if (is_array($id)) {
+		foreach ($id as $key => $val) {
+
+
+			$return .= <<< HTML
 
  
  
@@ -1153,18 +1158,17 @@ if (is_array($id)) {
 
 
 HTML;
-			}
-		} else {
-$return.= <<<HTML
+		}
+	} else {
+		$return .= <<< HTML
 		  <textarea id="{$id}" name="{$id}" style="width:100%;height:320px;">
     {$value}
     </textarea>
 
 HTML;
- 
-	}	
 
-	
+	}
+
 
 	return $return;
 }
