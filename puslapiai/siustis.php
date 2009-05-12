@@ -206,15 +206,11 @@ else {
 		lentele("{$lang['download']['downloads']} >> " . $name['pavadinimas'] . "", $bla->render($info) . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
 
 
-	} else {
-
-		klaida($lang['system']['warning'], "{$lang['download']['no']}.<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
-
 	}
 
 	unset($bla, $info, $sql, $sql_d, $vid);
 }
-if (kiek("siuntiniai", "WHERE rodoma='TAIP'") < 0)
+if (kiek("siuntiniai", "WHERE rodoma='TAIP'") <= 0)
 	klaida($lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
 
 ?>
