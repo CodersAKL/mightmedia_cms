@@ -56,7 +56,7 @@ if (isset($url['m']) && $url['m'] > 0) {
           <small>
             <b>' . $lang['user']['user_name'] . ':</b> ' . $sql['vardas'] . '<br />
             <b>' . $lang['user']['user_secondname'] . ':</b> ' . $sql['pavarde'] . '<br />
-            <b>' . $lang['user']['user_age'] . ':</b> ' . amzius($sql['gim_data']) . '<br />
+            <b>' . $lang['user']['user_age'] . ':</b> ' . (amzius($sql['gim_data'])>0 ? amzius($sql['gim_data']):"-" ). '<br />
             <b>' . $lang['user']['user_city'] . ':</b> ' . $sql['miestas'] . '<br />
             <b>' . $lang['user']['user_registered'] . ': </b> ' . date('Y-m-d H:i:s ', $sql['reg_data']) . '<br />
             <b>' . $lang['user']['user_lastvisit'] . ': </b> ' . kada(date('Y-m-d H:i:s ', $sql['login_data'])) . '<br />
