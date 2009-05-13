@@ -1086,7 +1086,8 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 	} else {
 		$areos = "'$id'";
 	}
-	$return = ' <script type="text/javascript">
+	$return="";
+	echo '<script type="text/javascript">
    
     _editor_url  = "javascript/htmlarea/Xinha_0.95/"
     _editor_lang = "en"; 
@@ -1108,7 +1109,7 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 
       xinha_plugins = xinha_plugins ? xinha_plugins :
       [
-        \'CharacterMap\', \'Linker\', \'Abbreviation\', \'ContextMenu\',' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ? '\'ExtendedFileManager\',' : '') . '\'HorizontalRule\',\'InsertAnchor\',\'InsertPicture\',\'SuperClean\',\'Stylist\'
+        \'CharacterMap\',\'Linker\', \'Abbreviation\', \'ContextMenu\',' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ? '\'ImageManager\',' : '') . '\'HorizontalRule\',\'InsertAnchor\',\'InsertPicture\',\'SuperClean\',\'Stylist\'
 
       ];
              // THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
@@ -1124,12 +1125,30 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
      
        xinha_config = xinha_config ? xinha_config : new Xinha.Config();
        xinha_config.fullPage = false;
-       xinha_config.showLoading = false;
-       xinha_config.CharacterMap.mode = \'popup\';
+       xinha_config.showLoading = true;
+       xinha_config.CharacterMap.mode = \'panel\';
        //xinha_config.stylistLoadStylesheet(\'stiliai/' . input($conf['Stilius']) . '/default.css\');
        //xinha_config.pageStyleSheets = [\'stiliai/' . input($conf['Stilius']) . '/default.css\'];
-       xinha_config.htmlRemoveTags = /body|head|html/;
-      
+       //xinha_config.htmlRemoveTags = /body|head|html/;
+      with (xinha_config.ImageManager)
+     { 
+       '; 
+       require_once('javascript/htmlarea/Xinha_0.95/contrib/php-xinha.php');
+
+         xinha_pass_to_php_backend
+         (       
+           array
+           (
+            'images_dir' => '../../../../../siuntiniai/images',
+            'images_url' => adresas().'siuntiniai/images'//,
+            //'thumbnail_prefix'=>'',
+            //'thumbnail_dir'=>'sumazinti'
+            //'resized_prefix'=>'.pakeistas',
+            //'resized_dir'=>'.resized'
+           )
+         );
+      echo '
+     }
       
        xinha_editors   = Xinha.makeEditors(xinha_editors, xinha_config, xinha_plugins);
 

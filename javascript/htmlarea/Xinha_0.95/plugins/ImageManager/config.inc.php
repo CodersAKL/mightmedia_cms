@@ -23,7 +23,10 @@
 *
 * The ?__plugin=ImageManager& is required. 
 */
-
+//Šitas neveikia
+//if(!isset($_SESSION['level']) || $_SESSION['level'] != 1){
+//die;
+//}
 $IMConfig['backend_url'] = "backend.php?__plugin=ImageManager&";
 
 /**

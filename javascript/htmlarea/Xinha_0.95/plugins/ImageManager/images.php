@@ -78,6 +78,7 @@ function drawFiles($list, &$manager)
           <?php
           foreach($list as $entry => $file)
           {
+          
             ?>
             <tr>
               <th><a href="#" class="thumb" style="cursor: pointer;" onclick="selectImage('<?php echo $file['relative'];?>', '<?php echo $entry; ?>', <?php echo $file['image'][0];?>, <?php echo $file['image'][1]; ?>);return false;" title="<?php echo $entry; ?> - <?php echo Files::formatSize($file['stat']['size']); ?>" onmouseover="showPreview('<?php echo $file['relative'];?>')" onmouseout="showPreview(window.parent.document.getElementById('f_url').value)" ><?php echo $entry ?></a></th>
@@ -105,7 +106,7 @@ function drawFiles($list, &$manager)
 	{
 		?>
     <div class="thumb_holder" id="holder_<?php echo asc2hex($entry) ?>">
-      <a href="#" class="thumb" style="cursor: pointer;" onclick="selectImage('<?php echo $file['relative'];?>', '<?php echo $entry; ?>', <?php echo $file['image'][0];?>, <?php echo $file['image'][1]; ?>);return false;" title="<?php echo $entry; ?> - <?php echo Files::formatSize($file['stat']['size']); ?>">
+      <a href="#" class="thumb" style="cursor: pointer;" onclick="selectImage('<?php echo $IMConfig['images_url'].$file['relative'];?>', '<?php echo $entry; ?>', <?php echo $file['image'][0];?>, <?php echo $file['image'][1]; ?>);return false;" title="<?php echo $entry; ?> - <?php echo Files::formatSize($file['stat']['size']); ?>">
         <img src="<?php print $manager->getThumbnail($file['relative']); ?>" alt="<?php echo $entry; ?> - <?php echo Files::formatSize($file['stat']['size']); ?>"/>
       </a>
       <div class="edit">
