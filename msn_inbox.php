@@ -18,7 +18,7 @@ include_once ("priedai/prisijungimas.php");
 // @TODO floodo apsauga
 if (isset($_GET) && !empty($_GET)) {
 
-	if (isset($_GET['pm']) && !empty($_GET['pm'])) {
+	if (isset($_GET['pm']) && !empty($_GET['pm']) && isset($_SESSION['username']) && !empty($_SESSION['username'])) {
     $msg = mysql_fetch_assoc(mysql_query1(
     "SELECT SQL_CACHE ".LENTELES_PRIESAGA."private_msg.id as `msg_id`, `from`, `title`, `msg`, `" . LENTELES_PRIESAGA . "users`.`nick`, `" . LENTELES_PRIESAGA . "users`.`email` as email  
     FROM `".LENTELES_PRIESAGA."private_msg` Inner Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "private_msg`.`from` = `" . LENTELES_PRIESAGA . "users`.`nick`
