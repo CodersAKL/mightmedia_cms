@@ -124,7 +124,8 @@ if ($vid > 0) {
 			if (isset($sql['Kategorija'])) {
 				$info2[0]["{$lang['system']['category']}"] = "<b>" . $sql['Kategorija'] . "</b><br /><div class='avataras'><img src='images/naujienu_kat/" . input($sql['img']) . "' alt='" . input($sql['Kategorija']) . "' /></div>";
 			}
-			$info2[0][$sql['pavadinimas'] . "{$lang['download']['info']}"] = "<div style='vertical-align: top'> <b>{$lang['download']['about']}:</b> " . $sql['apie'] . "<br /><b>{$lang['download']['date']}:</b> " . date('Y-m-d H:i:s ', $sql['data']) . "<br /><hr /><a href=\"siustis.php?d," . $sql['id'] . "\"><img src=\"images/icons/disk.png\" alt=\"" . $sql['file'] . "\" border=\"0\" /></a></div>";
+			$info2[0][$sql['pavadinimas'] . " {$lang['download']['info']}"] = "<div style='vertical-align: top'> <b>{$lang['download']['about']}:</b> " . $sql['apie'] . "<br /><b>{$lang['download']['date']}:</b> " . date('Y-m-d H:i:s ', $sql['data']) . "<br /><hr /><a href=\"siustis.php?d," . $sql['id'] . "\"><img src=\"images/icons/disk.png\" alt=\"" . $sql['file'] . "\" border=\"0\" /></a></div>";
+
 			lentele("{$lang['download']['downloads']} >> " . (isset($sql['Kategorija']) ? $sql['Kategorija'] . " >> " : "") . $sql['pavadinimas'] . "", $ble->render($info2) . "<a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
 
 			include_once ("priedai/komentarai.php");
