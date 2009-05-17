@@ -33,7 +33,7 @@ function komentarai($id, $hide = false) {
                 (SELECT `levelis` FROM `" . LENTELES_PRIESAGA . "users` WHERE `" . LENTELES_PRIESAGA . "kom`.`nick_id`=`id`) AS levelis FROM `" . LENTELES_PRIESAGA . "kom` WHERE kid = " . escape($id) . " AND pid = " . escape($page) . " ORDER BY `data` DESC LIMIT 50");
 		$text = "";
 		$i=0;
-		while ($row = mysql_fetch_assoc($sql)) {
+		foreach ($sql as $row) {
 		$i++;
 		if(is_int($i/2))$tr="2"; else $tr="";
 			$text .= "<div class=\"tr$tr\"><div class=\"title\"><a href=\"#" . $row['id'] . "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\"></a> ";
@@ -62,7 +62,7 @@ if (isset($_POST['n_kom']) && !empty($_POST['n_kom']) && !empty($_POST['Naujas']
 // Trinam komentara
 if (isset($url['dk']) && isnum($url['dk']) && $url['dk'] > 0 && isset($url['id']) && !empty($url['id']) && isnum($url['id']) && defined("LEVEL") && (LEVEL == 1 || (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('com', unserialize($_SESSION['mod']))))) {
 	$id = (int)$url['dk'];
-	$sql = mysql_fetch_assoc(mysql_query1("SELECT nick, nick_id FROM `" . LENTELES_PRIESAGA . "kom` WHERE id=" . escape($id) . " LIMIT 1"));
+	$sql = mysql_query1("SELECT nick, nick_id FROM `" . LENTELES_PRIESAGA . "kom` WHERE id=" . escape($id) . " LIMIT 1");
 	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai-1 WHERE nick=" . escape($sql['nick']) . " AND `id` = " . escape($sql['nick_id']) . "");
 	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE id=" . escape($id) . " LIMIT 1");
 	unset($id);

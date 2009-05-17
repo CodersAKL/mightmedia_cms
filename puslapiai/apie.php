@@ -16,9 +16,10 @@ lentele("{$lang['about']['about']} - " . $conf['Pavadinimas'], '<div class="sara
 $adminai = '';
 $moderatoriai = '';
 
-$sql = mysql_query1("SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2");
+//Kešuojam 24 valandom
+$sql = mysql_query1("SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2",86400);
 
-while ($row = mysql_fetch_assoc($sql)) {
+foreach ($sql as $row) {
 	if ($row['levelis'] == 1) {
 		$adminai .= user($row['nick'], $row['id'], $row['levelis']) . "<br />";
 	} elseif ($row['levelis'] == 2) {

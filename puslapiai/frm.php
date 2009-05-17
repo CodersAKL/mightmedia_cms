@@ -73,7 +73,7 @@ if (isset($url['q']) && isnum($url['q']) && $url['q'] > 0) {
 }
 include_once ("priedai/class.php");
 //kur tu?
-$kur = mysql_fetch_assoc(mysql_query1("SELECT pav, (SELECT pav from " . LENTELES_PRIESAGA . "d_straipsniai Where id=$tid )AS tema,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_zinute Where sid=$tid AND tid=$sid )AS zinute,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_zinute Where tid=$sid)AS subzinute,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_straipsniai Where tid=$sid)AS temos FROM " . LENTELES_PRIESAGA . "d_temos WHERE id=$sid"));
+$kur = mysql_query1("SELECT pav, (SELECT pav from " . LENTELES_PRIESAGA . "d_straipsniai Where id=$tid )AS tema,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_zinute Where sid=$tid AND tid=$sid )AS zinute,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_zinute Where tid=$sid)AS subzinute,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_straipsniai Where tid=$sid)AS temos FROM " . LENTELES_PRIESAGA . "d_temos WHERE id=$sid limit 1",120);
 //Sausainiai naujiems fiksuoti
 if ($sid > 0) {
 	setcookie("sub_$sid", $kur['subzinute'], time() + (60 * 60 * 24 * 365));
@@ -98,7 +98,7 @@ if (isset($kur['pav']) && !empty($kur['pav'])) {
 
 //kategoriju sarasas
 if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
-	//Didelë uþklausa á kategorijas/subkategorijas :P gera kà?
+	//Didelė užklausa į kategorijas/subkategorijas :P gera ką?
 	$sqlis = mysql_query1("SELECT
 	`" . LENTELES_PRIESAGA . "d_temos`.`pav`,
 	`" . LENTELES_PRIESAGA . "d_temos`.`last_data`,
@@ -113,10 +113,10 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
     FROM
   `" . LENTELES_PRIESAGA . "d_forumai`
     inner Join `" . LENTELES_PRIESAGA . "d_temos` ON `" . LENTELES_PRIESAGA . "d_forumai`.`id`=`" . LENTELES_PRIESAGA . "d_temos`.`fid` 
-	ORDER by `" . LENTELES_PRIESAGA . "d_forumai`.`place` ASC, `" . LENTELES_PRIESAGA . "d_temos`.`place` ASC") or die(mysql_error());
+	ORDER by `" . LENTELES_PRIESAGA . "d_forumai`.`place` ASC, `" . LENTELES_PRIESAGA . "d_temos`.`place` ASC",60);
 	//$info = array();
-	if (mysql_num_rows($sqlis) > 0) {
-		while ($kat = mysql_fetch_assoc($sqlis)) {
+	if (sizeof($sqlis) > 0) {
+		foreach ($sqlis as $kat) {
 			//þinuèiø kategorijoj
 			$zinutes = (int)$kat['zinutes'];
 			//temø kategorijoj
@@ -155,9 +155,9 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 	" . LENTELES_PRIESAGA . "d_straipsniai.id as strid ,
 	(SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=" . escape($sid) . " AND`sid`=strid ) AS viso	
 	from " . LENTELES_PRIESAGA . "d_straipsniai 
-	WHERE " . LENTELES_PRIESAGA . "d_straipsniai.tid=" . escape($sid) . " ORDER by " . LENTELES_PRIESAGA . "d_straipsniai.sticky DESC, " . LENTELES_PRIESAGA . "d_straipsniai.last_data DESC LIMIT " . $pid . ", " . $limit . "") or die(mysql_error());
-	if (mysql_num_rows($tem) > 0) {
-		while ($temos = mysql_fetch_assoc($tem)) {
+	WHERE " . LENTELES_PRIESAGA . "d_straipsniai.tid=" . escape($sid) . " ORDER by " . LENTELES_PRIESAGA . "d_straipsniai.sticky DESC, " . LENTELES_PRIESAGA . "d_straipsniai.last_data DESC LIMIT " . $pid . ", " . $limit . "",120);
+	if (sizeof($tem) > 0) {
+		foreach ($tem as $temos) {
 			//$tsql = mysql_fetch_assoc(mysql_query1("SELECT count(id) AS viso FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=" . escape($sid) . " AND `sid`=" . escape($temos['id']) . ""));
 			$zinutes = $temos['viso'];
 			$limit = 20;
@@ -216,7 +216,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 		}
 	}
 
-	$tsql = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`=" . escape((int)$sid) . " AND `id`=" . escape((int)$tid) . ""));
+	$tsql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`=" . escape((int)$sid) . " AND `id`=" . escape((int)$tid) . " limit 1");
 	$straipsnis = $tsql['pav'];
 	if (!empty($straipsnis)) {
 		if (defined("LEVEL") && ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1)) {
@@ -240,7 +240,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 		$a = 0;
 		$turinys = '';
 		unset($row);
-		while ($row = mysql_fetch_assoc($gaunam)) {
+		foreach ($gaunam as $row) {
 			if ($pid == '0') {
 				$a++;
 			} else {
@@ -295,7 +295,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 		}
 		lentele($straipsnis, puslapiai($pid, $limit, $viso, 10) . $turinys . puslapiai($pid, $limit, $viso, 10) . "<a name='end' id='end'></a>");
 
-		$tikrinam = mysql_fetch_assoc(mysql_query1("SELECT `uzrakinta` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `id`=" . escape($tid) . " AND `tid`=" . escape($sid) . ""));
+		$tikrinam = mysql_query1("SELECT `uzrakinta` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `id`=" . escape($tid) . " AND `tid`=" . escape($sid) . " limit 1");
 
 
 		if (isset($_SESSION['id']) && $kid == 0 && $lid == 0 && $rid == 0 && $eid > 0) {
@@ -314,8 +314,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 				} else {
 					$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($eid) . " AND `nick`='" . escape($_SESSION['id']) . "' LIMIT 1";
 				}
-				$sql = mysql_query1($sql);
-				$sql = mysql_fetch_assoc($sql);
+				$sql = mysql_query1($sql,15);
 				$extra = $sql['zinute'];
 			}
 		}
@@ -375,7 +374,7 @@ AND `" . LENTELES_PRIESAGA . "d_straipsniai`.`id`=" . escape($tid) . " AND `" . 
 			$citata = "";
 			if ($qid > 0) {
 
-				$cit = mysql_fetch_assoc(mysql_query1("SELECT *,nick as nikas,(SELECT nick from " . LENTELES_PRIESAGA . "users where id=nikas)as nickas from " . LENTELES_PRIESAGA . "d_zinute where id='" . (int)$qid . "'"));
+				$cit = mysql_query1("SELECT *,nick as nikas,(SELECT nick from " . LENTELES_PRIESAGA . "users where id=nikas)as nickas from " . LENTELES_PRIESAGA . "d_zinute where id='" . (int)$qid . "' limit 1",30);
 
 				if (isset($cit['zinute'])) {
 					$citata = "[quote=(" . date('Y-m-d H:i:s', $cit['laikas']) . ") " . $cit['nickas'] . "]" . $cit['zinute'] . "\n[/quote]";
@@ -384,7 +383,14 @@ AND `" . LENTELES_PRIESAGA . "d_straipsniai`.`id`=" . escape($tid) . " AND `" . 
 
 			}
 			$bla = new forma();
-			$forma = array("Form" => array("action" => "", "method" => "post", "name" => "msg"), $lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : $citata), "name" => "msg", "style" => "width:100%"), " " => array("type" => "string", "value" => bbk('msg')), "  " => array("type" => "submit", "value" => ((!empty($extra)) ? "{$lang['admin']['edit']}" : "{$lang['forum']['submit']}")), "    " => array("type" => "hidden", "name" => "action", "value" => ((!empty($extra)) ? "f_update" : "f_send")));
+			$forma = array(
+				"Form" => array("action" => "", "method" => "post", "name" => "msg"), 
+				" " => array("type" => "string", "value" => bbs('msg')),
+				$lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : $citata), "name" => "msg", "style" => "width:100%"), 
+				"  " => array("type" => "string", "value" => bbk('msg')), 
+				"   " => array("type" => "submit", "value" => ((!empty($extra)) ? "{$lang['admin']['edit']}" : "{$lang['forum']['submit']}")), 
+				"     " => array("type" => "hidden", "name" => "action", "value" => ((!empty($extra)) ? "f_update" : "f_send"))
+			);
 			hide($lang['forum']['newpost'], $bla->form($forma), (!empty($extra)) ? false : true);
 		}
 
@@ -394,7 +400,7 @@ AND `" . LENTELES_PRIESAGA . "d_straipsniai`.`id`=" . escape($tid) . " AND `" . 
 elseif ((int)$lid != 0 && $kid == 0 && $rid == 0) {
 	if (defined("LEVEL") && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1) {
 
-		$sql = mysql_fetch_assoc(mysql_query1("SELECT `uzrakinta` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`=" . escape($sid) . " AND `id`=" . escape($lid) . ""));
+		$sql = mysql_query1("SELECT `uzrakinta` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`=" . escape($sid) . " AND `id`=" . escape($lid) . " limit 1");
 		if (isset($sql['uzrakinta'])) {
 			$lock = $sql['uzrakinta'];
 
@@ -423,7 +429,7 @@ elseif ((int)$kid && (int)$kid && (int)$kid > 0) {
 
 
 		$gis = mysql_query1("SELECT nick FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `sid`=" . escape($kid) . "");
-		while ($stulpelis = mysql_fetch_assoc($gis)) {
+		foreach ($gis as $stulpelis) {
 			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` set `taskai`=`taskai`-1,`forum_atsakyta`=`forum_atsakyta`- 1 where id=" . escape($stulpelis['nick']) . "") or die(mysql_error());
 		}
 		//istrinam zinuters ir tema
@@ -440,11 +446,16 @@ elseif ((int)$kid && (int)$kid && (int)$kid > 0) {
 //redaguojam tema
 elseif (((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1) && (int)$rid != 0) {
 	unset($tsql);
-	$tsql = mysql_fetch_assoc(mysql_query1("SELECT pav,sticky FROM " . LENTELES_PRIESAGA . "d_straipsniai WHERE `id`=" . escape((int)$rid) . ""));
+	$tsql = mysql_query1("SELECT pav,sticky FROM " . LENTELES_PRIESAGA . "d_straipsniai WHERE `id`=" . escape((int)$rid) . " limit 1",15);
 	if (isset($tsql['pav'])) {
 
 		$bla = new forma();
-		$form = array("Form" => array("action" => "", "method" => "post", "name" => "rename"), "{$lang['admin']['forum_cangeto']}:" => array("type" => "text", "style" => "width:100%", "value" => $tsql['pav'], "name" => "name"), "{$lang['forum']['sticky']}?:" => array("type" => "select", "style" => "width:100%", "value" => array("1" => $lang['admin']['yes'], "0" => $lang['admin']['no']), "name" => "sticky", "style" => "width:100%", "selected" => $tsql['sticky']), "  " => array("type" => "submit", "name" => "sub", "value" => "{$lang['admin']['edit']}"));
+		$form = array(
+			"Form" => array("action" => "", "method" => "post", "name" => "rename"), 
+			"{$lang['admin']['forum_cangeto']}:" => array("type" => "text", "style" => "width:100%", "value" => $tsql['pav'], "name" => "name"), 
+			"{$lang['forum']['sticky']}?:" => array("type" => "select", "style" => "width:100%", "value" => array("1" => $lang['admin']['yes'], "0" => $lang['admin']['no']), "name" => "sticky", "style" => "width:100%", "selected" => $tsql['sticky']), 
+			"  " => array("type" => "submit", "name" => "sub", "value" => "{$lang['admin']['edit']}")
+		);
 		lentele($tsql['pav'], $bla->form($form));
 
 		if (isset($_POST['name'])) {
@@ -477,7 +488,7 @@ elseif ($aid == 1 && $kid == 0 && $lid == 0 && $rid == 0) {
 		if (empty($zinute) || strlen(str_replace(" ", "", $zinute)) < 1) {
 			$error .= $lang['forum']['message?'];
 		}
-		$result = mysql_num_rows(mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`=" . escape($sid) . ""));
+		$result = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`=" . escape($sid) . " limit 1");
 		if ($result == 0) {
 			$error .= "{$lang['forum']['badurl']}.<br/>";
 		}
@@ -491,7 +502,7 @@ elseif ($aid == 1 && $kid == 0 && $lid == 0 && $rid == 0) {
 			if (!isset($error)) {
 				unset($result);
 				//`pav`=" . escape($pavadinimas) . " AND
-				$inf = mysql_fetch_assoc(mysql_query1("SELECT max(id)AS`id` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE  autorius=" . escape($_SESSION['username']) . ""));
+				$inf = mysql_query1("SELECT max(id)AS`id` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE  autorius=" . escape($_SESSION['username']) . " limit 1");
 				//prirasiau kad atsinaujintu informacija apie paskutini foruma
 				//mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_temos` SET `last_data`= '" . time() . "', `last_nick`=" . escape($_SESSION['username']) . " WHERE `id`=" . escape($sid) . "") or die(mysql_error());
 				// mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_temos`=`forum_temos`+1 , `taskai`=`taskai`+1 WHERE nick=" . escape($_SESSION['username']) . "") or die(mysql_error());
@@ -519,7 +530,14 @@ WHERE `" . LENTELES_PRIESAGA . "users`.nick=" . escape($_SESSION['username']) . 
 		unset($uid, $pavadinimas, $zinute, $error, $result, $inf);
 	}
 	$bla = new forma();
-	$forma = array("Form" => array("action" => "", "method" => "post", "name" => "post_msg"), $lang['forum']['topicname'] => array("type" => "text", "style" => "width:100%", "name" => "post_pav"), $lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : ''), "name" => "post_msg", "style" => "width:100%"), "" => array("type" => "string", "value" => bbk('post_msg')), "  " => array("type" => "submit", "value" => $lang['forum']['submit']));
+	$forma = array(
+		"Form" => array("action" => "", "method" => "post", "name" => "post_msg"), 
+		$lang['forum']['topicname'] => array("type" => "text", "style" => "width:100%", "name" => "post_pav"), 
+		" " => array("type" => "string", "value" => bbs('post_msg')),
+		$lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : ''), "name" => "post_msg", "style" => "width:100%"), 
+		"  " => array("type" => "string", "value" => bbk('post_msg')), 
+		"   " => array("type" => "submit", "value" => $lang['forum']['submit'])
+	);
 	lentele($lang['forum']['newtopic'], $bla->form($forma));
 }
 

@@ -10,8 +10,9 @@
  * @$Date$
  **/
 
-$sql_p = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
-while ($row_p = mysql_fetch_assoc($sql_p)) {
+$sql_p = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC",120);
+foreach ($sql_p as $row_p) {
+
 	if (is_file("paneles/" . $row_p['file'])) {
 		include_once ("paneles/" . $row_p['file']);
 		if (!isset($title)) {

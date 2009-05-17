@@ -24,14 +24,14 @@ function kategorija($kieno, $leidimas = false) {
 	if (empty($_GET['v'])) {
 		$_GET['v'] = 0;
 	}
-	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND `path`=0 ORDER BY `id` DESC") or die(mysql_error());
-	if (mysql_num_rows($sql) > 0) {
-		while ($row = mysql_fetch_assoc($sql)) {
+	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND `path`=0 ORDER BY `id` DESC",120);
+	if (sizeof($sql) > 0) {
+		foreach ($sql as $row) {
 
-			$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
-			if (mysql_num_rows($sql2) > 0) {
+			$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC",120);
+			if (sizeof($sql2) > 0) {
 				$subcat = '';
-				while ($path = mysql_fetch_assoc($sql2)) {
+				foreach ($sql2 as $path) {
 
 					$subcat .= "->" . $path['pavadinimas'];
 					$kategorijoss[$row['id']] = $row['pavadinimas'];
@@ -102,13 +102,17 @@ function kategorija($kieno, $leidimas = false) {
 		} else {
 			$teises = serialize(0);
 		}
-
-		$path = @mysql_fetch_assoc(mysql_query1("Select * from`" . LENTELES_PRIESAGA . "grupes` WHERE id=" . $_POST['path'] . " Limit 1"));
-		if ($path) {
-				if ($kieno == 'vartotojai')
-				$teises = $_POST['Teises']; else
-				$teises = serialize($_POST['Teises']);
+		
+		if (isset($_POST['path'])) {
+			$path = mysql_query1("Select * from`" . LENTELES_PRIESAGA . "grupes` WHERE id=" . escape($_POST['path']) . " Limit 1",120);
+			if ($path) {
+					if ($kieno == 'vartotojai')
+						$teises = $_POST['Teises']; 
+					else
+						$teises = serialize($_POST['Teises']);
+			}			
 		}
+
 		if ($path['path'] == 0) {
 			$pathas = $path['id'];
 		} else {
@@ -118,13 +122,10 @@ function kategorija($kieno, $leidimas = false) {
 			$pathas = 0;
 		}
 		if ($kieno == 'vartotojai') {
-			$einfo = mysql_query("SELECT `teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `teises`='" . $teises . "'AND `kieno`='vartotojai'") or die(mysql_error());
-			$einfo = mysql_num_rows($einfo);
+			$einfo = mysql_query("SELECT `teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `teises`='" . $teises . "'AND `kieno`='vartotojai'");
 
-			if ($einfo == 0) {
-				$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "grupes` 
- (`pavadinimas`, `aprasymas`, `teises`, `pav`, `path`, `kieno`, `mod`)
-  VALUES (" . escape($pavadinimas) . ",  " . escape($aprasymas) . ", " . escape($teises) . ", " . escape($pav) . ", " . escape($pathas) . ", " . escape($kieno) . ", " . escape($moderuoti) . ")") or die(mysql_error());
+			if (sizeof($einfo) > 0) {
+				$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "grupes` (`pavadinimas`, `aprasymas`, `teises`, `pav`, `path`, `kieno`, `mod`) VALUES (" . escape($pavadinimas) . ",  " . escape($aprasymas) . ", " . escape($teises) . ", " . escape($pav) . ", " . escape($pathas) . ", " . escape($kieno) . ", " . escape($moderuoti) . ")");
 
 				if ($result) {
 					msg($lang['system']['done'], $lang['system']['categorycreated']);
@@ -172,7 +173,7 @@ function kategorija($kieno, $leidimas = false) {
 		}
 	}
 	if (isset($_POST['Kategorijos_id']) && isNum($_POST['Kategorijos_id']) && $_POST['Kategorijos_id'] > 0 && isset($_POST['Kategorija']) && $_POST['Kategorija'] == $lang['system']['edit']) {
-		$extra = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND `id`=" . escape((int)$_POST['Kategorijos_id']) . " LIMIT 1") or die(mysql_error());
+		$extra = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND `id`=" . escape((int)$_POST['Kategorijos_id']) . " LIMIT 1",120);
 		$extra = mysql_fetch_assoc($extra);
 	}
 	if ($_GET['v'] == 2 || $_GET['v'] == 5) {
@@ -185,7 +186,7 @@ function kategorija($kieno, $leidimas = false) {
 			if ($kieno == 'straipsniai') {
 
 				$sql = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `kat` = " . escape($_POST['Kategorijos_id']) . "");
-				while ($row = mysql_fetch_assoc($sql)) {
+				foreach ($sql as $row) {
 
 					mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/straipsnis' AND kid=" . escape($row['id']) . "");
 				}
@@ -196,8 +197,8 @@ function kategorija($kieno, $leidimas = false) {
 			//Trinam failą iš siuntinių
 			if ($kieno == 'siuntiniai') {
 				$id = ceil((int)$_POST['Kategorijos_id']);
-				$sql = mysql_query1("SELECT `ID`,`file` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `categorija` = " . escape($id) . "");
-				while ($row = mysql_fetch_assoc($sql)) {
+				$sql = mysql_query1("SELECT `ID`,`file` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `categorija` = " . escape($id) . "",120);
+				foreach ($sql as $row) {
 
 					if (isset($row['file']) && !empty($row['file'])) {
 						mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/siustis' AND kid=" . escape($row['ID']) . "");
@@ -210,8 +211,8 @@ function kategorija($kieno, $leidimas = false) {
 			//Trinam paveikslėlius kurie yra kategorijoje(galerija)
 			if ($kieno == 'galerija') {
 				$id = ceil((int)$_POST['Kategorijos_id']);
-				$sql = mysql_query1("SELECT `ID`,`file` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `categorija` = " . escape($id) . "");
-				while ($row = mysql_fetch_assoc($sql)) {
+				$sql = mysql_query1("SELECT `ID`,`file` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `categorija` = " . escape($id) . "",120);
+				foreach ($sql as $row) {
 					if (isset($row['file']) && !empty($row['file'])) {
 						@unlink("galerija/" . $row['file']);
 						@unlink("galerija/mini/" . $row['file']);
@@ -224,17 +225,17 @@ function kategorija($kieno, $leidimas = false) {
 			//Trinamos naujienos esančios kategorijoje
 			if ($kieno == 'naujienos') {
 				$id = ceil((int)$_POST['Kategorijos_id']);
-				$sql = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija` = " . escape($_POST['Kategorijos_id']) . "");
-				while ($row = mysql_fetch_assoc($sql)) {
+				$sql = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija` = " . escape($_POST['Kategorijos_id']) . "",120);
+				foreach ($sql as $row) {
 					mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/naujienos' AND kid=" . escape($row['id']) . "");
 				}
 				mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija` = '" . escape($id) . "'") or klaida("Klaida", mysql_error());
 			}
 			//trinama kategorija
 			//Jei turi subkategoriju, perkeliam
-			$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`like%" . escape($_POST['Kategorijos_id']) . ",%");
-			if (mysql_num_rows($sql) > 0) {
-				while ($row = mysql_fetch_assoc($sql)) {
+			$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`like%" . escape($_POST['Kategorijos_id']) . ",%",120);
+			if (sizeof($sql) > 0) {
+				foreach ($sql as $row) {
 					//echo $row['path'];
 					$update = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "grupes` set path=" . str_replace(escape($_POST['Kategorijos_id']) . ",", "", $row['path']) . " WHERE id=" . $row['id'] . "");
 				}

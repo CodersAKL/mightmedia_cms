@@ -42,14 +42,14 @@ HTML;
 		$text .= "<li><a href=\"?id," . $conf['puslapiai']['edit_user.php']['id'] . "\"><img src=\"images/icons/user_edit.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\"> {$lang['user']['edit_profile']}</a></li>";
 	}
 	if (isset($conf['puslapiai']['pm.php']['id'])) {
-		$pm = mysql_fetch_assoc(mysql_query1("SELECT count(id) AS `total` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_SESSION['username']) . " AND `read`='NO'"));
+		$pm = kiek('private_msg', "WHERE `to`=" . escape($_SESSION['username']) . " AND `read`='NO'",'total');
 
-		if ($pm['total'] != 0) {
+		if ($pm != 0) {
 			$img = "<blink><img src='images/icons/email_error.gif' alt='new' border='0' style=\"vertical-align: middle;\"/></blink>";
 		} else {
 			$img = "<img src='images/icons/email.png' alt='@' border='0' style=\"vertical-align: middle;\"/>";
 		}
-		$text .= "<li><a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";a,1\">$img {$lang['user']['messages']} ({$pm['total']})</a></li>";
+		$text .= "<li><a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";a,1\">$img {$lang['user']['messages']} ({$pm})</a></li>";
 	}
 
 	if (isset($conf['puslapiai']['moderatorius.php']['id']) && isset($_SESSION['mod']) && !empty($_SESSION['mod'])) {

@@ -2,13 +2,10 @@
 Deny from All
 </FilesMatch>
 
-<FilesMatch "uploader.php">
+<FilesMatch "uploader.php|scan.php|styles.php|backend.php">
 Allow from all
 </FilesMatch>
 
-<FilesMatch "styles.php">
-Allow from all
-</FilesMatch>
 
 #Betkokie bandymai atverti faila forsuoja parsisiuntima
 <Files *.*>

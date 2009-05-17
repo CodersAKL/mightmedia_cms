@@ -26,8 +26,8 @@ header_info();
 
 $sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC LIMIT 12");
 $text = '';
-while ($row1 = mysql_fetch_assoc($sql1)) {
-	if ($row1['show'] == "Y" && (int)$_SESSION['level'] >= (int)$row1['teises']) {
+foreach ($sql1 as $row1) {
+	if ($row1['show'] == "Y" && puslapis($row1['file'])) {
 		$text .= '<a href="?id,' . (int)$row1['id'] . '">' . input($row1['pavadinimas']) . '</a>';
 	}
 }
@@ -91,11 +91,11 @@ if ($conf['Render'] == 1) {
 	$ttime = '';
 }
 copyright("$ttime\n" . $conf['Copyright'] . "");
-if (defined("LEVEL") && LEVEL > 20) {
+if (defined("LEVEL") && LEVEL == 1) {
 	copyright("Mysql uzklausu: $mysql_num");
 }
 unset($extra, $meniu, $text, $ttime);
-
+$mysql_num;
 ?></div>
 </body>
 </html>

@@ -36,11 +36,11 @@ function chatbox() {
 	$extras = '';
 	$chat = mysql_query1("SELECT SQL_CACHE `" . LENTELES_PRIESAGA . "chat_box`.*,`" . LENTELES_PRIESAGA . "users`.`nick`,`" . LENTELES_PRIESAGA . "users`.`levelis`
 FROM `" . LENTELES_PRIESAGA . "chat_box` Inner Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "chat_box`.`niko_id` = `" . LENTELES_PRIESAGA . "users`.`id`
-ORDER BY `time` DESC LIMIT " . escape((int)$conf['Chat_limit'])) or die(mysql_error());
+ORDER BY `time` DESC LIMIT " . escape((int)$conf['Chat_limit']));
 $i=0;
 
-  if (mysql_num_rows($chat) > 0) {
-    while ($row = mysql_fetch_assoc($chat)) {
+  if (sizeof($chat) > 0) {
+    foreach ($chat as $row) {
     $i++;
       if ($_SESSION['level']==1||(isset($_SESSION['mod'])&& strlen($_SESSION['mod'])>1)&& isset($conf['puslapiai']['deze.php']['id'])) {
         $extras = "

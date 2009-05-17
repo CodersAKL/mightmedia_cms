@@ -13,9 +13,3 @@ ErrorDocument 401 /klaida.php
 ErrorDocument 403 /klaida.php
 ErrorDocument 404 /klaida.php
 ErrorDocument 500 /klaida.php
-#šiaip
-deny from 12.111.111.11
-#šiaip
-deny from 12.111.111.11
-#šiaip
-deny from 12.111.111.11

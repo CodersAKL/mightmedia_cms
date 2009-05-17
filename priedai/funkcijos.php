@@ -204,27 +204,23 @@ if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
  * @return array
  */
 unset($sql, $row);
-$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `path`=0 ORDER BY `id` DESC");
-//$levels = '';
-if (mysql_num_rows($sql) > 0) {
-	while ($row = mysql_fetch_assoc($sql)) {
-		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE path!=0 and `path` like'" . $row['id'] . "%' ORDER BY `id` ASC");
-		if (mysql_num_rows($sql2) > 0) {
+$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `path`=0 ORDER BY `id` DESC",300);
+
+if (sizeof($sql) > 1) {
+	foreach ($sql as $row) {
+		$sql2 = mysql_query1("SELECT `pavadinimas` FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE path!=0 and `path` like'" . $row['id'] . "%' ORDER BY `id` ASC");
+		if (sizeof($sql2) > 0) {
 			$subcat = '';
-			while ($path = mysql_fetch_assoc($sql2)) {
+			foreach ($sql2 as $path) {
 
 				$subcat .= "->" . $path['pavadinimas'];
 				$levels[$row['teises']] = array('pavadinimas' => $row['pavadinimas'], 'aprasymas' => $row['aprasymas'], 'pav' => $row['pav']);
 				$levels[$path['teises']] = array('pavadinimas' => $row['pavadinimas'] . $subcat, 'aprasymas' => $row['aprasymas'], 'pav' => $row['pav']);
 
-
 			}
 		} else {
 			$levels[$row['teises']] = array('pavadinimas' => $row['pavadinimas'], 'aprasymas' => $row['aprasymas'], 'pav' => $row['pav']);
-
 		}
-
-
 	}
 }
 $levels[1] = array('pavadinimas' => $lang['system']['admin'], 'aprasymas' => $lang['system']['admin'], 'pav' => 'admin.png');
@@ -234,11 +230,12 @@ $levels[2] = array('pavadinimas' => $lang['system']['user'], 'aprasymas' => $lan
 $conf['level'] = $levels;
 unset($levels, $sql, $row);
 
+
 /**
  * Gaunam visus puslapius ir sukisam i masyva
  */
-$sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
-while ($row = mysql_fetch_assoc($sql)) {
+$sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC",120);
+foreach ($sql as $row) {
 	$conf['puslapiai'][$row['file']] = array('id' => $row['id'], 'pavadinimas' => $row['pavadinimas'], 'file' => $row['file'], 'place' => (int)$row['place'], 'show' => $row['show'], 'teises' => $row['teises']);
 }
 
@@ -284,12 +281,70 @@ function user($user, $id = 0, $level = 0, $extra = false) {
  * @param sql string $query
  * @return resource
  */
-function mysql_query1($query) {
+function mysql_query1($query, $lifetime = 0) {
 	global $mysql_num, $prisijungimas_prie_mysql;
-	//if (defined("LEVEL") && LEVEL > 20) {
-	$mysql_num++;
-	//}
-	return mysql_query($query, $prisijungimas_prie_mysql);
+
+	//Sugeneruojam kesho pavadinima
+	$keshas = 'sandeliukas/'.md5($query).'.txt';	//kesho failas
+	$return = array();
+	
+	if ($lifetime > 0 && !in_array(strtolower(substr($query,0,6)),array('delete','insert','update'))) {
+		
+		//Tikrinam ar keshas yra jau
+		if (is_file($keshas) && filemtime($keshas) > $_SERVER['REQUEST_TIME'] - $lifetime) {
+			//uzkraunam kesha
+			$fh = fopen($keshas, 'rb') or die("negaliu nuskaityti kesho failo");
+			
+			$return = unserialize(fread($fh, filesize($keshas)));	//skaitom
+			fclose($fh);
+			
+		} else {
+			//Irasom i kesh faila
+			$mysql_num++;
+
+			$sql = mysql_query($query, $prisijungimas_prie_mysql) or die(mysql_error());
+			
+			//Jeigu uzklausoje nurodyta kad reikia tik vieno iraso tai nesudarom masyvo.
+			if (substr(strtolower($query),-7) == 'limit 1') {
+				$return = mysql_fetch_assoc($sql);
+			} else {
+				while ($row = mysql_fetch_assoc($sql)) {
+					$return[] = $row;
+				}
+			}
+			
+			$fh = fopen($keshas, 'wb') or die("negaliu nuskaityti kesho");
+
+			//Reikia uzrakinti faila kad du kartus neirasytu
+			if (flock($fh, LOCK_EX)) { // urakinam
+			    fwrite($fh, serialize($return));
+			    flock($fh, LOCK_UN); // release the lock
+			} else {
+			    echo "Negaliu uzrakinti failo !";
+			}
+			fclose($fh);	//baigiam failo irasyma
+			$return = $return;
+		}
+		return $return;
+	} else {
+		$mysql_num++;
+
+			$sql = mysql_query($query, $prisijungimas_prie_mysql);
+
+			if (in_array(strtolower(substr($query,0,6)),array('delete','insert','update'))) {
+				$return = true;
+			} 
+			else {
+				if (substr(strtolower($query),-7) == 'limit 1') {
+					$return = mysql_fetch_assoc($sql);
+				} else {
+					while ($row = mysql_fetch_assoc($sql)) {
+						$return[] = $row;
+					}
+				}
+			}
+	}
+	return $return;
 }
 
 /**
@@ -342,7 +397,7 @@ function get_tag_contents($xml, $tag) {
  * @return int
  */
 function kiek($table, $where = '', $as = "viso") {
-	$viso = mysql_fetch_assoc(mysql_query1("SELECT count(id) AS $as FROM `" . LENTELES_PRIESAGA . $table . "` " . $where));
+	$viso = mysql_query1("SELECT count(id) AS $as FROM `" . LENTELES_PRIESAGA . $table . "` " . $where . 'limit 1',60);
 	return (isset($viso[$as]) && $viso[$as] > 0 ? (int)$viso[$as] : (int)0);
 }
 
@@ -1053,7 +1108,7 @@ function versija($failas = false) {
 function debug() {
 	global $lang;
 	$array = debug_backtrace();
-	klaida($lang['system']['debuger'], '<pre>' . print_r(array_values($array), true) . '</pre>');
+	klaida($lang['system']['debuger'], '<code><pre>' . print_r(array_values($array), true) . '</pre></code>');
 }
 function sendcompressedcontent($content) {
 	header("Content-Encoding: gzip");

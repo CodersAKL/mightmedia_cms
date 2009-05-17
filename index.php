@@ -47,11 +47,12 @@ if (isset($url['id']) && !empty($url['id']) && isnum($url['id'])) {
 	$url['id'] = $pslid;
 }
 if (isset($pslid) && isnum($pslid) && $pslid > 0) {
-	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int)$pslid) . " LIMIT 1") or die(mysql_error());
-	if (mysql_num_rows($sql1) > 0) {
-		$sql1 = mysql_fetch_assoc($sql1);
-		if (isset($_SESSION['level']) && ($_SESSION['level'] == $sql1['teises'] || $_SESSION['level'] == 1 || $sql1['teises'] == 0)) {
-			$page = 'puslapiai/' . str_replace(".php", "", $sql1['file']);
+	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int)$pslid) . " LIMIT 1",180);
+
+	if (!empty($sql1)) {
+
+		if (puslapis($sql1['file'])) {
+			$page = 'puslapiai/' . basename($sql1['file'],'.php');
 			$page_pavadinimas = $sql1['pavadinimas'];
 		} else {
 			$page = "puslapiai/klaida";
@@ -76,6 +77,7 @@ if ($conf['Palaikymas'] == 1) {
 		redirect("remontas.php");
 	}
 }
+
 include_once ("priedai/header.php");
 //Tikrinam ar setup.php failas paљalintas. Saugumo sumetimais
 if (is_file('setup.php') && defined('LEVEL') && LEVEL == 1 && !@unlink('setup.php')) {

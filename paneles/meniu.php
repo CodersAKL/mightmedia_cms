@@ -12,7 +12,7 @@
 
 $sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
 $text = '<div id="vertikalus_meniu"><ul>';
-while ($row1 = mysql_fetch_assoc($sql1)) {
+foreach ($sql1 as $row1) {
 	if ($row1['show'] == "Y" && puslapis($row1['file'])) {
 		$text .= '<li><a href="?id,' . $row1['id'] . '">' . $row1['pavadinimas'] . '</a></li>';
 

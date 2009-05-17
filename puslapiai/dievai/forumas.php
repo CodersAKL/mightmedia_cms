@@ -76,7 +76,7 @@ if (isset($_POST['order'])) {
 	$where = rtrim($where, ", ");
 	$sqlas .= "UPDATE `" . LENTELES_PRIESAGA . "d_forumai` SET `place`=  CASE id " . $case_place . " END WHERE id IN (" . $where . ")";
 	echo $sqlas;
-	$result = mysql_query1($sqlas) or die(mysql_error());
+	$result = mysql_query1($sqlas);
 
 }
 if (isset($_POST['order2'])) {
@@ -96,7 +96,7 @@ if (isset($_POST['order2'])) {
 	$where = rtrim($where, ", ");
 	$sqlas .= "UPDATE `" . LENTELES_PRIESAGA . "d_temos` SET `place`=  CASE id " . $case_place . " END WHERE id IN (" . $where . ")";
 	echo $sqlas;
-	$result = mysql_query1($sqlas) or die(mysql_error());
+	$result = mysql_query1($sqlas);
 
 }
 // Paspaustas kazkoks mygtukas
@@ -134,11 +134,11 @@ if (isset($_POST['keisti']) && $_POST['keisti'] == $lang['admin']['edit']) {
 if (isset($_GET['d'])) {
 	$f_id = (int)$_GET['d'];
 	$strid = mysql_query1("SELECT id from `" . LENTELES_PRIESAGA . "d_temos`  WHERE `fid`='" . $f_id . "'");
-	if (mysql_num_rows($strid) > 0) {
-		while ($stridi = mysql_fetch_assoc($strid)) {
+	if (sizeof($strid) > 0) {
+		foreach ($strid as $stridi) {
 			$zinsid = mysql_query1("SELECT id from `" . LENTELES_PRIESAGA . "d_straipsniai` where `tid`=" . escape($stridi['id']) . "");
-			if (mysql_num_rows($zinsid) > 0) {
-				while ($zinsids = mysql_fetch_assoc($zinsid)) {
+			if (sizeof($zinsid) > 0) {
+				foreach ($zinsid as $zinsids) {
 					$result2 = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_zinute`  WHERE sid=" . escape($zinsids['id']) . "");
 				}
 			}
@@ -166,8 +166,8 @@ if (isset($_GET['t'])) {
 	$result = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_temos`  WHERE `id`='" . $f_id . "'");
 	//turetu istrint zinutes
 	$sql12 = mysql_query1("SELECT id from `" . LENTELES_PRIESAGA . "d_straipsniai` where `tid`='" . $f_id . "'");
-	if (mysql_num_rows($sql12) > 0) {
-		while ($sidas = mysql_fetch_assoc($sql12)) {
+	if (sizeof($sql12) > 0) {
+		foreach ($sql12 as $sidas) {
 			$result2 = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_zinute`  WHERE sid='" . $sidas['id'] . "'") or die(mysql_error());
 
 		}
@@ -204,49 +204,11 @@ if (isset($_POST['subedit']) && $_POST['subedit'] == $lang['admin']['forum_selec
 	
 $f_id = (int)$_POST['f_forumas'];
 $sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `fid`='" . $f_id . "' ORDER by place");
-if(mysql_num_rows($sql)>0){
-	$tema = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` where `id`='" . (int)$_POST['f_forumas'] . "'  ORDER BY `place` ASC"));
-/*	$f_id = (int)$_POST['f_forumas'];
-	$f_info = "
-					
-					<form name=\"44\" action=\"?id," . $url['id'] . ";a,{$_GET['a']}\" method=\"post\">
-					<table border=0 width=100%>
-						<tr>
-							<td width='15%'>{$lang['admin']['forum_category']}:</td>
-							<td>
-								";
-	while ($row = mysql_fetch_assoc($sql)) {
-		$f_info .= "<b>" . $row['pav'] . "</b><br/><input type=\"hidden\" name=\"f_forumas\" value=\"" . $row['id'] . "\"> ";
+if(sizeof($sql)>0){
+	$tema = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` where `id`='" . (int)$_POST['f_forumas'] . "'  ORDER BY `place` ASC limit 1");
 
-
-	}
-	unset($row, $sql);
-	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `fid`='" . $f_id . "'");
-	$f_info .= "
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>{$lang['admin']['forum_subcategory']}:</td>
-							<td>
-								<select size=\"1\" name=\"f_sub\">";
-	while ($row = mysql_fetch_assoc($sql)) {
-		$f_info .= "<option value='" . $row['id'] . "'>" . $row['pav'] . "</option>";
-	}
-	$f_info .= "
-								</select>
-							</td>
-						</tr>
-					</table>
-					<input type=\"submit\" name=\"action2\" value=\"{$lang['admin']['edit']}\"> <input name=\"action2\" type=\"submit\" value=\"{$lang['admin']['delete']}\">
-					
-					</form>
-				
-				";
-	lentele($lang['admin']['forum_editsub'], $f_info);
-	unset($f_info, $f_id, $sql, $row, $t_info);*/
 	$li='';
-	while ($record1 = mysql_fetch_assoc($sql)) {
+	foreach ($sql as $record1) {
 		$li .= '<li id="listItem_' . $record1['id'] . '" style="display:block; border:1px solid grey; width:460px; padding:3px; margin:3px; background-color:#DDDDDD"> 
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';t,' . $record1['id'] . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] . ';f,'.$tema['id'].'" style="align:right" ><img src="images/icons/pencil.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>  
@@ -263,10 +225,10 @@ if(mysql_num_rows($sql)>0){
 if (isset($_GET['r'])&& isset($_GET['f'])) {
 	$f_id = (int)$_GET['f'];
 	$f_temos_id = (int)$_GET['r'];
-	$sql = mysql_fetch_assoc(mysql_query1("SELECT pav FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `id`='" . $f_id . "'"));
+	$sql = mysql_query1("SELECT pav FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `id`='" . $f_id . "' limit 1");
 	$f_forumas = $sql['pav'];
 	unset($sql);
-	$t_info = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`='" . $f_temos_id . "'"));
+	$t_info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`='" . $f_temos_id . "' limit 1");
 	$f_text = "
 					
 					<form name=\"subred\" action=\"?id," . $url['id'] . ";a,{$_GET['a']}\" method=\"post\">
@@ -324,7 +286,7 @@ if (isset($url['f'])) {
 	//Kategorijos redagavimas
 	if ((int)$url['f'] == 2) {
 		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` ORDER BY `place` ASC");
-		if (mysql_num_rows($sql) > 0) {
+		if (sizeof($sql) > 0) {
 			$li = "";
 
 			$tekst = "
@@ -333,7 +295,7 @@ if (isset($url['f'])) {
 						<tr>
 							<td width='10%'>{$lang['admin']['forum_category']}:</td>
 							<td><select size=\"1\" name=\"f_edit\">";
-			while ($record1 = mysql_fetch_assoc($sql)) {
+			foreach ($sql as $record1) {
 				$tekst .= "<option value=" . $record1['id'] . ">" . $record1['pav'] . "</option>\n";
 				$li .= '<li id="listItem_' . $record1['id'] . '" style="display:block; border:1px solid grey; width:460px; padding:3px; margin:3px; background-color:#DDDDDD"> 
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
@@ -365,14 +327,14 @@ if (isset($url['f'])) {
 	//subkat. kūrimo forma
 	if ((int)$url['f'] == 3) {
 		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` ORDER BY `place` ASC");
-		if (mysql_num_rows($sql) > 0) {
+		if (sizeof($sql) > 0) {
 			$f_text = "
 					<form name=\"kurk\" action=\"?id," . $url['id'] . ";a,{$_GET['a']}\" method=\"post\">
 					<table border=0 width=100%>
 						<tr>
 							<td width='10%'>{$lang['admin']['forum_category']}:</td>
 							<td><select size=\"1\" name=\"f_forumas\">";
-			while ($row = mysql_fetch_assoc($sql)) {
+			foreach ($sql as $row) {
 				$f_text .= "<option value=" . $row['id'] . ">" . $row['pav'] . "</option>\n";
 			}
 			$f_text .= "</select>
@@ -399,7 +361,7 @@ if (isset($url['f'])) {
 	//subkat redag?
 	if ((int)$url['f'] == 4) {
 		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` ORDER BY `place` ASC");
-		if (mysql_num_rows($sql) > 0) {
+		if (sizeof($sql) > 0) {
 			$f_text = "
 					
 					<form name=\"subedit\" action=\"?id," . $url['id'] . ";a,{$_GET['a']}\" method=\"post\">
@@ -407,7 +369,7 @@ if (isset($url['f'])) {
 						<tr>
 							<td width='50%'>{$lang['admin']['forum_subwhere']}:</td>
 							<td><select size=\"1\" name=\"f_forumas\">";
-			while ($row = mysql_fetch_assoc($sql)) {
+			foreach ($sql as $row) {
 				$f_text .= "<option value='" . $row['id'] . "'>" . $row['pav'] . "</option>\n";
 			}
 			$f_text .= "
