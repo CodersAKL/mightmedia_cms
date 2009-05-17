@@ -226,7 +226,7 @@ if (isset($mid) && isnum($mid)) {
 		$a = 1;
 		while ($a < 31) {
 			$text .= "<option value=" . $a . " ";
-			if ($a == $data[2]) {
+			if (isset($data[2]) && $a == $data[2]) {
 				$text .= "selected";
 			}
 			$text .= " >$a</option>\n";
@@ -237,69 +237,69 @@ if (isset($mid) && isnum($mid)) {
   					</select>
   					<select size=\"1\" name=\"menesis\">
   						<option value=\"1\" ";
-		if ($data[1] == 1) {
+		if (isset($data[1]) && $data[1] == 1) {
 			$text .= "selected";
 		}
 		$text .= ">{$lang['calendar']['January']}</option>
   						<option value=\"2\" ";
-		if ($data[1] == 2) {
+		if (isset($data[1]) && $data[1] == 2) {
 			$text .= "selected";
 		}
 		$text .= ">{$lang['calendar']['February']}</option>
   						<option value=\"3\" ";
-		if ($data[1] == 3) {
+		if (isset($data[1]) && $data[1] == 3) {
 			$text .= "selected";
 		}
 		$text .= ">{$lang['calendar']['March']}</option>
   						<option value=\"4\" ";
-		if ($data[1] == 4) {
+		if (isset($data[1]) && $data[1] == 4) {
 			$text .= "selected";
 		}
 		$text .= ">{$lang['calendar']['April']}</option>
   						<option value=\"5\" ";
-		if ($data[1] == 5) {
+		if (isset($data[1]) && $data[1] == 5) {
 			$text .= "selected";
 		}
 		$text .= ">{$lang['calendar']['May']}</option>
   						<option value=\"6\" ";
-		if ($data[1] == 6) {
+		if (isset($data[1]) && $data[1] == 6) {
 			$text .= "selected";
 		}
 		$text .= ">{$lang['calendar']['June']}</option>
   						<option value=\"7\" ";
-		if ($data[1] == 7) {
+		if (isset($data[1]) && $data[1] == 7) {
 			$text .= "selected";
 		}
 		$text .= ">{$lang['calendar']['July']}</option>
   						<option value=\"8\" ";
-		if ($data[1] == 8) {
+		if (isset($data[1]) && $data[1] == 8) {
 			$text .= "selected";
 		}
 		$text .= ">{$lang['calendar']['August']}</option>
   						<option value=\"9\" ";
-		if ($data[1] == 9) {
+		if (isset($data[1]) && $data[1] == 9) {
 			$text .= "selected";
 		}
 		$text .= ">{$lang['calendar']['September']}</option>
   						<option value=\"10\" ";
-		if ($data[1] == 10) {
+		if (isset($data[1]) && $data[1] == 10) {
 			$text .= "selected";
 		}
 		$text .= ">{$lang['calendar']['October']}</option>
   						<option value=\"11\" ";
-		if ($data[1] == 11) {
+		if (isset($data[1]) && $data[1] == 11) {
 			$text .= "selected";
 		}
 		$text .= ">{$lang['calendar']['November']}</option>
   						<option value=\"12\" ";
-		if ($data[1] == 12) {
+		if (isset($data[1]) && $data[1] == 12) {
 			$text .= "selected";
 		}
 		$text .= ">{$lang['calendar']['December']}</option>
 					</select>
 					<select size=\"1\" name=\"metai\">";
 		$a = date("Y") - 80;
-		$viso = date("Y") - 10;
+		$viso = date("Y") - 7;
 		while ($a < $viso) {
 			$text .= "<option value=" . $a . " ";
 			if ($data[0] == $a) {
