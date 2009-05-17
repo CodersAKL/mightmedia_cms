@@ -145,8 +145,9 @@ HTML;
 
 		foreach ($failai as $file) {
 			if ($file['type'] == 'file') {
-				$sql = mysql_query1("SELECT panel FROM `" . LENTELES_PRIESAGA . "panel` WHERE file=" . escape(basename($file['name'])) . " LIMIT 1");
-				if (mysql_num_rows($sql) == 0) {
+				$sql = mysql_query1("SELECT file FROM `" . LENTELES_PRIESAGA . "panel` WHERE file=" . escape(basename($file['name'])) . " LIMIT 1");
+				//echo $sql['file'];
+				if ($sql['file'] != basename($file['name'])) {
 					$paneles[basename($file['name'])] = basename($file['name']) . ": " . $file['sizetext'] . "\n";
 				}
 			}
@@ -192,7 +193,7 @@ HTML;
 		} else {
 
 			$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`=" . escape((int)$url['r']) . " LIMIT 1";
-			$sql = mysql_fetch_assoc(mysql_query1($sql));
+			$sql = mysql_query1($sql, 3500);
 			$selected = unserialize($sql['teises']);
 			$box = "";
 			foreach ($teises as $name => $check) {
@@ -213,7 +214,7 @@ HTML;
 
 		if (isset($_POST['Turinys']) && !empty($_POST['Turinys'])) {
 			$sql = "SELECT `file` FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`=" . escape($panel_id) . " LIMIT 1";
-			$sql = mysql_fetch_assoc(mysql_query1($sql));
+			$sql = mysql_query1($sql);
 			if (!is_writable('paneles/' . $sql['file'])) {
 				klaida($lang['system']['warning'], $lang['admin']['panel_cantedit']);
 			} else {
@@ -239,7 +240,7 @@ HTML;
 			}
 		} else {
 			$sql = "SELECT `id`, `panel`, `file` FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`=" . escape($panel_id) . " LIMIT 1";
-			$sql = mysql_fetch_assoc(mysql_query1($sql));
+			$sql = mysql_query1($sql);
 			//tikrinam failo struktura
 
 			$lines = file('paneles/' . $sql['file']); // "failas.txt" - failas kuriame ieškoma.
@@ -296,31 +297,35 @@ HTML;
 	$sql = "SELECT id, panel, place from `" . LENTELES_PRIESAGA . "panel` WHERE align='L' order by place";
 	$recordSet = mysql_query1($sql);
 	$listArray = array();
-	while ($record = mysql_fetch_assoc($recordSet)) {
-		//$listArray[] = sprintf($listItemFormat, $record['id'], $record['panel'], $record['id'],$record['id'], $record['id']);
+	if (sizeof($recordSet) > 0) {
+		foreach ($recordSet as $record) {
+			//$listArray[] = sprintf($listItemFormat, $record['id'], $record['panel'], $record['id'],$record['id'], $record['id']);
 
-		$li .= '<li id="listItem_' . $record['id'] . '" Style="display:block; border:1px solid grey; width:210px; padding:3px; margin:3px; background-color:#DDDDDD"> 
+			$li .= '<li id="listItem_' . $record['id'] . '" Style="display:block; border:1px solid grey; width:210px; padding:3px; margin:3px; background-color:#DDDDDD"> 
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record['id'] . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record['id'] . '" style="align:right"><img src="images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record['id'] . '" style="align:right"><img src="images/icons/pencil.png" title="' . $lang['admin']['panel_text'] . '" align="right" /></a> 
 <img style="cursor:move;vertical-align:middle" src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
 ' . $record['panel'] . '
 </li> ';
+		}
 	}
 	$sql1 = "SELECT id, panel, place from `" . LENTELES_PRIESAGA . "panel` WHERE align='R' order by place";
 	$recordSet1 = mysql_query1($sql1);
 	//$listArray1 = array();
 
-	while ($record1 = mysql_fetch_assoc($recordSet1)) {
-		//$listArray1[] = sprintf($listItemFormat, $record1['id'], $record1['panel'], $record1['id'],$record1['id'], $record1['id']);
-		//$listArray1[] = sprintf($listItemFormat, $record1['id'], $record1['pavadinimas'],$record1['id'], $record1['id'], $record1['id']);
-		$li1 .= '<li id="listItem_' . $record1['id'] . '" style="display:block; border:1px solid grey; width:210px; padding:3px; margin-bottom:3px; background-color:#DDDDDD"> 
+	if (sizeof($recordSet1) > 0) {
+		foreach ($recordSet1 as $record1) {
+			//$listArray1[] = sprintf($listItemFormat, $record1['id'], $record1['panel'], $record1['id'],$record1['id'], $record1['id']);
+			//$listArray1[] = sprintf($listItemFormat, $record1['id'], $record1['pavadinimas'],$record1['id'], $record1['id'], $record1['id']);
+			$li1 .= '<li id="listItem_' . $record1['id'] . '" style="display:block; border:1px solid grey; width:210px; padding:3px; margin-bottom:3px; background-color:#DDDDDD"> 
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] . '" style="align:right"><img src="images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record1['id'] . '" style="align:right"><img src="images/icons/pencil.png" title="' . $lang['admin']['panel_text'] . '" align="right" /></a> 
 <img style="cursor:move;vertical-align:middle" src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
 ' . $record1['panel'] . '
 </li> ';
+		}
 	}
 	//mysql_free_result($recordSet);
 	//mysql_free_result($recordSet1);

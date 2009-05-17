@@ -34,7 +34,7 @@ $i = 0;
 
 while ($row = mysql_fetch_assoc($result)) {
 	//if (!empty($row['user'])) {
-	$narsykle =((isset($row['agent']))?browser($row['agent']):'?');
+	$narsykle = ((isset($row['agent'])) ? browser($row['agent']) : '?');
 	$info[$i] = array("{$lang['online']['who']}" => user($row['user'], $row['id']), "{$lang['online']['timestamp']}" => date('i:s', $timestamp - $row['timestamp']), "{$lang['online']['clicks']}" => $row['clicks']);
 	if (defined("LEVEL") && LEVEL == 1) {
 		$info[$i]['IP'] = "<a href='http://www.dnsstuff.com/tools/whois.ch?ip=" . $row['ip'] . "&src=ShowIP' target='_blank' title='" . $row['ip'] . "'>" . $row['ip'] . "</a>";

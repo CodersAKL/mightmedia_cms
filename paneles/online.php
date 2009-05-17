@@ -16,7 +16,7 @@ if (!defined("OK")) {
 	exit();
 }
 
-if (defined("LEVEL") && LEVEL >= 30) { //ADMINAS
+if (defined("LEVEL") && LEVEL == 1) { //ADMINAS
 	$q = "SELECT * FROM `" . LENTELES_PRIESAGA . "kas_prisijunges` WHERE `timestamp`>'" . $timeout . "'";
 } elseif (!defined("LEVEL")) { //SVECIAS
 	$q = "SELECT `id`, `uid`, `user`, `file` FROM `" . LENTELES_PRIESAGA . "kas_prisijunges` WHERE `timestamp`>'" . $timeout . "' LIMIT 10";
@@ -24,11 +24,11 @@ if (defined("LEVEL") && LEVEL >= 30) { //ADMINAS
 	$q = "SELECT `id`, `uid`, `user`, `file` FROM `" . LENTELES_PRIESAGA . "kas_prisijunges` WHERE `timestamp`>'" . $timeout . "' ORDER BY `clicks` ASC LIMIT 50";
 }
 
-$result = mysql_query1($q) or die(klaida("Klaida", mysql_error()));
-$u = mysql_num_rows($result);
+$result = mysql_query1($q);
+$u = count($result);
 $i = 0;
 
-while ($row = mysql_fetch_assoc($result)) {
+foreach ($result as $row) {
 	$info[$i] = array("Slapyvardis" => user($row['user'], $row['id']), 'Kur' => '<a href="?' . $row['file'] . '"><img src="images/icons/link.png" alt="page" border="0" class="middle"/></a>');
 	if (defined("LEVEL") && LEVEL >= 30) {
 		$info[$i]['IP'] = "<a href='http://www.dnsstuff.com/tools/whois.ch?ip=" . $row['ip'] . "&src=ShowIP' target='_blank' title='" . $row['ip'] . "'>" . trimlink($row['ip'], 5) . "</a>";
@@ -41,7 +41,7 @@ $bla = new Table();
 
 $text = $bla->render($info);
 
-mysql_free_result($result);
+//mysql_free_result($result);
 unset($row, $result, $q, $u, $i, $info, $bla);
 
 ?>

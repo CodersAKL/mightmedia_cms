@@ -39,8 +39,8 @@ if (isset($url['a']) && isnum($url['a']) && $url['a'] >= 0) {
 } else {
 	$a = 0;
 } //inbox arba outbox
-	$order = 'date';
- //lygiavimas
+$order = 'date';
+//lygiavimas
 if (isset($url['s']) && !empty($url['s']) && $url['s'] != null) {
 	$s = input($url['s']);
 }

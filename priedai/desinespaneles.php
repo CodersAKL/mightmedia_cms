@@ -10,7 +10,7 @@
  * @$Date$
  **/
 
-$sql_p = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC",120);
+$sql_p = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC", 120);
 
 foreach ($sql_p as $row_p) {
 	if (is_file("paneles/" . $row_p['file'])) {

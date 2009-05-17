@@ -131,7 +131,7 @@ lentele($page_pavadinimas,$text);
 		foreach ($failai as $file) {
 			if ($file['type'] == 'file') {
 				$sql = mysql_query1("SELECT pavadinimas FROM `" . LENTELES_PRIESAGA . "page` WHERE file=" . escape(basename($file['name'])) . " LIMIT 1");
-				if (@mysql_num_rows($sql) == 0) {
+				if (($sql) == 0) {
 					$puslapiai[basename($file['name'])] = basename($file['name']) . ": " . $file['sizetext'] . "\n";
 				}
 			}
@@ -179,7 +179,7 @@ lentele($page_pavadinimas,$text);
 			redirect("?id," . $url['id'] . ";a,21", "header");
 		} else {
 			$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape((int)$url['r']) . " LIMIT 1";
-			$sql = mysql_fetch_assoc(mysql_query1($sql));
+			$sql = mysql_query1($sql, 2500);
 			$selected = unserialize($sql['teises']);
 			$box = "";
 			foreach ($teises as $name => $check) {
@@ -200,7 +200,7 @@ lentele($page_pavadinimas,$text);
 
 		if (isset($_POST['Redaguoti_txt']) && $_POST['Redaguoti_txt'] == $lang['admin']['edit']) {
 			$sql = "SELECT `file`,`pavadinimas` FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape($psl_id) . " LIMIT 1";
-			$sql = mysql_fetch_assoc(mysql_query1($sql));
+			$sql = mysql_query1($sql);
 			$tekstas = str_replace('$', '\$', $_POST['Page']);
 			$tekstas = str_replace('HTML', 'html', $tekstas);
 
@@ -221,7 +221,7 @@ lentele($page_pavadinimas,$text);
 		} else {
 
 			$sql = "SELECT `id`, `pavadinimas`, `file` FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape($psl_id) . " LIMIT 1";
-			$sql = mysql_fetch_assoc(mysql_query1($sql));
+			$sql = mysql_query1($sql);
 			//tikrinam failo struktura
 
 			$lines = file('puslapiai/' . $sql['file']); // "failas.txt" - failas kuriame ieškoma.
@@ -257,11 +257,12 @@ lentele($page_pavadinimas,$text);
 	}
 
 	$li = '';
-	$recordSet1 = mysql_query1("SELECT * from `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'Y' order by place") or die(mysql_error());
+	$recordSet1 = mysql_query1("SELECT * from `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'Y' order by place");
 	$listArray1 = array();
-	while ($record1 = mysql_fetch_assoc($recordSet1)) {
-		//$listArray1[] = sprintf($listItemFormat, $record1['id'], $record1['pavadinimas'],$record1['id'], $record1['id'], $record1['id']);
-		$li .= '<li id="listItem_' . $record1['id'] . '" style="display:block; border:1px solid grey; width:460px; padding:3px; margin:3px; background-color:#DDDDDD"> 
+	if (sizeof($recordSet1) > 0) {
+		foreach ($recordSet1 as $record1) {
+			//$listArray1[] = sprintf($listItemFormat, $record1['id'], $record1['pavadinimas'],$record1['id'], $record1['id'], $record1['id']);
+			$li .= '<li id="listItem_' . $record1['id'] . '" style="display:block; border:1px solid grey; width:460px; padding:3px; margin:3px; background-color:#DDDDDD"> 
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] . '" style="align:right"><img src="images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record1['id'] . '" style="align:right"><img src="images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '" align="right" /></a> 
@@ -269,6 +270,7 @@ lentele($page_pavadinimas,$text);
 ' . $record1['pavadinimas'] . '
 </li> ';
 
+		}
 	}
 	//mysql_free_result($recordSet1);
 	//$listHTML1 = implode("\n", $listArray1);
@@ -284,20 +286,22 @@ lentele($page_pavadinimas,$text);
 			<ul id="test-list">' . $li . '</ul>';
 	//$tekstas .= $sortableLists->printBottomJS();
 	$tekstas .= '</fieldset>';
-	$sql25 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'N' order by id") or die(mysql_error());
+	$sql25 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'N' order by id");
 	$tekstas .= '
 		
 			<fieldset><legend>' . $lang['admin']['page_other'] . '</legend><ul>
 			';
-	while ($sql2 = mysql_fetch_assoc($sql25)) {
+	if (sizeof($sql25) > 0) {
+		foreach ($sql25 as $sql2) {
 
-		$tekstas .= '<li style="display:block; border:1px solid grey; width:460px; padding:3px; margin:3px; background-color:#DDDDDD;height:16px;"> 
+			$tekstas .= '<li style="display:block; border:1px solid grey; width:460px; padding:3px; margin:3px; background-color:#DDDDDD;height:16px;"> 
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $sql2['id'] . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $sql2['id'] . '" style="align:right"><img src="images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $sql2['id'] . '" style="align:right"><img src="images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '" align="right" /></a> 
 
 ' . $sql2['pavadinimas'] . '
 </li> ';
+		}
 	}
 	$tekstas .= '</ul></fieldset>';
 	$tekstas .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,21;n,2';\">{$lang['admin']['page_create']}</button>";

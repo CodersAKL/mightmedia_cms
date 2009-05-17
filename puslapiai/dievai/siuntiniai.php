@@ -37,14 +37,15 @@ lentele($lang['admin']['downloads'], $buttons);
 unset($buttons);
 include_once ("priedai/kategorijos.php");
 kategorija("siuntiniai", true);
-$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `path`=0 ORDER BY `id` DESC") or die(mysql_error());
-if (mysql_num_rows($sql) > 0) {
-	while ($row = mysql_fetch_assoc($sql)) {
+$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `path`=0 ORDER BY `id` DESC");
+if (sizeof($sql) > 0) {
+	foreach ($sql as $row) {
 
 		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
-		if (mysql_num_rows($sql2) > 0) {
-			$subcat = '';
-			while ($path = mysql_fetch_assoc($sql2)) {
+
+		$subcat = '';
+		if (sizeof($sql2) > 0) {
+			foreach ($sql as $path) {
 
 				$subcat .= "->" . $path['pavadinimas'];
 				$kategorijos[$row['id']] = $row['pavadinimas'];
@@ -81,8 +82,8 @@ if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete'] &&
 	} elseif (isset($_POST['edit_new'])) {
 		$trinti = (int)$_POST['edit_new'];
 	}
-	$sql = mysql_query1("SELECT `file` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` = " . escape($trinti) . " LIMIT 1");
-	$row = mysql_fetch_assoc($sql);
+	$row = mysql_query1("SELECT `file` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` = " . escape($trinti) . " LIMIT 1");
+
 	if (isset($row['file']) && !empty($row['file'])) {
 		@unlink("siuntiniai/" . $row['file']);
 	}
@@ -104,7 +105,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 		$redaguoti = (int)$_POST['edit_new'];
 	}
 	$extra = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `id`=" . escape($redaguoti) . " LIMIT 1");
-	$extra = mysql_fetch_assoc($extra);
+	//$extra = mysql_fetch_assoc($extra);
 } elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['edit']) {
 	//apsauga nuo kenksmingo kodo
 	include_once ('priedai/safe_html.php');
@@ -227,8 +228,8 @@ if (isset($_GET['v'])) {
 	$bla = new forma();
 	if ($_GET['v'] == 7) {
 		$sql2 = mysql_query1("SELECT id, pavadinimas FROM  `" . LENTELES_PRIESAGA . "siuntiniai` ORDER BY ID DESC");
-		if (mysql_num_rows($sql2) > 0) {
-			while ($row2 = mysql_fetch_assoc($sql2)) {
+		if (sizeof($sql2) > 0) {
+			foreach ($sql2 as $row2) {
 				$siuntiniaii[$row2['id']] = $row2['pavadinimas'];
 			}
 		} else {
@@ -266,7 +267,8 @@ if (isset($_GET['v'])) {
 			include_once ("priedai/class.php");
 			$bla = new Table();
 			$info = array();
-			while ($sql = mysql_fetch_assoc($q)) {
+
+			foreach ($q as $sql) {
 				$sql2 = mysql_fetch_assoc(mysql_query1("SELECT nick FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $sql['autorius'] . "'"));
 				if (isset($sql2['nick'])) {
 					$autorius = $sql2['nick'];

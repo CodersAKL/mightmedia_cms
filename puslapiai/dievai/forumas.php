@@ -201,28 +201,28 @@ if (isset($_POST['kurk']) && $_POST['kurk'] == $lang['admin']['forum_createsub']
 }
 //Subkategorijos redagavimas
 if (isset($_POST['subedit']) && $_POST['subedit'] == $lang['admin']['forum_select']) {
-	
-$f_id = (int)$_POST['f_forumas'];
-$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `fid`='" . $f_id . "' ORDER by place");
-if(sizeof($sql)>0){
-	$tema = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` where `id`='" . (int)$_POST['f_forumas'] . "'  ORDER BY `place` ASC limit 1");
 
-	$li='';
-	foreach ($sql as $record1) {
-		$li .= '<li id="listItem_' . $record1['id'] . '" style="display:block; border:1px solid grey; width:460px; padding:3px; margin:3px; background-color:#DDDDDD"> 
+	$f_id = (int)$_POST['f_forumas'];
+	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `fid`='" . $f_id . "' ORDER by place");
+	if (sizeof($sql) > 0) {
+		$tema = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` where `id`='" . (int)$_POST['f_forumas'] . "'  ORDER BY `place` ASC limit 1");
+
+		$li = '';
+		foreach ($sql as $record1) {
+			$li .= '<li id="listItem_' . $record1['id'] . '" style="display:block; border:1px solid grey; width:460px; padding:3px; margin:3px; background-color:#DDDDDD"> 
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';t,' . $record1['id'] . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
-<a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] . ';f,'.$tema['id'].'" style="align:right" ><img src="images/icons/pencil.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>  
+<a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] . ';f,' . $tema['id'] . '" style="align:right" ><img src="images/icons/pencil.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>  
 <img style="cursor:move;vertical-align:middle" src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
 ' . $record1['pav'] . '
 </li> ';
-	}
-	$tekstas = '
+		}
+		$tekstas = '
 <div id="la2" style="display:none"><b>' . $lang['system']['updated'] . '</b></div>
 			<ul id="test-list2">' . $li . '</ul>';
-	lentele($lang['admin']['forum_editsub'],$tekstas);
+		lentele($lang['admin']['forum_editsub'], $tekstas);
+	}
 }
-}
-if (isset($_GET['r'])&& isset($_GET['f'])) {
+if (isset($_GET['r']) && isset($_GET['f'])) {
 	$f_id = (int)$_GET['f'];
 	$f_temos_id = (int)$_GET['r'];
 	$sql = mysql_query1("SELECT pav FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `id`='" . $f_id . "' limit 1");

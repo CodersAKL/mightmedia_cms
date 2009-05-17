@@ -14,8 +14,8 @@
 //if (!defined("LEVEL") || LEVEL > 1 || !defined("OK")) {
 if (!defined("OK") || !ar_admin(basename(__file__))) {
 
-    header('location: ?');
-    exit();
+	header('location: ?');
+	exit();
 }
 
 $buttons = <<< HTML
@@ -24,25 +24,25 @@ $buttons = <<< HTML
 HTML;
 lentele($lang['admin']['poll'], $buttons);
 if (empty($url['v'])) {
-    $url['v'] = 0;
+	$url['v'] = 0;
 
 
-    $is = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA .
-        "balsavimas` WHERE `ijungtas`='TAIP'  ORDER BY `id` DESC LIMIT 1");
-    if (!empty($sql['klausimas'])) {
-        $info = $sql['klausimas'];
-        $text = "<b>$info</b></br>";
-    } else {
-        $text = $lang['admin']['poll_no'];
-    }
+	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE `ijungtas`='TAIP'  ORDER BY `id` DESC LIMIT 1");
+	if (sizeof($strid) > 0) {
+		if (!empty($sql['klausimas'])) {
+			$info = $sql['klausimas'];
+			$text = "<b>$info</b></br>";
+		} else {
+			$text = $lang['admin']['poll_no'];
+		}
+	}
 
-    lentele("{$lang['admin']['poll_active']}", $text);
-    unset($text, $a, $total, $info2, $info, $sql, $is);
+	lentele("{$lang['admin']['poll_active']}", $text);
+	unset($text, $a, $total, $info2, $info, $sql, $is);
 }
 if ((int)$url['v'] == 1) {
-    $text = "
-<form name='b_create' action='?id," . $_GET['id'] . ";a," . $_GET['a'] .
-        "' method='post'>
+	$text = "
+<form name='b_create' action='?id," . $_GET['id'] . ";a," . $_GET['a'] . "' method='post'>
 	<table border=0>
 		<tr>
 			<td>{$lang['admin']['poll_question']}:</td>
@@ -76,22 +76,22 @@ if ((int)$url['v'] == 1) {
 		<input name='b_create' type='submit' value='{$lang['admin']['poll_create']}'><br>
 </form>
 	";
-    lentele("{$lang['admin']['poll_create']}", $text);
-    unset($text);
+	lentele("{$lang['admin']['poll_create']}", $text);
+	unset($text);
 }
 
 if (isset($_POST['b_delete']) && $_POST['b_delete'] == $lang['admin']['delete']) {
-    $result = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE `id`= " . escape((int)$_POST['id']) . " LIMIT 1");
-    header("Location: ?id," . $_GET['id'] . ";a," . $_GET['a']);
+	$result = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE `id`= " . escape((int)$_POST['id']) . " LIMIT 1");
+	header("Location: ?id," . $_GET['id'] . ";a," . $_GET['a']);
 }
 if (isset($_POST['b_edit']) && $_POST['b_edit'] == $lang['admin']['edit']) {
-    $result2 = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "balsavimas` SET info='" . $_POST['leid'] . "', `ijungtas` = " . escape($_POST['ar']) . " WHERE `id`='" . $url['n'] . "' LIMIT 1 ;");
-    header("Location: ?id," . $_GET['id'] . ";a," . $_GET['a']);
+	$result2 = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "balsavimas` SET info='" . $_POST['leid'] . "', `ijungtas` = " . escape($_POST['ar']) . " WHERE `id`='" . $url['n'] . "' LIMIT 1 ;");
+	header("Location: ?id," . $_GET['id'] . ";a," . $_GET['a']);
 }
 if (isset($_POST['b_delete']) && $_POST['b_delete'] == $lang['admin']['edit']) {
 
 
-    $edit = "
+	$edit = "
 <form name='b_edit' action='?id," . $_GET['id'] . ";a," . $_GET['a'] . ";n," . $_POST['id'] . "' method='post'>	
 	Ar rodyti apklausą?
 	<select size=1 name='ar'>
@@ -106,58 +106,50 @@ if (isset($_POST['b_delete']) && $_POST['b_delete'] == $lang['admin']['edit']) {
 	</select>
 	<input name='b_edit' type='submit' value='{$lang['admin']['edit']}'><br>
 </form>";
-    lentele("{$lang['admin']['poll_edit']}", $edit);
+	lentele("{$lang['admin']['poll_edit']}", $edit);
 
 }
 if ((int)$url['v'] == 2) {
-    $sql2 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "balsavimas`", 120);
-    if (sizeof($sql2) > 0) {
-        $text = "
+	$sql2 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "balsavimas`", 120);
+	if (sizeof($sql2) > 0) {
+		$text = "
 	<form name='b_delete' action='?id," . $_GET['id'] . ";a," . $_GET['a'] . "' method='post'>
 		<select size='1' name='id'>
 	";
 
-        foreach ($sql2 as $row) {
-            if (isset($row['klausimas'])) {
-                $text .= "<option  value=" . $row['id'] . ">" . $row['klausimas'] . "</option>";
-            }
-        }
+		foreach ($sql2 as $row) {
+			if (isset($row['klausimas'])) {
+				$text .= "<option  value=" . $row['id'] . ">" . $row['klausimas'] . "</option>";
+			}
+		}
 
-        $text .= "
+		$text .= "
 		</select>
 		<input name='b_delete' type='submit' value='{$lang['admin']['delete']}'>
 		<input name='b_delete' type='submit' value='{$lang['admin']['edit']}'>
 	</form>
 	";
-        lentele("{$lang['admin']['poll_edit']}", $text);
-    }
-    unset($sql, $row, $text, $info);
+		lentele("{$lang['admin']['poll_edit']}", $text);
+	}
+	unset($sql, $row, $text, $info);
 }
 
 
 if (isset($_POST['b_create']) && $_POST['b_create'] == $lang['admin']['poll_create']) {
-    $kl = $_POST['b_kl'];
-    $ats1 = (isset($_POST[0]) && !empty($_POST[0]) ? strip_tags($_POST[0]) . ';0' :
-        ';0');
-    $ats2 = (isset($_POST[1]) && !empty($_POST[1]) ? strip_tags($_POST[1]) . ';0' :
-        ';0');
-    $ats3 = (isset($_POST[2]) && !empty($_POST[2]) ? strip_tags($_POST[2]) . ';0' :
-        ';0');
-    $ats4 = (isset($_POST[3]) && !empty($_POST[3]) ? strip_tags($_POST[3]) . ';0' :
-        ';0');
-    $ats5 = (isset($_POST[4]) && !empty($_POST[4]) ? strip_tags($_POST[4]) . ';0' :
-        ';0');
+	$kl = $_POST['b_kl'];
+	$ats1 = (isset($_POST[0]) && !empty($_POST[0]) ? strip_tags($_POST[0]) . ';0' : ';0');
+	$ats2 = (isset($_POST[1]) && !empty($_POST[1]) ? strip_tags($_POST[1]) . ';0' : ';0');
+	$ats3 = (isset($_POST[2]) && !empty($_POST[2]) ? strip_tags($_POST[2]) . ';0' : ';0');
+	$ats4 = (isset($_POST[3]) && !empty($_POST[3]) ? strip_tags($_POST[3]) . ';0' : ';0');
+	$ats5 = (isset($_POST[4]) && !empty($_POST[4]) ? strip_tags($_POST[4]) . ';0' : ';0');
 
-    $result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA .
-        "balsavimas` (`info`, `autorius`, `laikas`, `klausimas`, `pirmas`, `antras`, `trecias`, `ketvirtas`,`penktas`) VALUES ('" .
-        $_POST['leid'] . "', '" . $_SESSION['id'] . "', '" . time() . "','" . $kl .
-        "','" . $ats1 . "','" . $ats2 . "','" . $ats3 . "','" . $ats4 . "','" . $ats5 .
-        "')") or die(klaida("Klaida", mysql_error()));
-    if ($result) {
-        msg("{$lang['system']['done']}", "{$lang['admin']['poll_created']}.");
-    }
-    redirect("?id," . $_GET['id'] . ";a," . $_GET['a'], "meta");
+	$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "balsavimas` (`info`, `autorius`, `laikas`, `klausimas`, `pirmas`, `antras`, `trecias`, `ketvirtas`,`penktas`) VALUES ('" . $_POST['leid'] . "', '" . $_SESSION['id'] . "', '" . time() . "','" . $kl . "','" . $ats1 . "','" . $ats2 . "','" . $ats3 . "','" . $ats4 . "','" . $ats5 . "')") or die(klaida("Klaida", mysql_error()));
+	if ($result) {
+		msg("{$lang['system']['done']}", "{$lang['admin']['poll_created']}.");
+	}
+	redirect("?id," . $_GET['id'] . ";a," . $_GET['a'], "meta");
 }
 unset($a, $ats1, $ats2, $ats3, $ats4, $ats5, $balsas, $sujungti);
 unset($_POST['b_create'], $_POST['b_delete']);
+
 ?>

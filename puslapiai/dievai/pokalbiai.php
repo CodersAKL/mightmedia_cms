@@ -39,12 +39,14 @@ if (isset($_POST['admin_chat_send']) && $_POST['admin_chat_send'] == $lang['admi
 			$extra = "[i]{$lang['admin']['globalmessagefor']}:[b]" . $conf['level'][$_POST['pm']]['pavadinimas'] . "[/b][/i]\n---\n";
 			$sql = mysql_query1("SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis = '" . $_POST['pm'] . "'");
 		}
-		while ($row = mysql_fetch_assoc($sql)) {
-			if (kiek("private_msg", "WHERE `to`=" . escape($row['nick']) . "") < 51) {
-				mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "private_msg` (`from` , `to` , `title` , `msg` , `date`) VALUES (" . escape($_SESSION['username']) . ", " . escape($row['nick']) . ", '" . $lang['admin']['readme'] . "!', " . escape($_POST['admin_chat']) . ", '" . time() . "')");
+		if (sizeof($sql) > 0) {
+			foreach ($sql as $row) {
+				if (kiek("private_msg", "WHERE `to`=" . escape($row['nick']) . "") < 51) {
+					mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "private_msg` (`from` , `to` , `title` , `msg` , `date`) VALUES (" . escape($_SESSION['username']) . ", " . escape($row['nick']) . ", '" . $lang['admin']['readme'] . "!', " . escape($_POST['admin_chat']) . ", '" . time() . "')");
+				}
 			}
+			//}
 		}
-		//}
 	}
 
 
@@ -60,7 +62,7 @@ if (isset($url['d']) && !isset($url['a']) && isnum($url['d']) && $url['d'] > 0 &
 //redaguojam zinute
 if (isset($url['r']) && !isset($url['d']) && !isset($url['a']) && isnum($url['r']) && $url['r'] > 0) {
 	if (!isset($_POST['admin_chat_send'])) {
-		$extra = mysql_fetch_assoc(mysql_query1("SELECT msg FROM `" . LENTELES_PRIESAGA . "admin_chat` WHERE id=" . escape((int)$url['r']) . " LIMIT 1"));
+		$extra = mysql_query1("SELECT msg FROM `" . LENTELES_PRIESAGA . "admin_chat` WHERE id=" . escape((int)$url['r']) . " LIMIT 1");
 		$extra = $extra['msg'];
 	} elseif ($_POST['admin_chat_send'] == $lang['admin']['edit']) {
 		mysql_query("UPDATE `" . LENTELES_PRIESAGA . "admin_chat` SET `msg`=" . escape($_POST['admin_chat']) . ",`date` = '" . time() . "' WHERE `admin`=" . escape($_SESSION['username']) . " AND id=" . escape((int)$url['r']) . " LIMIT 1");
@@ -99,11 +101,13 @@ if ($viso > $limit) {
 }
 //$sql = mysql_query1("SELECT * FROM `".LENTELES_PRIESAGA."admin_chat` ORDER BY date DESC LIMIT ".escape($p).",".$limit."");
 $sql = mysql_query1("SELECT `" . LENTELES_PRIESAGA . "admin_chat`.*, `" . LENTELES_PRIESAGA . "users`.`email` AS `email` FROM `" . LENTELES_PRIESAGA . "admin_chat` Inner Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "admin_chat`.`admin` = `" . LENTELES_PRIESAGA . "users`.`nick` ORDER BY date DESC LIMIT " . escape($p) . "," . $limit);
-while ($row = mysql_fetch_assoc($sql)) {
-	$text .= "
+if (sizeof($sql) > 0) {
+	foreach ($sql as $row) {
+		$text .= "
 				<div class='title'><em><a href=\"" . url("d," . $row['id'] . "") . "\" >[{$lang['admin']['delete']}]</a> " . (($_SESSION['username'] == $row['admin']) ? "<a href=\"" . url("r," . $row['id'] . "") . "\">[{$lang['admin']['edit']}]</a> " : "") . $row['admin'] . " [" . date('Y-m-d H:i:s ', $row['date']) . "] - " . kada(date('Y-m-d H:i:s ', $row['date'])) . " " . naujas($row['date'], $row['admin']) . "</em></div>
 				<blockquote>" . bbcode($row['msg']) . "<br/></blockquote><hr></hr>
 		";
+	}
 }
 lentele("{$lang['admin']['admin_chat']}", $text);
 if ($viso > $limit) {

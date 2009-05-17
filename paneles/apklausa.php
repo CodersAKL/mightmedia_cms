@@ -14,7 +14,7 @@ unset($title);
 
 
 $sql = mysql_query1("SELECT * ,autorius ,(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE id=autorius LIMIT 1)AS nick FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE ijungtas='TAIP' ORDER BY `laikas` DESC LIMIT 1") or die(mysql_error());
-$sql = mysql_fetch_assoc($sql);
+//$sql = mysql_fetch_assoc($sql);
 
 
 if (isset($sql['klausimas'])) {
@@ -54,47 +54,47 @@ if (isset($sql['klausimas'])) {
 
 
 	if (!in_array($_SERVER['REMOTE_ADDR'], $ipasai) && !in_array($narys, $nariai)) {
-			$text = '<blockquote><center><b>' . $sql['klausimas'] . '</b></center><br/>
+		$text = '<blockquote><center><b>' . $sql['klausimas'] . '</b></center><br/>
 			<form name="vote" action="" method="post">';
-			for ($i = 1; $i <= 5; $i++) {
-			  if (!empty($ats[$i][0])) {
+		for ($i = 1; $i <= 5; $i++) {
+			if (!empty($ats[$i][0])) {
 				$text .= '<label name="balsas"><input name="balsas" value="' . $ats[$i][0] . '" type="radio">' . $ats[$i][0] . '</label><br>';
-			  }
-     }
+			}
+		}
 
-			//visu balsavimas
-			if (($sql['info'] == 'vis') || ($sql['info'] == 'nar' && isset($_SESSION['username']))) {
-				if (isset($_POST['balsas']) && $_POST['vote'] == $lang['poll']['vote']) {
-					if ($_POST['balsas'] == $ats[1][0]) {
-						$stulp = 'pirmas';
-						$atsakymas = $_POST['balsas'] . ";" . ($ats[1][1] + 1);
-					}
-					if ($_POST['balsas'] == $ats[2][0]) {
-						$stulp = 'antras';
-						$atsakymas = $_POST['balsas'] . ";" . ($ats[2][1] + 1);
-					}
-					if ($_POST['balsas'] == $ats[3][0]) {
-						$stulp = 'trecias';
-						$atsakymas = $_POST['balsas'] . ";" . ($ats[3][1] + 1);
-					}
-					if ($_POST['balsas'] == $ats[4][0]) {
-						$stulp = 'ketvirtas';
-						$atsakymas = $_POST['balsas'] . ";" . ($ats[4][1] + 1);
-					}
-					if ($_POST['balsas'] == $ats[5][0]) {
-						$stulp = 'penktas';
-						$atsakymas = $_POST['balsas'] . ";" . ($ats[5][1] + 1);
-					}
-
-					$result2 = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "balsavimas` SET $stulp = " . escape($atsakymas) . ", ips=" . escape($sql['ips'] . $_SERVER['REMOTE_ADDR'] . ";") . ", nariai='" . $sql['nariai'] . $userid . "' WHERE `id`=" . escape($sql['id'])) or die(mysql_error());
-					header("Location: " . $_SERVER['PHP_SELF'] . "");
+		//visu balsavimas
+		if (($sql['info'] == 'vis') || ($sql['info'] == 'nar' && isset($_SESSION['username']))) {
+			if (isset($_POST['balsas']) && $_POST['vote'] == $lang['poll']['vote']) {
+				if ($_POST['balsas'] == $ats[1][0]) {
+					$stulp = 'pirmas';
+					$atsakymas = $_POST['balsas'] . ";" . ($ats[1][1] + 1);
+				}
+				if ($_POST['balsas'] == $ats[2][0]) {
+					$stulp = 'antras';
+					$atsakymas = $_POST['balsas'] . ";" . ($ats[2][1] + 1);
+				}
+				if ($_POST['balsas'] == $ats[3][0]) {
+					$stulp = 'trecias';
+					$atsakymas = $_POST['balsas'] . ";" . ($ats[3][1] + 1);
+				}
+				if ($_POST['balsas'] == $ats[4][0]) {
+					$stulp = 'ketvirtas';
+					$atsakymas = $_POST['balsas'] . ";" . ($ats[4][1] + 1);
+				}
+				if ($_POST['balsas'] == $ats[5][0]) {
+					$stulp = 'penktas';
+					$atsakymas = $_POST['balsas'] . ";" . ($ats[5][1] + 1);
 				}
 
-				$text .= '</br><input name="vote" type="submit" value="' . $lang['poll']['vote'] . '"></form>';
+				$result2 = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "balsavimas` SET $stulp = " . escape($atsakymas) . ", ips=" . escape($sql['ips'] . $_SERVER['REMOTE_ADDR'] . ";") . ", nariai='" . $sql['nariai'] . $userid . "' WHERE `id`=" . escape($sql['id'])) or die(mysql_error());
+				header("Location: " . $_SERVER['PHP_SELF'] . "");
 			}
-			if ($sql['info'] == 'nar' && !isset($_SESSION['username'])) {
-				$text .= '</br>' . $lang['poll']['cant'] . '.</form>';
-			}
+
+			$text .= '</br><input name="vote" type="submit" value="' . $lang['poll']['vote'] . '"></form>';
+		}
+		if ($sql['info'] == 'nar' && !isset($_SESSION['username'])) {
+			$text .= '</br>' . $lang['poll']['cant'] . '.</form>';
+		}
 
 
 	} else {

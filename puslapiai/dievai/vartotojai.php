@@ -33,11 +33,11 @@ include_once ("priedai/kategorijos.php");
 kategorija("vartotojai", true);
 
 if (isset($url['d']) && $url['d'] != "" && $url['d'] != 0) {
-	$del = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "users` WHERE id=" . escape((int)$url['d']) . " AND `levelis` > 1") or die(mysql_error());
+	$del = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "users` WHERE id=" . escape((int)$url['d']) . " AND `levelis` > 1");
 	header("Location: " . url('d,0'));
 }
 if (isset($_POST['action']) && $_POST['action'] == $lang['admin']['save'] && $_POST['id'] > 0) {
-	$info = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $_POST['id'] . "'AND `levelis` > 1"));
+	$info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $_POST['id'] . "'AND `levelis` > 1 LIMIT 1");
 
 	if (!empty($_POST['tsk'])) {
 		$tsk = (int)$_POST['tsk'];
@@ -113,8 +113,8 @@ if (isset($_GET['v']) && $_GET['v'] == 1) {
 		$i = 0;
 		$viso = kiek("users", "WHERE levelis=" . escape($_GET['k']) . "");
 
-		if (mysql_num_rows($sql) > 0) {
-			while ($row2 = mysql_fetch_assoc($sql)) {
+		if (sizeof($sql) > 0) {
+			foreach ($sql as $row2) {
 				$i++;
 				$info2[] = array("{$lang['admin']['user_name']}" => user($row2['nick'], $row2['id'], $row2['levelis']), "IP" => $row2['ip'], "{$lang['admin']['user_email']}" => preg_replace("#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)#i", "<a href=\"javascript:mailto:mail('\\1','\\2');\">\\1_(at)_\\2</a>", $row2['email']), "{$lang['admin']['action']}" => "<a href='?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] . "'title='{$lang['admin']['edit']}'><img src='images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url("d," . $row2['id']) . "' onclick=\"if (!confirm('{$lang['admin']['delete']}?')) return false;\" title='{$lang['admin']['delete']}'><img src='images/icons/cross.png' border='0' class='middle' /></a><a href='?id," . $_GET['id'] . ";a,11;b,1;ip," . $row2['ip'] .
 					"' title='{$lang['admin']['badip']}'><img src='images/icons/delete.png' border='0' class='middle' /></a>");
@@ -133,8 +133,8 @@ if (isset($_GET['v']) && $_GET['v'] == 4) {
 	lentele("{$lang['admin']['user_find']}", $text);
 	if (isset($_POST['rasti']) && isset($_POST['vardas'])) {
 		$resultas = mysql_query1("SELECT *, INET_NTOA(ip) AS ip FROM `" . LENTELES_PRIESAGA . "users` WHERE nick LIKE " . escape("%" . $_POST['vardas'] . "%") . "LIMIT 0,100");
-		if (mysql_num_rows($resultas) > 0) {
-			while ($row2 = mysql_fetch_assoc($resultas)) {
+		if (sizeof($resultas) > 0) {
+			foreach ($resultas as $row2) {
 				$info3[] = array($lang['admin']['user_name'] => user($row2['nick'], $row2['id'], $row2['levelis']), "IP" => $row2['ip'], "{$lang['admin']['user_email']}" => preg_replace("#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)#i", "<a href=\"javascript:mailto:mail('\\1','\\2');\">\\1_(at)_\\2</a>", $row2['email']), "{$lang['admin']['action']}" => "<a href='?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] . "'><img src='images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url("d," . $row2['id']) . "' onclick=\"if (!confirm('{$lang['admin']['delete']}?')) return false;\" title='{$lang['admin']['delete']}'><img src='images/icons/cross.png' border='0' class='middle' /></a><a href='?id," . $_GET['id'] . ";a,11;b,1;ip," . $row2['ip'] . "' title='{$lang['admin']['badip']}'><img src='images/icons/delete.png' border='0' class='middle' /></a>");
 			}
 			$bla = new Table();

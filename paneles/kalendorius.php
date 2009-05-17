@@ -60,12 +60,12 @@ function showCalendar($year = 0, $month = 0) {
 	//$sql = "SELECT SQL_CACHE `id`,`nick`,`gim_data`,DATE_FORMAT(`gim_data`,'%e') AS `diena` FROM `" . LENTELES_PRIESAGA . "users` WHERE DATE_FORMAT(`gim_data`,'%c')=DATE_FORMAT(NOW(),'%c')";
 	$sql = "SELECT SQL_CACHE `id`, `nick`, `gim_data`, DATE_FORMAT(`gim_data`,'%e') as `diena` FROM `" . LENTELES_PRIESAGA . "users` WHERE DATE_FORMAT(`gim_data`,'%c')=MONTH(NOW())";
 
-	$sql = mysql_query1($sql,86400);
-		foreach ($sql as $row) {
-			if($row['diena'] >= date("j")){
+	$sql = mysql_query1($sql, 86400);
+	foreach ($sql as $row) {
+		if ($row['diena'] >= date("j")) {
 			$sventes[date('n') . "-" . $row['diena']][] = "<b>" . $row['nick'] . "</b> {$lang['calendar']['birthday']}. " . (amzius($row['gim_data']) + 1) . "m.";
-			}
 		}
+	}
 
 
 	// Get today, reference day, first day and last day info

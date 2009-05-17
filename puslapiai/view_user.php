@@ -35,13 +35,13 @@ if (isset($url['m']) && $url['m'] > 0) {
 		}
 		//Profilio rodymas
 		if ($_SESSION['level'] == 1) {
-			$admin = '<a href="?id,999;a,6;r,' . $sql['id'] . '" title="'.$lang['admin']['edit'].'"><img src="images/icons/pencil.png" class="middle" border="0" alt="edit" /></a> <a href="?id,999;a,6;d,' . $sql['id'] . '" onclick="if (!confirm("' . $lang['admin']['delete'] . '")) return false;\" title="'.$lang['admin']['delete'].'"><img src="images/icons/cross.png" class="middle" border="0" alt="delete" /></a>  <a title="'.$lang['admin']['badip'].'" href="?id,999;a,11;b,1;ip,' . $sql['ip'] . '"><img src="images/icons/delete.png" class="middle" border="0" alt="ban" /></a>';
+			$admin = '<a href="?id,999;a,6;r,' . $sql['id'] . '" title="' . $lang['admin']['edit'] . '"><img src="images/icons/pencil.png" class="middle" border="0" alt="edit" /></a> <a href="?id,999;a,6;d,' . $sql['id'] . '" onclick="if (!confirm("' . $lang['admin']['delete'] . '")) return false;\" title="' . $lang['admin']['delete'] . '"><img src="images/icons/cross.png" class="middle" border="0" alt="delete" /></a>  <a title="' . $lang['admin']['badip'] . '" href="?id,999;a,11;b,1;ip,' . $sql['ip'] . '"><img src="images/icons/delete.png" class="middle" border="0" alt="ban" /></a>';
 		} else {
 			$admin = '';
 		}
 		$text = '<table align="center" border="0" cellpadding="0" cellspacing="1" class="table" width="100%">
 			<tr >
-				<td height="14" class="th" width="140"><b>' . $sql['nick'] . '</b> <img src="' . $prisijunges . '" title="' . $pr . '" style="vertical-align:middle" alt="'.$pr.'" /></td>
+				<td height="14" class="th" width="140"><b>' . $sql['nick'] . '</b> <img src="' . $prisijunges . '" title="' . $pr . '" style="vertical-align:middle" alt="' . $pr . '" /></td>
 				<td height="14" class="th" width="50%">' . $lang['user']['user_info'] . '</td>
 				<td height="14" class="th" width="50%">' . $lang['user']['user_contacts'] . '</td>
 			</tr>
@@ -56,7 +56,7 @@ if (isset($url['m']) && $url['m'] > 0) {
           <small>
             <b>' . $lang['user']['user_name'] . ':</b> ' . $sql['vardas'] . '<br />
             <b>' . $lang['user']['user_secondname'] . ':</b> ' . $sql['pavarde'] . '<br />
-            <b>' . $lang['user']['user_age'] . ':</b> ' . (amzius($sql['gim_data'])>0 ? amzius($sql['gim_data']):"-" ). '<br />
+            <b>' . $lang['user']['user_age'] . ':</b> ' . (amzius($sql['gim_data']) > 0 ? amzius($sql['gim_data']) : "-") . '<br />
             <b>' . $lang['user']['user_city'] . ':</b> ' . $sql['miestas'] . '<br />
             <b>' . $lang['user']['user_registered'] . ': </b> ' . date('Y-m-d H:i:s ', $sql['reg_data']) . '<br />
             <b>' . $lang['user']['user_lastvisit'] . ': </b> ' . kada(date('Y-m-d H:i:s ', $sql['login_data'])) . '<br />

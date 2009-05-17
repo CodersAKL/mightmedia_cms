@@ -13,8 +13,8 @@
 $q = mysql_query1("SELECT id, nick, reg_data, login_data, gim_data,  taskai, levelis FROM `" . LENTELES_PRIESAGA . "users` WHERE `taskai` > 0 ORDER BY `taskai` DESC LIMIT 10");
 $i = '';
 $text = ' ';
-if ($q) {
-	while ($row = mysql_fetch_assoc($q)) {
+if (sizeof($q) > 0) {
+	foreach ($q as $row) {
 		$i++;
 		if ($i == 1) {
 			$img = "<img src=\"images/icons/trophy.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
@@ -22,7 +22,7 @@ if ($q) {
 			$img = "<img src=\"images/icons/trophy_silver.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
 		} elseif ($i == 3) {
 			$img = "<img src=\"images/icons/trophy_bronze.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
-		}  else {
+		} else {
 			$img = "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
 		}
 		$text .= "<div class=\"sarasas\"><br/><b>" . $i . "</b> $img " . user($row['nick'], $row['id'], $row['levelis']) . "</div>";

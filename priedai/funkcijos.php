@@ -95,8 +95,8 @@ function adresas() {
 	$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
 	$protocol = substr(strtolower($_SERVER["SERVER_PROTOCOL"]), 0, strpos(strtolower($_SERVER["SERVER_PROTOCOL"]), "/")) . $s;
 	$port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":" . $_SERVER["SERVER_PORT"]);
-	 
-	return str_replace('?'.$_SERVER['QUERY_STRING'],'',$protocol . "://" . str_replace('//','/',$_SERVER['SERVER_NAME'] . $port . dirname($_SERVER['REQUEST_URI']))).'/';
+
+	return str_replace('?' . $_SERVER['QUERY_STRING'], '', $protocol . "://" . str_replace('//', '/', $_SERVER['SERVER_NAME'] . $port . dirname($_SERVER['REQUEST_URI']))) . '/';
 }
 
 
@@ -122,7 +122,7 @@ function puslapis($puslapis, $extra = false) {
 		return false;
 }
 function teises($mas, $lvl) {
-	if ($lvl==0||$lvl==1||(is_array(@unserialize($mas)) && in_array($lvl, unserialize($mas))))
+	if ($lvl == 0 || $lvl == 1 || (is_array(@unserialize($mas)) && in_array($lvl, unserialize($mas))))
 		return true;
 	else
 		return false;
@@ -204,7 +204,7 @@ if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
  * @return array
  */
 unset($sql, $row);
-$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `path`=0 ORDER BY `id` DESC",300);
+$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `path`=0 ORDER BY `id` DESC", 300);
 
 if (sizeof($sql) > 1) {
 	foreach ($sql as $row) {
@@ -234,7 +234,7 @@ unset($levels, $sql, $row);
 /**
  * Gaunam visus puslapius ir sukisam i masyva
  */
-$sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC",120);
+$sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC", 120);
 foreach ($sql as $row) {
 	$conf['puslapiai'][$row['file']] = array('id' => $row['id'], 'pavadinimas' => $row['pavadinimas'], 'file' => $row['file'], 'place' => (int)$row['place'], 'show' => $row['show'], 'teises' => $row['teises']);
 }
@@ -285,64 +285,63 @@ function mysql_query1($query, $lifetime = 0) {
 	global $mysql_num, $prisijungimas_prie_mysql;
 
 	//Sugeneruojam kesho pavadinima
-	$keshas = 'sandeliukas/'.md5($query).'.txt';	//kesho failas
+	$keshas = 'sandeliukas/' . md5($query) . '.txt'; //kesho failas
 	$return = array();
-	
-	if ($lifetime > 0 && !in_array(strtolower(substr($query,0,6)),array('delete','insert','update'))) {
-		
+
+	if ($lifetime > 0 && !in_array(strtolower(substr($query, 0, 6)), array('delete', 'insert', 'update'))) {
+
 		//Tikrinam ar keshas yra jau
 		if (is_file($keshas) && filemtime($keshas) > $_SERVER['REQUEST_TIME'] - $lifetime) {
 			//uzkraunam kesha
 			$fh = fopen($keshas, 'rb') or die("negaliu nuskaityti kesho failo");
-			
-			$return = unserialize(fread($fh, filesize($keshas)));	//skaitom
+
+			$return = unserialize(fread($fh, filesize($keshas))); //skaitom
 			fclose($fh);
-			
+
 		} else {
 			//Irasom i kesh faila
 			$mysql_num++;
 
 			$sql = mysql_query($query, $prisijungimas_prie_mysql) or die(mysql_error());
-			
+
 			//Jeigu uzklausoje nurodyta kad reikia tik vieno iraso tai nesudarom masyvo.
-			if (substr(strtolower($query),-7) == 'limit 1') {
+			if (substr(strtolower($query), -7) == 'limit 1') {
 				$return = mysql_fetch_assoc($sql);
 			} else {
 				while ($row = mysql_fetch_assoc($sql)) {
 					$return[] = $row;
 				}
 			}
-			
+
 			$fh = fopen($keshas, 'wb') or die("negaliu nuskaityti kesho");
 
 			//Reikia uzrakinti faila kad du kartus neirasytu
 			if (flock($fh, LOCK_EX)) { // urakinam
-			    fwrite($fh, serialize($return));
-			    flock($fh, LOCK_UN); // release the lock
+				fwrite($fh, serialize($return));
+				flock($fh, LOCK_UN); // release the lock
 			} else {
-			    echo "Negaliu uzrakinti failo !";
+				echo "Negaliu uzrakinti failo !";
 			}
-			fclose($fh);	//baigiam failo irasyma
+			fclose($fh); //baigiam failo irasyma
 			$return = $return;
 		}
 		return $return;
 	} else {
 		$mysql_num++;
 
-			$sql = mysql_query($query, $prisijungimas_prie_mysql);
+		$sql = mysql_query($query, $prisijungimas_prie_mysql);
 
-			if (in_array(strtolower(substr($query,0,6)),array('delete','insert','update'))) {
-				$return = true;
-			} 
-			else {
-				if (substr(strtolower($query),-7) == 'limit 1') {
-					$return = mysql_fetch_assoc($sql);
-				} else {
-					while ($row = mysql_fetch_assoc($sql)) {
-						$return[] = $row;
-					}
+		if (in_array(strtolower(substr($query, 0, 6)), array('delete', 'insert', 'update'))) {
+			$return = true;
+		} else {
+			if (substr(strtolower($query), -7) == 'limit 1') {
+				$return = mysql_fetch_assoc($sql);
+			} else {
+				while ($row = mysql_fetch_assoc($sql)) {
+					$return[] = $row;
 				}
 			}
+		}
 	}
 	return $return;
 }
@@ -397,7 +396,7 @@ function get_tag_contents($xml, $tag) {
  * @return int
  */
 function kiek($table, $where = '', $as = "viso") {
-	$viso = mysql_query1("SELECT count(id) AS $as FROM `" . LENTELES_PRIESAGA . $table . "` " . $where . 'limit 1',60);
+	$viso = mysql_query1("SELECT count(*) AS `$as` FROM `" . LENTELES_PRIESAGA . $table . "` " . $where . " limit 1", 60);
 	return (isset($viso[$as]) && $viso[$as] > 0 ? (int)$viso[$as] : (int)0);
 }
 
@@ -1142,7 +1141,7 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 	} else {
 		$areos = "'$id'";
 	}
-	$return="";
+	$return = "";
 	echo '<script type="text/javascript">
    
     _editor_url  = "javascript/htmlarea/Xinha_0.95/"
@@ -1188,22 +1187,16 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
        //xinha_config.htmlRemoveTags = /body|head|html/;
       with (xinha_config.ImageManager)
      { 
-       '; 
-       require_once('javascript/htmlarea/Xinha_0.95/contrib/php-xinha.php');
+       ';
+	require_once ('javascript/htmlarea/Xinha_0.95/contrib/php-xinha.php');
 
-         xinha_pass_to_php_backend
-         (       
-           array
-           (
-            'images_dir' => '../../../../../siuntiniai/images',
-            'images_url' => adresas().'siuntiniai/images'//,
-            //'thumbnail_prefix'=>'',
-            //'thumbnail_dir'=>'sumazinti'
-            //'resized_prefix'=>'.pakeistas',
-            //'resized_dir'=>'.resized'
-           )
-         );
-      echo '
+	xinha_pass_to_php_backend(array('images_dir' => '../../../../../siuntiniai/images', 'images_url' => adresas() . 'siuntiniai/images' //,
+		//'thumbnail_prefix'=>'',
+	//'thumbnail_dir'=>'sumazinti'
+	//'resized_prefix'=>'.pakeistas',
+	//'resized_dir'=>'.resized'
+	));
+	echo '
      }
       
        xinha_editors   = Xinha.makeEditors(xinha_editors, xinha_config, xinha_plugins);

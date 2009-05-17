@@ -10,16 +10,17 @@
  * @$Date$
  **/
 
-$sql = mysql_fetch_assoc(mysql_query1("SELECT count(id) as svec, 
+$sqli = mysql_query1("SELECT count(id) as svec, 
 (SELECT count(id) FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE `timestamp`>'" . $timeout . "' AND user!='Svečias') as users, 
 (SELECT count(id) FROM " . LENTELES_PRIESAGA . "users) as useriai, 
 (SELECT `nick` FROM " . LENTELES_PRIESAGA . "users order by id DESC LIMIT 1 ) as useris,
 (SELECT `id` FROM " . LENTELES_PRIESAGA . "users order by id DESC  LIMIT 1 ) as userid,
 (SELECT `levelis` FROM " . LENTELES_PRIESAGA . "users order by id DESC  LIMIT 1 ) as lvl
  FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE `timestamp`>'" . $timeout . "' AND user='Svečias'
-"));
+");
 
-$text = '<blockquote>
+foreach ($sqli as $sql) {
+	$text = '<blockquote>
 <strong>' . $lang['online']['users'] . ':</strong><br>
 ' . $lang['online']['usrs'] . ': ' . (int)$sql['users'] . '<br>
 ' . $lang['online']['guests'] . ': ' . (int)$sql['svec'] . '<br>
@@ -27,6 +28,7 @@ $text = '<blockquote>
 ' . $lang['online']['registeredmembers'] . ': ' . (int)$sql['useriai'] . '<br>
 ' . $lang['online']['lastregistered'] . ': <br />' . user($sql['useris'], $sql['userid'], $sql['lvl']) . '
  </blockquote>';
-unset($sql);
+	//unset($sql);
+}
 
 ?>
