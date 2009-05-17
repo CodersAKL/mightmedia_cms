@@ -96,14 +96,18 @@ function kategorija($kieno, $leidimas = false) {
 		$moderuoti = ((isset($_POST['punktai'])) ? serialize($_POST['punktai']) : '');
 
 		if (isset($_POST['Teises'])) {
-			$teises = serialize($_POST['Teises']);
+			if ($kieno == 'vartotojai')
+				$teises = $_POST['Teises']; else
+				$teises = serialize($_POST['Teises']);
 		} else {
 			$teises = serialize(0);
 		}
 
 		$path = @mysql_fetch_assoc(mysql_query1("Select * from`" . LENTELES_PRIESAGA . "grupes` WHERE id=" . $_POST['path'] . " Limit 1"));
 		if ($path) {
-			$teises = serialize($path['teises']);
+				if ($kieno == 'vartotojai')
+				$teises = $_POST['Teises']; else
+				$teises = serialize($_POST['Teises']);
 		}
 		if ($path['path'] == 0) {
 			$pathas = $path['id'];
@@ -149,7 +153,9 @@ function kategorija($kieno, $leidimas = false) {
 		$aprasymas = safe_html(str_replace(array("&#39;"), array("'"), $_POST['Aprasymas']));
 		$pav = input(strip_tags($_POST['Pav']));
 		$id = ceil((int)$_POST['Kategorijos_id']);
-		$teises = serialize($_POST['Teises']);
+			if ($kieno == 'vartotojai')
+				$teises = $_POST['Teises']; else
+				$teises = serialize($_POST['Teises']);
 		$moderuoti = ((isset($_POST['punktai'])) ? serialize($_POST['punktai']) : '');
 		$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "grupes` SET
 			`pavadinimas` = " . escape($pavadinimas) . ",
@@ -307,15 +313,19 @@ HTML;
 				$kategorijos[$lang['admin']['what_moderate']] = array("type" => "select", "extra" => "multiple=multiple", "value" => $puslapiai, "class" => "asmSelect", "style" => "width:100%", "name" => "punktai[]", "id" => "punktai", "selected" => (isset($extra['mod'])) ? $ser : "");
 			}
 			if ($leidimas == true && $vartotojai == false && $_GET['v'] == 2) {
+				if ($kieno == 'vartotojai') {
 
-				$box = "";
-				foreach ($teises as $name => $check) {
-					$box .= "<label><input type=\"checkbox\" " . (isset($extra) && in_array($name, unserialize($extra['teises'])) ? "checked" : "") . " name=\"Teises[]\" value=\"$name\"/> $check</label><br /> ";
+					$kategorijos[$textas] = array("type" => "select", "value" => $teises, "name" => "Teises", "selected" => (isset($extra['teises']) ? input($extra['teises']) : ""));
+				} else {
+					$box = "";
+					foreach ($teises as $name => $check) {
+						$box .= "<label><input type=\"checkbox\" " . (isset($extra) && in_array($name, unserialize($extra['teises'])) ? "checked" : "") . " name=\"Teises[]\" value=\"$name\"/> $check</label><br /> ";
+					}
+					$kategorijos[$textas] = array("type" => "string", "value" => $box);
 				}
-				$kategorijos[$textas] = array("type" => "string", "value" => $box);
 
 			} else {
-				$kategorijos[""] = array("type" => "hidden", "name" => "Teises", "value" => (isset($extra['teises']) ? input(unserialize($extra['teises'])) : ''));
+				$kategorijos[""] = array("type" => "hidden", "name" => "Teises", "value" => (isset($extra['teises']) ? ($kieno=='vartotojai'?$extra['teises']:unserialize($extra['teises'])) : ''));
 			}
 			$kategorijos[" "] = array("type" => "hidden", "name" => "Kategorijos_id", "value" => (isset($extra['id']) ? input($extra['id']) : ''));
 			lentele($lang['system']['categories'], '<center><h2>' . $lang['system']['picture'] . ':</h2><div class="avataras"><img src="' . $dir . '/' . (isset($extra['pav']) ? $extra['pav'] : 'Universal.png') . '" id="kategorijos_img" /></div></center>' . $bla->form($kategorijos));
