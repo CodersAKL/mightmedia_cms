@@ -7,18 +7,13 @@ function lentele_r($pavadinimas,$tekstas,$label=false) {
 	lentele_l($pavadinimas,$tekstas);
 }
 function lentele_l($pavadinimas,$tekstas,$label=false) {
-	echo "\n<div class=\"title\">".ucfirst($pavadinimas)."</div>\n";
-	if ($label) { $label = "<fieldset>\n<legend>$label</legend>\n";	}
-	echo "<div class=\"vidus\">$label $tekstas";
-	if ($label) { echo "</fieldset></div>\n"; }
-	else { echo "</div>\n"; }}
+	echo "<div class=\"title\">$pavadinimas</div>
+<div class=\"vidus\">$tekstas</div>";
+	}
 
-function lentele($pavadinimas,$tekstas,$label=false) {//<p><span class='header1'>$title</span></p><br />\n
-	echo "\n<div class=\"title\">".ucfirst($pavadinimas)."</div>\n";
-	if ($label) { $label = "<fieldset>\n<legend>$label</legend>\n";	}
-	echo "<div class=\"content\">$label $tekstas";
-	if ($label) { echo "</fieldset></div>\n"; }
-	else { echo "</div>\n"; }
+function lentele($pavadinimas,$tekstas,$label=false) {
+echo "<div class=\"title\">$pavadinimas</div>
+<div class=\"content\">$tekstas</div>";
 }
 
 

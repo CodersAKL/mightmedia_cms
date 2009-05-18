@@ -15,8 +15,8 @@ if (!defined("LEVEL") || !isset($_SESSION['username']) || empty($_SESSION['usern
 	$text = <<< HTML
 	<center>
 		<form id="user_reg" name="user_reg" method="post" action="">
-			<label for="vartotojas">{$lang['user']['user']}:</label><br />
-			<script type="text/javascript">document.write(unescape(unescape('%3C')+'input name="vartotojas" class="input" id="vartotojas" type="text" value="" maxlength="50" /'+unescape('%3E')));</script><br />
+			<label>{$lang['user']['user']}:<br />
+			<script type="text/javascript">document.write(unescape(unescape('%3C')+'input name="vartotojas" class="input" id="vartotojas" type="text" value="" maxlength="50" /'+unescape('%3E')));</script></label><br />
 			<label for="slaptazodis">{$lang['user']['password']}:</label><br/>
 			<input name="slaptazodis" class="input" id="slaptazodis" type="password" value="" maxlength="50" /><br/>
 			<label>{$lang['user']['login_remember']}:<input type="checkbox" class="checkbox" style="background-color:transparent;border:0" name="Prisiminti" id="Prisiminti"/></label><br /> <input type="submit" class="submit" name="Submit" value="{$lang['user']['login']}" />

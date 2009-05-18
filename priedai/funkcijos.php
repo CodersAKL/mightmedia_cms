@@ -44,8 +44,8 @@ function header_info() {
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
   <script type="text/javascript" src="javascript/jquery/jquery-ui-personalized-1.6rc6.min.js"></script> 
   <script type="text/javascript" src="javascript/jquery/jquery.tablesorter.js"></script> 
-  <script language="javascript" type="text/javascript" src="javascript/pagrindinis.js"></script>  
-  <script language="javascript" type="text/javascript" src="javascript/rating_update.js"></script>	
+  <script type="text/javascript" src="javascript/pagrindinis.js"></script>  
+  <script type="text/javascript" src="javascript/rating_update.js"></script>	
   <script type="text/javascript" src="javascript/jquery/tooltip.js"></script>
 	<!--[if lt IE 7]>
 	<script type="text/javascript" src="javascript/jquery/jquery.pngFix.pack.js"></script>

@@ -1,9 +1,16 @@
+* {
+padding: 0;
+margin: 0;
+} 
 
-body{
-	font: 10px verdana, helvetica, arial, sans-serif;
-	margin: auto;
-	background-image: url(images/bg.jpg);
-	background-color: #CCCCCC;
+body {
+margin:0;
+padding: 0;
+color: #444;
+font: 13px Arial, Verdana, Tahoma, sans-serif;
+line-height: 17px;
+background-image: url(images/bg.jpg);
+background-color: #CCCCCC;
 }
 .tooltip{
  padding: 3px;
@@ -15,42 +22,7 @@ body{
  text-align: left;
  position: absolute;
  z-index: 1000;
- -moz-border-radius:5px;
 }
-table{
-	font: 10px verdana, helvetica, arial, sans-serif;
-
-}
-.blokas, .blokas a{
-font: bold 12px Verdana, Arial, Helvetica, sans-serif;
-}blockquote{
-	/*width: 180px;*/
-}
-ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-img { border: 0; }
-a, a:visited { color: #0A5087; text-decoration: none; }
-a:hover { color: #266493; text-decoration: underline; }
-.main {
-	font: 10px verdana, helvetica, arial, sans-serif;
-	margin-right: auto;
-	margin-left: auto;
-	width: 970px;
-	background-color: #CCCCCC;
-	border: 1px solid #cccccc;
-	padding: 0;
-}
-.sonas {
-	border: 1px solid Black;
-	padding: 5px;
-	background-image: url(images/left_bgr.jpg);
-	background-repeat: no-repeat;
-	width: 200px;
-}
-
 .title {
 background-image:url(images/titlas.gif);
 background-repeat:repeat-x;
@@ -65,17 +37,21 @@ text-align:center;
 text-transform:uppercase;
 vertical-align:middle;
 }
-
-div .title a, #sms-title a {
+div .title a {
 	color: white;
 	text-decoration: underline;
-	font-veight:bold;
+	}
+.content {
+	background-color : white;
+	background-image: url(images/bgas.jpg);
+	padding: 10px;
+	border: 1px solid;
+	border-color: #73A4BF;
+	margin-bottom: 0px; /* buvo 10 */
+	font-family: Verdana, Arial, Helvetica, sans-serif, webdings;
+	font-size : 11px;
+	font-weight : normal;
 }
-body div#toolTipas { position:absolute;z-index:1000;width:220px;background:#666;border:2px double #fff;text-align:left;padding:5px;min-height:1em;-moz-border-radius:5px; }
-body div#toolTipas p { margin:0;padding:0;color:#fff;font:11px/12px verdana,arial,sans-serif; }
-body div#toolTipas p em { display:block;margin-top:3px;color:#f60;font-style:normal;font-weight:bold; }
-body div#toolTipas p em span { font-weight:bold;color:#fff; }
-
 .vidus {
 	background-color : white;
 	background-image: url(images/block_vidus_fonas.gif);
@@ -92,227 +68,120 @@ body div#toolTipas p em span { font-weight:bold;color:#fff; }
 	font-size : 11px;
 	font-weight : normal;
 }
-.content {
-	background-color : white;
-	background-image: url(images/bgas.jpg);
-	padding: 10px;
-	border: 1px solid;
-	border-color: #73A4BF;
-	margin-bottom: 0px; /* buvo 10 */
-	font-family: Verdana, Arial, Helvetica, sans-serif, webdings;
-	font-size : 11px;
-	font-weight : normal;
+img {border: none;}
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
-.img_left {
-	float:left; margin:5px; border: solid 1px black; padding: 3px;
-}
-
-.comment {
-	font-family : Verdana, Arial, Helvetica, sans-serif, webdings;
-	font-size : 9px;
-	color : #999999;
-	text-align : center;
-}
-
-h4:first-letter {
-	color: #0A3F67;
-	font-size: 40px;
-	float: left;
-}
-fieldset {
-	border : 1px solid #ccc;
-	padding : 5px;
-	margin : 5px;
-}
+img { border: 0; }
+a, a:visited { color: #0A5087; text-decoration: none; }
+a:hover { color: #266493; text-decoration: underline; }
 input, textarea, button, select {
 	font-family : Verdana, Arial, Helvetica, sans-serif;
 	font-size : 9px;
 	color : #0A3F67;
 	background-color : white;
 	border : 1px solid #0A3F67;
-	/*font-weight : bold;*/
 	padding-left: 5px;
-	background-image: url(images/bgr.jpg);
-	background-repeat: no-repeat;
-}
-/*
-input, button {
-	cursor: pointer;
-}
-*/
-.middle {
-	vertical-align : middle;
-}
-/*mygtukø juosta*/
-#mygtukaii {
-	text-align:center;
-	color: white;
-	background-image: url(images/menius.jpg);
-	border-left: 1px gray solid;
-	background-color: #E4C9BB;
-	height: 20px;
-	padding-top: 6px;
-	padding-bottom: 0px;
-} 
-#mygtukaii a {
-	text-align:center;
-	color: white;
-	border-left: 1px solid gray;
-	height: 15px;
-	padding: 5px; 
-	border-right: 1px solid #333;
-	font: 11px verdana; 
-	color:#FFFFFF; 
-
-}
-#mygtukaii a:hover {
-	text-decoration: none;
-	padding: 5px; /*atstumas nuo kraðto, mygtuko viduje*/
-	color: #cccccc; /*Å rifto spalva*/
-}
-#po-sms {
-	background-image: url(images/po-sms2.gif);
-	background-repeat: repeat-x;
-	height: 10px;
-	width: 100%;
 }
 
-/*
-.ukryj {
-	padding-bottom : 10px;
-	padding-left : 30px;
-	padding-top : 10px;
-	padding-right : 30px;
+#contentt {
+background: #ccc;
+padding: 20px;
 }
 
-.cytat {
-	padding-left : 5px;
-	color : #ffffff;
-	background-color : #666;
-	font-family : Arial, sans-serif, Verdana;
-	font-size : 12px;
-	margin-left : 10px;
+
+#wrap {
+width: 970px;
+margin: 0 auto;
 }
 
-#tabsJ {
-	font-size: 12px;
-	font-weight: bold;
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+
+#header{
+font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 100%;
 }
-#tabsJ ul {
-	margin:0;
-	padding:10px 10px 0 50px;
-	list-style:none;
+.header_bar{
+background-image: url(images/hdr_bg.jpg);
+background-repeat:repeat-x;
+height:100px;
+width:100%;
+text-align:left;
 }
-#tabsJ li {
-	display:inline;
-	margin:0;
-	padding:0;
-}
-#tabsJ a {
-	float:left;
-	background: url(images/tableftJ.gif) no-repeat left top;
-	margin:0;
-	padding:0 0 0 5px;
-	text-decoration:none;
-}
-#tabsJ a span {
-	float:left;
-	display:block;
-	background: url(images/tabrightJ.gif) no-repeat right top;
-	padding:5px 15px 4px 6px;
-	color:#24618E;
-}
-*/
-    /* Commented Backslash Hack hides rule from IE5-Mac \*/
-/*
-#tabsJ a span {float:none;}
-    / End IE5-Mac hack /
-#tabsJ a:hover span {
-	color:#FFF;
-}
-#tabsJ a:hover {
-	background-position: 0% -42px
-}
-#tabsJ a:hover span {
-	background-position:100% -42px;
-}
-#tabsJ #current a {
-	background-position:0% -42px;
-}
-#tabsJ #current a span {
-	background-position:100% -42px;
-	color:#FFF;
+/* Meniu */
+#vertikalus_meniu {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	width: 160px;
+	padding: 0px;
+	margin: 0px;
 }
 
-#suckerdiv {
-	width: 200px;
-	margin: 10px;
-	border-style: solid solid none solid;
-	border-color: #D8D5D1;
-	border-size: 1px;
-	border-width: 1px;
-	}
-ul {
+#vertikalus_meniu ul {
 	list-style: none;
-	margin: 0;
-	padding: 0;
+	margin: 0px;
+	padding: 0px;
+	border: none;
 }
-#suckertree1 li a {
-	height: 32px;
-	  voice-family: "\"}\""; 
-	  voice-family: inherit;
-	  height: 24px;
-	text-decoration: none;
-	}	
-	
-#suckertree1 li a:link, #suckertree1 li a:visited {
-	color: #3688BA;
+#vertikalus_meniu ul li {
+	margin: 0px;
+	padding: 0px;
+}
+#vertikalus_meniu ul li a {
+	font-size: 80%;
 	display: block;
-	background:  url(stilius/menu2.gif);
-	padding: 8px 0 0 30px;
-	}
-	
-#suckertree1 li a:hover {
-	color: #3688BA;
-	background:  url(stilius/menu2.gif) 0 -32px;
-	padding: 8px 0 0 32px;
-	}
-*/
-/* Lentelems */
-.table {
-	border-bottom: 1px solid black;
-	border-right: 1px solid black;
-}
-.th {
-	text-align:center;
-	color: white;
-	background-image: url(images/menius.jpg);
-	border-left: 1px solid gray;
-	background-color: #E4C9BB;
-	height: 20px;
-	font-weight: normal;
-}
-.th a {
-	color: white;
-}
-.tr:hover, .tr2:hover {
-	/*background-color: #FFFFCC;*/
-	background-color: #FAECAB;
-	cursor:pointer;
-}
-.tr2 {
-	background-color: #FBF8F4;
-}
-.td {
-	padding-left:5px;
-	border-left:1px solid gray
-}
-.td2 {
-	padding-left: 5px;
-	border-left: 1px solid gray;
+	border-bottom: 1px dashed #73A4BF;
+	padding: 5px 0px 2px 4px;
+	text-decoration: none;
+	color: #666666;
+	width:160px;
 }
 
+#vertikalus_meniu ul li a:hover, #vertikalus_meniu ul li a:focus {
+	color: #000000;
+	background-color: #73A4BF;
+}
+/* Meniu juosta*/
+#juosta {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	width: 100%;
+	margin: 0px;
+	padding:0;
+	background-image:url(images/menius.jpg);
+	text-align:center;
+	height:28px;
+	
+}
+
+#juosta ul {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+#juosta ul li {
+  display: inline;
+	margin: 0px;
+	padding: 0px;
+}
+#juosta ul li a {
+  border-right:1px solid #000;
+  font-size: 11px;
+  padding-left:4px;
+  padding-right:4px;
+	display: inline;
+		vertical-align:middle;
+   height:2px;
+	text-decoration: none;
+	color: #CCCCCC;
+	
+}
+
+#juosta ul li a:hover, #vertikalus_meniu ul li a:focus {
+	color: #FFF;
+	
+}
 /* Knopkems administravimo */
 .blokas {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
@@ -355,122 +224,66 @@ div.blokas img:hover {
 	border:0;
 	/*filter:alpha(opacity=100);*/
 }
-
-.mrcbug {
-	position: absolute;
-	bottom: 0;
-	padding: 0px;
-	background: #666666 url(bg.gif) repeat-x;
-	width:100%; height:18px;
-	font-family:Geneva, Arial, Helvetica, sans-serif;
-	font-size:9px;
-	font-weight:bold;
-	vertical-align : middle;
+/* Lentelems */
+.table {
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
 }
-.mrcbug a {
-	color:black;
+.th {
+	text-align:center;
+	color: white;
+	background-image: url(images/menius.jpg);
+	border-left: 1px solid gray;
+	background-color: #E4C9BB;
+	height: 20px;
+	font-weight: normal;
 }
-.mrcbug #text {
-	float:left;
-	padding:0;
-	padding-top:3px;
-	margin-left:5px;
-	background: #666666 url(bg.gif) repeat-x;
-	vertical-align : middle;
+.th a {
+	color: white;
 }
-.mrcbug img {
-	border:none;
+.tr:hover, .tr2:hover {
+	/*background-color: #FFFFCC;*/
+	background-color: #FAECAB;
+	cursor:pointer;
 }
-.mrcbug #left {
-	padding:0; margin:0;
-	float:left; width:17px; height:18px;
-	background: url(l.gif) no-repeat;
-	background-position:top;
+.tr2 {
+	background-color: #FBF8F4;
 }
-.mrcbug #right {
-	padding:0; margin:0;
-	float:left; width:17px; height:18px;
-	background: url(r.gif) no-repeat right top;
+.td {
+	padding-left:5px;
+	border-left:1px solid gray
 }
-
-/*paneliu stilius*/
-ul.sortableList {
-	list-style-type: none;
-	padding: 0px;
-	margin: 0px;
-	width: 200px;
+.td2 {
+	padding-left: 5px;
+	border-left: 1px solid gray;
 }
-ul.sortableList li {
-	cursor: move;
-	padding: 2px 2px;
-	margin: 2px 0px;
-	border: 1px solid #000000;
-	background-color: #ECF2F2;
-}
-div.sortableList div {
-	cursor: move;
-	padding: 2px 2px;
-	margin: 2px 0px;
-	border: 1px solid #000000;
-	background-color: #ECF2F2;
-	width: 300px;
-}
-div.sortableList img {
-	cursor: move;
-	display: block;
-	margin: 5px 0px;
-	border: 1px solid #000000;
-}
-.adm-info {
-	font-size:12px;
-	color:black;
-	display:inline;
+.left {
+margin-top: 10px;
+float: left;
+width: 200px;
+line-height: 15px;
 }
 
-/* Kalendorius */
-.cal-sel {
-	background: #FFFFFF;
-	color: #FF0000;
-	font-weight: bold;
-	text-decoration: underline;
-}
-.cal_sun {
-	color: #FF0000;
-	font-family: Tahoma, sans-serif;
-	font-size: 11px;
-	text-decoration: none;
+
+.center { 
+margin-top: 10px;
+float: left;
+width: 510px;
+margin-left: 10px;
+line-height: 20px;
 }
 
-/* Meniu */
-#vertikalus_meniu {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 100%;
-	width: 160px;
-	padding: 0px;
-	margin: 0px;
+
+.right {
+margin-top: 10px;
+float: right;
+width: 200px;
 }
 
-#vertikalus_meniu ul {
-	list-style: none;
-	margin: 0px;
-	padding: 0px;
-	border: none;
+#footer { 
+color: #777;
+text-align: center;
+padding-bottom: 10px;
 }
-#vertikalus_meniu ul li {
-	margin: 0px;
-	padding: 0px;
-}
-#vertikalus_meniu ul li a {
-	font-size: 80%;
-	display: block;
-	border-bottom: 1px dashed #73A4BF;
-	padding: 5px 0px 2px 4px;
-	text-decoration: none;
-	color: #666666;
-	width:160px;
-}
-
-#vertikalus_meniu ul li a:hover, #vertikalus_meniu ul li a:focus {
-	color: #000000;
-	background-color: #73A4BF;
-}
+#footer a {  color: #777; text-decoration: none; }
+#footer  a:hover { color: #000; } 
