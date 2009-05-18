@@ -257,8 +257,8 @@ VALUES (
 	}
 
 	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' ORDER BY `pavadinimas` DESC");
-	if (mysql_num_rows($sql) > 0) {
-		while ($row = mysql_fetch_assoc($sql)) {
+	if (sizeof($sql) > 0) {
+		foreach ($sql as $row) {
 			$kategorijos[$row['id']] = $row['pavadinimas'];
 		}
 	} else {

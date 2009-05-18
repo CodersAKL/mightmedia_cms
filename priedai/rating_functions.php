@@ -17,9 +17,8 @@ function getRating($id) {
 	$rows = 0;
 
 	$sel = mysql_query1("SELECT rating_num FROM " . LENTELES_PRIESAGA . "ratings WHERE rating_id = '$id'AND psl = '$page'");
-	if (mysql_num_rows($sel) > 0) {
-
-		while ($data = mysql_fetch_assoc($sel)) {
+	if (sizeof($sel) > 0) {
+		foreach ($sel as $data) {
 
 			$total = $total + $data['rating_num'];
 			$rows++;
@@ -46,9 +45,8 @@ function outOfFive($id) {
 	$rows = 0;
 
 	$sel = mysql_query1("SELECT rating_num FROM " . LENTELES_PRIESAGA . "ratings WHERE rating_id = '$id' AND psl = '$page'");
-	if (mysql_num_rows($sel) > 0) {
-
-		while ($data = mysql_fetch_assoc($sel)) {
+	if (sizeof($sel) > 0) {
+		foreach ($sel as $data) {
 
 			$total = $total + $data['rating_num'];
 			$rows++;
@@ -71,7 +69,7 @@ function outOfFive($id) {
 function getVotes($id) {
 	global $page;
 	$sel = mysql_query1("SELECT rating_num FROM " . LENTELES_PRIESAGA . "ratings WHERE rating_id = '$id' AND psl = '$page'");
-	$rows = mysql_num_rows($sel);
+	$rows = count($sel);
 	if ($rows == 0) {
 		$votes = '0 Balsų';
 	} else
@@ -90,7 +88,7 @@ function pullRating($id, $show5 = false, $showPerc = false, $showVotes = false, 
 	$text = '';
 
 	$sel = mysql_query1("SELECT id FROM " . LENTELES_PRIESAGA . "ratings WHERE IP = '" . $_SERVER['REMOTE_ADDR'] . "' AND rating_id = '$id' AND psl = '$page'");
-	if (mysql_num_rows($sel) > 0 || $static == 'novote' || isset($_COOKIE['has_voted_' . $id])) {
+	if (count($sel) > 0 || $static == 'novote' || isset($_COOKIE['has_voted_' . $id])) {
 
 
 		if ($show5 || $showPerc || $showVotes) {
@@ -187,7 +185,8 @@ function getTopRated($limit, $table, $idfield, $namefield) {
 
 	$result .= '<ul class="topRatedList">' . "\n";
 
-	while ($data = @mysql_fetch_assoc($sel)) {
+
+	foreach ($sel as $data) {
 		$result .= '<li>' . $data['thenamefield'] . ' (' . $data['rating'] . ')</li>' . "\n";
 	}
 

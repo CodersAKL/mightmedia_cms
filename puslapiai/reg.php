@@ -79,7 +79,7 @@ if (isset($_SESSION['username'])) {
 	header("Location: ?");
 }
 $error = '';
-$sekme=false;
+$sekme = false;
 if (isset($_POST['action']) && $_POST['action'] == 'registracija' && $conf['Registracija'] == 1) {
 	//if (!preg_match("[^[a-zA-Z0-9_-]+$]", $user)) && !preg_match('/[^A-Za-z0-9]/', $_POST['nick'])
 	//$vardas = htmlentities($_POST['nick'], ENT_QUOTES, 'UTF-8');
@@ -89,7 +89,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'registracija' && $conf['Regi
 	$pass2 = $_POST['pass2'];
 	$email = strip_tags($_POST['email']);
 	$error = "";
-	$einfo = mysql_num_rows(mysql_query1("SELECT * FROM " . LENTELES_PRIESAGA . "users WHERE nick=" . escape($vardas) . ""));
+	$einfo = count(mysql_query1("SELECT * FROM " . LENTELES_PRIESAGA . "users WHERE nick=" . escape($vardas) . ""));
 	if ($einfo != 0) {
 		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['takenusername']}<br />";
 	}
@@ -99,8 +99,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'registracija' && $conf['Regi
 	if (strlen($vardas) > 15) {
 		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['usrtoolong']}<br />";
 	}
-	if(preg_match('/^[\p{L}0-9]+$/u', $vardas)==0){
-		$error.="<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['only_letters_numbers']}<br />";
+	if (preg_match('/^[\p{L}0-9]+$/u', $vardas) == 0) {
+		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['only_letters_numbers']}<br />";
 	}
 	if ($pass != $pass2) {
 		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['badpass']}<br />";
@@ -114,9 +114,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'registracija' && $conf['Regi
 	if (!check_email($email)) {
 		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['bademail']}<br />";
 	}
-	
+
 	if (check_email($email)) {
-		$minfo = mysql_num_rows(mysql_query1("SELECT * FROM " . LENTELES_PRIESAGA . "users WHERE email=" . escape($email) . ""));
+		$minfo = count(mysql_query1("SELECT * FROM " . LENTELES_PRIESAGA . "users WHERE email=" . escape($email) . ""));
 		if ($minfo != 0) {
 			$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['emailregistered']}<br />";
 		}
@@ -130,7 +130,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'registracija' && $conf['Regi
 					NULL , " . escape($vardas) . ", '2', " . escape(koduoju($pass)) . " , " . escape($email) . ", '" . time() . "' , '" . time() . "'
 					)")) {
 			msg("{$lang['system']['done']}", "{$lang['reg']['registered']}.");
-			$sekme=true;
+			$sekme = true;
 		} else {
 			klaida("{$lang['system']['error']}", "{$lang['system']['systemerror']}" . mysql_error());
 		}
@@ -138,10 +138,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'registracija' && $conf['Regi
 		klaida($lang['reg']['wronginfo'], $error);
 	}
 }
-if($sekme==false){
-$title = "{$lang['reg']['registration']}";
-$text = registracijos_forma();
-lentele($title, $text);
+if ($sekme == false) {
+	$title = "{$lang['reg']['registration']}";
+	$text = registracijos_forma();
+	lentele($title, $text);
 }
 
 //unset($email, $vardas, $error, $einfo, $pass, $pass, $reg_info);

@@ -47,7 +47,7 @@ if (isset($url['s']) && !empty($url['s']) && $url['s'] != null) {
 
 
 $limit = 30;
-$uzeris = mysql_fetch_assoc(mysql_query1("SELECT `pm_viso`,`nick` FROM " . LENTELES_PRIESAGA . "users WHERE nick='" . $_SESSION['username'] . "'"));
+$uzeris = mysql_query1("SELECT `pm_viso`,`nick` FROM " . LENTELES_PRIESAGA . "users WHERE nick='" . $_SESSION['username'] . "' LIMIT 1");
 $pm_sk = kiek("private_msg", "WHERE `to`=" . escape($uzeris['nick']));
 $date['m'] = 'Viso';
 $date['d'] = $pm_sk;
@@ -76,7 +76,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'pm_send' && isset($_SESSION[
 	$msg = $_POST['msg'];
 	$date = time();
 	$sql = mysql_query1("SELECT nick,email FROM " . LENTELES_PRIESAGA . "users WHERE nick=" . escape($to) . " LIMIT 1");
-	if (mysql_num_rows($sql) == 0) {
+	if (count($sql) == 0) {
 		$error = "{$lang['user']['pm_noreceiver']}";
 	}
 	if (!isset($error)) {
@@ -139,7 +139,7 @@ if (isset($url['n'])) {
 		// ############### Jei nera paspaustas atsakyti mygtukas sukuriam paprasta forma #################
 		//if (isset($error) && !empty($error)) { msg("Dėmesio!",$error); }
 		if (isset($user) && (int)$pid > 0) {
-			$sql = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape($user) . " AND `id`=" . escape($pid) . " AND `to`=" . escape($_SESSION['username']) . ""));
+			$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape($user) . " AND `id`=" . escape($pid) . " AND `to`=" . escape($_SESSION['username']) . " LIMIT 1");
 			if ($sql['read'] == "NO") {
 				mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "private_msg` SET `read`='YES' WHERE `id`=" . escape($pid));
 			}
@@ -186,7 +186,7 @@ unset($text);
 if (isset($url['v'])) {
 	if (!empty($url['v']) && (int)$url['v'] > 0 && isnum($url['v'])) {
 
-		$sql = mysql_fetch_assoc(mysql_query1("SELECT `msg`, `from`,`to`, `title`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE (`to`=" . escape($_SESSION['username']) . " OR `from`=" . escape($_SESSION['username']) . ") AND `id`=" . escape($url['v'])));
+		$sql = mysql_query1("SELECT `msg`, `from`,`to`, `title`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE (`to`=" . escape($_SESSION['username']) . " OR `from`=" . escape($_SESSION['username']) . ") AND `id`=" . escape($url['v']) . " LIMIT 1");
 		if ($sql) {
 			$laiskas = "
 				<div class=\"pm_read\"><b>{$lang['user']['pm_from']}:</b>  " . $sql['from'] . "<br><b>{$lang['user']['pm_to']}:</b> " . $sql['to'] . "<br> <b>{$lang['user']['pm_subject']}:</b> " . (isset($sql['title']) && !empty($sql['title']) ? input(trimlink($sql['title'], 40)) : "{$lang['user']['pm_nosubject']}") . "<br><br><b>{$lang['user']['pm_message']}:</b><br>" . bbcode(wrap($sql['msg'], 40)) . "<br><br></div>
@@ -203,11 +203,13 @@ if (isset($url['v'])) {
 }
 if (defined("LEVEL") && LEVEL > 0 && $a == 1 && !isset($s)) {
 	include_once ("priedai/class.php");
-	$sql = mysql_query1("SELECT `id`, `read`,`from`, IF(`from` = '', 'Sve�?ias',`from`) AS `Nuo`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_SESSION['username']) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`$order` DESC LIMIT $p,$limit") or die(mysql_error());
-	if (mysql_num_rows($sql) > 0) {
+	$sql = mysql_query1("SELECT `id`, `read`,`from`, IF(`from` = '', 'Sve�?ias',`from`) AS `Nuo`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_SESSION['username']) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`$order` DESC LIMIT $p,$limit");
+	if (sizeof($sql) > 0) {
+
 		$bla = new Table();
 		$info = array();
-		while ($row = mysql_fetch_assoc($sql)) {
+
+		foreach ($sql as $row) {
 			if ($row['read'] == "NO") {
 				$extra = "<img src='images/pm/pm_new.png' />";
 			} else {
@@ -222,11 +224,12 @@ if (defined("LEVEL") && LEVEL > 0 && $a == 1 && !isset($s)) {
 }
 if (defined("LEVEL") && LEVEL > 0 && $a == 2 && !isset($s)) {
 	include_once ("priedai/class.php");
-	$sql = mysql_query1("SELECT `id`, `read`, IF(`to` = '', 'Sve�?ias',`to`) AS `to`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`to`) AS `to_id`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape($_SESSION['username']) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`$order` DESC LIMIT $p,$limit") or die(mysql_error());
-	if (mysql_num_rows($sql) > 0) {
+	$sql = mysql_query1("SELECT `id`, `read`, IF(`to` = '', 'Sve�?ias',`to`) AS `to`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`to`) AS `to_id`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape($_SESSION['username']) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`$order` DESC LIMIT $p,$limit");
+	if (count($sql) > 0) {
 		$bla = new Table();
 		$info = array();
-		while ($row = mysql_fetch_assoc($sql)) {
+
+		foreach ($sql as $row) {
 			if ($row['read'] == "NO") {
 				$extra = "<img src='images/pm/pm_new.png' />";
 			} else {

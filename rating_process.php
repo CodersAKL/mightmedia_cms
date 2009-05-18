@@ -39,7 +39,7 @@ if ($_POST) {
 	$psl = $_SESSION['page'];
 	if ($rating <= 5 && $rating >= 1) {
 
-		if (@mysql_fetch_assoc(mysql_query1("SELECT id FROM " . LENTELES_PRIESAGA . "ratings WHERE IP = '" . $_SERVER['REMOTE_ADDR'] . "' AND rating_id = '$id' AND psl = '$psl'")) || isset($_COOKIE['has_voted_' . $id])) {
+		if (mysql_query1("SELECT id FROM " . LENTELES_PRIESAGA . "ratings WHERE IP = '" . $_SERVER['REMOTE_ADDR'] . "' AND rating_id = '$id' AND psl = '$psl'") || isset($_COOKIE['has_voted_' . $id])) {
 
 			echo 'already_voted';
 
@@ -53,7 +53,8 @@ if ($_POST) {
 			$rows = 0;
 
 			$sel = mysql_query1("SELECT rating_num FROM " . LENTELES_PRIESAGA . "ratings WHERE rating_id = '$id' AND psl = '$psl'");
-			while ($data = mysql_fetch_assoc($sel)) {
+
+			foreach ($sel as $data) {
 
 				$total = $total + $data['rating_num'];
 				$rows++;

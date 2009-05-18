@@ -28,11 +28,12 @@ if (defined("LEVEL") && LEVEL == 1) { //ADMINAS
 	$q = "SELECT `id`, `uid`, `user`, `clicks`, `file`, `timestamp` FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE `timestamp`>'" . $timeout . "' ORDER BY `clicks` ASC LIMIT 50";
 }
 
-$result = mysql_query1($q) or die(klaida("Klaida", mysql_error()));
-$u = mysql_num_rows($result);
+$result = mysql_query1($q);
+$u = count($result);
 $i = 0;
 
-while ($row = mysql_fetch_assoc($result)) {
+
+foreach ($result as $row) {
 	//if (!empty($row['user'])) {
 	$narsykle = ((isset($row['agent'])) ? browser($row['agent']) : '?');
 	$info[$i] = array("{$lang['online']['who']}" => user($row['user'], $row['id']), "{$lang['online']['timestamp']}" => date('i:s', $timestamp - $row['timestamp']), "{$lang['online']['clicks']}" => $row['clicks']);
@@ -50,7 +51,7 @@ include_once ("priedai/class.php");
 $bla = new Table();
 lentele("{$lang['online']['users']} - " . $u, $bla->render($info));
 
-mysql_free_result($result);
+//mysql_free_result($result);
 //unset($user,$nekvepuoja,$file,$img,$content,$i,$u,$q,$row,$extra);
 
 

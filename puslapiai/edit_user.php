@@ -27,7 +27,7 @@ if (isset($url['id']) && isnum($url['id']) && $url['id'] > 0) {
 // ######### Slaptazodzio keitimas #############
 if (isset($_POST['old_pass']) && count($_POST['old_pass']) > 0 && count($_POST['new_pass']) > 0 && count($_POST['new_pass2']) > 0) {
 	$old_pass = koduoju($_POST['old_pass']);
-	$sql = mysql_num_rows(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " AND pass=" . escape($old_pass) . ""));
+	$sql = count(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " AND pass=" . escape($old_pass) . ""));
 	if ($sql != 0) {
 		$new_pass = koduoju($_POST['new_pass']);
 		$new_pass2 = koduoju($_POST['new_pass2']);
@@ -104,7 +104,7 @@ if (isset($mid) && isnum($mid)) {
 	}
 	// Pakeisti kontaktinius duomenis
 	if ($mid == 2) {
-		$info = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . ""));
+		$info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . "LIMIT 1");
 		$text .= "
 				<fieldset>
 					<legend>{$lang['user']['edit_contacts']}</legend>
@@ -152,7 +152,7 @@ if (isset($mid) && isnum($mid)) {
 	}
 	// Pakeisti sali, miesta
 	if ($mid == 3) {
-		$info = mysql_fetch_assoc(mysql_query1("SELECT salis, miestas FROM `" . LENTELES_PRIESAGA . "users` WHERE nick='" . $_SESSION['username'] . "'"));
+		$info = mysql_query1("SELECT salis, miestas FROM `" . LENTELES_PRIESAGA . "users` WHERE nick='" . $_SESSION['username'] . "' LIMIT 1");
 		$text .= "
 				<fieldset>
 					<legend>{$lang['user']['edit_locality']}</legend>
@@ -164,7 +164,8 @@ if (isset($mid) && isnum($mid)) {
 								<select size=\"1\" name=\"salis\">
 		";
 		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "salis`");
-		while ($row = mysql_fetch_assoc($sql)) {
+
+		foreach ($sql as $row) {
 			$text .= "<option value='" . $row['iso'] . "' ";
 			if ($row['iso'] == $info['salis']) {
 				$text .= "selected";
@@ -195,7 +196,7 @@ if (isset($mid) && isnum($mid)) {
 	//Žaidime mano šito nereikės
 
 	if ($mid == 4) {
-		$sql = mysql_fetch_assoc(mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`='" . $_SESSION['username'] . "'"));
+		$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`='" . $_SESSION['username'] . "' LIMIT 1");
 
 		$text .= "<fieldset>
   			<legend>{$lang['user']['edit_avatar']}</legend><center><img src='http://www.gravatar.com/avatar.php?gravatar_id=" . md5($sql['email']) . "&amp;default=" . urlencode('images/avatars/no_image.jpg') . "&amp;size=60'></img><br/>
@@ -204,7 +205,7 @@ if (isset($mid) && isnum($mid)) {
 	}
 	// Pagrindiniai nustatymai
 	if ($mid == 5) {
-		$sql = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick='" . $_SESSION['username'] . "'"));
+		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick='" . $_SESSION['username'] . "' LIMIT 1");
 		$data = explode("-", $sql['gim_data']);
 		$text .= "
   			<fieldset>

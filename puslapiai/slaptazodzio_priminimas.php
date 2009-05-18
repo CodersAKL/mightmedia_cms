@@ -19,10 +19,10 @@ if (isset($_SESSION['username'])) {
 if (isset($url['c']) && !empty($url['c']) && strlen($url['c']) == 11) {
 	$kode = input(strip_tags($url['c']));
 	$sql = mysql_query("SELECT `nick`,`email`,`slaptas` FROM `" . LENTELES_PRIESAGA . "users` WHERE slaptas=" . escape($kode) . " LIMIT 1");
-	if (mysql_num_rows($sql) < 1) {
+	if (count($sql) < 1) {
 		$error = "{$lang['pass']['wrongcode']}";
 	} else {
-		$sql = mysql_fetch_assoc($sql);
+		//$sql = mysql_fetch_assoc($sql);
 		$slaptas = random_name();
 		$nick = $sql['nick'];
 		if (mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `slaptas`= NULL, pass='" . koduoju($slaptas) . "' WHERE `nick`=" . escape($nick) . " LIMIT 1") or die(mysql_error())) {
@@ -47,11 +47,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'siusti') {
 	} elseif ($_POST['email'] == $_POST['email1']) {
 		$email = input(strip_tags($_POST['email']));
 		$sql = mysql_query("SELECT `nick`,`email` FROM `" . LENTELES_PRIESAGA . "users` WHERE email=" . escape($email) . " LIMIT 1");
-		if (mysql_num_rows($sql) < 1) {
+		if (count($sql) < 1) {
 			$error .= " {$lang['pass']['wrongemail']}.<br />";
 			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['pass']['wrongemail']}({$lang['pass']['remain']}) : " . $email) . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
 		} else {
-			$sql = mysql_fetch_assoc($sql);
+			//$sql = mysql_fetch_assoc($sql);
 			$slaptas = random_name();
 			$msg = "
 {$lang['user']['hello']} <b>" . $sql['nick'] . "</b>,<br/>

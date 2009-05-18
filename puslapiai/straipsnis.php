@@ -23,10 +23,10 @@ $limit = 50;
 $text = '';
 
 //Kategorijų sąrašas
-$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai'  ORDER BY `pavadinimas`");
-if ($sqlas && mysql_num_rows($sqlas) > 0 && !isset($url['m'])) {
-	while ($sql = mysql_fetch_assoc($sqlas)) {
-		$path = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas`"));
+$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai'  ORDER BY `pavadinimas`", 86400);
+if ($sqlas && sizeof($sqlas) > 0 && !isset($url['m'])) {
+	foreach ($sqlas as $sql) {
+		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas` LIMIT 1", 86400);
 		$path1 = explode(",", $path['path']);
 
 		if ($path1[(count($path1) - 1)] == $k) {
@@ -46,22 +46,24 @@ if ($sqlas && mysql_num_rows($sqlas) > 0 && !isset($url['m'])) {
 if ($k >= 0 && empty($url['m'])) {
 
 	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' 
-		AND `kat`='" . $k . "' ORDER BY `date` DESC LIMIT $p, $limit") or die(mysql_error());
-	$pav = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='$k' "));
-	$viso = mysql_num_rows($sql);
+		AND `kat`='" . $k . "' ORDER BY `date` DESC LIMIT $p, $limit", 86400);
+	$pav = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='$k' LIMIT 1", 86400);
+	$viso = count($sql);
 
 
 	if ($viso > 0) {
-		if (LEVEL >= $sqlas['teises'] || LEVEL == 1 || LEVEL == 2) {
-			while ($row = mysql_fetch_assoc($sql)) {
-				if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
-					$text .= "<h1>" . $row['pav'] . "</h1>
+		if (teises($pav['teises'], $_SESSION['level'])) {
+			if (sizeof($sql) > 0) {
+				foreach ($sql as $row) {
+					if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
+						$text .= "<h1>" . $row['pav'] . "</h1>
 				<i>" . $row['t_text'] . "</i><br><a href=?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] . ">{$lang['article']['read']}</a><hr></hr>\n";
 
+					}
 				}
-			}
 
-			lentele($pav['pavadinimas'], $text, false, array('Viso', $viso));
+				lentele($pav['pavadinimas'], $text, false, array('Viso', $viso));
+			}
 		} else {
 			klaida($lang['system']['warning'], "{$lang['article']['cant']}.");
 		}
@@ -70,23 +72,18 @@ if ($k >= 0 && empty($url['m'])) {
 		}
 		unset($text, $row, $sql);
 
-	} else {
-		klaida($lang['system']['warning'], $lang['system']['no_content']);
 	}
 } elseif (!empty($url['m'])) {
 
+	$row = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' AND `id`=" . escape((int)$url['m']) . " LIMIT 1", 86400);
 
-	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' AND `id`='" . (int)$url['m'] . "' LIMIT 1 ") or die(mysql_error());
-
-
-	$row = mysql_fetch_assoc($sql);
-	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $row['kat'] . "' AND `kieno`='straipsniai' ORDER BY `pavadinimas` LIMIT 1") or die(mysql_error());
-	$sqlas = mysql_fetch_assoc($sqlas);
-	if ($sql && teises($sql['teises'], $_SESSION['level'])) {
+	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape($row['kat']) . " AND `kieno`='straipsniai' ORDER BY `pavadinimas` LIMIT 1", 86400);
+	//$sqlas = mysql_fetch_assoc($sqlas);
+	if (teises($sqlas['teises'], $_SESSION['level'])) {
 		$text = "<blockquote><i>" . $row['t_text'] . "</i><br><hr></hr><br>\n
 		" . $row['f_text'] . "</blockquote>
 		<hr />{$lang['article']['date']}: " . date('Y-m-d H:i:s ', $row['date']) . "; {$lang['article']['author']}: <b>" . $row['autorius'] . "</b>";
-		lentele($row['pav'], $text);
+		lentele($sqlas['pavadinimas'] . " > " . $row['pav'], $text);
 		include ("priedai/komentarai.php");
 
 		komentarai($url['m'], true);

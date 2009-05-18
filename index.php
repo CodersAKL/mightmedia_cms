@@ -33,8 +33,8 @@ if (is_file('priedai/conf.php') && filesize('priedai/conf.php') > 1) {
 	die(klaida('Sistemos klaida / System error', 'Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.'));
 }
 include_once ('priedai/prisijungimas.php');
-if(!isset($conf)){
-include_once ('priedai/funkcijos.php');
+if (!isset($conf)) {
+	include_once ('priedai/funkcijos.php');
 }
 /* Puslapiu aprasymas */
 if (isset($url['id']) && !empty($url['id']) && isnum($url['id'])) {
@@ -47,12 +47,12 @@ if (isset($url['id']) && !empty($url['id']) && isnum($url['id'])) {
 	$url['id'] = $pslid;
 }
 if (isset($pslid) && isnum($pslid) && $pslid > 0) {
-	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int)$pslid) . " LIMIT 1",180);
+	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int)$pslid) . " LIMIT 1", 180);
 
 	if (!empty($sql1)) {
 
 		if (puslapis($sql1['file'])) {
-			$page = 'puslapiai/' . basename($sql1['file'],'.php');
+			$page = 'puslapiai/' . basename($sql1['file'], '.php');
 			$page_pavadinimas = $sql1['pavadinimas'];
 		} else {
 			$page = "puslapiai/klaida";
@@ -86,6 +86,5 @@ if (is_file('setup.php') && defined('LEVEL') && LEVEL == 1 && !@unlink('setup.ph
 include_once ('stiliai/' . $conf['Stilius'] . '/index.php');
 mysql_close($prisijungimas_prie_mysql);
 ob_end_flush();
-
 
 ?>

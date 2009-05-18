@@ -48,14 +48,15 @@ $sql = mysql_query1("SELECT
    `" . LENTELES_PRIESAGA . "galerija`.`autorius` =  '" . $m . "' AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
   ORDER BY
   `" . LENTELES_PRIESAGA . "galerija`.`id` DESC
-  LIMIT  $p,$limit") or die(mysql_error());
+  LIMIT  $p,$limit");
 $text .= "<table border=\"0\">
 	<tr>
 		<td >
 ";
-while ($row = mysql_fetch_assoc($sql)) {
-	if (isset($conf['puslapiai']['galerija.php']['id'])) {
-		$text .= "
+if (sizeof($sql) > 0) {
+	foreach ($sql as $row) {
+		if (isset($conf['puslapiai']['galerija.php']['id'])) {
+			$text .= "
 				
 				<div  class=\"img_left\" >
 			<a rel=\"lightbox[" . $url['id'] . "]\" href=\"galerija/" . $row['file'] . "\" title=\"" . $row['pavadinimas'] . ": " . $row['apie'] . "\">
@@ -67,12 +68,13 @@ while ($row = mysql_fetch_assoc($sql)) {
 			<a href=\"galerija/originalai/" . $row['file'] . "\" title=\"{$lang['download']['download']}\"><img src='images/icons/disk.png' border='0'></a>
 		</div>";
 
+		}
 	}
 }
 $text .= '</td>
 	</tr>
 </table>';
-$name = mysql_fetch_assoc(mysql_query1("SELECT nick FROM " . LENTELES_PRIESAGA . "users WHERE id=  '" . $m . "'"));
+$name = mysql_query1("SELECT nick FROM " . LENTELES_PRIESAGA . "users WHERE id=  '" . $m . "' LIMIT 1");
 lentele("" . $name['nick'] . "", $text);
 
 ?>

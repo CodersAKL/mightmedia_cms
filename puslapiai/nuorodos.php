@@ -37,14 +37,14 @@ $p = 0;
 //Jei lankytojas paspaudžia ant nuorodos
 if (isset($link) && strlen($link) > 0 && $link > 0) {
 	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET click=click+1 WHERE `id`=" . escape($link) . " LIMIT 1");
-	$link = mysql_fetch_assoc(mysql_query1("SELECT `url` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `id`=" . escape($link) . " LIMIT 1"));
+	$link = mysql_query1("SELECT `url` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `id`=" . escape($link) . " LIMIT 1", 86400);
 	redirect($link['url']);
 }
 
 //kategorijos
 $sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos'  ORDER BY `pavadinimas`");
-if ($sqlas && mysql_num_rows($sqlas) > 0) {
-	while ($sql = mysql_fetch_assoc($sqlas)) {
+if (sizeof($sqlas) > 0) {
+	foreach ($sqlas as $sql) {
 		$path = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas`"));
 		$path1 = explode(",", $path['path']);
 
@@ -62,7 +62,7 @@ if (isset($info)) {
 //pabaiga
 
 if ($k >= 0) {
-	$teis = mysql_fetch_assoc(mysql_query1("SELECT teises FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "'"));
+	$teis = mysql_query1("SELECT teises FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "' LIMIT 1", 86400);
 	if (teises($teis['teises'], $_SESSION['level'])) {
 		$q = mysql_query1("SELECT `" . LENTELES_PRIESAGA . "nuorodos`.`id`,
 		`" . LENTELES_PRIESAGA . "nuorodos`.`url`,
@@ -73,14 +73,14 @@ if ($k >= 0) {
 		`" . LENTELES_PRIESAGA . "users`.`nick`
 FROM `" . LENTELES_PRIESAGA . "nuorodos` 
 Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "nuorodos`.`nick` = `" . LENTELES_PRIESAGA . "users`.`id` WHERE `" . LENTELES_PRIESAGA . "nuorodos`.`cat`='" . $k . "' AND `" . LENTELES_PRIESAGA . "nuorodos`.`active`='TAIP'
-ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC") or die(mysql_error());
-		if (mysql_num_rows($q) > 0) {
+ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400);
+		if (count($q) > 0) {
 			include_once ("priedai/class.php");
 
 			$bla = new Table();
 			$info = array();
 
-			while ($sql = mysql_fetch_assoc($q)) {
+			foreach ($q as $sql) {
 				$extra = '';
 				include_once ("priedai/class.php");
 				include_once ("priedai/rating_functions.php");
@@ -120,14 +120,15 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 			}
 		}
 	}
-	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `path`=0 ORDER BY `id` DESC") or die(mysql_error());
-	if (mysql_num_rows($sql) > 0) {
-		while ($row = mysql_fetch_assoc($sql)) {
+	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `path`=0 ORDER BY `id` DESC");
+	if (sizeof($sql) > 0) {
+		foreach ($sql as $row) {
 
 			$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
-			if (mysql_num_rows($sql2) > 0) {
-				$subcat = '';
-				while ($path = mysql_fetch_assoc($sql2)) {
+
+			$subcat = '';
+			if (sizeof($sql2) > 0) {
+				foreach ($sql2 as $row) {
 
 					$subcat .= "->" . $path['pavadinimas'];
 					$kategorijos[$row['id']] = $row['pavadinimas'];

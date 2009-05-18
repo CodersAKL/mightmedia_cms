@@ -20,7 +20,7 @@ $viso = kiek("knyga");
 
 
 //jei tai moderatorius
-if (defined("LEVEL") && LEVEL >= 1 && LEVEL <= 2) {
+if (defined("LEVEL") && LEVEL == 1) {
 	//jei adminas paspaude trinti
 	if (isset($url['d']) && !empty($url['d']) && isnum($url['d'])) {
 		$id = (int)$url['d'];
@@ -37,7 +37,7 @@ if (defined("LEVEL") && LEVEL >= 1 && LEVEL <= 2) {
 		$nick = $_SESSION['username'];
 		$nick_id = $_SESSION['id'];
 		if (empty($_POST)) {
-			$msg = mysql_fetch_assoc(mysql_query1("SELECT `msg` FROM `" . LENTELES_PRIESAGA . "knyga` WHERE `id`=" . escape(ceil((int)$url['r'])) . " LIMIT 1"));
+			$msg = mysql_query1("SELECT `msg` FROM `" . LENTELES_PRIESAGA . "knyga` WHERE `id`=" . escape(ceil((int)$url['r'])) . " LIMIT 1");
 			$msg = '
 			<form name="knyga_edit" action="" method="post">
         <textarea name="msg" rows="3" cols="25" wrap="on" style="width:265px">' . input($msg['msg']) . '</textarea>
@@ -67,15 +67,17 @@ if ($viso > $limit) {
 }
 
 $text = '';
-while ($row = mysql_fetch_assoc($sql2)) {
-	$extra = '';
-	if (defined("LEVEL") && LEVEL == 1) {
-		$extra .= "<a href='" . url("d," . $row['id'] . "") . "'><img src='images/icons/control_delete_small.png' alt='[d]' title='{$lang['admin']['delete']}' class='middle' border='0' /></a> <a href='" . url("r," . $row['id'] . "") . "'><img src='images/icons/brightness_small_low.png' alt='[{$lang['admin']['edit']}]' title='{$lang['admin']['edit']}' class='middle' border='0' /></a>  ";
-	} else {
+if (sizeof($sql2) > 0) {
+	foreach ($sql2 as $row) {
 		$extra = '';
-	}
-	$text .= "<div class=\"title\"><em><a href=\"?id," . (int)$_GET['id'] . ";p,$p#knyg_" . $row['id'] . "\" name=\"knyg_" . $row['id'] . "\" id=\"knyg_" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " . input($row['nikas']) . " $extra (" . date('Y-m-d H:i:s ', $row['time']) . ") - " . kada(date('Y-m-d H:i:s ', $row['time'])) . "</em></div><div class=\"sarasas\">" . smile(bbchat($row['msg'])) . "</div><br/>";
+		if (defined("LEVEL") && LEVEL == 1) {
+			$extra .= "<a href='" . url("d," . $row['id'] . "") . "'><img src='images/icons/control_delete_small.png' alt='[d]' title='{$lang['admin']['delete']}' class='middle' border='0' /></a> <a href='" . url("r," . $row['id'] . "") . "'><img src='images/icons/brightness_small_low.png' alt='[{$lang['admin']['edit']}]' title='{$lang['admin']['edit']}' class='middle' border='0' /></a>  ";
+		} else {
+			$extra = '';
+		}
+		$text .= "<div class=\"title\"><em><a href=\"?id," . (int)$_GET['id'] . ";p,$p#knyg_" . $row['id'] . "\" name=\"knyg_" . $row['id'] . "\" id=\"knyg_" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " . input($row['nikas']) . " $extra (" . date('Y-m-d H:i:s ', $row['time']) . ") - " . kada(date('Y-m-d H:i:s ', $row['time'])) . "</em></div><div class=\"sarasas\">" . smile(bbchat($row['msg'])) . "</div><br/>";
 
+	}
 }
 
 if (isset($_POST['knyga']) && $_POST['knyga'] == $lang['guestbook']['submit'] && strtoupper($_POST['code']) == $_SESSION['code'] && !empty($_POST['zinute']) && !empty($_POST['vardas'])) {
@@ -102,7 +104,9 @@ $forma = '
 ';
 
 hide($lang['guestbook']['write'], $forma, 'knyga', false);
-if(strlen($text)<1){$text=$lang['guestbook']['empty'];}
+if (strlen($text) < 1) {
+	$text = $lang['guestbook']['empty'];
+}
 lentele($lang['guestbook']['guestbook'], $text);
 
 if ($viso > $limit) {

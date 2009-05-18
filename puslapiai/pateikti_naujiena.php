@@ -11,8 +11,8 @@
  **/
 $tags = array("p" => 1, "br" => 0, "a" => 1, "img" => 0, "li" => 1, "ol" => 1, "ul" => 1, "b" => 1, "i" => 1, "em" => 1, "strong" => 1, "del" => 1, "ins" => 1, "u" => 1, "code" => 1, "pre" => 1, "blockquote" => 1, "hr" => 0, "span" => 1, "font" => 1, "h1" => 1, "h2" => 1, "h3" => 1, "table" => 1, "tr" => 1, "td" => 1, "th" => 1, "tbody" => 1, "div" => 1, "embed" => 1);
 $sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' ORDER BY `pavadinimas` DESC");
-if (mysql_num_rows($sql) > 0) {
-	while ($row = mysql_fetch_assoc($sql)) {
+if (sizeof($sql) > 0) {
+	foreach ($sql as $row) {
 		$kategorijos[$row['id']] = $row['pavadinimas'];
 	}
 	$i = 1;

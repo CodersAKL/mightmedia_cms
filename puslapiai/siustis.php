@@ -39,14 +39,14 @@ if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
 //kategorijos
 if ($vid == 0) {
 	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai'  ORDER BY `pavadinimas`");
-	if ($sqlas && mysql_num_rows($sqlas) > 0) {
-		while ($sql = mysql_fetch_assoc($sqlas)) {
-			$path = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas`"));
+	if ($sqlas && sizeof($sqlas) > 0) {
+		foreach ($sqlas as $sql) {
+			$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas` LIMIT 1", 86400);
 			$path1 = explode(",", $path['path']);
 
 			if ($path1[(count($path1) - 1)] == $k) {
 				$sqlkiek = kiek('siuntiniai', "WHERE `categorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP'");
-				$info[] = array(" " => "<a href='?id," . $url['id'] . ";k," . $sql['id'] . "'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' /></a>", "{$lang['category']['about']}" => "<h2><a href='?id," . $url['id'] . ";k," . $sql['id'] . "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br />", "{$lang['category']['downloads']}" => $sqlkiek, );
+				$info[] = array(" " => "<a href='?id," . $url['id'] . ";k," . $sql['id'] . "'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' /></a>", "{$lang['category']['about']}" => "<h2><a href='?id," . $url['id'] . ";k," . $sql['id'] . "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br />", "{$lang['category']['downloads']}" => $sqlkiek);
 			}
 		}
 		include_once ("priedai/class.php");
@@ -84,9 +84,8 @@ if ($vid > 0) {
    `" . LENTELES_PRIESAGA . "siuntiniai`.`rodoma` =  'TAIP'
   ORDER BY
   `" . LENTELES_PRIESAGA . "siuntiniai`.`data` DESC
-  LIMIT 0, 1
-  ");
-	if (MYSQL_NUM_rows($sql) == 0) {
+  LIMIT 1", 86400);
+	if (count($sql) == 0) {
 		$sql = mysql_query1("
   SELECT
   `" . LENTELES_PRIESAGA . "siuntiniai`.`pavadinimas`,
@@ -107,11 +106,10 @@ if ($vid > 0) {
    `" . LENTELES_PRIESAGA . "siuntiniai`.`rodoma` =  'TAIP'
   ORDER BY
   `" . LENTELES_PRIESAGA . "siuntiniai`.`data` DESC
-  LIMIT 0, 1
-  ");
+  LIMIT 1", 86400);
 	}
-	if (MYSQL_NUM_rows($sql) > 0) {
-		$sql = mysql_fetch_assoc($sql);
+	if (sizeof($sql) > 0) {
+		//$sql = mysql_fetch_assoc($sql);
 		if (!isset($sql['teises']) || teises($sql['teises'], $_SESSION['level'])) {
 			if (isset($sql['Nick'])) {
 				$autorius = user($sql['Nick'], $sql['nick_id'], $sql['levelis']);
@@ -164,7 +162,7 @@ else {
     ORDER BY
     `" . LENTELES_PRIESAGA . "siuntiniai`.`data` DESC
     LIMIT 0, 50
-  ");
+  ", 86400);
 	} else {
 		$sql_s = mysql_query1(" SELECT
     `" . LENTELES_PRIESAGA . "siuntiniai`.`pavadinimas`,
@@ -183,13 +181,13 @@ else {
    `" . LENTELES_PRIESAGA . "siuntiniai`.`rodoma` =  'TAIP'
     ORDER BY
     `" . LENTELES_PRIESAGA . "siuntiniai`.`data` DESC
-    LIMIT 0, 50");
+    LIMIT 0, 50", 86400);
 	}
-	if (mysql_num_rows($sql_s) > 0) {
+	if (sizeof($sql_s) > 0) {
 		include_once ("priedai/class.php");
 		$bla = new Table();
 		$info = array();
-		while ($sql = mysql_fetch_assoc($sql_s)) {
+		foreach ($sql_s as $sql) {
 			if (!isset($sql['teises']) || teises($sql['teises'], $_SESSION['level'])) {
 				if (isset($sql['Nick'])) {
 					$autorius = user($sql['Nick'], $sql['nick_id'], $sql['levelis']);
@@ -203,7 +201,7 @@ else {
 				klaida($lang['system']['error'], $lang['download']['notallowed']);
 			}
 		}
-		$name = mysql_fetch_assoc(mysql_query1("SELECT pavadinimas FROM " . LENTELES_PRIESAGA . "grupes WHERE id=  '$k'"));
+		$name = mysql_query1("SELECT pavadinimas FROM " . LENTELES_PRIESAGA . "grupes WHERE id= " . escape($k) . " LIMIT 1", 86400);
 		lentele("{$lang['download']['downloads']} >> " . $name['pavadinimas'] . "", $bla->render($info) . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
 
 

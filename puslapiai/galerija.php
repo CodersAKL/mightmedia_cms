@@ -40,9 +40,9 @@ if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
 //kategorijos
 if (!isset($url['m'])) {
 	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija'  ORDER BY `pavadinimas`");
-	if ($sqlas && mysql_num_rows($sqlas) > 0) {
-		while ($sql = mysql_fetch_assoc($sqlas)) {
-			$path = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas`"));
+	if ($sqlas && sizeof($sqlas) > 0) {
+		foreach ($sqlas as $sql) {
+			$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas` LIMIT 1", 86400);
 			$path1 = explode(",", $path['path']);
 
 			if ($path1[(count($path1) - 1)] == $k) {
@@ -80,7 +80,7 @@ if ($k > 0) {
    `" . LENTELES_PRIESAGA . "galerija`.`categorija` = " . escape($k) . " AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
   ORDER BY
   `" . LENTELES_PRIESAGA . "galerija`.`id` DESC
-  LIMIT  $p,$limit") or die(mysql_error());
+  LIMIT  $p,$limit", 86400);
 } else {
 	$sql = mysql_query1("SELECT
   `" . LENTELES_PRIESAGA . "galerija`.`pavadinimas`,
@@ -97,7 +97,7 @@ if ($k > 0) {
    `" . LENTELES_PRIESAGA . "galerija`.`categorija` =  " . escape($k) . " AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
   ORDER BY
   `" . LENTELES_PRIESAGA . "galerija`.`id` DESC
-  LIMIT  $p,$limit") or die(mysql_error());
+  LIMIT  $p,$limit", 86400);
 
 }
 
@@ -108,11 +108,10 @@ if ($visos > $limit) {
 
 
 if (empty($url['m'])) {
-	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape($k) . " AND `kieno`='naujienos' ORDER BY `pavadinimas` LIMIT 1") or die(mysql_error());
+	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape($k) . " AND `kieno`='naujienos' ORDER BY `pavadinimas` LIMIT 1");
 
-	$sqlas = mysql_fetch_assoc($sqlas);
 
-	if (defined('LEVEL') && teises($sqlas['teises'], $_SESSION['level']) || LEVEL == 2) {
+	if (defined('LEVEL') && teises($sqlas['teises'], $_SESSION['level'])) {
 		$text .= "
 			
     
@@ -120,7 +119,8 @@ if (empty($url['m'])) {
 	<tr>
 		<td >
 ";
-		while ($row = mysql_fetch_assoc($sql)) {
+
+		foreach ($sql as $row) {
 
 			if (isset($row['Nick'])) {
 				$autorius = $row['Nick'];
@@ -159,7 +159,7 @@ if (empty($url['m'])) {
 </table>';
 
 		if ($k > 0) {
-			$name = mysql_fetch_assoc(mysql_query1("SELECT pavadinimas FROM " . LENTELES_PRIESAGA . "grupes WHERE id=  " . escape($k) . ""));
+			$name = mysql_query1("SELECT pavadinimas FROM " . LENTELES_PRIESAGA . "grupes WHERE id=  " . escape($k) . " LIMIT 1", 86400);
 			$pav = input($name['pavadinimas']);
 		} else {
 			$pav = "--";
@@ -195,15 +195,15 @@ if (!empty($url['m'])) {
    `" . LENTELES_PRIESAGA . "galerija`.`id` =  '" . $url['m'] . "' AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
   ORDER BY
   `" . LENTELES_PRIESAGA . "galerija`.`data` DESC
-  LIMIT  1");
+  LIMIT  1", 86400);
 
-	$row = mysql_fetch_assoc($sql);
+	$row = $sql;
 	if (!empty($row['file']) && isset($row['file'])) {
 		if (defined('LEVEL') && teises($row['teises'], $_SESSION['level']) || ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('galerija.php', unserialize($_SESSION['mod']))))) {
 
-			$nuoroda = mysql_fetch_assoc(mysql_query1("SELECT id
-FROM " . LENTELES_PRIESAGA . "galerija WHERE id > '" . $url['m'] . "' AND `categorija`='" . $row['kid'] . "'order by id ASC LIMIT 1"));
-			$nuoroda2 = mysql_fetch_assoc(mysql_query1("SELECT id FROM " . LENTELES_PRIESAGA . "galerija WHERE id < '" . $url['m'] . "' AND categorija='" . $row['kid'] . "' order by id DESC LIMIT 1"));
+			$nuoroda = mysql_query1("SELECT id
+FROM " . LENTELES_PRIESAGA . "galerija WHERE id > '" . $url['m'] . "' AND `categorija`='" . $row['kid'] . "'order by id ASC LIMIT 1", 86400);
+			$nuoroda2 = mysql_query1("SELECT id FROM " . LENTELES_PRIESAGA . "galerija WHERE id < '" . $url['m'] . "' AND categorija='" . $row['kid'] . "' order by id DESC LIMIT 1", 86400);
 			if (isset($row['Nick'])) {
 				$autorius = user($row['Nick'], $row['nick_id'], $row['levelis']);
 			} else {

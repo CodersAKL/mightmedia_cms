@@ -36,7 +36,7 @@ if (isset($_POST['kontaktas']) && $_POST['kontaktas'] == 'Siųsti' && strtoupper
 } else {
 	if (isset($_SESSION['username'])) {
 		$from = $_SESSION['username'];
-		$email = mysql_fetch_assoc(mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape($from) . " LIMIT 1"));
+		$email = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape($from) . " LIMIT 1");
 		$email = $email['email'];
 	}
 }

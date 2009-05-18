@@ -22,8 +22,8 @@ $viso = kiek("users");
 $sql = mysql_query1("SELECT id, INET_NTOA(ip) AS ip, reg_data, gim_data, login_data, nick, vardas, pavarde, email, levelis FROM `" . LENTELES_PRIESAGA . "users` LIMIT $p, $limit");
 $i = 0;
 
-if (mysql_num_rows($sql) > 0) {
-	while ($row = mysql_fetch_assoc($sql)) {
+if (sizeof($sql) > 0) {
+	foreach ($sql as $row) {
 		if (isset($conf['level'][$row['levelis']]['pavadinimas'])) {
 			$grupe = $conf['level'][$row['levelis']]['pavadinimas'];
 		} else {

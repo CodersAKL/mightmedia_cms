@@ -18,10 +18,10 @@ if (isset($url['m']) && $url['m'] > 0) {
 		$vote = pullRating($url['m'], true, true, true, 'novote');
 	}
 
-	$sql = mysql_fetch_assoc(mysql_query1("SELECT *, INET_NTOA(ip) AS ip FROM " . LENTELES_PRIESAGA . "users WHERE id='" . $url['m'] . "'"));
+	$sql = mysql_query1("SELECT *, INET_NTOA(ip) AS ip FROM " . LENTELES_PRIESAGA . "users WHERE id='" . $url['m'] . "' LIMIT 1");
 	if (isset($sql['nick'])) {
 		$sql2 = mysql_query1("SELECT * FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE user='" . $sql['nick'] . "' AND `timestamp`>'" . $timeout . "' LIMIT 1");
-		if (mysql_num_rows($sql2) > 0) {
+		if (count($sql2) > 0) {
 			$prisijunges = 'images/icons/status_online.png';
 			$pr = $lang['user']['user_online'];
 		} else {

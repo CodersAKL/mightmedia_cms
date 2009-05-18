@@ -14,17 +14,17 @@ $status = $_SERVER['REDIRECT_STATUS'];
 switch ($status) {
 	case 403:
 		{
-			$tipas = 'Bomžams draudžiama';
+			$tipas = 'Programišiams - NE!';
 			break;
 		}
 	case 404:
 		{
-			$tipas = 'Puslapis nerastas';
+			$tipas = 'Puslapis nerastas.';
 			break;
 		}
 	default:
 		{
-			$tipas = 'Klaida';
+			$tipas = 'Klaida.';
 			break;
 		}
 }
