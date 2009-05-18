@@ -31,7 +31,39 @@ echo "?" . $_SERVER['QUERY_STRING'];
     });
 });
 </script>
+<script type="text/javascript" src="javascript/jquery/jquery.asmselect.js"></script>
 
+	<script type="text/javascript">
+
+		
+		$(document).ready(function() {
+			$("select[multiple]").asmSelect({
+				addItemTarget: 'bottom',
+				animate: true,
+				highlight: true,
+				removeLabel: '<?php
+
+echo $lang['system']['delete'];
+
+?>',					
+			    highlightAddedLabel: '<?php
+
+echo $lang['admin']['added'];
+
+?>: ',
+			    highlightRemovedLabel: '<?php
+
+echo $lang['sb']['deleted'];
+
+?>: ',	
+				sortable: true
+			});
+			
+		}); 
+			
+		 
+
+	</script>
 <?php
 
 /**
@@ -156,12 +188,12 @@ HTML;
 		if (!isset($paneles) || count($paneles) < 1) {
 			klaida($lang['system']['error'], "<h3>{$lang['admin']['panel_no']}.</h3>");
 		} else {
-			$box = "";
+			/*	$box = "";
 			foreach ($teises as $name => $check) {
-				$box .= "<label><input type=\"checkbox\" name=\"Teises[]\" value=\"$name\"/> $check</label><br /> ";
-			}
+			$box .= "<label><input type=\"checkbox\" name=\"Teises[]\" value=\"$name\"/> $check</label><br /> ";
+			}*/
 			$panele = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel"), "{$lang['admin']['panel_title']}:" => array("type" => "text", "value" => "{$lang['admin']['panel_new']}", "name" => "Panel", "style" => "width:400px"), "{$lang['admin']['panel_name']}:" => array("type" => "select", "value" => $paneles, "name" => "File"), "{$lang['admin']['panel_side']}:" => array("type" => "select", "value" => array("L" => "{$lang['admin']['panel_left']}", "R" => "{$lang['admin']['panel_right']}"), "name" => "Align"), "{$lang['admin']['panel_showtitle']}?" => array("type" => "select", "value" => array("Y" => "{$lang['admin']['yes']}", "N" => "{$lang['admin']['no']}"), "name" => "Show"), "{$lang['admin']['panel_showfor']}:" => array("type" =>
-				"string", "value" => $box), "" => array("type" => "submit", "name" => "Nauja_panele", "value" => "{$lang['admin']['panel_create']}"));
+				"select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai"), "" => array("type" => "submit", "name" => "Nauja_panele", "value" => "{$lang['admin']['panel_create']}"));
 
 			include_once ("priedai/class.php");
 			$bla = new forma();
@@ -195,12 +227,12 @@ HTML;
 			$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`=" . escape((int)$url['r']) . " LIMIT 1";
 			$sql = mysql_query1($sql, 3500);
 			$selected = unserialize($sql['teises']);
-			$box = "";
+			/*$box = "";
 			foreach ($teises as $name => $check) {
-				$box .= "<label><input type=\"checkbox\" " . (in_array($name, $selected) ? "checked" : "") . " name=\"Teises[]\" value=\"$name\"/> $check</label><br /> ";
-			}
-			$panele = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel"), "{$lang['admin']['panel_title']}:" => array("type" => "text", "value" => input($sql['panel']), "name" => "Panel", "style" => "width:100%"), "{$lang['admin']['panel_side']}:" => array("type" => "select", "value" => array("L" => "{$lang['admin']['panel_left']}", "R" => "{$lang['admin']['panel_right']}"), "selected" => input($sql['align']), "name" => "Align"), "{$lang['admin']['panel_showtitle']}?" => array("type" => "select", "value" => array("Y" => "{$lang['admin']['yes']}", "N" => "{$lang['admin']['no']}"), "selected" => input($sql['show']), "name" => "Show"), "{$lang['admin']['panel_showfor']}:" => array("type" => "string", "value" => $box, "name" =>
-				"Teises", "class" => "input", "style" => "width:100%", "selected" => (isset($sql['teises']) ? input($sql['teises']) : '')), "" => array("type" => "submit", "name" => "Redaguoti_panele", "value" => "{$lang['admin']['edit']}"));
+			$box .= "<label><input type=\"checkbox\" " . (in_array($name, $selected) ? "checked" : "") . " name=\"Teises[]\" value=\"$name\"/> $check</label><br /> ";
+			}*/
+			$panele = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel"), "{$lang['admin']['panel_title']}:" => array("type" => "text", "value" => input($sql['panel']), "name" => "Panel", "style" => "width:100%"), "{$lang['admin']['panel_side']}:" => array("type" => "select", "value" => array("L" => "{$lang['admin']['panel_left']}", "R" => "{$lang['admin']['panel_right']}"), "selected" => input($sql['align']), "name" => "Align"), "{$lang['admin']['panel_showtitle']}?" => array("type" => "select", "value" => array("Y" => "{$lang['admin']['yes']}", "N" => "{$lang['admin']['no']}"), "selected" => input($sql['show']), "name" => "Show"), "{$lang['admin']['panel_showfor']}:" => array("type" => "select", "extra" => "multiple=multiple",
+				"value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai", "selected" => $selected), "" => array("type" => "submit", "name" => "Redaguoti_panele", "value" => "{$lang['admin']['edit']}"));
 
 			include_once ("priedai/class.php");
 			$bla = new forma();
