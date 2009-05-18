@@ -30,6 +30,7 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
 	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape($_POST['Maintenance']) . " WHERE `key` = 'Maintenance' LIMIT 1 ; ";
 	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape($_POST['pirminis']) . " WHERE `key` = 'pirminis' LIMIT 1 ; ";
 	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape($_POST['kalba']) . " WHERE `key` = 'kalba' LIMIT 1 ; ";
+	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape($_POST['keshas']) . " WHERE `key` = 'keshas' LIMIT 1 ; ";
 	foreach ($q as $sql) {
 		mysql_query1($sql) or die(mysql_error());
 	}
@@ -48,10 +49,20 @@ foreach ($puslapiai as $key) {
 	$psl[$key] = $conf['puslapiai'][$key]['file'];
 }
 
-$nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), "{$lang['admin']['sitename']}:" => array("type" => "text", "value" => input($conf['Pavadinimas']), "name" => "Pavadinimas"), "{$lang['admin']['homepage']}:" => array("type" => "select", "value" => $psl, "selected" => input($conf['pirminis']), "name" => "pirminis"), "{$lang['admin']['about']}:" => array("type" => "string", "value" => editorius('spaw', 'mini', 'Apie', (isset($conf['Apie']) ? $conf['Apie'] : ''))), "{$lang['admin']['keywords']}:" => array("type" => "textarea", "value" => input($conf['Keywords']), "name" => "Keywords", "rows" => "3", "class" => "input"), "{$lang['admin']['generation']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}",
-	"{$lang['admin']['no']}" => "Ne"), "selected" => input($conf['Render']), "name" => "Render"), "{$lang['admin']['copyright']}:" => array("type" => "text", "value" => input($conf['Copyright']), "name" => "Copyright"), "{$lang['admin']['email']}:" => array("type" => "text", "value" => input($conf['Pastas']), "name" => "Pastas"), "{$lang['admin']['allow registration']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['Registracija']), "name" => "Registracija"), "{$lang['admin']['maintenance']}?:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['Palaikymas']), "name" => "Palaikymas"), "{$lang['admin']['maintenancetext']}:" =>
-	array("type" => "textarea", "name" => "Maintenance", "value" => (isset($conf['Maintenance']) ? $conf['Maintenance'] : ''), "style" => "width:100%;", "extra" => "rows=5"), //"Kiek rodyti ChatBox pranešimu?:"=>array("type"=>"select","value"=>array("5"=>"5","10"=>"10","15"=>"15","20"=>"20","25"=>"25","30"=>"30","35"=>"35","40"=>"40"),"selected"=>input($conf['Chat_limit']),"name"=>"Chat_limit"),
-	"{$lang['admin']['newsperpage']}:" => array("type" => "select", "value" => array("5" => "5", "10" => "10", "15" => "15", "20" => "20", "25" => "25", "30" => "30", "35" => "35", "40" => "40"), "selected" => input($conf['News_limit']), "name" => "News_limit"), "{$lang['admin']['theme']}:" => array("type" => "select", "value" => $stiliai, "selected" => input($conf['Stilius']), "name" => "Stilius"), "{$lang['admin']['lang']}:" => array("type" => "select", "value" => $kalba, "selected" => input($conf['kalba']), "name" => "kalba"), "" => array("type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}"));
+$nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), 
+	"{$lang['admin']['sitename']}:" => array("type" => "text", "value" => input($conf['Pavadinimas']), "name" => "Pavadinimas"), 
+	"{$lang['admin']['homepage']}:" => array("type" => "select", "value" => $psl, "selected" => input($conf['pirminis']), "name" => "pirminis"), 
+	"{$lang['admin']['about']}:" => array("type" => "string", "value" => editorius('spaw', 'mini', 'Apie', (isset($conf['Apie']) ? $conf['Apie'] : ''))), 
+	"{$lang['admin']['keywords']}:" => array("type" => "textarea", "value" => input($conf['Keywords']), "name" => "Keywords", "rows" => "3", "class" => "input"), 
+	"{$lang['admin']['generation']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}",	"{$lang['admin']['no']}" => "Ne"), "selected" => input($conf['Render']), "name" => "Render"), 
+	"{$lang['admin']['copyright']}:" => array("type" => "text", "value" => input($conf['Copyright']), "name" => "Copyright"), 
+	"{$lang['admin']['email']}:" => array("type" => "text", "value" => input($conf['Pastas']), "name" => "Pastas"), 
+	"{$lang['admin']['allow registration']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['Registracija']), "name" => "Registracija"), 
+	"{$lang['admin']['maintenance']}?:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['Palaikymas']), "name" => "Palaikymas"), 
+	"{$lang['admin']['maintenancetext']}:" =>	array("type" => "textarea", "name" => "Maintenance", "value" => (isset($conf['Maintenance']) ? $conf['Maintenance'] : ''), "style" => "width:100%;", "extra" => "rows=5"), //"Kiek rodyti ChatBox pranešimu?:"=>array("type"=>"select","value"=>array("5"=>"5","10"=>"10","15"=>"15","20"=>"20","25"=>"25","30"=>"30","35"=>"35","40"=>"40"),"selected"=>input($conf['Chat_limit']),"name"=>"Chat_limit"),
+	"{$lang['admin']['newsperpage']}:" => array("type" => "select", "value" => array("5" => "5", "10" => "10", "15" => "15", "20" => "20", "25" => "25", "30" => "30", "35" => "35", "40" => "40"), "selected" => input($conf['News_limit']), "name" => "News_limit"), 
+	"{$lang['admin']['cache']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['keshas']), "name" => "keshas"), 
+	"{$lang['admin']['theme']}:" => array("type" => "select", "value" => $stiliai, "selected" => input($conf['Stilius']), "name" => "Stilius"), "{$lang['admin']['lang']}:" => array("type" => "select", "value" => $kalba, "selected" => input($conf['kalba']), "name" => "kalba"), "" => array("type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}"));
 
 //"Aprašymas:"=>array("type"=>"string","value"=>editorius('spaw','mini','Aprasymas',(isset($extra['aprasymas']))?$extra['aprasymas']:'')),
 

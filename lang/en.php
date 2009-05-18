@@ -211,6 +211,7 @@ $lang['faq']['submit'] = 'Submit';
 $lang['faq']['new'] = 'Add New FAQ';
 //admin
 $lang['admin']['for_guests'] = 'Guests';
+$lang['admin']['cache'] = 'Cache';
 $lang['admin']['lang'] = 'Language';
 $lang['admin']['conf'] = 'Configuration';
 $lang['admin']['links'] = 'Links';

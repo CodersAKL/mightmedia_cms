@@ -369,6 +369,7 @@ INSERT INTO `nustatymai` (`key`, `val`) VALUES
 ('fotoperpsl', '10'),
 ('galkom', '1'),
 ('pirminis', 'naujienos.php'),
+('keshas', '1'),
 ('kalba', 'lt.php');
 -- --------------------------------------------------------
 

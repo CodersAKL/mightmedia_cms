@@ -282,21 +282,18 @@ function user($user, $id = 0, $level = 0, $extra = false) {
  * @return resource
  */
 function mysql_query1($query, $lifetime = 0) {
-	global $mysql_num, $prisijungimas_prie_mysql;
+	global $mysql_num, $prisijungimas_prie_mysql, $conf;
 
 	//Sugeneruojam kesho pavadinima
-	$keshas = 'sandeliukas/' . md5($query) . '.txt'; //kesho failas
+	$keshas = 'sandeliukas/' . md5($query) . '.php'; //kesho failas
 	$return = array();
 
-	if ($lifetime > 0 && !in_array(strtolower(substr($query, 0, 6)), array('delete', 'insert', 'update'))) {
+	if ($conf['keshas'] && $lifetime > 0 && !in_array(strtolower(substr($query, 0, 6)), array('delete', 'insert', 'update'))) {
 
-		//Tikrinam ar keshas yra jau
+		//Tikrinam ar keshavimas ijungtas ir ar keshas egzistuoja
 		if (is_file($keshas) && filemtime($keshas) > $_SERVER['REQUEST_TIME'] - $lifetime) {
 			//uzkraunam kesha
-			$fh = fopen($keshas, 'rb') or die("negaliu nuskaityti kesho failo");
-
-			$return = unserialize(fread($fh, filesize($keshas))); //skaitom
-			fclose($fh);
+			include($keshas);
 
 		} else {
 			//Irasom i kesh faila
@@ -317,7 +314,7 @@ function mysql_query1($query, $lifetime = 0) {
 
 			//Reikia uzrakinti faila kad du kartus neirasytu
 			if (flock($fh, LOCK_EX)) { // urakinam
-				fwrite($fh, serialize($return));
+				fwrite($fh, '<?php $return = '.var_export($return,true).'; ?>');
 				flock($fh, LOCK_UN); // release the lock
 			} else {
 				echo "Negaliu uzrakinti failo !";

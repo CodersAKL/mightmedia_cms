@@ -29,6 +29,7 @@ $chmod_files[] = "siuntiniai/images";
 $chmod_files[] = "siuntiniai/flash";
 $chmod_files[] = "galerija";
 $chmod_files[] = "galerija/originalai";
+$chmod_files[] = "sandeliukas";
 $chmod_files[] = "galerija/mini";
 $chmod_files[] = "puslapiai";
 $chmod_files[] = "paneles";

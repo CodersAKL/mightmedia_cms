@@ -32,6 +32,14 @@ if (isset($url['id']) && isnum($url['id']) && $url['id'] > 0) {
 } else {
 	$id = 0;
 }
+if ($conf['keshas'] && isset($_POST) && !empty($_POST) && sizeof($_POST) > 0) {
+	//išvalom keshą jeigu ijungtas
+	if(($count = count($glob = glob("sandeliukas/*.php"))) > 0) {
+	    foreach($glob as $v) {
+			unlink($v);
+	    }
+	}
+}
 
 // index.php -> pokalbiai.php
 $puslapis = "pokalbiai.php";

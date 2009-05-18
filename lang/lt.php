@@ -202,6 +202,7 @@ $lang['faq']['delete'] = 'Trinti';
 $lang['faq']['submit'] = 'Siųsti';
 $lang['faq']['new'] = 'Pridėti klausimą';
 $lang['admin']['conf'] = 'Konfigūracija';
+$lang['admin']['cache'] = 'Kešavimas';
 $lang['admin']['links'] = 'Nuorodos';
 $lang['admin']['Comments'] = 'Komentarai';
 $lang['admin']['Articles'] = 'Straipsniai';

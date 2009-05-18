@@ -8,6 +8,13 @@ AddDefaultCharset UTF-8
 	php_value allow_url_fopen 0
 	php_value magic_quotes_runtime 0
 </IfModule>
+
+<IfModule mod_headers.c>
+	<FilesMatch "\.(xml|png|jpg|gif|css|js|txt|mp3)$">
+		Header set Cache-Control "max-age=172800, proxy-revalidate"
+	</FilesMatch>
+</IfModule>
+
 ErrorDocument 400 /klaida.php
 ErrorDocument 401 /klaida.php
 ErrorDocument 403 /klaida.php
