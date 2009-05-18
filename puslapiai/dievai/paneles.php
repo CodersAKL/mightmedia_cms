@@ -7,11 +7,7 @@
 		var order = $('#kaire').sortable('serialize');
 		$("#la").show("slow");
 		$("#la").hide("slow");
-		$.post("<?php
-
-echo "?" . $_SERVER['QUERY_STRING'];
-
-?>",{order:order});
+		$.post("<?php echo "?" . $_SERVER['QUERY_STRING']; ?>",{order:order});
 
 		}
     });
@@ -21,11 +17,7 @@ echo "?" . $_SERVER['QUERY_STRING'];
 		var order = $('#desine').sortable('serialize');
 		$("#la").show("slow");
 		$("#la").hide("slow");
-		$.post("<?php
-
-echo "?" . $_SERVER['QUERY_STRING'];
-
-?>",{order:order});
+		$.post("<?php echo "?" . $_SERVER['QUERY_STRING']; ?>",{order:order});
 
 		}
     });
@@ -41,21 +33,9 @@ echo "?" . $_SERVER['QUERY_STRING'];
 				addItemTarget: 'bottom',
 				animate: true,
 				highlight: true,
-				removeLabel: '<?php
-
-echo $lang['system']['delete'];
-
-?>',					
-			    highlightAddedLabel: '<?php
-
-echo $lang['admin']['added'];
-
-?>: ',
-			    highlightRemovedLabel: '<?php
-
-echo $lang['sb']['deleted'];
-
-?>: ',	
+				removeLabel: '<?php echo $lang['system']['delete']; ?>',					
+			   highlightAddedLabel: '<?php echo $lang['admin']['added']; ?>: ',
+			   highlightRemovedLabel: '<?php echo $lang['sb']['deleted']; ?>: ',	
 				sortable: true
 			});
 			
@@ -133,6 +113,7 @@ HTML;
 		$fp = fopen($failas, "w+");
 		fwrite($fp, $irasas);
 		fclose($fp);
+		chmod($failas,0777);
 
 		// Rezultatas:
 		msg($lang['system']['done'], "{$lang['admin']['panel_created']}.");
@@ -268,6 +249,7 @@ HTML;
 				$fp = fopen($failas, "w+");
 				fwrite($fp, $irasas);
 				fclose($fp);
+				chmod($failas,0777);
 
 			}
 		} else {
@@ -405,6 +387,7 @@ HTML;
 				if (fwrite($fh, $Info) !== false) {
 					msg($lang['system']['done'], $lang['admin']['panel_updated']);
 					fclose($fh);
+					chmod($Failas,0777);
 					redirect("?id," . $url['id'] . ";a," . $url['a'], "meta");
 				}
 			} else {
