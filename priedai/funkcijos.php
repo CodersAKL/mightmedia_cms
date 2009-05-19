@@ -109,8 +109,7 @@ function puslapis($puslapis, $extra = false) {
 	//$teises = @unserialize($conf['puslapiai'][$puslapis]['teises']);
 	$teises = $conf['puslapiai'][$puslapis]['teises'];
 	if (isset($conf['puslapiai'][$puslapis]['id']) && !empty($conf['puslapiai'][$puslapis]['id']) && is_file(dirname(__file__) . '/../puslapiai/' . $puslapis)) {
-echo $puslapis;
-	print_r($teises);
+
 		if ((is_array($teises) && in_array(LEVEL, $teises)) || LEVEL == 1 || empty($teises)) {
 
 			if ($extra && isset($conf['puslapiai'][$puslapis][$extra]))
