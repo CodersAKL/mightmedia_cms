@@ -47,7 +47,8 @@ function cfunc() {
 	echo "</table>";
 }
 function copyright($tekstas) {
-	echo "<div class=\"comment\">$tekstas</div>";
+global $mysql_num;
+	echo "<div class=\"comment\">$tekstas ".(defined('LEVEL') && LEVEL == 1?'MySQL: '.$mysql_num:'')."</div>";
 }
 function th_meniu($array,$start='',$end='') {
 	$return = $start."\n";

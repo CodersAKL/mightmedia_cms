@@ -1180,6 +1180,7 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
      
        xinha_config = xinha_config ? xinha_config : new Xinha.Config();
        xinha_config.fullPage = false;
+       xinha_config.width = \'100%\';
        xinha_config.showLoading = true;
        xinha_config.CharacterMap.mode = \'panel\';
        //xinha_config.stylistLoadStylesheet(\'stiliai/' . input($conf['Stilius']) . '/default.css\');

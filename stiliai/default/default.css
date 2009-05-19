@@ -257,33 +257,33 @@ div.blokas img:hover {
 	padding-left: 5px;
 	border-left: 1px solid gray;
 }
-.left {
-margin-top: 10px;
-float: left;
-width: 200px;
-line-height: 15px;
+.kaire {
+	margin-top: 10px;
+	float: left;
+	width: 200px;
+	line-height: 15px;
 }
 
 
 .center { 
-margin-top: 10px;
-float: left;
-width: 510px;
-margin-left: 10px;
-line-height: 20px;
+	margin-top: 10px;
+	float: left;
+	width: 510px;
+	margin-left: 10px;
+	line-height: 20px;
 }
 
 
-.right {
-margin-top: 10px;
-float: right;
-width: 200px;
+.desine {
+	margin-top: 10px;
+	float: right;
+	width: 200px;
 }
 
 #footer { 
-color: #777;
-text-align: center;
-padding-bottom: 10px;
+	color: #777;
+	text-align: center;
+	padding-bottom: 10px;
 }
 #footer a {  color: #777; text-decoration: none; }
 #footer  a:hover { color: #000; } 

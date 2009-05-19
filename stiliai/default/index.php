@@ -33,7 +33,7 @@ echo $text;
             </div>
 </div>
 
-<div class="left">
+<div class="kaire">
 
 <?php include ("priedai/kairespaneles.php"); ?>
 </div>
@@ -51,7 +51,7 @@ include ($page . ".php");
 ?>
 </div>
 </div>
-<div class="right">
+<div class="desine">
 
 <?php include ("priedai/desinespaneles.php"); ?>
 </div>
