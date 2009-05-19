@@ -72,18 +72,18 @@ if (isset($_POST['action']) && $_POST['action'] == $lang['admin']['save'] && $_P
 
 //Jei redaguojam
 if (isset($url['r']) && $url['r'] != "" && $url['r'] != 0) {
-	$info = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $url['r'] . "'AND `levelis` > 1"));
+	$info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $url['r'] . "'AND `levelis` > 1 LIMIT 1");
 	if ($info) {
 		$lygiai2 = array_keys($conf['level']);
 		foreach ($lygiai2 as $key) {
 			$lygiai[$key] = $conf['level'][$key]['pavadinimas'];
 		}
 
-		$text = array('Form' => array('action' => "?id,{$_GET['id']};a,{$_GET['a']}", "method" => "post", "name" => "reg", 'extra' => "onSubmit=\"return checkMail('change_contacts','email')\""), $lang['admin']['user_points'] => array('type' => 'text', 'name' => 'tsk', 'extra' => "onkeyup=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\"", 'value' => input($info['taskai'])), $lang['admin']['user_level'] => array("type" => "select", "value" => $lygiai, "name" => "lvl", "class" => "input", "style" => "width:100%", "selected" => (isset($info['levelis']) ? (int)$info['levelis'] : '')), "{$lang['admin']['user_pass']} <a href='#' title='<b>{$lang['system']['warning']}</b><br/>{$lang['admin']['user_passinfo']}<br/>'>[?]</a>" => array('type' => 'password', 'name' => 'slapt'), $lang['admin']['user_email'] =>
-			array('type' => 'text', 'value' => input($info['email'])), '<input type="hidden" name="id" value="' . $url['r'] . '" /><input type="submit" name="action" value="' . $lang['admin']['save'] . '">' => array("type" => "reset", "name" => "reset", "value" => "{$lang['admin']['cancel']}", 'extra' => 'onclick="window.location=\'?id,' . $_GET['id'] . ';a,' . $_GET['a'] . '\'"'), );
+		$text = array('Form' => array('action' => "?id,{$_GET['id']};a,{$_GET['a']}", "method" => "post", "name" => "reg", 'extra' => "onSubmit=\"return checkMail('change_contacts','email')\""), $lang['admin']['user_points'] => array('type' => 'text', 'name' => 'tsk', 'extra' => "onkeyup=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\"", 'value' => (isset($info['taskai']) ? input($info['taskai']) : "")), $lang['admin']['user_level'] => array("type" => "select", "value" => $lygiai, "name" => "lvl", "class" => "input", "style" => "width:100%", "selected" => (isset($info['levelis']) ? (int)$info['levelis'] : '')), "{$lang['admin']['user_pass']} <a href='#' title='<b>{$lang['system']['warning']}</b><br/>{$lang['admin']['user_passinfo']}<br/>'>[?]</a>" => array('type' => 'password', 'name' =>
+			'slapt'), $lang['admin']['user_email'] => array('type' => 'text', 'value' => (isset($info['email']) ? input($info['email']) : "")), "\r" => array('type' => 'string', "value" => '<input type="hidden" name="id" value="' . $url['r'] . '" /><input type="submit" name="action" value="' . $lang['admin']['save'] . '">'), "" => array("type" => "reset", "name" => "reset", "value" => "{$lang['admin']['cancel']}", 'extra' => 'onclick="window.location=\'?id,' . $_GET['id'] . ';a,' . $_GET['a'] . '\'"'));
 		include_once ("priedai/class.php");
 		$bla = new forma();
-		lentele('<strong>' . input($info['nick']) . '</strong> ', $bla->form($text, $lang['admin']['user_canteditadmin']), $lang['admin']['user_details']);
+		lentele('<strong>' . input($info['nick']) . '</strong> ', $bla->form($text) . "<br /><small>*{$lang['admin']['user_canteditadmin']}</small>", $lang['admin']['user_details']);
 		unset($info, $text);
 	} else {
 		klaida($lang['system']['warning'], $lang['admin']['user_canteditadmin']);

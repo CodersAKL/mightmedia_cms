@@ -28,11 +28,11 @@ if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
 }
 //FUNKCIJOS
 if (isset($d) && $d > 0) {
-	$sql = mysql_query1("SELECT `file`,`categorija` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` = $d LIMIT 0, 1 ");
-	if (mysql_affected_rows() > 0) {
+	$sql = mysql_query1("SELECT `file`,`categorija` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` = " . escape($d) . " LIMIT 1");
+	if (count($sql) > 0) {
 		//$sql = mysql_fetch_assoc($sql);
 		$row = mysql_query1("SELECT `teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = '" . $sql['categorija'] . "'");
-		if (isset($_SESSION['level']) && $row['teises'] <= $_SESSION['level']) {
+		if (isset($_SESSION['level']) && (!$row || teises($row['teises'], $_SESSION['level']))) {
 
 			download("siuntiniai/" . $sql['file'] . "", ".htaccess|.|..|remontas.php|index.php|config.php|conf.php");
 		} else {

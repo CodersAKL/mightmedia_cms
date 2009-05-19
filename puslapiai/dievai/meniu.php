@@ -213,7 +213,7 @@ lentele($page_pavadinimas,$text);
 			redirect("?id," . $url['id'] . ";a,21", "header");
 		} else {
 			$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape((int)$url['r']) . " LIMIT 1";
-			$sql = mysql_query1($sql, 2500);
+			$sql = mysql_query1($sql);
 			$selected = unserialize($sql['teises']);
 			/*$box = "";
 			foreach ($teises as $name => $check) {

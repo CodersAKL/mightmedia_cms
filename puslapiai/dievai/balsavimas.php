@@ -110,7 +110,7 @@ if (isset($_POST['b_delete']) && $_POST['b_delete'] == $lang['admin']['edit']) {
 
 }
 if ((int)$url['v'] == 2) {
-	$sql2 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "balsavimas`", 120);
+	$sql2 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "balsavimas`");
 	if (sizeof($sql2) > 0) {
 		$text = "
 	<form name='b_delete' action='?id," . $_GET['id'] . ";a," . $_GET['a'] . "' method='post'>

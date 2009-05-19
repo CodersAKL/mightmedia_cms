@@ -1,37 +1,48 @@
 <?php
-function hide($pavadinimas,$tekstas,$hide=false,$label=false,$id=false) {
-	lentele($pavadinimas,$tekstas);
+
+function hide($pavadinimas, $tekstas, $hide = false, $label = false, $id = false) {
+	lentele($pavadinimas, $tekstas);
 
 }
-function lentele_r($pavadinimas,$tekstas,$label=false) {
-	lentele_l($pavadinimas,$tekstas);
+function lentele_r($pavadinimas, $tekstas, $label = false) {
+	lentele_l($pavadinimas, $tekstas);
 }
-function lentele_l($pavadinimas,$tekstas,$label=false) {
+function lentele_l($pavadinimas, $tekstas, $label = false) {
 	echo "<div class=\"title\">$pavadinimas</div>
 <div class=\"vidus\">$tekstas</div>";
-	}
+}
 
-function lentele($pavadinimas,$tekstas,$label=false) {
-echo "<div class=\"title\">$pavadinimas</div>
+function lentele($pavadinimas, $tekstas, $label = false) {
+	echo "<div class=\"title\">$pavadinimas</div>
 <div class=\"content\">$tekstas</div>";
 }
 
 
-function klaida($pavadinimas,$tekstas,$label=false) {
+function klaida($pavadinimas, $tekstas, $label = false) {
 	//global $conf;
-	echo "\n<div class=\"title\" style=\"border-color:black;background:red;color:white\">".ucfirst($pavadinimas)." <blink>!</blink></div>\n";
-	if ($label) { $label = "<fieldset>\n<legend>$label</legend>\n";	}
+	echo "\n<div class=\"title\" style=\"border-color:black;background:red;color:white\">" . ucfirst($pavadinimas) . " <blink>!</blink></div>\n";
+	if ($label) {
+		$label = "<fieldset>\n<legend>$label</legend>\n";
+	}
 	echo "<div class=\"vidus\" style=\"border-color:black;background:yellow\">$label <img src=\"images/icons/emblem-important.png\" align=\"left\" hspace=\"10\" alt=\"Klaida\"/>$tekstas";
-	if ($label) { echo "</fieldset></div>\n"; }
-	else { echo "</div>\n"; }
+	if ($label) {
+		echo "</fieldset></div>\n";
+	} else {
+		echo "</div>\n";
+	}
 	//if ($conf['Palaikymas'] != 1) { mysql_query1("INSERT INTO `".LENTELES_PRIESAGA."logai` (`action` ,`time` ,`ip`) VALUES (".escape($pavadinimas.": Tekstas: ".$tekstas." Puslapis: ".(isset($resto)?$resto:$_SERVER['QUERY_STRING'])).",NOW(),INET_ATON(".getip()."));"); }
 }
-function msg($pavadinimas,$tekstas,$label=false) {
-	echo "\n<div class=\"title\" style=\"border-color:black;background:green;color:white\">".ucfirst($pavadinimas)."</div>\n";
-	if ($label) { $label = "<fieldset>\n<legend>$label</legend>\n";	}
-	echo "<div class=\"vidus\" style=\"border-color:black;background:#CCFFCC\">$label <img src=\"images/icons/tick.png\" align=\"left\" hspace=\"10\" alt=\"Klaida\"/>$tekstas";
-	if ($label) { echo "</fieldset></div>\n"; }
-	else { echo "</div>\n"; }
+function msg($pavadinimas, $tekstas, $label = false) {
+	echo "\n<div class=\"title\" style=\"border-color:black;background:green;color:white\">" . ucfirst($pavadinimas) . "</div>\n";
+	if ($label) {
+		$label = "<fieldset>\n<legend>$label</legend>\n";
+	}
+	echo "<div class=\"vidus\" style=\"border-color:black;background:#CCFFCC\">$label <img src=\"images/icons/tick.png\" align=\"left\" hspace=\"10\" alt=\"Atlikta\"/>$tekstas";
+	if ($label) {
+		echo "</fieldset></div>\n";
+	} else {
+		echo "</div>\n";
+	}
 }
 function ofunc() {
 	echo "
@@ -47,21 +58,22 @@ function cfunc() {
 	echo "</table>";
 }
 function copyright($tekstas) {
-global $mysql_num;
-	echo "<div class=\"comment\">$tekstas ".(defined('LEVEL') && LEVEL == 1?'MySQL: '.$mysql_num:'')."</div>";
+	global $mysql_num;
+	echo "<div class=\"comment\">$tekstas " . (defined('LEVEL') && LEVEL == 1 ? 'MySQL: ' . $mysql_num : '') . "</div>";
 }
-function th_meniu($array,$start='',$end='') {
-	$return = $start."\n";
-	foreach($array as $key => $val){
+function th_meniu($array, $start = '', $end = '') {
+	$return = $start . "\n";
+	foreach ($array as $key => $val) {
 		if (is_array($val)) {
 			$return .= "\t<li>$key\n";
 			$return .= "\t<ul>\n\t";
-			$return .= "\t".th_meniu($val);
+			$return .= "\t" . th_meniu($val);
 			$return .= "\t</ul></li>\n";
+		} else {
+			$return .= "\t<li><a href='$val'>$key</a></li>\n";
 		}
-		else { $return .= "\t<li><a href='$val'>$key</a></li>\n"; }
 	}
-	return $return."\n".$end;
+	return $return . "\n" . $end;
 }
 function bbk($forma) {
 	$return = "
@@ -74,10 +86,12 @@ function bbk($forma) {
 <button onclick=\"addText('$forma', '[img]', '[/img]'); return false;\" title=\"IMG\"><img src=\"images/icons/picture.png\"></button>
 <button onclick=\"addText('$forma', '[quote]', '[/quote]'); return false;\" title=\"QUOTE\"><img src=\"images/icons/comment.png\"></button> | 
 ";
-	if (LEVEL == 30) { $return .= "
+	if (LEVEL == 30) {
+		$return .= "
 <button onclick=\"addText('$forma', '[hide=Tik registruotiems]', '[/hide]'); return false;\" title=\"HIDE\"><img src=\"images/icons/shield.png\"></button>
-"; }
-	return $return."<br />";
+";
+	}
+	return $return . "<br />";
 }
 
 function bbs($forma) {
@@ -94,80 +108,44 @@ function bbs($forma) {
 		:P
 		>)
 		o_0
-		",$forma)."<br/>";
+		", $forma) . "<br/>";
 }
 
 //SYPSENOS
-function smile($data,$bb = FALSE) {
-	$smilies = array(
-				':)' => 'smile.gif',
-				':]' => 'razz.gif',
-				':-)' => 'smile.gif',
-				';-)' => 'wink.gif',
-				';)' => 'wink.gif',
-				':-]' => 'biggrin.gif',
-				':-D' => '003.gif',
-				':D' => '003.gif',
-				':o' => 'shock.gif',
-				':-o' => '103.gif',
-				':O' => 'confuse.gif',
-				':(' => 'cry.gif',
-				'B-)' => 'cool.gif',
-				'B)' => 'cool.gif',
-				'%-)' => 'cool.gif',
-				':-|' => 'neutral.gif',
-				':|' => 'neutral.gif',
-				':P' => '118.gif',
-				':p' => '118.gif',
-				'>)' => 'badgrin.gif',
-				'0_o' => '119.gif',
-				'o_0' => '119.gif',
-	);
-	foreach($smilies as $smile => $image) {
+function smile($data, $bb = false) {
+	$smilies = array(':)' => 'smile.gif', ':]' => 'razz.gif', ':-)' => 'smile.gif', ';-)' => 'wink.gif', ';)' => 'wink.gif', ':-]' => 'biggrin.gif', ':-D' => '003.gif', ':D' => '003.gif', ':o' => 'shock.gif', ':-o' => '103.gif', ':O' => 'confuse.gif', ':(' => 'cry.gif', 'B-)' => 'cool.gif', 'B)' => 'cool.gif', '%-)' => 'cool.gif', ':-|' => 'neutral.gif', ':|' => 'neutral.gif', ':P' => '118.gif', ':p' => '118.gif', '>)' => 'badgrin.gif', '0_o' => '119.gif', 'o_0' => '119.gif', );
+	foreach ($smilies as $smile => $image) {
 		//$data = str_replace($smile,"<img src='images/smiles/$image' alt='".$smile."' class='middle' ".(($bb)?"onclick=\"addText('".$bb."','".$smile."',' ');\" style='cursor: pointer;'":"")." />",$data);
-		$data = str_replace($smile,"<img src='images/smiles/$image' alt='".$smile."' class='middle' onclick=\"addText('".$bb."','".$smile."',' ');\" style='cursor: pointer;' />",$data);
+		$data = str_replace($smile, "<img src='images/smiles/$image' alt='" . $smile . "' class='middle' onclick=\"addText('" . $bb . "','" . $smile . "',' ');\" style='cursor: pointer;' />", $data);
 	}
 	return $data;
 }
 
 //bbcodo varijantas 1
 function bb2html($Input) {
-	$Bbcode = array
-	(
-	'/\[b\](.+?)\[\/b\]/i',
-	'/\[i\](.+?)\[\/i\]/i',
-	'/\[quote\](.+?)\[\/quote\]/i',
-	'/\[url=(.+?)\](.+?)\[\/url\]/i'
-	);
-	$Html = array
-	(
-	'<strong>$1</strong>',
-	'<em>$1</em>',
-	'<blockquote>$1</blockquote>',
-	'<a href="$1">$2</a>'
-	);
+	$Bbcode = array('/\[b\](.+?)\[\/b\]/i', '/\[i\](.+?)\[\/i\]/i', '/\[quote\](.+?)\[\/quote\]/i', '/\[url=(.+?)\](.+?)\[\/url\]/i');
+	$Html = array('<strong>$1</strong>', '<em>$1</em>', '<blockquote>$1</blockquote>', '<a href="$1">$2</a>');
 	return preg_replace($Bbcode, $Html, $Input);
 }
 
 
-
 // bbcode
 
-function nl2br2( $text ) {
-	return str_replace( '<br />', '', $text );
+function nl2br2($text) {
+	return str_replace('<br />', '', $text);
 }
-function htmlspecialchars2( $text ) {
+function htmlspecialchars2($text) {
 	static $patterns, $replaces;
-	if( !$patterns ){
-		$patterns = array( '#&lt;#', '#&gt;#', '#&amp;#', '#&quot;#' );
-		$replaces = array( '<', '>', '&', '"' );
+	if (!$patterns) {
+		$patterns = array('#&lt;#', '#&gt;#', '#&amp;#', '#&quot;#');
+		$replaces = array('<', '>', '&', '"');
 	}
-	return preg_replace( $patterns, $replaces, $text );
+	return preg_replace($patterns, $replaces, $text);
 }
 function bbchat($str) {
 
 	//$str=htmlspecialchars(trim($str));
-	$str=descript($str);
+	$str = descript($str);
 	// paryskinam teksta
 	$str = preg_replace("#\[b\](.*?)\[/b\]#si", "<b>\\1</b>", $str);
 	// Paverciam teksta
@@ -186,7 +164,7 @@ function bbchat($str) {
 	$str = str_replace('&amp;hellip;', '&hellip;', $str);
 	$str = str_replace('&amp;#8230;', '&hellip;', $str);
 	// Konvertuojam naujas eilutes i <br/>
-	$str=nl2br($str);
+	$str = nl2br($str);
 	//padarom grazias kabutes
 	$str = preg_replace("#\&quot;(.+?)\&quot;#si", "<q>\\1</q>", $str);
 	//$str = preg_replace("/\"(.+?)\"/i", "<q>\\1</q>", $str);
@@ -197,11 +175,11 @@ function bbchat($str) {
 	return $str;
 }
 
-Function bbcode($str) {
+function bbcode($str) {
 	// Problemos su \ slashais
 	//$str=str_replace("\\","&#92;",$str);
 	//$str = preg_replace('&','#&amp;#',$str);
-	$str=input($str);
+	$str = input($str);
 	$str = preg_replace("#\[php\](.*?)\[\/php\]#sie", "base64encode('<textarea name=\"code\" class=\"php\" rows=\"15\" cols=\"100\">\\1</textarea>')", $str);
 	$str = preg_replace("#\[mirc\](.*?)\[\/mirc\]#sie", "base64encode('<textarea name=\"code\" class=\"mirc\" rows=\"15\" cols=\"100\">\\1</textarea>')", $str);
 	$str = preg_replace("#\[html\](.*?)\[\/html\]#sie", "base64encode('<textarea name=\"code\" class=\"html\" rows=\"15\" cols=\"100\">\\1</textarea>')", $str);
@@ -256,7 +234,7 @@ Function bbcode($str) {
 
 	// Cituojam
 	//$str = preg_replace("#\[quote\](.*?)\[/quote]#si", "<p class=\"cytat\"><u><b>Citata:</b></u><br/>\\1</p>", $str);
-	if (preg_match('#\[quote\](.*?)\[/quote]#si', $str))	{
+	if (preg_match('#\[quote\](.*?)\[/quote]#si', $str)) {
 		$str = preg_replace('#\[quote=(&quot;|"|\'|)(.*)\\1\]#seU', '"<div class=\"cytat\"><u><b>".str_replace(\'[\', \'&#91;\', \'$2\')." rašė:</b></u><br/>"', $str);
 		$str = str_replace('[quote]', "<p class=\"cytat\"><u><b>Citata:</b></u><br/>", $str);
 		$str = str_replace('[/quote]', '</p>', $str);
@@ -274,55 +252,59 @@ Function bbcode($str) {
 	$str = preg_replace("#\[email\]([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)\[/email\]#i", "<a href=\"mailto:\\1@\\2\">\\1@\\2</a>", $str);
 
 	// HTML formavimas
-	$str=nl2br($str);
-	$str = str_replace("[br]","<br/>",$str);
+	$str = nl2br($str);
+	$str = str_replace("[br]", "<br/>", $str);
 	$str = smile($str);
 
 	// Iskvieciam kodu atvaizdavima
-	$str = preg_replace_callback("#\<base64\>(.*?)\</base64\>#si","base64decode", $str);
+	$str = preg_replace_callback("#\<base64\>(.*?)\</base64\>#si", "base64decode", $str);
 
 	return $str;
 }
 
 // Atkoduojam koda
-function base64decode($str){
+function base64decode($str) {
 	return base64_decode($str[1]);
 }
 
 // Užkoduojam kodą
-function base64encode($str){
-	return "<base64>".base64_encode($str)."</base64>";
+function base64encode($str) {
+	return "<base64>" . base64_encode($str) . "</base64>";
 }
 
 // Teksto slepimui
-function ukryj ( $match ) {
+function ukryj($match) {
 	$id = uniqid('');
-	$return = (defined("LEVEL"))?$match[2]:'Tik registruotiems vartotojams';
-	return '<font color="red">▲</font> <a href="#" onclick="flip(\'' . $id . '\'); return false;"><b>' . $match[1] . '</b> <font color="red">▼</font></a><div id="' . $id . '" class="ukryj" style="display: none;">'.$return.'</div>';
+	$return = (defined("LEVEL")) ? $match[2] : 'Tik registruotiems vartotojams';
+	return '<font color="red">▲</font> <a href="#" onclick="flip(\'' . $id . '\'); return false;"><b>' . $match[1] . '</b> <font color="red">▼</font></a><div id="' . $id . '" class="ukryj" style="display: none;">' . $return . '</div>';
 }
 
 // Emailo apsauga
-Function bbcode_js($str){
-	if(!eregi('<a href=\"javascript:mailto:mail\(\'',$str[0])){
-		return str_replace('javascript','java_script',$str[0]);
-	}
-	else{
+function bbcode_js($str) {
+	if (!eregi('<a href=\"javascript:mailto:mail\(\'', $str[0])) {
+		return str_replace('javascript', 'java_script', $str[0]);
+	} else {
 		return $str[0];
 	}
 }
 
 // nuorodos kode
-function bbcode_autolink($str){
-	$lnk=$str[3];
-	if(strlen($lnk)>30){
-		if(substr($lnk,0,3)=='www'){$l=9;}else{$l=5;}
-		$lnk=substr($lnk,0,$l).'...'.substr($lnk,strlen($lnk)-8);
+function bbcode_autolink($str) {
+	$lnk = $str[3];
+	if (strlen($lnk) > 30) {
+		if (substr($lnk, 0, 3) == 'www') {
+			$l = 9;
+		} else {
+			$l = 5;
+		}
+		$lnk = substr($lnk, 0, $l) . '...' . substr($lnk, strlen($lnk) - 8);
 	}
-	return ' <a href="'.$str[2].'://'.$str[3].'" target="_blank" class="link"> '.$str[2].'://'.$lnk.' </a>';
+	return ' <a href="' . $str[2] . '://' . $str[3] . '" target="_blank" class="link"> ' . $str[2] . '://' . $lnk . ' </a>';
 }
 
 // Jei zmogus perkele teksta i kita eilute tai taip ir atvaizduojam
 function lauzymas($txt) {
 	//return str_replace("\r\n", "<br>", $txt);
 }
+
 ?>

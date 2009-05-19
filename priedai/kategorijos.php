@@ -9,15 +9,6 @@
  * @$Revision$
  * @$Date$
  **/
-
-//NEPRATESTUOTA.
-/*
-if (!defined("LEVEL") || LEVEL > 2 || !defined("OK") || !isset($_SESSION['username']))
-{
-header('location: ?');
-exit;
-}
-*/
 function kategorija($kieno, $leidimas = false) {
 	global $conf, $url, $lang;
 	echo <<< HTML
@@ -46,11 +37,11 @@ HTML;
 	if (empty($_GET['v'])) {
 		$_GET['v'] = 0;
 	}
-	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND `path`=0 ORDER BY `id` DESC", 120);
+	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND `path`=0 ORDER BY `id` DESC");
 	if (sizeof($sql) > 0) {
 		foreach ($sql as $row) {
 
-			$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC", 120);
+			$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
 			if (sizeof($sql2) > 0) {
 				$subcat = '';
 				foreach ($sql2 as $path) {
@@ -67,9 +58,9 @@ HTML;
 
 
 		}
-	} else {
+	} /*else {
 		$kategorijoss[] = "{$lang['system']['nocategories']}.";
-	}
+	}*/
 
 	if ($kieno != "vartotojai") {
 		$dir = "images/naujienu_kat";
@@ -127,7 +118,7 @@ HTML;
 		}
 
 		if (isset($_POST['path'])) {
-			$path = mysql_query1("Select * from`" . LENTELES_PRIESAGA . "grupes` WHERE id=" . escape($_POST['path']) . " Limit 1", 120);
+			$path = mysql_query1("Select * from`" . LENTELES_PRIESAGA . "grupes` WHERE id=" . escape($_POST['path']) . " Limit 1");
 			if ($path) {
 				if ($kieno == 'vartotojai')
 					$teises = $_POST['Teises'];
@@ -198,10 +189,13 @@ HTML;
 		}
 	}
 	if (isset($_POST['Kategorijos_id']) && isNum($_POST['Kategorijos_id']) && $_POST['Kategorijos_id'] > 0 && isset($_POST['Kategorija']) && $_POST['Kategorija'] == $lang['system']['edit']) {
-		$extra = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND `id`=" . escape((int)$_POST['Kategorijos_id']) . " LIMIT 1", 120);
+		$extra = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND `id`=" . escape((int)$_POST['Kategorijos_id']) . " LIMIT 1");
 		//$extra = mysql_fetch_assoc($extra);
 	}
-	if ($_GET['v'] == 2 || $_GET['v'] == 5) {
+	if ($_GET['v'] == 2 || $_GET['v'] == 5 ) {
+		if($_GET['v'] == 5 && !isset($kategorijoss)){
+			klaida($lang['system']['warning'],$lang['system']['nocategories']);
+		}else{
 		if (isset($_POST['Kategorija']) && $_POST['Kategorija'] == $lang['system']['delete']) {
 			//Trinamos nuorodos esančios kategorijoje
 			if ($kieno == 'nuorodos') {
@@ -222,7 +216,7 @@ HTML;
 			//Trinam failą iš siuntinių
 			if ($kieno == 'siuntiniai') {
 				$id = ceil((int)$_POST['Kategorijos_id']);
-				$sql = mysql_query1("SELECT `ID`,`file` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `categorija` = " . escape($id) . "", 120);
+				$sql = mysql_query1("SELECT `ID`,`file` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `categorija` = " . escape($id) . "");
 				foreach ($sql as $row) {
 
 					if (isset($row['file']) && !empty($row['file'])) {
@@ -236,7 +230,7 @@ HTML;
 			//Trinam paveikslėlius kurie yra kategorijoje(galerija)
 			if ($kieno == 'galerija') {
 				$id = ceil((int)$_POST['Kategorijos_id']);
-				$sql = mysql_query1("SELECT `ID`,`file` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `categorija` = " . escape($id) . "", 120);
+				$sql = mysql_query1("SELECT `ID`,`file` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `categorija` = " . escape($id) . "");
 				foreach ($sql as $row) {
 					if (isset($row['file']) && !empty($row['file'])) {
 						@unlink("galerija/" . $row['file']);
@@ -250,7 +244,7 @@ HTML;
 			//Trinamos naujienos esančios kategorijoje
 			if ($kieno == 'naujienos') {
 				$id = ceil((int)$_POST['Kategorijos_id']);
-				$sql = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija` = " . escape($_POST['Kategorijos_id']) . "", 120);
+				$sql = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija` = " . escape($_POST['Kategorijos_id']) . "");
 				foreach ($sql as $row) {
 					mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/naujienos' AND kid=" . escape($row['id']) . "");
 				}
@@ -258,7 +252,7 @@ HTML;
 			}
 			//trinama kategorija
 			//Jei turi subkategoriju, perkeliam
-			$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`like%" . escape($_POST['Kategorijos_id']) . ",%", 120);
+			$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`like '%" . $_POST['Kategorijos_id'] . ",%'");
 			if (sizeof($sql) > 0) {
 				foreach ($sql as $row) {
 					//echo $row['path'];
@@ -266,15 +260,14 @@ HTML;
 				}
 			}
 			//perkelimo pabaiga
-			$result2 = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "grupes` 
-			WHERE `id`=" . escape($_POST['Kategorijos_id']) . ";
-			");
+			$result23 = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "grupes` 
+			WHERE `id`=".escape($_POST['Kategorijos_id'])."");
 
-
-			if ($result2) {
+echo"dsa";
+			if ($result23) {
 				msg($lang['system']['done'], $lang['system']['categorydeleted']);
 			} else {
-				klaida($lang['system']['error'], " {$lang['system']['error']}<br><b>" . mysql_error() . "</b>");
+				klaida($lang['system']['error'], " {$lang['system']['error']}");
 			}
 		}
 
@@ -335,7 +328,7 @@ HTML;
 		} else {
 			klaida("{$lang['system']['warning']}", "{$lang['system']['nomorecategories']}.");
 		}
-	} elseif ($_GET['v'] == 3) {
+}	} elseif ($_GET['v'] == 3) {
 		$kategorijos_redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,2", "method" => "post", "name" => "reg"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijoss, "name" => "Kategorijos_id"), "{$lang['system']['edit']}:" => array("type" => "submit", "name" => "Kategorija", "value" => "{$lang['system']['edit']}"), "{$lang['system']['delete']}:" => array("type" => "submit", "name" => "Kategorija", "value" => "{$lang['system']['delete']}"));
 		lentele($lang['system']['editcategory'], $bla->form($kategorijos_redagavimas));
 	}

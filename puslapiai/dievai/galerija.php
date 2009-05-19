@@ -53,11 +53,11 @@ lentele($lang['admin']['gallery'], $buttons);
 unset($buttons, $extra, $text);
 include_once ("priedai/kategorijos.php");
 kategorija("galerija", true);
-$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `path`=0 ORDER BY `id` DESC", 2000) or die(mysql_error());
+$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `path`=0 ORDER BY `id` DESC") or die(mysql_error());
 if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
 
-		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC", 2000);
+		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
 
 		$subcat = '';
 		if (sizeof($sql2) > 0) {
@@ -233,6 +233,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 				//finally, save the image
 
 				ImageJpeg($resized_img, "$path_thumbs/$rand_name.$file_ext", 95);
+				chmod("$path_thumbs/$rand_name.$file_ext",0777);
 				ImageDestroy($resized_img);
 				ImageDestroy($new_img);
 
@@ -270,10 +271,12 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 				//finally, save the image
 
 				ImageJpeg($resized_imgbig, "$path_big/$rand_name.$file_ext", 95);
+				chmod("$path_big/$rand_name.$file_ext",0777);
 				ImageDestroy($resized_imgbig);
 				ImageDestroy($new_img);
 
 				move_uploaded_file($file_tmp, "$path_big/originalai/$rand_name.$file_ext");
+                chmod("$path_big/originalai/$rand_name.$file_ext",0777);
 
 				$result = mysql_query1("
 INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`)
@@ -508,7 +511,7 @@ if (isset($_GET['v'])) {
    `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'NE' 
   ORDER BY
   `" . LENTELES_PRIESAGA . "galerija`.`data` DESC
-  ", 1000);
+  ");
 		if ($q) {
 
 			include_once ("priedai/class.php");

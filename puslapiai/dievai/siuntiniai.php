@@ -144,7 +144,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 	// - tagai kurie uzdaromi atskirai (<p></p>) pazymeti kaip 1
 	// - tagai kuriuos uzdaryti nebutina (<hr>) zymimi kaip 0
 	$tags = array("p" => 1, "br" => 0, "a" => 1, "img" => 0, "li" => 1, "ol" => 1, "ul" => 1, "b" => 1, "i" => 1, "em" => 1, "strong" => 1, "del" => 1, "ins" => 1, "u" => 1, "code" => 1, "pre" => 1, "blockquote" => 1, "hr" => 0, "span" => 1, "font" => 1, "h1" => 1, "h2" => 1, "h3" => 1, "table" => 1, "tr" => 1, "td" => 1, "th" => 1, "tbody" => 1, "div" => 1);
-	function upload($file, $file_types_array = array("BMP", "JPG", "PNG", "PSD", "ZIP"), $max_file_size = 1048576, $upload_dir = "siuntiniai") {
+	function upload($file, $file_types_array = array("BMP", "JPG", "PNG", "PSD", "ZIP", "RAR", "GIF"), $max_file_size = 1048576, $upload_dir = "siuntiniai") {
 		global $lang;
 		if ($_FILES["$file"]["name"] != "") {
 			$origfilename = $_FILES["$file"]["name"];
@@ -168,17 +168,15 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 						$filename = time() . "_" . $filename;
 					}
 					move_uploaded_file($_FILES["$file"]["tmp_name"], $upload_dir . $filename);
-
+					chmod($upload_dir . $filename, 0777);
 					if (file_exists($upload_dir . $filename)) {
-						$result = mysql_query1("
-                    INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`)
-                    VALUES (" . escape($_POST['Pavadinimas']) . "," . escape($filename) . ",
+						$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`) VALUES (" . escape($_POST['Pavadinimas']) . "," . escape($filename) . ",
                     " . escape($_POST['Aprasymas']) . "," . escape($_SESSION['id']) . ", '" . time() . "', " . escape($_POST['cat']) . ", 'TAIP')");
 
 						if ($result) {
 							msg($lang['system']['done'], $lang['admin']['download_created']);
 						} else {
-							klaida($lang['system']['error'], '<b>' . mysql_error() . '</b>');
+							klaida($lang['system']['error'], $lang['system']['error']);
 						}
 					} else {
 						klaida($lang['system']['error'], '<font color="#FF0000">' . $filename . '</font>');
@@ -209,7 +207,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 		if ($result) {
 			msg($lang['system']['done'], $lang['admin']['download_created']);
 		} else {
-			klaida($lang['system']['error'], '<b>' . mysql_error() . '</b>');
+			klaida($lang['system']['error'], $lang['system']['error']);
 		}
 	}
 	unset($_FILES['failas'], $filename, $result, $_POST['Pavadinimas'], $_POST['Aprasymas'], $_POST['action'], $_POST['failas2']);
@@ -269,7 +267,7 @@ if (isset($_GET['v'])) {
 			$info = array();
 
 			foreach ($q as $sql) {
-				$sql2 = mysql_fetch_assoc(mysql_query1("SELECT nick FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $sql['autorius'] . "'"));
+				$sql2 = mysql_query1("SELECT nick FROM `" . LENTELES_PRIESAGA . "users` WHERE id=" . escape($sql['autorius']) . " LIMIT 1");
 				if (isset($sql2['nick'])) {
 					$autorius = $sql2['nick'];
 				} else {

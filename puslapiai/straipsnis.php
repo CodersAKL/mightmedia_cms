@@ -91,5 +91,9 @@ if ($k >= 0 && empty($url['m'])) {
 		klaida($lang['system']['warning'], "{$lang['article']['cant']}.");
 	}
 }
+if (count($_GET) == 1) {
+	if (kiek("straipsniai", "WHERE rodoma='TAIP'") <= 0)
+		klaida($lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
+}
 
 ?>

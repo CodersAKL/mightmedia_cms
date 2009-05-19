@@ -209,7 +209,9 @@ else {
 
 	unset($bla, $info, $sql, $sql_d, $vid);
 }
-if (kiek("siuntiniai", "WHERE rodoma='TAIP'") <= 0)
-	klaida($lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
+if (count($_GET) == 1) {
+	if (kiek("siuntiniai", "WHERE rodoma='TAIP'") <= 0)
+		klaida($lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
+}
 
 ?>

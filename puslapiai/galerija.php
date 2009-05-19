@@ -251,9 +251,10 @@ FROM " . LENTELES_PRIESAGA . "galerija WHERE id > '" . $url['m'] . "' AND `categ
 		}
 	}
 }
-if (kiek("galerija", "WHERE rodoma='TAIP'") == 0)
-	klaida($lang['system']['warning'], $lang['system']['no_content']);
-
+if (count($_GET) == 1) {
+	if (kiek("galerija", "WHERE rodoma='TAIP'") == 0)
+		klaida($lang['system']['warning'], $lang['system']['no_content']);
+}
 unset($text, $row, $sql);
 
 ?>

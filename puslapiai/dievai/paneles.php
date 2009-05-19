@@ -206,7 +206,7 @@ HTML;
 		} else {
 
 			$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`=" . escape((int)$url['r']) . " LIMIT 1";
-			$sql = mysql_query1($sql, 3500);
+			$sql = mysql_query1($sql);
 			$selected = unserialize($sql['teises']);
 			/*$box = "";
 			foreach ($teises as $name => $check) {

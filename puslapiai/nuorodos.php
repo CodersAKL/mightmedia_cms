@@ -156,8 +156,10 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 	}
 }
 unset($bla, $nuorodos, $row, $sql, $cat, $url, $pavadinimas, $apie, $info, $q, $sql, $text, $link, $sqlas);
-if (kiek("nuorodos", "WHERE active='TAIP'") == 0)
-	klaida($lang['system']['warning'], $lang['system']['no_content']);
+if (count($_GET) == 1) {
+	if (kiek("nuorodos", "WHERE active='TAIP'") == 0)
+		klaida($lang['system']['warning'], $lang['system']['no_content']);
+}
 /**
  * Gražina informaciją apie nurodyta puslapį
  * Title, meta tagus ir pan.
