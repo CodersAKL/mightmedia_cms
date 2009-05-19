@@ -383,7 +383,7 @@ CREATE TABLE IF NOT EXISTS `page` (
   `file` varchar(50) collate utf8_lithuanian_ci default NULL,
   `place` int(11) default NULL,
   `show` enum('Y','N') collate utf8_lithuanian_ci NOT NULL default 'Y',
-  `teises` varchar(150) collate utf8_lithuanian_ci NOT NULL default 'a:1:{i:0;s:1:"0";}',
+  `teises` varchar(150) collate utf8_lithuanian_ci NOT NULL default 'a:3:{i:0;s:1:"1";i:1;s:1:"2";i:2;s:1:"0";}',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
@@ -421,7 +421,7 @@ CREATE TABLE IF NOT EXISTS `panel` (
   `place` int(11) default NULL,
   `align` enum('R','L') collate utf8_lithuanian_ci NOT NULL default 'L',
   `show` enum('Y','N') collate utf8_lithuanian_ci NOT NULL default 'Y',
-  `teises` varchar(150) collate utf8_lithuanian_ci NOT NULL default 'i:0;',
+  `teises` varchar(150) collate utf8_lithuanian_ci NOT NULL default 'a:3:{i:0;s:1:"1";i:1;s:1:"2";i:2;s:1:"0";}',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
@@ -429,11 +429,11 @@ CREATE TABLE IF NOT EXISTS `panel` (
 -- Sukurta duomenų kopija lentelei `panel`
 --
 
-INSERT INTO `panel` (`panel`, `file`, `place`, `align`, `show`, `teises`) VALUES
-('Narys', 'vartotojas.php', 1, 'L', 'Y', 0),
-('Meniu', 'meniu.php', 2, 'L', 'Y', 0),
-('Kalendorius', 'kalendorius.php', 3, 'R', 'Y', 0),
-('Rėksnių dėžė', 'shoutbox.php', 4, 'R', 'Y', 0);
+INSERT INTO `panel` (`panel`, `file`, `place`, `align`, `show`) VALUES
+('Narys', 'vartotojas.php', 1, 'L', 'Y'),
+('Meniu', 'meniu.php', 2, 'L', 'Y'),
+('Kalendorius', 'kalendorius.php', 3, 'R', 'Y'),
+('Rėksnių dėžė', 'shoutbox.php', 4, 'R', 'Y');
 
 
 -- --------------------------------------------------------
