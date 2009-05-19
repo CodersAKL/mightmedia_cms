@@ -72,8 +72,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'prisijungimas') {
 
 		$strUsername = input($_POST['vartotojas']); // Vartotojo vardas
 		$strPassword = koduoju($_POST['slaptazodis']); // Slaptazodis
-		$linformacija3 = mysql_query1("SELECT `id`,`levelis`,`pass`,`nick`,`login_data`,`login_before`,(SELECT `mod` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `teises`=levelis)as `mod` FROM `" . LENTELES_PRIESAGA . "users` WHERE hex(nick)=hex(" . escape($strUsername) . ") AND password(pass)=password('" . $strPassword . "') LIMIT 1");
-		print_r($linformacija3);
+	$linformacija3 = mysql_query1("SELECT `id`,`levelis`,`pass`,`nick`,`login_data`,`login_before`,(SELECT `mod` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `teises`=`levelis`)as `mod` FROM `" . LENTELES_PRIESAGA . "users` WHERE hex(nick)=hex(" . escape($strUsername) . ") AND password(pass)=password('" . $strPassword . "') LIMIT 1");
+		$linformacija3 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($strUsername) . " AND pass='" . $strPassword . "' limit 1");
+		//print_r($linformacija3);
+		//echo $linformacija3['nick'];
+		//print_r($conf['level']);
+
 		if (!empty($linformacija3) && $strPassword === $linformacija3['pass']) {
 			$_SESSION['username'] = input($linformacija3['nick']);
 			$_SESSION['password'] = $strPassword;

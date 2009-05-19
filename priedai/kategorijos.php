@@ -113,9 +113,7 @@ HTML;
 				$teises = $_POST['Teises'];
 			else
 				$teises = serialize($_POST['Teises']);
-		} else {
-			$teises = serialize(0);
-		}
+		} 
 
 		if (isset($_POST['path'])) {
 			$path = mysql_query1("Select * from`" . LENTELES_PRIESAGA . "grupes` WHERE id=" . escape($_POST['path']) . " Limit 1");
@@ -133,9 +131,7 @@ HTML;
 				$pathas = $path['path'] . "," . $path['id'];
 			}
 		}
-		if (empty($pathas)) {
-			$pathas = 0;
-		}
+		
 		if ($kieno == 'vartotojai') {
 			$einfo = mysql_query("SELECT `teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `teises`='" . $teises . "'AND `kieno`='vartotojai'");
 
