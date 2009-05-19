@@ -106,9 +106,12 @@ function adresas() {
  */
 function puslapis($puslapis, $extra = false) {
 	global $conf;
+	//$teises = @unserialize($conf['puslapiai'][$puslapis]['teises']);
+	$teises = $conf['puslapiai'][$puslapis]['teises'];
 	if (isset($conf['puslapiai'][$puslapis]['id']) && !empty($conf['puslapiai'][$puslapis]['id']) && is_file(dirname(__file__) . '/../puslapiai/' . $puslapis)) {
-
-		if ((is_array(@unserialize($conf['puslapiai'][$puslapis]['teises'])) && in_array(LEVEL, unserialize($conf['puslapiai'][$puslapis]['teises']))) || LEVEL == 1) {
+echo $puslapis;
+	print_r($teises);
+		if ((is_array($teises) && in_array(LEVEL, $teises)) || LEVEL == 1 || empty($teises)) {
 
 			if ($extra && isset($conf['puslapiai'][$puslapis][$extra]))
 				return $conf['puslapiai'][$puslapis][$extra]; //Jei reikalinga kita informacija apie puslapi - grazinam ja.
@@ -122,7 +125,8 @@ function puslapis($puslapis, $extra = false) {
 		return false;
 }
 function teises($mas, $lvl) {
-	if ($lvl == 0 || $lvl == 1 || (is_array(@unserialize($mas)) && in_array($lvl, unserialize($mas))))
+	$teises = @unserialize($mas);
+	if ($lvl == 1 || (is_array($teises) && in_array($lvl, $teises)) || empty($teises))
 		return true;
 	else
 		return false;
