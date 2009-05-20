@@ -130,6 +130,8 @@ HTML;
 			} else {
 				$pathas = $path['path'] . "," . $path['id'];
 			}
+		}else{
+			$pathas=0;
 		}
 		
 		if ($kieno == 'vartotojai') {
@@ -259,7 +261,7 @@ HTML;
 			$result23 = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "grupes` 
 			WHERE `id`=".escape($_POST['Kategorijos_id'])."");
 
-echo"dsa";
+
 			if ($result23) {
 				msg($lang['system']['done'], $lang['system']['categorydeleted']);
 			} else {
@@ -298,7 +300,7 @@ echo"dsa";
 				$ser = "";
 			}
 			//print_r($puslapiai);
-			$kategorijos = array("Form" => array("action" => '' . "?id,{$_GET['id']};a,{$_GET['a']}" . '', "method" => "post", "name" => "reg"), "{$lang['system']['name']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', "name" => "Pavadinimas", "style" => "width:100%"), (isset($extra) || $_GET['v'] == 2 ? "" : "{$lang['system']['subcat/cat']}:") => (isset($extra) ? "" : array("type" => "select", "value" => $kategorijoss, "name" => "path", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : ""), "disabled" => $kategorijoss)), "{$lang['system']['about']}:" => array("type" => "textarea", "value" => (isset($extra['aprasymas'])) ? input($extra['aprasymas']) : '', "name" => "Aprasymas", "rows" => "3", "class" => "input",
+			$kategorijos = array("Form" => array("action" => '' . "?id,{$_GET['id']};a,{$_GET['a']}" . '', "method" => "post", "name" => "reg"), "{$lang['system']['name']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', "name" => "Pavadinimas", "style" => "width:100%"), (isset($extra) || $_GET['v'] == 2 ? "" : "{$lang['system']['subcat/cat']}:") => (isset($extra) ? "" : array("type" => "select", "value" => @$kategorijoss, "name" => "path", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : ""), "disabled" => @$kategorijoss)), "{$lang['system']['about']}:" => array("type" => "textarea", "value" => (isset($extra['aprasymas'])) ? input($extra['aprasymas']) : '', "name" => "Aprasymas", "rows" => "3", "class" => "input",
 				"style" => "width:100%", "id" => "Aprasymas"), "{$lang['system']['picture']}:" => array("type" => "select", "value" => $kategoriju_pav, "name" => "Pav", "class" => "input", "style" => "width:100%", "selected" => (isset($extra['pav']) ? input($extra['pav']) : ''), "extra" => "onchange=\"$('#kategorijos_img').attr({ src: '" . $dir . "/'+this.value });\""), $lang['admin']['what_moderate'] => "", $textas => "", "" => array("type" => "hidden", "name" => "Kategorijos_id", "value" => (isset($extra['id']) ? input($extra['id']) : '')), (isset($extra)) ? $lang['system']['editcategory'] : $lang['system']['createcategory'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['system']['editcategory'] : $lang['system']['createcategory']), );
 			if ($kieno == 'vartotojai') {
 				//	echo $mod;
@@ -328,8 +330,10 @@ echo"dsa";
 		$kategorijos_redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,2", "method" => "post", "name" => "reg"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijoss, "name" => "Kategorijos_id"), "{$lang['system']['edit']}:" => array("type" => "submit", "name" => "Kategorija", "value" => "{$lang['system']['edit']}"), "{$lang['system']['delete']}:" => array("type" => "submit", "name" => "Kategorija", "value" => "{$lang['system']['delete']}"));
 		lentele($lang['system']['editcategory'], $bla->form($kategorijos_redagavimas));
 	}
+	delete_cache("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai'  ORDER BY `pavadinimas`");
 	unset($bla, $info, $sql, $sql2, $q, $result, $result2);
 
 }
+//print_r($conf['level']);
 
 ?>

@@ -10,7 +10,7 @@
  * @$Date$
  **/
 
-$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
+$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC",2000);
 $text = '<div id="vertikalus_meniu"><ul>';
 foreach ($sql1 as $row1) {
 	if ($row1['show'] == "Y" && puslapis($row1['file'])) {

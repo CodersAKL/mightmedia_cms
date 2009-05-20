@@ -77,7 +77,9 @@ if (isset($_POST['order'])) {
 	$where = rtrim($where, ", ");
 	$sqlas .= "UPDATE `" . LENTELES_PRIESAGA . "panel` SET `place`=  CASE id " . $case_place . " END WHERE id IN (" . $where . ")";
 	echo $sqlas;
-	$result = mysql_query1($sqlas) or die(mysql_error());
+	$result = mysql_query1($sqlas);
+	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC");
+	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
 
 } else {
 	$lygiai = array_keys($conf['level']);
@@ -126,6 +128,8 @@ HTML;
 	}
 	if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`= " . escape((int)$url['d']) . " LIMIT 1") or die(mysql_error());
+		delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC");
+	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
 		redirect("?id," . $url['id'] . ";a,9", "header");
 	}
 	//naujos paneles sukurimas
@@ -149,7 +153,9 @@ HTML;
 				}
 				$teisess = serialize($_POST['Teises']);
 				$sql = "INSERT INTO `" . LENTELES_PRIESAGA . "panel` (`panel`, `file`, `place`, `align`, `show`, `teises`) VALUES (" . escape($panel) . ", " . escape($file) . ", '0', " . escape($align) . ", " . escape($show) . ", " . escape($teisess) . ")";
-				mysql_query1($sql) or die(mysql_error());
+				mysql_query1($sql);
+				delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC");
+	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
 				redirect("?id," . $url['id'] . ";a,9", "header");
 			}
 		}
@@ -202,6 +208,8 @@ HTML;
 			$sql = "UPDATE `" . LENTELES_PRIESAGA . "panel` SET `panel`=" . escape($panel) . ", `align`=" . escape($align) . ", `show`=" . escape($show) . ",`teises`=" . escape($teisess) . "   WHERE `id`=" . escape((int)$url['r']);
 			// print_r($_POST);
 			mysql_query1($sql);
+			delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC");
+	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
 			redirect("?id," . $url['id'] . ";a,9", "header");
 		} else {
 
@@ -290,11 +298,13 @@ HTML;
 		}
 	}
 	//Paneliu lygiavimas
-	elseif (isset($_POST['sortableListsSubmitted']) && !isset($url['n'])) {
+	/*elseif (isset($_POST['sortableListsSubmitted']) && !isset($url['n'])) {
 		$orderArray = SLLists::getOrderArray($_POST['paneles_kaire'], 'kaire');
 		foreach ($orderArray as $item) {
 			$sql = "UPDATE `" . LENTELES_PRIESAGA . "panel` set place=" . escape($item['order']) . " WHERE `id`=" . escape($item['element']);
 			mysql_query1($sql);
+			delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC");
+	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
 		}
 		$orderArray = SLLists::getOrderArray($_POST['paneles_desine'], 'desine');
 		foreach ($orderArray as $item) {
@@ -302,7 +312,7 @@ HTML;
 			mysql_query1($sql);
 		}
 		redirect("?id," . $url['id'] . ";a,9", "header");
-	}
+	}*/
 
 	//atvaizduojam paneles
 	$li = "";

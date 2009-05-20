@@ -207,9 +207,9 @@ if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
  * @return array
  */
 unset($sql, $row);
-$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `path`=0 ORDER BY `id` DESC");
+$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `path`='0' ORDER BY `id` DESC");
 
-if (sizeof($sql) > 1) {
+if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
 		$sql2 = mysql_query1("SELECT `pavadinimas` FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE path!=0 and `path` like'" . $row['id'] . "%' ORDER BY `id` ASC");
 		if (sizeof($sql2) > 0) {
@@ -296,7 +296,7 @@ function mysql_query1($query, $lifetime = 0) {
 		//Tikrinam ar keshavimas ijungtas ir ar keshas egzistuoja
 		if (is_file($keshas) && filemtime($keshas) > $_SERVER['REQUEST_TIME'] - $lifetime) {
 			//uzkraunam kesha
-			include($keshas);
+			include ($keshas);
 
 		} else {
 			//Irasom i kesh faila
@@ -317,10 +317,10 @@ function mysql_query1($query, $lifetime = 0) {
 
 			//Reikia uzrakinti faila kad du kartus neirasytu
 			if (flock($fh, LOCK_EX)) { // urakinam
-				fwrite($fh, '<?php $return = '.var_export($return,true).'; ?>');
+				fwrite($fh, '<?php $return = ' . var_export($return, true) . '; ?>');
 				flock($fh, LOCK_UN); // release the lock
 			} else {
-				echo "Negaliu uzrakinti failo !";
+				echo "Negaliu užrakinti failo !";
 			}
 			fclose($fh); //baigiam failo irasyma
 			$return = $return;
@@ -345,7 +345,13 @@ function mysql_query1($query, $lifetime = 0) {
 	}
 	return $return;
 }
+function delete_cache($query) {
+	$filename = 'sandeliukas/' . md5($query) . '.php';
+	if (is_file($filename)) {
+		unlink($filename);
+	}
 
+}
 /**
  * Nuskaitom turin¯ iš adreso
  *

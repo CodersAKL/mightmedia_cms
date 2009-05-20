@@ -45,12 +45,9 @@ if ($sqlas && sizeof($sqlas) > 0 && !isset($url['m'])) {
 //Jei pasirinkta kategoriją
 if ($k >= 0 && empty($url['m'])) {
 
-	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' 
-		AND `kat`='" . $k . "' ORDER BY `date` DESC LIMIT $p, $limit", 86400);
+	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' AND `kat`='" . $k . "' ORDER BY `date` DESC LIMIT $p, $limit", 86400);
 	$pav = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='$k' LIMIT 1", 86400);
 	$viso = count($sql);
-
-
 	if ($viso > 0) {
 		if (teises($pav['teises'], $_SESSION['level'])) {
 			if (sizeof($sql) > 0) {

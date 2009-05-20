@@ -68,8 +68,11 @@ if (isset($_POST['order'])) {
 	endforeach;
 	$where = rtrim($where, ", ");
 	$sqlas .= "UPDATE `" . LENTELES_PRIESAGA . "page` SET `place`=  CASE id " . $case_place . " END WHERE id IN (" . $where . ")";
+	
 	echo $sqlas;
-	$result = mysql_query1($sqlas) or die(mysql_error());
+	$result = mysql_query1($sqlas);
+	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
+
 
 } else {
 	$lygiai = array_keys($conf['level']);
@@ -123,7 +126,8 @@ lentele($page_pavadinimas,$text);
 	}
 	}*/
 	if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
-		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`= " . escape((int)$url['d']) . " LIMIT 1") or die(mysql_error());
+		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`= " . escape((int)$url['d']) . " LIMIT 1");
+			delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
 		redirect("?id," . $url['id'] . ";a,21", "header");
 	} elseif (isset($url['n']) && $url['n'] == 1) {
 		if (isset($_POST['Naujas_puslapis']) && $_POST['Naujas_puslapis'] == $lang['admin']['page_create']) {
@@ -141,7 +145,8 @@ lentele($page_pavadinimas,$text);
 					$align = 'Y';
 				}
 				$sql = "INSERT INTO `" . LENTELES_PRIESAGA . "page` (`pavadinimas`, `file`, `place`, `show`, `teises` ) VALUES (" . escape($psl) . ", " . escape($file) . ", '0', " . escape($show) . ", " . escape($teises) . ")";
-				mysql_query1($sql) or die(mysql_error());
+				mysql_query1($sql);
+					delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
 				redirect("?id," . $url['id'] . ";a,21", "header");
 			}
 		}
@@ -210,6 +215,7 @@ lentele($page_pavadinimas,$text);
 			}
 			$sql = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `pavadinimas`=" . escape($psl) . ", `show`=" . escape($show) . ",`teises`=" . escape($teises) . "  WHERE `id`=" . escape((int)$url['r']);
 			mysql_query1($sql);
+				delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
 			redirect("?id," . $url['id'] . ";a,21", "header");
 		} else {
 			$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape((int)$url['r']) . " LIMIT 1";
