@@ -32,8 +32,9 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
 	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape($_POST['kalba']) . " WHERE `key` = 'kalba' LIMIT 1 ; ";
 	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape($_POST['keshas']) . " WHERE `key` = 'keshas' LIMIT 1 ; ";
 	foreach ($q as $sql) {
-		mysql_query1($sql) or die(mysql_error());
+		mysql_query1($sql);
 	}
+	delete_cache("SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2");
 	redirect('?id,999;a,1');
 }
 

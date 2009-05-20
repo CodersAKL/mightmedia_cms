@@ -92,243 +92,90 @@ $text = "
 	</tr>
 </table>
 ";
-
+lentele($lang['user']['edit_settings'], $text);
 // ######################### Jei pasirinktas vienas is pasiulytu MENIU ####################
+include_once ("priedai/class.php");
 if (isset($mid) && isnum($mid)) {
 	// Pakeisti slaptazodi
 	if ($mid == 1) {
-		include_once ("priedai/class.php");
-		$form = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "change_password"), "{$lang['user']['edit_pass']}:" => array("type" => "password", "value" => "", "name" => "old_pass", "style" => "width:200px"), "{$lang['user']['edit_newpass']}:" => array("type" => "password", "value" => "", "name" => "new_pass", "style" => "width:200px"), "{$lang['user']['edit_confirmnewpass']}:" => array("type" => "password", "value" => "", "name" => "new_pass2", "style" => "width:200px"), "" => array("type" => "hidden", "name" => "action", "value" => "pass_change"), "" => array("type" => "submit", "name" => "action", "value" => "{$lang['user']['edit_update']}"));
+		$form = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "change_password"), "{$lang['user']['edit_pass']}:" => array("type" => "password", "value" => "", "name" => "old_pass"), "{$lang['user']['edit_newpass']}:" => array("type" => "password", "value" => "", "name" => "new_pass"), "{$lang['user']['edit_confirmnewpass']}:" => array("type" => "password", "value" => "", "name" => "new_pass2"), "" => array("type" => "hidden", "name" => "action", "value" => "pass_change"), "" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}"));
 		$bla = new forma();
-		$text .= $bla->form($form, "{$lang['user']['edit_pass']}");
+		lentele($lang['user']['edit_pass'], $bla->form($form));
 	}
 	// Pakeisti kontaktinius duomenis
-	if ($mid == 2) {
+	elseif ($mid == 2) {
 		$info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . "LIMIT 1");
-		$text .= "
-				<fieldset>
-					<legend>{$lang['user']['edit_contacts']}</legend>
-					<form name='change_contacts' action='' method='post' onSubmit=\"return checkMail('change_contacts','email')\">
-					<table border=0 width=100%>
-						<tr>
-							<td align='right' width='15%'>ICQ:</td>
-							<td><input name=\"icq\" type=\"text\" value=" . input($info['icq']) . "></td>
-						</tr>
-						<tr>
-							<td align='right'>MSN:</td>
-							<td><input name=\"msn\" type=\"text\" value=" . input($info['msn']) . "></td>
-						</tr>
-						<tr>
-							<td align='right'>Skype:</td>
-							<td><input name=\"skype\" type=\"text\" value=" . input($info['skype']) . "></td>
-						</tr>
-						<tr>
-							<td align='right'>Yahoo:</td>
-							<td><input name=\"yahoo\" type=\"text\" value=" . input($info['yahoo']) . "></td>
-						</tr>
-						<tr>
-							<td align='right'>AIM:</td>
-							<td><input name=\"aim\" type=\"text\" value=" . input($info['aim']) . "></td>
-						</tr>
-						<tr>
-							<td align='right'>{$lang['user']['edit_web']}:</td>
-							<td><input name=\"url\" type=\"text\" value=" . input($info['url']) . "></td>
-						</tr>
-						<tr>
-							<td align='right'>{$lang['user']['edit_email']}:</td>
-							<td><input name=\"email\" type=\"text\" value=" . input($info['email']) . "></td>
-						</tr>
-						<tr>
-							<td colspan=2>
-								<input type=\"submit\" value=\"{$lang['user']['edit_update']}\">
-								<input type=\"hidden\" name=\"action\" value=\"contacts_change\" />
-							</td>
-						</tr>
-					</table>
-					</form>
-				</fieldset>
-			";
-		unset($info);
+
+		$form = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "extra" => "onSubmit=\"return checkMail('change_contacts','email')\"", "name" => "change_contacts"), "ICQ:" => array("type" => "text", "value" => input($info['icq']), "name" => "icq"), "MSN:" => array("type" => "text", "value" => input($info['msn']), "name" => "msn"), "Skype:" => array("type" => "text", "value" => input($info['skype']), "name" => "skype"), "Yahoo:" => array("type" => "text", "value" => input($info['yahoo']), "name" => "yahoo"), "AIM:" => array("type" => "text", "value" => input($info['aim']), "name" => "aim"), "{$lang['user']['edit_web']}:" => array("type" => "text", "value" => input($info['url']), "name" => "url"), "{$lang['user']['edit_email']}:" => array("type" => "text",
+			"value" => input($info['email']), "name" => "email"), "\r\r\r" => array("type" => "hidden", "name" => "action", "value" => "contacts_change"), "" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}"));
+		$bla = new forma();
+		lentele($lang['user']['edit_contacts'], $bla->form($form));
+
+
 	}
 	// Pakeisti sali, miesta
-	if ($mid == 3) {
-		$info = mysql_query1("SELECT salis, miestas FROM `" . LENTELES_PRIESAGA . "users` WHERE nick='" . $_SESSION['username'] . "' LIMIT 1");
-		$text .= "
-				<fieldset>
-					<legend>{$lang['user']['edit_locality']}</legend>
-					<form name='change_country' action='' method='post'>
-					<table border=0 width=100%>
-						<tr>
-							<td align='right' width='5%'>{$lang['user']['edit_country']}:</td>
-							<td>
-								<select size=\"1\" name=\"salis\">
-		";
-		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "salis`");
+	elseif ($mid == 3) {
+		$info = mysql_query1("SELECT salis, miestas FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
 
+		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "salis`");
+		$salis = array();
 		foreach ($sql as $row) {
-			$text .= "<option value='" . $row['iso'] . "' ";
-			if ($row['iso'] == $info['salis']) {
-				$text .= "selected";
-			}
-			$text .= ">" . $row['printable_name'] . "</option>\n";
+			//	$text .= "<option value='" . $row['iso'] . "' ";
+			//	if ($row['iso'] == $info['salis']) {
+			//		$text .= "selected";
+			//}
+			//$text .= ">" . $row['printable_name'] . "</option>\n";
+			$salis[$row['iso']] = $row['printable_name'];
 		}
-		$text .= "		</select>
-  					</td>
-  				</tr>
-  				<tr>
-  					<td align='right'>{$lang['user']['edit_city']}:</td>
-  					<td><input name=\"miestas\" type=\"text\" value=" . $info['miestas'] . ">
-  				</tr>
-  				<tr>
-					<td colspan=2>
-						<input type=\"submit\" value=\"{$lang['user']['edit_update']}\">
-						<input type=\"hidden\" name=\"action\" value=\"country_change\" />
-					</td>
-				</tr>
-  			</table>
-  			</form>
-  			</fieldset>
-  		";
-		unset($info, $sql, $row);
+
+		$forma = array("Form" => array("action" => "", "method" => "post", "name" => "change_country"), "{$lang['user']['edit_country']}:" => array("type" => "select", "value" => $salis, "name" => "salis", "selected" => $info['salis']), "{$lang['user']['edit_city']}:" => array("type" => "text", "value" => $info['miestas'], "name" => "miestas"), " \r " => array("type" => "hidden", "name" => "action", "value" => "country_change"), "" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}"));
+
+		$bla = new forma();
+		lentele($lang['user']['edit_locality'], $bla->form($forma));
+
+
 	}
 
 	// Avataro keitimas
 	//Žaidime mano šito nereikės
 
-	if ($mid == 4) {
+	elseif ($mid == 4) {
 		$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`='" . $_SESSION['username'] . "' LIMIT 1");
 
-		$text .= "<fieldset>
-  			<legend>{$lang['user']['edit_avatar']}</legend><center><img src='http://www.gravatar.com/avatar.php?gravatar_id=" . md5($sql['email']) . "&amp;default=" . urlencode('images/avatars/no_image.jpg') . "&amp;size=60'></img><br/>
-{$lang['user']['edit_avatarcontent']} <b>" . $sql['email'] . "</b> .</center></fieldset>
+		$avatar = "<center><img src='http://www.gravatar.com/avatar.php?gravatar_id=" . md5($sql['email']) . "&amp;default=" . urlencode('images/avatars/no_image.jpg') . "&amp;size=60'></img><br/>
+{$lang['user']['edit_avatarcontent']} <b>" . $sql['email'] . "</b> .</center>
 		";
+		lentele($lang['user']['edit_avatar'], $avatar);
 	}
 	// Pagrindiniai nustatymai
-	if ($mid == 5) {
-		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick='" . $_SESSION['username'] . "' LIMIT 1");
+	elseif ($mid == 5) {
+		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
 		$data = explode("-", $sql['gim_data']);
-		$text .= "
-  			<fieldset>
-  			<legend>{$lang['user']['edit_mainsettings']}</legend>
-  			<form name=\"pagr_nustatymai\" action=\"\" method=\"post\">
-  			<table border=0 width=100%>
-  				<tr>
-  					<td align='right' width='15%'>{$lang['user']['edit_name']}:</td>
-  					<td><input name=\"vardas\" type=\"text\" value=" . input($sql['vardas']) . "></td>
-  				</tr>
-  				<tr>
-  					<td align='right'>{$lang['user']['edit_secondname']}:</td>
-  					<td><input name='pavarde' type=\"text\" value=" . input($sql['pavarde']) . "></td>
-  				</tr>
-  				<tr>
-  					<td align='right'>{$lang['user']['edit_dateOfbirth']}:</td>
-  					<td>
-  					<select size=\"1\" name=\"diena\">";
-		$a = 1;
-		while ($a < 31) {
-			$text .= "<option value=" . $a . " ";
-			if (isset($data[2]) && $a == $data[2]) {
-				$text .= "selected";
-			}
-			$text .= " >$a</option>\n";
-			$a++;
+		for ($a = 1; $a <= 31; $a++) {
+			$day[$a] = $a;
+
 		}
-		unset($a);
-		$text .= "
-  					</select>
-  					<select size=\"1\" name=\"menesis\">
-  						<option value=\"1\" ";
-		if (isset($data[1]) && $data[1] == 1) {
-			$text .= "selected";
+		for ($a = 1; $a <= 12; $a++) {
+			$month[$a] = $a;
+
 		}
-		$text .= ">{$lang['calendar']['January']}</option>
-  						<option value=\"2\" ";
-		if (isset($data[1]) && $data[1] == 2) {
-			$text .= "selected";
-		}
-		$text .= ">{$lang['calendar']['February']}</option>
-  						<option value=\"3\" ";
-		if (isset($data[1]) && $data[1] == 3) {
-			$text .= "selected";
-		}
-		$text .= ">{$lang['calendar']['March']}</option>
-  						<option value=\"4\" ";
-		if (isset($data[1]) && $data[1] == 4) {
-			$text .= "selected";
-		}
-		$text .= ">{$lang['calendar']['April']}</option>
-  						<option value=\"5\" ";
-		if (isset($data[1]) && $data[1] == 5) {
-			$text .= "selected";
-		}
-		$text .= ">{$lang['calendar']['May']}</option>
-  						<option value=\"6\" ";
-		if (isset($data[1]) && $data[1] == 6) {
-			$text .= "selected";
-		}
-		$text .= ">{$lang['calendar']['June']}</option>
-  						<option value=\"7\" ";
-		if (isset($data[1]) && $data[1] == 7) {
-			$text .= "selected";
-		}
-		$text .= ">{$lang['calendar']['July']}</option>
-  						<option value=\"8\" ";
-		if (isset($data[1]) && $data[1] == 8) {
-			$text .= "selected";
-		}
-		$text .= ">{$lang['calendar']['August']}</option>
-  						<option value=\"9\" ";
-		if (isset($data[1]) && $data[1] == 9) {
-			$text .= "selected";
-		}
-		$text .= ">{$lang['calendar']['September']}</option>
-  						<option value=\"10\" ";
-		if (isset($data[1]) && $data[1] == 10) {
-			$text .= "selected";
-		}
-		$text .= ">{$lang['calendar']['October']}</option>
-  						<option value=\"11\" ";
-		if (isset($data[1]) && $data[1] == 11) {
-			$text .= "selected";
-		}
-		$text .= ">{$lang['calendar']['November']}</option>
-  						<option value=\"12\" ";
-		if (isset($data[1]) && $data[1] == 12) {
-			$text .= "selected";
-		}
-		$text .= ">{$lang['calendar']['December']}</option>
-					</select>
-					<select size=\"1\" name=\"metai\">";
 		$a = date("Y") - 80;
 		$viso = date("Y") - 7;
 		while ($a < $viso) {
-			$text .= "<option value=" . $a . " ";
-			if ($data[0] == $a) {
-				$text .= "selected";
-			}
-			$text .= ">$a</option>\n";
+			$year[$a] = $a;
 			$a++;
 		}
-		unset($viso, $a);
-		$text .= "</select></td>
-				</tr>
-				<tr>
-					<td valign='top' align='right'>{$lang['user']['edit_signature']}:</td>
-					<td><textarea name=\"parasas\" rows=5 cols=30 wrap=\"on\">" . input($sql['parasas']) . "</textarea></td>
-				</tr>
-			</table>
-			<input type=\"submit\" value=\"{$lang['user']['edit_update']}\">
-			<input type=\"hidden\" name=\"action\" value=\"default_change\" />
-			</form>
-			</fieldset>";
+		$forma = array("Form" => array("action" => "", "method" => "post", "name" => "pagr_nustatymai"), "{$lang['user']['edit_name']}:" => array("type" => "text", "value" => $sql['vardas'], "name" => "vardas"), "{$lang['user']['edit_secondname']}:" => array("type" => "text", "value" => $sql['pavarde'], "name" => "pavarde"), "{$lang['user']['edit_dateOfbirth']}:" => array("type" => "select", "value" => $year, "selected" => $data[0], "style" => "width:80px;", "name" => "metai"), " " => array("type" => "select", "style" => "width:80px;", "value" => $month, "selected" => $data[1], "name" => "menesis"), "\r " => array("type" => "select", "style" => "width:80px;", "value" => $day, "selected" => $data[2], "name" => "diena"), "{$lang['user']['edit_signature']}" => array("type" => "textarea", "style" =>
+			"min-width:120px;", "value" => $sql['parasas'], "name" => "parasas"), " \r \n" => array("type" => "hidden", "name" => "action", "value" => "default_change"), "" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}"));
+
+		$bla = new forma();
+		lentele($lang['user']['edit_mainsettings'], $bla->form($forma));
+
+
 	}
 }
-// ############## VARTOTOJO Informacija ##############
-else {
-	include "puslapiai/view_user.php";
-	$text .= "</td></tr></table>";
-}
-lentele("{$lang['user']['edit_settings']}", $text);
+//print_r($_POST);
+
 
 ?>
 <script language="JavaScript1.2">

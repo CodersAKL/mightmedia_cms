@@ -75,7 +75,14 @@ if (isset($error)) {
 		klaida("{$lang['system']['sorry']}", $error);
 	}
 } elseif (!isset($_POST['action']) && !isset($url['c'])) {
-	$text = "
+	include_once ("priedai/class.php");
+
+		$bla = new forma();
+		$forma = array("Form" => array("action" => "", "method" => "post", "name" => "siusti","extra"=>"onSubmit=\"return checkMail('reg','email')\""), "{$lang['pass']['email']}:" => array("type" => "text", "value" =>$lang['pass']['email'], "name" => "email","extra"=>"onfocus=\"if (this.value=='{$lang['pass']['email']}   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['pass']['email']}   '; \""), 
+		"{$lang['pass']['email2']}:" => array("type" => "text", "value" =>$lang['pass']['email'], "name" => "email1","extra"=>"onfocus=\"if (this.value=='{$lang['pass']['email']}   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['pass']['email']}   '; \""), kodas()=>array("type"=>"text","name"=>"kode", "style"=>"height:40px; text-align:center; text-transform:uppercase; font-weight:bold; vertical-align:middle"), " \r" => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['pass']['send']}")," \r\r" => array("type" => "hidden", "name" => "action", "value" => "siusti"));
+
+
+	/*$text = "
     	<form name=\"siusti\" action=\"\" onSubmit=\"return checkMail('reg','email')\" method=\"post\">
     	    	<table border=0 width=100%>
     		<tr>
@@ -98,8 +105,8 @@ if (isset($error)) {
     	<input type=\"hidden\" name=\"action\" value=\"siusti\" />
      	
     	</form>
-    ";
-	lentele($lang['pass']['remain'], $text);
+    ";*/
+	lentele($lang['pass']['remain'], $bla->form($forma));
 	unset($text);
 }
 

@@ -21,7 +21,7 @@ class forma {
 			if (isset($inputs['Form'])) {
 				$return .= "\n<form" . (isset($inputs['Form']['id']) ? " id=\"" . $inputs['Form']['id'] . "\"" : "") . "" . (isset($inputs['Form']['name']) ? " name=\"" . $inputs['Form']['name'] . "\"" : "") . "" . (isset($inputs['Form']['method']) ? " method=\"" . $inputs['Form']['method'] . "\"" : "") . "" . (isset($inputs['Form']['action']) ? " action=\"" . $inputs['Form']['action'] . "\"" : "") . "" . (isset($inputs['Form']['enctype']) ? " enctype=\"" . $inputs['Form']['enctype'] . "\"" : "") . "" . (isset($inputs['Form']['class']) ? " class=\"" . $inputs['Form']['class'] . "\"" : "") . "" . (isset($inputs['Form']['onSubmit']) ? " onSubmit=\"" . $inputs['Form']['onSubmit'] . "\"" : "") . ">\n";
 			}
-			$return .= "<table border=\"0\" width=\"95%\" align=\"center\" cellpadding=\"3\" cellspacing=\"0\">\n\t<tr class=\"title\">\n\t\t<th colspan=\"2\" align=\"center\">" . $pavadinimas . "</th>\n\t</tr>";
+			$return .= "<table border=\"0\" width=\"100%\" align=\"center\" cellpadding=\"3\" cellspacing=\"0\">";
 			foreach ($inputs as $pav => $type) {
 				if (!empty($type) && $pav != 'Form') {
 					$return .= "\n\t<tr>\n\t\t<td align=\"right\" >" . $pav . "</td>";
@@ -84,7 +84,7 @@ class forma {
 					}
 				case "submit":
 					{
-						return "<input type=\"" . $array['type'] . "\" " . (isset($array['class']) ? "class=\"" . $array['class'] . "\"" : "") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['value']) ? " value=\"" . $array['value'] . "\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . "/>";
+						return "<input type=\"" . $array['type'] . "\" " . (isset($array['class']) ? "class=\"" . $array['class'] . "\"" : "class=\"submit\"") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['value']) ? " value=\"" . $array['value'] . "\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . "/>";
 					}
 				case "radio":
 					{

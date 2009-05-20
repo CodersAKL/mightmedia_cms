@@ -12,7 +12,14 @@
 
 function registracijos_forma() {
 	global $vardas, $pass, $pass2, $email, $lang;
-	$text = "
+include_once ("priedai/class.php");
+
+		$bla = new forma();
+		$forma = array("Form" => array("action" => "", "method" => "post", "name" => "reg","extra"=>"onSubmit=\"return checkMail('reg','email')\""), "{$lang['reg']['username']}:" => array("type" => "text", "value" => (isset($vardas) ? input($vardas) : "vardas"), "name" => "nick"), "{$lang['reg']['password']}:" => array("type" => "password", "value" => input($pass), "name" => "pass"),"{$lang['reg']['confirmpassword']}:" => array("type" => "password", "value" => input($pass2), "name" => "pass2"),"{$lang['reg']['email']}:" => array("type" => "text", "value" => (isset($email) ? input($email) : "{$lang['reg']['email']}@{$lang['reg']['email']}.com   "),		 "name" => "email","extra"=>"onfocus=\"if (this.value=='el@pastas.lt   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['reg']['email']}@{$lang['reg']['email']}.com   '; if (checkMail('reg','email'));\""),kodas()=>array("type"=>"text","name"=>"kode", "style"=>"height:40px; text-align:center; text-transform:uppercase; font-weight:bold; vertical-align:middle"), " \r" => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['reg']['register']}")," \r\r" => array("type" => "hidden", "name" => "action", "value" => "registracija"));
+
+
+
+/*	$text = "
     	<form name=\"reg\" action=\"\" onSubmit=\"return checkMail('reg','email')\" method=\"post\">
     	<fieldset>
     	<legend>{$lang['reg']['registration']}:</legend>
@@ -45,8 +52,8 @@ function registracijos_forma() {
     	<input type=\"hidden\" name=\"action\" value=\"registracija\" />
      	</fieldset>
     	</form>
-    ";
-	return $text;
+    ";*/
+	return $bla->form($forma);
 }
 // Tikrinamas E-Mail Adresas
 function check_email($email) {
