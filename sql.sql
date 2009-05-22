@@ -355,7 +355,6 @@ INSERT INTO `nustatymai` (`key`, `val`) VALUES
 ('Keywords', ''),
 ('Render', '1'),
 ('Copyright', '<a href="http://www.mightmedia.lt" target="_blank">MightMedia TVS</a>'),
-('Pastas', 'info@mrcbug.com'),
 ('Registracija', '1'),
 ('Palaikymas', '0'),
 ('Maintenance', 'Remontuojame<br />'),
