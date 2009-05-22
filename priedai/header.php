@@ -104,8 +104,8 @@ if (isset($uid)) {
 	}
 }
 
-$q = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kas_prisijunges` WHERE timestamp<" . escape($db_expire) . "");
-$q = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kas_prisijunges` WHERE timestamp>" . escape($timeout) . "");
+$q = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kas_prisijunges` WHERE `timestamp`<" . escape($db_expire) . "");
+$q = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kas_prisijunges` WHERE `timestamp`>" . escape($timeout) . "");
 
 $online = '';
 $i = '';
@@ -114,10 +114,11 @@ $u = '';
 foreach ($q as $row) {
 	$nekvepuoja = $timestamp - $row['timestamp'];
 	if (time() - $nekvepuoja >= 1 * 60 * 60 && isset($_SESSION['id']) && $row['id'] == $_SESSION['id']) {
-		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `login_before`=login_data, `login_data` = '" . time() . "', `ip` = INET_ATON(" . escape(getip()) . ") WHERE `id` ='" . $uzerid . "' LIMIT 1") or die(mysql_error());
+		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `login_before`=`login_data`, `login_data` = '" . time() . "', `ip` = INET_ATON(" . escape(getip()) . ") WHERE `id` ='" . $uzerid . "' LIMIT 1") or die(mysql_error());
 	}
 	if (!empty($row['id'])) {
 		$i++;
+		$user_online[$row['id']]=true;
 	} else {
 		$u++;
 	}
