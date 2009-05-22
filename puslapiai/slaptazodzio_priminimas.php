@@ -18,15 +18,18 @@ if (isset($_SESSION['username'])) {
 //nuskaitom saugos koda is nuorodos - jeigu toks egzistuoja patikrinam ar tinka ir vydom slaptazodzio atstatyma
 if (isset($url['c']) && !empty($url['c']) && strlen($url['c']) == 11) {
 	$kode = input(strip_tags($url['c']));
-	$sql = mysql_query("SELECT `nick`,`email`,`slaptas` FROM `" . LENTELES_PRIESAGA . "users` WHERE slaptas=" . escape($kode) . " LIMIT 1");
-	if (count($sql) < 1) {
+	$sqlis = mysql_query1("SELECT `nick`,`email`,`slaptas` FROM `" . LENTELES_PRIESAGA . "users` WHERE slaptas=" . escape($kode) . " LIMIT 1");
+	if (!isset($sqlis['nick'])) {
 		$error = "{$lang['pass']['wrongcode']}";
 	} else {
 		//$sql = mysql_fetch_assoc($sql);
 		$slaptas = random_name();
-		$nick = $sql['nick'];
-		if (mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `slaptas`= NULL, pass='" . koduoju($slaptas) . "' WHERE `nick`=" . escape($nick) . " LIMIT 1") or die(mysql_error())) {
-			msg($lang['system']['done'], "{$lang['user']['hello']} <b>" . $nick . "</b>,<br/>{$lang['pass']['new']} <b>" . $slaptas . "</b><br/>");
+		$nick = $sqlis['nick'];
+
+		$up=mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `slaptas`='', pass=" . escape(koduoju($slaptas)) . " WHERE `nick`=" . escape($nick) . " LIMIT 1") or die(mysql_error());
+
+		if (!empty($up)) {
+			msg($lang['system']['done'], "{$lang['user']['hello']}<b>" . $nick . "</b>,<br/>{$lang['pass']['new']} <b>" . $slaptas . "</b><br/>");
 		} else {
 			klaida($lang['system']['systemerror'], "{$lang['system']['contactadmin']}.");
 		}
@@ -46,7 +49,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'siusti') {
 		$error = "{$lang['pass']['wrongcode']}<br />";
 	} elseif ($_POST['email'] == $_POST['email1']) {
 		$email = input(strip_tags($_POST['email']));
-		$sql = mysql_query("SELECT `nick`,`email` FROM `" . LENTELES_PRIESAGA . "users` WHERE email=" . escape($email) . " LIMIT 1");
+		$sql = mysql_query1("SELECT `nick`,`email` FROM `" . LENTELES_PRIESAGA . "users` WHERE email=" . escape($email) . " LIMIT 1");
 		if (count($sql) < 1) {
 			$error .= " {$lang['pass']['wrongemail']}.<br />";
 			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['pass']['wrongemail']}({$lang['pass']['remain']}) : " . $email) . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
