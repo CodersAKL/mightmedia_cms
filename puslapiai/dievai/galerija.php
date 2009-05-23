@@ -53,7 +53,7 @@ lentele($lang['admin']['gallery'], $buttons);
 unset($buttons, $extra, $text);
 include_once ("priedai/kategorijos.php");
 kategorija("galerija", true);
-$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `path`=0 ORDER BY `id` DESC") or die(mysql_error());
+$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `path`=0 ORDER BY `id` DESC");
 if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
 
@@ -278,17 +278,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 				move_uploaded_file($file_tmp, "$path_big/originalai/$rand_name.$file_ext");
                 chmod("$path_big/originalai/$rand_name.$file_ext",0777);
 
-				$result = mysql_query1("
-INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`)
-VALUES (
-" . escape($_POST['Pavadinimas']) . ",
-" . escape($rand_name . "." . $file_ext) . ",
-" . escape(strip_tags($_POST['Aprasymas'])) . ",
-" . escape($_SESSION['id']) . ",
-'" . time() . "',
-" . escape($_POST['cat']) . ",
-'TAIP'
-)");
+				$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`) VALUES (" . escape($_POST['Pavadinimas']) . "," . escape($rand_name . "." . $file_ext) . "," . escape(strip_tags($_POST['Aprasymas'])) . "," . escape($_SESSION['id']) . ",'" . time() . "'," . escape($_POST['cat']) . ",'TAIP')");
 
 				if ($result) {
 					msg($lang['system']['done'], "{$lang['admin']['gallery_added']}");
@@ -402,22 +392,7 @@ if (isset($_GET['v'])) {
 		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "galerija` LIMIT $p,$limit");
 		if (sizeof($sql2) > 0) {
 
-			$text = "
-			
-    <script type=\"text/javascript\" src=\"javascript/jquery/jquery.lightbox-0.5.js\"></script>
-	<link rel=\"stylesheet\" type=\"text/css\" href=\"stiliai/jquery.lightbox-0.5.css\" media=\"screen\" />
-   
-    <!-- / fim dos arquivos utilizados pelo jQuery lightBox plugin -->
-    
-    <!-- Ativando o jQuery lightBox plugin -->
-    <script type=\"text/javascript\">
-    $(function() {
-        $('#gallery a[rel^=lightbox]').lightBox({fixedNavigation:true,txtOf: '" . $lang['user']['pm_of'] . "',txtImage: ''
-});
-
-    });
-    </script>
-			<table border=\"0\">
+			$text = "<table border=\"0\">
 	<tr>
 		<td >
 ";
@@ -431,7 +406,7 @@ if (isset($_GET['v'])) {
 				$text .= "
 				
 				<div id=\"gallery\" class=\"img_left\" >
-			<a rel=\"lightbox[" . $row2['ID'] . "]\" href=\"galerija/" . $row2['file'] . "\"  title=\"" . $row2['pavadinimas'] . ": " . $row2['apie'] . "\">
+			<a rel=\"lightbox\" href=\"galerija/" . $row2['file'] . "\"  title=\"" . $row2['pavadinimas'] . ": " . $row2['apie'] . "\">
 				<img src=\"galerija/mini/" . $row2['file'] . "\" alt=\"\" />
 			</a><br>
 <a href=\"?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row2['ID'] . "\" title=\"{$lang['admin']['gallery_comments']}\"><img src='images/icons/comment.png' alt='C' border='0'></a>
@@ -483,7 +458,7 @@ if (isset($_GET['v'])) {
 			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape((int)$_POST['fotoperpsl']) . " WHERE `key` = 'fotoperpsl' LIMIT 1 ; ";
 			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape((int)$_POST['galkom']) . " WHERE `key` = 'galkom' LIMIT 1 ; ";
 			foreach ($q as $sql) {
-				mysql_query1($sql) or die(mysql_error());
+				mysql_query1($sql);
 			}
 			redirect('?id,999;a,' . $url['a'] . ';v,6');
 		}

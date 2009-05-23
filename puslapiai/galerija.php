@@ -12,19 +12,7 @@
 
 include_once ("priedai/rating_functions.php");
 
-$text = "<script type=\"text/javascript\" src=\"javascript/jquery/jquery.lightbox-0.5.js\"></script>
-	<link rel=\"stylesheet\" type=\"text/css\" href=\"stiliai/jquery.lightbox-0.5.css\" media=\"screen\" />
-   
-    <!-- / fim dos arquivos utilizados pelo jQuery lightBox plugin -->
-    
-    <!-- Ativando o jQuery lightBox plugin -->
-    <script type=\"text/javascript\">
-    $(function() {
-        $('#gallery a[rel^=lightbox]').lightBox({fixedNavigation:true,txtOf: '" . $lang['user']['pm_of'] . "',txtImage: ''
-});
-
-    });
-    </script>";
+$text = "";
 $limit = $conf['fotoperpsl'];
 
 if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
@@ -131,7 +119,7 @@ if (empty($url['m'])) {
 			$text .= "
 				
 				<div id=\"gallery\" class=\"img_left\" >
-			<a rel=\"lightbox[" . $row['id'] . "]\" href=\"galerija/originalai/" . $row['file'] . "\"  title=\"" . $row['pavadinimas'] . ": " . trimlink(strip_tags($row['apie']), 50) . "\">
+			<a rel=\"lightbox\" href=\"galerija/originalai/" . $row['file'] . "\"  title=\"" . $row['pavadinimas'] . ": " . trimlink(strip_tags($row['apie']), 50) . "\">
 				<img src=\"galerija/mini/" . $row['file'] . "\" alt=\"\" />
 			</a><br />
       <a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date('Y-m-d H:i:s ', $row['data']) . "\">
@@ -218,7 +206,7 @@ FROM " . LENTELES_PRIESAGA . "galerija WHERE id > '" . $url['m'] . "' AND `categ
 			$text .= "
 			<div id=\"gallery\" class=\"img_left\" >
         <center>
-          <a  rel=\"lightbox[" . $row['nid'] . "]\" href=\"galerija/originalai/" . $row['file'] . "\" title=\"" . $row['pavadinimas'] . ": " . trimlink(strip_tags($row['apie']), 50) . "\">
+          <a  rel=\"lightbox\" href=\"galerija/originalai/" . $row['file'] . "\" title=\"" . $row['pavadinimas'] . ": " . trimlink(strip_tags($row['apie']), 50) . "\">
             <img src=\"galerija/" . $row['file'] . "\" alt=\"\" />
           </a>
         </center>

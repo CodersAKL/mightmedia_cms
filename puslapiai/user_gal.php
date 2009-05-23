@@ -21,14 +21,7 @@ if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
 } else {
 	$p = 0;
 }
-$text = '
-<script type="text/javascript" src="javascript/lightbox.js"></script>
-	<script src="javascript/scriptaculous/lib/prototype.js" type="text/javascript"></script>
-	<script src="javascript/scriptaculous/src/scriptaculous.js?load=effects,builder" type="text/javascript"></script>
-
-	<link rel="stylesheet" href="stiliai/lightbox.css" type="text/css" media="screen" />
-
-';
+$text = '';
 
 $sql = mysql_query1("SELECT
   `" . LENTELES_PRIESAGA . "grupes`.`pavadinimas` AS `Kategorija`,
@@ -49,7 +42,7 @@ $sql = mysql_query1("SELECT
   ORDER BY
   `" . LENTELES_PRIESAGA . "galerija`.`id` DESC
   LIMIT  $p,$limit");
-$text .= "<table border=\"0\">
+$text .= "<table border=\"0\" id=\"gallery\">
 	<tr>
 		<td >
 ";
@@ -59,7 +52,7 @@ if (sizeof($sql) > 0) {
 			$text .= "
 				
 				<div  class=\"img_left\" >
-			<a rel=\"lightbox[" . $url['id'] . "]\" href=\"galerija/" . $row['file'] . "\" title=\"" . $row['pavadinimas'] . ": " . $row['apie'] . "\">
+			<a rel=\"lightbox\" href=\"galerija/" . $row['file'] . "\" title=\"" . $row['pavadinimas'] . ": " . $row['apie'] . "\">
 				<img src=\"galerija/mini/" . $row['file'] . "\" alt=\"\" />
 			</a><br>
 <a href=\"#\" title=\"<b>{$lang['admin']['gallery_author']}:</b> " . $autorius . "<br>

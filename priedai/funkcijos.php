@@ -39,7 +39,10 @@ function header_info() {
   <link rel="stylesheet" type="text/css" href="stiliai/system.css" />
   <link href="stiliai/rating_style.css" rel="stylesheet" type="text/css" media="all" />
   <link rel="shortcut icon" href="favicon.ico" />
-  
+  <link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox.css" />
+		<!--[if IE]>
+		<link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox-ie.css" title="example" />
+		<![endif]-->
   <title>' . input(strip_tags($conf['Pavadinimas']) . ' - ' . $page_pavadinimas) . '</title>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
   <script type="text/javascript" src="javascript/jquery/jquery-ui-personalized-1.6rc6.min.js"></script> 
@@ -47,6 +50,19 @@ function header_info() {
   <script type="text/javascript" src="javascript/pagrindinis.js"></script>  
   <script type="text/javascript" src="javascript/rating_update.js"></script>	
   <script type="text/javascript" src="javascript/jquery/tooltip.js"></script>
+  <script type="text/javascript" src="javascript/jquery/jquery.colorbox.js"></script>
+  <script type="text/javascript">
+			$(document).ready(function(){
+				//Examples of how to assign the ColorBox event to elements.
+				$("#gallery a[rel=\'lightbox\']").colorbox({transition:"fade"});
+			
+				//Example of preserving a JavaScript event for inline calls.
+				$("#click").click(function(){ 
+					$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+				});
+				$("#inline").colorbox({width:"50%", inline:true, href:"#inline_example1", title:"hello"});
+			});
+		</script>
 	<!--[if lt IE 7]>
 	<script type="text/javascript" src="javascript/jquery/jquery.pngFix.pack.js"></script>
 	<script type="text/javascript">$(document).ready(function(){$(document).pngFix();});</script>
