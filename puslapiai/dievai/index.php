@@ -61,7 +61,7 @@ if (isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
 	if (isset($conf['puslapiai']['nuorodos.php']['id'])) {
 		$text .= "<div class=\"blokas\"><center><a href=\"?id," . $url['id'] . ";a,7\"><img src=\"images/admin/nuorodos.png\" alt=\"{$lang['admin']['links']}\" />{$lang['admin']['links']}</a></center></div>";
 	}
-	$text .= "<div class=\"blokas\"><center><a href=\"?id," . $url['id'] . ";a,8\"><img src=\"images/admin/folder.png\" alt=\"{$lang['admin']['files']}\" />{$lang['admin']['files']}</a></center></div>";
+	//$text .= "<div class=\"blokas\"><center><a href=\"?id," . $url['id'] . ";a,8\"><img src=\"images/admin/folder.png\" alt=\"{$lang['admin']['files']}\" />{$lang['admin']['files']}</a></center></div>";
 	$text .= "<div class=\"blokas\"><center><a href=\"?id," . $url['id'] . ";a,9\"><img src=\"images/admin/panel.png\" alt=\"{$lang['admin']['blocks']}\" />{$lang['admin']['blocks']}</a></center></div>";
 	//$text .="<div class=\"blokas\"><center><a href=\"?id,".$url['id'].";a,10\"><img src=\"images/admin/plugins.gif\" alt=\"{$lang['admin']['Comments']}\" /> {$lang['admin']['Comments']}</a></center></div>";
 	$text .= "<div class=\"blokas\"><center><a href=\"?id," . $url['id'] . ";a,11\"><img src=\"images/admin/banai.png\" alt=\"{$lang['admin']['bans']}\" />{$lang['admin']['bans']}</a></center></div>";
@@ -124,11 +124,11 @@ if (isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
 				$puslapis = "nuorodos.php";
 				break;
 			}
-		case 8:
+		/*case 8:
 			{
 				$puslapis = "narsykle.php";
 				break;
-			}
+			}*/
 		case 9:
 			{
 				$puslapis = "paneles.php";
