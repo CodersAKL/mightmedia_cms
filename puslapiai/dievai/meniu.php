@@ -2,6 +2,7 @@
    $(document).ready(function() {
     $("#test-list").sortable({
       handle : '.handle',
+      axis: 'y',
       update : function () {
 		var order = $('#test-list').sortable('serialize');
 		$("#la").show("slow");

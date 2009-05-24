@@ -150,28 +150,30 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 		return $return . '_';
 	}
 	if (isset($_FILES['failas']['name'])) {
-		//make sure this directory is writable!
-		$path_big = "galerija/";
-		$path_thumbs = "galerija/mini";
-		//the new width of the resized image, in pixels.
-		$img_thumb_width = $conf['minidyd']; //
-		$extlimit = "yes"; //Limit allowed extensions? (no for all extensions allowed)
-		//List of allowed extensions if extlimit = yes
+
+
+		$big_img = "galerija/";			//Kur bus saugomi didesni paveiksliukai
+		$mini_img = "galerija/mini";	//Kur bus saugomos miniatiuros
+		
+		$img_thumb_width = $conf['minidyd']; //Mini paveiksliukų dydis
+
+		//Sarašas leidžiamų failų
 		$limitedext = array(".gif", ".jpg", ".png", ".jpeg", ".bmp");
-		//the image -> variables
+		
 		$file_type = $_FILES['failas']['type'];
 		$file_name = $_FILES['failas']['name'];
 		$file_size = $_FILES['failas']['size'];
 		$file_tmp = $_FILES['failas']['tmp_name'];
-		//check if you have selected a file.
-
+		
+		//Patikrinam ar failas įkeltas sėkmingai
 		if (!is_uploaded_file($file_tmp)) {
 			klaida("{$lang['system']['warning']}", "{$lang['admin']['gallery_nofile']}.");
 		} else {
-			//check the file's extension
+			//gaunamm failo galunę
 			$ext = strrchr($file_name, '.');
 			$ext = strtolower($ext);
-			//uh-oh! the file extension is not allowed!
+
+			//Tikrinam ar tinkamas failas
 			if (($extlimit == "yes") && (!in_array($ext, $limitedext))) {
 				klaida("{$lang['system']['warning']}", "{$lang['admin']['gallery_notimg']}");
 			}
@@ -199,14 +201,22 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 				if ($width > $ThumbWidth) {
 					if ($imgratio > 1) {
 						$newwidth = $ThumbWidth;
-						$newheight = $ThumbWidth / $imgratio;
+						//$newheight = $ThumbWidth / $imgratio;
+						$newheight = $ThumbWidth;
 					} else {
 						$newheight = $ThumbWidth;
-						$newwidth = $ThumbWidth * $imgratio;
+						//$newwidth = $ThumbWidth * $imgratio;
+						$newwidth = $ThumbWidth;
 					}
 				} else {
 					$newwidth = $width;
 					$newheight = $height;
+				}
+				
+				$new_img = ImageCreateTrueColor($newwidth, $newheight);
+				if (!@imagefilledrectangle($new_img, 0, 0, $target_width-1, $target_height-1, 0)) {	// Fill the image black
+					echo "ERROR:Could not fill new image";
+					exit(0);
 				}
 				//function for resize image.
 				if (function_exists('imagecreatetruecolor')) {

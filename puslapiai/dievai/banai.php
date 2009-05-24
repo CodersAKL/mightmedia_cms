@@ -21,7 +21,10 @@ unset($resultatai, $i, $temp, $lines);
 /*$buttons = <<< HTML
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};b,1'">IP {$lang['admin']['bans']}</button>
 HTML;*/
-$buttons="<div id=\"admin_menu\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};b,1\"><img src=\"images/icons/bandaid__plus.png\" alt=\"\" class=\"middle\"/>IP {$lang['admin']['bans']}</a></div>";
+$buttons="
+<div class=\"btns\">
+	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};b,1\" class=\"btn\"><span><img src=\"images/icons/bandaid__plus.png\" alt=\"\" class=\"middle\"/>IP {$lang['admin']['bans']}</span></a>
+</div>";
 lentele($lang['admin']['bans'], $buttons);
 unset($buttons, $extra, $text);
 

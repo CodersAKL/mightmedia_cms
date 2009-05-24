@@ -406,3 +406,50 @@ input.chapter {
 	vertical-align:middle;
 	width:100px;
 }
+
+/********** buttonai */
+div.btns{
+	zoom:1;
+	white-space:nowrap;
+}
+
+div.btns:after{
+	display:block;
+	clear:both;
+	content:'';
+}
+
+div.btns a.btn{
+	float:left;
+	background:buttonface url(../images/admin/border-2.gif) no-repeat;cursor:pointer;font-size:0;text-align:center;
+	text-align:center;
+	display:block;
+	_width:100px;
+	min-width:100px;
+	text-decoration:none;
+	margin:3px 2px;
+}
+
+div.btns a.btn:hover span{
+	opacity:0.6;
+	filter:alpha(opacity:80);
+}
+
+div.btns a.btn span{
+	padding:3px 8px 4px 8px;
+	
+	text-align:center;
+	position:relative;
+	left:1px;top:1px;
+	display:block;
+	text-decoration:none;
+	background:url(../images/admin/border.gif) right bottom no-repeat;
+	font:small/1 Verdana;
+	color:#222;
+	
+}
+
+div.btns a.btn img {
+	margin-right:3px; vertical-align:middle;
+}
+

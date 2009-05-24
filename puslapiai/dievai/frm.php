@@ -2,30 +2,22 @@
    $(document).ready(function() {
     $("#test-list").sortable({
       handle : '.handle',
+      axis: 'y',
       update : function () {
-		var order = $('#test-list').sortable('serialize');
-		$("#la").show("slow");
-		$("#la").hide("slow");
-		$.post("<?php
-
-echo "?" . $_SERVER['QUERY_STRING'];
-
-?>",{order:order});
-
+			var order = $('#test-list').sortable('serialize');
+			$("#la").show("slow");
+			$("#la").hide("slow");
+			$.post("<?php echo "?" . $_SERVER['QUERY_STRING']; ?>",{order:order});
 		}
     });
         $("#test-list2").sortable({
       handle : '.handle',
+      axis: 'y',
       update : function () {
-		var order2 = $('#test-list2').sortable('serialize');
-		$("#la2").show("slow");
-		$("#la2").hide("slow");
-		$.post("<?php
-
-echo "?" . $_SERVER['QUERY_STRING'];
-
-?>",{order2:order2});
-
+			var order2 = $('#test-list2').sortable('serialize');
+			$("#la2").show("slow");
+			$("#la2").hide("slow");
+			$.post("<?php echo "?" . $_SERVER['QUERY_STRING']; ?>",{order2:order2});
 		}
     });
 });
@@ -55,7 +47,13 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};f,3'">{$lang['admin']['forum_createsub']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};f,4'">{$lang['admin']['forum_editsub']}</button>
 HTML;*/
-$buttons="<div id=\"admin_menu\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};f,1\"><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};f,2\"><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</a>  <a href=\"?id,{$_GET['id']};a,{$_GET['a']};f,3\"><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</a>  <a href=\"?id,{$_GET['id']};a,{$_GET['a']};f,4\"><img src=\"images/icons/folders__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_editsub']}</a></div>";
+$buttons="
+<div class=\"btns\">
+	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};f,1\" class=\"btn\"><span><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
+	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};f,2\" class=\"btn\"><span><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>
+	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};f,3\" class=\"btn\"><span><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</span></a>
+	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};f,4\" class=\"btn\"><span><img src=\"images/icons/folders__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_editsub']}</span></a>
+</div>";
 lentele($lang['admin']['frm'], $buttons);
 
 unset($buttons);
