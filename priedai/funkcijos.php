@@ -533,7 +533,7 @@ function escape($sql) {
 	if (get_magic_quotes_gpc()) {
 		$sql = stripslashes($sql);
 	}
-	//Jei ne skaiÄius
+	//Jei ne skaičius
 	if (!isnum($sql) || $sql[0] == '0') {
 		if (!isnum($sql)) {
 			$sql = "'" . mysql_real_escape_string($sql) . "'";

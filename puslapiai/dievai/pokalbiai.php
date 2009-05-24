@@ -87,7 +87,7 @@ $text = "
 		</fieldset>
 		<center>
 		<br/>
-		<textarea name=\"admin_chat\" rows=7 cols=\"5\" style='width:80%'>" . ((isset($extra) && isset($url['r'])) ? input($extra) : '') . "</textarea>
+		<textarea name=\"admin_chat\" rows=7 cols=\"5\" class='input'>" . ((isset($extra) && isset($url['r'])) ? input($extra) : '') . "</textarea>
 		<br/>
 		" . bbk("admin_chat") . "
         <br/>

@@ -37,10 +37,10 @@ text-align:center;
 text-transform:uppercase;
 vertical-align:middle;
 }
-div .title a {
+div .title a, div #footer a {
 	color: white;
 	text-decoration: underline;
-	}
+}
 .content {
 	background-color : white;
 	background-image: url(images/bgas.jpg);
@@ -330,6 +330,31 @@ div.blokas img:hover {
 	color: #777;
 	text-align: center;
 	padding-bottom: 10px;
+	height:8px;
 }
 #footer a {  color: #777; text-decoration: none; }
-#footer  a:hover { color: #000; } 
+#footer a:hover { color: #777; } 
+.line {
+border-bottom: 1px dashed #73A4BF;padding:5px
+}
+textarea.input {
+	width: 95%;
+	background-color:#FFF;
+	/*background:#FFF url(images/block_vidus_fonas.gif) left top repeat-x;*/
+}
+input.input {
+	height: 16px;
+	width: auto
+}
+table tr td { 
+padding:1px;
+}
+.kalendorius table tr td {
+border-bottom: 1px dashed #73A4BF;
+text-align:center;
+}
+.kalendorius .siandien {
+background-color: #73A4BF;
+font-weight: bold;
+color: white
+}

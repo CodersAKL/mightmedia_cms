@@ -122,13 +122,13 @@ function admin_login_form($strError = false) {
           <form id=\"user_reg\" name=\"user_reg\" method=\"post\" action=\"\">
           <label for=\"vartotojas\">{$lang['user']['user']}:</label>
           <br />
-          <input name=\"vartotojas\" type=\"text\"  value=\"\" maxlength=\"50\" />
+          <input name=\"vartotojas\" type=\"text\"  value=\"\" maxlength=\"50\" class=\"input\" />
           <br />
           <label for=\"slaptazodis\">{$lang['user']['password']}:</label>
           <br />
-          <input name=\"slaptazodis\" type=\"password\" value=\"\" maxlength=\"50\" />
+          <input name=\"slaptazodis\" type=\"password\" value=\"\" maxlength=\"50\" class=\"input\" />
           <br />
-          <input type=\"submit\" name=\"Submit\" value=\"{$lang['user']['login']}\" />
+          <input type=\"submit\" name=\"Submit\" value=\"{$lang['user']['login']}\" class=\"submit\" />
           <input type=\"hidden\" name=\"action\" value=\"prisijungimas\" />
         </form>
       </center>

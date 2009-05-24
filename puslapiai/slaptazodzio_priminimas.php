@@ -81,34 +81,14 @@ if (isset($error)) {
 	include_once ("priedai/class.php");
 
 		$bla = new forma();
-		$forma = array("Form" => array("action" => "", "method" => "post", "name" => "siusti","extra"=>"onSubmit=\"return checkMail('reg','email')\""), "{$lang['pass']['email']}:" => array("type" => "text", "value" =>$lang['pass']['email'], "name" => "email","extra"=>"onfocus=\"if (this.value=='{$lang['pass']['email']}   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['pass']['email']}   '; \""), 
-		"{$lang['pass']['email2']}:" => array("type" => "text", "value" =>$lang['pass']['email'], "name" => "email1","extra"=>"onfocus=\"if (this.value=='{$lang['pass']['email']}   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['pass']['email']}   '; \""), kodas()=>array("type"=>"text","name"=>"kode", "style"=>"height:40px; text-align:center; text-transform:uppercase; font-weight:bold; vertical-align:middle"), " \r" => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['pass']['send']}")," \r\r" => array("type" => "hidden", "name" => "action", "value" => "siusti"));
+		$forma = array(
+			"Form" => array("action" => "", "method" => "post", "name" => "siusti","extra"=>"onSubmit=\"return checkMail('reg','email')\""), 
+			"{$lang['pass']['email']}:" => array("type" => "text", "value" =>$lang['pass']['email'], "name" => "email","extra"=>"onfocus=\"if (this.value=='{$lang['pass']['email']}   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['pass']['email']}   '; \""), 
+			"{$lang['pass']['email2']}:" => array("type" => "text", "value" =>$lang['pass']['email'], "name" => "email1","extra"=>"onfocus=\"if (this.value=='{$lang['pass']['email']}   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['pass']['email']}   '; \""), kodas()=>array("type"=>"text","name"=>"kode", "class"=>"chapter"), 
+			" \r" => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['pass']['send']}"),
+			" \r\r" => array("type" => "hidden", "name" => "action", "value" => "siusti")
+		);
 
-
-	/*$text = "
-    	<form name=\"siusti\" action=\"\" onSubmit=\"return checkMail('reg','email')\" method=\"post\">
-    	    	<table border=0 width=100%>
-    		<tr>
-    			<td align=\"right\">{$lang['pass']['email']}:</td>
-    			<td><input name=\"email\" id=\"email\" type=\"text\" value=\"{$lang['pass']['email']}\" onfocus=\"if (this.value=='{$lang['pass']['email']}   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['pass']['email']}   '; if (checkMail('reg','email')) ajax.update('tikrink.php?email='+this.value+'', 'result_email'); \" /> <span id=\"result_email\"></span></td>
-    		</tr>
-    		<tr>
-    			<td align=\"right\">{$lang['pass']['email2']}:</td>
-    			<td><input name=\"email1\" id=\"email1\" type=\"text\" value=\"{$lang['pass']['email']}   \" onfocus=\"if (this.value=='{$lang['pass']['email']}   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['pass']['email']}   '; if (checkMail('reg','email')) ajax.update('tikrink.php?email='+this.value+'', 'result_email'); \" /> <span id=\"result_email\"></span></td>
-    		</tr>
-    		<tr>
-    			<td align=\"right\">" . kodas() . "</td>
-    			<td><input name=\"kode\" id=\"kode\" style=\"height:40px; text-align:center; text-transform:uppercase; font-weight:bold; vertical-align:middle\" type=\"text\" onblur=\"ajax.update('tikrink.php?c='+this.value+'', 'result_kode'); \" /> <span id=\"result_kode\"></span></td>
-    		</tr>
-    		<tr>
-    			<td></td>
-    			<td><input type=\"submit\" value=\"{$lang['pass']['send']}\" /></td>
-    		</tr>
-    	</table>
-    	<input type=\"hidden\" name=\"action\" value=\"siusti\" />
-     	
-    	</form>
-    ";*/
 	lentele($lang['pass']['remain'], $bla->form($forma));
 	unset($text);
 }

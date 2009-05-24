@@ -92,7 +92,7 @@ if ($kid != 0) {
 			$title = $sql['pavadinimas'];
 			$text = "<div class='naujiena'>" . $sql['naujiena'] . "";
 			if (!empty($sql['daugiau'])) {
-				$text .= '<div style="border-bottom:1px dashed silver;padding:5px"></div>' . $sql['daugiau'];
+				$text .= '<div class="line"></div>' . $sql['daugiau'];
 			}
 			$text .= "</div><hr />" . date('Y-m-d H:i:s ', $sql['data']) . ",  <b>" . $sql['autorius'] . "</b>";
 			//$text .= "</div>";

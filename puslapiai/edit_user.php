@@ -106,8 +106,18 @@ if (isset($mid) && isnum($mid)) {
 	elseif ($mid == 2) {
 		$info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . "LIMIT 1");
 
-		$form = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "extra" => "onSubmit=\"return checkMail('change_contacts','email')\"", "name" => "change_contacts"), "ICQ:" => array("type" => "text", "value" => input($info['icq']), "name" => "icq"), "MSN:" => array("type" => "text", "value" => input($info['msn']), "name" => "msn"), "Skype:" => array("type" => "text", "value" => input($info['skype']), "name" => "skype"), "Yahoo:" => array("type" => "text", "value" => input($info['yahoo']), "name" => "yahoo"), "AIM:" => array("type" => "text", "value" => input($info['aim']), "name" => "aim"), "{$lang['user']['edit_web']}:" => array("type" => "text", "value" => input($info['url']), "name" => "url"), "{$lang['user']['edit_email']}:" => array("type" => "text",
-			"value" => input($info['email']), "name" => "email"), "\r\r\r" => array("type" => "hidden", "name" => "action", "value" => "contacts_change"), "" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}"));
+		$form = array(
+			"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "extra" => "onSubmit=\"return checkMail('change_contacts','email')\"", "name" => "change_contacts"), 
+			"ICQ:" => array("type" => "text", "value" => input($info['icq']), "name" => "icq", "class" => "input"), 
+			"MSN:" => array("type" => "text", "value" => input($info['msn']), "name" => "msn", "class" => "input"), 
+			"Skype:" => array("type" => "text", "value" => input($info['skype']), "name" => "skype", "class" => "input"), 
+			"Yahoo:" => array("type" => "text", "value" => input($info['yahoo']), "name" => "yahoo", "class" => "input"), 
+			"AIM:" => array("type" => "text", "value" => input($info['aim']), "name" => "aim", "class" => "input"), 
+			"{$lang['user']['edit_web']}:" => array("type" => "text", "value" => input($info['url']), "name" => "url", "class" => "input"), 
+			"{$lang['user']['edit_email']}:" => array("type" => "text", "value" => input($info['email']), "name" => "email", "class" => "input"), 
+			"\r\r\r" => array("type" => "hidden", "name" => "action", "value" => "contacts_change"), 
+			"" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}")
+		);
 		$bla = new forma();
 		lentele($lang['user']['edit_contacts'], $bla->form($form));
 
@@ -165,8 +175,17 @@ if (isset($mid) && isnum($mid)) {
 			$year[$a] = $a;
 			$a++;
 		}
-		$forma = array("Form" => array("action" => "", "method" => "post", "name" => "pagr_nustatymai"), "{$lang['user']['edit_name']}:" => array("type" => "text", "value" => $sql['vardas'], "name" => "vardas"), "{$lang['user']['edit_secondname']}:" => array("type" => "text", "value" => $sql['pavarde'], "name" => "pavarde"), "{$lang['user']['edit_dateOfbirth']}:" => array("type" => "select", "value" => $year, "selected" => $data[0], "style" => "width:80px;", "name" => "metai"), " " => array("type" => "select", "style" => "width:80px;", "value" => $month, "selected" => $data[1], "name" => "menesis"), "\r " => array("type" => "select", "style" => "width:80px;", "value" => $day, "selected" => $data[2], "name" => "diena"), "{$lang['user']['edit_signature']}" => array("type" => "textarea", "style" =>
-			"min-width:120px;", "value" => $sql['parasas'], "name" => "parasas"), " \r \n" => array("type" => "hidden", "name" => "action", "value" => "default_change"), "" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}"));
+		$forma = array(
+			"Form" => array("action" => "", "method" => "post", "name" => "pagr_nustatymai"), 
+			"{$lang['user']['edit_name']}:" => array("type" => "text", "value" => $sql['vardas'], "name" => "vardas", "class" => "input"), 
+			"{$lang['user']['edit_secondname']}:" => array("type" => "text", "value" => $sql['pavarde'], "name" => "pavarde", "class" => "input"), 
+			"{$lang['user']['edit_dateOfbirth']}:" => array("type" => "select", "value" => $year, "selected" => $data[0], "class" => "select", "name" => "metai"), 
+			" " => array("type" => "select", "class" => "select", "value" => $month, "selected" => $data[1], "name" => "menesis"), 
+			"\r " => array("type" => "select", "class" => "select", "value" => $day, "selected" => $data[2], "name" => "diena"), 
+			"{$lang['user']['edit_signature']}" => array("type" => "textarea", "class" =>	"input", "value" => $sql['parasas'], "name" => "parasas"), 
+			" \r \n" => array("type" => "hidden", "name" => "action", "value" => "default_change"), 
+			"" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}")
+		);
 
 		$bla = new forma();
 		lentele($lang['user']['edit_mainsettings'], $bla->form($forma));

@@ -387,3 +387,22 @@ white-space : nowrap;
 float:left;
 margin-right:5px;
 }
+
+/***** STUMDOMIEMS BLOKAMS *******/
+.drag_block {
+display:block; border:1px solid grey; width:95%; padding:3px; margin:3px; background-color:#DDDDDD
+}
+/* Neðimo ikona */
+li.drag_block>img {
+cursor:move;vertical-align:middle
+}
+input.chapter {
+	font-size:20px;
+	font-weight:bold;
+	height:30px;
+	padding-top:5px;
+	text-align:center;
+	text-transform:uppercase;
+	vertical-align:middle;
+	width:100px;
+}

@@ -101,7 +101,7 @@ function showCalendar($year = 0, $month = 0) {
 		$actday++;
 		$svente = svente($sventes, "" . $today['mon'] . "-" . $actday . "");
 		if (($actday == $today['mday']) /*&& ($today['mon'] == $month)*/ ) {
-			$class = "  style='border:1px solid red'";
+			$class = "  class='siandien'";
 		} else {
 			$class = '';
 		}
@@ -124,7 +124,7 @@ function showCalendar($year = 0, $month = 0) {
 			$actday++;
 			$svente = svente($sventes, "" . $today['mon'] . "-" . $actday . "");
 			if (($actday == $today['mday']) && ($today['mon'] == $month)) {
-				$class = "  style='border:1px solid red'";
+				$class = "  class='siandien'";
 			} else {
 				$class = '';
 			}
@@ -147,7 +147,7 @@ function showCalendar($year = 0, $month = 0) {
 			$svente = svente($sventes, "" . $today['mon'] . "-" . $actday . "");
 
 			if (($actday == $today['mday']) && ($today['mon'] == $month)) {
-				$class = "  style='border:1px solid red'";
+				$class = "  class='siandien'";
 			} else {
 				$class = '';
 			}

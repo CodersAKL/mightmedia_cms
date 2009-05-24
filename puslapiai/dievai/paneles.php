@@ -3,6 +3,7 @@
    $(document).ready(function() {
     $("#kaire").sortable({
       handle : '.handle',
+      axis: 'y',
       update : function () {
 		var order = $('#kaire').sortable('serialize');
 		$("#la").show("slow");
@@ -13,6 +14,7 @@
     });
 	$("#desine").sortable({
       handle : '.handle',
+      axis: 'y',
       update : function () {
 		var order = $('#desine').sortable('serialize');
 		$("#la").show("slow");
@@ -121,7 +123,7 @@ HTML;
 		msg($lang['system']['done'], "{$lang['admin']['panel_created']}.");
 	}
 	if (isset($url['n']) && $url['n'] == 2) {
-		$psl = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "Naujaa_pnl"), "{$lang['admin']['panel_name']}:" => array("type" => "text", "value" => "Naujas blokas", "name" => "pav", "class"=>"input"), "{$lang['admin']['panel_text']}:" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('pnl' => 'pnl'), false), "name" => "pnl", "class" => "input", "rows" => "8", "class"=>"input"), "" => array("type" => "submit", "name" => "Naujaa_pnl", "value" => "{$lang['admin']['panel_create']}"));
+		$psl = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "Naujaa_pnl"), "{$lang['admin']['panel_name']}:" => array("type" => "text", "value" => "Naujas blokas", "name" => "pav", "class" => "input"), "{$lang['admin']['panel_text']}:" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('pnl' => 'pnl'), false), "name" => "pnl", "class" => "input", "rows" => "8", "class" => "input"), "" => array("type" => "submit", "name" => "Naujaa_pnl", "value" => "{$lang['admin']['panel_create']}"));
 		include_once ("priedai/class.php");
 		$bla = new forma();
 		lentele("{$lang['admin']['panel_new']}", $bla->form($psl, "{$lang['admin']['panel_new']}"));
@@ -179,8 +181,8 @@ HTML;
 			foreach ($teises as $name => $check) {
 			$box .= "<label><input type=\"checkbox\" name=\"Teises[]\" value=\"$name\"/> $check</label><br /> ";
 			}*/
-			$panele = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel"), "{$lang['admin']['panel_title']}:" => array("type" => "text", "value" => "{$lang['admin']['panel_new']}", "name" => "Panel", "class"=>"input"), "{$lang['admin']['panel_name']}:" => array("type" => "select", "value" => $paneles, "name" => "File"), "{$lang['admin']['panel_side']}:" => array("type" => "select", "value" => array("L" => "{$lang['admin']['panel_left']}", "R" => "{$lang['admin']['panel_right']}"), "name" => "Align"), "{$lang['admin']['panel_showtitle']}?" => array("type" => "select", "value" => array("Y" => "{$lang['admin']['yes']}", "N" => "{$lang['admin']['no']}"), "name" => "Show"), "{$lang['admin']['panel_showfor']}:" => array("type" =>
-				"select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "class"=>"input", "name" => "Teises[]", "id" => "punktai"), "" => array("type" => "submit", "name" => "Nauja_panele", "value" => "{$lang['admin']['panel_create']}"));
+			$panele = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel"), "{$lang['admin']['panel_title']}:" => array("type" => "text", "value" => "{$lang['admin']['panel_new']}", "name" => "Panel", "class" => "input"), "{$lang['admin']['panel_name']}:" => array("type" => "select", "value" => $paneles, "name" => "File"), "{$lang['admin']['panel_side']}:" => array("type" => "select", "value" => array("L" => "{$lang['admin']['panel_left']}", "R" => "{$lang['admin']['panel_right']}"), "name" => "Align"), "{$lang['admin']['panel_showtitle']}?" => array("type" => "select", "value" => array("Y" => "{$lang['admin']['yes']}", "N" => "{$lang['admin']['no']}"), "name" => "Show"), "{$lang['admin']['panel_showfor']}:" => array("type" =>
+				"select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai"), "" => array("type" => "submit", "name" => "Nauja_panele", "value" => "{$lang['admin']['panel_create']}"));
 
 			include_once ("priedai/class.php");
 			$bla = new forma();
@@ -220,8 +222,8 @@ HTML;
 			foreach ($teises as $name => $check) {
 			$box .= "<label><input type=\"checkbox\" " . (in_array($name, $selected) ? "checked" : "") . " name=\"Teises[]\" value=\"$name\"/> $check</label><br /> ";
 			}*/
-			$panele = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel"), "{$lang['admin']['panel_title']}:" => array("type" => "text", "value" => input($sql['panel']), "name" => "Panel", "class"=>"input"), "{$lang['admin']['panel_side']}:" => array("type" => "select", "value" => array("L" => "{$lang['admin']['panel_left']}", "R" => "{$lang['admin']['panel_right']}"), "selected" => input($sql['align']), "name" => "Align"), "{$lang['admin']['panel_showtitle']}?" => array("type" => "select", "value" => array("Y" => "{$lang['admin']['yes']}", "N" => "{$lang['admin']['no']}"), "selected" => input($sql['show']), "name" => "Show"), "{$lang['admin']['panel_showfor']}:" => array("type" => "select", "extra" => "multiple=multiple",
-				"value" => $teises, "class" => "asmSelect", "class"=>"input", "name" => "Teises[]", "id" => "punktai", "selected" => $selected), "" => array("type" => "submit", "name" => "Redaguoti_panele", "value" => "{$lang['admin']['edit']}"));
+			$panele = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel"), "{$lang['admin']['panel_title']}:" => array("type" => "text", "value" => input($sql['panel']), "name" => "Panel", "class" => "input"), "{$lang['admin']['panel_side']}:" => array("type" => "select", "value" => array("L" => "{$lang['admin']['panel_left']}", "R" => "{$lang['admin']['panel_right']}"), "selected" => input($sql['align']), "name" => "Align"), "{$lang['admin']['panel_showtitle']}?" => array("type" => "select", "value" => array("Y" => "{$lang['admin']['yes']}", "N" => "{$lang['admin']['no']}"), "selected" => input($sql['show']), "name" => "Show"), "{$lang['admin']['panel_showfor']}:" => array("type" => "select", "extra" => "multiple=multiple",
+				"value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai", "selected" => $selected), "" => array("type" => "submit", "name" => "Redaguoti_panele", "value" => "{$lang['admin']['edit']}"));
 
 			include_once ("priedai/class.php");
 			$bla = new forma();
@@ -325,11 +327,11 @@ HTML;
 		foreach ($recordSet as $record) {
 			//$listArray[] = sprintf($listItemFormat, $record['id'], $record['panel'], $record['id'],$record['id'], $record['id']);
 
-			$li .= '<li id="listItem_' . $record['id'] . '" Style="display:block; border:1px solid grey; width:210px; padding:3px; margin:3px; background-color:#DDDDDD"> 
+			$li .= '<li id="listItem_' . $record['id'] . '" class="drag_block"> 
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record['id'] . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record['id'] . '" style="align:right"><img src="images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record['id'] . '" style="align:right"><img src="images/icons/pencil.png" title="' . $lang['admin']['panel_text'] . '" align="right" /></a> 
-<img style="cursor:move;vertical-align:middle" src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
+<img src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
 ' . $record['panel'] . '
 </li> ';
 		}
@@ -342,11 +344,11 @@ HTML;
 		foreach ($recordSet1 as $record1) {
 			//$listArray1[] = sprintf($listItemFormat, $record1['id'], $record1['panel'], $record1['id'],$record1['id'], $record1['id']);
 			//$listArray1[] = sprintf($listItemFormat, $record1['id'], $record1['pavadinimas'],$record1['id'], $record1['id'], $record1['id']);
-			$li1 .= '<li id="listItem_' . $record1['id'] . '" style="display:block; border:1px solid grey; width:210px; padding:3px; margin-bottom:3px; background-color:#DDDDDD"> 
+			$li1 .= '<li id="listItem_' . $record1['id'] . '" class="drag_block"> 
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] . '" style="align:right"><img src="images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record1['id'] . '" style="align:right"><img src="images/icons/pencil.png" title="' . $lang['admin']['panel_text'] . '" align="right" /></a> 
-<img style="cursor:move;vertical-align:middle" src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
+<img src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
 ' . $record1['panel'] . '
 </li> ';
 		}

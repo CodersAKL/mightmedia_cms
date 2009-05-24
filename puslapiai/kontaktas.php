@@ -43,13 +43,13 @@ if (isset($_POST['kontaktas']) && $_POST['kontaktas'] == 'Siųsti' && strtoupper
 
 $forma = '
  <form name="knyga" method="post">
- ' . $lang['contact']['subject'] . ':<br /><input type="text" name="pavadinimas" value="' . (isset($title) && !empty($title) ? input($title) : '') . '" size="20" style="width:90%;"><br />
-' . $lang['contact']['name'] . ':<br /><input type="text" name="vardas" value="' . (isset($from) && !empty($from) ? input($from) : '') . '" size="20" style="width:90%;"><br />
- ' . $lang['contact']['email'] . ':<br /><input type="text" name="email" value="' . (isset($email) ? input($email) : '') . '" size="20" style="width:90%;"><br />
+ ' . $lang['contact']['subject'] . ':<br /><input type="text" name="pavadinimas" value="' . (isset($title) && !empty($title) ? input($title) : '') . '" size="20" class="input"><br />
+' . $lang['contact']['name'] . ':<br /><input type="text" name="vardas" value="' . (isset($from) && !empty($from) ? input($from) : '') . '" size="20" class="input"><br />
+ ' . $lang['contact']['email'] . ':<br /><input type="text" name="email" value="' . (isset($email) ? input($email) : '') . '" size="20" class="input"><br />
  ' . $lang['contact']['message'] . ':<br />
-		<textarea name="zinute" rows="13" cols="10" style="width:90%">' . (isset($_POST['zinute']) && !empty($_POST['zinute']) ? input($_POST['zinute']) : '') . '</textarea>
+		<textarea name="zinute" rows="13" cols="10" class="input">' . (isset($_POST['zinute']) && !empty($_POST['zinute']) ? input($_POST['zinute']) : '') . '</textarea>
 		<br /><br />
-		<input type="text" name="code" value="" size="20" style="float:left;height:38px;text-align:center;text-transform:uppercase;font-weight:bold;vertical-align:middle"> &nbsp; &nbsp; ' . kodas() . '<br />
+		<input type="text" name="code" value="" size="20" class="chapter"> &nbsp; &nbsp; ' . kodas() . '<br />
 
 		<br />
 		<input type="submit" name="kontaktas" value="' . $lang['contact']['submit'] . '" />

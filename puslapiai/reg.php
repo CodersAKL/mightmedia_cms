@@ -15,46 +15,19 @@ function registracijos_forma() {
 include_once ("priedai/class.php");
 
 		$bla = new forma();
-		$forma = array("Form" => array("action" => "", "method" => "post", "name" => "reg","extra"=>"onSubmit=\"return checkMail('reg','email')\""), "{$lang['reg']['username']}:" => array("type" => "text", "value" => (isset($vardas) ? input($vardas) : "vardas"), "name" => "nick"), "{$lang['reg']['password']}:" => array("type" => "password", "value" => input($pass), "name" => "pass"),"{$lang['reg']['confirmpassword']}:" => array("type" => "password", "value" => input($pass2), "name" => "pass2"),"{$lang['reg']['email']}:" => array("type" => "text", "value" => (isset($email) ? input($email) : "{$lang['reg']['email']}@{$lang['reg']['email']}.com   "),		 "name" => "email","extra"=>"onfocus=\"if (this.value=='el@pastas.lt   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['reg']['email']}@{$lang['reg']['email']}.com   '; if (checkMail('reg','email'));\""),kodas()=>array("type"=>"text","name"=>"kode", "style"=>"height:40px; text-align:center; text-transform:uppercase; font-weight:bold; vertical-align:middle"), " \r" => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['reg']['register']}")," \r\r" => array("type" => "hidden", "name" => "action", "value" => "registracija"));
+		$forma = array(
+			"Form" => array("action" => "", "method" => "post", "name" => "reg","extra"=>"onSubmit=\"return checkMail('reg','email')\"", "class" => "input"), 
+			"{$lang['reg']['username']}:" => array("type" => "text", "value" => (isset($vardas) ? input($vardas) : "vardas"), "name" => "nick", "class" => "input"), 
+			"{$lang['reg']['password']}:" => array("type" => "password", "value" => input($pass), "name" => "pass", "class" => "input"),
+			"{$lang['reg']['confirmpassword']}:" => array("type" => "password", "value" => input($pass2), "name" => "pass2", "class" => "input"),
+			"{$lang['reg']['email']}:" => array("type" => "text", "value" => (isset($email) ? input($email) : "{$lang['reg']['email']}@{$lang['reg']['email']}.com   "), "name" => "email","extra"=>"onfocus=\"if (this.value=='el@pastas.lt   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['reg']['email']}@{$lang['reg']['email']}.com   '; if (checkMail('reg','email'));\""),kodas()=>array("type"=>"text","name"=>"kode", "class"=>"chapter"), 
+			" \r\r" => array("type" => "hidden", "name" => "action", "value" => "registracija"),
+			" \r" => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['reg']['register']}", "class" => "submit")
+		);
 
-
-
-/*	$text = "
-    	<form name=\"reg\" action=\"\" onSubmit=\"return checkMail('reg','email')\" method=\"post\">
-    	<fieldset>
-    	<legend>{$lang['reg']['registration']}:</legend>
-    	<table border=0 width=100%>
-    		<tr>
-    			<td align=\"right\">{$lang['reg']['username']}:</td>
-    			<td width='100%'><input name=\"nick\" id=\"nick\" type=\"text\" value=\"" . (isset($vardas) ? input($vardas) : "vardas   ") . "\" onfocus=\"if (this.value=='vardas   ') this.value=''\" onblur=\"if (this.value=='') this.value='vardas   '; ajax.update('tikrink.php?nick='+this.value+'', 'result_nick') \" /> <span id=\"result_nick\"></span></td>
-    		</tr>
-    		<tr>
-    			<td align=\"right\">{$lang['reg']['password']}:</td>
-    			<td><input name=\"pass\" type=\"password\" value=\"" . input($pass) . "\" /></td>
-    		</tr>
-    		<tr>
-    			<td align=\"right\">{$lang['reg']['confirmpassword']}:</td>
-    			<td><input name=\"pass2\" type=\"password\" value=\"" . input($pass2) . "\" /></td>
-    		</tr>
-    		<tr>
-    			<td align=\"right\">{$lang['reg']['email']}:</td>
-    			<td><input name=\"email\" id=\"email\" type=\"text\" value=\"" . (isset($email) ? input($email) : "{$lang['reg']['email']}@{$lang['reg']['email']}.com   ") . "\" onfocus=\"if (this.value=='el@pastas.lt   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['reg']['email']}@{$lang['reg']['email']}.com   '; if (checkMail('reg','email')) ajax.update('tikrink.php?email='+this.value+'', 'result_email'); \" /> <span id=\"result_email\"></span></td>
-    		</tr>
-    		<tr>
-    			<td align=\"right\">" . kodas() . "</td>
-    			<td><input name=\"kode\" id=\"kode\" style=\"height:40px; text-align:center; text-transform:uppercase; font-weight:bold; vertical-align:middle\" type=\"text\" onblur=\"ajax.update('tikrink.php?kode='+this.value+'', 'result_kode'); \" /> <span id=\"result_kode\"></span></td>
-    		</tr>
-    		<tr>
-    			<td></td>
-    			<td><input type=\"submit\" value=\"{$lang['reg']['register']}\" /></td>
-    		</tr>
-    	</table>
-    	<input type=\"hidden\" name=\"action\" value=\"registracija\" />
-     	</fieldset>
-    	</form>
-    ";*/
 	return $bla->form($forma);
 }
+
 // Tikrinamas E-Mail Adresas
 function check_email($email) {
 	if (!ereg("^[^@]{1,64}@[^@]{1,255}$", $email)) {

@@ -20,16 +20,16 @@ function chatbox() {
 	global $conf, $lang;
 	$extra = '';
 	if (isset($_SESSION['username']) && !empty($_SESSION['username'])) {
-		$chat_box = '<blockquote><form name="chat_box" action="" method="post">
-                <textarea name="chat_msg" rows="3" cols="10" style="width:95%"></textarea>
+		$chat_box = '<form name="chat_box" action="" method="post">
+                <textarea name="chat_msg" rows="3" cols="10" class="input"></textarea>
                 <br />
-                <input type="submit" name="chat_box" value="' . $lang['sb']['send'] . '" />
+                <input type="submit" name="chat_box" class="submit" value="' . $lang['sb']['send'] . '" />
                 </form>
                 ';
 	} else {
-		$chat_box = '<blockquote><textarea name="chat" rows="3" cols="10" style="width:95%" disabled="disabled">' . $lang['system']['pleaselogin'] . '</textarea>
+		$chat_box = '<blockquote><textarea name="chat" rows="3" cols="10" class="input" disabled="disabled">' . $lang['system']['pleaselogin'] . '</textarea>
                 <br />
-                <input type="submit" name="chat_box" value="' . $lang['sb']['send'] . '" disabled="disabled" />
+                <input type="submit" class="submit" name="chat_box" value="' . $lang['sb']['send'] . '" disabled="disabled" />
         ';
 	}
 	$chat_box .= "<hr />";
@@ -65,7 +65,7 @@ ORDER BY `time` DESC LIMIT " . escape((int)$conf['Chat_limit']));
 	if (puslapis('deze.php')) {
 		$chat_box .= "<a href='?id," . $conf['puslapiai']['deze.php']['id'] . "' >{$lang['sb']['archive']}</a>";
 	}
-	return $chat_box . '</blockquote>';
+	return $chat_box;
 }
 
 $text = chatbox();

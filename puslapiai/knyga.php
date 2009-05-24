@@ -40,7 +40,7 @@ if (defined("LEVEL") && LEVEL == 1) {
 			$msg = mysql_query1("SELECT `msg` FROM `" . LENTELES_PRIESAGA . "knyga` WHERE `id`=" . escape(ceil((int)$url['r'])) . " LIMIT 1");
 			$msg = '
 			<form name="knyga_edit" action="" method="post">
-        <textarea name="msg" rows="3" cols="25" wrap="on" style="width:265px">' . input($msg['msg']) . '</textarea>
+        <textarea name="msg" rows="3" cols="25" wrap="on" class="input">' . input($msg['msg']) . '</textarea>
         <br />
         <input type="submit" name="knyga" value="' . $lang['admin']['edit'] . '" />
       </form>
@@ -92,11 +92,11 @@ if (isset($_POST['knyga']) && $_POST['knyga'] == $lang['guestbook']['submit'] &&
 $forma = '
  <form name="knyga" action="" method="post">
  ' . $lang['guestbook']['name'] . ':<br />
- <input type="text" name="vardas" value="' . (isset($_SESSION['username']) && !empty($_SESSION['username']) ? input($_SESSION['username']) : '') . '" size="20" style="width:90%;" /><br />
+ <input type="text" name="vardas" value="' . (isset($_SESSION['username']) && !empty($_SESSION['username']) ? input($_SESSION['username']) : '') . '" size="20" class="input" /><br />
  ' . $lang['guestbook']['message'] . ':<br />
-		<textarea name="zinute" rows="3" cols="10" style="width:90%"></textarea>
+		<textarea name="zinute" rows="3" cols="10" class="input"></textarea>
 		<br />' . $lang['guestbook']['code'] . ':<br />
-		<input type="text" name="code" value="" size="20" style="float:left;height:38px;text-align:center;text-transform:uppercase;font-weight:bold;vertical-align:middle" /> &nbsp; &nbsp; ' . kodas() . '<br />
+		<input type="text" name="code" value="" size="20" class="chapter" /> &nbsp; &nbsp; ' . kodas() . '<br />
 
 		<br />
 		<input type="submit" name="knyga" value="' . $lang['guestbook']['submit'] . '" />

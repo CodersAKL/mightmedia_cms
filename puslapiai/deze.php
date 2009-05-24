@@ -41,7 +41,7 @@ if ($_SESSION['level'] == 1 || (isset($_SESSION['mod']) && strlen($_SESSION['mod
 		if (empty($_POST)) {
 			$msg = mysql_query1("SELECT `msg` FROM `" . LENTELES_PRIESAGA . "chat_box` WHERE `id`=" . escape(ceil((int)$url['r'])) . " LIMIT 1");
 			$msg = '<form name="chat_box_edit" action="" method="post">
-					<textarea name="msg" rows="3" cols="25" wrap="on" style="width:265px">' . input($msg['msg']) . '</textarea>
+					<textarea name="msg" rows="3" cols="25" wrap="on" class="input">' . input($msg['msg']) . '</textarea>
 					<br />
 					<input type="submit" name="chat_box" value="' . $lang['admin']['edit'] . '" />
 					</form>

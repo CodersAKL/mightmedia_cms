@@ -210,10 +210,10 @@ if (isset($_POST['subedit']) && $_POST['subedit'] == $lang['admin']['forum_selec
 
 		$li = '';
 		foreach ($sql as $record1) {
-			$li .= '<li id="listItem_' . $record1['id'] . '" style="display:block; border:1px solid grey; width:460px; padding:3px; margin:3px; background-color:#DDDDDD"> 
+			$li .= '<li id="listItem_' . $record1['id'] . '" class="drag_block"> 
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';t,' . $record1['id'] . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] . ';f,' . $tema['id'] . '" style="align:right" ><img src="images/icons/pencil.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>  
-<img style="cursor:move;vertical-align:middle" src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
+<img src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
 ' . $record1['pav'] . '
 </li> ';
 		}
@@ -239,13 +239,13 @@ if (isset($_GET['r']) && isset($_GET['f'])) {
 							<td><b>" . $f_forumas . "</b><input type=\"hidden\" name=\"forumo_id\"  value='" . $f_id . "' /></td>
 						<tr>
 							<td>{$lang['admin']['forum_subcategory']}:</td>
-							<td><input name=\"temos_pav\" type=\"text\" value='" . $t_info['pav'] . "'><input type=\"hidden\" name=\"temos_id\"  value='" . $t_info['id'] . "' /></td>
+							<td><input name=\"temos_pav\" type=\"text\" value='" . $t_info['pav'] . "' class=\"input\"><input type=\"hidden\" name=\"temos_id\"  value='" . $t_info['id'] . "' /></td>
 						</tr>
 							<td>{$lang['admin']['forum_subabout']}:</td>
-							<td><input name=\"temos_apr\" type=\"text\" value='" . $t_info['aprasymas'] . "'></td>
+							<td><input name=\"temos_apr\" type=\"text\" value='" . $t_info['aprasymas'] . "' class=\"input\"></td>
 						</tr>
 					</table>
-					<input type=\"submit\"name=\"subred\" value=\"{$lang['admin']['edit']}\">
+					<input type=\"submit\"name=\"subred\" value=\"{$lang['admin']['edit']}\" class=\"submit\">
 					</form>
 				
 				";
@@ -275,8 +275,8 @@ if (isset($url['f'])) {
 		$f_text = "
 				
 						<form name=\"1\" action=\"?id," . $url['id'] . ";a,{$_GET['a']}\" method=\"post\">
-							{$lang['admin']['forum_category']}:&nbsp;&nbsp;<input name=\"f_pav\" type=\"text\" value=\"\">
-							<input type=\"submit\" value=\"{$lang['system']['createcategory']}\">
+							{$lang['admin']['forum_category']}:&nbsp;&nbsp;<input name=\"f_pav\" type=\"text\" value=\"\" class=\"input\">
+							<input type=\"submit\" value=\"{$lang['system']['createcategory']}\" class=\"submit\">
 							<input type=\"hidden\" name=\"action\"  value=\"f_sukurimas\" />
 						</form>
 					
@@ -295,12 +295,12 @@ if (isset($url['f'])) {
 					<table border=0 width=100%>
 						<tr>
 							<td width='10%'>{$lang['admin']['forum_category']}:</td>
-							<td><select size=\"1\" name=\"f_edit\">";
+							<td><select size=\"1\" name=\"f_edit\" class=\"select\">";
 			foreach ($sql as $record1) {
 				$tekst .= "<option value=" . $record1['id'] . ">" . $record1['pav'] . "</option>\n";
-				$li .= '<li id="listItem_' . $record1['id'] . '" style="display:block; border:1px solid grey; width:460px; padding:3px; margin:3px; background-color:#DDDDDD"> 
+				$li .= '<li id="listItem_' . $record1['id'] . '" class="drag_block"> 
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
-<img style="cursor:move;vertical-align:middle" src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
+<img src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
 ' . $record1['pav'] . '
 </li> ';
 			}
@@ -309,7 +309,7 @@ if (isset($url['f'])) {
   						</tr>
   						<tr>
   							<td>{$lang['admin']['forum_cangeto']}:</td>
-  							<td><input name=\"f_pav_keitimas\" type=\"text\" value=\"\"></td>
+  							<td><input name=\"f_pav_keitimas\" type=\"text\" value=\"\" class=\"input\"></td>
   						</tr>
   					</table>
   					<input type=\"submit\" name=\"keisti\" value=\"{$lang['admin']['edit']}\"> 
@@ -334,7 +334,7 @@ if (isset($url['f'])) {
 					<table border=0 width=100%>
 						<tr>
 							<td width='10%'>{$lang['admin']['forum_category']}:</td>
-							<td><select size=\"1\" name=\"f_forumas\">";
+							<td><select size=\"1\" name=\"f_forumas\" class=\"select\">";
 			foreach ($sql as $row) {
 				$f_text .= "<option value=" . $row['id'] . ">" . $row['pav'] . "</option>\n";
 			}
@@ -343,14 +343,14 @@ if (isset($url['f'])) {
   						</tr>
   						<tr>
   							<td>{$lang['admin']['forum_subcategory']}:</td>
-  							<td><input name=\"f_tema\" type=\"text\" value=\"\"></td>
+  							<td><input name=\"f_tema\" type=\"text\" value=\"\" class=\"input\"></td>
   						</tr>
   						<tr>
   							<td>{$lang['admin']['forum_subabout']}:</td>
-  							<td><input name=\"f_aprasymas\" type=\"text\" value=\"\">
+  							<td><input name=\"f_aprasymas\" type=\"text\" value=\"\" class=\"input\">
   						</tr>
   					</table>
-  					<input type=\"submit\" name=\"kurk\" value=\"{$lang['admin']['forum_createsub']}\"></form>
+  					<input type=\"submit\" name=\"kurk\" value=\"{$lang['admin']['forum_createsub']}\" class=\"submit\"></form>
 					
 					";
 			lentele($lang['admin']['forum_createsub'], $f_text);
@@ -369,7 +369,7 @@ if (isset($url['f'])) {
 					<table border=0 width=100%>
 						<tr>
 							<td width='50%'>{$lang['admin']['forum_subwhere']}:</td>
-							<td><select size=\"1\" name=\"f_forumas\">";
+							<td><select size=\"1\" name=\"f_forumas\" class=\"select\">";
 			foreach ($sql as $row) {
 				$f_text .= "<option value='" . $row['id'] . "'>" . $row['pav'] . "</option>\n";
 			}
@@ -378,7 +378,7 @@ if (isset($url['f'])) {
   							</td>
   						</tr>
   					</table>
-  					<input type=\"submit\" name=\"subedit\" value=\"{$lang['admin']['forum_select']}\">
+  					<input type=\"submit\" name=\"subedit\" value=\"{$lang['admin']['forum_select']}\" class=\"submit\">
 					<input type=\"hidden\" name=\"action\"  value=\"f_temos_edit\" />
 					</form>
 									";
