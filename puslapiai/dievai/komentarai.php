@@ -100,7 +100,7 @@ if ($url['id'] == 46 && $url['a'] == 10 && $kid > 0 && $pid > 0) {
 				$text .= "<div class=\"title\"><a href='" . url("d," . $row['id'] . "") . "' onclick=\"return confirm('Ar tikrai norite trinti?') \">[d]</a> <a href='http://85.232.143.6/nvs/index.php?id,47;m," . $row['nick_id'] . "'>" . $row['nick'] . "</a> <a href='?id,45;n,1;u," . $row['nick'] . "'><img src='images/pm/mail.png' alt='mail' border='0'/></a> (" . $row['data'] . ")" . "</div>
 			<blockquote><table><tr valign='top'><td><div class='avataras'>" . avatar($row['email'], 40) . "</div></td><td>" . smile(bbchat(wrap(input($row['zinute']), 80))) . "</td></tr></table></blockquote>";
 			}
-		}
+		}}
 	else {
 		klaida("Klaida", "komentarų nėra");
 	}

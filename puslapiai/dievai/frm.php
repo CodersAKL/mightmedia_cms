@@ -56,7 +56,7 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};f,4'">{$lang['admin']['forum_editsub']}</button>
 HTML;*/
 $buttons="<div id=\"admin_menu\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};f,1\"><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};f,2\"><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</a>  <a href=\"?id,{$_GET['id']};a,{$_GET['a']};f,3\"><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</a>  <a href=\"?id,{$_GET['id']};a,{$_GET['a']};f,4\"><img src=\"images/icons/folders__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_editsub']}</a></div>";
-lentele($lang['admin']['forum'], $buttons);
+lentele($lang['admin']['frm'], $buttons);
 
 unset($buttons);
 //rikiuote

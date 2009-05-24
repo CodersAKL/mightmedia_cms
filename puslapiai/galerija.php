@@ -132,7 +132,7 @@ if (empty($url['m'])) {
         <img src='images/icons/disk.png' border='0' alt='save' />
       </a>";
 			$text .= (defined('LEVEL') && LEVEL == 1 ? "
-      <a href=\"#\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('?id,999;a,22;t," . $row['id'] . "'); $(this).parent('.img_left').remove(); return false } else { return false }\" title=\"{$lang['system']['delete']}\">
+      <a href=\"#\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('?id,999;a,{$admin_pagesid['galerija']};t," . $row['id'] . "'); $(this).parent('.img_left').remove(); return false } else { return false }\" title=\"{$lang['system']['delete']}\">
         <img src='images/icons/cross.png' alt='X' border='0' />
       </a>
       " : "") . "

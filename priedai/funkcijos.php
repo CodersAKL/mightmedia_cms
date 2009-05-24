@@ -22,6 +22,16 @@ if (preg_match('%/\*\*/|SERVER|http|SELECT|UNION|UPDATE|INSERT%i', $_SERVER['QUE
 	$remoteaddress = $_SERVER["REMOTE_ADDR"];
 	ban($lang['system']['forhacking']);
 }
+//admin links
+if($_SESSION['level']==1){
+$glob = glob('puslapiai/dievai/*.php');
+foreach($glob as $id => $file) {
+	$file = basename($file,'.php');
+	$admin_pages[$id] = $file;
+	$admin_pagesid[$file] = $id;
+	
+}}
+
 //slaptaþodþio kodavimas
 function koduoju($pass) {
 	return md5(sha1(md5($pass)));

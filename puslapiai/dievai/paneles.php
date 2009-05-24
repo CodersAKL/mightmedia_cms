@@ -132,7 +132,7 @@ HTML;
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`= " . escape((int)$url['d']) . " LIMIT 1") or die(mysql_error());
 		delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC");
 	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
-		redirect("?id," . $url['id'] . ";a,9", "header");
+		redirect("?id," . $url['id'] . ";a,{$_GET['a']}", "header");
 	}
 	//naujos paneles sukurimas
 	elseif (isset($url['n']) && $url['n'] == 1) {
@@ -158,7 +158,7 @@ HTML;
 				mysql_query1($sql);
 				delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC");
 	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
-				redirect("?id," . $url['id'] . ";a,9", "header");
+				redirect("?id," . $url['id'] . ";a,{$_GET['a']}", "header");
 			}
 		}
 		$failai = getFiles('paneles/');
@@ -212,7 +212,7 @@ HTML;
 			mysql_query1($sql);
 			delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC");
 	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
-			redirect("?id," . $url['id'] . ";a,9", "header");
+			redirect("?id," . $url['id'] . ";a,{$_GET['a']}", "header");
 		} else {
 
 			$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`=" . escape((int)$url['r']) . " LIMIT 1";
@@ -353,31 +353,25 @@ HTML;
 </li> ';
 		}
 	}
-	//mysql_free_result($recordSet);
-	//mysql_free_result($recordSet1);
-	//$listHTML = implode("\n", $listArray);
-	//$listHTML1 = implode("\n", $listArray1);
 
-	//$text = $sortableLists->SLLists("javascript"); //kelias iki js failu
-	//$text .= $sortableLists->printTopJS(); //atspauzdinam pagrindinius javascript
 
 	$text .= '<div id="la" style="display:none"><b>' . $lang['system']['updated'] . '</b></div>
 
 		<table width="100%"><tr><td width="50%" valign="top">
 			<fieldset><legend>' . $lang['admin']['panel_left'] . '</legend>
 			<ul id="kaire">' . $li . '</ul>';
-	//$text .= $sortableLists->printBottomJS();
+
 	$text .= '</fieldset></td>
 	<td width="50%" valign="top"><fieldset><legend>' . $lang['admin']['panel_right'] . '</legend>
 		<ul id="desine">' . $li1 . '</ul>';
-	//$text .= $sortableLists->printBottomJS();
+
 	$text .= "</fieldset>
 		</td>
 	</tr>
 	</table>";
-	$text .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,9;n,1';\">{$lang['admin']['panel_select']}</button>";
-	$text .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,9;n,2';\">{$lang['admin']['panel_create']}</button>";
-	//$text .= $sortableLists->printForm('?id,' . $url['id'] . ';a,9;p,l', 'POST', $lang['admin']['save'],'button');
+	$text .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,{$_GET['a']};n,1';\">{$lang['admin']['panel_select']}</button>";
+	$text .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,{$_GET['a']};n,2';\">{$lang['admin']['panel_create']}</button>";
+
 	lentele($lang['admin']['paneles'], $text);
 
 	//Funkcija panelių turiniui įrašyti
