@@ -16,7 +16,7 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 }
 //admin_login();
 unset($extra);
-$buttons = <<< HTML
+/*$buttons = <<< HTML
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,6'">{$lang['admin']['news_unpublished']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,1'">{$lang['admin']['news_create']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,4'">{$lang['admin']['news_edit']}</button>
@@ -24,8 +24,8 @@ $buttons = <<< HTML
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,3'">{$lang['system']['editcategory']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,5'">{$lang['system']['createsubcategory']}</button>
 
-HTML;
-
+HTML;*/
+$buttons="<div id=\"admin_menu\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,6\"><img src=\"images/icons/sticky_note__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['news_unpublished']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,1\"><img src=\"images/icons/sticky_note__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['news_create']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,4\"><img src=\"images/icons/sticky_note__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['news_edit']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\"><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,3\"><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,5\"><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</a></div>";
 lentele($lang['admin']['news'], $buttons);
 include_once ("priedai/kategorijos.php");
 kategorija("naujienos", true);
@@ -177,7 +177,7 @@ if (isset($_GET['v'])) {
 	} elseif ($_GET['v'] == 1 || isset($_GET['h'])) {
 		if ($i = 1) {
 			$kom = array('taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no']);
-			$naujiena = array("Form" => array("action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pavadinimas'] : ''), "name" => "pav", "style" => "width:100%"), $lang['admin']['Comments'] => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input", "style" => "width:100%"), "{$lang['admin']['news_category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "style" => "width:100%", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')), "{$lang['admin']['news_text']}:" => array("type" => "string",
+			$naujiena = array("Form" => array("action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pavadinimas'] : ''), "name" => "pav", "class"=>"input"), $lang['admin']['Comments'] => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input", "class"=>"input"), "{$lang['admin']['news_category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class"=>"input", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')), "{$lang['admin']['news_text']}:" => array("type" => "string",
 				"value" => editorius('jquery', 'standartinis', array('naujiena' => $lang['admin']['news_preface'], 'placiau' => $lang['admin']['news_more']), array('naujiena' => (isset($extra)) ? $extra['naujiena'] : $lang['admin']['news_preface'], 'placiau' => (isset($extra)) ? $extra['daugiau'] : $lang['admin']['news_more']))), (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create']));
 
 			if (isset($extra)) {

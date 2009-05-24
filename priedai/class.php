@@ -42,7 +42,7 @@ class forma {
 					{
 						$return = '';
 						if (is_array($array['value'])) {
-							$return = "<select" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['class']) ? " class=\"" . $array['class'] . "\"" : "") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['jump']) ? " onchange=\"top.location.href='" . $array['jump'] . "' + this.value;\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . ">\n";
+							$return = "<select" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['class']) ? " class=\"" . $array['class'] . "\"" : "class=\"input\"") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['jump']) ? " onchange=\"top.location.href='" . $array['jump'] . "' + this.value;\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . ">\n";
 							foreach ($array['value'] as $val => $pav) {
 								$return .= "\t\t\t\t<option value=\"" . $val . "\"" . (((isset($array['selected']) && $array['selected'] == $val) || (isset($array['selected']) && is_array($array['selected']) && in_array($val, $array['selected']))) ? " selected=\"selected\"" : "") . "" . (isset($array['disabled']) && ($array['disabled'] == $val) ? " disabled=\"disabled\"" : "") . ">" . $pav . "</option>\n";
 							}
@@ -56,23 +56,23 @@ class forma {
 					}
 				case "text":
 					{
-						return "<input type=\"" . $array['type'] . "\" " . (isset($array['class']) ? "class=\"" . $array['class'] . "\"" : "") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['value']) ? " value=\"" . $array['value'] . "\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . "/>";
+						return "<input type=\"" . $array['type'] . "\" " . (isset($array['class']) ? "class=\"" . $array['class'] . "\"" : "class=\"input\"") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['value']) ? " value=\"" . $array['value'] . "\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . "/>";
 					}
 				case "reset":
 					{
-						return "<input type=\"" . $array['type'] . "\" " . (isset($array['class']) ? "class=\"" . $array['class'] . "\"" : "") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['value']) ? " value=\"" . $array['value'] . "\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . "/>";
+						return "<input type=\"" . $array['type'] . "\" " . (isset($array['class']) ? "class=\"" . $array['class'] . "\"" : "class=\"input\"") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['value']) ? " value=\"" . $array['value'] . "\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . "/>";
 					}
 				case "password":
 					{
-						return "<input type=\"" . $array['type'] . "\" " . (isset($array['class']) ? "class=\"" . $array['class'] . "\"" : "") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['value']) ? " value=\"" . $array['value'] . "\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . "/>";
+						return "<input type=\"" . $array['type'] . "\" " . (isset($array['class']) ? "class=\"" . $array['class'] . "\"" : "class=\"input\"") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['value']) ? " value=\"" . $array['value'] . "\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . "/>";
 					}
 				case "file":
 					{
-						return "<input type=\"" . $array['type'] . "\" " . (isset($array['class']) ? "class=\"" . $array['class'] . "\"" : "") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['value']) ? " value=\"" . $array['value'] . "\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . "/>";
+						return "<input type=\"" . $array['type'] . "\" " . (isset($array['class']) ? "class=\"" . $array['class'] . "\"" : "class=\"input\"") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['value']) ? " value=\"" . $array['value'] . "\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . "/>";
 					}
 				case "image":
 					{
-						return "<input type=\"" . $array['type'] . "\" " . (isset($array['class']) ? "class=\"" . $array['class'] . "\"" : "") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['src']) ? " src=\"" . $array['src'] . "\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . "/>";
+						return "<input type=\"" . $array['type'] . "\" " . (isset($array['class']) ? "class=\"" . $array['class'] . "\"" : "class=\"input\"") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['src']) ? " src=\"" . $array['src'] . "\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . "/>";
 					}
 				case "hidden":
 					{
@@ -80,7 +80,7 @@ class forma {
 					}
 				case "button":
 					{
-						return "<input type=\"" . $array['type'] . "\" " . (isset($array['class']) ? "class=\"" . $array['class'] . "\"" : "") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['value']) ? " value=\"" . $array['value'] . "\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . "/>";
+						return "<input type=\"" . $array['type'] . "\" " . (isset($array['class']) ? "class=\"" . $array['class'] . "\"" : "class=\"input\"") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['value']) ? " value=\"" . $array['value'] . "\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . "/>";
 					}
 				case "submit":
 					{

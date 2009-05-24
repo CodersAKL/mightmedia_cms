@@ -139,15 +139,15 @@ $bla = new forma();
 
 $forma = array(
 	"Form"=>array("action"=>"","method"=>"post","enctype"=>"multipart/form-data","id"=>"form1","class"=>"","name"=>"siuntiniai"),
-	"Siuntinio pavadinimas:"=>array("type"=>"text","value"=>input($conf['Pavadinimas']),"name"=>"Pavadinimas","style"=>"width:100%"),
-	"Trumpai apie svetainę:"=>array("type"=>"textarea","id"=>"Apie","value"=>input($conf['Apie']),"name"=>"Apie","class"=>"input","rows"=>"8","style"=>"width:100%"),
-	"Raktiniai žodžiai: (skirkite žodžius kableliais)"=>array("type"=>"textarea","value"=>input($conf['Keywords']),"name"=>"Keywords","rows"=>"3","class"=>"input","style"=>"width:100%"),
+	"Siuntinio pavadinimas:"=>array("type"=>"text","value"=>input($conf['Pavadinimas']),"name"=>"Pavadinimas","class"=>"input"),
+	"Trumpai apie svetainę:"=>array("type"=>"textarea","id"=>"Apie","value"=>input($conf['Apie']),"name"=>"Apie","class"=>"input","rows"=>"8","class"=>"input"),
+	"Raktiniai žodžiai: (skirkite žodžius kableliais)"=>array("type"=>"textarea","value"=>input($conf['Keywords']),"name"=>"Keywords","rows"=>"3","class"=>"input","class"=>"input"),
 	"Ar rodyti sugeneravimo laiką:"=>array("type"=>"select","value"=>array("1"=>"Taip","0"=>"Ne"),"selected"=>input($conf['Render']),"name"=>"Render"),
-	"Copyright Tekstas:"=>array("type"=>"text","value"=>input($conf['Copyright']),"name"=>"Copyright","style"=>"width:100%"),
-	"Svetaines e-paštas:"=>array("type"=>"text","value"=>input($conf['Pastas']),"name"=>"Pastas","style"=>"width:100%"),
+	"Copyright Tekstas:"=>array("type"=>"text","value"=>input($conf['Copyright']),"name"=>"Copyright","class"=>"input"),
+	"Svetaines e-paštas:"=>array("type"=>"text","value"=>input($conf['Pastas']),"name"=>"Pastas","class"=>"input"),
 	"Leisti registruotis:"=>array("type"=>"select","value"=>array("1"=>"Taip","0"=>"Ne"),"selected"=>input($conf['Registracija']),"name"=>"Registracija"),
 	"Svetaine remontuojama?:"=>array("type"=>"select","value"=>array("1"=>"Taip","0"=>"Ne"),"selected"=>input($conf['Palaikymas']),"name"=>"Palaikymas"),
-	"Uždarytos svetaines tekstas:"=>array("type"=>"textarea","id"=>"Maintenance","value"=>input($conf['Maintenance']),"name"=>"Maintenance","rows"=>"8","class"=>"input","style"=>"width:100%"),
+	"Uždarytos svetaines tekstas:"=>array("type"=>"textarea","id"=>"Maintenance","value"=>input($conf['Maintenance']),"name"=>"Maintenance","rows"=>"8","class"=>"input","class"=>"input"),
 	"Kiek rodyti ChatBox pranešimu?:"=>array("type"=>"select","value"=>array("5"=>"5","10"=>"10","15"=>"15","20"=>"20","25"=>"25","30"=>"30","35"=>"35","40"=>"40"),"selected"=>input($conf['Chat_limit']),"name"=>"Chat_limit"),
 	"Kiek rodyti naujienu?:"=>array("type"=>"select","value"=>array("5"=>"5","10"=>"10","15"=>"15","20"=>"20","25"=>"25","30"=>"30","35"=>"35","40"=>"40"),"selected"=>input($conf['News_limit']),"name"=>"News_limit"),
 	"Svetainės stilius:"=>array("type"=>"select","value"=>$stiliai,"selected"=>input($conf['Stilius']),"name"=>"Stilius"),
@@ -225,4 +225,3 @@ $forma = array(
 			</fieldset>
 		</div>
 	</form>
-

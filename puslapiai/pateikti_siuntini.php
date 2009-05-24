@@ -102,7 +102,7 @@ if (isset($_SESSION['id']) && $_SESSION['id']) {
 	include_once ("priedai/class.php");
 	$bla = new forma();
 	if (!isset($nera)) {
-		$forma = array("Form" => array("enctype" => "multipart/form-data", "action" => '', "method" => "post", "name" => "action"), "Failas:" => array("name" => "failas", "type" => "file", "value" => "", "style" => "width:100%"), "Pavadinimas:" => array("type" => "text", "value" => '', "name" => "Pavadinimas", "style" => "width:100%"), "Kategorija:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "style" => "width:100%"), "Aprašymas:" => array("type" => "string", "value" => editorius('spaw', 'mini', 'Aprasymas', '')), 'Sukurti siuntinį' => array("type" => "submit", "name" => "action", "value" => 'Pateikti siuntinį'), );
+		$forma = array("Form" => array("enctype" => "multipart/form-data", "action" => '', "method" => "post", "name" => "action"), "Failas:" => array("name" => "failas", "type" => "file", "value" => "", "class"=>"input"), "Pavadinimas:" => array("type" => "text", "value" => '', "name" => "Pavadinimas", "class"=>"input"), "Kategorija:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "class"=>"input"), "Aprašymas:" => array("type" => "string", "value" => editorius('spaw', 'mini', 'Aprasymas', '')), 'Sukurti siuntinį' => array("type" => "submit", "name" => "action", "value" => 'Pateikti siuntinį'), );
 
 		lentele('Siuntinių kūrimas', $bla->form($forma));
 	} else {

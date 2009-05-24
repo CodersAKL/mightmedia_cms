@@ -8,13 +8,13 @@ function lentele_r($pavadinimas, $tekstas, $label = false) {
 	lentele_l($pavadinimas, $tekstas);
 }
 function lentele_l($pavadinimas, $tekstas, $label = false) {
-	echo "<div class=\"title\">$pavadinimas</div>
-<div class=\"vidus\">$tekstas</div>";
+	echo "<div class=\"vidus\"><div class=\"title\">$pavadinimas</div><div class=\"text\">
+$tekstas</div></div>";
 }
 
 function lentele($pavadinimas, $tekstas, $label = false) {
-	echo "<div class=\"title\">$pavadinimas</div>
-<div class=\"content\">$tekstas</div>";
+	echo "<div class=\"content\"><div class=\"title\">$pavadinimas</div><div class=\"virsus\"></div><div class=\"text\">
+$tekstas</div></div>";
 }
 
 

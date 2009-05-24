@@ -55,7 +55,7 @@ elseif (isset($_GET['n']) || isset($_GET['e'])) { ?>
 
 	$todo = array(
 	"Form"=>array("action"=>"","method"=>"post","enctype"=>"","id"=>"","class"=>"","name"=>"todo"),
-	"Pavadinimas:"=>array("type"=>"text","value"=>input($pavadinimas),"name"=>"Pavadinimas","style"=>"width:400px"),
+	"Pavadinimas:"=>array("type"=>"text","value"=>input($pavadinimas),"name"=>"Pavadinimas","class"=>"input"),
 	"Aprašymas:"=>array("type"=>"textarea","value"=>input($aprasymas),"name"=>"Aprasymas","id"=>"aprasymas","class"=>"input","rows"=>"10","style"=>"width:90%"),
 	"Atlikta %:"=>array("type"=>"text","value"=>input((int)$atliktas),"name"=>"Atliktas","style"=>"width:200px"),
 	""=>array("type"=>"hidden","value"=>input($id),"name"=>"id","id"=>"id"),

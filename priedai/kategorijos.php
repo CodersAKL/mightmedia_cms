@@ -300,11 +300,11 @@ HTML;
 				$ser = "";
 			}
 			//print_r($puslapiai);
-			$kategorijos = array("Form" => array("action" => '' . "?id,{$_GET['id']};a,{$_GET['a']}" . '', "method" => "post", "name" => "reg"), "{$lang['system']['name']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', "name" => "Pavadinimas", "style" => "width:100%"), (isset($extra) || $_GET['v'] == 2 ? "" : "{$lang['system']['subcat/cat']}:") => (isset($extra) ? "" : array("type" => "select", "value" => @$kategorijoss, "name" => "path", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : ""), "disabled" => @$kategorijoss)), "{$lang['system']['about']}:" => array("type" => "textarea", "value" => (isset($extra['aprasymas'])) ? input($extra['aprasymas']) : '', "name" => "Aprasymas", "rows" => "3", "class" => "input",
-				"style" => "width:100%", "id" => "Aprasymas"), "{$lang['system']['picture']}:" => array("type" => "select", "value" => $kategoriju_pav, "name" => "Pav", "class" => "input", "style" => "width:100%", "selected" => (isset($extra['pav']) ? input($extra['pav']) : ''), "extra" => "onchange=\"$('#kategorijos_img').attr({ src: '" . $dir . "/'+this.value });\""), $lang['admin']['what_moderate'] => "", $textas => "", "" => array("type" => "hidden", "name" => "Kategorijos_id", "value" => (isset($extra['id']) ? input($extra['id']) : '')), (isset($extra)) ? $lang['system']['editcategory'] : $lang['system']['createcategory'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['system']['editcategory'] : $lang['system']['createcategory']), );
+			$kategorijos = array("Form" => array("action" => '' . "?id,{$_GET['id']};a,{$_GET['a']}" . '', "method" => "post", "name" => "reg"), "{$lang['system']['name']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', "name" => "Pavadinimas", "class"=>"input"), (isset($extra) || $_GET['v'] == 2 ? "" : "{$lang['system']['subcat/cat']}:") => (isset($extra) ? "" : array("type" => "select", "value" => @$kategorijoss, "name" => "path", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : ""), "disabled" => @$kategorijoss)), "{$lang['system']['about']}:" => array("type" => "textarea", "value" => (isset($extra['aprasymas'])) ? input($extra['aprasymas']) : '', "name" => "Aprasymas", "rows" => "3", "class" => "input",
+				"class"=>"input", "id" => "Aprasymas"), "{$lang['system']['picture']}:" => array("type" => "select", "value" => $kategoriju_pav, "name" => "Pav", "class" => "input", "class"=>"input", "selected" => (isset($extra['pav']) ? input($extra['pav']) : ''), "extra" => "onchange=\"$('#kategorijos_img').attr({ src: '" . $dir . "/'+this.value });\""), $lang['admin']['what_moderate'] => "", $textas => "", "" => array("type" => "hidden", "name" => "Kategorijos_id", "value" => (isset($extra['id']) ? input($extra['id']) : '')), (isset($extra)) ? $lang['system']['editcategory'] : $lang['system']['createcategory'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['system']['editcategory'] : $lang['system']['createcategory']), );
 			if ($kieno == 'vartotojai') {
 				//	echo $mod;
-				$kategorijos[$lang['admin']['what_moderate']] = array("type" => "select", "extra" => "multiple=multiple", "value" => $puslapiai, "class" => "asmSelect", "style" => "width:100%", "name" => "punktai[]", "id" => "punktai", "selected" => (isset($extra['mod'])) ? $ser : "");
+				$kategorijos[$lang['admin']['what_moderate']] = array("type" => "select", "extra" => "multiple=multiple", "value" => $puslapiai, "class" => "asmSelect", "class"=>"input", "name" => "punktai[]", "id" => "punktai", "selected" => (isset($extra['mod'])) ? $ser : "");
 			}
 			if ($leidimas == true && $vartotojai == false && $_GET['v'] == 2) {
 				if ($kieno == 'vartotojai') {
@@ -315,7 +315,7 @@ HTML;
 					foreach ($teises as $name => $check) {
 					$box .= "<label><input type=\"checkbox\" " . (isset($extra) && in_array($name, unserialize($extra['teises'])) ? "checked" : "") . " name=\"Teises[]\" value=\"$name\"/> $check</label><br /> ";
 					}*/
-					$kategorijos[$textas] = array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai", "selected" => (isset($extra['teises']) ? unserialize($extra['teises']) : "-1"));
+					$kategorijos[$textas] = array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "class"=>"input", "name" => "Teises[]", "id" => "punktai", "selected" => (isset($extra['teises']) ? unserialize($extra['teises']) : "-1"));
 				}
 
 			} else {

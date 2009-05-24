@@ -20,12 +20,13 @@ include_once ("priedai/class.php");
 $tags = array("p" => 1, "br" => 0, "a" => 1, "img" => 0, "li" => 1, "ol" => 1, "ul" => 1, "b" => 1, "i" => 1, "em" => 1, "strong" => 1, "del" => 1, "ins" => 1, "u" => 1, "code" => 1, "pre" => 1, "blockquote" => 1, "hr" => 0, "span" => 1, "font" => 1, "h1" => 1, "h2" => 1, "h3" => 1, "table" => 1, "tr" => 1, "td" => 1, "th" => 1, "tbody" => 1, "div" => 1, "embed" => 1);
 
 //Mygtukai
-$buttons = <<< HTML
+/*$buttons = <<< HTML
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,1'">{$lang['admin']['user_list']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,4'">{$lang['admin']['user_find']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,2'">{$lang['system']['createcategory']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,3'">{$lang['system']['editcategory']}</button>
-HTML;
+HTML;*/
+$buttons="<div id=\"admin_menu\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,1\"><img src=\"images/icons/users.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['user_list']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,4\"><img src=\"images/icons/users__arrow.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['user_find']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\"><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,3\"><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</a></div>";
 //<button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,5'">{$lang['system']['createsubcategory']}</button>
 
 lentele($lang['admin']['users'], $buttons);
@@ -79,7 +80,7 @@ if (isset($url['r']) && $url['r'] != "" && $url['r'] != 0) {
 			$lygiai[$key] = $conf['level'][$key]['pavadinimas'];
 		}
 
-		$text = array('Form' => array('action' => "?id,{$_GET['id']};a,{$_GET['a']}", "method" => "post", "name" => "reg", 'extra' => "onSubmit=\"return checkMail('change_contacts','email')\""), $lang['admin']['user_points'] => array('type' => 'text', 'name' => 'tsk', 'extra' => "onkeyup=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\"", 'value' => (isset($info['taskai']) ? input($info['taskai']) : "")), $lang['admin']['user_level'] => array("type" => "select", "value" => $lygiai, "name" => "lvl", "class" => "input", "style" => "width:100%", "selected" => (isset($info['levelis']) ? (int)$info['levelis'] : '')), "{$lang['admin']['user_pass']} <a href='#' title='<b>{$lang['system']['warning']}</b><br/>{$lang['admin']['user_passinfo']}<br/>'>[?]</a>" => array('type' => 'password', 'name' =>
+		$text = array('Form' => array('action' => "?id,{$_GET['id']};a,{$_GET['a']}", "method" => "post", "name" => "reg", 'extra' => "onSubmit=\"return checkMail('change_contacts','email')\""), $lang['admin']['user_points'] => array('type' => 'text', 'name' => 'tsk', 'extra' => "onkeyup=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\"", 'value' => (isset($info['taskai']) ? input($info['taskai']) : "")), $lang['admin']['user_level'] => array("type" => "select", "value" => $lygiai, "name" => "lvl", "class" => "input", "class"=>"input", "selected" => (isset($info['levelis']) ? (int)$info['levelis'] : '')), "{$lang['admin']['user_pass']} <a href='#' title='<b>{$lang['system']['warning']}</b><br/>{$lang['admin']['user_passinfo']}<br/>'>[?]</a>" => array('type' => 'password', 'name' =>
 			'slapt'), $lang['admin']['user_email'] => array('type' => 'text', 'value' => (isset($info['email']) ? input($info['email']) : "")), "\r" => array('type' => 'string', "value" => '<input type="hidden" name="id" value="' . $url['r'] . '" /><input type="submit" name="action" value="' . $lang['admin']['save'] . '">'), "" => array("type" => "reset", "name" => "reset", "value" => "{$lang['admin']['cancel']}", 'extra' => 'onclick="window.location=\'?id,' . $_GET['id'] . ';a,' . $_GET['a'] . '\'"'));
 		include_once ("priedai/class.php");
 		$bla = new forma();

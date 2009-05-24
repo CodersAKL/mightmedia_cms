@@ -15,7 +15,7 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 	exit();
 }
 
-$buttons = <<< HTML
+/*$buttons = <<< HTML
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,6'">{$lang['admin']['download_unpublished']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,1'">{$lang['admin']['download_Create']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,7'">{$lang['admin']['download_edit']}</button>
@@ -23,8 +23,8 @@ $buttons = <<< HTML
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,3'">{$lang['system']['editcategory']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,5'">{$lang['system']['createsubcategory']}</button>
 
-HTML;
-
+HTML;*/
+$buttons="<div id=\"admin_menu\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,6\"><img src=\"images/icons/disk__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['download_unpublished']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,1\"><img src=\"images/icons/disk__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['download_Create']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,4\"><img src=\"images/icons/disk__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['download_edit']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\"><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,3\"><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,5\"><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</a></div>";
 if (empty($url['s'])) {
 	$url['s'] = 0;
 }
@@ -246,8 +246,8 @@ if (isset($_GET['v'])) {
 			}
 			if (isset($_POST['tipas']) || isset($extra)) {
 				//if(!isset($_post['tipas'])){$_POST['tipas']=3;}
-				$forma = array("Form" => array("enctype" => "multipart/form-data", "action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "method" => "post", "name" => "action"), (!isset($extra) && @$_POST['tipas'] != 2) ? "{$lang['admin']['download_file']}:" : "" => array("name" => "failas", "type" => (isset($extra) || $_POST['tipas'] != 2) ? "file" : "hidden", "value" => "", "style" => "width:100%"), (isset($extra) || $_POST['tipas'] == 2) ? "{$lang['admin']['download_fileurl']}:" : "" => array("name" => "failas2", "type" => (isset($extra) || $_POST['tipas'] == 2) ? "text" : "hidden", "value" => (isset($extra['pavadinimas'])) ? input($extra['file']) : '', "style" => "width:100%"), "{$lang['admin']['download_download']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) :
-					'', "name" => "Pavadinimas", "style" => "width:100%"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "style" => "width:100%", "selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '')), "{$lang['admin']['download_about']}:" => array("type" => "string", "value" => editorius('spaw', 'mini', 'Aprasymas', (isset($extra['apie'])) ? $extra['apie'] : '')), //"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","style"=>"width:100%"),
+				$forma = array("Form" => array("enctype" => "multipart/form-data", "action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "method" => "post", "name" => "action"), (!isset($extra) && @$_POST['tipas'] != 2) ? "{$lang['admin']['download_file']}:" : "" => array("name" => "failas", "type" => (isset($extra) || $_POST['tipas'] != 2) ? "file" : "hidden", "value" => "", "class"=>"input"), (isset($extra) || $_POST['tipas'] == 2) ? "{$lang['admin']['download_fileurl']}:" : "" => array("name" => "failas2", "type" => (isset($extra) || $_POST['tipas'] == 2) ? "text" : "hidden", "value" => (isset($extra['pavadinimas'])) ? input($extra['file']) : '', "class"=>"input"), "{$lang['admin']['download_download']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) :
+					'', "name" => "Pavadinimas", "class"=>"input"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "class"=>"input", "selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '')), "{$lang['admin']['download_about']}:" => array("type" => "string", "value" => editorius('spaw', 'mini', 'Aprasymas', (isset($extra['apie'])) ? $extra['apie'] : '')), //"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","class"=>"input"),
 					(isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['download_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['download_create']), );
 				if (isset($extra)) {
 					$forma[''] = array("type" => "hidden", "name" => "news_id", "value" => (isset($extra) ? input($extra['ID']) : ''));

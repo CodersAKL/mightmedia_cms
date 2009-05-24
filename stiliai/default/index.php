@@ -28,15 +28,19 @@ echo $text;
              <?php echo input(strip_tags($conf['Apie'])); ?>
             </div>
 </div>
-
+<div class="pagr">
+<div class="virsus"></div>
+<div class="aplink">
 <div class="kaire">
-
+<div class="shadow">
 <?php include ("priedai/kairespaneles.php"); ?>
+</div>
+<div class="shadow_bottom"></div>
 </div>
 
 <div class="center">
-<div class="title"><?php if (isset($conf['puslapiai']['online.php'])): ?>Šiuo metu svetaineje: <a href="?id,<?php echo $conf['puslapiai']['online.php']['id']; ?>"><?php echo (int)$online; ?></a><?php endif; ?></div>
-<div class="vidus">
+
+
 <?php
 
 if (isset($strError) && !empty($strError)) {
@@ -45,21 +49,24 @@ if (isset($strError) && !empty($strError)) {
 include ($page . ".php");
 
 ?>
-</div>
+
 </div>
 <div class="desine">
-
+<div class="shadow">
 <?php include ("priedai/desinespaneles.php"); ?>
 </div>
+<div class="shadow_bottom"></div>
+</div>
+
 
 <div style="clear: both;"> </div>
 
 </div>
-
-<div id="footer">
+</div>
+<div  class="title">
 <?php copyright( $conf['Copyright'] );?>
 </div>
-
+</div>
 </div>
 </body>
 </html>

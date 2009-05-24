@@ -20,17 +20,7 @@ if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
 } else {
 	$p = 0;
 }
-/*$buttons = <<<HTML
-<table><tr><td>
-<button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,6'" class="blokas"><img src="images/icons/picture_key.png" border="0"><br>Nustatymai</button>
-<button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,7'" class="blokas"><img src="images/icons/picture_error.png" border="0"><br>Nerodomos nuotraukos</button>
-<button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,1'" class="blokas"><img src="images/icons/picture_add.png" border="0"><br>Pridėti nuotrauką</button>
-<button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,8'" class="blokas"><img src="images/icons/picture_edit.png" border="0"><br>Redaguoti nuotrauką</button>
-<button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,2'" class="blokas"><img src="images/icons/folder_add.png" border="0"><br>Sukurti kategoriją</button>
-<button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,3'" class="blokas"><img src="images/icons/folder_edit.png" border="0"><br>Redaguoti kategoriją</button>
-</td></tr></table>
-HTML;*/
-$buttons = <<< HTML
+/*$buttons = <<< HTML
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,6'">{$lang['admin']['gallery_conf']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,7'">{$lang['admin']['gallery_unpublished']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,1'">{$lang['admin']['gallery_add']}</button>
@@ -39,7 +29,8 @@ $buttons = <<< HTML
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,3'">{$lang['system']['editcategory']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,5'">{$lang['system']['createsubcategory']}</button>
 
-HTML;
+HTML;*/
+$buttons="<div id=\"admin_menu\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,6\"><img src=\"images/icons/photo_album__arrow.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_conf']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,7\"><img src=\"images/icons/picture__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_unpublished']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,1\"><img src=\"images/icons/picture__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_add']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,8\"><img src=\"images/icons/picture__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_edit']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\"><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,3\"><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</a>  <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,5\"><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</a></div>";
 
 if (empty($url['s'])) {
 	$url['s'] = 0;
@@ -439,8 +430,8 @@ if (isset($_GET['v'])) {
 
 		if (sizeof($sql) > 0) {
 
-			$forma = array("Form" => array("enctype" => "multipart/form-data", "action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "method" => "post", "name" => "action"), (!isset($extra)) ? "{$lang['admin']['gallery_file']}:" : "" => array("name" => "failas", "type" => (!isset($extra)) ? "file" : "hidden", "value" => "", "style" => "width:100%"), "{$lang['admin']['gallery_title']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', "name" => "Pavadinimas", "style" => "width:100%"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "style" => "width:100%", "selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '')), "{$lang['admin']['gallery_about']}:" =>
-				array("type" => "textarea", "name" => "Aprasymas", "style" => "width:100%", "rows" => "3", "class" => "input", "value" => (isset($extra['apie'])) ? input($extra['apie']) : ''), //"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","style"=>"width:100%"),
+			$forma = array("Form" => array("enctype" => "multipart/form-data", "action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "method" => "post", "name" => "action"), (!isset($extra)) ? "{$lang['admin']['gallery_file']}:" : "" => array("name" => "failas", "type" => (!isset($extra)) ? "file" : "hidden", "value" => ""), "{$lang['admin']['gallery_title']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', "name" => "Pavadinimas"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '')), "{$lang['admin']['gallery_about']}:" =>
+				array("type" => "textarea", "name" => "Aprasymas",  "rows" => "3", "class" => "input", "value" => (isset($extra['apie'])) ? input($extra['apie']) : ''), //"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","class"=>"input"),
 				(isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add']), );
 			if (isset($extra)) {
 				$forma[''] = array("type" => "hidden", "name" => "news_id", "value" => (isset($extra) ? input($extra['ID']) : ''));
@@ -462,7 +453,7 @@ if (isset($_GET['v'])) {
 			}
 			redirect('?id,999;a,' . $url['a'] . ';v,6');
 		}
-		$nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), "{$lang['admin']['gallery_maxwidth']}:" => array("type" => "text", "value" => input($conf['fotodyd']), "name" => "fotodyd", "style" => "width:100%"), "{$lang['admin']['gallery_minwidth']}:" => array("type" => "text", "value" => input($conf['minidyd']), "name" => "minidyd", "style" => "width:100%"), "{$lang['admin']['gallery_rate']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galbalsuot']), "name" => "galbalsuot"), "{$lang['admin']['gallery_comments']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['yes']}"),
+		$nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), "{$lang['admin']['gallery_maxwidth']}:" => array("type" => "text", "value" => input($conf['fotodyd']), "name" => "fotodyd"), "{$lang['admin']['gallery_minwidth']}:" => array("type" => "text", "value" => input($conf['minidyd']), "name" => "minidyd"), "{$lang['admin']['gallery_rate']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galbalsuot']), "name" => "galbalsuot"), "{$lang['admin']['gallery_comments']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['yes']}"),
 			"selected" => input($conf['galkom']), "name" => "galkom"), "{$lang['admin']['gallery_images_per_page']}:" => array("type" => "select", "value" => array("5" => "5", "10" => "10", "15" => "15", "20" => "20", "25" => "25", "30" => "30", "35" => "35", "40" => "40"), "selected" => input($conf['fotoperpsl']), "name" => "fotoperpsl"), "" => array("type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}"));
 
 		include_once ("priedai/class.php");

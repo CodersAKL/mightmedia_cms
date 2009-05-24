@@ -58,7 +58,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'Pateikti') {
 if ($i == 1) {
 	include_once ("priedai/class.php");
 	$bla = new forma();
-	$naujiena = array("Form" => array("action" => "", "method" => "post", "name" => "reg"), "Pavadinimas:" => array("type" => "text", "value" => '', "name" => "pav", "style" => "width:100%"), "Komentarai:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "style" => "width:100%"), "Kategorija:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "style" => "width:100%"), "Naujiena:" => array("type" => "string", "value" => editorius('tiny_mce', 'standartinis', array('naujiena' => 'Glaustai', 'placiau' => 'Plačiau'))), 'Pateikti' => array("type" => "submit", "name" => "action", "value" => 'Pateikti'));
+	$naujiena = array("Form" => array("action" => "", "method" => "post", "name" => "reg"), "Pavadinimas:" => array("type" => "text", "value" => '', "name" => "pav", "class"=>"input"), "Komentarai:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"), "Kategorija:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class"=>"input"), "Naujiena:" => array("type" => "string", "value" => editorius('tiny_mce', 'standartinis', array('naujiena' => 'Glaustai', 'placiau' => 'Plačiau'))), 'Pateikti' => array("type" => "submit", "name" => "action", "value" => 'Pateikti'));
 	lentele('Naujienos rašymas', $bla->form($naujiena));
 } else {
 	klaida("Dėmesio", "Nėra kategorijų.");

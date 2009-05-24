@@ -45,7 +45,7 @@ if ($conf['keshas'] && isset($_POST) && !empty($_POST) && sizeof($_POST) > 0) {
 $puslapis = "pokalbiai.php";
 
 if (isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
-	$text = "<table border=\"0\">
+	$text = "<div id=\"admin\"><table border=\"0\">
 	<tr>
 		<td >
 <div>";
@@ -82,7 +82,7 @@ if (isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
 	$text .= "</div><br style=\"clear:left\"/></td>
 	</tr>
 </table>
-
+</div>
 ";
 
 	lentele($lang['user']['administration'], $text);

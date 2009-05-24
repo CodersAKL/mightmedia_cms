@@ -26,8 +26,8 @@ background-color: #CCCCCC;
 .title {
 background-image:url(images/titlas.gif);
 background-repeat:repeat-x;
-border-bottom:1px solid #000000;
-color:white;
+border-top:1px solid #CCC;
+color:#CCCCCC;
 font-family:"Lucida Grande",verdana,helvetica,arial,sans-serif;
 font-size:10px;
 /*font-weight:bold;*/
@@ -44,35 +44,74 @@ div .title a {
 .content {
 	background-color : white;
 	background-image: url(images/bgas.jpg);
-	padding: 10px;
+	/*padding: 10px;*/
 	border: 1px solid;
-	border-color: #73A4BF;
+	border-color: #999999;
 	margin-bottom: 0px; /* buvo 10 */
 	font-family: Verdana, Arial, Helvetica, sans-serif, webdings;
 	font-size : 11px;
 	font-weight : normal;
+	margin-bottom: 5px;
+}
+.pagr{
+	background-color: #FFF;
 }
 .vidus {
 	background-color : white;
 	background-image: url(images/block_vidus_fonas.gif);
 	background-repeat: repeat-x;
-	padding: 10px;
+	/*padding: 10px;*/
 	border-left: 1px solid;
 	border-right: 1px solid;
 	border-top: 1px solid;
 	border-bottom: 1px solid; /* */
-	border-color: #73A4BF;
+	border-color: #90A7B5;
 	margin-bottom: 0px; /* buvo 10 */
 	border-top : 0px;
 	font-family: Verdana, Arial, Helvetica, sans-serif, webdings;
 	font-size : 11px;
 	font-weight : normal;
 }
+.virsus {
+	background-color : white;
+	background-image: url(images/virsus.png);
+	background-repeat: repeat-x;
+	height:12px;
+	
+}
+.vidus , .content{
+	padding-top:5px;
+}
+.shadow{
+ background-image: url(images/shadow.png);	
+ background-repeat: repeat-y;
+ width:190px;
+ padding-left:5px; 
+ padding-right:5px;
+ 
+}
+.shadow_bottom{
+ background-image: url(images/shadow_bottom.png);	
+ background-repeat: no-repeat;
+ width:200px;
+ height:10px;
+ }
+.aplink{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.text{
+	padding:3px;
+}
 img {border: none;}
 ul {
 	list-style: none;
 	margin: 0;
 	padding: 0;
+}
+hr, fieldset{
+	margin:2px;
+	border: 1px dotted #CCC;
 }
 img { border: 0; }
 a, a:visited { color: #0A5087; text-decoration: none; }
@@ -85,7 +124,12 @@ input, textarea, button, select {
 	border : 1px solid #0A3F67;
 	padding-left: 5px;
 }
-
+input[type="submit"], .submit{
+background-image:url(images/submit.png);
+background-repeat: repeat-x;
+border:1px solid red;
+color:#FFF;	
+}
 #contentt {
 background: #ccc;
 padding: 20px;
@@ -146,12 +190,11 @@ text-align:left;
 #juosta {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	width: 100%;
-	margin: 0px;
-	padding:0;
+	width: 100%;	
+	padding-top:3px;
 	background-image:url(images/menius.jpg);
 	text-align:center;
-	height:28px;
+	height: 25px;
 	
 }
 
@@ -169,10 +212,11 @@ text-align:left;
   border-right:1px solid #000;
   font-size: 11px;
   padding-left:4px;
+  padding-top:5px;
+   padding-bottom:5px;
   padding-right:4px;
-	display: inline;
-		vertical-align:middle;
-   height:2px;
+   display: inline;
+   vertical-align:middle;
 	text-decoration: none;
 	color: #CCCCCC;
 	
@@ -262,13 +306,14 @@ div.blokas img:hover {
 	float: left;
 	width: 200px;
 	line-height: 15px;
+
 }
 
 
 .center { 
 	margin-top: 10px;
 	float: left;
-	width: 510px;
+	width: 490px;
 	margin-left: 10px;
 	line-height: 20px;
 }
@@ -278,6 +323,7 @@ div.blokas img:hover {
 	margin-top: 10px;
 	float: right;
 	width: 200px;
+	
 }
 
 #footer { 

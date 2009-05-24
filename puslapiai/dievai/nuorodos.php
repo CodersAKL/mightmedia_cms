@@ -14,14 +14,15 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 	header('location: ?');
 	exit();
 }
-$buttons = <<< HTML
+/*$buttons = <<< HTML
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,1'">{$lang['admin']['links_unpublished']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,4'">{$lang['admin']['links_edit'] }</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,2'">{$lang['system']['createcategory']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,3'">{$lang['system']['editcategory']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,5'">{$lang['system']['createsubcategory']}</button>
 
-HTML;
+HTML;*/
+$buttons="<div id=\"admin_menu\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,1\"><img src=\"images/icons/chain__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['links_unpublished']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,4\"><img src=\"images/icons/chain__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['links_edit']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\"><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</a>  <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,3\"><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,5\"><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</a></div>";
 if (empty($_GET['v'])) {
 	$_GET['v'] = 0;
 }

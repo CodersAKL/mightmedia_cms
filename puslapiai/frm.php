@@ -386,7 +386,7 @@ AND `" . LENTELES_PRIESAGA . "d_straipsniai`.`id`=" . escape($tid) . " AND `" . 
 			$forma = array(
 				"Form" => array("action" => "", "method" => "post", "name" => "msg"), 
 				" " => array("type" => "string", "value" => bbs('msg')),
-				$lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : $citata), "name" => "msg", "style" => "width:100%"), 
+				$lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : $citata), "name" => "msg", "class"=>"input"), 
 				"  " => array("type" => "string", "value" => bbk('msg')), 
 				"   " => array("type" => "submit", "value" => ((!empty($extra)) ? "{$lang['admin']['edit']}" : "{$lang['forum']['submit']}")), 
 				"     " => array("type" => "hidden", "name" => "action", "value" => ((!empty($extra)) ? "f_update" : "f_send"))
@@ -452,8 +452,8 @@ elseif (((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && 
 		$bla = new forma();
 		$form = array(
 			"Form" => array("action" => "", "method" => "post", "name" => "rename"), 
-			"{$lang['admin']['forum_cangeto']}:" => array("type" => "text", "style" => "width:100%", "value" => $tsql['pav'], "name" => "name"), 
-			"{$lang['forum']['sticky']}?:" => array("type" => "select", "style" => "width:100%", "value" => array("1" => $lang['admin']['yes'], "0" => $lang['admin']['no']), "name" => "sticky", "style" => "width:100%", "selected" => $tsql['sticky']), 
+			"{$lang['admin']['forum_cangeto']}:" => array("type" => "text", "class"=>"input", "value" => $tsql['pav'], "name" => "name"), 
+			"{$lang['forum']['sticky']}?:" => array("type" => "select", "class"=>"input", "value" => array("1" => $lang['admin']['yes'], "0" => $lang['admin']['no']), "name" => "sticky", "class"=>"input", "selected" => $tsql['sticky']), 
 			"  " => array("type" => "submit", "name" => "sub", "value" => "{$lang['admin']['edit']}")
 		);
 		lentele($tsql['pav'], $bla->form($form));
@@ -532,9 +532,9 @@ WHERE `" . LENTELES_PRIESAGA . "users`.nick=" . escape($_SESSION['username']) . 
 	$bla = new forma();
 	$forma = array(
 		"Form" => array("action" => "", "method" => "post", "name" => "post_msg"), 
-		$lang['forum']['topicname'] => array("type" => "text", "style" => "width:100%", "name" => "post_pav"), 
+		$lang['forum']['topicname'] => array("type" => "text", "class"=>"input", "name" => "post_pav"), 
 		" " => array("type" => "string", "value" => bbs('post_msg')),
-		$lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : ''), "name" => "post_msg", "style" => "width:100%"), 
+		$lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : ''), "name" => "post_msg", "class"=>"input"), 
 		"  " => array("type" => "string", "value" => bbk('post_msg')), 
 		"   " => array("type" => "submit", "value" => $lang['forum']['submit'])
 	);

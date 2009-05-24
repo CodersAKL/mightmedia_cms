@@ -15,15 +15,15 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 	exit();
 }
 unset($text, $extra);
-$buttons = <<< HTML
+/*$buttons = <<< HTML
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,2'">{$lang['system']['createcategory']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,3'">{$lang['system']['editcategory']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,5'">{$lang['system']['createsubcategory']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,4'">{$lang['admin']['article_edit']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,7'">{$lang['admin']['article_create']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,6'">{$lang['admin']['article_unpublished']}</button>
-
-HTML;
+HTML;*/
+$buttons="<div id=\"admin_menu\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,6\"><img src=\"images/icons/script__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['article_unpublished']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,7\"><img src=\"images/icons/script__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['article_create']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,4\"><img src=\"images/icons/script__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['article_edit']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\"><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,3\"><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,5\"><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</a></div>";
 if (empty($_GET['v'])) {
 	$_GET['v'] = 0;
 }
@@ -186,8 +186,8 @@ if ($_GET['v'] == 4) {
 if ($_GET['v'] == 7 || isset($url['h'])) {
 	if ($i = 1) {
 		$ar = array("TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}");
-		$straipsnis = array("Form" => array("action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "method" => "post", "name" => "reg"), "{$lang['admin']['article_title']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pav'] : ''), "name" => "pav", "style" => "width:100%"), "" => array("type" => "hidden", "name" => "idas", "value" => (isset($extra['id']) ? input($extra['id']) : '')), "{$lang['admin']['article_comments']}:" => array("type" => "select", "value" => array('taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no']), "name" => "kom", "class" => "input", "style" => "width:100%"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "style" => "width:100%", "selected" => (isset($extra['kat']) ?
-			input($extra['kat']) : '')), "{$lang['admin']['article_shown']}:" => array("type" => "select", "value" => $ar, "name" => "rodoma", "class" => "input", "style" => "width:100%", "selected" => (isset($extra['rodoma']) ? input($extra['rodoma']) : '')), "{$lang['admin']['article']}:" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('apr' => 'Straipsnio įžanga', 'str' => 'straipsnis'), array('apr' => (isset($extra)) ? $extra['t_text'] : $lang['admin']['article_preface'], 'str' => (isset($extra)) ? $extra['f_text'] : $lang['admin']['article']))), (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['article_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['article_create']));
+		$straipsnis = array("Form" => array("action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "method" => "post", "name" => "reg"), "{$lang['admin']['article_title']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pav'] : ''), "name" => "pav", "class"=>"input"), "" => array("type" => "hidden", "name" => "idas", "value" => (isset($extra['id']) ? input($extra['id']) : '')), "{$lang['admin']['article_comments']}:" => array("type" => "select", "value" => array('taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no']), "name" => "kom", "class" => "input", "class"=>"input"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class"=>"input", "selected" => (isset($extra['kat']) ?
+			input($extra['kat']) : '')), "{$lang['admin']['article_shown']}:" => array("type" => "select", "value" => $ar, "name" => "rodoma", "class" => "input", "class"=>"input", "selected" => (isset($extra['rodoma']) ? input($extra['rodoma']) : '')), "{$lang['admin']['article']}:" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('apr' => 'Straipsnio įžanga', 'str' => 'straipsnis'), array('apr' => (isset($extra)) ? $extra['t_text'] : $lang['admin']['article_preface'], 'str' => (isset($extra)) ? $extra['f_text'] : $lang['admin']['article']))), (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['article_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['article_create']));
 		if (isset($extra['id'])) {
 			$naujiena[''] = array("type" => "text", "name" => "idas", "value" => (isset($extra['id']) ? input($extra['id']) : ''));
 		}

@@ -18,9 +18,10 @@ if (!defined("OK") || !ar_admin(basename(__file__)))
 }
 
 unset($resultatai, $i, $temp, $lines);
-$buttons = <<< HTML
+/*$buttons = <<< HTML
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};b,1'">IP {$lang['admin']['bans']}</button>
-HTML;
+HTML;*/
+$buttons="<div id=\"admin_menu\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};b,1\"><img src=\"images/icons/bandaid__plus.png\" alt=\"\" class=\"middle\"/>IP {$lang['admin']['bans']}</a></div>";
 lentele($lang['admin']['bans'], $buttons);
 unset($buttons, $extra, $text);
 
@@ -45,9 +46,9 @@ if (isset($_GET['b']) && $_GET['b'] == 1)
 {
     $title = "IP {$lang['admin']['bans']}"; //Atvaizdavimo pavadinimas
     //$viso = kiek("ban_portai");	//suskaiciuojam kiek isviso irasu
-    $forma = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port"), "IP (xx.xxx.xxx.xx):" => array("type" => "text", "value" => "" . input((isset($url['ip'])) ? $url['ip'] : '') . "", "name" => "ip", "style" => "width:400px"),
+    $forma = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port"), "IP (xx.xxx.xxx.xx):" => array("type" => "text", "value" => "" . input((isset($url['ip'])) ? $url['ip'] : '') . "", "name" => "ip", ),
         //"Veiksmas:"=>array("type"=>"select","value"=>array("1"=>"Baninti","0"=>"Peradresuoti"),"name"=>"veiksmas"),
-        "{$lang['admin']['why']}:" => array("type" => "text", "value" => "", "name" => "priezastis", "style" => "width:400px"), "" => array("type" => "submit", "name" => "Portai", "value" => "{$lang['admin']['save']}"));
+        "{$lang['admin']['why']}:" => array("type" => "text", "value" => "", "name" => "priezastis"), "" => array("type" => "submit", "name" => "Portai", "value" => "{$lang['admin']['save']}"));
     if (isset($_POST['ip']) && isset($_POST['priezastis']))
     {
         if (preg_match("/^[0-9]{2,3}[.]{1,1}[0-9]{2,3}[.]{1,1}[0-9]{2,3}[.]{1,1}[0-9]{1,3}$/", $_POST['ip']))
@@ -81,7 +82,7 @@ if (isset($forma) && isset($title))
 {
     include_once ('priedai/class.php');
     $bla = new forma();
-    echo $bla->form($forma, $title);
+   lentele($title, $bla->form($forma));
 }
 
 

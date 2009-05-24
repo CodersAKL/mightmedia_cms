@@ -18,17 +18,18 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 	exit();
 }
 
-$buttons = <<< HTML
+/*$buttons = <<< HTML
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,1'">{$lang['admin']['poll_create']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,2'">{$lang['admin']['poll_edit']}</button>
-HTML;
+HTML;*/
+$buttons="<div id=\"admin_menu\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,1\"><img src=\"images/icons/heart__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['poll_create']}</a>  <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\"><img src=\"images/icons/heart__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['poll_edit']}</a></div>";
 lentele($lang['admin']['poll'], $buttons);
 if (empty($url['v'])) {
 	$url['v'] = 0;
 
 
 	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE `ijungtas`='TAIP'  ORDER BY `id` DESC LIMIT 1");
-	if (sizeof($strid) > 0) {
+	if (sizeof($sql) > 0) {
 		if (!empty($sql['klausimas'])) {
 			$info = $sql['klausimas'];
 			$text = "<b>$info</b></br>";
