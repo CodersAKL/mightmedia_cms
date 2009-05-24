@@ -40,8 +40,9 @@ $text = "<table border=\"0\"><tr><td><div>\n";
 foreach($glob as $id => $file) {
 	$file = basename($file,'.php');
 	$admin_pages[$id] = $file;
-	if ((isset($conf['puslapiai'][$file.'.php']['id']) || in_array($file, array('config','meniu','logai','paneles','vartotojai','komentarai'))) && !in_array($file, array('index','pokalbiai'))) {
-		$text .= "<div class=\"blokas\"><center><a href=\"?id," . $url['id'] . ";a,{$id}\"><img src=\"images/admin/{$file}.png\" alt=\"\$lang['admin']['{$file}']\" title=\"\$lang['admin']['{$file}']\" />{$lang['admin'][$file]}</a></center></div>";
+	$admin_pagesid[$file] = $id;
+	if ((isset($conf['puslapiai'][$file.'.php']['id']) || in_array($file, array('config','meniu','logai','paneles','vartotojai','komentarai','banai'))) && !in_array($file, array('index','pokalbiai'))) {
+		$text .= "<div class=\"blokas\"><center><a href=\"?id," . $url['id'] . ";a,{$id}\"><img src=\"images/admin/{$file}.png\" alt=\"".(isset($lang['admin'][$file])?$lang['admin'][$file]:$file)."\" title=\"".(isset($lang['admin'][$file])?$lang['admin'][$file]:$file)."\" />".(isset($lang['admin'][$file])?$lang['admin'][$file]:$file)."</a></center></div>";
 	}
 }
 $text .= "</div><br style=\"clear:left\"/></td></tr></table>\n";

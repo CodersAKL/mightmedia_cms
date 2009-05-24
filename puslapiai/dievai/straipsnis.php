@@ -27,7 +27,7 @@ $buttons="<div id=\"admin_menu\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,6\
 if (empty($_GET['v'])) {
 	$_GET['v'] = 0;
 }
-lentele($lang['admin']['Articles'], $buttons);
+lentele($lang['admin']['straipsnis'], $buttons);
 unset($buttons);
 include_once ("priedai/kategorijos.php");
 kategorija("straipsniai", true);

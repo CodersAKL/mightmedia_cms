@@ -51,10 +51,10 @@ if (isset($url['d']) && isnum($url['d']) && LEVEL == 1) {
 	if ($url['d'] == "0" && isset($_POST['ip']) && !empty($_POST['ip']) && $_POST['del_all'] == $lang['admin']['delete'] && isnum($_POST['ip'])) {
 		$sql = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "logai` WHERE `ip` = " . escape($_POST['ip']));
 		msg($lang['system']['done'], "<b>" . long2ip($_POST['ip']) . "</b> {$lang['admin']['logs_logsdeleted']}.");
-		redirect("?id," . $url['id'] . ";a,19", "meta");
+		redirect("?id," . $url['id'] . ";a,{$_GET['a']}", "meta");
 	} elseif (!empty($url['d'])) {
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "logai` WHERE `id` = " . escape($url['d']) . " LIMIT 1;");
-		header("location: ?id," . $url['id'] . ";a,19");
+		header("location: ?id," . $url['id'] . ";a,{$_GET['a']}");
 	}
 } elseif (isset($url['v']) && !empty($url['v']) && isnum($url['v'])) {
 	$sql = mysql_query1("SELECT id, INET_NTOA(ip) AS ip, action, time FROM `" . LENTELES_PRIESAGA . "logai` WHERE id=" . escape($url['v']) . " LIMIT 1");
@@ -63,7 +63,7 @@ if (isset($url['d']) && isnum($url['d']) && LEVEL == 1) {
 if (!empty($url['t'])) {
 	mysql_query1("TRUNCATE TABLE `" . LENTELES_PRIESAGA . "logai`");
 	mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("Administratorius: " . $_SESSION['username'] . " ištrynė logus.") . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
-	header("location: ?id," . $url['id'] . ";a,19");
+	header("location: ?id," . $url['id'] . ";a,{$_GET['a']}");
 } else {
 	include_once ("priedai/class.php");
 	//$sql = mysql_query1("SELECT id, INET_NTOA(ip) AS ip, action, time FROM `logai` ORDER BY $order DESC LIMIT 0 , 100 ");
@@ -103,10 +103,10 @@ if (!empty($url['t'])) {
 						\">" . trimlink(input(strip_tags($row['action'])), 50) . "</a>", //"Veiksmas"=>trimlink(input($row['action']),50),
 				//"IP"=>$row['ip1'],
 			"{$lang['admin']['logs_user']}" => $kas, //"Kada"=>kada($row['time']),
-				"{$lang['admin']['action']}" => "<a href=\"" . url("d," . $row['id'] . "") . "\" title='{$lang['admin']['delete']}'><img src=\"images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a> <a href='?id," . $url['id'] . ";a,11;b,1;ip," . $row['ip'] . "' title='{$lang['admin']['badip']}'><img src=\"images/icons/delete.png\" alt=\"[{$lang['admin']['badip']}]\" border=\"0\" class=\"middle\" /></a>");
+				"{$lang['admin']['action']}" => "<a href=\"" . url("d," . $row['id'] . "") . "\" title='{$lang['admin']['delete']}'><img src=\"images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a> <a href='?id," . $url['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row['ip'] . "' title='{$lang['admin']['badip']}'><img src=\"images/icons/delete.png\" alt=\"[{$lang['admin']['badip']}]\" border=\"0\" class=\"middle\" /></a>");
 		}
 		$bla = new Table();
-		lentele("{$lang['admin']['logs']} - {$lang['admin']['logs_yourip']}: <font color='red'>" . getip() . "</font>", $bla->render($info));
+		lentele("{$lang['admin']['logai']} - {$lang['admin']['logs_yourip']}: <font color='red'>" . getip() . "</font>", $bla->render($info));
 	} else {
 		msg("{$lang['admin']['logs']}", "{$lang['admin']['logs_nologs']}.");
 	}

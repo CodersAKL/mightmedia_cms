@@ -39,7 +39,7 @@ if (empty($url['v'])) {
 	$url['v'] = 0;
 }
 
-lentele($lang['admin']['gallery'], $buttons);
+lentele($lang['admin']['galerija'], $buttons);
 
 unset($buttons, $extra, $text);
 include_once ("priedai/kategorijos.php");

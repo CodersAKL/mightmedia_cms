@@ -378,7 +378,7 @@ HTML;
 	$text .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,9;n,1';\">{$lang['admin']['panel_select']}</button>";
 	$text .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,9;n,2';\">{$lang['admin']['panel_create']}</button>";
 	//$text .= $sortableLists->printForm('?id,' . $url['id'] . ';a,9;p,l', 'POST', $lang['admin']['save'],'button');
-	lentele($lang['admin']['blocks'], $text);
+	lentele($lang['admin']['paneles'], $text);
 
 	//Funkcija panelių turiniui įrašyti
 	function irasom($Failas, $Info) {

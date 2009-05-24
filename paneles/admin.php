@@ -23,19 +23,19 @@ FROM " . LENTELES_PRIESAGA . "kom") or die(mysql_error());
 foreach ($sqli as $sql) {
 	$text = '<ul>';
 	if (isset($conf['puslapiai']['naujienos.php']['id'])) {
-		$text .= '<li><a href="?id,999;a,2;v,5">Neaktyvių naujienų: ' . $sql['news'] . '</a></li>';
+		$text .= '<li>Neaktyvių naujienų: ' . $sql['news'] . '</li>';
 	}
 	if (isset($conf['puslapiai']['siustis.php']['id'])) {
-		$text .= '<li><a href="?id,999;a,13;v,6">Neaktyvių siuntinių: ' . $sql['siuntiniai'] . '</a></li>';
+		$text .= '<li>Neaktyvių siuntinių: ' . $sql['siuntiniai'] . '</li>';
 	}
 	if (isset($conf['puslapiai']['nuorodos.php']['id'])) {
-		$text .= '<li><a href="?id,999;a,7;v,1">Neaktyvių nuorodų: ' . $sql['nuorodos'] . '</a></li>';
+		$text .= '<li>Neaktyvių nuorodų: ' . $sql['nuorodos'] . '</li>';
 	}
 	if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
-		$text .= '<li><a href="?id,999;a,4;v,6">Neaktyvių straipsnių: ' . $sql['straipsniai2'] . '</a></li>';
+		$text .= '<li>Neaktyvių straipsnių: ' . $sql['straipsniai2'] . '</li>';
 	}
 	if (isset($conf['puslapiai']['galerija.php']['id'])) {
-		$text .= '<li><a href="?id,999;a,22;v,7">Neaktyvių nuotraukų: ' . $sql['foto'] . '</a></li>';
+		$text .= '<li>Neaktyvių nuotraukų: ' . $sql['foto'] . '</li>';
 	}
 
 	$text .= '</ul> ';

@@ -75,6 +75,10 @@ if (isset($_POST['order'])) {
 
 
 } else {
+	$parent=mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent`='0' ORDER BY `place` ASC");
+foreach($parent as $parent_row){
+	$parents[$parent_row['id']]=$parent_row['pavadinimas'];
+}
 	$lygiai = array_keys($conf['level']);
 
 
@@ -82,6 +86,7 @@ if (isset($_POST['order'])) {
 		$teises[$key] = $conf['level'][$key]['pavadinimas'];
 	}
 	$teises[0] = $lang['admin']['for_guests'];
+	
 	//require ('puslapiai/dievai/tools/list.class.php');
 
 	//$sortableLists = new SLLists('javascript/scriptaculous/'); // points to path of scriptaculous JS files
@@ -144,7 +149,7 @@ lentele($page_pavadinimas,$text);
 				if (strlen($show) > 1) {
 					$align = 'Y';
 				}
-				$sql = "INSERT INTO `" . LENTELES_PRIESAGA . "page` (`pavadinimas`, `file`, `place`, `show`, `teises` ) VALUES (" . escape($psl) . ", " . escape($file) . ", '0', " . escape($show) . ", " . escape($teises) . ")";
+			$sql = "INSERT INTO `" . LENTELES_PRIESAGA . "page` (`pavadinimas`, `file`, `place`, `show`, `teises`,`parent` ) VALUES (" . escape($psl) . ", " . escape($file) . ", '0', " . escape($show) . ", " . escape($teises) . "," . escape((int)$_POST['parent']) . ")";
 				mysql_query1($sql);
 					delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
 				redirect("?id," . $url['id'] . ";a,".$url['a'], "header");
@@ -176,6 +181,7 @@ lentele($page_pavadinimas,$text);
 				"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel"), 
 				"{$lang['admin']['page_name']}:" => array("type" => "text", "value" => "{$lang['admin']['page_name']}", "name" => "Page", "class" => "input"), 
 				"{$lang['admin']['page_file']}:" => array("type" => "select", "value" => $puslapiai, "name" => "File"), 
+				"Sub" => array("type" => "select", "value" => $parents,"name" => "parent"), 
 				"{$lang['admin']['page_show']}" => array("type" => "select", "value" => array("Y" => $lang['admin']['yes'], "N" => "{$lang['admin']['no']}"), "name" => "Show"), 
 				"{$lang['admin']['page_showfor']}:" => array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai"), 
 				"" => array("type" => "submit", "name" => "Naujas_puslapis", "value" => $lang['admin']['page_create'])
@@ -213,7 +219,7 @@ lentele($page_pavadinimas,$text);
 			if (strlen($show) > 1) {
 				$align = 'Y';
 			}
-			$sql = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `pavadinimas`=" . escape($psl) . ", `show`=" . escape($show) . ",`teises`=" . escape($teises) . "  WHERE `id`=" . escape((int)$url['r']);
+			$sql = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `pavadinimas`=" . escape($psl) . ", `show`=" . escape($show) . ",`teises`=" . escape($teises) . ",`parent`= " . escape((int)$_POST['parent']) . "  WHERE `id`=" . escape((int)$url['r']);
 			mysql_query1($sql);
 				delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
 			redirect("?id," . $url['id'] . ";a,".$url['a'], "header");
@@ -230,6 +236,7 @@ lentele($page_pavadinimas,$text);
 				"{$lang['admin']['page_name']}:" => array("type" => "text", "value" => input($sql['pavadinimas']), "name" => "pslp", "class" => "input"), 
 				"{$lang['admin']['page_showfor']}:" => array("type" => "select", "value" => $teises, "name" => "Teises", "class" => "input", "class" => "input", "selected" => (isset($sql['teises']) ? input($sql['teises']) : '')), 
 				"{$lang['admin']['page_show']}" => array("type" => "select", "value" => array("Y" => $lang['admin']['yes'], "N" => $lang['admin']['no']), "selected" => input($sql['show']), "name" => "Show"), 
+				"Sub" => array("type" => "select", "value" => $parents, "selected" => input($sql['parent']), "name" => "parent"), 
 				"{$lang['admin']['page_showfor']}:" => array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai", "selected" => $selected), 
 				"" => array("type" => "submit", "name" => "Redaguoti_psl", "value" => $lang['admin']['edit'])
 			);
@@ -315,7 +322,7 @@ lentele($page_pavadinimas,$text);
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] . '" style="align:right"><img src="images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record1['id'] . '" style="align:right"><img src="images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '" align="right" /></a> 
 <img src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
-' . $record1['pavadinimas'] . '
+' .($record1['parent']!=0?$parents[$record1['parent']]." > ":""). $record1['pavadinimas'] . '
 </li> ';
 
 		}
@@ -355,7 +362,7 @@ lentele($page_pavadinimas,$text);
 	$tekstas .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,".$url['a'].";n,2';\">{$lang['admin']['page_create']}</button>";
 	$tekstas .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,".$url['a'].";n,1';\">{$lang['admin']['page_select']}</button>";
 
-	lentele($lang['admin']['pages'], $tekstas);
+	lentele($lang['admin']['meniu'], $tekstas);
 
 
 	//Funkcija puslapiu turiniui irašyti

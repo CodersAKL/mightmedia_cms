@@ -10,15 +10,22 @@
  * @$Date$
  **/
 
-$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC",2000);
-$text = '<div id="vertikalus_meniu"><ul>';
-foreach ($sql1 as $row1) {
-	if ($row1['show'] == "Y" && puslapis($row1['file'])) {
-		$text .= '<li><a href="?id,' . $row1['id'] . '">' . $row1['pavadinimas'] . '</a></li>';
-
-	}
+function build_menu($data, $id=0){
+	$re="";
+   foreach ($data[$id] as $row){
+      if (isset($data[$row['id']])){
+         $re.= "<li><a href=\"?id,{$row['id']}\">".$row['pavadinimas']."</a><ul>";
+        
+         $re.=build_menu($data, $row['id']);
+         $re.= "</ul></li>";
+      } else $re.= "<li><a href=\"?id,{$row['id']}\">".$row['pavadinimas']."</a></li>\n";
+   }
+   return $re;
 }
-$text .= '</ul></div>';
-unset($row1, $sql1);
+
+$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`='Y' ORDER BY `place` ASC");
+foreach ($res as $row){ $data[$row['parent']][] = $row;}
+$text='<div id="navigation"><ul>'.build_menu($data).'</ul></div>';
+
 
 ?>

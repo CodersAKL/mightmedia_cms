@@ -32,7 +32,7 @@ if (empty($url['v'])) {
 	$url['v'] = 0;
 }
 
-lentele($lang['admin']['downloads'], $buttons);
+lentele($lang['admin']['siustis'], $buttons);
 
 unset($buttons);
 include_once ("priedai/kategorijos.php");

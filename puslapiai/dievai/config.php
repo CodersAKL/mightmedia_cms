@@ -35,7 +35,7 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
 		mysql_query1($sql);
 	}
 	delete_cache("SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2");
-	redirect('?id,999;a,1');
+	redirect('?id,999;a,'.$_GET['a'].'');
 }
 
 $stiliai = getDirs('stiliai/');
@@ -73,7 +73,7 @@ $nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype
 
 include_once ("priedai/class.php");
 $bla = new forma();
-lentele($lang['admin']['conf'], $bla->form($nustatymai));
+lentele($lang['admin']['config'], $bla->form($nustatymai));
 unset($_POST['Konfiguracija']);
 
 ?>
