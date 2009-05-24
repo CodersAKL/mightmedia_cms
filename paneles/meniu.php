@@ -25,7 +25,7 @@ function build_menu($data, $id=0){
 
 $res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`='Y' ORDER BY `place` ASC");
 foreach ($res as $row){ $data[$row['parent']][] = $row;}
-$text='<div id="navigation"><ul>'.build_menu($data).'</ul></div>';
+$text='<div id="vertikalus_meniu"><ul>'.build_menu($data).'</ul></div>';
 
 
 ?>
