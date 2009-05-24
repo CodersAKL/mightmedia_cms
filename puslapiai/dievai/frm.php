@@ -35,11 +35,11 @@ echo "?" . $_SERVER['QUERY_STRING'];
 /**
  * @Projektas: MightMedia TVS
  * @Puslapis: www.coders.lt
- * @$Author$
+ * @$Author: FDisk $
  * @copyright CodeRS ©2008
  * @license GNU General Public License v2
- * @$Revision$
- * @$Date$
+ * @$Revision: 124 $
+ * @$Date: 2009-05-24 14:14:40 +0300 (Sk, 24 Geg 2009) $
  **/
 
 
