@@ -383,6 +383,7 @@ CREATE TABLE IF NOT EXISTS `page` (
   `place` int(11) default NULL,
   `show` enum('Y','N') collate utf8_lithuanian_ci NOT NULL default 'Y',
   `teises` varchar(150) collate utf8_lithuanian_ci NOT NULL default 'N;',
+  `parent` int(150) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
