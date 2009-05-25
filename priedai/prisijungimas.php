@@ -93,7 +93,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'prisijungimas') {
 			header("Location: " . (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : adresas()));
 
 		} else {
-			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['user']['wrong']}: User: " . $strUsername . " Pass: " . str_repeat('*',strlen($_POST['slaptazodis'])) . ",'" . time() . "',INET_ATON(" . escape($_SERVER['REMOTE_ADDR']) . "));");
+			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['user']['wrong']}: User: " . $strUsername . " Pass: " . str_repeat('*',strlen($_POST['slaptazodis']))) . ",'" . time() . "',INET_ATON(" . escape($_SERVER['REMOTE_ADDR']) . "));");
 			$strError = $lang['user']['wrong'];
 			isset($_SESSION['login_error']) ? $_SESSION['login_error']++ : $_SESSION['login_error'] = 1;
 		}
