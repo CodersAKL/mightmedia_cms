@@ -23,7 +23,7 @@ if (preg_match('%/\*\*/|SERVER|http|SELECT|UNION|UPDATE|INSERT%i', $_SERVER['QUE
 	ban($lang['system']['forhacking']);
 }
 //admin links
-if($_SESSION['level']==1){
+if(isset($_SESSION['level']) && $_SESSION['level']==1){
 $glob = glob('puslapiai/dievai/*.php');
 foreach($glob as $id => $file) {
 	$file = basename($file,'.php');
@@ -63,6 +63,7 @@ function header_info() {
   <script type="text/javascript" src="javascript/jquery/jquery.colorbox.js"></script>
   <script type="text/javascript">
 			$(document).ready(function(){
+	
 				//Examples of how to assign the ColorBox event to elements.
 				$("#gallery a[rel=\'lightbox\']").colorbox({transition:"fade"});
 			

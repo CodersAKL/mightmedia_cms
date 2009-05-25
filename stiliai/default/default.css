@@ -189,30 +189,45 @@ text-align:left;
 #navigation {width:100%; font-size:12px;}
 
 /*Main Menu*/
-#navigation ul {margin:0px; padding:0px;}
+#navigation ul {	
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	border: none;}
 
-#navigation ul li {
-height:25px;
-line-height:25px; 
-list-style:none; 
-padding-left:10px;
-color:#FFF; 
-border-bottom: 1px dashed #73A4BF;
-cursor:pointer; 
+#navigation ul li a{
+	font-size: 10px;
+	display: block;
+	border-bottom: 1px dashed #73A4BF;
+	padding: 5px 0px 2px 4px;
+	text-decoration: none;
+	color: #666666;
+	width:160px;
+
 }
-#navigation ul li:hover {background-color:#FBF8F4; position:relative;}
+#navigation ul li:hover {
+	color: #000000;
+	background-color: #73A4BF;
+	 position:relative;
+	 }
 
 /*Sub Menu*/
-#navigation ul ul {display:none; position:absolute; left:75px; top:5px; border:#666 solid; border-width:1px; background-color:#FFF }
-#navigation ul li:hover ul {display:block;border-bottom: 1px dashed #73A4BF;}
-
-#navigation ul ul li { width:150px; float:left; display:inline; border:none;}
-#navigation ul ul li:hover {text-decoration:underline; border:none;}
+#navigation ul ul {background-image: url(images/block_vidus_fonas.gif);
+	background-repeat: repeat-x;display:none; position:absolute; left:160px; top:0px; }
+#navigation ul li:hover ul {display:block;}
+#navigation ul ul li{ font-size: 10px;
+	display: block;
+	padding: 5px 0px 2px 4px;
+	text-decoration: none;
+	color: #666666;
+	width:165px;}
+#navigation ul ul li:hover {}
 
 #navigation li:hover ul li ul {display:none;}
 
-#navigation ul ul li ul {left:110px;}
+#navigation ul ul li ul {left:110px; }
 #navigation ul ul li:hover ul {display:block;}
+
 
 /* Meniu juosta*/
 #juosta {
