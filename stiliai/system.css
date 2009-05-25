@@ -424,8 +424,8 @@ div.btns a.btn{
 	background:buttonface url(../images/admin/border-2.gif) no-repeat;cursor:pointer;font-size:0;text-align:center;
 	text-align:center;
 	display:block;
-	_width:100px;
-	min-width:100px;
+	/*_width:100px;
+	min-width:100px;*/
 	text-decoration:none;
 	margin:3px 2px;
 }

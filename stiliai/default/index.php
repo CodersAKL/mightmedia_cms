@@ -25,20 +25,26 @@ echo $text;
 <div class="header_bar"><a href="?" title="<?php adresas(); ?>"><img src="stiliai/<?php echo $conf['Stilius']; ?>/images/hdr_left.jpg" alt=""/></a></div>
 
 <div class="title">
-             <?php echo input(strip_tags($conf['Apie'])); ?>
+            <?php echo trimlink(input(strip_tags($conf['Apie'])),120); ?>
             </div>
 </div>
 <div class="pagr">
 <div class="virsus"></div>
 <div class="aplink">
-<div class="kaire">
-<div class="shadow">
-<?php include ("priedai/kairespaneles.php"); ?>
-</div>
-<div class="shadow_bottom"></div>
-</div>
 
-<div class="center">
+<?php 
+$desinespaneles = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC", 120); 
+$kairespaneles = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC", 120); if (sizeof($kairespaneles)): ?>
+
+<div class="kaire">
+	<div class="shadow">
+		<?php include ("priedai/kairespaneles.php"); ?>
+	</div>
+	<div class="shadow_bottom"></div>
+</div>
+<?php endif; ?>
+
+<div class="center" style="width:<?php echo (490 + (!sizeof($kairespaneles)?200:0) + (!sizeof($desinespaneles)?200:0)); ?>px">
 
 
 <?php
@@ -51,19 +57,20 @@ include ($page . ".php");
 ?>
 
 </div>
+<?php if (sizeof($desinespaneles)): ?>
 <div class="desine">
-<div class="shadow">
-<?php include ("priedai/desinespaneles.php"); ?>
+	<div class="shadow">
+		<?php include ("priedai/desinespaneles.php"); ?>
+	</div>
+	<div class="shadow_bottom"></div>
 </div>
-<div class="shadow_bottom"></div>
-</div>
-
+<?php endif; ?>
 
 <div style="clear: both;"> </div>
 
 </div>
 </div>
-<div  class="title">
+<div class="title">
 <?php copyright( $conf['Copyright'] );?>
 </div>
 </div>
