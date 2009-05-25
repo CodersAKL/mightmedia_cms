@@ -11,10 +11,8 @@
  **/
 
 if ($url['id'] != '999') {
-
-	klaida("Dėmesio!", "Toks puslapis nerastas, arba jūs neturite teisės jo matyti.");
+	klaida($lang['system']['warning'], $lang['system']['nopage']);
 }
-//msg("Pranešimas","Bandyk dar kartą");
 
 
 ?>
