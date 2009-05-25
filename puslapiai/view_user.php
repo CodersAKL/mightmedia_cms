@@ -48,7 +48,7 @@ if (isset($url['m']) && $url['m'] > 0) {
 			<tr >
 				<td height="14" class="td" width="140">
           <center>
-            ' . avatar($sql['email'], '80') . '<br />
+            ' . avatar($sql['email'], '80') . '<br style="clear:both" />
             <small>' . $grupe . '<br />' . $admin . '</small>
           </center>
         </td>
