@@ -43,7 +43,7 @@ ORDER BY `time` DESC LIMIT " . escape((int)$conf['Chat_limit']));
 	if (sizeof($chat) > 0) {
 		foreach ($chat as $row) {
 			$i++;
-			if ($_SESSION['level'] == 1 || (isset($_SESSION['mod']) && strlen($_SESSION['mod']) > 1) && isset($conf['puslapiai']['deze.php']['id'])) {
+			if (($_SESSION['level'] == 1 || (isset($_SESSION['mod']) && strlen($_SESSION['mod']) > 1)) && isset($conf['puslapiai']['deze.php']['id'])) {
 				$extras = "
         <a title='{$lang['admin']['delete']}' href='?id," . $conf['puslapiai']['deze.php']['id'] . ";d," . $row['id'] . "'><img src='images/icons/control_delete_small.png' alt='[d]' class='middle' border='0' /></a>
         <a title='{$lang['admin']['edit']}' href='?id," . $conf['puslapiai']['deze.php']['id'] . ";r," . $row['id'] . "'><img src='images/icons/brightness_small_low.png' alt='[r]' class='middle' border='0' /></a>
