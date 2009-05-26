@@ -131,7 +131,7 @@ HTML;
 				$pathas = $path['path'] . "," . $path['id'];
 			}
 		}else{
-			$pathas=0;
+			$pathas='0';
 		}
 		
 		if ($kieno == 'vartotojai') {
@@ -327,8 +327,10 @@ HTML;
 			klaida("{$lang['system']['warning']}", "{$lang['system']['nomorecategories']}.");
 		}
 }	} elseif ($_GET['v'] == 3) {
+	if(isset($kategorijoss)){
 		$kategorijos_redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,2", "method" => "post", "name" => "reg"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijoss, "name" => "Kategorijos_id"), "{$lang['system']['edit']}:" => array("type" => "submit", "name" => "Kategorija", "value" => "{$lang['system']['edit']}"), "{$lang['system']['delete']}:" => array("type" => "submit", "name" => "Kategorija", "value" => "{$lang['system']['delete']}"));
 		lentele($lang['system']['editcategory'], $bla->form($kategorijos_redagavimas));
+		}else{klaida($lang['system']['warning'],$lang['system']['nocategories']);}
 	}
 	delete_cache("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai'  ORDER BY `pavadinimas`");
 	unset($bla, $info, $sql, $sql2, $q, $result, $result2);

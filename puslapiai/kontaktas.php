@@ -41,7 +41,7 @@ if (isset($_POST['kontaktas']) && $_POST['kontaktas'] == 'Siųsti' && strtoupper
 	}
 }
 
-$forma = '
+/*$forma = '
  <form name="knyga" method="post">
  ' . $lang['contact']['subject'] . ':<br /><input type="text" name="pavadinimas" value="' . (isset($title) && !empty($title) ? input($title) : '') . '" size="20" class="input"><br />
 ' . $lang['contact']['name'] . ':<br /><input type="text" name="vardas" value="' . (isset($from) && !empty($from) ? input($from) : '') . '" size="20" class="input"><br />
@@ -55,9 +55,12 @@ $forma = '
 		<input type="submit" name="kontaktas" value="' . $lang['contact']['submit'] . '" />
 		</form>
 ';
-
-lentele($lang['contact']['form'], $forma);
-
+lentele($lang['contact']['form'], $forma);*/
+include_once ("priedai/class.php");
+$bla = new forma();
+	$form = array("Form" => array("action" => "", "method" => "post", "name" => "kontaktas"), "{$lang['contact']['subject']}:" => array("type" => "text", "class"=>"input", "value" => (isset($title) && !empty($title) ? input($title) : ''), "name" => "pavadinimas", "class"=>"input"),"{$lang['contact']['name']}:" => array("type" => "text", "class"=>"input", "value" => (isset($from) && !empty($from) ? input($from) : ''), "name" => "vardas", "class"=>"input"),"{$lang['contact']['email']}:" => array("type" => "text", "class"=>"input", "value" => (isset($email) ? input($email) : ''), "name" => "email", "class"=>"input"), "{$lang['contact']['message']}:" => array("type" => "textarea", "value" =>(isset($_POST['zinute']) && !empty($_POST['zinute']) ? input($_POST['zinute']) : ''), "name" => "zinute","extra" => "rows=5", "class"=>"input"), kodas()=> array("type" => "text", "value" =>"","name"=>"code", "class"=>"chapter"),
+		" " => array("type" => "submit", "name" => "kontaktas", "value" => "{$lang['contact']['submit']}"));
+	lentele($lang['contact']['form'], $bla->form($form));	
 unset($forma, $result, $from, $forma, $error, $to, $msg, $email, $title);
 //PABAIGA - atvaizdavimo
 

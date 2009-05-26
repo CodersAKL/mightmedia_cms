@@ -20,7 +20,8 @@ if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
 }
 $limit = 50;
 $viso = kiek("chat_box");
-
+include_once ("priedai/class.php");
+$bla = new forma();
 //jei tai moderatorius
 if ($_SESSION['level'] == 1 || (isset($_SESSION['mod']) && strlen($_SESSION['mod']) > 1)) {
 	//jei paspaude trinti
@@ -40,7 +41,7 @@ if ($_SESSION['level'] == 1 || (isset($_SESSION['mod']) && strlen($_SESSION['mod
 		$nick_id = $_SESSION['id'];
 		if (empty($_POST)) {
 			$msg = mysql_query1("SELECT `msg` FROM `" . LENTELES_PRIESAGA . "chat_box` WHERE `id`=" . escape(ceil((int)$url['r'])) . " LIMIT 1");
-			$msg = '<form name="chat_box_edit" action="" method="post">
+			/*$msg = '<form name="chat_box_edit" action="" method="post">
 					<textarea name="msg" rows="3" cols="25" wrap="on" class="input">' . input($msg['msg']) . '</textarea>
 					<br />
 					<input type="submit" name="chat_box" value="' . $lang['admin']['edit'] . '" />
@@ -48,15 +49,16 @@ if ($_SESSION['level'] == 1 || (isset($_SESSION['mod']) && strlen($_SESSION['mod
 					';
 
 			$text = $msg;
-			lentele($lang['sb']['edit'], $text);
+			lentele($lang['sb']['edit'], $text);*/
+			$form = array("Form" => array("action" => "", "method" => "post", "name" => "chat_box_edit"), "{$lang['guestbook']['message']}:" => array("type" => "textarea", "value" => $msg['msg'], "name" => "msg","extra" => "rows=5", "class"=>"input"),
+		" " => array("type" => "submit", "name" => "chat_box", "value" =>  $lang['admin']['edit']));
+			lentele($lang['sb']['edit'], $bla->form($form));
 		} elseif (isset($_POST['chat_box']) && $_POST['chat_box'] == $lang['admin']['edit'] && !empty($_POST['msg'])) {
 			$msg = trim($_POST['msg']) . "\n[sm] [i] {$lang['sb']['editedby']}: " . $_SESSION['username'] . " [/i] [/sm]";
 			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "chat_box` SET `msg` = " . escape($msg) . " WHERE `id` =" . escape($url['r']) . " LIMIT 1");
 			if (mysql_affected_rows() > 0) {
 				msg($lang['system']['done'], $lang['sb']['updated']);
-			} else {
-				klaida($lang['system']['error'], mysql_error());
-			}
+			} redirect("?id,{$_GET['id']};p,$p#".escape($url['r'])."","meta");
 
 		}
 	}

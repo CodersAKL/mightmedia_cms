@@ -77,6 +77,7 @@ if (isset($_POST['order'])) {
 
 } else {
 	$parent=mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent`='0' ORDER BY `place` ASC");
+	$parents[0]="";
 foreach($parent as $parent_row){
 	$parents[$parent_row['id']]=$parent_row['pavadinimas'];
 }

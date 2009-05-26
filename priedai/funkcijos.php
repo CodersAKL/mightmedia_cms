@@ -488,7 +488,9 @@ function puslapiai($start, $count, $total, $range = 0) {
  * @return 1 arba NULL
  */
 function isNum($value) {
-	return preg_match("/^[0-9]+$/", $value);
+//	if(is_string($value)){
+	return @preg_match("/^[0-9]+$/", $value);//}
+	//else {return false;}
 }
 
 /**
@@ -547,7 +549,7 @@ function escape($sql) {
 	//Jei ne skaičius
 	if (!isnum($sql) || $sql[0] == '0') {
 		if (!isnum($sql)) {
-			$sql = "'" . mysql_real_escape_string($sql) . "'";
+			$sql = "'" . @mysql_real_escape_string($sql) . "'";
 		}
 	}
 	return $sql;
