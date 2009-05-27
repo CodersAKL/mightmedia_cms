@@ -1,36 +1,21 @@
 <?php
-
-/**
- * @Projektas: MightMedia TVS
- * @Puslapis: www.coders.lt
- * @$Author$
- * @copyright CodeRS ©2008
- * @license GNU General Public License v2
- * @$Revision$
- * @$Date$
- **/
-//NEBAIKTA
-if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
-	$p = escape(ceil((int)$url['p']));
-} else {
-	$p = 0;
-}
-
-$limit = 10;
-$viso = kiek("balsavimas");
-$text = '';
-
-//Atvaizduojam pranesimus su puslapiavimu - LIMITAS nurodytas virsuje
-if ($viso > 0) {
-	$sql2 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "balsavimas` ORDER BY `laikas` DESC LIMIT $p, $limit", 2000);
-
-	//Puslapiavimas
-	if ($viso > $limit) {
-		lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
+$limit=6;
+$viso=kiek("balsavimas");
+$p=(isset($_GET['p'])?$_GET['p']:0);
+$sqlas = mysql_query1("SELECT * ,autorius ,(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE id=autorius LIMIT 1)AS nick FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE ijungtas='TAIP' ORDER BY `laikas` DESC LIMIT $p , $limit");
+//$sql = mysql_fetch_assoc($sql);
+$text="";
+foreach($sqlas as $sql){
+if (isset($sql['klausimas'])) {
+	if (isset($_SESSION['id'])) {
+		$narys = $_SESSION['id'];
+		$userid = $_SESSION['id'] . ";";
+	} else {
+		$userid = "";
+		$narys = $_SERVER['REMOTE_ADDR'];
 	}
 
-		foreach ($sql2 as $sql) {
-		$ipasai = explode(";", $sql['ips']);
+	$ipasai = explode(";", $sql['ips']);
 	$nariai = explode(";", $sql['nariai']);
 	$ats = array();
 	$atsa = array();
@@ -45,8 +30,8 @@ if ($viso > 0) {
 
 		for ($i = 1; $i <= 5; $i++) {
 	if (!empty($ats[$i][0])) {
-				$atsa[$i] = "<br />" . $ats[$i][0] . " [" . $ats[$i][1] . "] <br />";
-				$img = round((int)(100 / $viso * $ats[$i][1]));
+				$atsa[$i] = "<br />" . $ats[$i][0] . " [" . (!empty($ats[$i][1])?$ats[$i][1]:0) . "] <br />";
+				$img = @round((int)(100 / $viso * $ats[$i][1]));
                 $atsa[$i] .= '
          <div style="width:'.$img.'%;background:url(images/balsavimas/center.png) top left repeat-x; height:10px">
          
@@ -58,26 +43,23 @@ if ($viso > 0) {
 			} else {
 				$atsa[$i] = '';
 			}
-		
+		}
 
 		$rezultatai = '<blockquote><div align="left"><center><b>' . (isset($sql['klausimas']) ? $sql['klausimas'] : "N/A") . '</b></center>' . $atsa[1] . $atsa[2] . $atsa[3] . $atsa[4] . $atsa[5] . '</div>';
 	
-}
-		}
-		lentele($lang['poll']['archive'], $rezultatai);
 
-		//Puslapiavimas
-		if ($viso > $limit) {
-			lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
-		}
-	
+
+
+	$text .= $rezultatai.'<br/> ' . $lang['poll']['votes'] . ': ' . $viso . '';
+	$text .= '<br>	' . $lang['poll']['author'] . ': ' . user($sql['nick'], $sql['autorius']) . '';
+	$text .= '</blockquote><hr></hr>';
 } else {
-	lentele($lang['poll']['archive'], $lang['poll']['no']);
+	$text .= '<blockquote><b>' . $lang['poll']['no'] . '.</b><br/>';
+}}
+lentele($lang['poll']['archive'], $text);
+if ($viso > $limit) {
+	lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
 }
-
-unset($extra, $text);
-
-//PABAIGA - atvaizdavimo
-
+unset($rezultatai, $atsakymas, $ipsai, $nariai, $narys, $atsakymas, $ats, $atsa, $sql);
 
 ?>
