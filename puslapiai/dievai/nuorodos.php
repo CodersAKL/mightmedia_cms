@@ -22,7 +22,7 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,5'">{$lang['system']['createsubcategory']}</button>
 
 HTML;*/
-$buttons="
+$buttons = "
 <div class=\"btns\">
 	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,1\" class=\"btn\"><span><img src=\"images/icons/chain__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['links_unpublished']}</span></a>
 	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,4\" class=\"btn\"><span><img src=\"images/icons/chain__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['links_edit']}</span></a>
@@ -75,7 +75,7 @@ if (sizeof($sql2) > 0) {
 	}
 }
 
-require_once("priedai/class.php");
+require_once ("priedai/class.php");
 
 $bla = new forma();
 
@@ -168,9 +168,11 @@ elseif ($_GET['v'] == 1) {
 
 		}
 		lentele($lang['admin']['nuorodos'], $bla->render($info));
+	} else {
+		klaida($lang['system']['warning'], $lang['system']['no_items']);
 	}
 }
 unset($bla, $info, $sql, $sql2, $q, $result, $result2);
-unset($_POST);
+//unset($_POST);
 
 ?>

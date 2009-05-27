@@ -8,6 +8,7 @@ $lang['system']['warning'] = 'Warning!';
 $lang['system']['sorry'] = 'Sorry';
 $lang['system']['updated'] = 'Updated';
 $lang['system']['done'] = 'Done!';
+$lang['system']['no_items'] = 'Empty!';
 $lang['system']['contactadmin'] = 'Contact admin'; //susisiek su adminu (nezinau kaip)
 $lang['system']['notadmin'] = 'You are not admin!';
 $lang['system']['pleaselogin'] = 'You must login!';
