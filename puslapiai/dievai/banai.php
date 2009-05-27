@@ -56,8 +56,8 @@ if (isset($_GET['b']) && $_GET['b'] == 1)
     {
         if (preg_match("/^[0-9]{2,3}[.]{1,1}[0-9]{2,3}[.]{1,1}[0-9]{2,3}[.]{1,1}[0-9]{1,3}$/", $_POST['ip']))
         {
-            $sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE ip =INET_ATON(" . escape($_POST['ip']) . ") AND levelis=1") or die(mysql_error());
-            if (mysql_num_rows($sql) == 0)
+            $sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE ip =INET_ATON(" . escape($_POST['ip']) . ") AND levelis=1");
+            if (count($sql) == 0)
             {
                 $ip = "#" . $_POST['priezastis'] . "\ndeny from " . $_POST['ip'] . "\n";
                 $banip = '.htaccess';
