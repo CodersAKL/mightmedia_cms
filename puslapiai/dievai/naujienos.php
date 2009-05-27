@@ -171,9 +171,14 @@ foreach ($sql as $row) {
 if (isset($_GET['v'])) {
 	include_once ("priedai/class.php");
 	$bla = new forma();
+
 	if ($_GET['v'] == 4) {
-		$redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,1", "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "select", "value" => $naujienos, "name" => "edit_new"), "{$lang['admin']['edit']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "{$lang['admin']['delete']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['delete']}"));
-		lentele($lang['admin']['edit'], $bla->form($redagavimas));
+		if (isset($naujienos)) {
+			$redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,1", "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "select", "value" => $naujienos, "name" => "edit_new"), "{$lang['admin']['edit']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "{$lang['admin']['delete']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['delete']}"));
+			lentele($lang['admin']['edit'], $bla->form($redagavimas));
+		} else {
+			klaida($lang['system']['warning'], $lang['system']['no_items']);
+		}
 	} elseif ($_GET['v'] == 1 || isset($_GET['h'])) {
 		if ($i = 1) {
 			$kom = array('taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no']);
@@ -218,5 +223,6 @@ if (isset($_GET['v'])) {
 
 unset($sql, $extra, $row);
 //unset($_POST);
+
 
 ?>
