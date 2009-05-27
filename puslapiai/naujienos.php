@@ -38,12 +38,11 @@ $data = '';
 // Jei niekas nepaspaudziama, o atidaromas pirminis puslapis
 if ($kid == 0) {
 
-	$sql = mysql_query1("
-			SELECT SQL_CACHE *, (SELECT SQL_CACHE COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
+	$sql = mysql_query1("SELECT SQL_CACHE *, (SELECT SQL_CACHE COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
 			FROM `" . LENTELES_PRIESAGA . "naujienos`
 			WHERE `rodoma`= 'TAIP'
 			ORDER BY `data` DESC
-			LIMIT {$p},{$limit}", 300) or die(mysql_error());
+			LIMIT {$p},{$limit}", 300);
 
 
 	if (sizeof($sql) > 0) {

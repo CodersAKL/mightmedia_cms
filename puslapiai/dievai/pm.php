@@ -73,7 +73,7 @@ if (isset($url['w']) && !empty($url['w'])) {
 // Trinam laiska
 if (isset($url['d']) && isnum($url['d'])) {
 	if ($url['d'] == "0" && isset($_POST['to']) && !empty($_POST['to']) && $_POST['del_all'] == $lang['admin']['delete']) {
-		$sql = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_POST['to']) . "") or die(mysql_error());
+		$sql = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_POST['to']) . "");
 		//$i = mysql_affected_rows();
 		if ($sql) {
 			msg($lang['system']['done'], "<b>" . input($_POST['to']) . "</b> {$lang['admin']['pm_msgsdeleted']}.");
@@ -83,7 +83,7 @@ if (isset($url['d']) && isnum($url['d'])) {
 		}
 	}
 	if ($url['d'] == "0" && isset($_POST['from']) && !empty($_POST['from']) && $_POST['del_all'] == $lang['admin']['delete']) {
-		$sql = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape($_POST['from']) . "") or die(mysql_error());
+		$sql = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape($_POST['from']) . "");
 		//$i = mysql_affected_rows();
 		if ($sql) {
 			msg($lang['system']['done'], "<b>" . input($_POST['from']) . "</b> {$lang['admin']['pm_msgsdeleted']}.");
@@ -93,7 +93,7 @@ if (isset($url['d']) && isnum($url['d'])) {
 		}
 	}
 	if (!empty($url['d']) && $url['d'] > 0) {
-		$sql = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE id=" . escape((int)$url['d'])) or die(mysql_error());
+		$sql = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE id=" . escape((int)$url['d']));
 		if ($sql) {
 			msg($lang['system']['done'], "{$lang['admin']['pm_deleted']}.");
 			redirect("?id,999;a," . $_GET['a'] . "", "meta");

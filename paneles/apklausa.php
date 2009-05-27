@@ -40,8 +40,17 @@ if (isset($sql['klausimas'])) {
 
 	if ($viso != 0) {
 		for ($i = 1; $i <= 5; $i++) {
-			if (!empty($ats[$i][0])) {
-				$atsa[$i] = $ats[$i][0] . " [" . $ats[$i][1] . "] <br><hr align='left' width='" . (100 / $viso * $ats[$i][1]) . "'></hr><br/>";
+	if (!empty($ats[$i][0])) {
+				$atsa[$i] = "<br />" . $ats[$i][0] . " [" . $ats[$i][1] . "] <br />";
+				$img = round((int)(100 / $viso * $ats[$i][1]));
+                $atsa[$i] .= '
+         <div style="width:'.$img.'%;background:url(images/balsavimas/center.png) top left repeat-x; height:10px">
+         
+			<div style="float:right;height:8px; width:1px; border-right:1px solid black;margin:1px -1px"></div>
+			<div style="float:left;height:8px; width:1px; border-right:1px solid black;margin:1px -2px"></div>
+
+		</div>
+';
 			} else {
 				$atsa[$i] = '';
 			}
@@ -86,7 +95,7 @@ if (isset($sql['klausimas'])) {
 					$atsakymas = $_POST['balsas'] . ";" . ($ats[5][1] + 1);
 				}
 
-				$result2 = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "balsavimas` SET $stulp = " . escape($atsakymas) . ", ips=" . escape($sql['ips'] . $_SERVER['REMOTE_ADDR'] . ";") . ", nariai='" . $sql['nariai'] . $userid . "' WHERE `id`=" . escape($sql['id'])) or die(mysql_error());
+				$result2 = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "balsavimas` SET $stulp = " . escape($atsakymas) . ", ips=" . escape($sql['ips'] . $_SERVER['REMOTE_ADDR'] . ";") . ", nariai='" . $sql['nariai'] . $userid . "' WHERE `id`=" . escape($sql['id']));
 				header("Location: " . $_SERVER['PHP_SELF'] . "");
 			}
 

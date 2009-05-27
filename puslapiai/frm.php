@@ -198,12 +198,10 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 	//trinam posta
 	if (isset($tid) && isset($sid) && isset($did) && $did > 0 && defined("LEVEL") && ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1)) {
 
-		/*$autorius = mysql_fetch_assoc(mysql_query1("SELECT `nick` FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . ""));
-		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_atsakyta`=`forum_atsakyta`-1 , `taskai`=`taskai`-1 WHERE id=" . escape($autorius['nick']) . "") or die(mysql_error());
-		$msql = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . "");*/
+	
 		//Cia nesugalvojau kaip visas 3 sujungt :(
 		$msql = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_atsakyta`=`forum_atsakyta`-1 , `taskai`=`taskai`-1 WHERE id=(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . "  LIMIT 1);
-") or die(mysql_error());
+");
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . "");
 
 
@@ -303,9 +301,9 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 			$extra = '';
 			if (!empty($_POST['msg']) && $_POST['action'] == 'f_update') {
 				if ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1) {
-					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]Redagavo: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . "") or die(mysql_error());
+					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]Redagavo: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . "");
 				} else {
-					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]Redagavo: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . " AND `nick`=" . escape($_SESSION['id']) . "") or die(mysql_error());
+					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]Redagavo: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . " AND `nick`=" . escape($_SESSION['id']) . "");
 				}
 				redirect("?id," . $url['id'] . ";s,$sid;t,$tid;p,$p");
 			} else {
@@ -343,11 +341,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 						$uid = $_SESSION['id'];
 					}
 
-					/* mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_zinute` (`tid`, `sid`, `nick`, `zinute`, `laikas`) VALUES (" . escape($sid) . ", " . escape($tid) . ", " . escape($uid) . ", " . escape($zinute) . ", '" . time() . "')") or die(mysql_error());
-					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_temos` SET `last_data`= '" . time() . "', `last_nick`=" . escape($_SESSION['username']) . " WHERE `id`=" . escape($sid) . "") or die(mysql_error());
-					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_straipsniai` SET `last_data`= '" . time() . "', `last_nick`=" . escape($_SESSION['username']) . " WHERE `id`=" . escape($tid) . "") or die(mysql_error());
-					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_atsakyta`=`forum_atsakyta`+1 , `taskai`=`taskai`+1 WHERE nick=" . escape($_SESSION['username']) . "") or die(mysql_error());
-					*/
+				
 					//is 4 dvi uzklausos :), nemoku sujungt update ir insert :(
 					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_temos`,`" . LENTELES_PRIESAGA . "users`,`" . LENTELES_PRIESAGA . "d_straipsniai`
 SET 
@@ -358,8 +352,8 @@ SET
 `" . LENTELES_PRIESAGA . "users`.`taskai`=`" . LENTELES_PRIESAGA . "users`.`taskai`+1 
 WHERE `" . LENTELES_PRIESAGA . "users`.`nick`=" . escape($_SESSION['username']) . " 
 AND `" . LENTELES_PRIESAGA . "d_straipsniai`.`id`=" . escape($tid) . " AND `" . LENTELES_PRIESAGA . "d_temos`.`id`=" . escape($sid) . "
-") or die(mysql_error());
-					mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_zinute` (`tid`, `sid`, `nick`, `zinute`, `laikas`) VALUES (" . escape($sid) . ", " . escape($tid) . ", " . escape($uid) . ", " . escape($zinute) . ", '" . time() . "')") or die(mysql_error());
+");
+					mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_zinute` (`tid`, `sid`, `nick`, `zinute`, `laikas`) VALUES (" . escape($sid) . ", " . escape($tid) . ", " . escape($uid) . ", " . escape($zinute) . ", '" . time() . "')");
 					header('location: ' . $_SERVER['HTTP_REFERER'] . '');
 
 					unset($zinute, $uid, $f_atsakyta);
@@ -405,10 +399,10 @@ elseif ((int)$lid != 0 && $kid == 0 && $rid == 0) {
 			$lock = $sql['uzrakinta'];
 
 			if ($lock == "ne") {
-				$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_straipsniai` SET `uzrakinta`='taip' WHERE `id`=" . escape($lid) . "") or die(mysql_error());
+				$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_straipsniai` SET `uzrakinta`='taip' WHERE `id`=" . escape($lid) . "");
 
 			} elseif ($lock == "taip") {
-				$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_straipsniai` SET `uzrakinta`='ne' WHERE `id`=" . escape($lid) . "") or die(mysql_error());
+				$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_straipsniai` SET `uzrakinta`='ne' WHERE `id`=" . escape($lid) . "");
 				;
 			}
 
@@ -425,17 +419,17 @@ elseif ((int)$kid && (int)$kid && (int)$kid > 0) {
 	if (defined("LEVEL") && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1) {
 
 		//atimam autoriui tema
-		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_temos`=`forum_temos`-1 WHERE id=(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `sid`=" . escape($kid) . " ORDER BY laikas ASC LIMIT 1) LIMIT 1") or die(mysql_error());
+		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_temos`=`forum_temos`-1 WHERE id=(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `sid`=" . escape($kid) . " ORDER BY laikas ASC LIMIT 1) LIMIT 1");
 
 
 		$gis = mysql_query1("SELECT nick FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `sid`=" . escape($kid) . "");
 		foreach ($gis as $stulpelis) {
-			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` set `taskai`=`taskai`-1,`forum_atsakyta`=`forum_atsakyta`- 1 where id=" . escape($stulpelis['nick']) . "") or die(mysql_error());
+			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` set `taskai`=`taskai`-1,`forum_atsakyta`=`forum_atsakyta`- 1 where id=" . escape($stulpelis['nick']) . "");
 		}
 		//istrinam zinuters ir tema
 
 		$result = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `id`=" . escape($kid) . "");
-		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `sid`=" . escape($kid) . "") or die(mysql_error());
+		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `sid`=" . escape($kid) . "");
 		if ($result) {
 			header("Location: ?id," . $url['id'] . ";s," . $sid . "");
 			exit;

@@ -61,8 +61,7 @@ if (isset($_POST['order'])) {
 	//print_r($array);
 	//$sql=array();
 	foreach ($array as $position => $item):
-		//$sql[] = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "page` SET `place` = ".escape($position)." WHERE `id` = ".escape($item)."")or die(mysql_error());
-		//$sql= "(UPDATE `" . LENTELES_PRIESAGA . "page` SET `place` = ".escape($position)." WHERE `id` = ".escape($item).")"
+		
 		$case_place .= "WHEN " . (int)$item . " THEN '" . (int)$position . "' ";
 		//$case_type .= "WHEN $phone_id THEN '" . $number['type'] . "' ";
 		$where .= "$item,";

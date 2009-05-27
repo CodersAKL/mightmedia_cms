@@ -66,10 +66,9 @@ if (isset($_POST['order'])) {
 	//print_r($array);
 	//$sql=array();
 	foreach ($array as $position => $item):
-		//$sql[] = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "page` SET `place` = ".escape($position)." WHERE `id` = ".escape($item)."")or die(mysql_error());
-		//$sql= "(UPDATE `" . LENTELES_PRIESAGA . "page` SET `place` = ".escape($position)." WHERE `id` = ".escape($item).")"
+	
 		$case_place .= "WHEN " . (int)$item . " THEN '" . (int)$position . "' ";
-		//$case_type .= "WHEN $phone_id THEN '" . $number['type'] . "' ";
+		
 		$where .= "$item,";
 	endforeach;
 	$where = rtrim($where, ", ");
@@ -86,8 +85,7 @@ if (isset($_POST['order2'])) {
 	//print_r($array);
 	//$sql=array();
 	foreach ($array as $position => $item):
-		//$sql[] = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "page` SET `place` = ".escape($position)." WHERE `id` = ".escape($item)."")or die(mysql_error());
-		//$sql= "(UPDATE `" . LENTELES_PRIESAGA . "page` SET `place` = ".escape($position)." WHERE `id` = ".escape($item).")"
+	
 		$case_place .= "WHEN " . (int)$item . " THEN '" . (int)$position . "' ";
 		//$case_type .= "WHEN $phone_id THEN '" . $number['type'] . "' ";
 		$where .= "$item,";
@@ -167,7 +165,7 @@ if (isset($_GET['t'])) {
 	$sql12 = mysql_query1("SELECT id from `" . LENTELES_PRIESAGA . "d_straipsniai` where `tid`='" . $f_id . "'");
 	if (sizeof($sql12) > 0) {
 		foreach ($sql12 as $sidas) {
-			$result2 = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_zinute`  WHERE sid='" . $sidas['id'] . "'") or die(mysql_error());
+			$result2 = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_zinute`  WHERE sid='" . $sidas['id'] . "'");
 
 		}
 	}

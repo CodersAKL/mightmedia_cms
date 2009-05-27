@@ -9,8 +9,7 @@
  * @$Revision$
  * @$Date$
  **/
-
-
+//NEBAIKTA
 if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
 	$p = escape(ceil((int)$url['p']));
 } else {
@@ -29,59 +28,49 @@ if ($viso > 0) {
 	if ($viso > $limit) {
 		lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
 	}
-	if (sizeof($sql2) > 0) {
-		foreach ($sql2 as $row) {
-			$sql3 = mysql_query1("SELECT `id`,`nick`,`levelis` FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $row['autorius'] . "' LIMIT 1") or die(klaida($lang['system']['error'], mysql_error()));
-			//$sql3 = mysql_fetch_assoc($sql3);
 
-			$ats1 = explode(";", $row['pirmas']);
-			$ats2 = explode(";", $row['antras']);
-			$ats3 = explode(";", $row['trecias']);
-			$ats4 = explode(";", $row['ketvirtas']);
-			$ats5 = explode(";", $row['penktas']);
+		foreach ($sql2 as $sql) {
+		$ipasai = explode(";", $sql['ips']);
+	$nariai = explode(";", $sql['nariai']);
+	$ats = array();
+	$atsa = array();
+	$ats[1] = explode(";", $sql['pirmas']);
+	$ats[2] = explode(";", $sql['antras']);
+	$ats[3] = explode(";", $sql['trecias']);
+	$ats[4] = explode(";", $sql['ketvirtas']);
+	$ats[5] = explode(";", $sql['penktas']);
 
-			$kiok = ($ats1[1] + $ats2[1] + $ats3[1] + $ats4[1] + $ats5[1]);
-			if ($viso != 0) {
-				if (!empty($ats1[0])) {
-					$atsa1 = $ats1[0] . " [" . $ats1[1] . "] <br><hr align='left' width='" . @(100 / $kiok * $ats1[1]) . "'></hr><br/>";
-				} else {
-					$atsa1 = '';
-				}
-				if (!empty($ats2[0])) {
-					$atsa2 = $ats2[0] . " [" . $ats2[1] . "] <br><hr align='left' width='" . @(100 / $kiok * $ats2[1]) . "'></hr><br/>";
-				} else {
-					$atsa2 = '';
-				}
-				if (!empty($ats3[0])) {
-					$atsa3 = $ats3[0] . " [" . $ats3[1] . "] <br><hr align='left' width='" . @(100 / $kiok * $ats3[1]) . "'></hr><br/>";
-				} else {
-					$atsa3 = '';
-				}
-				if (!empty($ats4[0])) {
-					$atsa4 = $ats4[0] . " [" . $ats4[1] . "] <br><hr align='left' width='" . @(100 / $kiok * $ats4[1]) . "'></hr><br/>";
-				} else {
-					$atsa4 = '';
-				}
-				if (!empty($ats5[0])) {
-					$atsa5 = $ats5[0] . " [" . $ats5[1] . "] <br><hr align='left' width='" . @(100 / $kiok * $ats5[1]) . "'></hr><br/>";
-				} else {
-					$atsa5 = '';
-				}
+	$viso = ((int)$ats[1][1] + (int)$ats[2][1] + (int)$ats[3][1] + (int)$ats[4][1] + (int)$ats[5][1]);
 
-				$rezultatai = '<div class="sarasas"><b>' . $row['klausimas'] . '</b><br>' . $atsa1 . $atsa2 . $atsa3 . $atsa4 . $atsa5 . '<br>' . $lang['poll']['votes'] . ': ' . $kiok . '<br>' . $lang['poll']['author'] . ': ' . user($sql3['nick'], $sql3['id'], $sql3['levelis']) . '</div>';
+
+		for ($i = 1; $i <= 5; $i++) {
+	if (!empty($ats[$i][0])) {
+				$atsa[$i] = "<br />" . $ats[$i][0] . " [" . $ats[$i][1] . "] <br />";
+				$img = round((int)(100 / $viso * $ats[$i][1]));
+                $atsa[$i] .= '
+         <div style="width:'.$img.'%;background:url(images/balsavimas/center.png) top left repeat-x; height:10px">
+         
+			<div style="float:right;height:8px; width:1px; border-right:1px solid black;margin:1px -1px"></div>
+			<div style="float:left;height:8px; width:1px; border-right:1px solid black;margin:1px -2px"></div>
+
+		</div>
+';
 			} else {
-				$rezultatai = '';
+				$atsa[$i] = '';
 			}
-			$text .= $rezultatai;
+		
 
+		$rezultatai = '<blockquote><div align="left"><center><b>' . (isset($sql['klausimas']) ? $sql['klausimas'] : "N/A") . '</b></center>' . $atsa[1] . $atsa[2] . $atsa[3] . $atsa[4] . $atsa[5] . '</div>';
+	
+}
 		}
-		lentele($lang['poll']['archive'], $text);
+		lentele($lang['poll']['archive'], $rezultatai);
 
 		//Puslapiavimas
 		if ($viso > $limit) {
 			lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
 		}
-	}
+	
 } else {
 	lentele($lang['poll']['archive'], $lang['poll']['no']);
 }

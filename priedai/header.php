@@ -114,7 +114,7 @@ $u = '';
 foreach ($q as $row) {
 	$nekvepuoja = $timestamp - $row['timestamp'];
 	if (time() - $nekvepuoja >= 1 * 60 * 60 && isset($_SESSION['id']) && $row['id'] == $_SESSION['id']) {
-		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `login_before`=`login_data`, `login_data` = '" . time() . "', `ip` = INET_ATON(" . escape(getip()) . ") WHERE `id` ='" . $uzerid . "' LIMIT 1") or die(mysql_error());
+		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `login_before`=`login_data`, `login_data` = '" . time() . "', `ip` = INET_ATON(" . escape(getip()) . ") WHERE `id` ='" . $uzerid . "' LIMIT 1");
 	}
 	if (!empty($row['id'])) {
 		$i++;

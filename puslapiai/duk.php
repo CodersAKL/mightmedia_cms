@@ -17,7 +17,7 @@ if (isset($_GET) && !empty($_GET) && defined("LEVEL") && LEVEL == 1) {
 	//Jei adminas bando trinti. $_GET['d'] == ID
 	if (isset($_GET['d']) && isnum($_GET['d']) && $_GET['d'] > 0) {
 		$q = "DELETE FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` = " . escape((int)$_GET['d']);
-		mysql_query1($q) or die($lang['system']['error']);
+		mysql_query1($q);
 		redirect("?id," . $_GET['id'], "header");
 
 	} elseif (isset($_GET['n']) || isset($_GET['e'])) {
@@ -85,7 +85,7 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['duk']) && defined("LEVEL") 
 		`atsakymas` = " . escape($atsakymas) . ",
 		`klausimas` = " . escape($klausimas) . ",
 		`order` = " . escape((int)$_POST['Order']) . " WHERE `id`=" . $id . " LIMIT 1 ;";
-		mysql_query1($q) or die(mysql_error());
+		mysql_query1($q);
 		redirect("?id," . $url['id'], "header");
 	}
 

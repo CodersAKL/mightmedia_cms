@@ -70,10 +70,9 @@ if (isset($_POST['order'])) {
 	//print_r($array);
 	//$sql=array();
 	foreach ($array as $position => $item):
-		//$sql[] = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "page` SET `place` = ".escape($position)." WHERE `id` = ".escape($item)."")or die(mysql_error());
-		//$sql= "(UPDATE `" . LENTELES_PRIESAGA . "page` SET `place` = ".escape($position)." WHERE `id` = ".escape($item).")"
+		
 		$case_place .= "WHEN " . (int)$item . " THEN '" . (int)$position . "' ";
-		//$case_type .= "WHEN $phone_id THEN '" . $number['type'] . "' ";
+		
 		$where .= "$item,";
 	endforeach;
 	$where = rtrim($where, ", ");
@@ -122,7 +121,7 @@ HTML;
 		lentele("{$lang['admin']['panel_new']}", $bla->form($psl, "{$lang['admin']['panel_new']}"));
 	}
 	if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
-		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`= " . escape((int)$url['d']) . " LIMIT 1") or die(mysql_error());
+		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`= " . escape((int)$url['d']) . " LIMIT 1");
 		delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC");
 	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
 		redirect("?id," . $url['id'] . ";a,{$_GET['a']}", "header");
