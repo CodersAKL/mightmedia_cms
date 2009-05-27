@@ -121,17 +121,11 @@ lentele($page_pavadinimas,$text);
 		chmod($failas,0777);
 
 		// Rezultatas:
-		msg($lang['system']['done'], "{$lang['admin']['page_created']}.");
+	//	msg($lang['system']['done'], "{$lang['admin']['page_created']}.");
+		redirect("?id,{$_GET['id']};a,{$_GET['a']};n,1","header");
 
 	}
-	/* elseif (isset($_POST['sortableListsSubmitted']) && !isset($url['n'])) {
-	//$orderArray = SLLists::getOrderArray($_POST['paneles_kaire'], 'kaire');
-	foreach ($orderArray as $item) {
-	$sql = "UPDATE `" . LENTELES_PRIESAGA . "page` set place=" . escape($item['order']) .
-	" WHERE `id`=" . escape($item['element']);
-	mysql_query1($sql);
-	}
-	}*/
+
 	if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`= " . escape((int)$url['d']) . " LIMIT 1");
 			delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
@@ -173,11 +167,7 @@ lentele($page_pavadinimas,$text);
 			klaida($lang['system']['warning'], "<h3>{$lang['admin']['page_nounused']}</h3>");
 		} else {
 
-			//	$box = "";
-			//foreach ($teises as $name => $check) {
-			//	$box .= "<label><input type=\"checkbox\"  name=\"Teises[]\" value=\"$name\"/> $check</label><br /> ";
-			//	}
-			//$box = array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "punktai[]", "id" => "punktai");
+
 
 			$psl = array(
 				"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel"), 
@@ -229,10 +219,7 @@ lentele($page_pavadinimas,$text);
 			$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape((int)$url['r']) . " LIMIT 1";
 			$sql = mysql_query1($sql);
 			$selected = unserialize($sql['teises']);
-			/*$box = "";
-			foreach ($teises as $name => $check) {
-			$box .= "<label><input type=\"checkbox\" " . (in_array($name, $selected) ? "checked" : "") . " name=\"Teises[]\" value=\"$name\"/> $check</label><br /> ";
-			}*/
+
 			$psl = array(
 				"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_psl"), 
 				"{$lang['admin']['page_name']}:" => array("type" => "text", "value" => input($sql['pavadinimas']), "name" => "pslp", "class" => "input"), 
@@ -318,7 +305,7 @@ lentele($page_pavadinimas,$text);
 	$listArray1 = array();
 	if (sizeof($recordSet1) > 0) {
 		foreach ($recordSet1 as $record1) {
-			//$listArray1[] = sprintf($listItemFormat, $record1['id'], $record1['pavadinimas'],$record1['id'], $record1['id'], $record1['id']);
+
 			$li .= '<li id="listItem_' . $record1['id'] . '" class="drag_block"> 
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] . '" style="align:right"><img src="images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
@@ -329,11 +316,7 @@ lentele($page_pavadinimas,$text);
 
 		}
 	}
-	//mysql_free_result($recordSet1);
-	//$listHTML1 = implode("\n", $listArray1);
 
-	////$tekstas = $sortableLists->SLLists("javascript"); //kelias iki js failu
-	//$tekstas .= $sortableLists->printTopJS(); //atspauzdinam pagrindinius javascript
 	$tekstas = '';
 	$tekstas .= '
 <div id="la" style="display:none"><b>' . $lang['system']['updated'] . '</b></div>

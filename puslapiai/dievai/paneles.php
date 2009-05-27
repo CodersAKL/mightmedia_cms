@@ -90,14 +90,6 @@ if (isset($_POST['order'])) {
 		$teises[$key] = $conf['level'][$key]['pavadinimas'];
 	}
 	$teises[0] = $lang['admin']['for_guests'];
-	//require ('puslapiai/dievai/tools/list.class.php');
-	//$sortableLists = new SLLists('javascript/scriptaculous/'); // points to path of scriptaculous JS files
-
-	//$listItemFormat = '<li id="item_%s"><strong>%s</strong> <a href="?id,' . $url['id'] .';a,9;r,%s" style="align:right">[' . $lang['admin']['edit'] .']</a> <a href="?id,' . $url['id'] .';a,9;d,%s" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] .'?\')">[' . $lang['admin']['delete'] . ']</a> <a href="?id,' . $url['id'] .';a,9;e,%s" style="align:right">[' . $lang['admin']['panel_text'] . ']</a></li>'; // two arguments are the idField and the displayField
-
-	//$sortableLists->addList('kaire', 'paneles_kaire');
-	//$sortableLists->addList('desine', 'paneles_desine');
-
 	if (isset($_POST['Naujaa_pnl']) && $_POST['Naujaa_pnl'] == $lang['admin']['panel_create']) {
 		// Nurodote failo pavadinimą:
 		$failas = "paneles/" . preg_replace("/[^a-z0-9-]/", "_", strtolower($_POST['pav'])) . ".php";
@@ -120,7 +112,8 @@ HTML;
 		chmod($failas,0777);
 
 		// Rezultatas:
-		msg($lang['system']['done'], "{$lang['admin']['panel_created']}.");
+	//	msg($lang['system']['done'], "{$lang['admin']['panel_created']}.");
+	redirect("?id,{$_GET['id']};a,{$_GET['a']};n,1","header");
 	}
 	if (isset($url['n']) && $url['n'] == 2) {
 		$psl = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "Naujaa_pnl"), "{$lang['admin']['panel_name']}:" => array("type" => "text", "value" => "Naujas blokas", "name" => "pav", "class" => "input"), "{$lang['admin']['panel_text']}:" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('pnl' => 'pnl'), false), "name" => "pnl", "class" => "input", "rows" => "8", "class" => "input"), "" => array("type" => "submit", "name" => "Naujaa_pnl", "value" => "{$lang['admin']['panel_create']}"));
