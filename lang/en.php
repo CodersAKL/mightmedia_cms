@@ -230,6 +230,7 @@ $lang['admin']['bans'] = 'Bans';
 $lang['admin']['port'] = 'Port';
 $lang['admin']['action'] = 'Action';
 $lang['admin']['why'] = 'Why?';
+$lang['admin']['comm_guests'] = 'Comment for guests?';
 $lang['admin']['what_moderate'] = 'Allow to moderate:';
 $lang['admin']['added'] = 'Added';
 $lang['admin']['banned'] = 'banned';

@@ -253,6 +253,7 @@ $lang['admin']['copyright'] = 'Autorinis tekstas';
 $lang['admin']['email'] = 'El. paštas';
 $lang['admin']['allow registration'] = 'Leisti registruots? (reg.php turi būti įjungtas)';
 $lang['admin']['maintenance'] = 'Remontas';
+$lang['admin']['comm_guests'] = 'Leisti komentuoti svečiams?';
 $lang['admin']['maintenancetext'] = 'Remonto pranešimas';
 $lang['admin']['newsperpage'] = 'Kiek naujienų puslapyje?';
 $lang['admin']['theme'] = 'Dizainas';

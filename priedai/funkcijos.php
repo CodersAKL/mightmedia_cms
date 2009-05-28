@@ -289,13 +289,13 @@ function user($user, $id = 0, $level = 0, $extra = false) {
 				return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="?id,' . $conf['puslapiai']['view_user.php']['id'] . ';m,' . (int)$id . '" title="' . input($user) . '<br />' . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
 			}
 			if ($level == 0 || $id == 0) {
-				return '<a href="?id,' . $conf['puslapiai']['view_user.php']['id'] . ';m,' . (int)$id . '" title="' . input($user) . '<br />' . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\" alt=\"pm\" border=\"0\" style=\"vertical-align:middle\" class=\"middle\" /></a>" : "");
+				return '<div style="display:inline;" title="' . input($user) . '<br />' . $extra . '">' . trimlink($user, 10) . '</div>';
 			}
 
 		} else {
 			//Kitu atveju nickas nepaspaudziamas
 			if ($level == 0 || $id == 0) {
-				return '<a href="#" onclick="return false" title="' . input($user) . '<br /> ' . $extra . '">' . $user . '</a>';
+				return '<div style="display:inline;" title="' . input($user) . '<br /> ' . $extra . '"><u>' . $user . '</u></div>';
 			} else {
 				return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" /> ' : '') . ' <a href="#" onclick="return false" title="' . input($user) . '<br/>' . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\" alt=\"pm\" style=\"vertical-align:middle\" border=\"0\" /></a>" : "");
 			}
