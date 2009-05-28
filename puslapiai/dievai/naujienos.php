@@ -109,7 +109,7 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['edit']) {
 
 	$naujiena = safe_html(str_replace(array("&#39;", "<br>"), array("'", "<br />"), $_POST['naujiena']), $tags);
 	$placiau = safe_html(str_replace(array("&#39;", "<br>"), array("'", "<br />"), $_POST['placiau']), $tags);
-	$komentaras = (isset($_POST['kom']) && $_POST['kom'] == $lang['admin']['yes'] ? $lang['admin']['yes'] : $lang['admin']['no']);
+$komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
 	$kategorija = (int)$_POST['kategorija'];
 	$pavadinimas = strip_tags($_POST['pav']);
 	$id = ceil((int)$_POST['news_id']);
@@ -136,7 +136,7 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_crea
 
 	$naujiena = safe_html(str_replace(array("&#39;", "<br>"), array("'", "<br />"), $_POST['naujiena']), $tags);
 	$placiau = safe_html(str_replace(array("&#39;", "<br>"), array("'", "<br />"), $_POST['placiau']), $tags);
-	$komentaras = (isset($_POST['kom']) && $_POST['kom'] == $lang['admin']['yes'] ? $lang['admin']['yes'] : $lang['admin']['no']);
+	$komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
 	$pavadinimas = input(strip_tags($_POST['pav']));
 	$kategorija = (int)$_POST['kategorija'];
 
