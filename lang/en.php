@@ -211,6 +211,9 @@ $lang['faq']['delete'] = 'Delete';
 $lang['faq']['submit'] = 'Submit';
 $lang['faq']['new'] = 'Add New FAQ';
 //admin
+$lang['admin']['adm_comments'] = 'Comments';
+$lang['admin']['del_comments'] = 'Delete comments';
+$lang['admin']['comments_kid'] = 'id';
 $lang['admin']['for_guests'] = 'Guests';
 $lang['admin']['cache'] = 'Cache';
 $lang['admin']['lang'] = 'Language';
