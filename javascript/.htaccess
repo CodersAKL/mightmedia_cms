@@ -2,7 +2,7 @@
 Deny from All
 </FilesMatch>
 
-<FilesMatch "uploader.php|scan.php|styles.php|backend.php">
+<FilesMatch "uploader.php|scan.php|styles.php|backend.php|tidy.php">
 Allow from all
 </FilesMatch>
 

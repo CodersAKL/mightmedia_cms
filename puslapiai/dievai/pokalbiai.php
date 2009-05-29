@@ -51,7 +51,7 @@ if (isset($_POST['admin_chat_send']) && $_POST['admin_chat_send'] == $lang['admi
 
 
 	mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "admin_chat` (admin, msg, date) VALUES(" . escape($_SESSION['username']) . "," . escape($extra . $_POST['admin_chat']) . ",'" . time() . "')") or die(mysql_error());
-	header("Location: ?id,{$_GET['id']};a,{$_GET['a']}");
+	header("Location: ?id,{$_GET['id']};");
 }
 //trinam zinute
 if (isset($url['d']) && !isset($url['a']) && isnum($url['d']) && $url['d'] > 0 && LEVEL == 1) {
