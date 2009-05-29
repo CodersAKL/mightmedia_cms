@@ -25,24 +25,29 @@ if (isset($_POST['del2'])) {
 }
 if (!isset($_POST['pg'])) {
 	$sql = mysql_query1("SELECT `pid` FROM `" . LENTELES_PRIESAGA . "kom` GROUP BY `pid` ORDER BY `pid` DESC");
+	if (isset($row['kid']) && count($row['kid']) > 0) {
+		foreach ($sql as $row) {
+			$pgs[$row['pid']] = $row['pid'];
+		}
+		$form = array("Form" => array("action" => "", "method" => "post", "name" => "com"), "{$lang['online']['page']}:" => array("type" => "select", "value" => $pgs, "name" => "pg"), " " => array("type" => "submit", "name" => "select", "value" => "{$lang['admin']['page_select']}"), "  " => array("type" => "submit", "name" => "del", "value" => "{$lang['admin']['del_comments']}"));
 
-	foreach ($sql as $row) {
-		$pgs[$row['pid']] = $row['pid'];
-	}
-	$form = array("Form" => array("action" => "", "method" => "post", "name" => "com"), "{$lang['online']['page']}:" => array("type" => "select", "value" => $pgs, "name" => "pg"), " " => array("type" => "submit", "name" => "select", "value" => "{$lang['admin']['page_select']}"), "  " => array("type" => "submit", "name" => "del", "value" => "{$lang['admin']['del_comments']}"));
-
-	lentele("{$lang['admin']['adm_comments']}", $bla->form($form));
+		lentele("{$lang['admin']['adm_comments']}", $bla->form($form));
+	} else
+		klaida($lang['system']['warning'], $lang['system']['no_items']);
 }
 if (isset($_POST['select'])) {
 	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` where `pid`=" . escape($_POST['pg']) . " GROUP BY `kid`");
-	foreach ($sql as $row) {
-		$pgs[$row['kid']] = $row['kid'];
-	}
-	$form = array("Form" => array("action" => "", "method" => "post", "name" => "com2"), "{$lang['admin']['comments_kid']}:" => array("type" => "select", "value" => $pgs, "name" => "pg"), "\r\r " => array("type" => "hidden", "value" => $_POST['pg'], "name" => "page"), //" " => array("type" => "submit", "name" => "select2", "value" => "{$lang['admin']['page_select']}"),
-		"  " => array("type" => "submit", "name" => "del2", "value" => "{$lang['admin']['del_comments']}"));
+	if (isset($row['kid']) && count($row['kid']) > 0) {
+		foreach ($sql as $row) {
+			$pgs[$row['kid']] = $row['kid'];
+		}
 
-	lentele("{$lang['admin']['adm_comments']}", $bla->form($form));
+		$form = array("Form" => array("action" => "", "method" => "post", "name" => "com2"), "{$lang['admin']['comments_kid']}:" => array("type" => "select", "value" => $pgs, "name" => "pg"), "\r\r " => array("type" => "hidden", "value" => $_POST['pg'], "name" => "page"), //" " => array("type" => "submit", "name" => "select2", "value" => "{$lang['admin']['page_select']}"),
+			"  " => array("type" => "submit", "name" => "del2", "value" => "{$lang['admin']['del_comments']}"));
 
+		lentele("{$lang['admin']['adm_comments']}", $bla->form($form));
+	} else
+		klaida($lang['system']['warning'], $lang['system']['no_items']);
 }
 if (isset($_POST['select2'])) {
 	//čia jei norės pasidarys kas nors

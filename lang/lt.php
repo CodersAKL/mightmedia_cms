@@ -1,5 +1,4 @@
 <?php
-
 $lang['system']['error'] = 'Klaida!';
 $lang['system']['delete_confirm'] = 'Ar tikrai norite ištrinti?';
 $lang['system']['systemerror'] = 'Sistemos klaida!';
