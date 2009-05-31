@@ -103,7 +103,7 @@ if ($kid != 0) {
 			if (sizeof($susijus) > 0) {
 				$naujienos = "<ul id=\"naujienos\">";
 				foreach ($susijus as $susijusios) {
-					$naujienos .= "<li><a href=\"?id," . $_GET['id'] . ";k," . $susijusios['id'] . "\">" . $susijusios['pavadinimas'] . "</a> (" . date('Y-m-d H:i:s', $susijusios['data']) . ")</li>";
+					$naujienos .= "<li><a href=\"?id," . $_GET['id'] . ";k," . $susijusios['id'] . "\" title=\"{$susijusios['pavadinimas']}\">" . trimlink($susijusios['pavadinimas'],55) . "</a> (" . date('Y-m-d H:i:s', $susijusios['data']) . ")</li>";
 				}
 				$naujienos .= "</ul>";
 				lentele($lang['news']['related'], $naujienos);
