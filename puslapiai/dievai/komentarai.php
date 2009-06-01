@@ -25,7 +25,7 @@ if (isset($_POST['del2'])) {
 }
 if (!isset($_POST['pg'])) {
 	$sql = mysql_query1("SELECT `pid` FROM `" . LENTELES_PRIESAGA . "kom` GROUP BY `pid` ORDER BY `pid` DESC");
-	if (isset($row['kid']) && count($row['kid']) > 0) {
+	if (!empty($sql)) {
 		foreach ($sql as $row) {
 			$pgs[$row['pid']] = $row['pid'];
 		}
@@ -37,7 +37,7 @@ if (!isset($_POST['pg'])) {
 }
 if (isset($_POST['select'])) {
 	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` where `pid`=" . escape($_POST['pg']) . " GROUP BY `kid`");
-	if (isset($row['kid']) && count($row['kid']) > 0) {
+	if (!empty($sql)) {
 		foreach ($sql as $row) {
 			$pgs[$row['kid']] = $row['kid'];
 		}

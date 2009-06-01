@@ -42,7 +42,7 @@ if ($kid == 0) {
 			FROM `" . LENTELES_PRIESAGA . "naujienos`
 			WHERE `rodoma`= 'TAIP'
 			ORDER BY `data` DESC
-			LIMIT {$p},{$limit}", 300);
+			LIMIT {$p},{$limit}", 100);
 
 
 	if (sizeof($sql) > 0) {
