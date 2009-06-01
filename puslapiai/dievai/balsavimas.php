@@ -24,8 +24,8 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 HTML;*/
 $buttons="<div id=\"admin_menu\" class=\"btns\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,1\"class=\"btn\"><span><img src=\"images/icons/heart__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['poll_create']}</span></a>  <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\" class=\"btn\"><span><img src=\"images/icons/heart__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['poll_edit']}</span></a></div>";
 lentele($lang['admin']['poll'], $buttons);
-if (empty($url['v'])) {
-	$url['v'] = 0;
+//if (empty($url['v'])) {
+//	$url['v'] = 0;
 
 
 	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE `ijungtas`='TAIP'  ORDER BY `id` DESC LIMIT 1");
@@ -40,7 +40,7 @@ if (empty($url['v'])) {
 
 	lentele("{$lang['admin']['poll_active']}", $text);
 	unset($text, $a, $total, $info2, $info, $sql, $is);
-}
+//}
 if ((int)$url['v'] == 1) {
 	$text = "
 <form name='b_create' action='?id," . $_GET['id'] . ";a," . $_GET['a'] . "' method='post'>
