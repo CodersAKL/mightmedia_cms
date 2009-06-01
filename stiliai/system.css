@@ -3,7 +3,7 @@ blockquote {
 padding : 0;
 margin : 0;
 }
-.rating {
+/*.rating {
 width : 80px;
 height : 16px;
 margin : 0 0 20px 0;
@@ -268,7 +268,7 @@ color : #000;
 }
 .dp-highlighter .important {
 color : red;
-}
+}*/
 ul.sortableList {
 list-style-type : none;
 padding : 0;
@@ -442,31 +442,4 @@ color : #222;
 div.btns a.btn img {
 margin-right : 3px;
 vertical-align : middle;
-}
-.star-rating, .star-rating a:hover, .star-rating a:active, .star-rating .current-rating {
-background : url(../images/balsavimas/rating_star.gif) repeat-x left -1000px;
-}
-.star-rating {
-position : relative;
-width : 125px;
-height : 25px;
-overflow : hidden;
-list-style : none;
-margin : 0;
-padding : 0;
-background-position : left top;
-}
-.star-rating li {
-display : inline;
-}
-.star-rating a, .star-rating .current-rating {
-position : absolute;
-top : 0;
-left : 0;
-text-indent : -1000em;
-height : 25px;
-line-height : 25px;
-outline : none;
-overflow : hidden;
-border : none;
 }
