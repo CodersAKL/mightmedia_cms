@@ -384,72 +384,89 @@ font-family : arial;
 white-space : nowrap;
 }
 .img_left {
-float:left;
-margin-right:5px;
+float : left;
+margin-right : 5px;
 }
-
-/***** STUMDOMIEMS BLOKAMS *******/
 .drag_block {
-display:block; border:1px solid grey; width:95%; padding:3px; margin:3px; background-color:#DDDDDD
+display : block;
+width : 95%;
+padding : 3px;
+margin : 3px;
+background-color : #dddddd;
 }
-/* Neðimo ikona */
-li.drag_block>img {
-cursor:move;vertical-align:middle
+li.drag_block > img {
+cursor : move;
+vertical-align : middle;
 }
 input.chapter {
-	font-size:20px;
-	font-weight:bold;
-	height:30px;
-	padding-top:5px;
-	text-align:center;
-	text-transform:uppercase;
-	vertical-align:middle;
-	width:100px;
+font-size : 20px;
+font-weight : bold;
+height : 30px;
+padding-top : 5px;
+text-align : center;
+text-transform : uppercase;
+vertical-align : middle;
+width : 100px;
 }
-
-/********** buttonai */
-div.btns{
-	zoom:1;
-	white-space:nowrap;
+div.btns {
+white-space : nowrap;
 }
-
-div.btns:after{
-	display:block;
-	clear:both;
-	content:'';
+div.btns:after {
+display : block;
+clear : both;
+content : '';
 }
-
-div.btns a.btn{
-	float:left;
-	background:buttonface url(../images/admin/border-2.gif) no-repeat;cursor:pointer;font-size:0;text-align:center;
-	text-align:center;
-	display:block;
-	/*_width:100px;
-	min-width:100px;*/
-	text-decoration:none;
-	margin:3px 2px;
+div.btns a.btn {
+float : left;
+background : ButtonFace url(../images/admin/border-2.gif) no-repeat;
+cursor : pointer;
+font-size : 0;
+text-align : center;
+text-align : center;
+display : block;
+text-decoration : none;
+margin : 3px 2px;
 }
-
-div.btns a.btn:hover span{
-	opacity:0.6;
-	filter:alpha(opacity:80);
+div.btns a.btn span {
+padding : 3px 8px 4px 8px;
+text-align : center;
+position : relative;
+left : 1px;
+top : 1px;
+display : block;
+text-decoration : none;
+background : url(../images/admin/border.gif) no-repeat right bottom;
+font : small/1 Verdana;
+color : #222;
 }
-
-div.btns a.btn span{
-	padding:3px 8px 4px 8px;
-	
-	text-align:center;
-	position:relative;
-	left:1px;top:1px;
-	display:block;
-	text-decoration:none;
-	background:url(../images/admin/border.gif) right bottom no-repeat;
-	font:small/1 Verdana;
-	color:#222;
-	
-}
-
 div.btns a.btn img {
-	margin-right:3px; vertical-align:middle;
+margin-right : 3px;
+vertical-align : middle;
 }
-
+.star-rating, .star-rating a:hover, .star-rating a:active, .star-rating .current-rating {
+background : url(../images/balsavimas/rating_star.gif) repeat-x left -1000px;
+}
+.star-rating {
+position : relative;
+width : 125px;
+height : 25px;
+overflow : hidden;
+list-style : none;
+margin : 0;
+padding : 0;
+background-position : left top;
+}
+.star-rating li {
+display : inline;
+}
+.star-rating a, .star-rating .current-rating {
+position : absolute;
+top : 0;
+left : 0;
+text-indent : -1000em;
+height : 25px;
+line-height : 25px;
+outline : none;
+overflow : hidden;
+border : none;
+}
