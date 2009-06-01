@@ -40,12 +40,12 @@ if (isset($url['m']) && $url['m'] > 0) {
 			$admin = '';
 		}
 		$text = '<table align="center" border="0" cellpadding="0" cellspacing="1" class="table" width="100%">
-			<tr >
-				<td height="14" class="th" width="140"><b>' . $sql['nick'] . '</b> <img src="' . $prisijunges . '" title="' . $pr . '" style="vertical-align:middle" alt="' . $pr . '" /></td>
-				<td height="14" class="th" width="50%">' . $lang['user']['user_info'] . '</td>
-				<td height="14" class="th" width="50%">' . $lang['user']['user_contacts'] . '</td>
+			<tr class="th">
+				<th height="14" class="th" width="140"><b>' . $sql['nick'] . '</b> <img src="' . $prisijunges . '" title="' . $pr . '" style="vertical-align:middle" alt="' . $pr . '" /></th>
+				<th height="14" class="th" width="50%">' . $lang['user']['user_info'] . '</th>
+				<th height="14" class="th" width="50%">' . $lang['user']['user_contacts'] . '</th>
 			</tr>
-			<tr >
+			<tr class="tr">
 				<td height="14" class="td" width="140">
           <center>
             ' . avatar($sql['email'], '80') . '<br style="clear:both" />
@@ -74,22 +74,22 @@ if (isset($url['m']) && $url['m'] > 0) {
           </small>
 				</td>
 			</tr>
-			<tr>
-				<td  class="th" height="14" width="140">' . $lang['forum']['forum'] . '</td>
-				<td class="th" height="14" colspan="2"  width="280">' . $lang['user']['user_signature'] . '</td>
+			<tr class="th">
+				<th  class="th" height="14" width="140">' . $lang['forum']['forum'] . '</th>
+				<th class="th" height="14" colspan="2"  width="280">' . $lang['user']['user_signature'] . '</th>
 			</tr>
-			<tr>
-				<td class="td" rowspan="3" height="87" valign="top" width="140"><small>
+			<tr class="tr2">
+				<td class="td" rowspan="1" height="87" valign="top" width="140"><small>
 					<b>' . $lang['forum']['topic'] . ':</b> ' . $sql['forum_temos'] . '<br />
 					<b>' . $lang['forum']['messages'] . ':</b>	' . $sql['forum_atsakyta'] . '<br /></small>
         </td>
 				<td class="td" colspan="2" height="18" width="280">' . bbcode($sql['parasas']) . '</td>
 			</tr>		
-				<tr>
-				<td class="th" height="14" colspan="2" >' . $lang['user']['user_rate'] . '</td>
+				<tr class="th">
+				<th class="th" height="14" colspan="3" >' . $lang['user']['user_rate'] . '</th>
 			</tr>
-      <tr>
-        <td class="td" colspan="2"> 
+      <tr class="tr">
+        <td class="td" colspan="3"> 
           ' . $vote . '
         </td>
       </tr>
