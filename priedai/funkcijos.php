@@ -14,7 +14,7 @@ if (basename($_SERVER['PHP_SELF']) == 'funkcijos.php') {
 }
 define("OK", true);
 
-if (preg_match('%/\*\*/|SERVER|http|SELECT|UNION|UPDATE|INSERT%i', $_SERVER['QUERY_STRING'])) {
+if (preg_match('%/\*\*/|SERVER|http|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['QUERY_STRING'])) {
 	$ip = getip();
 	$forwarded = (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : 'N/A');
 	$remoteaddress = $_SERVER["REMOTE_ADDR"];
@@ -1173,12 +1173,12 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 	$return = "";
 	echo '<script type="text/javascript">
    
-    _editor_url  = "javascript/htmlarea/Xinha_0.95/"
+    _editor_url  = "javascript/htmlarea/Xinha0.96beta2/"
     _editor_lang = "en"; 
     </script>
 
   <!-- Load up the actual editor core -->
-  <script type="text/javascript" src="javascript/htmlarea/Xinha_0.95/XinhaCore.js"></script>
+  <script type="text/javascript" src="javascript/htmlarea/Xinha0.96beta2/XinhaCore.js"></script>
   
   <script type="text/javascript">
     xinha_editors = null;
@@ -1209,7 +1209,7 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
      
        xinha_config = xinha_config ? xinha_config : new Xinha.Config();
        xinha_config.fullPage = false;
-       xinha_config.width = \'100%\';
+       //xinha_config.width = \'100%\';
        xinha_config.showLoading = true;
        xinha_config.CharacterMap.mode = \'panel\';
        //xinha_config.stylistLoadStylesheet(\'stiliai/' . input($conf['Stilius']) . '/default.css\');
@@ -1218,7 +1218,7 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
       with (xinha_config.ImageManager)
      { 
        ';
-	require_once ('javascript/htmlarea/Xinha_0.95/contrib/php-xinha.php');
+	require_once ('javascript/htmlarea/Xinha0.96beta2/contrib/php-xinha.php');
 
 	xinha_pass_to_php_backend(array('images_dir' => '../../../../../siuntiniai/images', 'images_url' => adresas() . 'siuntiniai/images' //,
 		//'thumbnail_prefix'=>'',
@@ -1250,7 +1250,7 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 
  
  
-  <textarea id="{$key}" name="{$key}" style="width:100%;height:320px;">
+  <textarea id="{$key}" name="{$key}" class="input" style="min-height:320px;">
     {$value[$key]}
     </textarea>
 
@@ -1259,7 +1259,7 @@ HTML;
 		}
 	} else {
 		$return .= <<< HTML
-		  <textarea id="{$id}" name="{$id}" style="width:100%;height:320px;">
+		  <textarea id="{$id}" name="{$id}" class="input" style="min-height:320px;">
     {$value}
     </textarea>
 
