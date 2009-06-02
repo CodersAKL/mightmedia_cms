@@ -269,6 +269,9 @@ color : #000;
 .dp-highlighter .important {
 color : red;
 }*/
+.input{
+width:80%;
+}
 ul.sortableList {
 list-style-type : none;
 padding : 0;
