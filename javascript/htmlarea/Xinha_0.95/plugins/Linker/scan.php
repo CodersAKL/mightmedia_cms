@@ -55,7 +55,7 @@
       require_once("../../../../../priedai/conf.php");
     function scan($dir='', $durl = '')
     {
-      global $dir,$conf;
+      //global $dir,$conf;
      // static $seen = array();
 
       $files = array();
@@ -95,8 +95,8 @@
       @closedir($dh);
       return dirsort($files);*/
      
-       
-    foreach($conf['puslapiai'] as $pav){
+       $sql=mysql_query1("SELECT `id`,`pavadinimas` FROM `".LENTELES_PRIESAGA."page`");
+    foreach($sql as $pav){
       $files[] = array('url'=>"?id,".$pav['id']."#".$pav['pavadinimas']);
        }
       
