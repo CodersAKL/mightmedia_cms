@@ -25,9 +25,8 @@ function komentarai($id, $hide = false) {
 			</form>
 			</center>";*/
 			include_once ("priedai/class.php");
-
 			$bla = new forma();
-			$form = array("Form" => array("action" => "", "method" => "post", "name" => "n_kom"), "{$lang['guestbook']['name']}:" => (!isset($_SESSION['id']) ? array("type" => "text", "value" => (isset($_COOKIE['komentatorius']) ? $_COOKIE['komentatorius'] : ""), "name" => "name") : array("type" => "string", "value" => "<b>" . $_SESSION['username'] . "</b>")), "{$lang['guestbook']['message']}:" => array("type" => "textarea", "value" => "", "class" => "input", "name" => "n_kom", "extra" => "wrap=\"on\" rows=5"), (!isset($_SESSION['id']) ? kodas() : "") => (!isset($_SESSION['id']) ? array("type" => "text", "value" => "", "name" => "code", "class" => "chapter") : ""), " " => array("type" => "submit", "name" => "Naujas", "value" => "{$lang['comments']['send']}"), "  " => array("type" => "hidden",
+			$form = array("Form" => array("action" => "", "method" => "post", "name" => "n_kom"), "{$lang['guestbook']['name']}:" => (!isset($_SESSION['id']) ? array("type" => "text", "value" => (isset($_COOKIE['komentatorius']) ? $_COOKIE['komentatorius'] : ""), "name" => "name") : array("type" => "string", "value" => "<b>" . $_SESSION['username'] . "</b>")),"  \r\r\r\r\r"=>array("type"=>"string","value"=>bbs('n_kom')), "{$lang['guestbook']['message']}:" => array("type" => "textarea", "value" => "", "class" => "input", "name" => "n_kom", "extra" => "wrap=\"on\" rows=5"), (!isset($_SESSION['id']) ? kodas() : "") => (!isset($_SESSION['id']) ? array("type" => "text", "value" => "", "name" => "code", "class" => "chapter") : ""), " " => array("type" => "submit", "name" => "Naujas", "value" => "{$lang['comments']['send']}"), "  " => array("type" => "hidden",
 				"value" => $id, "name" => "id"));
 
 
@@ -68,11 +67,11 @@ function komentarai($id, $hide = false) {
 
 //Irasom nauja komentara jei nurodytas puslapis, gal perdidele salyga bet saugumo sumetimais :)
 if (isset($_POST['n_kom']) && !empty($_POST['n_kom']) && !empty($_POST['Naujas']) && $_POST['Naujas'] == $lang['comments']['send'] && isset($_POST['id']) && !empty($_POST['id']) && isnum($_POST['id']) && (isset($_SESSION['id']) || $conf['kmomentarai_sveciams'] == 1)) {
-	if ((isset($_POST['code']) && $_POST['code'] == $_SESSION['code']) || isset($_SESSION['id'])) {
+	if ((isset($_POST['code']) && strtoupper($_POST['code']) == $_SESSION['code']) || isset($_SESSION['id'])) {
 		if (isset($_SESSION['id'])) {
 			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai+1 WHERE nick=" . escape($_SESSION['username']) . " AND `id` = " . escape($_SESSION['id']) . "");
 		} else {
-			if (!isset($_COOKIE['komentatorius'])) {
+			if (!isset($_COOKIE['komentatorius'])||$_POST['name']!=$_COOKIE['komentatorius']) {
 				setcookie("komentatorius", $_POST['name'], time() + 60 * 60 * 24 * 30);
 			}
 		}
