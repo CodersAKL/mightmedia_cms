@@ -26,7 +26,7 @@ function komentarai($id, $hide = false) {
 			</center>";*/
 			include_once ("priedai/class.php");
 			$bla = new forma();
-			$form = array("Form" => array("action" => "", "method" => "post", "name" => "n_kom"), "{$lang['guestbook']['name']}:" => (!isset($_SESSION['id']) ? array("type" => "text", "value" => (isset($_COOKIE['komentatorius']) ? $_COOKIE['komentatorius'] : ""), "name" => "name") : array("type" => "string", "value" => "<b>" . $_SESSION['username'] . "</b>")),"  \r\r\r\r\r"=>array("type"=>"string","value"=>bbs('n_kom')), "{$lang['guestbook']['message']}:" => array("type" => "textarea", "value" => "", "class" => "input", "name" => "n_kom", "extra" => "wrap=\"on\" rows=5"), (!isset($_SESSION['id']) ? kodas() : "") => (!isset($_SESSION['id']) ? array("type" => "text", "value" => "", "name" => "code", "class" => "chapter") : ""), " " => array("type" => "submit", "name" => "Naujas", "value" => "{$lang['comments']['send']}"), "  " => array("type" => "hidden",
+			$form = array("Form" => array("action" => "", "method" => "post", "name" => "n_kom"), "{$lang['guestbook']['name']}:" => (!isset($_SESSION['id']) ? array("type" => "text", "value" => (isset($_COOKIE['komentatorius']) ? $_COOKIE['komentatorius'] : ""), "name" => "name") : array("type" => "string", "value" => "<b>" . $_SESSION['username'] . "</b>")),"  \r\r\r\r\r"=>array("type"=>"string","value"=>bbs('n_kom')), "{$lang['guestbook']['message']}:" => array("type" => "textarea", "value" => "", "class" => "input", "name" => "n_kom", "extra" => "rows=\"5\" cols=\"3\""), (!isset($_SESSION['id']) ? kodas() : "") => (!isset($_SESSION['id']) ? array("type" => "text", "value" => "", "name" => "code", "class" => "chapter") : ""), " " => array("type" => "submit", "name" => "Naujas", "value" => "{$lang['comments']['send']}"), "  " => array("type" => "hidden",
 				"value" => $id, "name" => "id"));
 
 
@@ -45,7 +45,7 @@ function komentarai($id, $hide = false) {
 				$tr = "2";
 			else
 				$tr = "";
-			$text .= "<div class=\"tr$tr\"><div class=\"title\"><a href=\"#" . $row['id'] . "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\"></a> ";
+			$text .= "<div class=\"tr$tr\"><div class=\"title\"><a href=\"#k:" . $row['id'] . "\" id=\"k:" . $row['id'] . "\"> <img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /> </a> ";
 			if (defined("LEVEL") && (LEVEL == 1 || (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('com', unserialize($_SESSION['mod']))))) {
 				$text .= "<a href='" . url("dk," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['admin']['delete']}?') \">[{$lang['admin']['delete']}]</a> ";
 			}
