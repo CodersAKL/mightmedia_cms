@@ -83,7 +83,7 @@ if ($kid != 0) {
 			FROM `" . LENTELES_PRIESAGA . "naujienos`
 			WHERE `rodoma`= 'TAIP' AND `id` = " . escape($kid) . " limit 1", 300);
 	}
-	if (sizeof($sql) > 0) {
+	if (isset($sql['naujiena'])&& !empty($sql['naujiena'])) {
 		if (!isset($sql['teises'])) {
 			$sql['teises'] = 0;
 		}
