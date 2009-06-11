@@ -108,7 +108,7 @@ if (!empty($url['t'])) {
 		$bla = new Table();
 		lentele("{$lang['admin']['logai']} - {$lang['admin']['logs_yourip']}: <font color='red'>" . getip() . "</font>", $bla->render($info));
 	} else {
-		msg("{$lang['admin']['logs']}", "{$lang['admin']['logs_nologs']}.");
+		msg("{$lang['system']['warning']}", "{$lang['admin']['logs_nologs']}.");
 	}
 	if ($viso > $limit) {
 		lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));

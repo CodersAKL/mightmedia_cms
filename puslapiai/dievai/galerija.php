@@ -174,68 +174,87 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 			$ext = strtolower($ext);
 
 			//Tikrinam ar tinkamas failas
-			if (($extlimit == "yes") && (!in_array($ext, $limitedext))) {
+			if (!in_array($ext, $limitedext)) {
 				klaida("{$lang['system']['warning']}", "{$lang['admin']['gallery_notimg']}");
 			}
-			//so, whats the file's extension?
-			$getExt = explode('.', $file_name);
-			$file_ext = $getExt[count($getExt) - 1];
+
 			//create a random file name
 			$rand_pre = random();
 			$rand_name = $rand_pre . time();
-			//$rand_name= rand(0,999999999);
+
 			//the new width variable
 			$ThumbWidth = $img_thumb_width;
 			if ($file_size) {
 				if ($file_type == "image/pjpeg" || $file_type == "image/jpeg") {
-					$new_img = imagecreatefromjpeg($file_tmp);
+					$img = imagecreatefromjpeg($file_tmp);
 				} elseif ($file_type == "image/x-png" || $file_type == "image/png") {
-					$new_img = imagecreatefrompng($file_tmp);
+					$img = imagecreatefrompng($file_tmp);
 				} elseif ($file_type == "image/gif") {
-					$new_img = imagecreatefromgif($file_tmp);
+					$img = imagecreatefromgif($file_tmp);
+				} elseif ($file_type == "image/bmp") {
+					$img = imagecreatefrombmp($file_tmp);
 				}
 				//list the width and height and keep the height ratio.
-				list($width, $height) = getimagesize($file_tmp);
+				$width = imageSX($img);
+				$height = imageSY($img);
+				
+				// Build the thumbnail
+				$target_width = $conf['minidyd'];
+				$target_height = $conf['minidyd'];
+				$target_ratio = $target_width / $target_height;
+
+				$img_ratio = $width / $height;
+
 				//calculate the image ratio
 				$imgratio = $width / $height;
-				if ($width > $ThumbWidth) {
-					if ($imgratio > 1) {
-						$newwidth = $ThumbWidth;
-						//$newheight = $ThumbWidth / $imgratio;
-						$newheight = $ThumbWidth;
-					} else {
-						$newheight = $ThumbWidth;
-						//$newwidth = $ThumbWidth * $imgratio;
-						$newwidth = $ThumbWidth;
-					}
-				} else {
-					$newwidth = $width;
-					$newheight = $height;
-				}
 				
-				$new_img = ImageCreateTrueColor($newwidth, $newheight);
-				if (!@imagefilledrectangle($new_img, 0, 0, $target_width-1, $target_height-1, 0)) {	// Fill the image black
-					echo "ERROR:Could not fill new image";
-					exit(0);
-				}
-				//function for resize image.
-				if (function_exists('imagecreatetruecolor')) {
-					$resized_img = imagecreatetruecolor($newwidth, $newheight);
+				if ($target_ratio > $img_ratio) {
+					$new_height = $target_height;
+					$new_width = $img_ratio * $target_height;
 				} else {
-					klaida($lang['system']['error'], 'GD v2+' . $lang['system']['error']);
+					$new_height = $target_width / $img_ratio;
+					$new_width = $target_width;
 				}
 
+				if ($new_height > $target_height) {
+					$new_height = $target_height;
+				}
+				if ($new_width > $target_width) {
+					$new_height = $target_width;
+				}
+				
+				
+				$new_img = ImageCreateTrueColor($conf['minidyd'], $conf['minidyd']);
+				if (!@imagefilledrectangle($new_img, 0, 0, $target_width-1, $target_height-1, 0)) {	// Fill the image black
+					klaida($lang['system']['error'], 'GD v2+' . $lang['system']['error']);
+					exit(0);
+				}
+
+				if (!@imagecopyresampled($new_img, $img, ($target_width-$new_width)/2, ($target_height-$new_height)/2, 0, 0, $new_width, $new_height, $width, $height)) {
+					klaida($lang['system']['error'], 'GD v2+' . $lang['system']['error']);
+					exit(0);
+				}
 
 				//the resizing is going on here!
 
-				imagecopyresampled($resized_img, $new_img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+				//imagecopyresampled($resized_img, $new_img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 				//imagecopyresampled($resized_img, $new_img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
 				//finally, save the image
+				/*
+				if ($file_type == "image/pjpeg" || $file_type == "image/jpeg") {
+					imagejpeg($new_img, $mini_img."/".$rand_name.$ext, 95);
+				} elseif ($file_type == "image/x-png" || $file_type == "image/png") {
+					imagepng($new_img, $mini_img."/".$rand_name.$ext, 95);
+				} elseif ($file_type == "image/gif") {
+					imagegif($new_img, $mini_img."/".$rand_name.$ext, 95);
+				} elseif ($file_type == "image/bmp") {
+					imagejpeg($new_img, $mini_img."/".$rand_name.$ext, 95);
+				}*/
+				imagejpeg($new_img, $mini_img."/".$rand_name.$ext, 95);
 
-				ImageJpeg($resized_img, "$path_thumbs/$rand_name.$file_ext", 95);
-				chmod("$path_thumbs/$rand_name.$file_ext",0777);
-				ImageDestroy($resized_img);
+				chmod($mini_img."/".$rand_name.$ext,0777);
+				ImageDestroy($img);
 				ImageDestroy($new_img);
 
 			}
@@ -271,15 +290,15 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 
 				//finally, save the image
 
-				ImageJpeg($resized_imgbig, "$path_big/$rand_name.$file_ext", 95);
-				chmod("$path_big/$rand_name.$file_ext",0777);
+				ImageJpeg($resized_imgbig, $big_img."/".$rand_name.$ext, 95);
+				chmod($big_img."/".$rand_name.$ext,0777);
 				ImageDestroy($resized_imgbig);
 				ImageDestroy($new_img);
 
-				move_uploaded_file($file_tmp, "$path_big/originalai/$rand_name.$file_ext");
-                chmod("$path_big/originalai/$rand_name.$file_ext",0777);
+				move_uploaded_file($file_tmp, $big_img."/originalai/".$rand_name.$ext);
+            chmod($big_img."/originalai/".$rand_name.$ext,0777);
 
-				$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`) VALUES (" . escape($_POST['Pavadinimas']) . "," . escape($rand_name . "." . $file_ext) . "," . escape(strip_tags($_POST['Aprasymas'])) . "," . escape($_SESSION['id']) . ",'" . time() . "'," . escape($_POST['cat']) . ",'TAIP')");
+				$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`) VALUES (" . escape($_POST['Pavadinimas']) . "," . escape($rand_name . $ext) . "," . escape(strip_tags($_POST['Aprasymas'])) . "," . escape($_SESSION['id']) . ",'" . time() . "'," . escape($_POST['cat']) . ",'TAIP')");
 
 				if ($result) {
 					msg($lang['system']['done'], "{$lang['admin']['gallery_added']}");
@@ -287,7 +306,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 					klaida("{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>");
 				}
 				unset($_FILES['failas'], $filename, $_POST['action']);
-				redirect("?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "meta");
+				redirect("?id," . $_GET['id'] . ";a," . $_GET['a'] . ";v,1", "meta");
 
 			}
 		}
@@ -463,8 +482,15 @@ if (isset($_GET['v'])) {
 			}
 			redirect('?id,999;a,' . $url['a'] . ';v,6');
 		}
-		$nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), "{$lang['admin']['gallery_maxwidth']}:" => array("type" => "text", "value" => input($conf['fotodyd']), "name" => "fotodyd"), "{$lang['admin']['gallery_minwidth']}:" => array("type" => "text", "value" => input($conf['minidyd']), "name" => "minidyd"), "{$lang['admin']['gallery_rate']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galbalsuot']), "name" => "galbalsuot"), "{$lang['admin']['gallery_comments']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['yes']}"),
-			"selected" => input($conf['galkom']), "name" => "galkom"), "{$lang['admin']['gallery_images_per_page']}:" => array("type" => "select", "value" => array("5" => "5", "10" => "10", "15" => "15", "20" => "20", "25" => "25", "30" => "30", "35" => "35", "40" => "40"), "selected" => input($conf['fotoperpsl']), "name" => "fotoperpsl"), "" => array("type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}"));
+		$nustatymai = array(
+			"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), 
+			"{$lang['admin']['gallery_maxwidth']}:" => array("type" => "text", "value" => input($conf['fotodyd']), "name" => "fotodyd"), 
+			"{$lang['admin']['gallery_minwidth']}:" => array("type" => "text", "value" => input($conf['minidyd']), "name" => "minidyd"), 
+			"{$lang['admin']['gallery_rate']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galbalsuot']), "name" => "galbalsuot"), 
+			"{$lang['admin']['gallery_comments']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galkom']), "name" => "galkom"), 
+			"{$lang['admin']['gallery_images_per_page']}:" => array("type" => "select", "value" => array("5" => "5", "10" => "10", "15" => "15", "20" => "20", "25" => "25", "30" => "30", "35" => "35", "40" => "40"), "selected" => input($conf['fotoperpsl']), "name" => "fotoperpsl"), 
+			"" => array("type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}")
+		);
 
 		include_once ("priedai/class.php");
 		$bla = new forma();
