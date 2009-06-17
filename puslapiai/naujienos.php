@@ -51,7 +51,7 @@ if ($kid == 0) {
 				$extra = "<div style='float: right;'>" . (($row['kom'] == 'taip') ? "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>{$lang['news']['read']} • {$lang['news']['comments']} (" . $row['viso'] . ")</a>" : "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>{$lang['news']['read']}</a>") . "</div><br />";
 			}
 
-			$kategorijos_pav = mysql_query1("SELECT `pav`,`id` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape($row['kategorija']) . " limit 1");
+			$kategorijos_pav = mysql_query1("SELECT `pav`,`id`,`teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape($row['kategorija']) . " limit 1");
 			$pav = "<table><tr valign='top'>";
 			if (isset($kategorijos_pav['pav'])) {
 				if (isset($conf['puslapiai']['naujkat.php']['id'])) {
@@ -62,7 +62,7 @@ if ($kid == 0) {
 
 			}
 			$pav .= "<td>";
-			lentele($row['pavadinimas'], $pav . $row['naujiena'] . "</td></tr></table>" . $extra, false, array(menesis((int)date('m', strtotime(date('Y-m-d H:i:s ', $row['data'])))), (int)date('d', strtotime(date('Y-m-d H:i:s ', $row['data'])))));
+			if(!isset($kategorijos_pav['pav'])|| teises($kategorijos_pav['teises'], $_SESSION['level'])){lentele($row['pavadinimas'], $pav . $row['naujiena'] . "</td></tr></table>" . $extra, false, array(menesis((int)date('m', strtotime(date('Y-m-d H:i:s ', $row['data'])))), (int)date('d', strtotime(date('Y-m-d H:i:s ', $row['data'])))));}
 		}
 	} else {
 		lentele("{$lang['news']['news']}", "{$lang['news']['nonews']}");
@@ -84,10 +84,10 @@ if ($kid != 0) {
 			WHERE `rodoma`= 'TAIP' AND `id` = " . escape($kid) . " limit 1", 300);
 	}
 	if (isset($sql['naujiena'])&& !empty($sql['naujiena'])) {
-		if (!isset($sql['teises'])) {
-			$sql['teises'] = 0;
+		if (!isset($kategorijos_pav['teises'])) {
+			$kategorijos_pav['teises'] = 0;
 		}
-		if (teises($sql['teises'], $_SESSION['level'])) {
+		if (teises($kategorijos_pav['teises'], $_SESSION['level'])) {
 			$title = $sql['pavadinimas'];
 			$text = "<div class='naujiena'>" . $sql['naujiena'] . "";
 			if (!empty($sql['daugiau'])) {
