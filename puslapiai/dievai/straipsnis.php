@@ -187,7 +187,7 @@ if (sizeof($sql2) > 0) {
 include_once ("priedai/class.php");
 $bla = new forma();
 if ($_GET['v'] == 4) {
-	$redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,7", "method" => "post", "name" => "reg"), "{$lang['admin']['article']}:" => array("type" => "select", "value" => $straipsniai, "name" => "edit_new"), " " => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['delete']}"));
+	$redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,7", "method" => "post", "name" => "reg"), "{$lang['admin']['article']}:" => array("type" => "select", "value" => $straipsniai, "name" => "edit_new"), " " => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "" => array("type" => "submit", "name" => "action","extra"=>"onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"", "value" => "{$lang['admin']['delete']}"));
 	lentele($lang['admin']['article_edit'], $bla->form($redagavimas));
 }
 

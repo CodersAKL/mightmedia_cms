@@ -35,7 +35,7 @@ if (isset($url['m']) && $url['m'] > 0) {
 		}
 		//Profilio rodymas
 		if ($_SESSION['level'] == 1) {
-			$admin = '<a href="?id,999;a,'.$admin_pagesid['vartotojai'].';r,' . $sql['id'] . '" title="' . $lang['admin']['edit'] . '"><img src="images/icons/pencil.png" class="middle" border="0" alt="edit" /></a> <a href="?id,999;a,'.$admin_pagesid['vartotojai'].';d,' . $sql['id'] . '" onclick="if (!confirm("' . $lang['admin']['delete'] . '")) return false;\" title="' . $lang['admin']['delete'] . '"><img src="images/icons/cross.png" class="middle" border="0" alt="delete" /></a>  <a title="' . $lang['admin']['badip'] . '" href="?id,999;a,'.$admin_pagesid['banai'].';b,1;ip,' . $sql['ip'] . '"><img src="images/icons/delete.png" class="middle" border="0" alt="ban" /></a>';
+			$admin = '<a href="?id,999;a,'.$admin_pagesid['vartotojai'].';r,' . $sql['id'] . '" title="' . $lang['admin']['edit'] . '"><img src="images/icons/pencil.png" class="middle" border="0" alt="edit" /></a> <a href="?id,999;a,'.$admin_pagesid['vartotojai'].';d,' . $sql['id'] . '" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\');" title="' . $lang['admin']['delete'] . '"><img src="images/icons/cross.png" class="middle" border="0" alt="delete" /></a>  <a title="' . $lang['admin']['badip'] . '" href="?id,999;a,'.$admin_pagesid['banai'].';b,1;ip,' . $sql['ip'] . '"><img src="images/icons/delete.png" class="middle" border="0" alt="ban" /></a>';
 		} else {
 			$admin = '';
 		}

@@ -241,7 +241,7 @@ if (isset($_GET['v'])) {
 		} else {
 			$siuntiniaii[] = $lang['admin']['download_no'];
 		}
-		$redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,1", "method" => "post", "name" => "reg"), "{$lang['admin']['download_download']}:" => array("type" => "select", "value" => $siuntiniaii, "name" => "edit_new"), "{$lang['admin']['edit']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "{$lang['admin']['delete']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['delete']}"));
+		$redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,1", "method" => "post", "name" => "reg"), "{$lang['admin']['download_download']}:" => array("type" => "select", "value" => $siuntiniaii, "name" => "edit_new"), "{$lang['admin']['edit']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "{$lang['admin']['delete']}:" => array("type" => "submit", "name" => "action","extra"=>"onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"", "value" => "{$lang['admin']['delete']}"));
 		lentele($lang['admin']['download_edit'], $bla->form($redagavimas));
 	} elseif ($_GET['v'] == 1 || isset($_GET['h'])) {
 		if (!isset($nocat)) {
@@ -285,7 +285,7 @@ if (isset($_GET['v'])) {
 			<br /><br />
 			' . $lang['admin']['download_author'] . ': <b>' . $autorius . '</b><br />
 			' . $lang['admin']['download_about'] . ': <b>' . $sql['apie'] . '</b><br />
-			' . $lang['admin']['download_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['data']) . ' - ' . kada(date('Y-m-d H:i:s ', $sql['data'])) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['action'] }:" => "<a href='?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['ID'] . "'title='{$lang['admin']['acept']}'><img src='images/icons/icon_accept.gif' alt='a' border='0'></a> <a href='?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['ID'] . "' title='{$lang['admin']['delete']}'><img src='images/icons/cross.png' border='0'></a> <a href='?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['ID'] . "' title='{$lang['admin']['edit']}'><img src='images/icons/pencil.png' border='0'></a>");
+			' . $lang['admin']['download_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['data']) . ' - ' . kada(date('Y-m-d H:i:s ', $sql['data'])) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['action'] }:" => "<a href='?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['ID'] . "'title='{$lang['admin']['acept']}'><img src='images/icons/icon_accept.gif' alt='a' border='0'></a> <a href='?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['ID'] . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='images/icons/cross.png' border='0'></a> <a href='?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['ID'] . "' title='{$lang['admin']['edit']}'><img src='images/icons/pencil.png' border='0'></a>");
 
 			}
 			lentele($lang['admin']['download_unpublished'], $bla->render($info));

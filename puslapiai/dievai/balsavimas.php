@@ -126,7 +126,7 @@ if ((int)$url['v'] == 2) {
 
 		$text .= "
 		</select>
-		<input name='b_delete' type='submit' value='{$lang['admin']['delete']}'>
+		<input name='b_delete' type='submit' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" value='{$lang['admin']['delete']}'>
 		<input name='b_delete' type='submit' value='{$lang['admin']['edit']}'>
 	</form>
 	";

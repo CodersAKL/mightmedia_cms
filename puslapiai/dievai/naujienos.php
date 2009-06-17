@@ -174,7 +174,7 @@ if (isset($_GET['v'])) {
 
 	if ($_GET['v'] == 4) {
 		if (isset($naujienos)) {
-			$redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,1", "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "select", "value" => $naujienos, "name" => "edit_new"), "{$lang['admin']['edit']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "{$lang['admin']['delete']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['delete']}"));
+			$redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,1", "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "select", "value" => $naujienos, "name" => "edit_new"), "{$lang['admin']['edit']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "{$lang['admin']['delete']}:" => array("type" => "submit", "name" => "action", "extra" => "onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"","value" => "{$lang['admin']['delete']}"));
 			lentele($lang['admin']['edit'], $bla->form($redagavimas));
 		} else {
 			klaida($lang['system']['warning'], $lang['system']['no_items']);
@@ -207,7 +207,7 @@ if (isset($_GET['v'])) {
 				$info[] = array("ID" => $sql['id'], "Naujiena:" => '<a href="#" title="<b>' . $sql['pavadinimas'] . '</b>
 			<br /><br />
 			' . $lang['admin']['news_author'] . ': <b>' . $sql['autorius'] . '</b><br />
-			' . $lang['admin']['news_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['data']) . ' - ' . kada(date('Y-m-d H:i:s ', $sql['data'])) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['action']}:" => "<a href='?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] . "'title='{$lang['admin']['acept']}'><img src='images/icons/icon_accept.gif' border='0'></a> <a href='?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] . "' title='{$lang['admin']['delete']}'><img src='images/icons/stop.png' border='0'></a> <a href='?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] . "' title='{$lang['admin']['edit']}'><img src='images/icons/pencil.png' border='0'></a>");
+			' . $lang['admin']['news_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['data']) . ' - ' . kada(date('Y-m-d H:i:s ', $sql['data'])) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['action']}:" => "<a href='?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] . "'title='{$lang['admin']['acept']}'><img src='images/icons/icon_accept.gif' border='0'></a> <a href='?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='images/icons/stop.png' border='0'></a> <a href='?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] . "' title='{$lang['admin']['edit']}'><img src='images/icons/pencil.png' border='0'></a>");
 
 			}
 			lentele($lang['admin']['news_unpublished'], $bla->render($info));

@@ -103,7 +103,7 @@ if (!empty($url['t'])) {
 						\">" . trimlink(input(strip_tags($row['action'])), 50) . "</a>", //"Veiksmas"=>trimlink(input($row['action']),50),
 				//"IP"=>$row['ip1'],
 			"{$lang['admin']['logs_user']}" => $kas, //"Kada"=>kada($row['time']),
-				"{$lang['admin']['action']}" => "<a href=\"" . url("d," . $row['id'] . "") . "\" title='{$lang['admin']['delete']}'><img src=\"images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a> <a href='?id," . $url['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row['ip'] . "' title='{$lang['admin']['badip']}'><img src=\"images/icons/delete.png\" alt=\"[{$lang['admin']['badip']}]\" border=\"0\" class=\"middle\" /></a>");
+				"{$lang['admin']['action']}" => "<a href=\"" . url("d," . $row['id'] . "") . "\" onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src=\"images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a> <a href='?id," . $url['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row['ip'] . "' title='{$lang['admin']['badip']}'><img src=\"images/icons/delete.png\" alt=\"[{$lang['admin']['badip']}]\" border=\"0\" class=\"middle\" /></a>");
 		}
 		$bla = new Table();
 		lentele("{$lang['admin']['logai']} - {$lang['admin']['logs_yourip']}: <font color='red'>" . getip() . "</font>", $bla->render($info));
@@ -118,7 +118,7 @@ if (!empty($url['t'])) {
 		foreach ($sql as $row) {
 			$select[$row['ip']] = $row['ip1'] . " - " . $row['viso'];
 		}
-		$nustatymai = array("Form" => array("action" => "?id," . $url['id'] . ";a," . $url['a'] . ";d,0", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), "{$lang['admin']['logs_deletebyip']}:" => array("type" => "select", "value" => $select, "selected" => ip2long($_SERVER['REMOTE_ADDR']), "name" => "ip"), "" => array("type" => "submit", "name" => "del_all", "value" => $lang['admin']['delete']));
+		$nustatymai = array("Form" => array("action" => "?id," . $url['id'] . ";a," . $url['a'] . ";d,0", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), "{$lang['admin']['logs_deletebyip']}:" => array("type" => "select", "value" => $select, "selected" => ip2long($_SERVER['REMOTE_ADDR']), "name" => "ip"), "" => array("type" => "submit", "name" => "del_all", "extra"=>"onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"","value" => $lang['admin']['delete']));
 		$bla = new forma();
 		lentele("{$lang['admin']['logs_deletebyip']}", $bla->form($nustatymai));
 

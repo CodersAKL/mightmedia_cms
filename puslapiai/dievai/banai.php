@@ -219,7 +219,7 @@ if (count($IPS) > 0)
 {
     foreach ($IPS as $key => $val)
     {
-        $info[] = array('IP' => $key, $lang['admin']['why'] => trimlink($val, 50), $lang['admin']['action'] => "<a href=\"?id,{$_GET['id']};a,{$_GET['a']};d,{$key}\" title='{$lang['admin']['delete']}'><img src=\"images/icons/cross.png\" alt=\"delete\" border=\"0\"></a> ");
+        $info[] = array('IP' => $key, $lang['admin']['why'] => trimlink($val, 50), $lang['admin']['action'] => "<a href=\"?id,{$_GET['id']};a,{$_GET['a']};d,{$key}\" title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src=\"images/icons/cross.png\" alt=\"delete\" border=\"0\"></a> ");
     }
 }
 $title = $lang['admin']['bans'];
