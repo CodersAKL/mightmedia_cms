@@ -93,7 +93,7 @@ if ($kid != 0) {
 			if (!empty($sql['daugiau'])) {
 				$text .= '<div class="line"></div>' . $sql['daugiau'];
 			}
-			$text .= "</div><hr />" . date('Y-m-d H:i:s ', $sql['data']) . ",  <b>" . $sql['autorius'] . "</b>";
+			$text .= "</div><hr />" . date('Y-m-d H:i:s', $sql['data']) . ",  <b>" . $sql['autorius'] . "</b>";
 			//$text .= "</div>";
 
 			//Atvaizduojam naujieną, likę argumentai - mėnesis žodžiais ir diena skaičiumi
