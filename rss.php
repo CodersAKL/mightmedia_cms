@@ -31,26 +31,26 @@ if(isset($conf['puslapiai']['rss.php'])){?>
  			<description>A web development resource center</description>
  		</image>*/
 
- $result = mysql_query("SELECT   SQL_CACHE *
-			FROM `" . LENTELES_PRIESAGA . "naujienos`
-			WHERE `rodoma`= 'TAIP'
-			ORDER BY `data` DESC LIMIT 50");
+ $result = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "naujienos`	WHERE `rodoma`= 'TAIP'	ORDER BY `data` DESC LIMIT 50");
  
  //Iterate over the rows to create each item
  //<image>'.adresas()."images/naujienu_kat/".$kategorija['pav'].'</image>
- while ($row = mysql_fetch_assoc($result)) {
- $kategorija=mysql_fetch_assoc(mysql_query1("SELECT  SQL_CACHE * from `" . LENTELES_PRIESAGA . "grupes` where id=".escape($row['kategorija']).""));
- echo '<item>
+ foreach($result as $row) {
+ $kategorija = mysql_query1("SELECT  SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` where `id`=".escape($row['kategorija'])." LIMIT 1");
+ if((isset($kategorija['teises']) && teises($kategorija['teises'], 0))||!isset($kategorija['teises'])){
+ echo '
+ <item>
  		<title>'.$row['pavadinimas'].'</title>
  		<link>'.adresas().'?id,'.$conf['puslapiai']['naujienos.php']['id'].';k,'.$row['id'].'</link>
  		<description>'.htmlspecialchars($row['naujiena']).'</description>
  		<author>'.$row['autorius'].'</author>
- 		<category>'.$kategorija['pavadinimas'].'</category>
+ 		'.(isset($kategorija['pavadinimas'])?'<category>'.$kategorija['pavadinimas'].'</category>':'').'
  		<pubDate>'.date('Y-m-d H:i:s ', $row['data']).'</pubDate>
  		<source url="'.adresas().'">'.$conf['Pavadinimas'].' RSS</source>
- 	</item>';
+</item>
+';
  }
- 
+} 
  ?>
  
  	</channel>
