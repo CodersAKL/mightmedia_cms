@@ -275,7 +275,7 @@ function base64encode($str) {
 // Teksto slepimui
 function ukryj($match) {
 	$id = uniqid('');
-	$return = (defined("LEVEL")) ? $match[2] : 'Tik registruotiems vartotojams';
+	$return = (defined("LEVEL")&& LEVEL>0) ? $match[2] : 'Tik registruotiems vartotojams';
 	return '<font color="red">▲</font> <a href="#" onclick="flip(\'' . $id . '\'); return false;"><b>' . $match[1] . '</b> <font color="red">▼</font></a><div id="' . $id . '" class="ukryj" style="display: none;">' . $return . '</div>';
 }
 
