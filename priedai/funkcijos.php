@@ -311,7 +311,7 @@ function mysql_query1($query, $lifetime = 0) {
 	global $mysql_num, $prisijungimas_prie_mysql, $conf;
 
 	//Sugeneruojam kesho pavadinima
-	$keshas = 'sandeliukas/' . md5($query) . '.php'; //kesho failas
+	$keshas =realpath(dirname(__file__).'/..').'/sandeliukas/' . md5($query) . '.php'; //kesho failas
 	$return = array();
 
 	if ($conf['keshas'] && $lifetime > 0 && !in_array(strtolower(substr($query, 0, 6)), array('delete', 'insert', 'update'))) {
@@ -369,7 +369,7 @@ function mysql_query1($query, $lifetime = 0) {
 	return $return;
 }
 function delete_cache($query) {
-	$filename = 'sandeliukas/' . md5($query) . '.php';
+	$filename = realpath(dirname(__file__).'/..').'sandeliukas/' . md5($query) . '.php';
 	if (is_file($filename)) {
 		unlink($filename);
 	}
