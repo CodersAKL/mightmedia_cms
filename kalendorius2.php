@@ -1,20 +1,20 @@
 <?php
 function svente($array, $siandien = '', $return = '') {
 
-//Gauname ğiandienos (mënesis-diena)
+//Gauname Å¡iandienos (mÄ—nesis-diena)
 	if (!$siandien) {
 		$siandien = date('n-j');
 	}
 
-	//Tikriname ar ğvenèiø masyve nurodyta diena egzistuoja
+	//Tikriname ar Å¡venÄiÅ³ masyve nurodyta diena egzistuoja
 	if (array_key_exists($siandien, $array)) {
 		foreach ($array[$siandien] as $key => $val) {
-			if (empty($return)) {	//Jei iğvedam ğventæ pirmà kartà
+			if (empty($return)) {	//Jei iÅ¡vedam Å¡ventÄ™ pirmÄ… kartÄ…
 				$return .= $val;
 			}
 			else {
 				$return .= ", <br />" . $val;
-			}	//Iğvedame daugiau nei vienà ğventæ, atskiriame kableliais
+			}	//IÅ¡vedame daugiau nei vienÄ… Å¡ventÄ™, atskiriame kableliais
 		}
 	}
 	return $return;
@@ -34,7 +34,7 @@ function gimtadienis() {
 }
 
 $sventes = array(
-	 //Valstybines ğventes
+	 //Valstybines Å¡ventes
 	 "1-1" => array("Naujieji metai", "Lietuvos veliavos diena"),
 	 "1-13" => array("Laisves gyneju diena"),
 	 "2-16" => array("Lietuvos valstybes atkurimo diena"),
@@ -43,15 +43,15 @@ $sventes = array(
 	 "5-4" => array("Motinos diena"),
 	 "6-24" => array("Rasos diena", "Joninines"),
 	 "7-6" => array("Valstybes diena", "Lietuvos karaliaus Mindaugo karunavimo diena"),
-	 "8-15" => array("Şolines"),
-	 "11-1" => array("Visu ğventuju diena"),
+	 "8-15" => array("Å½olines"),
+	 "11-1" => array("Visu Å¡ventuju diena"),
 	 "12-25" => array("Kaledos"),
 	 "12-26" => array("Kaledos (antra diena)"),
 	 //Lietuvos Respublikos atmintinos dienos
 	 "8-23" => array("Juodojo kaspino diena", "Baltijos kelio diena"),
 	 "8-31" => array("Laisves diena"),
-	 "9-1" => array("Mokslo ir şiniu diena"),
-	 "9-8" => array("Ğiline (Ğvc. Mergeles Marijos gimimo diena)", "Vytauto Didşiojo karunavimo diena")
+	 "9-1" => array("Mokslo ir Å¾iniu diena"),
+	 "9-8" => array("Å iline (Å vc. Mergeles Marijos gimimo diena)", "Vytauto DidÅ¾iojo karunavimo diena")
 );
 
 $ieskom = array(
@@ -106,7 +106,7 @@ $text='<center>
 <b> '.str_replace($ieskom,$keiciam,date('F')).'</b><br />
 <span style="font-family: Arial; font-style: normal; font-variant: normal; font-weight: bold; font-size: 65px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none;">'.date('d').'</span><br />
 <b>'.str_replace($days_en ,$dienos,date('l')).'</b><br />
-<b>'.date('W').' savaitë</b><br />
+<b>'.date('W').' savaitÄ—</b><br />
 ';
 $svent=svente($sventes);
 $gim=gimtadienis();
