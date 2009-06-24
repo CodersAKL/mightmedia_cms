@@ -119,7 +119,7 @@ if (empty($url['m'])) {
 			$text .= "
 				
 				<div id=\"gallery\" class=\"img_left\" >
-			<a rel=\"lightbox\" href=\"galerija/" . $row['file'] . "\"  title=\"" . $row['pavadinimas'] . ": " . trimlink(strip_tags($row['apie']), 50) . "\">
+			<a rel=\"lightbox\" href=\"galerija/" . $row['file'] . "\" title=\"" . (!empty($row['pavadinimas'])?$row['pavadinimas'] . ": ":'') . trimlink(strip_tags($row['apie']), 50) . "\">
 				<img src=\"galerija/mini/" . $row['file'] . "\" alt=\"\" />
 			</a><br />
       <a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date('Y-m-d H:i:s ', $row['data']) . "\">
@@ -135,12 +135,12 @@ if (empty($url['m'])) {
       <a href=\"#\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('?id,999;a,{$admin_pagesid['galerija']};t," . $row['id'] . "'); $(this).parent('.img_left').remove(); return false } else { return false }\" title=\"{$lang['system']['delete']}\">
         <img src='images/icons/cross.png' alt='X' border='0' />
       </a>
-      " : "") . "
+				 " : "") . "
 		</div>
 		";
 
 			$foto = true;
-			//<b>{$lang['admin']['gallery_author']}:</b> " . $autorius . "<br />
+		//<b>{$lang['admin']['gallery_author']}:</b> " . $autorius . "<br />
 		}
 		$text .= '</td>
 	</tr>
@@ -164,9 +164,9 @@ if (empty($url['m'])) {
 if (!empty($url['m'])) {
 	$sql = "SELECT
   `" . LENTELES_PRIESAGA . "grupes`.`pavadinimas` AS `Kategorija`,
-    `" . LENTELES_PRIESAGA . "grupes`.`pav` AS `img`,
-        `" . LENTELES_PRIESAGA . "grupes`.`teises` AS `teises`,
-   `" . LENTELES_PRIESAGA . "grupes`.`id` AS `kid`,
+  `" . LENTELES_PRIESAGA . "grupes`.`pav` AS `img`,
+  `" . LENTELES_PRIESAGA . "grupes`.`teises` AS `teises`,
+  `" . LENTELES_PRIESAGA . "grupes`.`id` AS `kid`,
   `" . LENTELES_PRIESAGA . "galerija`.`pavadinimas`,
   `" . LENTELES_PRIESAGA . "galerija`.`id` AS `nid`,
   `" . LENTELES_PRIESAGA . "galerija`.`apie`,
@@ -186,8 +186,8 @@ if (!empty($url['m'])) {
   LIMIT 1";
 
 	$row = mysql_query1($sql, 86400);
-	if(empty($row['file'])){
-	$row = mysql_query1("SELECT
+	if(empty($row['file'])) {
+		$row = mysql_query1("SELECT
   `" . LENTELES_PRIESAGA . "galerija`.`pavadinimas`,
   `" . LENTELES_PRIESAGA . "galerija`.`id` AS `nid`,
   `" . LENTELES_PRIESAGA . "galerija`.`apie`,
@@ -205,9 +205,9 @@ if (!empty($url['m'])) {
   ORDER BY
   `" . LENTELES_PRIESAGA . "galerija`.`data` DESC
   LIMIT 1", 86400);
-	$row['teises']=0;
-	$row['kid']=0;
-	} 
+		$row['teises']=0;
+		$row['kid']=0;
+	}
 
 	if (!empty($row['file']) && isset($row['file'])) {
 		if (defined('LEVEL') && teises($row['teises'], $_SESSION['level']) || ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('galerija.php', unserialize($_SESSION['mod']))))) {
@@ -237,8 +237,8 @@ if (!empty($url['m'])) {
 		" . $balsavimas . "
 		
 		<b>{$lang['admin']['gallery_date']}:</b> " . date('Y-m-d H:i:s ', $row['data']) . "<br />\n";
-		if (!empty($row['apie'])) { $text .= "<b>{$lang['admin']['gallery_about']}:</b> " . $row['apie'] . "<br />\n"; }
-		$text .= "<b>{$lang['admin']['gallery_author']}:</b> " . $autorius . " <br />
+			if (!empty($row['apie'])) { $text .= "<b>{$lang['admin']['gallery_about']}:</b> " . $row['apie'] . "<br />\n"; }
+			$text .= "<b>{$lang['admin']['gallery_author']}:</b> " . $autorius . " <br />
 		<center>
 		<h1>";
 
