@@ -76,9 +76,9 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 				$link = "k," . $row['kid'];
 			} elseif ($row['pid'] == 'puslapiai/siustis' && isset($conf['puslapiai']['siustis.php']['id'])) {
 				$linkas = mysql_query1("SELECT categorija FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID`='" . $row['kid'] . "'LIMIT 1");
-				$link = "k," . $linkas['categorija'] . "v," . $row['kid'] . "";
+				$link = "k," . $linkas['categorija'] . ";v," . $row['kid'] . "";
 				//$extra = "Siuntiniai";
-				$link = "v," . $row['kid'];
+				//$link = "v," . $row['kid'];
 			} //siuntiniai ?id,50;k,25#162
 			elseif ($row['pid'] == 'puslapiai/straipsnis' && isset($conf['puslapiai']['straipsnis.php']['id'])) {
 
