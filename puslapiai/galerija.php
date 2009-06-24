@@ -186,6 +186,28 @@ if (!empty($url['m'])) {
   LIMIT 1";
 
 	$row = mysql_query1($sql, 86400);
+	if(empty($row['file'])){
+	$row = mysql_query1("SELECT
+  `" . LENTELES_PRIESAGA . "galerija`.`pavadinimas`,
+  `" . LENTELES_PRIESAGA . "galerija`.`id` AS `nid`,
+  `" . LENTELES_PRIESAGA . "galerija`.`apie`,
+  `" . LENTELES_PRIESAGA . "galerija`.`data`,
+  `" . LENTELES_PRIESAGA . "users`.`nick` AS `Nick`,
+  `" . LENTELES_PRIESAGA . "users`.`id` AS `nick_id`,
+  `" . LENTELES_PRIESAGA . "users`.`levelis` AS `levelis`,
+  `" . LENTELES_PRIESAGA . "galerija`.`file`
+  FROM
+  `" . LENTELES_PRIESAGA . "galerija`
+
+  Inner Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "galerija`.`autorius` = `" . LENTELES_PRIESAGA . "users`.`id`
+  WHERE  
+   `" . LENTELES_PRIESAGA . "galerija`.`id` =  " . escape($url['m']) . " AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
+  ORDER BY
+  `" . LENTELES_PRIESAGA . "galerija`.`data` DESC
+  LIMIT 1", 86400);
+	$row['teises']=0;
+	$row['kid']=0;
+	} 
 
 	if (!empty($row['file']) && isset($row['file'])) {
 		if (defined('LEVEL') && teises($row['teises'], $_SESSION['level']) || ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('galerija.php', unserialize($_SESSION['mod']))))) {
