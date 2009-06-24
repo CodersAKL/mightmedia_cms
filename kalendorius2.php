@@ -1,20 +1,20 @@
 <?php
 function svente($array, $siandien = '', $return = '') {
 
-//Gauname Å¡iandienos (mÄ—nesis-diena)
+//Gauname ðiandienos (mënesis-diena)
 	if (!$siandien) {
 		$siandien = date('n-j');
 	}
-	
-	//Tikriname ar Å¡venÄiÅ³ masyve nurodyta diena egzistuoja
+
+	//Tikriname ar ðvenèiø masyve nurodyta diena egzistuoja
 	if (array_key_exists($siandien, $array)) {
 		foreach ($array[$siandien] as $key => $val) {
-			if (empty($return)) {	//Jei iÅ¡vedam Å¡ventÄ™ pirmÄ… kartÄ…
+			if (empty($return)) {	//Jei iðvedam ðventæ pirmà kartà
 				$return .= $val;
-			}	
+			}
 			else {
 				$return .= ", <br />" . $val;
-			}	//IÅ¡vedame daugiau nei vienÄ… Å¡ventÄ™, atskiriame kableliais
+			}	//Iðvedame daugiau nei vienà ðventæ, atskiriame kableliais
 		}
 	}
 	return $return;
@@ -26,7 +26,7 @@ function gimtadienis() {
 	foreach ($sql as $row) {
 		$gimtadieniai[date('n') . "-" . $row['diena']][] = user($row['nick'],$row['id'],'',"sukako " . (amzius($row['gim_data'])) . "m.");
 	}
-	
+
 	if(isset($gimtadieniai[date('n-j')])) {
 		return implode(", ",$gimtadieniai[date('n-j')]);
 	}
@@ -34,8 +34,8 @@ function gimtadienis() {
 }
 
 $sventes = array(
-	 //Valstybines Å¡ventes
-	 "1-1" => array("Naujieji metai", "Lietuvos veliavos diena"), 
+	 //Valstybines ðventes
+	 "1-1" => array("Naujieji metai", "Lietuvos veliavos diena"),
 	 "1-13" => array("Laisves gyneju diena"),
 	 "2-16" => array("Lietuvos valstybes atkurimo diena"),
 	 "3-11" => array("Lietuvos nepriklausomybes atkurimo diena"),
@@ -43,44 +43,44 @@ $sventes = array(
 	 "5-4" => array("Motinos diena"),
 	 "6-24" => array("Rasos diena", "Joninines"),
 	 "7-6" => array("Valstybes diena", "Lietuvos karaliaus Mindaugo karunavimo diena"),
-	 "8-15" => array("Å½olines"),
-	 "11-1" => array("Visu Å¡ventuju diena"),
+	 "8-15" => array("Þolines"),
+	 "11-1" => array("Visu ðventuju diena"),
 	 "12-25" => array("Kaledos"),
 	 "12-26" => array("Kaledos (antra diena)"),
 	 //Lietuvos Respublikos atmintinos dienos
-	 "8-23" => array("Juodojo kaspino diena", "Baltijos kelio diena"), 
+	 "8-23" => array("Juodojo kaspino diena", "Baltijos kelio diena"),
 	 "8-31" => array("Laisves diena"),
-	 "9-1" => array("Mokslo ir Å¾iniu diena"),
-	 "9-8" => array("Å iline (Å vc. Mergeles Marijos gimimo diena)", "Vytauto DidÅ¾iojo karunavimo diena")
- );
+	 "9-1" => array("Mokslo ir þiniu diena"),
+	 "9-8" => array("Ðiline (Ðvc. Mergeles Marijos gimimo diena)", "Vytauto Didþiojo karunavimo diena")
+);
 
 $ieskom = array(
-	"December",
-	"January",
-	"February",
-	"March",
-	"April",
-	"May",
-	"June",
-	"July",
-	"August",
-	"September",
-	"October",
-	"November"
+	 "December",
+	 "January",
+	 "February",
+	 "March",
+	 "April",
+	 "May",
+	 "June",
+	 "July",
+	 "August",
+	 "September",
+	 "October",
+	 "November"
 );
 $keiciam = array(
-	$lang['calendar']['December'],
-	$lang['calendar']['January'],
-	$lang['calendar']['February'],
-	$lang['calendar']['March'],
-	$lang['calendar']['April'],
-	$lang['calendar']['May'],
-	$lang['calendar']['June'],
-	$lang['calendar']['July'],
-	$lang['calendar']['August'],
-	$lang['calendar']['September'],
-	$lang['calendar']['October'],
-	$lang['calendar']['November']
+	 $lang['calendar']['December'],
+	 $lang['calendar']['January'],
+	 $lang['calendar']['February'],
+	 $lang['calendar']['March'],
+	 $lang['calendar']['April'],
+	 $lang['calendar']['May'],
+	 $lang['calendar']['June'],
+	 $lang['calendar']['July'],
+	 $lang['calendar']['August'],
+	 $lang['calendar']['September'],
+	 $lang['calendar']['October'],
+	 $lang['calendar']['November']
 );
 $days_en = array(
 	 'Monday',
@@ -92,13 +92,13 @@ $days_en = array(
 	 'Sunday');
 
 $dienos= array(
-	$lang['calendar']['Monday'],
-	$lang['calendar']['Tuesday'],
-	$lang['calendar']['Wednesday'],
-	$lang['calendar']['Thursday'],
-	$lang['calendar']['Friday'],
-	$lang['calendar']['Saturday'],
-	$lang['calendar']['Sunday']
+	 $lang['calendar']['Monday'],
+	 $lang['calendar']['Tuesday'],
+	 $lang['calendar']['Wednesday'],
+	 $lang['calendar']['Thursday'],
+	 $lang['calendar']['Friday'],
+	 $lang['calendar']['Saturday'],
+	 $lang['calendar']['Sunday']
 );
 
 $text='<center>
@@ -106,7 +106,7 @@ $text='<center>
 <b> '.str_replace($ieskom,$keiciam,date('F')).'</b><br />
 <span style="font-family: Arial; font-style: normal; font-variant: normal; font-weight: bold; font-size: 65px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none;">'.date('d').'</span><br />
 <b>'.str_replace($days_en ,$dienos,date('l')).'</b><br />
-<b>'.date('W').' savaitÄ—</b><br />
+<b>'.date('W').' savaitë</b><br />
 ';
 $svent=svente($sventes);
 $gim=gimtadienis();
