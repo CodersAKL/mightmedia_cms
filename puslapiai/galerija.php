@@ -240,13 +240,13 @@ if (!empty($url['m'])) {
 			if (!empty($row['apie'])) { $text .= "<b>{$lang['admin']['gallery_about']}:</b> " . $row['apie'] . "<br />\n"; }
 			$text .= "<b>{$lang['admin']['gallery_author']}:</b> " . $autorius . " <br />
 		<center>
-		<h1>";
+	";
 
 			if (!empty($nuoroda2['id'])) {
 				$text .= "<a href=\"?id," . $url['id'] . ";m," . $nuoroda2['id'] . "\" >< {$lang['admin']['gallery_prev']}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 			}
 			if (!empty($nuoroda['id'])) {
-				$text .= "<a href=\"?id," . $url['id'] . ";m," . $nuoroda['id'] . "\" >{$lang['admin']['gallery_next']} ></a></h1>";
+				$text .= "<a href=\"?id," . $url['id'] . ";m," . $nuoroda['id'] . "\" >{$lang['admin']['gallery_next']} ></a>";
 			}
 			$text .= "</center>";
 
