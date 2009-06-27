@@ -20,7 +20,7 @@ include_once (dirname(__file__) . "/priedai/prisijungimas.php");
 <head>
 <?php
 
-echo header();
+header_info();
 
 ?>
 </head>
