@@ -37,14 +37,11 @@ function komentarai($id, $hide = false) {
 		//$sql = mysql_query1("SELECT * FROM `".LENTELES_PRIESAGA."kom` WHERE kid = ".escape($id)." AND pid = ".escape((int)$url['id'])." ORDER BY `data` DESC LIMIT 50");
 		$sql = mysql_query1("SELECT *, (SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `" . LENTELES_PRIESAGA . "kom`.`nick_id`=`id`) AS email,
                 (SELECT `levelis` FROM `" . LENTELES_PRIESAGA . "users` WHERE `" . LENTELES_PRIESAGA . "kom`.`nick_id`=`id`) AS levelis FROM `" . LENTELES_PRIESAGA . "kom` WHERE kid = " . escape($id) . " AND pid = " . escape($page) . " ORDER BY `data` DESC LIMIT 50");
-		$text = "";
+		$text = ''; $tr = '';
 		$i = 0;
 		foreach ($sql as $row) {
 			$i++;
-			if (is_int($i / 2))
-				$tr = "2";
-			else
-				$tr = "";
+			$tr = $i % 2 ? '2' : '';
 			$text .= "<div class=\"tr$tr\"><div class=\"title\"><a href=\"#k:" . $row['id'] . "\" id=\"k:" . $row['id'] . "\"> <img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /> </a> ";
 			if (defined("LEVEL") && (LEVEL == 1 || (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('com', unserialize($_SESSION['mod']))))) {
 				$text .= "<a href='" . url("dk," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['admin']['delete']}?') \">[{$lang['admin']['delete']}]</a> ";
@@ -55,7 +52,7 @@ function komentarai($id, $hide = false) {
 			} else {
 				$nick = user($row['nick'], $row['nick_id'], $row['levelis']);
 			}
-			$text .= "" . $nick . "";
+			$text .= $nick;
 			$text .= " (" . date('Y-m-d H:i:s ', $row['data']) . ") " . naujas($row['data'], $row['nick']) . "</div>" . smile(bbchat(wrap(input($row['zinute']), 80))) . "</div>";
 			//  <div class=\"avatar\" align=\"left\" style=\"display:inline;margin:4px;padding:2px;height:auto;\">" . avatar($row['email'], 40) . "</div>
 		}
