@@ -17,55 +17,47 @@ include_once (dirname(__file__) . "/priedai/prisijungimas.php");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<?php
+	<head>
+		<?php header_info(); ?>
+	</head>
+	<body>
+		<table width="400px" align="center" class="main">
+			<tr class="center_header"><td>
+					<?php
 
-header_info();
+					klaida($lang['admin']['maintenance'], $conf['Maintenance']);
 
-?>
-</head>
-<body>
-<table width="400px" align="center" class="main">
-<tr class="center_header"><td>
-<?php
+					?>
+				</td>
+			</tr>
+			<tr>
+				<td class="center_middle">
+					<?php
 
-klaida($lang['admin']['maintenance'], $conf['Maintenance']);
+					if ($conf['Palaikymas'] == 1 && !isset($_SESSION['id'])) {
+						admin_login_form();
+					} elseif (isset($_SESSION['id']) && $_SESSION['level'] > 1 && $_SESSION['level'] > 0 && $conf['Palaikymas'] == 1) {
+						echo "<a href='?id,Atsijungti'>{$lang['user']['logout']}</a>";
+					} elseif (isset($_SESSION['id']) && $_SESSION['level'] == 1) {
+						header('location: index.php'); exit;
+					}
+					if ($conf['Palaikymas'] == 0) {
+						header('location: index.php'); exit;
+					}
 
-?>
-</td>
-</tr>
-<tr>
-<td class="center_middle">
-<?php
+					?>
+				</td></tr>
+			<tr>
+				<td class="center_footer">
+					<?php
 
-if ($conf['Palaikymas'] == 1 && !isset($_SESSION['id'])) {
-	admin_login_form();
-} elseif (isset($_SESSION['id']) && $_SESSION['level'] > 1 && $_SESSION['level'] > 0 && $conf['Palaikymas'] == 1) {
-	echo "<a href='?id,Atsijungti'>{$lang['user']['logout']}</a>";
-} elseif (isset($_SESSION['id']) && $_SESSION['level'] == 1) {
-	header('location: index.php');
-}
-if ($conf['Palaikymas'] == 0) {
-	header('location: index.php');
-}
+					copyright($conf['Copyright']);
+					unset($text);
 
-?>
-</td></tr>
-<tr>
-<td class="center_footer">
-<?php
-
-copyright($conf['Copyright']);
-unset($text);
-
-?>
-</td>
-</tr>
-</table>
-</body>
+					?>
+				</td>
+			</tr>
+		</table>
+	</body>
 </html>
-<?php
-
-ob_end_flush();
-
-?>
+<?php ob_end_flush(); ?>
