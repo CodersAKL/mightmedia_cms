@@ -43,7 +43,12 @@ foreach ($kur as $name => $check) {
 }
 $box .= "<label><input type='checkbox' name='vis' onclick='checkedAll(\"search\");'/> {$lang['search']['everything']}</label>";
 //Paieškos forma
-$search = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "search", "name" => "search"), " " => array("type" => "text", "value" => (isset($_POST['s']) ? input($_POST['s']) : ''), "name" => "s", "class"=>"input"), "{$lang['search']['for']}:" => array("type" => "string", "value" => $box), "" => array("type" => "submit", "class" => "submit", "name" => "subsearch", "value" => $lang['search']['search']));
+$search = array(
+	 "Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "search", "name" => "search"),
+	 " " => array("type" => "text", "value" => (isset($_POST['s']) ? input($_POST['s']) : ''), "name" => "s", "class"=>"input", "extra"=>"title='{$lang['search']['for']}'"),
+	 "{$lang['search']['for']}:" => array("type" => "string", "value" => $box),
+	 "" => array("type" => "submit", "class" => "submit", "name" => "subsearch", "value" => $lang['search']['search'])
+);
 
 //Nupiešiam paieškos formą
 include_once ("priedai/class.php");
@@ -192,9 +197,9 @@ if (isset($_POST['s'])) {
 			}
 		}
 		if ($i > 0) {
-			//$kiek = mysql_num_rows($sqlas);
-			//msg($lang['system']['done'],"<b>".input(str_replace("%"," ",$_POST['s']))."</b><br/>Rasta atikmenų: ".$i);
-			//msg($lang['search']['results'], $text);
+		//$kiek = mysql_num_rows($sqlas);
+		//msg($lang['system']['done'],"<b>".input(str_replace("%"," ",$_POST['s']))."</b><br/>Rasta atikmenų: ".$i);
+		//msg($lang['search']['results'], $text);
 		} else {
 			klaida($lang['system']['sorry'], "<b>" . input(str_replace("%", " ", $_POST['s'])) . "</b> {$lang['search']['notfound']}");
 		}

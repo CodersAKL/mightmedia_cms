@@ -22,7 +22,7 @@ if (isset($url['c']) && !empty($url['c']) && strlen($url['c']) == 11) {
 	if (!isset($sqlis['nick'])) {
 		$error = "{$lang['pass']['wrongcode']}";
 	} else {
-		//$sql = mysql_fetch_assoc($sql);
+	//$sql = mysql_fetch_assoc($sql);
 		$slaptas = random_name();
 		$nick = $sqlis['nick'];
 
@@ -54,11 +54,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'siusti') {
 			$error .= " {$lang['pass']['wrongemail']}.<br />";
 			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['pass']['wrongemail']}({$lang['pass']['remain']}) : " . $email) . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
 		} else {
-			//$sql = mysql_fetch_assoc($sql);
+		//$sql = mysql_fetch_assoc($sql);
 			$slaptas = random_name();
 			$msg = "
-{$lang['user']['hello']} <b>" . $sql['nick'] . "</b>,<br/>
-{$lang['pass']['mail']}
+				 {$lang['user']['hello']} <b>" . $sql['nick'] . "</b>,<br/>
+				 {$lang['pass']['mail']}
  <a href='http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "/?id," . $_GET['id'] . ";c," . $slaptas . "'>http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "/?id," . $_GET['id'] . ";c," . $slaptas . "</a>
 <hr>";
 			ini_set("sendmail_from", $conf['Pastas']);
@@ -80,14 +80,15 @@ if (isset($error)) {
 } elseif (!isset($_POST['action']) && !isset($url['c'])) {
 	include_once ("priedai/class.php");
 
-		$bla = new forma();
-		$forma = array(
-			"Form" => array("action" => "", "method" => "post", "name" => "siusti","extra"=>"onSubmit=\"return checkMail('reg','email')\""), 
-			"{$lang['pass']['email']}:" => array("type" => "text", "value" =>$lang['pass']['email'], "name" => "email","extra"=>"onfocus=\"if (this.value=='{$lang['pass']['email']}   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['pass']['email']}   '; \""), 
-			"{$lang['pass']['email2']}:" => array("type" => "text", "value" =>$lang['pass']['email'], "name" => "email1","extra"=>"onfocus=\"if (this.value=='{$lang['pass']['email']}   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['pass']['email']}   '; \""), kodas()=>array("type"=>"text","name"=>"kode", "class"=>"chapter"), 
-			" \r" => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['pass']['send']}"),
-			" \r\r" => array("type" => "hidden", "name" => "action", "value" => "siusti")
-		);
+	$bla = new forma();
+	$forma = array(
+		 "Form" => array("action" => "", "method" => "post", "name" => "siusti","extra"=>"onSubmit=\"return checkMail('reg','email')\""),
+		 "{$lang['pass']['email']}:" => array("type" => "text","name" => "email","extra"=>"title='{$lang['pass']['email']}'"),
+		 "{$lang['pass']['email2']}:" => array("type" => "text", "name" => "email1","extra"=>"title='{$lang['pass']['email']}'"),
+		 kodas()=>array("type"=>"text","name"=>"kode", "class"=>"chapter"),
+		 " \r" => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['pass']['send']}"),
+		 " \r\r" => array("type" => "hidden", "name" => "action", "value" => "siusti")
+	);
 
 	lentele($lang['pass']['remain'], $bla->form($forma));
 	unset($text);
