@@ -39,37 +39,37 @@ HTML;
 
 	$text = "<ul>";
 	if (isset($conf['puslapiai']['edit_user.php']['id'])) {
-		$text .= "<li><a href=\"?id," . $conf['puslapiai']['edit_user.php']['id'] . "\"><img src=\"images/icons/user_edit.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\"> {$lang['user']['edit_profile']}</a></li>";
+		$text .= "<li><a href=\"?id," . $conf['puslapiai']['edit_user.php']['id'] . "\"><img src=\"images/icons/user_edit.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['edit_profile']}</a></li>";
 	}
 	if (isset($conf['puslapiai']['pm.php']['id'])) {
 		$pm = kiek('private_msg', "WHERE `to`=" . escape($_SESSION['username']) . " AND `read`='NO'", 'total');
 
 		if ($pm != 0) {
-			$img = "<blink><img src='images/icons/email_error.gif' alt='new' border='0' style=\"vertical-align: middle;\"/></blink>";
+			$img = "<img src='images/icons/email_error.gif' alt='new' border='0' style=\"vertical-align: middle;\"/>";
 		} else {
-			$img = "<img src='images/icons/email.png' alt='@' border='0' style=\"vertical-align: middle;\"/>";
+			$img = "<img src='images/icons/email.png' alt='@' border='0' style=\"vertical-align: middle;\" />";
 		}
 		$text .= "<li><a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";a,1\">$img {$lang['user']['messages']} ({$pm})</a></li>";
 	}
 
 	if (isset($conf['puslapiai']['moderatorius.php']['id']) && isset($_SESSION['mod']) && !empty($_SESSION['mod'])) {
 		$text .= "
-			<li><a href=\"?id,{$conf['puslapiai']['moderatorius.php']['id']}\"><img src=\"images/icons/book__pencil.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\"> {$lang['system']['mod']}</a></li>";
+			<li><a href=\"?id,{$conf['puslapiai']['moderatorius.php']['id']}\"><img src=\"images/icons/book__pencil.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['system']['mod']}</a></li>";
 	}
 	if (isset($_SESSION['level']) && $_SESSION['level'] == 1) {
 
 		$text .= "
-			<li><a href=\"?id,999\"><img src=\"images/icons/admin_block.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\"> {$lang['user']['administration']}</a></li>
-			<li><a href=\"?id,999;a,{$admin_pagesid['naujienos']};v,1\"><img src=\"images/icons/sticky_note__pencil.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\"> {$lang['user']['write_news']}</a></li>
+			<li><a href=\"?id,999\"><img src=\"images/icons/admin_block.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['administration']}</a></li>
+			<li><a href=\"?id,999;a,{$admin_pagesid['naujienos']};v,1\"><img src=\"images/icons/sticky_note__pencil.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['write_news']}</a></li>
 		";
 
 		if (isset($conf['puslapiai']['galerija.php']['id']))
-			$text .= "<li><a href=\"?id,999;a,{$admin_pagesid['galerija']};v,1\"><img src=\"images/icons/camera_go.png\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['admin']['gallery_add']}</a></li>";
+			$text .= "<li><a href=\"?id,999;a,{$admin_pagesid['galerija']};v,1\"><img src=\"images/icons/camera_go.png\" style=\"vertical-align: middle;\" border=\"0\" alt=\"@\" /> {$lang['admin']['gallery_add']}</a></li>";
 	}
 
 
 	$text .= "
-			<li><a href=\"?id,atsijungti\"><img src=\"images/icons/key_go.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\"> {$lang['user']['logout']}</a></li>
+			<li><a href=\"?id,atsijungti\"><img src=\"images/icons/key_go.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['logout']}</a></li>
 		</ul>
 	";
 	$title = sprintf($lang['user']['hello'], $_SESSION['username']);
