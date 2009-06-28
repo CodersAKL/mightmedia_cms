@@ -12,18 +12,19 @@
 
 function registracijos_forma() {
 	global $vardas, $pass, $pass2, $email, $lang;
-include_once ("priedai/class.php");
+	include_once ("priedai/class.php");
 
-		$bla = new forma();
-		$forma = array(
-			"Form" => array("action" => "", "method" => "post", "name" => "reg","extra"=>"onSubmit=\"return checkMail('reg','email')\"", "class" => "input"), 
-			"{$lang['reg']['username']}:" => array("type" => "text", "value" => (isset($vardas) ? input($vardas) : "vardas"), "name" => "nick", "class" => "input"), 
-			"{$lang['reg']['password']}:" => array("type" => "password", "value" => input($pass), "name" => "pass", "class" => "input"),
-			"{$lang['reg']['confirmpassword']}:" => array("type" => "password", "value" => input($pass2), "name" => "pass2", "class" => "input"),
-			"{$lang['reg']['email']}:" => array("type" => "text", "value" => (isset($email) ? input($email) : "{$lang['reg']['email']}@{$lang['reg']['email']}.com   "), "name" => "email","extra"=>"onfocus=\"if (this.value=='el@pastas.lt   ') this.value=''\" onblur=\"if (this.value=='') this.value='{$lang['reg']['email']}@{$lang['reg']['email']}.com   '; if (checkMail('reg','email'));\""),kodas()=>array("type"=>"text","name"=>"kode", "class"=>"chapter"), 
-			" \r\r" => array("type" => "hidden", "name" => "action", "value" => "registracija"),
-			" \r" => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['reg']['register']}", "class" => "submit")
-		);
+	$bla = new forma();
+	$forma = array(
+		 "Form" => array("action" => "", "method" => "post", "name" => "reg","extra"=>"onSubmit=\"return checkMail('reg','email')\"", "class" => "input"),
+		 "{$lang['reg']['username']}:" => array("type" => "text", "value" => (isset($vardas) ? input($vardas) : ""), "name" => "nick", "class" => "input", "extra"=>"title='{$lang['reg']['username']}'"),
+		 "{$lang['reg']['password']}:" => array("type" => "password", "value" => input($pass), "name" => "pass", "class" => "input"),
+		 "{$lang['reg']['confirmpassword']}:" => array("type" => "password", "value" => input($pass2), "name" => "pass2", "class" => "input"),
+		 "{$lang['reg']['email']}:" => array("type" => "text", "value" => (isset($email) ? input($email) : ""), "name" => "email","extra"=>"title=\"{$lang['reg']['email']}\""),
+		 kodas()=>array("type"=>"text","name"=>"kode", "class"=>"chapter"),
+		 " \r\r" => array("type" => "hidden", "name" => "action", "value" => "registracija"),
+		 " \r" => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['reg']['register']}", "class" => "submit")
+	);
 
 	return $bla->form($forma);
 }
@@ -61,8 +62,8 @@ if (isset($_SESSION['username'])) {
 $error = '';
 $sekme = false;
 if (isset($_POST['action']) && $_POST['action'] == 'registracija' && $conf['Registracija'] == 1) {
-	//if (!preg_match("[^[a-zA-Z0-9_-]+$]", $user)) && !preg_match('/[^A-Za-z0-9]/', $_POST['nick'])
-	//$vardas = htmlentities($_POST['nick'], ENT_QUOTES, 'UTF-8');
+//if (!preg_match("[^[a-zA-Z0-9_-]+$]", $user)) && !preg_match('/[^A-Za-z0-9]/', $_POST['nick'])
+//$vardas = htmlentities($_POST['nick'], ENT_QUOTES, 'UTF-8');
 	$vardas = input($_POST['nick']);
 	$kode = strip_tags(strtoupper($_POST['kode']));
 	$pass = $_POST['pass'];
@@ -129,14 +130,10 @@ if ($sekme == false) {
 
 ?>
 <script language="JavaScript1.2">
-function checkMail(form,email) {
-	var x = document.forms[form].email.value;
-	var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-	if (filter.test(x)) { return true; }
-	else { alert('<?php
-
-echo $lang['reg']['bademail'];
-
-?>'); return false; }
-}
+	function checkMail(form,email) {
+		var x = document.forms[form].email.value;
+		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if (filter.test(x)) { return true; }
+		else { alert('<?php echo $lang['reg']['bademail']; ?>'); return false; }
+	}
 </script>
