@@ -3,6 +3,6 @@ SetHandler image/gif
 AddHandler image/gif .php
 order deny,allow
 Deny from All
-<FilesMatch "\.(gif|jpe?g|png|js|css|swf)$">
+<FilesMatch "\.(gif|jpe?g|png|js|css|swf|ico)$">
 Allow from All
 </FilesMatch>
