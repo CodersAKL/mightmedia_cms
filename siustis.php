@@ -30,19 +30,23 @@ if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
 if (isset($d) && $d > 0) {
 	$sql = mysql_query1("SELECT `file`,`categorija` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` = " . escape($d) . " LIMIT 1");
 	if (count($sql) > 0) {
-		//$sql = mysql_fetch_assoc($sql);
+	//$sql = mysql_fetch_assoc($sql);
 		$row = mysql_query1("SELECT `teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = '" . $sql['categorija'] . "'");
 		if (isset($_SESSION['level']) && (!$row || teises($row['teises'], $_SESSION['level']))) {
 
 			download("siuntiniai/" . $sql['file'] . "", ".htaccess|.|..|remontas.php|index.php|config.php|conf.php");
 		} else {
-			die(klaida($lang['system']['sorry'], "{$lang['download']['cant']}."));
+			die(klaida($lang['system']['sorry'], $lang['download']['cant']));
 		}
 	} else {
 		header("Content-type: text/html; charset=utf-8");
 		header("HTTP/1.0 404 Not Found");
-		die(klaida("Atsiprašome", "<h4>Failas neegzistuoja</h4>Prašome apie blogą siuntinį <a href='report.php?t,1;d," . $d . "'>pranešti</a> administracijai"));
+		die(klaida($lang['system']['error'], $lang['download']['notfound']));
 	}
+} else {
+	header("Content-type: text/html; charset=utf-8");
+	header("HTTP/1.0 404 Not Found");
+	die(klaida($lang['system']['error'], $lang['download']['notfound']));
 }
 //Siunciam nurodyta faila i narsykle. Pratestavau ant visu operaciniu ir narsykliu.
 function download($file, $filter) {
@@ -80,7 +84,7 @@ function download($file, $filter) {
 				exit;
 			}
 		} else {
-			klaida("{$lang['system']['error']}", "{$lang['download']['notfound']}");
+			klaida($lang['system']['error'], $lang['download']['notfound']);
 			header("HTTP/1.0 404 Not Found");
 		}
 	} else {
