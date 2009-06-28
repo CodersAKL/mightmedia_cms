@@ -21,13 +21,13 @@ if (preg_match('%/\*\*/|SERVER|http|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERV
 	ban($lang['system']['forhacking']);
 }
 //admin links
-if(isset($_SESSION['level']) && $_SESSION['level']==1){
-$glob = glob('puslapiai/dievai/*.php');
-foreach($glob as $id => $file) {
-	$file = basename($file,'.php');
-	$admin_pages[$id] = $file;
-	$admin_pagesid[$file] = $id;
-	
+if(isset($_SESSION['level']) && $_SESSION['level']==1) {
+	$glob = glob('puslapiai/dievai/*.php');
+	foreach($glob as $id => $file) {
+		$file = basename($file,'.php');
+		$admin_pages[$id] = $file;
+		$admin_pagesid[$file] = $id;
+
 }}
 
 //slaptaþodþio kodavimas
@@ -46,7 +46,7 @@ function header_info() {
   <link rel="stylesheet" type="text/css" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/default.css" />
   <link rel="stylesheet" type="text/css" href="stiliai/system.css" />
   <link href="stiliai/rating_style.css" rel="stylesheet" type="text/css" media="all" />
-  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="shortcut icon" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/favicon.ico" />
   <link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox.css" />
 		<!--[if IE]>
 		<link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox-ie.css" title="example" />
@@ -59,6 +59,7 @@ function header_info() {
   <script type="text/javascript" src="javascript/rating_update.js"></script>	
   <script type="text/javascript" src="javascript/jquery/tooltip.js"></script>
   <script type="text/javascript" src="javascript/jquery/jquery.colorbox.js"></script>
+  <script type="text/javascript" src="javascript/jquery/jquery.hint.js"></script>
   <script type="text/javascript">
 			$(document).ready(function(){
 	
@@ -70,6 +71,9 @@ function header_info() {
 					$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
 				});
 				$("#inline").colorbox({width:"50%", inline:true, href:"#inline_example1", title:"hello"});
+
+				 // find all the input elements with title attributes and make them with a hint
+				$(\'input[title!=""]\').hint(\'inactive\');
 			});
 		</script>
 	<!--[if lt IE 7]>
@@ -271,14 +275,14 @@ foreach ($sql as $row) {
  * @return string
  */
 function user($user, $id = 0, $level = 0, $extra = false) {
-	//kadangi vëjai gaunas jeigu nikas su utf-8 simboliais, tai pm sistema pakeiciu
+//kadangi vëjai gaunas jeigu nikas su utf-8 simboliais, tai pm sistema pakeiciu
 	global $lang, $conf;
 	if ($user == '' || $user == $lang['system']['guest']) {
 		$user = $lang['system']['guest'];
 		return $lang['system']['guest'];
 	} else {
 		if (isset($conf['puslapiai']['view_user.php']['id'])) {
-			//Jeigu galiam ziuret vartotojo profili tada nickas paspaudziamas
+		//Jeigu galiam ziuret vartotojo profili tada nickas paspaudziamas
 			if ($level > 0 && $id > 0) {
 				return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="?id,' . $conf['puslapiai']['view_user.php']['id'] . ';m,' . (int)$id . '" title="' . input($user) .$extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
 			}
@@ -287,7 +291,7 @@ function user($user, $id = 0, $level = 0, $extra = false) {
 			}
 
 		} else {
-			//Kitu atveju nickas nepaspaudziamas
+		//Kitu atveju nickas nepaspaudziamas
 			if ($level == 0 || $id == 0) {
 				return '<div style="display:inline;" title="' . input($user). $extra . '"><u>' . $user . '</u></div>';
 			} else {
@@ -316,13 +320,13 @@ function mysql_query1($query, $lifetime = 0) {
 
 	if ($conf['keshas'] && $lifetime > 0 && !in_array(strtolower(substr($query, 0, 6)), array('delete', 'insert', 'update'))) {
 
-		//Tikrinam ar keshavimas ijungtas ir ar keshas egzistuoja
+	//Tikrinam ar keshavimas ijungtas ir ar keshas egzistuoja
 		if (is_file($keshas) && filemtime($keshas) > $_SERVER['REQUEST_TIME'] - $lifetime) {
-			//uzkraunam kesha
+		//uzkraunam kesha
 			include ($keshas);
 
 		} else {
-			//Irasom i kesh faila
+		//Irasom i kesh faila
 			$mysql_num++;
 
 			$sql = mysql_query($query, $prisijungimas_prie_mysql) or die(mysql_error());
@@ -486,7 +490,7 @@ function puslapiai($start, $count, $total, $range = 0) {
 function isNum($value) {
 //	if(is_string($value)){
 	return @preg_match("/^[0-9]+$/", $value);//}
-	//else {return false;}
+//else {return false;}
 }
 
 /**
@@ -538,7 +542,7 @@ function random_name($i = 10) {
  * @return escaped string
  */
 function escape($sql) {
-	// Stripslashes
+// Stripslashes
 	if (get_magic_quotes_gpc()) {
 		$sql = stripslashes($sql);
 	}
@@ -681,7 +685,7 @@ function amzius($data) {
  * @return string
  */
 function descript($text, $striptags = true) {
-	// Convert problematic ascii characters to their true values
+// Convert problematic ascii characters to their true values
 	$search = array("40", "41", "58", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "97", "98", "99", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "239");
 	$replace = array("(", ")", ":", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "");
 	$entities = count($search);
@@ -717,8 +721,8 @@ function descript($text, $striptags = true) {
  * @return string
  */
 function isImage1($img) {
-	//$img = $matches[1].str_replace(array("?","&","="),"",$matches[3]).$matches[4];
-	//$img = $matches[1].$matches[3].$matches[4];
+//$img = $matches[1].str_replace(array("?","&","="),"",$matches[3]).$matches[4];
+//$img = $matches[1].$matches[3].$matches[4];
 	if (@getimagesize($img)) {
 		$res = "<img src='" . $img . "' style='border:0px;'>";
 	} else {
@@ -1127,7 +1131,7 @@ function versija($failas = false) {
 		$scid = utf8_substr($svnid, 6);
 		return apvalinti((intval(utf8_substr($scid, 0, strlen($scid) - 2)) / 5000) + '1.26', 2);
 	} else {
-		//Nuskaityti faila ir paimti su regexp versijos numeri
+	//Nuskaityti faila ir paimti su regexp versijos numeri
 		return '$Rev$';
 	}
 }
@@ -1223,10 +1227,10 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 	require_once ('javascript/htmlarea/Xinha0.96beta2/contrib/php-xinha.php');
 
 	xinha_pass_to_php_backend(array('images_dir' => '../../../../../siuntiniai/images', 'images_url' => adresas() . 'siuntiniai/images' //,
-		//'thumbnail_prefix'=>'',
-	//'thumbnail_dir'=>'sumazinti'
-	//'resized_prefix'=>'.pakeistas',
-	//'resized_dir'=>'.resized'
+		 //'thumbnail_prefix'=>'',
+		 //'thumbnail_dir'=>'sumazinti'
+		 //'resized_prefix'=>'.pakeistas',
+		 //'resized_dir'=>'.resized'
 	));
 	echo '
      }
@@ -1253,7 +1257,7 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
  
  
   <textarea id="{$key}" name="{$key}" class="input" style="min-height:320px;">
-    {$value[$key]}
+				 {$value[$key]}
     </textarea>
 
 
@@ -1262,7 +1266,7 @@ HTML;
 	} else {
 		$return .= <<< HTML
 		  <textarea id="{$id}" name="{$id}" class="input" style="min-height:320px;">
-    {$value}
+			 {$value}
     </textarea>
 
 HTML;
