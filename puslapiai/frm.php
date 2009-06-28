@@ -9,8 +9,7 @@
  * @$Revision$
  * @$Date$
  **/
-//print_r($_COOKIE);
-//TODO: sujungti uzklausas sql, kad maziau butu
+
 //subkategorijos
 if (isset($url['s']) && isnum($url['s']) && $url['s'] > 0) {
 	$sid = (int)$url['s'];
@@ -92,13 +91,12 @@ if (isset($kur['pav']) && !empty($kur['pav'])) {
 	if (!empty($kur['tema'])) {
 		$tema = " > <a href='?id," . $url['id'] . ";s," . $sid . ";t,$tid'>" . $kur['tema'] . "</a> (" . $kur['zinute'] . ")";
 	}
-
 	lentele($lang['forum']['forum'], "<a href='?id," . $url['id'] . "'>{$lang['forum']['forum']}</a>" . $sub . $tema);
 }
 
 //kategoriju sarasas
 if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
-	//Didelė užklausa į kategorijas/subkategorijas :P gera ką?
+//Didelė užklausa į kategorijas/subkategorijas :P gera ką?
 	$sqlis = mysql_query1("SELECT
 	`" . LENTELES_PRIESAGA . "d_temos`.`pav`,
 	`" . LENTELES_PRIESAGA . "d_temos`.`last_data`,
@@ -117,7 +115,7 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 	//$info = array();
 	if (sizeof($sqlis) > 0) {
 		foreach ($sqlis as $kat) {
-			//þinuèiø kategorijoj
+		//þinuèiø kategorijoj
 			$zinutes = (int)$kat['zinutes'];
 			//temø kategorijoj
 			$temos = (int)$kat['temos'];
@@ -135,11 +133,11 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 		}
 		//atvaizduojam kategorijas subkategorijom
 		foreach ($kateg as $t => $name) {
-			//$lang['forum']['nosubcat']
+		//$lang['forum']['nosubcat']
 			lentele($name, $subai[$t]);
 		}
 
-	}else{
+	}else {
 		klaida($lang['system']['warning'],$lang['system']['nocategories']);
 	}
 }
@@ -158,7 +156,7 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 	WHERE " . LENTELES_PRIESAGA . "d_straipsniai.tid=" . escape($sid) . " ORDER by " . LENTELES_PRIESAGA . "d_straipsniai.sticky DESC, " . LENTELES_PRIESAGA . "d_straipsniai.last_data DESC LIMIT " . $pid . ", " . $limit . "",120);
 	if (sizeof($tem) > 0) {
 		foreach ($tem as $temos) {
-			//$tsql = mysql_fetch_assoc(mysql_query1("SELECT count(id) AS viso FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=" . escape($sid) . " AND `sid`=" . escape($temos['id']) . ""));
+		//$tsql = mysql_fetch_assoc(mysql_query1("SELECT count(id) AS viso FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=" . escape($sid) . " AND `sid`=" . escape($temos['id']) . ""));
 			$zinutes = $temos['viso'];
 			$limit = 20;
 			$viso = $kur['temos'];
@@ -195,11 +193,11 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 //tema
 if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 
-	//trinam posta
+//trinam posta
 	if (isset($tid) && isset($sid) && isset($did) && $did > 0 && defined("LEVEL") && ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1)) {
 
-	
-		//Cia nesugalvojau kaip visas 3 sujungt :(
+
+	//Cia nesugalvojau kaip visas 3 sujungt :(
 		$msql = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_atsakyta`=`forum_atsakyta`-1 , `taskai`=`taskai`-1 WHERE id=(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . "  LIMIT 1);
 ");
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . "");
@@ -233,7 +231,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 		$viso = $kur['zinute'];
 		$limit = 15;
 		$gaunam = mysql_query1("SELECT " . LENTELES_PRIESAGA . "users.nick, " . LENTELES_PRIESAGA . "users.taskai, " . LENTELES_PRIESAGA . "users.levelis, " . LENTELES_PRIESAGA . "users.gim_data, " . LENTELES_PRIESAGA . "users.email, " . LENTELES_PRIESAGA . "users.id, " . LENTELES_PRIESAGA . "users.miestas, " . LENTELES_PRIESAGA . "users.icq, " . LENTELES_PRIESAGA . "users.msn, " . LENTELES_PRIESAGA . "users.skype, " . LENTELES_PRIESAGA . "users.aim, " . LENTELES_PRIESAGA . "users.url, " . LENTELES_PRIESAGA . "users.yahoo, " . LENTELES_PRIESAGA . "users.forum_atsakyta, " . LENTELES_PRIESAGA . "d_zinute.id AS `zid`, " . LENTELES_PRIESAGA . "d_zinute.nick AS `nikas`, `tid`, `sid`,`zinute`,`laikas` FROM " . LENTELES_PRIESAGA . "users INNER JOIN `" . LENTELES_PRIESAGA . "d_zinute` ON " .
-			LENTELES_PRIESAGA . "d_zinute.nick=" . LENTELES_PRIESAGA . "users.id WHERE `sid`='" . $tid . "' ORDER BY laikas ASC LIMIT $pid,$limit");
+			 LENTELES_PRIESAGA . "d_zinute.nick=" . LENTELES_PRIESAGA . "users.id WHERE `sid`='" . $tid . "' ORDER BY laikas ASC LIMIT $pid,$limit");
 
 		$a = 0;
 		$turinys = '';
@@ -258,7 +256,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 			}
 
 			if (!empty($row['skype'])) {
-				$extra .= "<a href='skype:" . urlencode($row['skype']) . "?chat' target='_blank'><img src='http://mystatus.skype.com/mediumicon/" . urlencode($row['skype']) . "' width='16px' hight='16' border=0 alt='skype' /></a>  ";
+				$extra .= "<a href='skype:" . urlencode($row['skype']) . "?chat' target='_blank'><img src='http://mystatus.skype.com/smallicon/" . urlencode($row['skype']) . "' width='16px' hight='16' border=0 alt='skype' /></a>  ";
 			}
 			if (!empty($row['url'])) {
 				$extra .= "<a href='" . $row['url'] . "' target='_blank'><img src='images/forum/icon_www.gif' border=0 alt='www' /></a>  ";
@@ -341,7 +339,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 						$uid = $_SESSION['id'];
 					}
 
-				
+
 					//is 4 dvi uzklausos :), nemoku sujungt update ir insert :(
 					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_temos`,`" . LENTELES_PRIESAGA . "users`,`" . LENTELES_PRIESAGA . "d_straipsniai`
 SET 
@@ -378,12 +376,12 @@ AND `" . LENTELES_PRIESAGA . "d_straipsniai`.`id`=" . escape($tid) . " AND `" . 
 			}
 			$bla = new forma();
 			$forma = array(
-				"Form" => array("action" => "", "method" => "post", "name" => "msg"), 
-				" " => array("type" => "string", "value" => bbs('msg')),
-				$lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : $citata), "name" => "msg", "class" => "input"), 
-				"  " => array("type" => "string", "value" => bbk('msg')), 
-				"   " => array("type" => "submit", "value" => ((!empty($extra)) ? "{$lang['admin']['edit']}" : "{$lang['forum']['submit']}")), 
-				"     " => array("type" => "hidden", "name" => "action", "value" => ((!empty($extra)) ? "f_update" : "f_send"))
+				 "Form" => array("action" => "", "method" => "post", "name" => "msg"),
+				 " " => array("type" => "string", "value" => bbs('msg')),
+				 $lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : $citata), "name" => "msg", "class" => "input"),
+				 "  " => array("type" => "string", "value" => bbk('msg')),
+				 "   " => array("type" => "submit", "value" => ((!empty($extra)) ? "{$lang['admin']['edit']}" : "{$lang['forum']['submit']}")),
+				 "     " => array("type" => "hidden", "name" => "action", "value" => ((!empty($extra)) ? "f_update" : "f_send"))
 			);
 			hide($lang['forum']['newpost'], $bla->form($forma), (!empty($extra)) ? false : true);
 		}
@@ -418,7 +416,7 @@ elseif ((int)$lid != 0 && $kid == 0 && $rid == 0) {
 elseif ((int)$kid && (int)$kid && (int)$kid > 0) {
 	if (defined("LEVEL") && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1) {
 
-		//atimam autoriui tema
+	//atimam autoriui tema
 		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_temos`=`forum_temos`-1 WHERE id=(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `sid`=" . escape($kid) . " ORDER BY laikas ASC LIMIT 1) LIMIT 1");
 
 
@@ -445,10 +443,10 @@ elseif (((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && 
 
 		$bla = new forma();
 		$form = array(
-			"Form" => array("action" => "", "method" => "post", "name" => "rename"), 
-			"{$lang['admin']['forum_cangeto']}:" => array("type" => "text", "class" => "input", "value" => $tsql['pav'], "name" => "name"), 
-			"{$lang['forum']['sticky']}?:" => array("type" => "select", "class" => "select", "value" => array("1" => $lang['admin']['yes'], "0" => $lang['admin']['no']), "name" => "sticky", "class" => "select", "selected" => $tsql['sticky']), 
-			"  " => array("type" => "submit", "name" => "sub", "value" => "{$lang['admin']['edit']}")
+			 "Form" => array("action" => "", "method" => "post", "name" => "rename"),
+			 "{$lang['admin']['forum_cangeto']}:" => array("type" => "text", "class" => "input", "value" => $tsql['pav'], "name" => "name"),
+			 "{$lang['forum']['sticky']}?:" => array("type" => "select", "class" => "select", "value" => array("1" => $lang['admin']['yes'], "0" => $lang['admin']['no']), "name" => "sticky", "class" => "select", "selected" => $tsql['sticky']),
+			 "  " => array("type" => "submit", "name" => "sub", "value" => "{$lang['admin']['edit']}")
 		);
 		lentele($tsql['pav'], $bla->form($form));
 
@@ -525,12 +523,12 @@ WHERE `" . LENTELES_PRIESAGA . "users`.nick=" . escape($_SESSION['username']) . 
 	}
 	$bla = new forma();
 	$forma = array(
-		"Form" => array("action" => "", "method" => "post", "name" => "post_msg"), 
-		$lang['forum']['topicname'] => array("type" => "text", "class" => "input", "name" => "post_pav"), 
-		" " => array("type" => "string", "value" => bbs('post_msg')),
-		$lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : ''), "name" => "post_msg", "class" => "input"), 
-		"  " => array("type" => "string", "value" => bbk('post_msg')), 
-		"   " => array("type" => "submit", "value" => $lang['forum']['submit'])
+		 "Form" => array("action" => "", "method" => "post", "name" => "post_msg"),
+		 $lang['forum']['topicname'] => array("type" => "text", "class" => "input", "name" => "post_pav"),
+		 " " => array("type" => "string", "value" => bbs('post_msg')),
+		 $lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : ''), "name" => "post_msg", "class" => "input"),
+		 "  " => array("type" => "string", "value" => bbk('post_msg')),
+		 "   " => array("type" => "submit", "value" => $lang['forum']['submit'])
 	);
 	lentele($lang['forum']['newtopic'], $bla->form($forma));
 }
