@@ -47,7 +47,7 @@ if (isset($url['id']) && !empty($url['id']) && isnum($url['id'])) {
 	$url['id'] = $pslid;
 }
 if (isset($pslid) && isnum($pslid) && $pslid > 0) {
-	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int)$pslid) . " LIMIT 1", 180);
+	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int)$pslid) . " LIMIT 1", 259200);	//keshas  3dienos.
 
 	if (!empty($sql1)) {
 
