@@ -280,8 +280,8 @@ HTML;
 					$puslapiai[basename($file['name'])] = basename($file['name']);
 				}
 			}
-			$puslapiai['com'] = "<b>" . $lang['admin']['Comments'] . "(mod)</b>";
-			$puslapiai['frm'] = "<b>" . $lang['admin']['forum'] . "(mod)</b>";
+			$puslapiai['com'] = "<b>" . $lang['admin']['komentarai'] . "(mod)</b>";
+			$puslapiai['frm'] = "<b>" . $lang['admin']['frm'] . "(mod)</b>";
 
 
 			$vartotojai = false;
