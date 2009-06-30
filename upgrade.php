@@ -11,9 +11,7 @@
 header("Content-type: text/html; charset=utf-8");
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 'Off');
-
-if (!isset($_SESSION))
-	session_start();
+session_start();
 ob_start();
 include_once("priedai/conf.php");
 include_once("priedai/prisijungimas.php");
@@ -279,4 +277,6 @@ function Go(id) {
 </body>
 </html>
 <?php }else{?><head><title>MightMedia TVS atnaujinimas</title>
-<link href="stiliai/default/default.css" rel="stylesheet" type="text/css" media="all" /></head><body><center><div class="title">Tik instaliuotojui</div><div class="vidus"><?php admin_login_form();?></div></center></body><?php }?>
+<link href="stiliai/default/default.css" rel="stylesheet" type="text/css" media="all" /></head><body><center><div class="title">Tik instaliuotojui</div><div class="vidus"><?php admin_login_form();?></div></center></body><?php }
+ob_end_flush();
+?>
