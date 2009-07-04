@@ -41,7 +41,7 @@ lentele($lang['admin']['poll'], $buttons);
 	lentele("{$lang['admin']['poll_active']}", $text);
 	unset($text, $a, $total, $info2, $info, $sql, $is);
 //}
-if ((int)$url['v'] == 1) {
+if (isset($url['v']) && (int)$url['v'] == 1) {
 	$text = "
 <form name='b_create' action='?id," . $_GET['id'] . ";a," . $_GET['a'] . "' method='post'>
 	<table border=0>
@@ -110,7 +110,7 @@ if (isset($_POST['b_delete']) && $_POST['b_delete'] == $lang['admin']['edit']) {
 	lentele("{$lang['admin']['poll_edit']}", $edit);
 
 }
-if ((int)$url['v'] == 2) {
+if (isset($url['v']) &&(int)$url['v'] == 2) {
 	$sql2 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "balsavimas`");
 	if (sizeof($sql2) > 0) {
 		$text = "
