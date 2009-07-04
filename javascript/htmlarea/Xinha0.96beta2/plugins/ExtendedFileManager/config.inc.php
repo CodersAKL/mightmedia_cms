@@ -1,4 +1,13 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['level']) || $_SESSION['level'] != 1) {
+	include_once('../../../../../lang/en.php');
+	exit($lang['system']['forbidden']);
+}
+
+include_once('../../../../../priedai/conf.php');
+
 /**
  * ExtendedFileManager configuration file.
  * Authors: Wei Zhuo, Afru
@@ -58,16 +67,19 @@ $IMConfig['base_url'] = '';
 		   PHP must be able to create files in this directory.
 		   Able to create directories is nice, but not necessary.
 */
-$IMConfig['images_dir'] = 'demo_images';
+//$IMConfig['images_dir'] = 'demo_images';
+$IMConfig['images_dir'] = '../../../../../siuntiniai';
 //You may set a different directory for the link mode; if you don't, the above setting will be used for both modes
-//$IMConfig['files_dir'] = 'demo_files';
+$IMConfig['files_dir'] = '../../../../../siuntiniai';
 
 /*
  The URL to the above path, the web browser needs to be able to see it.
  Please remove scripting capabilities in this directory
  for this directory (i.e. disable PHP, Perl, CGI; see .htaccess file in demo_images folder).
 */
-$IMConfig['images_url'] = str_replace( array("backend.php","manager.php"), "", $_SERVER["PHP_SELF"] ) . $IMConfig['images_dir'];
+//$IMConfig['images_url'] = str_replace( array("backend.php","manager.php"), "", $_SERVER["PHP_SELF"] ) . $IMConfig['images_dir'];
+$IMConfig['images_url'] = 'siuntiniai';
+$IMConfig['files_url'] = 'siuntiniai';
 //$IMConfig['files_url'] = 'url/to/files_dir';
 
 /*
@@ -280,7 +292,7 @@ $IMConfig['link_enable_target'] = true;
 
   FALSE - No uploading allowed.
 */
-$IMConfig['allow_upload'] = false;
+$IMConfig['allow_upload'] = true;
 
 /* Maximum upload file size
 
@@ -304,7 +316,7 @@ Available icons are for "doc,fla,gif,gz,html,jpg,js,mov,pdf,php,png,ppt,rar,txt,
 */
 
 $IMConfig['allowed_image_extensions'] = array("jpg","gif","png","bmp");
-$IMConfig['allowed_link_extensions'] = array("jpg","gif","js","php","pdf","zip","txt","psd","png","html","swf","xml","xls","doc");
+$IMConfig['allowed_link_extensions'] = array("jpg","gif","js","pdf","zip","txt","psd","png","html","xml","xls","doc","ppt","pps","swf","mov","flv","qt","mpg","mp4","mpeg","dcr","avi","wmv","wm","asf","asx","wmx","wvx","rm","ra","ram","mp3","wav");
 
 
 /*

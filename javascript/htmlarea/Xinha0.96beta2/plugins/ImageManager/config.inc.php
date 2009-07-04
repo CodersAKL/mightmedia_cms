@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['level']) || $_SESSION['level'] != 1) {
+	include_once('../../../../../lang/en.php');
+	exit($lang['system']['forbidden']);
+}
+
 /**
  * Image Manager configuration file.
  * @author $Author:gogo $

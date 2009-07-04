@@ -82,12 +82,12 @@ function drawDirs_Files($list, &$manager)
     		foreach($list[0] as $path => $dir)
     		{ ?>
     			<tr>
-    			<td><span style="width:20px;"><img src="<?php print $IMConfig['base_url'];?>icons/folder_small.gif" alt="" /></span>
+    			<td><span width="20px"><img src="<?php print $IMConfig['base_url'];?>icons/folder_small.gif" alt="" /></span>
 				<a href="<?php print $backend_url_enc; ?>__function=images&amp;mode=<?php echo $insertMode;?>&amp;dir=<?php echo rawurlencode($path); ?>&amp;viewtype=<?php echo $afruViewType; ?>" onclick="updateDir('<?php echo $path; ?>')" title="<?php echo $dir['entry']; ?>">
     			<?php
     			if(strlen($dir['entry'])>$maxNameLength) echo substr($dir['entry'],0,$maxNameLength)."..."; else echo $dir['entry'];
     			?>
-    			</a></td>
+    			</a></th>
     			<td colspan="2" >Folder</td>
 
     			<td ><?php echo date($IMConfig['date_format'],$dir['stat']['mtime']); ?></td>
@@ -113,8 +113,8 @@ function drawDirs_Files($list, &$manager)
     		{
     			?>
                 <tr>
-        		  <td><span style="width:20px;"><img src="<?php print $IMConfig['base_url']; if(is_file('icons/'.$file['ext'].'_small.gif')) echo "icons/".$file['ext']."_small.gif"; else echo $IMConfig['default_listicon']; ?>" alt="" /></span>
-					<a href="#" class="thumb" style="cursor: pointer;" ondblclick="this.onclick();window.top.onOK();" onclick="selectImage('<?php echo $file['relative'];?>', '<?php echo preg_replace('#\..{3,4}$#', '', $entry); ?>', <?php echo $file['image'][0];?>, <?php echo $file['image'][1]; ?>);return false;" title="<?php echo $entry; ?> - <?php echo Files::formatSize($file['stat']['size']); ?>" <?php if ($insertMode == 'image') { ?> onmouseover="showPreview('<?php echo $file['relative'];?>')" onmouseout="showPreview(window.parent.document.getElementById('f_url').value)" <?php } ?> >
+        		  <td><span width="20px"><img src="<?php print $IMConfig['base_url']; if(is_file('icons/'.$file['ext'].'_small.gif')) echo "icons/".$file['ext']."_small.gif"; else echo $IMConfig['default_listicon']; ?>" alt="" /></span>
+					<a href="#" class="thumb" style="cursor: pointer;" ondblclick="this.onclick();window.top.onOK();" onclick="generatePreview('<?php echo "$IMConfig[images_url]$file[relative]";?>');selectImage('<?php echo $file['relative'];?>', '<?php echo preg_replace('#\..{3,4}$#', '', $entry); ?>', <?php echo $file['image'][0];?>, <?php echo $file['image'][1]; ?>); return false;" title="<?php echo $entry; ?> - <?php echo Files::formatSize($file['stat']['size']); ?>" <?php if ($insertMode == 'image') { ?> onmouseover="showPreview('<?php echo $file['relative'];?>')" onmouseout="showPreview(window.parent.document.getElementById('f_url').value)" <?php } ?> >
         			<?php
         			if(strlen($entry)>$maxNameLength) echo substr($entry,0,$maxNameLength)."..."; else echo $entry;
         			?>
@@ -123,7 +123,7 @@ function drawDirs_Files($list, &$manager)
                   <td><?php if($file['image'][0] > 0){ echo $file['image'][0].'x'.$file['image'][1]; } ?></td>
     			  <td ><?php echo date($IMConfig['date_format'],$file['stat']['mtime']); ?></td>
                   <td class="actions">
-                    <?php if($IMConfig['img_library'] && $IMConfig['allow_edit_image'] && $file['image'][0] > 0) { ?>
+                    <?php if($IMConfig['img_library'] && $IMConfig['allow_edit_image'] && $file['image'][0] > 0 &&  in_array(strtolower(substr($file['relative'],-3)),$IMConfig['allowed_image_extensions'])) { ?>
                     <a href="javascript:;" title="Edit" onclick="editImage('<?php echo rawurlencode($file['relative']);?>');"><img src="<?php print $IMConfig['base_url'];?>img/edit_pencil.gif" height="15" width="15" alt="Edit" border="0" /></a>
                     <?php }  ?>  
                     <a href="<?php print $backend_url_enc; ?>__function=images&amp;dir=<?php echo $relative; ?>&amp;delf=<?php echo rawurlencode($file['relative']);?>&amp;mode=<?php echo $insertMode;?>&amp;viewtype=<?php echo $afruViewType; ?>" title="Trash" onclick="return confirmDeleteFile('<?php echo $entry; ?>');"><img src="<?php print $IMConfig['base_url'];?>img/edit_trash.gif" height="15" width="15" alt="Trash" border="0" /></a>
@@ -181,7 +181,7 @@ function drawDirs_Files($list, &$manager)
     			$thisFileNameLength = $maxFileNameLength;
     			?>
                 <div class="thumb_holder" id="holder_<?php echo asc2hex($entry) ?>">
-                  <a href="#" class="thumb" style="cursor: pointer;" ondblclick="this.onclick();window.top.onOK();" onclick="selectImage('<?php echo $file['relative'];?>', '<?php echo preg_replace('#\..{3,4}$#', '', $entry); ?>', <?php echo $file['image'][0];?>, <?php echo $file['image'][1]; ?>);return false;" title="<?php echo $entry; ?> - <?php echo Files::formatSize($file['stat']['size']); ?>">
+                  <a href="#" class="thumb" style="cursor: pointer;" ondblclick="this.onclick();window.top.onOK();" onclick="generatePreview('<?php echo "$IMConfig[images_url]$file[relative]";?>'); selectImage('<?php echo $file['relative'];?>', '<?php echo preg_replace('#\..{3,4}$#', '', $entry); ?>', <?php echo $file['image'][0];?>, <?php echo $file['image'][1]; ?>);return false;" title="<?php echo $entry; ?> - <?php echo Files::formatSize($file['stat']['size']); ?>">
                     <img src="<?php print $manager->getThumbnail($file['relative']); ?>" alt="<?php echo $entry; ?> - <?php echo Files::formatSize($file['stat']['size']); ?>" />
                   </a>
                    <div class="fileName">
@@ -190,7 +190,7 @@ function drawDirs_Files($list, &$manager)
             		?>
                    </div>
                   <div class="edit">
-                    <?php if($IMConfig['img_library'] && $IMConfig['allow_edit_image'] && $file['image'][0] > 0 )
+                    <?php if($IMConfig['img_library'] && $IMConfig['allow_edit_image'] && $file['image'][0] > 0 &&  in_array(strtolower(substr($file['relative'],-3)),$IMConfig['allowed_image_extensions']))
                     { ?>
                     <a href="javascript:;" title="Edit" onclick="editImage('<?php echo rawurlencode($file['relative']);?>');"><img src="<?php print $IMConfig['base_url'];?>img/edit_pencil.gif" height="15" width="15" alt="Edit" /></a>
             		<?php $thisFileNameLength -= 3; } ?>
@@ -371,6 +371,7 @@ function asc2hex ($temp)
 </script>
 <script type="text/javascript" src="<?php print $IMConfig['base_url'];?>assets/images.js"></script>
 <script type="text/javascript" src="<?php print $IMConfig['base_url'];?>assets/popup.js"></script>
+<script type="text/javascript" src="../Media/jscripts/mediatype.js"></script>
 <script type="text/javascript">
 <!--
 // Koto: why emptying? commented out
