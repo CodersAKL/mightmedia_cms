@@ -69,7 +69,7 @@ if (isset($_GET['p'])) {
 // nurodome masyva leidziamu elementu DUK
 // - tagai kurie uzdaromi atskirai (<p></p>) pazymeti kaip 1
 // - tagai kuriuos uzdaryti nebutina (<hr>) zymimi kaip 0
-$tags = array("p" => 1, "br" => 0, "a" => 1, "img" => 0, "li" => 1, "ol" => 1, "ul" => 1, "b" => 1, "i" => 1, "em" => 1, "strong" => 1, "del" => 1, "ins" => 1, "u" => 1, "code" => 1, "pre" => 1, "blockquote" => 1, "hr" => 0, "span" => 1, "font" => 1, "h1" => 1, "h2" => 1, "h3" => 1, "table" => 1, "tr" => 1, "td" => 1, "th" => 1, "tbody" => 1, "div" => 1, "embed" => 1);
+$tags = array("p" => 1, "br" => 0, "a" => 1, "img" => 0, "li" => 1, "ol" => 1, "ul" => 1, "b" => 1, "i" => 1, "em" => 1, "strong" => 1, "del" => 1, "ins" => 1, "u" => 1, "code" => 1, "pre" => 1, "blockquote" => 1, "hr" => 0, "span" => 1, "font" => 1, "h1" => 1, "h2" => 1, "h3" => 1, "table" => 1, "tr" => 1, "td" => 1, "th" => 1, "tbody" => 1, "div" => 1, "embed" => 1, "object" => 1, "param" => 0);
 
 //Naujienos trinimas
 if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete'] && LEVEL == 1 && isset($_POST['edit_new']) && $_POST['edit_new'] > 0)) || isset($url['t']) && LEVEL == 1) {

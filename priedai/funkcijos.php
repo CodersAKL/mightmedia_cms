@@ -43,8 +43,8 @@ function header_info() {
   <meta name="description" content="' . input(strip_tags($conf['Pavadinimas']) . ' - ' . trimlink(strip_tags($conf['Apie']), 120)) . '" />
   <meta name="keywords" content="' . input(strip_tags($conf['Keywords'])) . '" />
   <meta name="author" content="' . input(strip_tags($conf['Copyright'])) . '" />
-  <link rel="stylesheet" type="text/css" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/default.css" />
   <link rel="stylesheet" type="text/css" href="stiliai/system.css" />
+  <link rel="stylesheet" type="text/css" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/default.css" />
   <link href="stiliai/rating_style.css" rel="stylesheet" type="text/css" media="all" />
   <link rel="shortcut icon" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/favicon.ico" />
   <link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox.css" />
@@ -52,7 +52,7 @@ function header_info() {
 		<link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox-ie.css" title="example" />
 		<![endif]-->
   <title>' . input(strip_tags($conf['Pavadinimas']) . ' - ' . $page_pavadinimas) . '</title>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
+  <script type="text/javascript" src="javascript/jquery/jquery-1.3.2.min.js"></script> 
   <script type="text/javascript" src="javascript/jquery/jquery-ui-personalized-1.6rc6.min.js"></script> 
   <script type="text/javascript" src="javascript/jquery/jquery.tablesorter.js"></script> 
   <script type="text/javascript" src="javascript/pagrindinis.js"></script>  
@@ -1199,7 +1199,7 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 
       xinha_plugins = xinha_plugins ? xinha_plugins :
       [
-        \'CharacterMap\',\'Linker\', \'Abbreviation\', \'ContextMenu\',' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ? '\'ImageManager\',' : '') . '\'HorizontalRule\',\'InsertAnchor\',\'InsertPicture\',\'SuperClean\',\'Stylist\'
+        \'CharacterMap\',\'Linker\', \'Media\', \'Abbreviation\', \'ContextMenu\',' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ? '\'ExtendedFileManager\',' : '') . '\'HorizontalRule\',\'InsertAnchor\',\'InsertPicture\',\'SuperClean\',\'Stylist\'
 
       ];
              // THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
@@ -1221,12 +1221,21 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
        //xinha_config.stylistLoadStylesheet(\'stiliai/' . input($conf['Stilius']) . '/default.css\');
        //xinha_config.pageStyleSheets = [\'stiliai/' . input($conf['Stilius']) . '/default.css\'];
        //xinha_config.htmlRemoveTags = /body|head|html/;
-      with (xinha_config.ImageManager)
+      with (xinha_config.ExtendedFileManager)
      { 
        ';
 	require_once ('javascript/htmlarea/Xinha0.96beta2/contrib/php-xinha.php');
 
-	xinha_pass_to_php_backend(array('images_dir' => '../../../../../siuntiniai/images', 'images_url' => adresas() . 'siuntiniai/images' //,
+	xinha_pass_to_php_backend(array(
+	'images_dir' => '../../../../../siuntiniai/images',
+	'images_url' => adresas() . 'siuntiniai/images',
+	'files_dir' => '../../../../../siuntiniai/failai',
+	'files_url' => adresas() . 'siuntiniai/failai',
+	//'base_dir' => '../../../../../siuntiniai',
+	//'base_url' => adresas() . 'siuntiniai',
+
+	'allow_upload' => true
+	 //,
 		 //'thumbnail_prefix'=>'',
 		 //'thumbnail_dir'=>'sumazinti'
 		 //'resized_prefix'=>'.pakeistas',
