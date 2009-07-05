@@ -39,15 +39,14 @@ unset($buttons);
 include_once ("priedai/kategorijos.php");
 kategorija("nuorodos");
 
-$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `path`=0 ORDER BY `id` DESC");
+$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `path`=0 ORDER BY `id` DESC");
 if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
 
-		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
-
-		$subcat = '';
-		if (sizeof($sql) > 0) {
-			foreach ($sql as $path) {
+		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
+		if (sizeof($sql2) > 0) {
+			$subcat = '';
+			foreach ($sql2 as $path) {
 
 				$subcat .= "->" . $path['pavadinimas'];
 				$kategorijos[$row['id']] = $row['pavadinimas'];
@@ -104,7 +103,7 @@ if (isset($_POST['edit']) && $_POST['edit'] == $lang['system']['edit']) {
 
 
 if (isset($_GET['r'])) {
-	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE id='" . $_GET['r'] . "'");
+	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE id='" . $_GET['r'] . "' LIMIT 1");
 	$argi = array("TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}");
 	$nuorodos_redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,1", "method" => "post", "name" => "edit"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "Kategorijos_id"), "{$lang['admin']['links_title']}:" => array("type" => "text", "value" => $sql['pavadinimas'], "name" => "name"), "{$lang['admin']['links_about']}:" => array("type" => "textarea", "value" => $sql['apie'], "name" => "apie"), "{$lang['admin']['link']}:" => array("type" => "text", "value" => $sql['url'], "name" => "url"), "{$lang['admin']['links_active']}" => array("type" => "select", "value" => $argi, "name" => "ar"), "" => array("type" => "hidden", "name" => "nuorodos_id", "value" => $_GET['r']), "{$lang['admin']['edit']}:" => array("type" =>
 		"submit", "name" => "edit", "value" => "{$lang['admin']['edit']}"));
@@ -161,7 +160,7 @@ elseif ($_GET['v'] == 1) {
 	$info = array();
 	if (sizeof($q) > 0) {
 		foreach ($q as $sql) {
-			$sql2 = mysql_fetch_assoc(mysql_query1("SELECT nick FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $sql['nick'] . "'"));
+			$sql2 = mysql_query1("SELECT nick FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $sql['nick'] . "' LIMIT 1");
 
 			$info[] = array("ID" => $sql['id'], "{$lang['admin']['link']}:" => '<a href="' . $sql['url'] . '" title="<b>' . $sql2['nick'] . '</b>
 			<br/><br/>' . $lang['admin']['links_about'] . ': <i>' . $sql['apie'] . '</i><br/>' . $lang['admin']['links_author'] . ': <b>' . $sql2['nick'] . '</b><br/>' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . ' - ' . kada(date('Y-m-d H:i:s ', $sql['date'])) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['action']}:" => "<a href='?id,{$_GET['id']};a,{$_GET['a']};m," . $sql['id'] . "'title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='images/icons/cross.png' border='0'></a> <a href='?id,{$_GET['id']};a,{$_GET['a']};r," . $sql['id'] . "'title='{$lang['admin']['edit']}'><img src='images/icons/pencil.png' border='0'></a>");
