@@ -143,7 +143,7 @@ elseif ($_GET['v'] == 1) {
 	$bla = new Table();
 	$info = array();
 	if (sizeof($q) > 0) {
-		foreach ($q as $row) {
+		foreach ($q as $sql) {
 			$sql2 = mysql_query1("SELECT nick FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $sql['nick'] . "' LIMIT 1");
 
 			$info[] = array("ID" => $sql['id'], "{$lang['admin']['link']}:" => '<a href="' . $sql['url'] . '" title="<b>' . $sql2['nick'] . '</b>

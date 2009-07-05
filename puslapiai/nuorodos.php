@@ -45,7 +45,7 @@ if (isset($link) && strlen($link) > 0 && $link > 0) {
 $sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos'  ORDER BY `pavadinimas`");
 if (sizeof($sqlas) > 0) {
 	foreach ($sqlas as $sql) {
-		$path = mysql_fetch_assoc(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas`"));
+		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas` LIMIT 1");
 		$path1 = explode(",", $path['path']);
 
 		if ($path1[(count($path1) - 1)] == $k) {
