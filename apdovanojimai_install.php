@@ -90,7 +90,7 @@ Atidarykite failą puslapiai/view_user.php, jame suraskitetokią eilutę (~21 ei
 HTML;
 }elseif($url['s']==4){
 $text.='<h1>Duomenų lentelės kūrimas</h1><br />';
-$r=mysql_query("CREATE TABLE `".LENTELES_PRIESAGA."_apdovanojimai` (
+$r=mysql_query("CREATE TABLE `".LENTELES_PRIESAGA."apdovanojimai` (
   `id` int(150) NOT NULL auto_increment,
   `uid` int(150) NOT NULL,
   `nick` varchar(255) character set utf8 collate utf8_lithuanian_ci NOT NULL,
