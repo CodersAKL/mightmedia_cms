@@ -7,7 +7,7 @@
 include_once ("priedai/class.php");
 		
 		$ble = new Table();
-$sql = mysql_query1("SELECT `id` as `apid`,`nick`,`levelis`,(SELECT count(`id`) FROM `".LENTELES_PRIESAGA."apdovanojimai` WHERE `uid`=`apid`)AS `apdovanoj` FROM `".LENTELES_PRIESAGA."users` ORDER by `apdovanoj` DESC");
+$sql = mysql_query1("SELECT `id` as `apid`,`nick`,`levelis`,(SELECT count(`id`) FROM `".LENTELES_PRIESAGA."apdovanojimai` WHERE `uid`=`apid`)AS `apdovanoj` FROM `".LENTELES_PRIESAGA."users` ORDER by `apdovanoj` DESC LIMIT 10");
   
 		if (sizeof($sql) > 0) {
 			foreach ($sql as $row2) {
