@@ -286,8 +286,12 @@ function user($user, $id = 0, $level = 0, $extra = false) {
 			if ($level > 0 && $id > 0) {
 				return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="?id,' . $conf['puslapiai']['view_user.php']['id'] . ';m,' . (int)$id . '" title="' . input($user) .$extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
 			}
-			if ($level == 0 || $id == 0) {
-				return '<div style="display:inline;" title="' . input($user). $extra . '">' . trimlink($user, 10) . '</div>';
+			elseif ($id == 0 && $level!=0) {
+				return '<div style="display:inline;" title="' . input($user). $extra . '">' .(isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') .  trimlink($user, 10) . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : ""). '</div>';
+			}elseif($level==0 && $id!=0){
+			return '<a href="?id,' . $conf['puslapiai']['view_user.php']['id'] . ';m,' . (int)$id . '" title="' . input($user) .$extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
+			}else{
+				return '<div style="display:inline;" title="' . input($user). $extra . '">' .  trimlink($user, 10) . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : ""). '</div>';
 			}
 
 		} else {
@@ -356,7 +360,7 @@ function mysql_query1($query, $lifetime = 0) {
 	} else {
 		$mysql_num++;
 
-		$sql = mysql_query($query, $prisijungimas_prie_mysql);
+		$sql = mysql_query($query, $prisijungimas_prie_mysql) or die(mysql_error());
 
 		if (in_array(strtolower(substr($query, 0, 6)), array('delete', 'insert', 'update'))) {
 			$return = true;
