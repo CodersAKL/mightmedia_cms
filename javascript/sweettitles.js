@@ -15,46 +15,50 @@ var qTipY = 15; //This is qTip's Y offset//
 
 //There's No need to edit anything below this line//
 tooltip = {
-  name : "qTip",
-  offsetX : qTipX,
-  offsetY : qTipY,
-  tip : null
+	name : "qTip",
+	offsetX : qTipX,
+	offsetY : qTipY,
+	tip : null
 }
 
 tooltip.init = function () {
 	var tipNameSpaceURI = "http://www.w3.org/1999/xhtml";
-	if(!tipContainerID){ var tipContainerID = "qTip";}
+	if(!tipContainerID){ 
+		var tipContainerID = "qTip";
+	}
 	var tipContainer = document.getElementById(tipContainerID);
 
 	if(!tipContainer) {
-	  tipContainer = document.createElementNS ? document.createElementNS(tipNameSpaceURI, "div") : document.createElement("div");
+		tipContainer = document.createElementNS ? document.createElementNS(tipNameSpaceURI, "div") : document.createElement("div");
 		tipContainer.setAttribute("id", tipContainerID);
-	  document.getElementsByTagName("body").item(0).appendChild(tipContainer);
+		document.getElementsByTagName("body").item(0).appendChild(tipContainer);
 	}
 
 	if (!document.getElementById) return;
 	this.tip = document.getElementById (this.name);
-	if (this.tip) document.onmousemove = function (evt) {tooltip.move (evt)};
+	if (this.tip) document.onmousemove = function (evt) {
+		tooltip.move (evt)
+	};
 
 	var a, sTitle, elements;
 	
 	var elementList = qTipTag.split(",");
-	for(var j = 0; j < elementList.length; j++)
-	{	
+	for(var j = 0; j < elementList.length; j++) {
 		elements = document.getElementsByTagName(elementList[j]);
-		if(elements)
-		{
-			for (var i = 0; i < elements.length; i ++)
-			{
+		if(elements) {
+			for (var i = 0; i < elements.length; i ++) {
 				a = elements[i];
 				sTitle = a.getAttribute("title");				
-				if(sTitle)
-				{
+				if(sTitle && sTitle.length>1) {
 					a.setAttribute("tiptitle", sTitle);
 					a.removeAttribute("title");
 					a.removeAttribute("alt");
-					a.onmouseover = function() {tooltip.show(this.getAttribute('tiptitle'))};
-					a.onmouseout = function() {tooltip.hide()};
+					a.onmouseover = function() {
+						tooltip.show(this.getAttribute('tiptitle'))
+					};
+					a.onmouseout = function() {
+						tooltip.hide()
+					};
 				}
 			}
 		}
@@ -81,8 +85,8 @@ tooltip.show = function (text) {
 	if (!this.tip) return;
 	this.tip.innerHTML = text;
 	this.tip.style.display = "block";
-			this.tip.style.opacity = '.80';
-			this.tip.style.filter = "alpha(opacity:80)";
+	this.tip.style.opacity = '.80';
+	this.tip.style.filter = "alpha(opacity:80)";
 }
 
 tooltip.hide = function () {

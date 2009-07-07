@@ -14,7 +14,7 @@ if (basename($_SERVER['PHP_SELF']) == 'funkcijos.php') {
 }
 define("OK", true);
 
-if (preg_match('%/\*\*/|SERVER|http|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['QUERY_STRING'])) {
+if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['QUERY_STRING'])) {
 	$ip = getip();
 	$forwarded = (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : 'N/A');
 	$remoteaddress = $_SERVER["REMOTE_ADDR"];
@@ -48,9 +48,9 @@ function header_info() {
   <link href="stiliai/rating_style.css" rel="stylesheet" type="text/css" media="all" />
   <link rel="shortcut icon" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/favicon.ico" />
   <link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox.css" />
-		<!--[if IE]>
-		<link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox-ie.css" title="example" />
-		<![endif]-->
+  <!--[if IE]>
+  <link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox-ie.css" title="example" />
+  <![endif]-->
   <title>' . input(strip_tags($conf['Pavadinimas']) . ' - ' . $page_pavadinimas) . '</title>
   <script type="text/javascript" src="javascript/jquery/jquery-1.3.2.min.js"></script> 
   <script type="text/javascript" src="javascript/jquery/jquery-ui-personalized-1.6rc6.min.js"></script> 
@@ -61,26 +61,26 @@ function header_info() {
   <script type="text/javascript" src="javascript/jquery/jquery.colorbox.js"></script>
   <script type="text/javascript" src="javascript/jquery/jquery.hint.js"></script>
   <script type="text/javascript">
-			$(document).ready(function(){
-	
-				//Examples of how to assign the ColorBox event to elements.
-				$("#gallery a[rel=\'lightbox\']").colorbox({transition:"fade"});
-			
-				//Example of preserving a JavaScript event for inline calls.
-				$("#click").click(function(){ 
-					$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-				});
-				$("#inline").colorbox({width:"50%", inline:true, href:"#inline_example1", title:"hello"});
+  $(document).ready(function(){
 
-				 // find all the input elements with title attributes and make them with a hint
-				$(\'input[title!=""]\').hint(\'inactive\');
-			});
-		</script>
-	<!--[if lt IE 7]>
-	<script type="text/javascript" src="javascript/jquery/jquery.pngFix.pack.js"></script>
-	<script type="text/javascript">$(document).ready(function(){$(document).pngFix();});</script>
-	<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
-	<![endif]-->
+	//Examples of how to assign the ColorBox event to elements.
+	$("#gallery a[rel=\'lightbox\']").colorbox({transition:"fade"});
+
+	//Example of preserving a JavaScript event for inline calls.
+	$("#click").click(function(){
+			 $(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+	});
+	$("#inline").colorbox({width:"50%", inline:true, href:"#inline_example1", title:"hello"});
+
+	// find all the input elements with title attributes and make them with a hint
+	$(\'input[title!=""]\').hint(\'inactive\');
+});
+</script>
+<!--[if lt IE 7]>
+<script type="text/javascript" src="javascript/jquery/jquery.pngFix.pack.js"></script>
+<script type="text/javascript">$(document).ready(function(){$(document).pngFix();});</script>
+<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
+<![endif]-->
 ';
 }
 // Nupiesiam vartotojo avatara
@@ -288,9 +288,9 @@ function user($user, $id = 0, $level = 0, $extra = false) {
 			}
 			elseif ($id == 0 && $level!=0) {
 				return '<div style="display:inline;" title="' . input($user). $extra . '">' .(isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') .  trimlink($user, 10) . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : ""). '</div>';
-			}elseif($level==0 && $id!=0){
-			return '<a href="?id,' . $conf['puslapiai']['view_user.php']['id'] . ';m,' . (int)$id . '" title="' . input($user) .$extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
-			}else{
+			}elseif($level==0 && $id!=0) {
+				return '<a href="?id,' . $conf['puslapiai']['view_user.php']['id'] . ';m,' . (int)$id . '" title="' . input($user) .$extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
+			}else {
 				return '<div style="display:inline;" title="' . input($user). $extra . '">' .  trimlink($user, 10) . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : ""). '</div>';
 			}
 
@@ -1231,15 +1231,15 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 	require_once ('javascript/htmlarea/Xinha0.96beta2/contrib/php-xinha.php');
 
 	xinha_pass_to_php_backend(array(
-	'images_dir' => '../../../../../siuntiniai/images',
-	'images_url' => adresas() . 'siuntiniai/images',
-	'files_dir' => '../../../../../siuntiniai/failai',
-	'files_url' => adresas() . 'siuntiniai/failai',
-	//'base_dir' => '../../../../../siuntiniai',
-	//'base_url' => adresas() . 'siuntiniai',
+		 'images_dir' => '../../../../../siuntiniai/images',
+		 'images_url' => adresas() . 'siuntiniai/images',
+		 'files_dir' => '../../../../../siuntiniai/failai',
+		 'files_url' => adresas() . 'siuntiniai/failai',
+		 //'base_dir' => '../../../../../siuntiniai',
+		 //'base_url' => adresas() . 'siuntiniai',
 
-	'allow_upload' => true
-	 //,
+		 'allow_upload' => true
+		 //,
 		 //'thumbnail_prefix'=>'',
 		 //'thumbnail_dir'=>'sumazinti'
 		 //'resized_prefix'=>'.pakeistas',

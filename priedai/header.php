@@ -70,25 +70,11 @@ if (!check_name($uid)) {
 //jei sausainis yra (bus lengviau nuo botu)
 if (isset($uid)) {
 
-	//Jei tai ne botas atnaujinam
+//Jei tai ne botas atnaujinam
 	if (!botas($_SERVER['HTTP_USER_AGENT'])) {
-		$q = kiek("kas_prisijunges", "WHERE `uid` = " . escape($uid) . "");
-		//paskutinio prisijungimo atnaujinimas
 
-		//Jei jau toks useris buvo
-		if ($q > 0) {
-			$q = "UPDATE `" . LENTELES_PRIESAGA . "kas_prisijunges` SET 
-			id=" . $uzerid . ",
-			ip=" . escape($ip) . ",
-			clicks = clicks+1,
-			ref=" . escape($ref) . ",
-			file=" . escape(htmlspecialchars($_SERVER['QUERY_STRING'])) . ",
-			agent=" . escape(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) . ",
-			user=" . escape($username) . ",
-			timestamp=" . escape($timestamp) . "
-			WHERE uid=" . escape($uid) . ";";
-		} else {
-			$q = "INSERT INTO `" . LENTELES_PRIESAGA . "kas_prisijunges` (`id`,`uid`,`timestamp`,`ip`,`file`,`user`,`agent`,`ref`,`clicks`) VALUES (
+	//paskutinio prisijungimo atnaujinimas
+		$q = "INSERT INTO `" . LENTELES_PRIESAGA . "kas_prisijunges` (`id`,`uid`,`timestamp`,`ip`,`file`,`user`,`agent`,`ref`,`clicks`) VALUES (
 				" . escape($uzerid) . ",
 				" . escape($uid) . ",
 				" . escape($timestamp) . ",
@@ -97,9 +83,17 @@ if (isset($uid)) {
 				" . escape($username) . ",
 				" . escape(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) . ",
 				" . escape($ref) . ",
-				'1');
-			";
-		}
+				'1')
+            ON DUPLICATE KEY UPDATE
+			id=" . $uzerid . ",
+			ip=" . escape($ip) . ",
+			clicks = clicks+1,
+			ref=" . escape($ref) . ",
+			file=" . escape(htmlspecialchars($_SERVER['QUERY_STRING'])) . ",
+			agent=" . escape(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) . ",
+			user=" . escape($username) . ",
+			timestamp=" . escape($timestamp) . ";";
+
 		mysql_query1($q);
 	}
 }
@@ -256,7 +250,7 @@ function botas($agentas) {
 }
 
 function check_name($name) {
-	//return preg_match("/^w$/",$name);
+//return preg_match("/^w$/",$name);
 	return true;
 }
 function curl_get_file_contents($URL) {
