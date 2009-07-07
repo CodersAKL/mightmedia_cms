@@ -15,7 +15,7 @@ if (!defined("OK")) {
 function komentarai($id, $hide = false) {
 	global $url, $page, $lang, $conf;
 	if (isset($url['id']) && isnum($url['id']) && $url['id'] > 0 && isnum($id) && $id > 0) {
-		if (isset($_SESSION['id']) || $conf['kmomentarai_sveciams'] == 1) {
+		if (isset($_SESSION['id']) || (isset($conf['kmomentarai_sveciams'])&&$conf['kmomentarai_sveciams'] == 1)) {
 			/*$text = "
 			<center>
 			<form name=\"n_kom\" id=\"n_kom\" action=\"\" method=\"post\">
