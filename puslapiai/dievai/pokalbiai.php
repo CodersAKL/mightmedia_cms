@@ -105,7 +105,7 @@ if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
 		$text .= "
 				<div class='title'><em><a href=\"" . url("d," . $row['id'] . "") . "\" onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\">[{$lang['admin']['delete']}]</a> " . (($_SESSION['username'] == $row['admin']) ? "<a href=\"" . url("r," . $row['id'] . "") . "\">[{$lang['admin']['edit']}]</a> " : "") . $row['admin'] . " [" . date('Y-m-d H:i:s ', $row['date']) . "] - " . kada(date('Y-m-d H:i:s ', $row['date'])) . " " . naujas($row['date'], $row['admin']) . "</em></div>
-				<blockquote>" . bbcode($row['msg']) . "<br/></blockquote><hr></hr>
+				" . bbcode($row['msg']) . "<br /><hr></hr>
 		";
 	}
 }
