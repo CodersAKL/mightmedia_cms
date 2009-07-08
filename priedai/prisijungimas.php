@@ -53,7 +53,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 		$_SESSION['level'] = $linformacija2['levelis'];
 		$_SESSION['mod'] = $linformacija2['mod'];
 	} else {
-		mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['user']['cookie']}: UserID: " . $user_idas . " Pass: " . $user_pass) . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
+		mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['user']['cookie']}: UserID: " . $user_id . " Pass: " . $user_pass) . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
 		$strError = $lang['user']['cookie'];
 
 		unset($_SESSION['username'], $_SESSION['password'], $_SESSION['id'], $_SESSION['lankesi'], $_SESSION['mod']); // Isvalom sesija
