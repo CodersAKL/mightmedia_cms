@@ -1203,7 +1203,7 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 
       xinha_plugins = xinha_plugins ? xinha_plugins :
       [
-        \'CharacterMap\',\'Linker\', \'Media\', \'Abbreviation\', \'ContextMenu\',' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ? '\'ExtendedFileManager\',' : '') . '\'HorizontalRule\',\'InsertAnchor\',\'InsertPicture\',\'SuperClean\',\'Stylist\'
+        \'CharacterMap\',\'Linker\', \'Media\', \'Abbreviation\', \'ContextMenu\',' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ? '\'ExtendedFileManager\',' : '') . '\'HorizontalRule\',\'InsertAnchor\',\'SuperClean\',\'Stylist\'
 
       ];
              // THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
