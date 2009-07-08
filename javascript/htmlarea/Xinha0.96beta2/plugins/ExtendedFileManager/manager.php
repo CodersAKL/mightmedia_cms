@@ -79,7 +79,7 @@ if(isset($_REQUEST['media'])) { ?>
 	var mediaid = params['returnid'];
 	var mediasrc = params['returndoc'];
 	media = "true";
-	var backendFolder = "<?=$IMConfig['images_url']?>";
+	var backendFolder = "<?php echo $IMConfig['images_url'];?>";
 <?php }
 ?>
 		</script>
@@ -165,7 +165,7 @@ $iframe_url = str_replace( array("backend.php","manager.php"), "", $_SERVER["PHP
 						<td colspan="5"><input type="text" id="<?php if($insertMode=='image') echo 'f_url'; else echo 'f_href';?>" class="largelWidth" value="" /></td>
 						<td rowspan="<?php echo $num_rows ?>" colspan="2" valign="top" align="center"><?php //if($insertMode=='image') { ?>
 							<div id="prev" style="padding:4px;background-color:#FFF;border:1px inset;width: 130px; height: 110px; font-size:8px; overflow:hidden;">
-								<img src="<?php print $IMConfig['base_url'];?>img/1x1_transparent.gif" alt="" id="f_preview" /><?php if($insertMode=='image') { ?>Lorem ipsum dolor sit amet, consec tetuer adipiscing elit. Suspen disse tempor tincidunt eros. Ut venenatis. Lorem ipsum dolor sit amet, consec tetuer adipiscing elit. Suspen disse tempor tincidunt eros. Ut venenatis. Lorem ipsum dolor sit amet, consec tetuer adipiscing elit. Suspen disse tempor tincidunt eros. Ut venenatis.<? } ?>
+								<img src="<?php print $IMConfig['base_url'];?>img/1x1_transparent.gif" alt="" id="f_preview" /><?php if($insertMode=='image') { ?>Lorem ipsum dolor sit amet, consec tetuer adipiscing elit. Suspen disse tempor tincidunt eros. Ut venenatis. Lorem ipsum dolor sit amet, consec tetuer adipiscing elit. Suspen disse tempor tincidunt eros. Ut venenatis. Lorem ipsum dolor sit amet, consec tetuer adipiscing elit. Suspen disse tempor tincidunt eros. Ut venenatis.<?php } ?>
 							</div>
 						</td>
 					</tr>
