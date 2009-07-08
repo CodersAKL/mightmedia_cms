@@ -4,19 +4,19 @@
 
 if (document.images){
   pic1 = new Image(220,19); 
-  pic1.src = "images/balasvimas/rating_loading.gif"; 
+  pic1.src = "images/balsavimas/rating_loading.gif"; 
 
   pic2 = new Image(25,75); 
-  pic2.src = "images/balasvimas/rating_star.gif"; 
+  pic2.src = "images/balsavimas/rating_star.gif"; 
 
   pic3 = new Image(25,75); 
-  pic3.src = "images/balasvimas/rating_star_2.gif"; 
+  pic3.src = "images/balsavimas/rating_star_2.gif"; 
   
   pic4 = new Image(16,13); 
-  pic4.src = "images/balasvimas/rating_tick.gif";
+  pic4.src = "images/balsavimas/rating_tick.gif";
   
   pic5 = new Image(14,14); 
-  pic5.src = "images/balasvimas/rating_warning.gif";
+  pic5.src = "images/balsavimas/rating_warning.gif";
 }
 
 // AJAX ----------------------------------------
