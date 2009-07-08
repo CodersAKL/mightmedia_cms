@@ -21,14 +21,14 @@ if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['Q
 	ban($lang['system']['forhacking']);
 }
 //admin links
-if(isset($_SESSION['level']) && $_SESSION['level']==1) {
+//if(isset($_SESSION['level']) && $_SESSION['level']==1) {
 	$glob = glob('puslapiai/dievai/*.php');
 	foreach($glob as $id => $file) {
 		$file = basename($file,'.php');
 		$admin_pages[$id] = $file;
 		$admin_pagesid[$file] = $id;
 
-}}
+}//}
 
 //slaptaþodþio kodavimas
 function koduoju($pass) {
