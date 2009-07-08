@@ -243,5 +243,5 @@ if (defined("LEVEL") && LEVEL > 0 && $a == 2 && !isset($s)) {
 		lentele("{$lang['user']['pm_outbox']}", "{$lang['user']['pm_empty_msg']}");
 	}
 }
-
+unset($title,$info,$text,$extra)
 ?>
