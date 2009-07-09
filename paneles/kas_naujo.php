@@ -102,7 +102,12 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 
 			$file = str_replace('puslapiai/', '', $row['pid']);
 			if (isset($conf['puslapiai'][$file . ".php"]['id'])) {
-				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['' . $file . '.php']['id'] . ";" . $link . "#" . $row['id'] . "' title=\"{$lang['new']['author']}: <b>" . $row['nick'] . "</b><br/>{$lang['new']['date']}: <b>" . date('Y-m-d H:i:s ', $row['data']) . "</b><br/>\">" . trimlink(input($row['zinute']), 20) . "</a><br />\n";
+			   if(strlen($row['nick'])>15){
+			      $ar=unserialize($row['nick']); $author=$ar[0];
+			    }else $author=$row['nick'];
+			       
+			      
+				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['' . $file . '.php']['id'] . ";" . $link . "#" . $row['id'] . "' title=\"{$lang['new']['author']}: <b>" . $author. "</b><br/>{$lang['new']['date']}: <b>" . date('Y-m-d H:i:s ', $row['data']) . "</b><br/>\">" . trimlink(input($row['zinute']), 20) . "</a><br />\n";
 			}
 		}
 	}
