@@ -56,5 +56,5 @@ if (isset($url['a']) && file_exists(dirname(__file__) . "/" . $admin_pages[(int)
 	lentele('MightMedia TVS Naujienos', '<iframe src="http://code.assembla.com/mightmedia/subversion/node/blob/naujienos.html" width="100%" height="100" frameborder="0"></iframe>');
 	include_once (dirname(__file__) . "/pokalbiai.php");
 }
-
+unset($title, $text);
 ?>
