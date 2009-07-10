@@ -264,7 +264,7 @@ VALUES (
 	} else {
 		$kategorijos[] = "Kategorijų nėra";
 	}
-	if (mysql_num_rows($sql) > 0) {
+	if (sizeof($sql) > 0) {
 		$forma = array("Form" => array("enctype" => "multipart/form-data", "action" => '', "method" => "post", "name" => "action"), "Failas:" => array("name" => "failas", "type" => "file", "value" => "", "class"=>"input"), "Pavadinimas:" => array("type" => "text", "value" => '', "name" => "Pavadinimas", "class"=>"input"), "Kategorija:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "class"=>"input"), "Aprašymas:" => array("type" => "textarea", "name" => "Aprasymas", "class"=>"input", "rows" => "3", "class" => "input", "value" => ''), //"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","class"=>"input"),
 			'Pateikti nuotrauką' => array("type" => "submit", "name" => "action", "value" => 'Pateikti nuotrauką'), );
 
