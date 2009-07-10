@@ -115,15 +115,10 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 	$extra = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `id`=" . escape($redaguoti) . " LIMIT 1");
 	//$extra = mysql_fetch_assoc($extra);
 } elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['edit']) {
-	//apsauga nuo kenksmingo kodo
-
+	
 	$apie = strip_tags($_POST['Aprasymas']);
-	//$naujiena = safe_html($_POST['naujiena'], $tags );
-
-	//$placiau = safe_html($_POST['placiau'], $tags );
 	$pavadinimas = strip_tags($_POST['Pavadinimas']);
 	$kategorija = (int)$_POST['cat'];
-	//$foto = strip_tags($_POST['Pav']);
 	$id = ceil((int)$_POST['news_id']);
 	$komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'TAIP' ? 'TAIP' : 'NE');
 

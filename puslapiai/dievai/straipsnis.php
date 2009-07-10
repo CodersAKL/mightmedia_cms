@@ -66,11 +66,9 @@ if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete'] &&
 	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/straipsnis' AND kid=" . escape($trinti) . "");
 	//redirect("?id,".$_GET['id'].";a,".$_GET['a'],"header");
 } elseif (isset($_POST['action']) && isset($_POST['str']) && $_POST['action'] == $lang['admin']['edit']) {
-	//apsauga nuo kenksmingo kodo
-	include_once ('priedai/safe_html.php');
-
-	$apr = safe_html(str_replace(array("&#39;"), array("'"), $_POST['apr']), $tags);
-	$str = safe_html(str_replace(array("&#39;"), array("'"), $_POST['str']), $tags);
+	
+	$apr = $_POST['apr'];
+	$str = $_POST['str'];
 	$komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'taip' ? 'taip' : 'ne');
 	$rodoma = (isset($_POST['rodoma']) && $_POST['rodoma'] == 'TAIP' ? 'TAIP' : 'NE');
 	$kategorija = (int)$_POST['kategorija'];
@@ -97,11 +95,9 @@ if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete'] &&
 	}
 
 } elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['article_create']) {
-	//apsauga nuo kenksmingo kodo
-	include_once ('priedai/safe_html.php');
-
-	$apr = safe_html(str_replace(array("&#39;"), array("'"), $_POST['apr']), $tags);
-	$str = safe_html(str_replace(array("&#39;"), array("'"), $_POST['str']), $tags);
+	
+	$apr = $_POST['apr'];
+	$str = $_POST['str'];
 	$komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'taip' ? 'taip' : 'ne');
 	$kategorija = (int)$_POST['kategorija'];
 	$pavadinimas = strip_tags($_POST['pav']);

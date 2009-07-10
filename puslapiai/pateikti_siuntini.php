@@ -15,13 +15,7 @@ if (isset($_SESSION['id']) && $_SESSION['id']) {
 
 	if (isset($_POST['action']) && $_POST['action'] == 'Pateikti siuntinį') {
 		if (isset($_FILES) && isset($_POST['Pavadinimas']) && isset($_POST['Aprasymas'])) {
-			//debug($_POST);
-			//apsauga nuo kenksmingo kodo
-			include_once ('priedai/safe_html.php');
-			// nurodome masyva leidziamu elementu DUK
-			// - tagai kurie uzdaromi atskirai (<p></p>) pazymeti kaip 1
-			// - tagai kuriuos uzdaryti nebutina (<hr>) zymimi kaip 0
-			$tags = array("p" => 1, "br" => 0, "a" => 1, "img" => 0, "li" => 1, "ol" => 1, "ul" => 1, "b" => 1, "i" => 1, "em" => 1, "strong" => 1, "del" => 1, "ins" => 1, "u" => 1, "code" => 1, "pre" => 1, "blockquote" => 1, "hr" => 0, "span" => 1, "font" => 1, "h1" => 1, "h2" => 1, "h3" => 1, "table" => 1, "tr" => 1, "td" => 1, "th" => 1, "tbody" => 1, "div" => 1);
+			
 			function upload($file, $file_types_array = array("BMP", "JPG", "PNG", "PSD", "ZIP"), $max_file_size = 1048576, $upload_dir = "siuntiniai") {
 				if ($_FILES["$file"]["name"] != "") {
 					$origfilename = $_FILES["$file"]["name"];

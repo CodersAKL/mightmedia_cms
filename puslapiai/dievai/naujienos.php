@@ -65,11 +65,6 @@ if (isset($_GET['p'])) {
 		klaida($lang['system']['error'], "{$lang['system']['error']}<br><b>" . mysql_error() . "</b>");
 	}
 }
-//Leidžiami naujienose html elementai
-// nurodome masyva leidziamu elementu DUK
-// - tagai kurie uzdaromi atskirai (<p></p>) pazymeti kaip 1
-// - tagai kuriuos uzdaryti nebutina (<hr>) zymimi kaip 0
-$tags = array("p" => 1, "br" => 0, "a" => 1, "img" => 0, "li" => 1, "ol" => 1, "ul" => 1, "b" => 1, "i" => 1, "em" => 1, "strong" => 1, "del" => 1, "ins" => 1, "u" => 1, "code" => 1, "pre" => 1, "blockquote" => 1, "hr" => 0, "span" => 1, "font" => 1, "h1" => 1, "h2" => 1, "h3" => 1, "table" => 1, "tr" => 1, "td" => 1, "th" => 1, "tbody" => 1, "div" => 1, "embed" => 1, "object" => 1, "param" => 0);
 
 //Naujienos trinimas
 if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete'] && LEVEL == 1 && isset($_POST['edit_new']) && $_POST['edit_new'] > 0)) || isset($url['t']) && LEVEL == 1) {
@@ -104,11 +99,8 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 
 //Išsaugojam redaguojamą naujieną
 elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['edit']) {
-	//apsauga nuo kenksmingo kodo
-	include_once ('priedai/safe_html.php');
-
-	$naujiena = safe_html(str_replace(array("&#39;", "<br>"), array("'", "<br />"), $_POST['naujiena']), $tags);
-	$placiau = safe_html(str_replace(array("&#39;", "<br>"), array("'", "<br />"), $_POST['placiau']), $tags);
+	$naujiena = $_POST['naujiena'];
+	$placiau =$_POST['placiau'];
 $komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
 	$kategorija = (int)$_POST['kategorija'];
 	$pavadinimas = strip_tags($_POST['pav']);
@@ -131,13 +123,10 @@ $komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
 
 //Išsaugojam naujieną
 elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_create']) {
-	//apsauga nuo kenksmingo kodo
-	include_once ('priedai/safe_html.php');
-
-	$naujiena = safe_html(str_replace(array("&#39;", "<br>"), array("'", "<br />"), $_POST['naujiena']), $tags);
-	$placiau = safe_html(str_replace(array("&#39;", "<br>"), array("'", "<br />"), $_POST['placiau']), $tags);
+	$naujiena = $_POST['naujiena'];
+	$placiau =  $_POST['placiau'];
 	$komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
-	$pavadinimas = input(strip_tags($_POST['pav']));
+	$pavadinimas = strip_tags($_POST['pav']);
 	$kategorija = (int)$_POST['kategorija'];
 
 	if (empty($naujiena) || empty($pavadinimas)) {

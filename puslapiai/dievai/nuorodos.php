@@ -79,12 +79,11 @@ require_once ("priedai/class.php");
 $bla = new forma();
 
 if (isset($_POST['edit']) && $_POST['edit'] == $lang['system']['edit']) {
-	include_once ('priedai/safe_html.php');
 
 	$pavadinimas = strip_tags($_POST['name']);
 	$url = strip_tags($_POST['url']);
 	$aktyvi = strip_tags($_POST['ar']);
-	$aprasymas = safe_html(str_replace(array("&#39;"), array("'"), $_POST['apie']));
+	$aprasymas = $_POST['apie'];
 	$kategorija = ceil((int)$_POST['Kategorijos_id']);
 	$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET
 			`pavadinimas` = " . escape($pavadinimas) . ",

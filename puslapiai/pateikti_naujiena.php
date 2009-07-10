@@ -9,7 +9,7 @@
  * @$Revision$
  * @$Date$
  **/
-$tags = array("p" => 1, "br" => 0, "a" => 1, "img" => 0, "li" => 1, "ol" => 1, "ul" => 1, "b" => 1, "i" => 1, "em" => 1, "strong" => 1, "del" => 1, "ins" => 1, "u" => 1, "code" => 1, "pre" => 1, "blockquote" => 1, "hr" => 0, "span" => 1, "font" => 1, "h1" => 1, "h2" => 1, "h3" => 1, "table" => 1, "tr" => 1, "td" => 1, "th" => 1, "tbody" => 1, "div" => 1, "embed" => 1);
+
 $sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' ORDER BY `pavadinimas` DESC");
 if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
@@ -22,13 +22,11 @@ if (sizeof($sql) > 0) {
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 'Pateikti') {
-	print_r($_POST);
+	//print_r($_POST);
 	if (isset($_POST['naujiena']) && isset($_POST['pav'])) {
-		//apsauga nuo kenksmingo kodo
-		include_once ('priedai/safe_html.php');
+		
 
-		$naujiena = safe_html(str_replace(array("&#39;"), array("'"), $_POST['naujiena']), $tags);
-		//$placiau = safe_html(str_replace(array("&#39;"), array("'"), $_POST['placiau']), $tags);
+		$naujiena = $_POST['naujiena'];
 		$komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'taip' ? 'taip' : 'ne');
 		$pavadinimas = input(strip_tags($_POST['pav']));
 		$kategorija = (int)$_POST['kategorija'];
