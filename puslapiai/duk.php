@@ -57,7 +57,7 @@ if ($_SESSION['level'] == 1) {
 
 
 if (isset($_POST['dukas'])) {
-	echo "asd";
+	//echo "asd";
 	$klausimas = $_POST['Klausimas'];
 	$atsakymas = str_replace(array('<br>'), array('<br />'), $_POST['Atsakymas']);
 	$order = ceil((int)$_POST['Order']);
