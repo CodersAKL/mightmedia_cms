@@ -76,6 +76,6 @@ $nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype
 include_once ("priedai/class.php");
 $bla = new forma();
 lentele($lang['admin']['config'], $bla->form($nustatymai));
-unset($_POST['Konfiguracija']);
+//unset($_POST['Konfiguracija']);
 
 ?>

@@ -152,6 +152,6 @@ if (isset($_POST['b_create']) && $_POST['b_create'] == $lang['admin']['poll_crea
 	redirect("?id," . $_GET['id'] . ";a," . $_GET['a'], "meta");
 }
 unset($a, $ats1, $ats2, $ats3, $ats4, $ats5, $balsas, $sujungti);
-unset($_POST['b_create'], $_POST['b_delete']);
+//unset($_POST['b_create'], $_POST['b_delete']);
 
 ?>

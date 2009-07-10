@@ -230,5 +230,5 @@ if (isset($title) && isset($info))
     $bla = new Table();
     lentele($title . " - " . count($info), $bla->render($info));
 }
-unset($_POST['ip'],$_POST['priezastis']);
+//unset($_POST['ip'],$_POST['priezastis']);
 ?>

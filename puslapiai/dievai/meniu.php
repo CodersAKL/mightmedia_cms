@@ -150,10 +150,10 @@ lentele($page_pavadinimas,$text);
 
 		foreach ($failai as $file) {
 			if ($file['type'] == 'file') {
-				$sql = mysql_query1("SELECT pavadinimas FROM `" . LENTELES_PRIESAGA . "page` WHERE file=" . escape(basename($file['name'])) . " LIMIT 1");
-				if (($sql) == 0) {
+				//$sql = mysql_query1("SELECT pavadinimas FROM `" . LENTELES_PRIESAGA . "page` WHERE file=" . escape(basename($file['name'])) . " LIMIT 1");
+				//if (($sql) == 0) {
 					$puslapiai[basename($file['name'])] = basename($file['name']) . ": " . $file['sizetext'] . "\n";
-				}
+				//}
 			}
 		}
 
