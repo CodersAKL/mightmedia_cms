@@ -1,21 +1,23 @@
 <?php 
-header("content-type: application/xhtml+xml; charset=UTF-8"); 
+header("content-type: application/xml; charset=UTF-8"); 
 require_once('priedai/conf.php');
-if(isset($conf['puslapiai']['rss.php'])){?>
-
- <rss version="2.0">
+if(isset($conf['puslapiai']['rss.php'])){
+	echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
+?>
+ <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
  	<channel>
  		<title><?php echo htmlspecialchars($conf['Pavadinimas']);?></title>
  		<link><?php  echo adresas();?></link>
- 		<description><?php echo $conf['Apie'];?></description>
+ 		<description><![CDATA[ <?php echo $conf['Apie'];?> ]]></description>
  		<language>en-lt</language>
- 		<copyright><?php echo htmlspecialchars($conf['Copyright']);?></copyright>
- 		<managingEditor><?php echo htmlspecialchars($conf['Pastas']);?></managingEditor>
- 		<webMaster><?php echo htmlspecialchars($conf['Pastas']);?></webMaster>
- 		<pubDate><?php echo htmlspecialchars(date('Y-m-d H:i:s'));?></pubDate>
- 		<lastBuildDate><?php echo htmlspecialchars(date('Y-m-d H:i:s'));?></lastBuildDate>
- 		<category><?php echo htmlspecialchars($conf['Pavadinimas']);?></category>
- 		<generator>Virtuosi Media RSS Generator</generator>
+ 		<copyright><![CDATA[ <?php echo strip_tags($conf['Copyright']);?> ]]></copyright>
+ 		<managingEditor><![CDATA[ <?php echo htmlspecialchars($conf['Pastas']).' ('.$admin_name.')';?> ]]></managingEditor>
+ 		<webMaster><![CDATA[ <?php echo htmlspecialchars($conf['Pastas']).' ('.$admin_name.')';?> ]]></webMaster>
+ 		<pubDate><?php echo date("D, d M Y H:i:s O");?></pubDate>
+ 		<atom:link href="<?php echo adresas();?>/rss.php" rel="self" type="application/rss+xml" />
+ 		<lastBuildDate><?php echo date("D, d M Y H:i:s O");?></lastBuildDate>
+ 		<category><![CDATA[ <?php echo htmlspecialchars($conf['Pavadinimas']);?> ]]></category>
+ 		<generator>MightMedia TVS</generator>
  		<docs>http://www.rssboard.org/rss-specification</docs>
  		<ttl>50</ttl>
  		
@@ -36,17 +38,19 @@ if(isset($conf['puslapiai']['rss.php'])){?>
  //Iterate over the rows to create each item
  //<image>'.adresas()."images/naujienu_kat/".$kategorija['pav'].'</image>
  foreach($result as $row) {
- $kategorija = mysql_query1("SELECT  SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` where `id`=".escape($row['kategorija'])." LIMIT 1");
+ $kategorija = mysql_query1("SELECT  SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` where `id`=".escape($row['kategorija'])." LIMIT 1",60);
+ $nickas = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick` = ".escape($row['autorius'])." LIMIT 1",60);
  if((isset($kategorija['teises']) && teises($kategorija['teises'], 0))||!isset($kategorija['teises'])){
  echo '
  <item>
- 		<title>'.$row['pavadinimas'].'</title>
+ 		<title><![CDATA['.$row['pavadinimas'].']]></title>
  		<link>'.adresas().'?id,'.$conf['puslapiai']['naujienos.php']['id'].';k,'.$row['id'].'</link>
- 		<description>'.htmlspecialchars($row['naujiena']).'</description>
- 		<author>'.$row['autorius'].'</author>
+ 		<description><![CDATA[ '.$row['naujiena'].' <br />'.$row['daugiau'].' ]]></description>
+ 		<author><![CDATA['.$nickas['email'].' ('.$row['autorius'].')]]></author>
  		'.(isset($kategorija['pavadinimas'])?'<category>'.$kategorija['pavadinimas'].'</category>':'').'
- 		<pubDate>'.date('Y-m-d H:i:s ', $row['data']).'</pubDate>
+ 		<pubDate>'.date('D, d M Y H:i:s O', $row['data']).'</pubDate>
  		<source url="'.adresas().'">'.$conf['Pavadinimas'].' RSS</source>
+ 		<guid>'.adresas().'?id,'.$conf['puslapiai']['naujienos.php']['id'].';k,'.$row['id'].'</guid>
 </item>
 ';
  }
