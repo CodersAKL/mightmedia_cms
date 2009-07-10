@@ -13,7 +13,7 @@
 
 $nr = 0;
 
-if (isset($_GET) && !empty($_GET) && defined("LEVEL") && LEVEL == 1) {
+if ($_SESSION['level'] == 1) {
 	//Jei adminas bando trinti. $_GET['d'] == ID
 	if (isset($_GET['d']) && isnum($_GET['d']) && $_GET['d'] > 0) {
 		$q = "DELETE FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` = " . escape((int)$_GET['d']);
@@ -54,18 +54,12 @@ if (isset($_GET) && !empty($_GET) && defined("LEVEL") && LEVEL == 1) {
 		lentele("{$lang['faq']['new']}", $bla->form($duk));
 
 	}
-}
 
-if (isset($_POST) && !empty($_POST) && isset($_POST['duk']) && defined("LEVEL") && LEVEL == 1) {
-	//apsauga nuo kenksmingo kodo
-	include_once ('priedai/safe_html.php');
-	// nurodome masyva leidziamu elementu DUK
-	// - tagai kurie uzdaromi atskirai (<p></p>) pazymeti kaip 1
-	// - tagai kuriuos uzdaryti nebutina (<hr>) zymimi kaip 0
-	$tags = array("p" => 1, "br" => 0, "a" => 1, "img" => 0, "li" => 1, "ol" => 1, "ul" => 1, "b" => 1, "i" => 1, "em" => 1, "strong" => 1, "del" => 1, "ins" => 1, "u" => 1, "code" => 1, "pre" => 1, "blockquote" => 1, "hr" => 0, "span" => 1, "font" => 1, "h1" => 1, "h2" => 1, "h3" => 1, "table" => 1, "tr" => 1, "td" => 1, "th" => 1, "tbody" => 1, "div" => 1);
 
-	$klausimas = safe_html($_POST['Klausimas'], $tags);
-	$atsakymas = safe_html(str_replace(array('<br>'), array('<br />'), $_POST['Atsakymas']), $tags);
+if (isset($_POST['dukas'])) {
+	echo "asd";
+	$klausimas = $_POST['Klausimas'];
+	$atsakymas = str_replace(array('<br>'), array('<br />'), $_POST['Atsakymas']);
 	$order = ceil((int)$_POST['Order']);
 	$id = ceil((int)$url['e']);
 
@@ -90,7 +84,7 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['duk']) && defined("LEVEL") 
 	}
 
 
-}
+}}
 $text = '';
 $extra = "<ol>";
 
