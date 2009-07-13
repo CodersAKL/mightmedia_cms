@@ -51,7 +51,7 @@ function koduoju($pass) {
 function header_info() {
 	global $conf, $page_pavadinimas;
 	echo '
-	<meta name="generator" content="notepad" />
+	<meta name="generator" content="MightMedia TVS" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="description" content="' . input(strip_tags($conf['Pavadinimas']) . ' - ' . trimlink(strip_tags($conf['Apie']), 120)) . '" />
   <meta name="keywords" content="' . input(strip_tags($conf['Keywords'])) . '" />
