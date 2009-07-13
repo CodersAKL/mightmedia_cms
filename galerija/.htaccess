@@ -4,10 +4,10 @@ Deny from All
 Allow from All
 </FilesMatch>
 
-<Files *.*>
-ForceType application/octet-stream
-Header set Content-Disposition attachment
-</Files>
+#<Files *.*>
+#ForceType application/octet-stream
+#Header set Content-Disposition attachment
+#</Files>
 
 #<Files *.*>
 #ForceType applicaton/octet-stream
