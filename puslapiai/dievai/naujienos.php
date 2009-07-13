@@ -67,7 +67,7 @@ if (isset($_GET['p'])) {
 }
 
 //Naujienos trinimas
-if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete'] && LEVEL == 1 && isset($_POST['edit_new']) && $_POST['edit_new'] > 0)) || isset($url['t']) && LEVEL == 1) {
+if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete']  && isset($_POST['edit_new']) && $_POST['edit_new'] > 0)) || isset($url['t'])) {
 	if (isset($url['t'])) {
 		$trinti = (int)$url['t'];
 	} elseif (isset($_POST['edit_new'])) {

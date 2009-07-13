@@ -84,7 +84,7 @@ if (isset($_GET['p'])) {
 		klaida($lang['system']['error'], " <br /><b>" . mysql_error() . "</b>");
 	}
 }
-if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete'] && LEVEL == 1 && isset($_POST['edit_new']) && $_POST['edit_new'] > 0)) || isset($url['t'])) {
+if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete']  && isset($_POST['edit_new']) && $_POST['edit_new'] > 0)) || isset($url['t'])) {
 	if (isset($url['t'])) {
 		$trinti = (int)$url['t'];
 	} elseif (isset($_POST['edit_new'])) {
