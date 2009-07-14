@@ -29,7 +29,7 @@ if (isset($url['c']) && !empty($url['c']) && strlen($url['c']) == 11) {
 		$up=mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `slaptas`='', pass=" . escape(koduoju($slaptas)) . " WHERE `nick`=" . escape($nick) . " LIMIT 1") or die(mysql_error());
 
 		if (!empty($up)) {
-			msg($lang['system']['done'], "{$lang['user']['hello']}<b>" . $nick . "</b>,<br/>{$lang['pass']['new']} <b>" . $slaptas . "</b><br/>");
+			msg($lang['system']['done'], "{$lang['user']['hello']} <b>" . $nick . "</b>,<br/>{$lang['pass']['new']} <b>" . $slaptas . "</b><br/>");
 		} else {
 			klaida($lang['system']['systemerror'], "{$lang['system']['contactadmin']}.");
 		}
