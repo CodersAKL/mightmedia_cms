@@ -16,11 +16,11 @@ if ($_SERVER['PHP_SELF'] == 'index.php') {
 include_once ("priedai/prisijungimas.php");
 if (!isset($_SESSION['username'])) {
 	admin_login_form();
-}
+}elseif(isset($_SESSION['username'])&&$_SESSION['level']==1){
 // Jei lanktytojas neprisijungęs arba, jei nėra administratorius
-elseif (!defined("LEVEL") || LEVEL > 1 || !defined("OK") || !isset($_SESSION['username'])) {
+/*elseif (!defined("LEVEL") || LEVEL > 1 || !defined("OK") || !isset($_SESSION['username'])) {
 	redirect("?home");
-}
+}*/
 
 if (isset($url['a']) && isnum($url['a']) && $url['a'] > 0) { $aid = (int)$url['a']; } else {	$aid = 0; }
 if (isset($url['id']) && isnum($url['id']) && $url['id'] > 0) { $id = (int)$url['id']; } else {	$id = 0; }
@@ -57,4 +57,5 @@ if (isset($url['a']) && file_exists(dirname(__file__) . "/" . $admin_pages[(int)
 	include_once (dirname(__file__) . "/pokalbiai.php");
 }
 unset($title, $text);
+}
 ?>
