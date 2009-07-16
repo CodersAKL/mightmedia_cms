@@ -5,9 +5,9 @@
 | Modificated by Paulius - mightmedia.lt
 | Plugin for MightMedia
  */
-$scip='srv.tr.lt';// serveris
-$scport='8020';//serverio portas
-$scpass='slaptazodis';//serverio slaptažodis
+$scip='local';// serveris
+$scport='000000';//serverio portas
+$scpass='pass';//serverio slaptažodis
 $klausytojai=true;//Rodyti klausytojus? true/false
 $kokybe=true;//Rodyti transliavimo kokybe? true/false
 $daina=true;//Rodyti dainos pavadinimą? true/false

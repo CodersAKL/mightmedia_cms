@@ -3,8 +3,8 @@
 1. Sukelkite bylas, esančias šiame pakete i bylą, kurioje laikote MightMedia turinio valdymo sistemą
 2. Atsidarykite failą 'priedai/dj_function.php' ir pakeiskite 8-14 eilutes:
 
-$scip='srv.tr.lt';// serveris
-$scport='8020';//serverio portas
+$scip='local';// serveris
+$scport='000000';//serverio portas
 $scpass='pass';//serverio slaptažodis
 $klausytojai=true;//Rodyti klausytojus? true/false
 $kokybe=true;//Rodyti transliavimo kokybe? true/false
