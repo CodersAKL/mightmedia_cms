@@ -21,16 +21,18 @@ if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['Q
 	$remoteaddress = $_SERVER["REMOTE_ADDR"];
 	ban($lang['system']['forhacking']);
 }
-include_once ('priedai/safe_html.php');
-if (isset($_POST)) {
+if (isset($_POST) && !empty($_POST)) {
+	include_once ('priedai/safe_html.php');
 	foreach ($_POST as $key => $value) {
-		$post[$key] = safe_html($value);
+		if (!is_array($value))
+			$post[$key] = safe_html($value);
+		else
+			$post[$key] = $value;
 	}
-}
-unset($_POST);
-if (isset($post)) {
+	unset($_POST);
 	$_POST = $post;
 }
+
 //print_r($post);
 
 //admin links
