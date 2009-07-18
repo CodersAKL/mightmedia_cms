@@ -16,10 +16,16 @@ header("Content-type: text/html; charset=utf-8");
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 'Off');
 
+
 if (!isset($_SESSION))
 	session_start();
 ob_start();
-include ("priedai/funkcijos.php");
+
+//slaptaþodþio kodavimas
+function koduoju($pass) {
+	return md5(sha1(md5($pass)));
+}
+
 // Sarašas failų kurių teisės turi suteikti svetainei įrašymo galimybę
 $chmod_files[0] = "priedai/conf.php";
 $chmod_files[] = "setup.php";
@@ -226,295 +232,287 @@ HTML;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="shortcut icon" href="favicon.ico" />
-<meta name="resource-type" content="document" />
-<meta name="distribution" content="global" />
-<meta name="author" content="CodeRS - MightMedia TVS scripts www.coders.lt" />
-<meta name="copyright" content="copyright (c) by CodeRS www.coders.lt" />
-<meta name="rating" content="general" />
-<meta name="generator" content="notepad" />
-<script src="javascript/jquery/jquery-1.3.1.min.js" type="text/javascript" ></script>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="shortcut icon" href="favicon.ico" />
+		<meta name="resource-type" content="document" />
+		<meta name="distribution" content="global" />
+		<meta name="author" content="CodeRS - MightMedia TVS scripts www.coders.lt" />
+		<meta name="copyright" content="copyright (c) by CodeRS www.coders.lt" />
+		<meta name="rating" content="general" />
+		<meta name="generator" content="notepad" />
+		<script src="javascript/jquery/jquery-1.3.1.min.js" type="text/javascript" ></script>
 
-<script src="javascript/jquery/tooltip.js" type="text/javascript" ></script>
-<title>MightMedia TVS įdiegimas</title>
-<link href="stiliai/default/default.css" rel="stylesheet" type="text/css" media="all" />
-</head>
-<body>
-<center>
-<table border="0" cellpadding="2" cellspacing="5" width="80%">
-<tbody>
-<tr>
-        <td width="25%" valign="top">
-                <div class="title" title="Įdiegimo stadijos. Viską atlikite su įpatingu atidumu.">Įdiegimo stadijos</div>
-                <div class="vidus">
-                <ul>
-<?php
+		<script src="javascript/jquery/tooltip.js" type="text/javascript" ></script>
+		<title>MightMedia TVS įdiegimas</title>
+		<link href="stiliai/default/default.css" rel="stylesheet" type="text/css" media="all" />
+	</head>
+	<body>
+		<center>
+			<table border="0" cellpadding="2" cellspacing="5" width="80%">
+				<tbody>
+					<tr>
+						<td width="25%" valign="top">
+							<div class="title" title="Įdiegimo stadijos. Viską atlikite su įpatingu atidumu.">Įdiegimo stadijos</div>
+							<div class="vidus">
+								<ul>
+									<?php
 
-$menu_pavad = array(1 => "Licensija", 2 => "Failų tikrinimas", 3 => "Duomenų bazės nustatymai", 4 => "Administratoriaus sukūrimas", 5 => "Pabaiga");
-foreach ($menu_pavad as $key => $value) {
-	if ($key <= $step)
-		echo "\t\t\t<li><img src=\"images/icons/tick_circle.png\" style=\"vertical-align: middle;\" /><font color=\"green\"><b>" . $value . "</b></font></li>";
-	else
-		echo "\t\t\t<li><img src=\"images/icons/cross_circle.png\" style=\"vertical-align: middle;\" /><b>" . $value . "</b></li>";
-}
+									$menu_pavad = array(1 => "Licensija", 2 => "Failų tikrinimas", 3 => "Duomenų bazės nustatymai", 4 => "Administratoriaus sukūrimas", 5 => "Pabaiga");
+									foreach ($menu_pavad as $key => $value) {
+										if ($key <= $step)
+											echo "\t\t\t<li><img src=\"images/icons/tick_circle.png\" style=\"vertical-align: middle;\" /><font color=\"green\"><b>" . $value . "</b></font></li>";
+										else
+											echo "\t\t\t<li><img src=\"images/icons/cross_circle.png\" style=\"vertical-align: middle;\" /><b>" . $value . "</b></li>";
+									}
 
-?>
-                </ul>
-                <hr />
-                Produktas: <a href="http://www.mightmedia.lt/" target="_blank">MightMedia TVS</a><br />
-        </td>
-        <td valign="top">
-        <div class="title">MightMedia TVS įdiegimas</div>
-        <div class="vidus">
-<?php
+									?>
+								</ul>
+								<hr />
+								Produktas: <a href="http://www.mightmedia.lt/" target="_blank">MightMedia TVS</a><br />
+						</td>
+						<td valign="top">
+							<div class="title">MightMedia TVS įdiegimas</div>
+							<div class="vidus">
+								<?php
 
-// HTML DALIS - Licensija
-if ($step == 1) {
+								// HTML DALIS - Licensija
+								if ($step == 1) {
 
-?>
-                <center>
-                <form name="setup">
-                <h2>Licensija</h2>
-                <textarea name="copy" rows=15 cols=100 wrap="on" readonly="readonly"><?php include ('Skaityk.txt'); ?></textarea><br />
-                <label><input name="agree_check" type="checkbox" value="ON" /> Su pateikta informacija sutinku ir jos laikysiuos.</label><br /><br />
-                <input name="agree" type="reset" value="Toliau >>" onClick="Check();" />
-                </form>
-                </center>
-<?php
+									?>
+								<center>
+									<form name="setup">
+										<h2>Licensija</h2>
+										<textarea name="copy" rows=15 cols=100 wrap="on" readonly="readonly"><?php include ('Skaityk.txt'); ?></textarea><br />
+										<label><input name="agree_check" type="checkbox" value="ON" /> Su pateikta informacija sutinku ir jos laikysiuos.</label><br /><br />
+										<input name="agree" type="reset" value="Toliau >>" onClick="Check();" />
+									</form>
+								</center>
+								<?php
 
-}
-//END
+								}
+								//END
 
 
-// HTML DALIS - Failų tikrinimas
-if ($step == 2) {
+								// HTML DALIS - Failų tikrinimas
+								if ($step == 2) {
 
-?>
-        <h2>Failų tikrinimas</h2>
+									?>
+								<h2>Failų tikrinimas</h2>
                         Žemiau surašyti failai kurie bus reikalingi įdiegiant šią sistemą. Jei sistema surado klaidų prašome jas ištaisyti ir spausti atnaujinti. Kitu atveju jums nebus leidžiama tęsti įdiegimo. <br /><br />
-        <h2>Legenda</h2>
+								<h2>Legenda</h2>
                         <img src="images/icons/tick.png" /> Jei prie failo nustatyta ši ikonėlė vadinasi failas yra tinkamai nustatytas.<br />
                         <img src="images/icons/cross.png" /> Jei rasite šią ikonėlę prie nurodyto failo tuomet reikia jį sutvarkyti.<br /><br />
                         <strong>Priminimas:</strong> Sutvarkyti failus, t.y. jums reikia atlikti <strong>chmod</strong>. Visur kur matote įkonėlę <img src="images/icons/cross.png" /> būtina nurodyti <strong>chmod      777</strong> FTP serveryje. <br /><br />
                         <table border="0">
-                        <tr>
-                                <td class="title" valign="top" width="10%">Failas</td>
-                                <td class="title" valign="top" width="5%">Būsena</td>
-                                <td class="title" valign="top" width="35%">Klaidos aprašymas</td>
-                        </tr>
-<?php
+									<tr>
+										<td class="title" valign="top" width="10%">Failas</td>
+										<td class="title" valign="top" width="5%">Būsena</td>
+										<td class="title" valign="top" width="35%">Klaidos aprašymas</td>
+									</tr>
+										<?php
 
-	$kartot = count($chmod_files) - 1;
-	for ($i = 0; $i <= $kartot; $i++) {
-		$teises = substr(sprintf('%o', fileperms($chmod_files[$i])), -4);
-		if ($teises != 777 && $teises != 666 && !is_writable($chmod_files[$i])) {
-			$file_error = 'Y';
-		}
-		echo "
+										$kartot = count($chmod_files) - 1;
+										for ($i = 0; $i <= $kartot; $i++) {
+											$teises = substr(sprintf('%o', fileperms($chmod_files[$i])), -4);
+											if ($teises != 777 && $teises != 666 && !is_writable($chmod_files[$i])) {
+												$file_error = 'Y';
+											}
+											echo "
                         <tr>
                                 <td>" . $chmod_files[$i] . "</td>
                                 <td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "<img src=\"images/icons/tick.png\" />" : "<img src=\"images/icons/cross.png\" />") . "</td>
                                 <td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "" : "Būtina nurodyti chmod 777 failui <strong>" . $chmod_files[$i] . "</strong> kadangi esamas chmod yra <strong>" . $teises . "</strong>") . "</td>
                         </tr>";
-	}
-	echo "\t\t\t</table>\n<br /><br />\n";
+										}
+										echo "\t\t\t</table>\n<br /><br />\n";
 
-	if (isset($file_error) && $file_error == 'Y')
-		echo '<center><input type="reset" value="Atnaujinti" onClick="JavaScript:location.reload(true);"> <input type="reset" value="Jeigu esate isitikines, kad viskas gerai" onClick="Go(\'3\');"><center>';
-	else
-		echo '<center><input type="reset" value="Toliau >>" onClick="Go(\'3\');"></center>';
+										if (isset($file_error) && $file_error == 'Y')
+											echo '<center><input type="reset" value="Atnaujinti" onClick="JavaScript:location.reload(true);"> <input type="reset" value="Jeigu esate isitikines, kad viskas gerai" onClick="Go(\'3\');"><center>';
+										else
+											echo '<center><input type="reset" value="Toliau >>" onClick="Go(\'3\');"></center>';
 
-}
-//END
-
-
-// HTML DALIS - MySQL duomenų bazės nustatymai
-if ($step == 3) {
-
-?>
-        <h2>MySQL Duomenų bazės nustatymai</h2>
-                Žemiau pateiktuose laukeliuose suveskite savo MySQL serverio prisijungimus. Prisijungimai yra reikalingi norint sukurti MightMedia TVS sistemos lenteles nurodytoje duomenų bazėje. <br /><br />
-                Suvedę visus reikiamus duomenis spauskite <strong>"Sukurti lenteles"</strong>. Jei prisijungimas sėkmingai pavyko tuomet išvysite papildomą mygtuką <b>"Toliau"</b>.<br /><br />
-                Atlikę visus veiksmus išvysite sekantį mygtuką pereiti į kitą Meniu punktą. Jei bent vienas iš žingsnių nepavyks jums bus draudžiama tęsti įdiegimą.
-                <form name="mysql" method="post">
-                <table border="0" width="100%">
-                <tr>
-                        <td class="title">MySQL prisijungimo duomenys</td>
-                </tr>
-                <tr>
-                        <td>
-                                <form name="mysql" action="?step=3" method="post">
-                                <table border="0" width="80%">
-                                <tr>
-                                        <td>Serverio adresas:</td>
-                                        <td><input name="host" type="text" value="<?php
-
-	echo (isset($_SESSION['mysql']['host']) ? $_SESSION['mysql']['host'] : 'localhost');
-
-?>"><br /></td>
-                                </tr>
-                                <tr>
-                                        <td>Prisijungimo vartotojas:</td>
-                                        <td><input name="user" type="text" value="<?php
-
-	echo (isset($_SESSION['mysql']['user']) ? $_SESSION['mysql']['user'] : 'root');
-
-?>"></td>
-                                </tr>
-                                        <td>Slaptažodis:</td>
-                                        <td><input name="pass" type="password" value="<?php
-
-	echo (isset($_SESSION['mysql']['pass']) ? $_SESSION['mysql']['pass'] : '');
-
-?>"></td>
-                                </tr>
-                                <tr>
-                                        <td>Duomenų bazė:</td>
-                                        <td><input name="db" type="text" value="<?php
-
-	echo (isset($_SESSION['mysql']['db']) ? $_SESSION['mysql']['db'] : 'mightmedia');
-
-?>"></td>
-                                </tr>
-                                <tr>
-                                        <td>Duomenų bazės lentelių pavadinimų priesaga:</td>
-                                        <td><input name="prefix" type="text" value="<?php
-
-	echo (isset($_SESSION['mysql']['prefix']) ? $_SESSION['mysql']['prefix'] : random());
-
-?>"></td>
-                                </tr>
-                                </table>                        
-                        </td>
-                </tr>
-                </table>
-                <br />
-                <center>
-                <p id="mysql_response"><?php
-
-	echo $next_mysql;
-
-?></p>
-                </center>
-                <?php
-
-	if (isset($mysql_info)) {
-
-?>
-                <br />
-                <table border="0" width="50%">
-                <tr>
-                        <td class="title">Informacija</td>
-                </tr>
-                <tr>
-                        <td><div id="info"><?php
-
-		echo $mysql_info;
-
-?></div></td>
-                </tr>
-                </table>
-                <?php
-
-	}
-
-?>
-                </form>
-<?php
-
-}
-//END
+									}
+									//END
 
 
-// HTML DALIS - TVS administratoriaus sukūrimas
-if ($step == 4) {
+									// HTML DALIS - MySQL duomenų bazės nustatymai
+									if ($step == 3) {
 
-?>
-                <h2>Administratoriaus sukūrimas</h2>
-                                Sukurkite pagrindinį administratorių kuris administruos MightMedia
-                                TVS.
-                                <br />
-                                <br />
-                                <br />
-                                <span style="color: red"><?php
+										?>
+									<h2>MySQL Duomenų bazės nustatymai</h2>
+									Žemiau pateiktuose laukeliuose suveskite savo MySQL serverio prisijungimus. Prisijungimai yra reikalingi norint sukurti MightMedia TVS sistemos lenteles nurodytoje duomenų bazėje. <br /><br />
+									Suvedę visus reikiamus duomenis spauskite <strong>"Sukurti lenteles"</strong>. Jei prisijungimas sėkmingai pavyko tuomet išvysite papildomą mygtuką <b>"Toliau"</b>.<br /><br />
+									Atlikę visus veiksmus išvysite sekantį mygtuką pereiti į kitą Meniu punktą. Jei bent vienas iš žingsnių nepavyks jums bus draudžiama tęsti įdiegimą.
+									<form name="mysql" method="post">
+										<table border="0" width="100%">
+											<tr>
+												<td class="title">MySQL prisijungimo duomenys</td>
+											</tr>
+											<tr>
+												<td>
+													<form name="mysql" action="?step=3" method="post">
+														<table border="0" width="80%">
+															<tr>
+																<td>Serverio adresas:</td>
+																<td><input name="host" type="text" value="<?php echo (isset($_SESSION['mysql']['host']) ? $_SESSION['mysql']['host'] : 'localhost'); ?>" /><br /></td>
+															</tr>
+															<tr>
+																<td>Prisijungimo vartotojas:</td>
+																<td><input name="user" type="text" value="<?php echo (isset($_SESSION['mysql']['user']) ? $_SESSION['mysql']['user'] : 'root'); ?>" /></td>
+															</tr>
+															<td>Slaptažodis:</td>
+															<td><input name="pass" type="password" value="<?php
 
-	echo (isset($admin_info) ? $admin_info : '');
+																	echo (isset($_SESSION['mysql']['pass']) ? $_SESSION['mysql']['pass'] : '');
 
-?></span>
-                                <br />
-                                <form name="admin_form" method="post">
-                                <table border="0" width="70%">
-                                        <tr>
-                                                <td width="50%">Slapyvardis:</td>
-                                                <td><input name="user" type="text" value="<?php
+																			  ?>"></td>
+															</tr>
+															<tr>
+																<td>Duomenų bazė:</td>
+																<td><input name="db" type="text" value="<?php
 
-	echo (isset($user) ? $user : '');
+																		echo (isset($_SESSION['mysql']['db']) ? $_SESSION['mysql']['db'] : 'mightmedia');
 
-?>"></td>
-                                        </tr>
-                                        <tr>
-                                                <td>Slaptažodis:</td>
-                                                <td><input name="pass" type="password" value=""></td>
-                                        </tr>
-                                        <tr>
-                                                <td>Pakartokite slaptažodį:</td>
-                                                <td><input name="pass2" type="password" value=""></td>
-                                        </tr>
-                                        <tr>
-                                                <td>El. Paštas:</td>
-                                                <td><input name="email" type="text" value="<?php
+																				  ?>"></td>
+															</tr>
+															<tr>
+																<td>Duomenų bazės lentelių pavadinimų priesaga:</td>
+																<td><input name="prefix" type="text" value="<?php
 
-	echo (isset($email) ? $email : '');
+																		echo (isset($_SESSION['mysql']['prefix']) ? $_SESSION['mysql']['prefix'] : random());
 
-?>"></td>
-                                        </tr>
-                                </table>
-                                <br />
-                                <center><input name="acc_create" type="submit" value="Tęsti >>"></center>
-                                </form>
-<?php
+																				  ?>"></td>
+															</tr>
+														</table>
+												</td>
+											</tr>
+										</table>
+										<br />
+										<center>
+											<p id="mysql_response"><?php
 
-}
-//END
+													echo $next_mysql;
+
+													?></p>
+										</center>
+											<?php
+
+											if (isset($mysql_info)) {
+
+												?>
+										<br />
+										<table border="0" width="50%">
+											<tr>
+												<td class="title">Informacija</td>
+											</tr>
+											<tr>
+												<td><div id="info"><?php
+
+																echo $mysql_info;
+
+																?></div></td>
+											</tr>
+										</table>
+											<?php
+
+											}
+
+											?>
+									</form>
+									<?php
+
+									}
+									//END
 
 
-// HTML DALIS - Pabaiga
-if ($step == 5) {
+									// HTML DALIS - TVS administratoriaus sukūrimas
+									if ($step == 4) {
 
-?>
-                <h2>Pabaiga</h2>
-                                Sveikiname įdiegus MightMedia TVS (Turinio Valdymo Sistemą).<br />
-                                Spauskite "Pabaigti" galutinai užbaigti instaliaciją. Bus ištrintas <b>setup.php</b> failas. Dėl visa ko - patikrinkite prisijungę prie FTP serverio.<br /><br />
-                                <form name="finish_install" method="post">
-                                <center><input name="finish" type="submit" value="Pabaigti" /></center>
-                                </form>
-<?php
+										?>
+									<h2>Administratoriaus sukūrimas</h2>
+									Sukurkite pagrindinį administratorių kuris administruos MightMedia
+									TVS.
+									<br />
+									<br />
+									<br />
+									<span style="color: red"><?php
 
-}
-//END
+											echo (isset($admin_info) ? $admin_info : '');
+
+											?></span>
+									<br />
+									<form name="admin_form" method="post">
+										<table border="0" width="70%">
+											<tr>
+												<td width="50%">Slapyvardis:</td>
+												<td><input name="user" type="text" value="<?php
+
+														echo (isset($user) ? $user : '');
+
+																  ?>"></td>
+											</tr>
+											<tr>
+												<td>Slaptažodis:</td>
+												<td><input name="pass" type="password" value=""></td>
+											</tr>
+											<tr>
+												<td>Pakartokite slaptažodį:</td>
+												<td><input name="pass2" type="password" value=""></td>
+											</tr>
+											<tr>
+												<td>El. Paštas:</td>
+												<td><input name="email" type="text" value="<?php
+
+														echo (isset($email) ? $email : '');
+
+																  ?>"></td>
+											</tr>
+										</table>
+										<br />
+										<center><input name="acc_create" type="submit" value="Tęsti >>"></center>
+									</form>
+									<?php
+
+									}
+									//END
 
 
-?>
-                </div>
-        </td>
-</tr>
-</tbody>
-</table>
-</center>
-<script type="text/javascript">
-function Check() {
-        if (document.setup.agree_check.checked == true) {
-                Go(2);
-        } else {
-                alert('Prašome sutikti su licensija');
-        }
-}
-function Go(id) {
-        document.location.href = "setup.php?step="+id;
-}
+									// HTML DALIS - Pabaiga
+									if ($step == 5) {
 
-</script>
-</body>
+										?>
+									<h2>Pabaiga</h2>
+									Sveikiname įdiegus MightMedia TVS (Turinio Valdymo Sistemą).<br />
+									Spauskite "Pabaigti" galutinai užbaigti instaliaciją. Bus ištrintas <b>setup.php</b> failas. Dėl visa ko - patikrinkite prisijungę prie FTP serverio.<br /><br />
+									<form name="finish_install" method="post">
+										<center><input name="finish" type="submit" value="Pabaigti" /></center>
+									</form>
+									<?php
+
+									}
+									//END
+
+
+									?>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</center>
+		<script type="text/javascript">
+			function Check() {
+				if (document.setup.agree_check.checked == true) {
+					Go(2);
+				} else {
+					alert('Prašome sutikti su licensija');
+				}
+			}
+			function Go(id) {
+				document.location.href = "setup.php?step="+id;
+			}
+
+		</script>
+	</body>
 </html>
