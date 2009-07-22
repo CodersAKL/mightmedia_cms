@@ -39,7 +39,7 @@ if (isset($_POST) && !empty($_POST)) {
 //if(isset($_SESSION['level']) && $_SESSION['level']==1) {
 $glob = glob('puslapiai/dievai/*.php');
 foreach ($glob as $id => $file) {
-	$file = basename($file, '.php');
+	$file = basename(ROOTAS.$file, '.php');
 	$admin_pages[$id] = $file;
 	$admin_pagesid[$file] = $id;
 
