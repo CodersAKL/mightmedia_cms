@@ -179,8 +179,6 @@ if (!empty($_POST['finish'])) {
 <?php
 if (basename(\$_SERVER['PHP_SELF']) == 'conf.php') { die("Tiesioginis kreipimąsis į failą draudžiamas"); }
 define('SETUP',true);
-define('ROOTAS',dirname(realpath(__file__).'../'));
-date_default_timezone_set('Europe/Vilnius');
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 'Off');	//Klaidu pranesimai On/Off
 \$host = "{$_SESSION['mysql']['host']}";	//mysql sererio adresas

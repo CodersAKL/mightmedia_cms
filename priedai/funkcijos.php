@@ -14,7 +14,7 @@ if (basename($_SERVER['PHP_SELF']) == 'funkcijos.php') {
 	ban($lang['system']['forhacking']);
 }
 define("OK", true);
-
+define('ROOTAS',dirname(realpath(__file__)).'/../'); 
 if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['QUERY_STRING'])) {
 	$ip = getip();
 	$forwarded = (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : 'N/A');
@@ -22,7 +22,7 @@ if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['Q
 	ban($lang['system']['forhacking']);
 }
 if (isset($_POST) && !empty($_POST)) {
-	include_once ('priedai/safe_html.php');
+	include_once (ROOTAS.'priedai/safe_html.php');
 	foreach ($_POST as $key => $value) {
 		if (!is_array($value))
 			$post[$key] = safe_html($value);
