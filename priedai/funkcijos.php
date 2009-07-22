@@ -252,7 +252,7 @@ $sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kien
 
 if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
-		$sql2 = mysql_query1("SELECT `pavadinimas` FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE path!=0 and `path` like'" . $row['id'] . "%' ORDER BY `id` ASC");
+		$sql2 = mysql_query1("SELECT `pavadinimas` FROM  `" . LENTELES_PRIESAGA . "grupes`  WHERE  `kieno` = 'vartotojai' AND path!=0 and `path` like'" . $row['id'] . "%' ORDER BY `id` ASC");
 		if (sizeof($sql2) > 0) {
 			$subcat = '';
 			foreach ($sql2 as $path) {
