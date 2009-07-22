@@ -59,7 +59,7 @@ function cfunc() {
 }
 function copyright($tekstas) {
 	global $mysql_num;
-	echo "<div class=\"comment\">$tekstas " . (defined('LEVEL') && LEVEL == 1 ? 'MySQL: ' . $mysql_num : '') . "</div>";
+	echo $tekstas.' '. (defined('LEVEL') && LEVEL == 1 ? 'MySQL: ' . $mysql_num : '');
 }
 function th_meniu($array, $start = '', $end = '') {
 	$return = $start . "\n";
@@ -84,9 +84,9 @@ function bbk($forma) {
 <button onclick=\"addText('$forma', '[big]', '[/big]'); return false;\" title=\"BIG\"><img src=\"images/icons/text_heading_1.png\"></button>
 <button onclick=\"addText('$forma', '[sm]', '[/sm]'); return false;\" title=\"SM\"><img src=\"images/icons/text_heading_6.png\"></button>
 <button onclick=\"addText('$forma', '[img]', '[/img]'); return false;\" title=\"IMG\"><img src=\"images/icons/picture.png\"></button>
-<button onclick=\"addText('$forma', '[quote]', '[/quote]'); return false;\" title=\"QUOTE\"><img src=\"images/icons/comment.png\"></button> | 
+<button onclick=\"addText('$forma', '[quote]', '[/quote]'); return false;\" title=\"QUOTE\"><img src=\"images/icons/comment.png\"></button> 
 ";
-	if (LEVEL == 30) {
+	if ($_SESSION['level'] == 1) {
 		$return .= "
 <button onclick=\"addText('$forma', '[hide=Tik registruotiems]', '[/hide]'); return false;\" title=\"HIDE\"><img src=\"images/icons/shield.png\"></button>
 ";
@@ -106,14 +106,13 @@ function bbs($forma) {
 		B-)
 		:-|
 		:P
-		>)
 		o_0
 		", $forma) . "<br/>";
 }
 
 //SYPSENOS
 function smile($data, $bb = false) {
-	$smilies = array(':)' => 'smile.gif', ':]' => 'razz.gif', ':-)' => 'smile.gif', ';-)' => 'wink.gif', ';)' => 'wink.gif', ':-]' => 'biggrin.gif', ':-D' => '003.gif', ':D' => '003.gif', ':o' => 'shock.gif', ':-o' => '103.gif', ':O' => 'confuse.gif', ':(' => 'cry.gif', 'B-)' => 'cool.gif', 'B)' => 'cool.gif', '%-)' => 'cool.gif', ':-|' => 'neutral.gif', ':|' => 'neutral.gif', ':P' => '118.gif', ':p' => '118.gif', '>)' => 'badgrin.gif', '0_o' => '119.gif', 'o_0' => '119.gif', );
+	$smilies = array(':)' => 'smile.gif', ':]' => 'razz.gif', ':-)' => 'smile.gif', ';-)' => 'wink.gif', ';)' => 'wink.gif', ':-]' => 'biggrin.gif', ':-D' => '003.gif', ':D' => '003.gif', ':o' => 'shock.gif', ':-o' => '103.gif', ':O' => 'confuse.gif', ':(' => 'cry.gif', 'B-)' => 'cool.gif', 'B)' => 'cool.gif', '%-)' => 'cool.gif', ':-|' => 'neutral.gif', ':|' => 'neutral.gif', ':P' => '118.gif', ':p' => '118.gif', '0_o' => '119.gif', 'o_0' => '119.gif', );
 	foreach ($smilies as $smile => $image) {
 		//$data = str_replace($smile,"<img src='images/smiles/$image' alt='".$smile."' class='middle' ".(($bb)?"onclick=\"addText('".$bb."','".$smile."',' ');\" style='cursor: pointer;'":"")." />",$data);
 		$data = str_replace($smile, "<img src='images/smiles/$image' alt='" . $smile . "' class='middle' onclick=\"addText('" . $bb . "','" . $smile . "',' ');\" style='cursor: pointer;' />", $data);
