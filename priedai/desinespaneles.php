@@ -21,7 +21,7 @@ foreach ($sql_p as $row_p) {
 		if ($row_p['show'] == 'Y' && isset($text) && !empty($text) && isset($_SESSION['level']) && teises($row_p['teises'], $_SESSION['level'])) {
 			lentele_r($title, $text);
 			unset($title, $text);
-		} elseif (isset($text) && !empty($text) && $row_p['show'] == 'N' && isset($_SESSION['level']) && ($_SESSION['level'] == $row_p['teises'] || $_SESSION['level'] == 1 || $row_p['teises'] == 0)) {
+		} elseif (isset($text) && !empty($text) && $row_p['show'] == 'N' && isset($_SESSION['level']) && teises($row_p['teises'], $_SESSION['level'])) {
 			echo $text;
 			unset($text, $title);
 		} else {
