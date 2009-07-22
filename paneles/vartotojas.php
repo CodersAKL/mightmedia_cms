@@ -24,11 +24,11 @@ if (!defined("LEVEL") || !isset($_SESSION['username']) || empty($_SESSION['usern
 		</form>
 	</center>
 HTML;
-	if ($conf['Registracija'] == 1) {
+	//if ($conf['Registracija'] == 1) {
 		if (isset($conf['puslapiai']['reg.php']['id'])) {
 			$text .= "<a href=\"?id," . $conf['puslapiai']['reg.php']['id'] . "\">{$lang['user']['registration']}</a> ";
 		}
-	}
+	//}
 	if (isset($conf['puslapiai']['slaptazodzio_priminimas.php']['id'])) {
 		$text .= "<a href=\"?id," . $conf['puslapiai']['slaptazodzio_priminimas.php']['id'] . "\">{$lang['user']['pass_forget']}</a>";
 		$title = $lang['user']['for_members'];

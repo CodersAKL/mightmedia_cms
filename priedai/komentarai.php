@@ -14,6 +14,7 @@ if (!defined("OK")) {
 }
 function komentarai($id, $hide = false) {
 	global $url, $page, $lang, $conf;
+	if(isset($conf['kmomentarai_sveciams'])&&$conf['kmomentarai_sveciams'] != 3){
 	if (isset($url['id']) && isnum($url['id']) && $url['id'] > 0 && isnum($id) && $id > 0) {
 		if (isset($_SESSION['id']) || (isset($conf['kmomentarai_sveciams'])&&$conf['kmomentarai_sveciams'] == 1)) {
 			/*$text = "
@@ -60,7 +61,7 @@ function komentarai($id, $hide = false) {
 			lentele($lang['comments']['comments'], $text);
 		}
 	}
-}
+
 
 //Irasom nauja komentara jei nurodytas puslapis, gal perdidele salyga bet saugumo sumetimais :)
 if (isset($_POST['n_kom']) && !empty($_POST['n_kom']) && !empty($_POST['Naujas']) && $_POST['Naujas'] == $lang['comments']['send'] && isset($_POST['id']) && !empty($_POST['id']) && isnum($_POST['id']) && (isset($_SESSION['id']) || $conf['kmomentarai_sveciams'] == 1)) {
@@ -92,5 +93,6 @@ if (isset($url['dk']) && isnum($url['dk']) && $url['dk'] > 0 && isset($url['id']
 	unset($id);
 	header("location: " . $_SERVER['HTTP_REFERER'] . "");
 }
-
+}
+}
 ?>

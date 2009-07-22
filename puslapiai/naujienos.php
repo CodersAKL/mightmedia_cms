@@ -48,7 +48,7 @@ if ($kid == 0) {
 	if (sizeof($sql) > 0) {
 		foreach ($sql as $row) {
 			if (isset($conf['puslapiai']['naujienos.php']['id'])) {
-				$extra = "<div style='float: right;'>" . (($row['kom'] == 'taip') ? "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>{$lang['news']['read']} • {$lang['news']['comments']} (" . $row['viso'] . ")</a>" : "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>{$lang['news']['read']}</a>") . "</div><br />";
+				$extra = "<div style='float: right;'>" . (($row['kom'] == 'taip'&&isset($conf['kmomentarai_sveciams'])&&$conf['kmomentarai_sveciams'] != 3) ? "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>{$lang['news']['read']} • {$lang['news']['comments']} (" . $row['viso'] . ")</a>" : "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>{$lang['news']['read']}</a>") . "</div><br />";
 			}
 
 			$kategorijos_pav = mysql_query1("SELECT `pav`,`id`,`teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape($row['kategorija']) . " limit 1");

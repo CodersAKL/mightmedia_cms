@@ -201,6 +201,7 @@ $lang['faq']['edit'] = 'Redaguti';
 $lang['faq']['delete'] = 'Trinti';
 $lang['faq']['submit'] = 'Siųsti';
 $lang['faq']['new'] = 'Pridėti klausimą';
+$lang['admin']['comments_off']='Išjungti komentarus';
 $lang['admin']['adm_comments'] = 'Komentarų administravimas';
 $lang['admin']['del_comments'] = 'Trinti komentarus';
 $lang['admin']['comments_kid'] = 'id';
