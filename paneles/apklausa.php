@@ -56,14 +56,14 @@ if (isset($sql['klausimas'])) {
 			}
 		}
 
-		$rezultatai = '<blockquote><div align="left"><center><b>' . (isset($sql['klausimas']) ? $sql['klausimas'] : "N/A") . '</b></center>' . $atsa[1] . $atsa[2] . $atsa[3] . $atsa[4] . $atsa[5] . '</div>';
+		$rezultatai = '<div align="left"><center><b>' . (isset($sql['klausimas']) ? $sql['klausimas'] : "N/A") . '</b></center>' . $atsa[1] . $atsa[2] . $atsa[3] . $atsa[4] . $atsa[5] . '</div>';
 	} else {
 		$rezultatai = "";
 	}
 
 
 	if (!in_array($_SERVER['REMOTE_ADDR'], $ipasai) && !in_array($narys, $nariai)) {
-		$text = '<blockquote><center><b>' . $sql['klausimas'] . '</b></center><br/>
+		$text = '<center><b>' . $sql['klausimas'] . '</b></center><br/>
 			<form name="vote" action="" method="post">';
 		for ($i = 1; $i <= 5; $i++) {
 			if (!empty($ats[$i][0])) {
@@ -110,14 +110,14 @@ if (isset($sql['klausimas'])) {
 		$text = $rezultatai;
 	}
 
-	$text .= '<br/> ' . $lang['poll']['votes'] . ': ' . $viso . '';
-	$text .= '<br>	' . $lang['poll']['author'] . ': ' . user($sql['nick'], $sql['autorius']) . '';
-	$text .= '</blockquote>';
+	$text .= '<br /> ' . $lang['poll']['votes'] . ': ' . $viso . '';
+	$text .= '<br />	' . $lang['poll']['author'] . ': ' . user($sql['nick'], $sql['autorius']) . '';
+	$text .= '';
 } else {
-	$text = '<blockquote><b>' . $lang['poll']['no'] . '.</b><br/>';
+	$text = '<b>' . $lang['poll']['no'] . '.</b><br />';
 }
 if (isset($conf['puslapiai']['blsavimo_archyvas.php'])) {
-	$text .= '<a href=?id,' . $conf['puslapiai']['blsavimo_archyvas.php']['id'] . '>' . $lang['poll']['archive'] . '</a></blockquote>';
+	$text .= '<a href=?id,' . $conf['puslapiai']['blsavimo_archyvas.php']['id'] . '>' . $lang['poll']['archive'] . '</a>';
 }
 unset($rezultatai, $atsakymas, $ipsai, $nariai, $narys, $atsakymas, $ats, $atsa, $sql);
 
