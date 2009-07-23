@@ -353,7 +353,6 @@ INSERT INTO `nustatymai` (`key`, `val`) VALUES
 ('Pavadinimas', 'MightMedia TVS'),
 ('Apie', '<br />'),
 ('Keywords', ''),
-('Render', '1'),
 ('Copyright', '<a href="http://www.mightmedia.lt" target="_blank">MightMedia TVS</a>'),
 ('Palaikymas', '0'),
 ('Maintenance', 'Remontuojame<br />'),

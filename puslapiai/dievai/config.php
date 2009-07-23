@@ -19,10 +19,10 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
 	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape($_POST['Apie']) . " WHERE `key` = 'Apie' LIMIT 1 ; ";
 	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape(input(strip_tags($_POST['Keywords']))) . " WHERE `key` = 'Keywords' LIMIT 1 ; ";
 	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape(input(strip_tags($_POST['Pavadinimas']))) . " WHERE `key` = 'Pavadinimas' LIMIT 1 ; ";
-	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape((int)$_POST['Render']) . " WHERE `key` = 'Render' LIMIT 1 ; ";
+//	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape((int)$_POST['Render']) . " WHERE `key` = 'Render' LIMIT 1 ; ";
 	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape($_POST['Copyright']) . " WHERE `key` = 'Copyright' LIMIT 1 ; ";
 	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape($_POST['Pastas']) . " WHERE `key` = 'Pastas' LIMIT 1 ;";
-	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape((int)$_POST['Registracija']) . " WHERE `key` = 'Registracija' LIMIT 1 ; ";
+	//$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape((int)$_POST['Registracija']) . " WHERE `key` = 'Registracija' LIMIT 1 ; ";
 	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape((int)$_POST['Palaikymas']) . " WHERE `key` = 'Palaikymas' LIMIT 1 ; ";
 	//$q[] = "UPDATE `".LENTELES_PRIESAGA."nustatymai` SET `val` = ".escape((int)$_POST['Chat_limit'])." WHERE `key` = 'Chat_limit' LIMIT 1 ; ";
 	$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape((int)$_POST['News_limit']) . " WHERE `key` = 'News_limit' LIMIT 1 ; ";
@@ -57,7 +57,7 @@ $nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype
 	//"{$lang['admin']['about']}:" => array("type" => "string", "value" => editorius('spaw', 'mini', 'Apie', (isset($conf['Apie']) ? $conf['Apie'] : '')), 
 	"{$lang['admin']['about']}:" => array("type" => "textarea", "name" => "Apie", "value" => (isset($conf['Apie']) ? $conf['Apie'] : ''), "extra" => "rows=5", "class" => "input"), 
 	"{$lang['admin']['keywords']}:" => array("type" => "text", "value" => input($conf['Keywords']), "name" => "Keywords", "rows" => "3", "class" => "input"), 
-	"{$lang['admin']['generation']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}",	"{$lang['admin']['no']}" => "Ne"), "selected" => input($conf['Render']), "name" => "Render", "class" => "select"), 
+	//"{$lang['admin']['generation']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}",	"{$lang['admin']['no']}" => "Ne"), "selected" => input($conf['Render']), "name" => "Render", "class" => "select"), 
 	"{$lang['admin']['copyright']}:" => array("type" => "text", "value" => input($conf['Copyright']), "name" => "Copyright", "class" => "input"), 
 	"{$lang['admin']['email']}:" => array("type" => "text", "value" => input($conf['Pastas']), "name" => "Pastas", "class" => "input"), 
 	//"{$lang['admin']['allow registration']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['Registracija']), "name" => "Registracija", "class" => "select"), 

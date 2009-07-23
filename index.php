@@ -85,6 +85,10 @@ if (is_file('setup.php') && defined('LEVEL') && LEVEL == 1 && !@unlink('setup.ph
 }
 include_once ('stiliai/' . $conf['Stilius'] . '/index.php');
 mysql_close($prisijungimas_prie_mysql);
+$m2 = explode(" ", microtime());
+$etime = $m2[1] + $m2[0];
+$ttime = ($etime - $stime);
+$ttime = number_format($ttime, 7);
+echo '<!-- Generated '.apvalinti($ttime,2 ).'s. -->';
 ob_end_flush();
-
 ?>
