@@ -283,7 +283,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
   </tr>
   <tr class="tr2">
     <td class="td2" ><a href="javascript:window.scroll(0,0)"><font size="1">▲</font></a></td>
-    <td class="td2">' . $extra . '<small align="right">' . $tool . ' <a href="' . url("q," . $row['zid'] . "") . '"><img src="images/forum/atsakyti.gif" border="0" alt="re"></a></small></td>
+    <td class="td2">' . $extra . '<small align="right">' . $tool . ' '.($_SESSION['level']>0?'<a href="' . url("q," . $row['zid'] . "") . '"><img src="images/forum/atsakyti.gif" border="0" alt="re"></a>':'').'</small></td>
   </tr>
 </table> </fieldset>';
 
@@ -303,7 +303,8 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 				} else {
 					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]Redagavo: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . " AND `nick`=" . escape($_SESSION['id']) . "");
 				}
-				redirect("?id," . $url['id'] . ";s,$sid;t,$tid;p,$p");
+				//redirect("?id," . $url['id'] . ";s,$sid;t,$tid;p,$p");
+				redirect($_SERVER['HTTP_REFERAL']);
 			} else {
 				if ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1) {
 					$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($eid) . "  LIMIT 1";
