@@ -14,15 +14,15 @@ if (basename($_SERVER['PHP_SELF']) == 'funkcijos.php') {
 	ban($lang['system']['forhacking']);
 }
 define("OK", true);
-define('ROOTAS',dirname(realpath(__file__)).'/../'); 
+define('ROOTAS', dirname(realpath(__file__)) . '/../');
 if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['QUERY_STRING'])) {
 	$ip = getip();
 	$forwarded = (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : 'N/A');
 	$remoteaddress = $_SERVER["REMOTE_ADDR"];
-	ban($lang['system']['forhacking']);
+	ban();
 }
 if (isset($_POST) && !empty($_POST)) {
-	include_once (ROOTAS.'priedai/safe_html.php');
+	include_once (ROOTAS . 'priedai/safe_html.php');
 	foreach ($_POST as $key => $value) {
 		if (!is_array($value))
 			$post[$key] = safe_html($value);
@@ -39,7 +39,7 @@ if (isset($_POST) && !empty($_POST)) {
 //if(isset($_SESSION['level']) && $_SESSION['level']==1) {
 $glob = glob('puslapiai/dievai/*.php');
 foreach ($glob as $id => $file) {
-	$file = basename(ROOTAS.$file, '.php');
+	$file = basename(ROOTAS . $file, '.php');
 	$admin_pages[$id] = $file;
 	$admin_pagesid[$file] = $id;
 
@@ -176,12 +176,22 @@ function teises($mas, $lvl) {
  *
  * @param string $kodel
  */
-function ban($kodel = 'XSS') {
-	global $lang;
-
-	global $_SERVER, $ip, $forwarded, $remoteaddress;
+function ban($ipas = '', $kodel = '') {
+	global $lang, $_SERVER, $ip, $forwarded, $remoteaddress;
+	if (!isset($kodel) || empty($kodel))
+		$kodel = $lang['system']['forhacking'];
+	if (!isset($ipas) || empty($ipas))
+		$ipas = getip();
+	$lines = file('.htaccess');
+	foreach ($lines as $key => $value) {
+		//echo "$key+1=>$value<br />";
+		if ($value == 'Allow from all')
+			$trinti = $key + 1;
+	}
+	//echo $trinti;
+	delLineFromFile('.htaccess', $trinti);
 	$atidaryti = fopen(".htaccess", "a");
-	fwrite($atidaryti, "# {$lang['system']['forhacking']} \ndeny from " . getip() . "\n");
+	fwrite($atidaryti, "# {$kodel} \ndeny from " . $ipas . "\nAllow from all");
 	fclose($atidaryti);
 	//@chmod(".htaccess", 0777);
 
@@ -198,10 +208,58 @@ function ban($kodel = 'XSS') {
 	IP:{$ip} - Forwarded = {$forwarded} - Remoteaddress = {$remoteaddress}
 HTML;
 
-
-	die("<center><h1>{$lang['system']['nohacking']}!</h1><font color='red'><b>" . $kodel . " - {$lang['system']['forbidden']}<blink>!</blink></b></font><hr/></center>");
+	if ($kodel == $lang['system']['forhacking']) {
+		die("<center><h1>{$lang['system']['nohacking']}!</h1><font color='red'><b>" . $kodel . " - {$lang['system']['forbidden']}<blink>!</blink></b></font><hr/></center>");
+	}
 }
+function delLineFromFile($fileName, $lineNum) {
+	global $lang;
+	// check the file exists
+	if (!is_writable($fileName)) {
+		// print an error
+		klaida($lang['system']['error'], $lang['system']['error']);
+		// exit the function
+		exit;
+	} else {
+		// read the file into an array
+		$arr = file($fileName);
+	}
 
+	// the line to delete is the line number minus 1, because arrays begin at zero
+	$lineToDelete = $lineNum - 1;
+
+	// check if the line to delete is greater than the length of the file
+	if ($lineToDelete > sizeof($arr)) {
+		// print an error
+		klaida($lang['system']['error'], "{$lang['system']['error']} <b>[$lineNum]</b>.");
+		// exit the function
+		exit;
+	}
+
+	//remove the line
+	unset($arr["$lineToDelete"]);
+
+	// open the file for reading
+	if (!$fp = fopen($fileName, 'w+')) {
+		// print an error
+		klaida($lang['system']['error'], "{$lang['system']['error']} ($fileName)");
+		// exit the function
+		exit;
+	}
+
+	// if $fp is valid
+	if ($fp) {
+		// write the array to the file
+		foreach ($arr as $line) {
+			fwrite($fp, $line);
+		}
+
+		// close the file
+		fclose($fp);
+	}
+
+	//msg($lang['system']['done'],"IP {$lang['admin']['unbaned']}.");
+}
 /// ASPAUGA - NETRINK - Pagal php-fusion
 
 /*foreach ($_GET as $check_url) {
@@ -669,8 +727,7 @@ function redirect($location, $type = "header") {
 	if ($type == "header") {
 		header("Location: " . $location);
 		exit;
-	}
-	if ($type == "meta") {
+	} elseif ($type == "meta") {
 		echo "<meta http-equiv='Refresh' content='1;url=$location'>";
 	} else {
 		echo "<script type='text/javascript'>document.location.href='" . $location . "'</script>\n";
