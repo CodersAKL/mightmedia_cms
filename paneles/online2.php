@@ -21,11 +21,11 @@ $sqli = mysql_query1("SELECT count(id) as svec,
 
 foreach ($sqli as $sql) {
 	$text = '
-<strong>' . $lang['online']['users'] . ':</strong><br>
-' . $lang['online']['usrs'] . ': ' . (int)$sql['users'] . '<br>
-' . $lang['online']['guests'] . ': ' . (int)$sql['svec'] . '<br>
-<strong>' . $lang['online']['info'] . ':</strong><br>
-' . $lang['online']['registeredmembers'] . ': ' . (int)$sql['useriai'] . '<br>
+<b>' . $lang['online']['users'] . ':</b><br />
+' . $lang['online']['usrs'] . ': ' . (int)$sql['users'] . '<br />
+' . $lang['online']['guests'] . ': ' . (int)$sql['svec'] . '<br />
+<b>' . $lang['online']['info'] . ':</b><br />
+' . $lang['online']['registeredmembers'] . ': ' . (int)$sql['useriai'] . '<br />
 ' . $lang['online']['lastregistered'] . ': <br />' . user($sql['useris'], $sql['userid'], $sql['lvl']) . '
  ';
 	//unset($sql);

@@ -48,22 +48,22 @@ if ($kid == 0) {
 	if (sizeof($sql) > 0) {
 		foreach ($sql as $row) {
 			if (isset($conf['puslapiai']['naujienos.php']['id'])) {
-				$extra = "<div style='float: right;'>" . (($row['kom'] == 'taip'&&isset($conf['kmomentarai_sveciams'])&&$conf['kmomentarai_sveciams'] != 3) ? "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>{$lang['news']['read']} • {$lang['news']['comments']} (" . $row['viso'] . ")</a>" : "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>{$lang['news']['read']}</a>") . "</div><br />";
+				$extra = "<span class='read_more' style='float: right;display:block;'>" . (($row['kom'] == 'taip'&&isset($conf['kmomentarai_sveciams'])&&$conf['kmomentarai_sveciams'] != 3) ? "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>{$lang['news']['read']} • {$lang['news']['comments']} (" . $row['viso'] . ")</a>" : "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>{$lang['news']['read']}</a>") . "</span><br />";
 			}
 
 			$kategorijos_pav = mysql_query1("SELECT `pav`,`id`,`teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape($row['kategorija']) . " limit 1");
-			$pav = "<table><tr valign='top'>";
+			$pav = "";
 			if (isset($kategorijos_pav['pav'])) {
 				if (isset($conf['puslapiai']['naujkat.php']['id'])) {
-					$pav .= "<td style='padding-right:10px'><div class='avataras' style='margin-right:25px'><a href='?id," . $conf['puslapiai']['naujkat.php']['id'] . ";k," . (int)$kategorijos_pav['id'] . "'><img src='images/naujienu_kat/" . input($kategorijos_pav['pav']) . "' alt='img' border='0' /></a></div></td>";
+					$pav .= "<div style='float:left;margin-right:25px' class='avataras'><a href='?id," . $conf['puslapiai']['naujkat.php']['id'] . ";k," . (int)$kategorijos_pav['id'] . "'><img src='images/naujienu_kat/" . input($kategorijos_pav['pav']) . "' alt='img' border='0' /></a></div>";
 				} else {
-					$pav .= "<td style='padding-right:10px'><div class='avataras' style='margin-right:25px'><img src='images/naujienu_kat/" . input($kategorijos_pav['pav']) . "' alt='img' border='0' /></div></td>";
+					$pav .= "<div class='avataras' style='float:left;margin-right:25px'><img src='images/naujienu_kat/" . input($kategorijos_pav['pav']) . "' alt='img' border='0' /></div>";
 				}
 
 			}
-			$pav .= "<td>";
+			$pav .= "";
 			
-			if(!isset($kategorijos_pav['pav'])|| teises($kategorijos_pav['teises'], $_SESSION['level'])){lentele($row['pavadinimas'], $pav . $row['naujiena'] . "</td></tr></table>" . $extra, false, array(menesis((int)date('m', strtotime(date('Y-m-d H:i:s ', $row['data'])))), (int)date('d', strtotime(date('Y-m-d H:i:s ', $row['data'])))));}
+			if(!isset($kategorijos_pav['pav'])|| teises($kategorijos_pav['teises'], $_SESSION['level'])){lentele($row['pavadinimas'], $pav . $row['naujiena'] .  $extra, false, array(menesis((int)date('m', strtotime(date('Y-m-d H:i:s ', $row['data'])))), (int)date('d', strtotime(date('Y-m-d H:i:s ', $row['data'])))));}
 		}
 	} else {
 		lentele("{$lang['news']['news']}", "{$lang['news']['nonews']}");
