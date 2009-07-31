@@ -89,6 +89,6 @@ $m2 = explode(" ", microtime());
 $etime = $m2[1] + $m2[0];
 $ttime = ($etime - $stime);
 $ttime = number_format($ttime, 7);
-echo '<!-- Generated '.apvalinti($ttime,2 ).'s. -->';
+//echo '<!-- Generated '.apvalinti($ttime,2 ).'s. -->';
 ob_end_flush();
 ?>
