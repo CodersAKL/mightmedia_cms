@@ -45,7 +45,7 @@ if (defined("LEVEL") && LEVEL == 1) {
         <input type="submit" name="knyga" value="' . $lang['admin']['edit'] . '" />
       </form>
       ';*/
-$form = array("Form" => array("action" => "", "method" => "post", "name" => "knyga_edit"), "{$lang['guestbook']['message']}:" => array("type" => "textarea", "value" => $msg['msg'], "name" => "msg","extra" => "rows=5", "class"=>"input"),
+$form = array("Form" => array("action" => "", "method" => "post", "name" => "knyga_edit"), "{$lang['guestbook']['message']}" => array("type" => "textarea", "value" => $msg['msg'], "name" => "msg","extra" => "rows=5", "class"=>"input"),
 		" " => array("type" => "submit", "name" => "knyga", "value" =>  $lang['admin']['edit']));
 			lentele($lang['guestbook']['Editmessage'], $bla->form($form));
 		} elseif (isset($_POST['knyga']) && $_POST['knyga'] == $lang['admin']['edit'] && !empty($_POST['msg'])) {
