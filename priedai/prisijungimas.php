@@ -9,6 +9,9 @@
  * @$Revision$
  * @$Date$
  **/
+ 
+//FDISK, nenaudok session_destroy(); ir session_unset(); šiam faile, nes jie tuo pačiu ir forumo sausainius išvalo
+
 //kai kuoriuose hostinguose susimala nario id su puslapio id, todel:
 unset($id);
 //Auto Atjungimas nuo sistemos (neveikė)
@@ -28,9 +31,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 		$_SESSION['level'] = $linformacija['levelis'];
 		$_SESSION['mod'] = $linformacija['mod'];
 	} else {
-		unset($_SESSION); // Isvalom sesija
-		session_unset();
-		session_destroy();
+		unset($_SESSION['username'],$_SESSION['password'],$_SESSION['id'],$_SESSION['level'],$_SESSION['mod']); // Isvalom sesija
+		//session_unset();
+		//session_destroy();
 		$_SESSION['level'] = 0;
 		setcookie("user", "", time() - 3600); // Sunaikinam sesija
 	}
@@ -56,9 +59,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 		mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['user']['cookie']}: UserID: " . $user_id . " Pass: " . $user_pass) . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
 		$strError = $lang['user']['cookie'];
 
-		unset($_SESSION['username'], $_SESSION['password'], $_SESSION['id'], $_SESSION['lankesi'], $_SESSION['mod']); // Isvalom sesija
-		session_unset();
-		session_destroy();
+		unset($_SESSION['username'],$_SESSION['password'],$_SESSION['id'],$_SESSION['level'],$_SESSION['mod'],$_SESSION['level']); // Isvalom sesija
+		//session_unset();
+		//session_destroy();
 		setcookie("user", "", time() - 3600); // Sunaikinam sesija
 	}
 	unset($linfo);
@@ -105,9 +108,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'prisijungimas') {
 }
 
 if (isset($_GET['id']) && !empty($_GET['id']) && preg_match('/[^\d]/simx', $_GET['id'])) {
-	unset($_SESSION);
-	session_unset();
-	session_destroy();
+	//unset($_SESSION);
+		unset($_SESSION['username'],$_SESSION['password'],$_SESSION['id'],$_SESSION['level'],$_SESSION['mod'],$_SESSION['level']); 
+	//session_unset();
+	//session_destroy();
 	$_SESSION['level'] = 0;
 	setcookie("user", "", time() - 3600);
 	setcookie("PHPSESSID", "", time() - 3600);
