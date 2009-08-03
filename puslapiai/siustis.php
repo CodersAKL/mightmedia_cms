@@ -19,22 +19,22 @@ if (isset($url['c']) && isnum($url['c']) && $url['c'] > 0) {
 	$cid = (int)$url['c'];
 } else {
 	$cid = 0;
-} // kategorijos id
+}
 if (isset($url['v']) && isnum($url['v']) && $url['v'] > 0) {
 	$vid = (int)$url['v'];
 } else {
 	$vid = 0;
-} // ziurimo siuntinio id
+} 
 if (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
 	$rid = (int)$url['r'];
 } else {
 	$rid = 0;
-} // pranesti id
+}
 if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
 	$k = (int)$url['k'];
 } else {
 	$k = 0;
-} // pranesti id
+} 
 
 //kategorijos
 if ($vid == 0) {
@@ -59,8 +59,7 @@ if ($vid == 0) {
 //pabaiga
 # Rodom siuntini
 if ($vid > 0) {
-	$sql = mysql_query1("
-  SELECT
+	$sql = mysql_query1("SELECT
   `" . LENTELES_PRIESAGA . "grupes`.`pavadinimas` AS `Kategorija`,
     `" . LENTELES_PRIESAGA . "grupes`.`pav` AS `img`,
    `" . LENTELES_PRIESAGA . "grupes`.`id` AS `kid`,
@@ -85,28 +84,8 @@ if ($vid > 0) {
   ORDER BY
   `" . LENTELES_PRIESAGA . "siuntiniai`.`data` DESC
   LIMIT 1", 86400);
-	if (count($sql) == 0) {
-		$sql = mysql_query1("
-  SELECT
-  `" . LENTELES_PRIESAGA . "siuntiniai`.`pavadinimas`,
-  `" . LENTELES_PRIESAGA . "siuntiniai`.`id`,
-  `" . LENTELES_PRIESAGA . "siuntiniai`.`apie`,
-  `" . LENTELES_PRIESAGA . "siuntiniai`.`data`,
-  `" . LENTELES_PRIESAGA . "users`.`nick` AS `Nick`,
-  `" . LENTELES_PRIESAGA . "users`.`id` AS `nick_id`,
-  `" . LENTELES_PRIESAGA . "users`.`levelis` AS `levelis`,
-  `" . LENTELES_PRIESAGA . "siuntiniai`.`file`
-  FROM
-  `" . LENTELES_PRIESAGA . "siuntiniai`
-  Inner Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "siuntiniai`.`autorius` = `" . LENTELES_PRIESAGA . "users`.`id`
-  WHERE  
-   `" . LENTELES_PRIESAGA . "siuntiniai`.`ID` = '$vid' AND
-   `" . LENTELES_PRIESAGA . "siuntiniai`.`categorija` =  '$k'
-   AND
-   `" . LENTELES_PRIESAGA . "siuntiniai`.`rodoma` =  'TAIP'
-  ORDER BY
-  `" . LENTELES_PRIESAGA . "siuntiniai`.`data` DESC
-  LIMIT 1", 86400);
+	if (!isset($sql['id'])) {
+		$sql = mysql_query1("SELECT *, `ID` as id  FROM  `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` = '$vid' AND `rodoma` =  'TAIP'  LIMIT 1", 86400);
 	}
 	if (sizeof($sql) > 0) {
 		//$sql = mysql_fetch_assoc($sql);
