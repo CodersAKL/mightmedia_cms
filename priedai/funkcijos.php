@@ -294,7 +294,7 @@ function cleanurl($url) {
 
 //sutvarkom nuorodas
 if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
-	$_GET = url_arr(cleanurl($_SERVER['QUERY_STRING']));
+	$_GET = url_arr(cleanurl(url_decode($_SERVER['QUERY_STRING'])));
 	$url = $_GET;
 } else {
 	$url = array();
