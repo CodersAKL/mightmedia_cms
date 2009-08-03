@@ -965,11 +965,10 @@ function insert($table, $array) {
 	return 'INSERT INTO `' . LENTELES_PRIESAGA . $table . '` (' . implode(', ', array_keys($array)) . ') VALUES (' . implode(', ', array_map('escape', $array)) . ')';
 }
 
-//echo "<img src='".pic('http://img95.imageshack.us/img95/6290/web1160860226jy1.jpg')."'>";
-function pic($off_site, $size = 150, $url = 'images/nuorodu/', $sub = 'url') {
+function pic($off_site, $size = false, $url = 'images/nuorodu/', $sub = 'url') {
 	$pic_name = md5($off_site);
-	$pic_name = $url . $sub . "_" . $pic_name . ".jpg";
-	if (!file_exists($pic_name) || (time() - filemtime($pic_name)) > 32400) { //9 valandos senumo
+	$pic_name = $url . $sub . "_" . $pic_name . ".png";
+	if (!file_exists($pic_name) || (time() - filemtime($pic_name)) > 86400) { //9 valandos senumo
 		clearstatcache();
 		@unlink($pic_name);
 		if (pic1($off_site, $size, $url, $sub)) {
@@ -984,7 +983,7 @@ function pic($off_site, $size = 150, $url = 'images/nuorodu/', $sub = 'url') {
 	}
 }
 
-function pic1($off_site, $size = 150, $url = 'images/nuorodu/', $sub = 'url') {
+function pic1($off_site, $size = false, $url = 'images/nuorodu/', $sub = 'url') {
 	$fp = @fopen($off_site, 'rb');
 	$buf = '';
 	if ($fp) {
@@ -998,37 +997,40 @@ function pic1($off_site, $size = 150, $url = 'images/nuorodu/', $sub = 'url') {
 
 		//set new height
 		$src = @imagecreatefromstring($data);
+		imagealphablending($src, true);
+		
 		if (empty($src)) {
 			return false;
 		}
-		$width = @imagesx($src);
-		$height = @imagesy($src);
-		$aspect_ratio = $width / $height;
+		if ($size) {
+			$width = @imagesx($src);
+			$height = @imagesy($src);
+			$aspect_ratio = $width / $height;
 
-		//start resizing
-		if ($width <= $size) {
-			$new_w = $width;
-			$new_h = $height;
-		} else {
-			$new_w = $size;
-			$new_h = @abs($new_w / $aspect_ratio);
+			//start resizing
+			if ($width <= $size) {
+				$new_w = $width;
+				$new_h = $height;
+			} else {
+				$new_w = $size;
+				$new_h = @abs($new_w / $aspect_ratio);
+			}
+
+			$img = @imagecreatetruecolor($new_w, $new_h);
+
+			//output image
+			@imagecopyresampled($img, $src, 0, 0, 0, 0, $new_w, $new_h, $width, $height);
 		}
-
-		$img = @imagecreatetruecolor($new_w, $new_h);
-
-		//output image
-		@imagecopyresampled($img, $src, 0, 0, 0, 0, $new_w, $new_h, $width, $height);
-
-		$file = $url . $sub . "_" . md5($off_site) . ".jpg";
+		$file = $url . $sub . "_" . md5($off_site) . ".png";
 
 		// determine image type and send it to the browser
-		@imagejpeg($img, $file, 90);
+		imagesavealpha($src, true);
+		@imagepng((!$img?$src:$img), $file);
 		@imagedestroy($img);
 		unset($buf);
 		sleep(2);
 	}
 }
-
 /**
  * Sulietuvinimas mėnesio
  * echo menesis(12); //Gruodis
