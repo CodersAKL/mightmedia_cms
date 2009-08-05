@@ -21,7 +21,7 @@ if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['Q
 	$remoteaddress = $_SERVER["REMOTE_ADDR"];
 	ban();
 }
-if (isset($_POST) && !empty($_POST)) {
+if (isset($_POST) && !empty($_POST) && (isset($_GET['id'])&&$_GET['id']!=999)&& $_SESSION['level']!=1) {
 	include_once (ROOTAS . 'priedai/safe_html.php');
 	foreach ($_POST as $key => $value) {
 		if (!is_array($value))
