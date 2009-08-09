@@ -1256,7 +1256,7 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 	echo '<script type="text/javascript">
    
     _editor_url  = "javascript/htmlarea/Xinha0.96beta2/"
-    _editor_lang = "en"; 
+    _editor_lang = "lt"; 
     </script>
 
   <!-- Load up the actual editor core -->
@@ -1275,7 +1275,7 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 
       xinha_plugins = xinha_plugins ? xinha_plugins :
       [
-        \'CharacterMap\',\'Linker\', \'Media\', \'Abbreviation\', \'ContextMenu\',' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ? '\'ExtendedFileManager\',' : '') . '\'HorizontalRule\',\'InsertAnchor\',\'SuperClean\',\'Stylist\'
+        \'CharacterMap\',\'Linker\', \'Media\', \'Abbreviation\', ' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ? '\'ExtendedFileManager\',' : '') . '\'HorizontalRule\',\'InsertAnchor\',\'SuperClean\',\'Stylist\'
 
       ];
              // THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
@@ -1291,7 +1291,20 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
      
        xinha_config = xinha_config ? xinha_config : new Xinha.Config();
        xinha_config.fullPage = false;
-       //xinha_config.width = \'100%\';
+        xinha_config.toolbar =
+  [
+    
+    ["separator","popupeditor","formatblock","fontname","fontsize","separator","bold","italic","underline","strikethrough"],
+    ["separator","forecolor","hilitecolor","textindicator"],
+    ["separator","subscript","superscript"],
+    ["linebreak","separator","justifyleft","justifycenter","justifyright","justifyfull"],
+    ["separator","insertorderedlist","insertunorderedlist","outdent","indent"],
+    ["separator","inserthorizontalrule","createlink","insertimage","inserttable"],
+    ["linebreak","separator","undo","redo","selectall"], (Xinha.is_gecko ? [] : ["cut","copy","paste","overwrite","saveas"]),
+    ["separator","killword","clearfonts","removeformat","toggleborders","splitblock","lefttoright", "righttoleft"],
+    ["separator","htmlmode","showhelp"]
+  ];       
+       
        xinha_config.showLoading = true;
        xinha_config.CharacterMap.mode = \'panel\';
        //xinha_config.stylistLoadStylesheet(\'stiliai/' . input($conf['Stilius']) . '/default.css\');
