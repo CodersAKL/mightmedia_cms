@@ -132,12 +132,19 @@ function comment_htaccess($str) {
  * @return unknown
  */
 function deny_htaccess($str) {
-	preg_match_all('/(#.*?$)(\n)(deny from )(\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b)/sim', $str, $result, PREG_PATTERN_ORDER);
 
-	foreach ($result[4] as $key => $val) {
-		$return[$result[4][$key]] = $result[1][$key];
-	}
-	return @$return;
+    preg_match_all('/(#.*?$).*?([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})/sim', $str, $result, PREG_PATTERN_ORDER);
+
+    //print_r($result);
+
+    foreach ($result[1] as $key => $val){
+
+        $return[$result[2][$key]] = $result[1][$key];
+
+    }
+
+    return @$return;
+
 }
 
 $IPS = deny_htaccess(read_htaccess());

@@ -24,4 +24,5 @@ ErrorDocument 404 /klaida.php
 ErrorDocument 500 /klaida.php
 
 Order Allow,Deny
-Allow from all
+Deny from env=draudziam
+Allow from all 

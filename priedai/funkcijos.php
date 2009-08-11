@@ -179,19 +179,19 @@ function teises($mas, $lvl) {
 function ban($ipas = '', $kodel = '') {
 	global $lang, $_SERVER, $ip, $forwarded, $remoteaddress;
 	if (!isset($kodel) || empty($kodel))
-		$kodel = $lang['system']['forhacking'];
+		$kodel = $lang['system']['forhacking'].' - '.input(str_replace("\n","",$_SERVER['QUERY_STRING']));
 	if (!isset($ipas) || empty($ipas))
 		$ipas = getip();
-	$lines = file('.htaccess');
-	foreach ($lines as $key => $value) {
+	//$lines = file('.htaccess');
+	//foreach ($lines as $key => $value) {
 		//echo "$key+1=>$value<br />";
-		if ($value == 'Allow from all')
-			$trinti = $key + 1;
-	}
+		//if ($value == 'Allow from all')
+		//	$trinti = $key + 1;
+//	}
 	//echo $trinti;
-	delLineFromFile('.htaccess', $trinti);
+	//delLineFromFile('.htaccess', $trinti);
 	$atidaryti = fopen(".htaccess", "a");
-	fwrite($atidaryti, "# {$kodel} \ndeny from " . $ipas . "\nAllow from all");
+	fwrite($atidaryti, '# '.$kodel." \nSetEnvIf Remote_Addr \"^{$ipas}\" draudziam\n");
 	fclose($atidaryti);
 	//@chmod(".htaccess", 0777);
 
