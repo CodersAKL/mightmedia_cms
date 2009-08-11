@@ -63,7 +63,7 @@ if ($kid == 0) {
 			}
 			$pav .= "";
 			
-			if(!isset($kategorijos_pav['pav'])|| teises($kategorijos_pav['teises'], $_SESSION['level'])){lentele($row['pavadinimas'], $pav . $row['naujiena'] .  $extra, false, array(menesis((int)date('m', strtotime(date('Y-m-d H:i:s ', $row['data'])))), (int)date('d', strtotime(date('Y-m-d H:i:s ', $row['data'])))));}
+			if(!isset($kategorijos_pav['pav'])|| teises($kategorijos_pav['teises'], $_SESSION['level'])){lentele($row['pavadinimas'], '<div>'.$pav . $row['naujiena'] .'<br />'.  $extra.'</div>', false, array(menesis((int)date('m', strtotime(date('Y-m-d H:i:s ', $row['data'])))), (int)date('d', strtotime(date('Y-m-d H:i:s ', $row['data'])))));}
 		}
 	} else {
 		lentele("{$lang['news']['news']}", "{$lang['news']['nonews']}");

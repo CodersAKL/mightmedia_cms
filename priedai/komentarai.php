@@ -43,7 +43,7 @@ function komentarai($id, $hide = false) {
 		foreach ($sql as $row) {
 			$i++;
 			$tr = $i % 2 ? '2' : '';
-			$text .= "<div class=\"tr$tr\"><div class=\"title\"><a href=\"#k:" . $row['id'] . "\" id=\"k:" . $row['id'] . "\"> <img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /> </a> ";
+			$text .= "<div class=\"tr$tr\"><em><a href=\"#k:" . $row['id'] . "\" id=\"k:" . $row['id'] . "\"> <img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /> </a> ";
 			if (defined("LEVEL") && (LEVEL == 1 || (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('com', unserialize($_SESSION['mod']))))) {
 				$text .= "<a href='" . url("dk," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['admin']['delete']}?') \">[{$lang['admin']['delete']}]</a> ";
 			}
@@ -54,7 +54,7 @@ function komentarai($id, $hide = false) {
 				$nick = user($row['nick'], $row['nick_id'], $row['levelis']);
 			}
 			$text .= $nick;
-			$text .= " (" . date('Y-m-d H:i:s ', $row['data']) . ") " . naujas($row['data'], $row['nick']) . "</div>" . smile(bbchat(wrap(input($row['zinute']), 80))) . "</div>";
+			$text .= " (" . date('Y-m-d H:i:s ', $row['data']) . ") " . naujas($row['data'], $row['nick']) . "</em><br />" . smile(bbchat(wrap(input($row['zinute']), 80))) . "</div>";
 			//  <div class=\"avatar\" align=\"left\" style=\"display:inline;margin:4px;padding:2px;height:auto;\">" . avatar($row['email'], 40) . "</div>
 		}
 		if (!empty($text)) {
