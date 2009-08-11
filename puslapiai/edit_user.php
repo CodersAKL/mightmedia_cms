@@ -52,6 +52,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'contacts_change') {
 	$aim = input($_POST['aim']);
 	$url = input($_POST['url']);
 	$email = input($_POST['email']);
+		$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
+	if(file_exists('images/avatars/'.md5($sql['email']).'.jpeg'))
+	rename('images/avatars/'.md5($sql['email']).'.jpeg','images/avatars/'.md5($email).'.jpeg');
 	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET icq=" . escape($icq) . ", msn=" . escape($msn) . ", skype=" . escape($skype) . ", yahoo=" . escape($yahoo) . ", aim=" . escape($aim) . ", url=" . escape($url) . ", email=" . escape($email) . " WHERE nick=" . escape($_SESSION['username']) . "");
 	msg("{$lang['system']['done']}", "{$lang['user']['edit_updated']}");
 	unset($icq, $msn, $skype, $yahoo, $aim, $url, $email);
@@ -151,10 +154,71 @@ if (isset($mid) && isnum($mid)) {
 
 	elseif ($mid == 4) {
 		$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`='" . $_SESSION['username'] . "' LIMIT 1");
+		if(isset($_GET['a'])&&$_GET['a']==1)@unlink('images/avatars/'.md5($sql['email']).'.jpeg');
+$avataras=avatar($sql['email']);
+$name=md5($sql['email']);
+		$avatar =<<<HTML
+<style type="text/css">
 
-		$avatar = "<center><img src='http://www.gravatar.com/avatar.php?gravatar_id=" . md5($sql['email']) . "&amp;default=" . urlencode('images/avatars/no_image.jpg') . "&amp;size=60'></img><br/>
-{$lang['user']['edit_avatarcontent']} <b>" . $sql['email'] . "</b> .</center>
+
+
+</style>
+
+<script type="text/javascript" src="javascript/jquery/jquery.uploader.js"></script>
+
+<script  type="text/javascript">
+
+$(document).ready(function(){
+
+var button = $('#button1'), interval;
+new AjaxUpload(button,{
+action: 'upload.php',
+name: 'userfile',
+data: {
+email : '{$sql['email']}'
+
+},
+
+onSubmit : function(file, ext){
+$('#gravatar').hide();
+if (! (ext && /^(jpg|jpeg|png|gif|bmp)$/.test(ext))){
+alert('{$lang['admin']['download_badfile']}');
+return false;
+} else {
+button.html('<img src="http://upload.wikimedia.org/wikipedia/commons/4/42/Loading.gif" />{$lang['user']['edit_uploading']}...');
+this.disable();
+}
+},
+onComplete: function(file, response){
+button.html('<img src="images/icons/picture__plus.png" alt="" class="middle"/>{$lang['user']['edit_upload']}');
+this.enable();
+
+$('#example1 .files').replaceWith('<div class="files"><img id="ikeltas_avataras" src="images/avatars/{$name}.jpeg?'+file+'" alt="" /></div>');
+}
+}); 
+});
+</script>
+<div align='center'>
+<ul>
+	<li id="example1" class="example">
+		
+	
+<div class="btns"><a onclick="return false" class="btn"><span id="button1"><img src="images/icons/picture__plus.png" alt="" class="middle"/>{$lang['user']['edit_upload']}</span></a>
+<a class="btn" href="?id,{$_GET['id']};m,{$_GET['m']};a,1"><span><img src="images/icons/picture__plus.png" alt="" class="middle"/>{$lang['user']['edit_gravatar']}</span></a>
+</div> 
+		<p>{$lang['user']['edit_avatar']}:</p>
+
+		<div class="files">{$avataras}</div>
+		</li>
+</ul></div>
+HTML;
+if(isset($_GET['a'])&&$_GET['a']==1)
+$avatar .= "<div align='center' id='gravatar'>
+{$lang['user']['edit_avatarcontent']} <b>" . $sql['email'] . "</b> .</div>
 		";
+/*	<div class="wrapper">
+			<div id="button1" class="button  "><b>>Įkelti<</b></div>
+		</div>*/
 		lentele($lang['user']['edit_avatar'], $avatar);
 	}
 	// Pagrindiniai nustatymai

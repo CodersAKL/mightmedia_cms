@@ -101,7 +101,8 @@ function header_info() {
 }
 // Nupiesiam vartotojo avatara
 function avatar($mail, $size = 80) {
-	$result = '<img src="http://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . htmlentities($size . '&r=any&default=' . urlencode(adresas() . 'images/avatars/no_image.jpg') . '&time=' . time()) . '"  width="' . $size . '" alt="avataras" />';
+	if(file_exists('images/avatars/'.md5($mail).'.jpeg')){
+	$result='<img src="images/avatars/'.md5($mail).'.jpeg"  width="' . $size . '" height="' . $size . '" alt="avataras" />';}else{	$result = '<img src="http://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . htmlentities($size . '&r=any&default=' . urlencode(adresas() . 'images/avatars/no_image.jpg') . '&time=' . time()) . '"  width="' . $size . '" alt="avataras" />';}
 	return $result;
 }
 function nice_name($name) {
