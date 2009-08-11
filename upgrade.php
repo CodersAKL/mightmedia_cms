@@ -19,7 +19,7 @@ if(isset($_SESSION['id'])&&$_SESSION['id']==1){
 // Sarašas failų kurių teisės turi suteikti svetainei įrašymo galimybę
 $chmod_files[0] = "siuntiniai/media";
 $chmod_files[] = "sandeliukas";
-
+$chmod_files[] = "images/avatars";
 
 
 

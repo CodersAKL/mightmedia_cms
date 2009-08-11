@@ -39,7 +39,7 @@ $chmod_files[] = "sandeliukas";
 $chmod_files[] = "galerija/mini";
 $chmod_files[] = "puslapiai";
 $chmod_files[] = "paneles";
-
+$chmod_files[] = "images/avatars";
 // Unikalus kodas, naudojamas svetainės identifikacijai.
 $slaptas = md5(uniqid(rand(), true));
 

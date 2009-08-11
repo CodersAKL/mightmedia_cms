@@ -185,7 +185,7 @@ if (! (ext && /^(jpg|jpeg|png|gif|bmp)$/.test(ext))){
 alert('{$lang['admin']['download_badfile']}');
 return false;
 } else {
-button.html('<img src="http://upload.wikimedia.org/wikipedia/commons/4/42/Loading.gif" />{$lang['user']['edit_uploading']}...');
+button.html('<img src="images/icons/Loading.gif" />{$lang['user']['edit_uploading']}...');
 this.disable();
 }
 },
