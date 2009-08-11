@@ -478,14 +478,14 @@ if (isset($_GET['v'])) {
 			redirect('?id,999;a,' . $url['a'] . ';v,6');
 		}
 		$nustatymai = array(
-			"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), 
-			"{$lang['admin']['gallery_maxwidth']}:" => array("type" => "text", "value" => input($conf['fotodyd']), "name" => "fotodyd"), 
-			"{$lang['admin']['gallery_minwidth']}:" => array("type" => "text", "value" => input($conf['minidyd']), "name" => "minidyd"), 
-			"{$lang['admin']['gallery_rate']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galbalsuot']), "name" => "galbalsuot"), 
-			"{$lang['admin']['gallery_comments']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galkom']), "name" => "galkom"), 
-			"{$lang['admin']['gallery_images_per_page']}:" => array("type" => "select", "value" => array("5" => "5", "10" => "10", "15" => "15", "20" => "20", "25" => "25", "30" => "30", "35" => "35", "40" => "40"), "selected" => input($conf['fotoperpsl']), "name" => "fotoperpsl"), 
-			"" => array("type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}")
-		);
+"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"),
+"{$lang['admin']['gallery_maxwidth']}:" => array("type" => "text", "value" => input($conf['fotodyd']), "name" => "fotodyd"),
+"{$lang['admin']['gallery_minwidth']}:" => array("type" => "text", "value" => input($conf['minidyd']), "name" => "minidyd"),
+"{$lang['admin']['gallery_rate']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galbalsuot']), "name" => "galbalsuot"),
+"{$lang['admin']['gallery_comments']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galkom']), "name" => "galkom"),
+"{$lang['admin']['gallery_images_per_page']}:" => array("type" => "text", "value" => input((int)$conf['fotoperpsl']), "name" => "fotoperpsl"),
+"" => array("type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}")
+);
 
 		include_once ("priedai/class.php");
 		$bla = new forma();
