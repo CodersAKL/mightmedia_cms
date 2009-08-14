@@ -17,7 +17,7 @@ if (isset($_POST['kontaktas']) && $_POST['kontaktas'] == 'Siųsti' && strtoupper
 	$from = strip_tags($_POST['vardas']);
 	$email = strip_tags($_POST['email']);
 
-	$msg = "{$lang['contact']['email']}: <b>" . $email . "</b><br/>\n{$lang['contact']['name']}: <b>" . $from . "</b><br/>\n{$lang['contact']['from']}: <b>" . adresas() . "</b><br/>\n----<br/>\n" . nl2br(htmlspecialchars($_POST['zinute']));
+	$msg = "{$lang['contact']['email']}: <b>" . $email . "</b><br/>\n{$lang['contact']['name']}: <b>" . $from . "</b><br/>\n{$lang['contact']['from']}: <b>" . adresas() . "</b><br/><b>IP:</b>".getip()."<br/>\n----<br/>\n" . nl2br(htmlspecialchars($_POST['zinute']));
 	$to = $conf['Pastas'];
 
 	ini_set("sendmail_from", $email);
@@ -41,25 +41,17 @@ if (isset($_POST['kontaktas']) && $_POST['kontaktas'] == 'Siųsti' && strtoupper
 	}
 }
 
-/*$forma = '
- <form name="knyga" method="post">
- ' . $lang['contact']['subject'] . ':<br /><input type="text" name="pavadinimas" value="' . (isset($title) && !empty($title) ? input($title) : '') . '" size="20" class="input"><br />
-' . $lang['contact']['name'] . ':<br /><input type="text" name="vardas" value="' . (isset($from) && !empty($from) ? input($from) : '') . '" size="20" class="input"><br />
- ' . $lang['contact']['email'] . ':<br /><input type="text" name="email" value="' . (isset($email) ? input($email) : '') . '" size="20" class="input"><br />
- ' . $lang['contact']['message'] . ':<br />
-		<textarea name="zinute" rows="13" cols="10" class="input">' . (isset($_POST['zinute']) && !empty($_POST['zinute']) ? input($_POST['zinute']) : '') . '</textarea>
-		<br /><br />
-		<input type="text" name="code" value="" size="20" class="chapter"> &nbsp; &nbsp; ' . kodas() . '<br />
-
-		<br />
-		<input type="submit" name="kontaktas" value="' . $lang['contact']['submit'] . '" />
-		</form>
-';
-lentele($lang['contact']['form'], $forma);*/
 include_once ("priedai/class.php");
 $bla = new forma();
-	$form = array("Form" => array("action" => "", "method" => "post", "name" => "kontaktas"), "{$lang['contact']['subject']}:" => array("type" => "text", "class"=>"input", "value" => (isset($title) && !empty($title) ? input($title) : ''), "name" => "pavadinimas", "class"=>"input"),"{$lang['contact']['name']}:" => array("type" => "text", "class"=>"input", "value" => (isset($from) && !empty($from) ? input($from) : ''), "name" => "vardas", "class"=>"input"),"{$lang['contact']['email']}:" => array("type" => "text", "class"=>"input", "value" => (isset($email) ? input($email) : ''), "name" => "email", "class"=>"input"), "{$lang['contact']['message']}:" => array("type" => "textarea", "value" =>(isset($_POST['zinute']) && !empty($_POST['zinute']) ? input($_POST['zinute']) : ''), "name" => "zinute","extra" => "rows=5", "class"=>"input"), kodas()=> array("type" => "text", "value" =>"","name"=>"code", "class"=>"chapter"),
-		" " => array("type" => "submit", "name" => "kontaktas", "value" => "{$lang['contact']['submit']}"));
+	$form = array(
+		"Form" => array("action" => "", "method" => "post", "name" => "kontaktas"), 
+		"{$lang['contact']['subject']}:" => array("type" => "text", "class"=>"input", "value" => (isset($title) && !empty($title) ? input($title) : ''), "name" => "pavadinimas", "class"=>"input"),
+		"{$lang['contact']['name']}:" => array("type" => "text", "class"=>"input", "value" => (isset($from) && !empty($from) ? input($from) : ''), "name" => "vardas", "class"=>"input"),
+		"{$lang['contact']['email']}:" => array("type" => "text", "class"=>"input", "value" => (isset($email) ? input($email) : ''), "name" => "email", "class"=>"input"), 
+		"{$lang['contact']['message']}:" => array("type" => "textarea", "value" =>(isset($_POST['zinute']) && !empty($_POST['zinute']) ? input($_POST['zinute']) : ''), "name" => "zinute","extra" => "rows=5", "class"=>"input"), 
+		kodas()=> array("type" => "text", "value" =>"","name"=>"code", "class"=>"chapter"),
+		" " => array("type" => "submit", "name" => "kontaktas", "value" => "{$lang['contact']['submit']}")
+	);
 	lentele($lang['contact']['form'], $bla->form($form));	
 unset($forma, $result, $from, $forma, $error, $to, $msg, $email, $title);
 //PABAIGA - atvaizdavimo
