@@ -187,12 +187,14 @@ function bbcode($str) {
 	$str = preg_replace("#\[sql\](.*?)\[\/sql\]#sie", "base64encode('<textarea name=\"code\" class=\"sql\" rows=\"15\" cols=\"100\">\\1</textarea>')", $str);
 
 	// Atverciam linka naujame lange
-	$str = preg_replace("#\[url\](.*?)?(.*?)\[/url\]#si", "<A HREF=\"\\1\\2\" TARGET=\"_blank\" class=\"link\">\\1\\2</A>", $str);
-	$str = preg_replace("#\[url=(.*?)?(.*?)\](.*?)\[/url\]#si", "<A HREF=\"\\2\" TARGET=\"_blank\" class=\"link\">\\3</A>", $str);
+	$str = preg_replace("#\[url\](.*?)?(.*?)\[/url\]#si", "<A HREF=\"\\1\\2\" TARGET=\"_blank\" rel=\"nofollow\" 
+ class=\"link\">\\1\\2</A>", $str);
+	$str = preg_replace("#\[url=(.*?)?(.*?)\](.*?)\[/url\]#si", "<A HREF=\"\\2\" TARGET=\"_blank\"  rel=\"nofollow\" 
+ class=\"link\">\\3</A>", $str);
 
 	// Atverciam linka tame paciame lange
-	$str = preg_replace("#\[url2\](.*?)?(.*?)\[/url2\]#si", "<A HREF=\"\\1\\2\">\\1\\2</A>", $str);
-	$str = preg_replace("#\[url2=(.*?)?(.*?)\](.*?)\[/url2\]#si", "<A HREF=\"\\2\">\\3</A>", $str);
+	$str = preg_replace("#\[url2\](.*?)?(.*?)\[/url2\]#si", "<A HREF=\"\\1\\2\" rel=\"nofollow\">\\1\\2</A>", $str);
+	$str = preg_replace("#\[url2=(.*?)?(.*?)\](.*?)\[/url2\]#si", "<A HREF=\"\\2\" rel=\"nofollow\">\\3</A>", $str);
 
 	// Automatiskai konvertuojam nuorodas
 	$str = preg_replace_callback("#([\n ])([a-z]+?)://([a-z0-9\-\.,\?!%\*_\#:;~\\&$@\/=\+]+)#si", "bbcode_autolink", $str);

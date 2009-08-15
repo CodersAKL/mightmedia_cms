@@ -85,8 +85,8 @@ ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400);
 				include_once ("priedai/class.php");
 				include_once ("priedai/rating_functions.php");
 
-				$info[] = array("{$lang['admin']['link']}:" => '' . $extra . ' <a href="?id,' . $url['id'] . ';k,' . $url['k'] . ';w,' . $sql['id'] . '" title="<center><b>' . $sql['url'] . '</b><br/><img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br/>
-                ' . $lang['admin']['links_author'] . ': <b>' . $sql['nick'] . '</b><br/>' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . '</b><br/>' . $lang['admin']['links_clicks'] . ': <b>' . $sql['click'] . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['links_about']}:" => $sql['apie'], "{$lang['admin']['links_rate']}:" => '' . pullRating($sql['id'], false, false, false) . '', );
+				$info[] = array("{$lang['admin']['link']}:" => '' . $extra . ' <a href="?id,' . $url['id'] . ';k,' . $url['k'] . ';w,' . $sql['id'] . '" title="<center><b>' . $sql['url'] . '</b><br /><img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br />
+                ' . $lang['admin']['links_author'] . ': <b>' . $sql['nick'] . '</b><br />' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . '</b><br />' . $lang['admin']['links_clicks'] . ': <b>' . $sql['click'] . '</b>" target="_blank" rel="nofollow">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['links_about']}:" => $sql['apie'], "{$lang['admin']['links_rate']}:" => '' . pullRating($sql['id'], false, false, false) . '', );
 
 
 			}
