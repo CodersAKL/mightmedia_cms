@@ -1198,7 +1198,20 @@ function get_browser_info() {
  */
 function kodas() {
 	global $lang;
-	return "<img src=\"priedai/human.php\" style=\"cursor: pointer;\" onclick='this.src=\"priedai/human.php?\"+Math.random()' id=\"captcha\" alt=\"code\" title=\"{$lang['system']['refresh']}\" />";
+	$return = <<<HTML
+	<script type="text/javascript">
+	var \$human = document.createElement('img');
+	\$human.setAttribute('src','priedai/human.php');
+	\$human.setAttribute('style','cursor: pointer');
+	\$human.setAttribute('title','{$lang['system']['refresh']}');
+	\$human.setAttribute('onclick','this.src="priedai/human.php?"+Math.random();');
+	\$human.setAttribute('alt','code');
+	\$human.setAttribute('id','captcha');
+
+	$('#captcha_content').html(\$human);
+	</script>
+HTML;
+	return "<p id='captcha_content'></p>$return";
 }
 
 /** Gražina versijos numerÄ¯ */
