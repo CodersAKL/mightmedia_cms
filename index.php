@@ -47,10 +47,13 @@ if (isset($url['id']) && !empty($url['id']) && isnum($url['id'])) {
 	$url['id'] = $pslid;
 }
 if (isset($pslid) && isnum($pslid) && $pslid > 0) {
-	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int)$pslid) . " LIMIT 1", 259200);	//keshas  3dienos.
+	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int)$pslid) . " LIMIT 1", 259200); //keshas  3dienos.
 
 	if (!empty($sql1)) {
-
+		if (preg_match("/http:\/\//", $sql1['file'])) {
+			header("Location:{$sql1['file']}");
+			exit;
+		}
 		if (puslapis($sql1['file'])) {
 			$page = 'puslapiai/' . basename($sql1['file'], '.php');
 			$page_pavadinimas = $sql1['pavadinimas'];
@@ -91,4 +94,5 @@ $ttime = ($etime - $stime);
 $ttime = number_format($ttime, 7);
 //echo '<!-- Generated '.apvalinti($ttime,2 ).'s. -->';
 ob_end_flush();
+
 ?>

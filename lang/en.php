@@ -351,6 +351,7 @@ $lang['admin']['logs_clear'] = 'Delete all logs';
 //pages admin
 $lang['admin']['page_text'] = 'Page text';
 $lang['admin']['page_create'] = 'Create page';
+$lang['admin']['page_link'] = 'Use link';
 $lang['admin']['page_select'] = 'Select page';
 $lang['admin']['page_created'] = 'Page created';
 $lang['admin']['page_nounused'] = 'No unused pages';

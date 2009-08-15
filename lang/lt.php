@@ -334,6 +334,7 @@ $lang['admin']['logs_clear'] = 'Trinti visus įrašus';
 $lang['admin']['logs_deletebyip'] = 'Trinti pagal ip';
 $lang['admin']['page_text'] = 'Puslapio turinys';
 $lang['admin']['page_create'] = 'Kurti puslapį';
+$lang['admin']['page_link'] = 'Naudoti nuorodą';
 $lang['admin']['page_select'] = 'Pasirinkti puslapį';
 $lang['admin']['page_created'] = 'Puslapis sukurtas';
 $lang['admin']['page_nounused'] = 'Nebėra puslapių';

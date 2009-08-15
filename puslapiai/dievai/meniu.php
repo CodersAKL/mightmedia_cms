@@ -7,7 +7,11 @@
 				var order = $('#test-list').sortable('serialize');
 				$("#la").show("slow");
 				$("#la").hide("slow");
-				$.post("<?php echo "?" . $_SERVER['QUERY_STRING']; ?>",{order:order});
+				$.post("<?php
+
+echo "?" . $_SERVER['QUERY_STRING'];
+
+?>",{order:order});
 			}
 		});
 	});
@@ -21,9 +25,21 @@
 			addItemTarget: 'bottom',
 			animate: true,
 			highlight: true,
-			removeLabel: '<?php echo $lang['system']['delete']; ?>',
-			highlightAddedLabel: '<?php echo $lang['admin']['added']; ?>: ',
-			highlightRemovedLabel: '<?php echo $lang['sb']['deleted']; ?>: ',
+			removeLabel: '<?php
+
+echo $lang['system']['delete'];
+
+?>',
+			highlightAddedLabel: '<?php
+
+echo $lang['admin']['added'];
+
+?>: ',
+			highlightRemovedLabel: '<?php
+
+echo $lang['sb']['deleted'];
+
+?>: ',
 			sortable: true
 		});
 
@@ -70,10 +86,10 @@ if (isset($_POST['order'])) {
 
 
 } else {
-	$parent=mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent`='0' ORDER BY `place` ASC");
-	$parents[0]="";
-	foreach($parent as $parent_row) {
-		$parents[$parent_row['id']]=$parent_row['pavadinimas'];
+	$parent = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent`='0' ORDER BY `place` ASC");
+	$parents[0] = "";
+	foreach ($parent as $parent_row) {
+		$parents[$parent_row['id']] = $parent_row['pavadinimas'];
 	}
 	$lygiai = array_keys($conf['level']);
 
@@ -92,7 +108,7 @@ if (isset($_POST['order'])) {
 	//$sortableLists->addList('desine','paneles_desine');
 
 	if (isset($_POST['Naujas_puslapis2']) && $_POST['Naujas_puslapis2'] == $lang['admin']['page_create']) {
-	// Nurodote failo pavadinimą:
+		// Nurodote failo pavadinimą:
 		$failas = "puslapiai/" . preg_replace("/[^a-z0-9-]/", "_", strtolower($_POST['pav'])) . ".php";
 
 		// Nurodote įrašą kuris bus faile kai jį sukurs:
@@ -112,26 +128,26 @@ lentele($page_pavadinimas,$text);
 		$fp = fopen($failas, "w+");
 		fwrite($fp, $irasas);
 		fclose($fp);
-		chmod($failas,0777);
+		chmod($failas, 0777);
 
 		// Rezultatas:
 		//	msg($lang['system']['done'], "{$lang['admin']['page_created']}.");
-		redirect("?id,{$_GET['id']};a,{$_GET['a']};n,1","header");
+		redirect("?id,{$_GET['id']};a,{$_GET['a']};n,1", "header");
 
 	}
 
 	if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`= " . escape((int)$url['d']) . " LIMIT 1");
 		delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
-		redirect("?id," . $url['id'] . ";a,".$url['a'], "header");
+		redirect("?id," . $url['id'] . ";a," . $url['a'], "header");
 	} elseif (isset($url['n']) && $url['n'] == 1) {
 		if (isset($_POST['Naujas_puslapis']) && $_POST['Naujas_puslapis'] == $lang['admin']['page_create']) {
 			$psl = input($_POST['Page']);
 			$teises = serialize($_POST['Teises']);
-			$file = input(basename($_POST['File']));
-			if (!file_exists("puslapiai/" . $file)) {
+			$file = input($_POST['File']);
+		/*if (!file_exists("puslapiai/" . $file)) {
 				klaida($lang['system']['error'], "<font color='red'>" . $file . "</font> ");
-			} else {
+			} else {*/
 				if (empty($psl) || $psl == '') {
 					$psl = basename($file, ".php");
 				}
@@ -142,8 +158,8 @@ lentele($page_pavadinimas,$text);
 				$sql = "INSERT INTO `" . LENTELES_PRIESAGA . "page` (`pavadinimas`, `file`, `place`, `show`, `teises`,`parent` ) VALUES (" . escape($psl) . ", " . escape($file) . ", '0', " . escape($show) . ", " . escape($teises) . "," . escape((int)$_POST['parent']) . ")";
 				mysql_query1($sql);
 				delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
-				redirect("?id," . $url['id'] . ";a,".$url['a'], "header");
-			}
+				redirect("?id," . $url['id'] . ";a," . $url['a'], "header");
+			//}
 		}
 		$failai = getFiles('puslapiai/');
 
@@ -152,7 +168,7 @@ lentele($page_pavadinimas,$text);
 			if ($file['type'] == 'file') {
 				//$sql = mysql_query1("SELECT pavadinimas FROM `" . LENTELES_PRIESAGA . "page` WHERE file=" . escape(basename($file['name'])) . " LIMIT 1");
 				//if (($sql) == 0) {
-					$puslapiai[basename($file['name'])] = basename($file['name']) . ": " . $file['sizetext'] . "\n";
+				$puslapiai[basename($file['name'])] = basename($file['name']) . ": " . $file['sizetext'] . "\n";
 				//}
 			}
 		}
@@ -162,29 +178,17 @@ lentele($page_pavadinimas,$text);
 		} else {
 
 
-
-			$psl = array(
-				 "Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel"),
-				 "{$lang['admin']['page_name']}:" => array("type" => "text", "value" => "{$lang['admin']['page_name']}", "name" => "Page", "class" => "input"),
-				 "{$lang['admin']['page_file']}:" => array("type" => "select", "value" => $puslapiai, "name" => "File"),
-				 "Sub" => array("type" => "select", "value" => $parents,"name" => "parent"),
-				 "{$lang['admin']['page_show']}" => array("type" => "select", "value" => array("Y" => $lang['admin']['yes'], "N" => "{$lang['admin']['no']}"), "name" => "Show"),
-				 "{$lang['admin']['page_showfor']}:" => array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai"),
-				 "" => array("type" => "submit", "name" => "Naujas_puslapis", "value" => $lang['admin']['page_create'])
-			);
-
+			$psl = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel"), "{$lang['admin']['page_name']}:" => array("type" => "text", "value" => "{$lang['admin']['page_name']}", "name" => "Page", "class" => "input"), "{$lang['admin']['page_file']}: <a id=\"linkas\" onclick=\"$('#failas').replaceWith('<input name=\'File\' value=\'http://\' class=\'input\' />'); $('#linkas').empty();
+return fale;\">[{$lang['admin']['page_link']}]</a>" => array("type" => "select", "value" => $puslapiai, "name" => "File", "id"=>"failas"), "Sub" => array("type" => "select", "value" => $parents, "name" => "parent"), "{$lang['admin']['page_show']}" => array("type" => "select", "value" => array("Y" => $lang['admin']['yes'], "N" => "{$lang['admin']['no']}"), "name" => "Show"), "{$lang['admin']['page_showfor']}:" => array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" =>
+				"Teises[]", "id" => "punktai"), "" => array("type" => "submit", "name" => "Naujas_puslapis", "value" => $lang['admin']['page_create']));
+//"{$lang['admin']['page_file']}:" => array("type" => "select", "value" => $puslapiai, "name" => "File");
 			include_once ("priedai/class.php");
 			$bla = new forma();
 			lentele($lang['admin']['page_create'], $bla->form($psl));
 		}
 	}
 	if (isset($url['n']) && $url['n'] == 2) {
-		$psl = array(
-			 "Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_page2"),
-			 "{$lang['admin']['page_filename']}:" => array("type" => "text", "value" => "{$lang['admin']['page_name']}", "name" => "pav", "class" => "input"),
-			 "{$lang['admin']['page_text']}:" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('Page' => 'Page'), false), "name" => "Page", "class" => "input", "rows" => "8", "class" => "input"),
-			 "" => array("type" => "submit", "name" => "Naujas_puslapis2", "value" => $lang['admin']['page_create'])
-		);
+		$psl = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_page2"), "{$lang['admin']['page_filename']}:" => array("type" => "text", "value" => "{$lang['admin']['page_name']}", "name" => "pav", "class" => "input"), "{$lang['admin']['page_text']}:" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('Page' => 'Page'), false), "name" => "Page", "class" => "input", "rows" => "8", "class" => "input"), "" => array("type" => "submit", "name" => "Naujas_puslapis2", "value" => $lang['admin']['page_create']));
 		include_once ("priedai/class.php");
 		$bla = new forma();
 		lentele($lang['admin']['page_create'], $bla->form($psl, $lang['admin']['page_create']));
@@ -208,21 +212,14 @@ lentele($page_pavadinimas,$text);
 			$sql = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `pavadinimas`=" . escape($psl) . ", `show`=" . escape($show) . ",`teises`=" . escape($teises) . ",`parent`= " . escape((int)$_POST['parent']) . "  WHERE `id`=" . escape((int)$url['r']);
 			mysql_query1($sql);
 			delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
-			redirect("?id," . $url['id'] . ";a,".$url['a'], "header");
+			redirect("?id," . $url['id'] . ";a," . $url['a'], "header");
 		} else {
 			$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape((int)$url['r']) . " LIMIT 1";
 			$sql = mysql_query1($sql);
 			$selected = unserialize($sql['teises']);
 
-			$psl = array(
-				 "Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_psl"),
-				 "{$lang['admin']['page_name']}:" => array("type" => "text", "value" => input($sql['pavadinimas']), "name" => "pslp", "class" => "input"),
-				 "{$lang['admin']['page_showfor']}:" => array("type" => "select", "value" => $teises, "name" => "Teises", "class" => "input", "class" => "input", "selected" => (isset($sql['teises']) ? input($sql['teises']) : '')),
-				 "{$lang['admin']['page_show']}" => array("type" => "select", "value" => array("Y" => $lang['admin']['yes'], "N" => $lang['admin']['no']), "selected" => input($sql['show']), "name" => "Show"),
-				 "Sub" => array("type" => "select", "value" => $parents, "selected" => input($sql['parent']), "name" => "parent"),
-				 "{$lang['admin']['page_showfor']}:" => array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai", "selected" => $selected),
-				 "" => array("type" => "submit", "name" => "Redaguoti_psl", "value" => $lang['admin']['edit'])
-			);
+			$psl = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_psl"), "{$lang['admin']['page_name']}:" => array("type" => "text", "value" => input($sql['pavadinimas']), "name" => "pslp", "class" => "input"), "{$lang['admin']['page_showfor']}:" => array("type" => "select", "value" => $teises, "name" => "Teises", "class" => "input", "class" => "input", "selected" => (isset($sql['teises']) ? input($sql['teises']) : '')), "{$lang['admin']['page_show']}" => array("type" => "select", "value" => array("Y" => $lang['admin']['yes'], "N" => $lang['admin']['no']), "selected" => input($sql['show']), "name" => "Show"), "Sub" => array("type" => "select", "value" => $parents, "selected" => input($sql['parent']), "name" => "parent"), "{$lang['admin']['page_showfor']}:" =>
+				array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai", "selected" => $selected), "" => array("type" => "submit", "name" => "Redaguoti_psl", "value" => $lang['admin']['edit']));
 
 			include_once ("priedai/class.php");
 			$bla = new forma();
@@ -254,7 +251,7 @@ lentele($page_pavadinimas,$text);
 			$fp = fopen('puslapiai/' . $sql['file'], "w+");
 			fwrite($fp, $irasas);
 			fclose($fp);
-			chmod('puslapiai/' . $sql['file'],0777);
+			chmod('puslapiai/' . $sql['file'], 0777);
 
 		} else {
 
@@ -277,13 +274,13 @@ lentele($page_pavadinimas,$text);
 
 			//tikrinimo pabaiga
 			if (isset($nr) && $nr == 2) {
-			//if (is_writable('puslapiai/' . $sql['file'])) {
+				//if (is_writable('puslapiai/' . $sql['file'])) {
 				include 'puslapiai/' . $sql['file'];
 
 				$puslapio_txt = $text;
 
 				$puslapis = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "psl_txt"), //"puslapiai avadinimas:"=>array("type"=>"text","value"=>input($sql['psl']),"name"=>"psl","disabled"=>"disabled","style"=>"width:100%"),
-					 "{$lang['admin']['page_text']}" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('Page' => 'Page'), array('Page' => $puslapio_txt)), "name" => "Turinys", "class" => "input", "rows" => "10"), "" => array("type" => "submit", "name" => "Redaguoti_txt", "value" => $lang['admin']['edit']));
+					"{$lang['admin']['page_text']}" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('Page' => 'Page'), array('Page' => $puslapio_txt)), "name" => "Turinys", "class" => "input", "rows" => "10"), "" => array("type" => "submit", "name" => "Redaguoti_txt", "value" => $lang['admin']['edit']));
 
 				include_once ("priedai/class.php");
 				$bla = new forma();
@@ -305,7 +302,7 @@ lentele($page_pavadinimas,$text);
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] . '" style="align:right"><img src="images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record1['id'] . '" style="align:right"><img src="images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '" align="right" /></a> 
 <img src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
-' .($record1['parent']!=0?$parents[$record1['parent']]." > ":""). $record1['pavadinimas'] . '
+' . ($record1['parent'] != 0 ? $parents[$record1['parent']] . " > " : "") . $record1['pavadinimas'] . '
 </li> ';
 
 		}
@@ -338,30 +335,13 @@ lentele($page_pavadinimas,$text);
 		}
 	}
 	$tekstas .= '</ul></fieldset>';
-	$tekstas .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,".$url['a'].";n,2';\">{$lang['admin']['page_create']}</button>";
-	$tekstas .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,".$url['a'].";n,1';\">{$lang['admin']['page_select']}</button>";
+	$tekstas .= "<button onClick=\"window.location='?id," . $url['id'] . ";a," . $url['a'] . ";n,2';\">{$lang['admin']['page_create']}</button>";
+	$tekstas .= "<button onClick=\"window.location='?id," . $url['id'] . ";a," . $url['a'] . ";n,1';\">{$lang['admin']['page_select']}</button>";
 
 	lentele($lang['admin']['meniu'], $tekstas);
 
 
-	//Funkcija puslapiu turiniui irašyti
-	function irasom($Failas, $Info) {
-		global $url;
-		if (is_writable($Failas)) {
-			if ($fh = fopen($Failas, 'w')) {
-				if (fwrite($fh, $Info) !== false) {
-					msg($lang['system']['done'], $lang['system']['done']);
-					fclose($fh);
-					chmod($Failas,0777);
-					redirect("?id," . $url['id'] . ";a," . $url['a'], "meta");
-				}
-			} else {
-				klaida($lang['system']['error'], $lang['system']['systemerror']);
-			}
-		} else {
-			klaida($Failas, $lang['system']['systemerror']);
-		}
-	}
+
 }
 
 ?>
