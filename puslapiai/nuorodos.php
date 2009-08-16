@@ -50,7 +50,11 @@ if (sizeof($sqlas) > 0) {
 
 		if ($path1[(count($path1) - 1)] == $k) {
 			$sqlkiek = kiek('nuorodos', "WHERE `cat`=" . escape($sql['id']) . " AND `active`='TAIP'");
-			$info[] = array(" " => "<img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' />", "{$lang['category']['about']}" => "<h2><a href='?id," . $url['id'] . ";k," . $sql['id'] . "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br>", "{$lang['category']['links']}" => $sqlkiek, );
+			$info[] = array(
+				" " => "<img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' />",
+				"{$lang['category']['about']}" => "<h2><a href='?id," . $url['id'] . ";k," . $sql['id'] . "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br>",
+				"{$lang['category']['links']}" => $sqlkiek
+			);
 		}
 	}
 }
@@ -85,8 +89,11 @@ ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400);
 				include_once ("priedai/class.php");
 				include_once ("priedai/rating_functions.php");
 
-				$info[] = array("{$lang['admin']['link']}:" => '' . $extra . ' <a href="?id,' . $url['id'] . ';k,' . $url['k'] . ';w,' . $sql['id'] . '" title="<center><b>' . $sql['url'] . '</b><br /><img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br />
-                ' . $lang['admin']['links_author'] . ': <b>' . $sql['nick'] . '</b><br />' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . '</b><br />' . $lang['admin']['links_clicks'] . ': <b>' . $sql['click'] . '</b>" target="_blank" rel="nofollow">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['links_about']}:" => $sql['apie'], "{$lang['admin']['links_rate']}:" => '' . pullRating($sql['id'], false, false, false) . '', );
+				$info[] = array(
+					"{$lang['admin']['link']}:" => '' . $extra . ' <a href="?id,' . $url['id'] . ';k,' . $url['k'] . ';w,' . $sql['id'] . '" title="<center><b>' . $sql['url'] . '</b><br /><img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br />' . $lang['admin']['links_author'] . ': <b>' . $sql['nick'] . '</b><br />' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . '</b><br />' . $lang['admin']['links_clicks'] . ': <b>' . $sql['click'] . '</b>" target="_blank" rel="nofollow">' . $sql['pavadinimas'] . '</a>',
+					"{$lang['admin']['links_about']}:" => $sql['apie'],
+					"{$lang['admin']['links_rate']}:" => pullRating($sql['id'], false, false, false)
+				);
 
 
 			}
@@ -98,7 +105,7 @@ ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400);
 if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LEVEL") && LEVEL > 0) {
 	if (isset($_POST['Submit_link']) && !empty($_POST['Submit_link']) && $_POST['Submit_link'] == $lang['admin']['links_create']) {
 
-		// Nustatom kintamuosius
+	// Nustatom kintamuosius
 		$url = strip_tags($_POST['url']);
 		$apie = strip_tags($_POST['apie']);
 		$pavadinimas = strip_tags($_POST['name']);
@@ -129,18 +136,13 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 			$subcat = '';
 			if (sizeof($sql2) > 0) {
 				foreach ($sql2 as $row) {
-
 					$subcat .= "->" . $path['pavadinimas'];
 					$kategorijos[$row['id']] = $row['pavadinimas'];
 					$kategorijos[$path['id']] = $row['pavadinimas'] . $subcat;
-
-
 				}
 			} else {
 				$kategorijos[$row['id']] = $row['pavadinimas'];
 			}
-
-
 		}
 	} else {
 		$kategorijos[0] = "{$lang['system']['nocategories']}";
