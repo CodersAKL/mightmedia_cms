@@ -714,6 +714,21 @@ function url($str, $link = '') {
 	}
 	return $link . "?" . arr_url(array_merge($url, $str));
 }
+
+/**
+ * Seo url TODO
+ */
+function url($url,$id) {   
+	//sušveplinam   
+	$url = iconv('UTF-8', 'US-ASCII//TRANSLIT', $url);   
+	//neaiškius simbolius pakeičiam brūkšniukais   
+	$url = preg_replace('/[^A-z0-9-]/', '-', $url);   
+	//išvalom besikartojančius brūkšniukus   
+	$url = preg_replace('/-+/', "-", $url);   
+	//verčiam viską į mažasias raides   
+	$url = strtolower($url);    
+	return $url.'_'.$id.'.html';   
+} 
 /////////////////////////////////////////////////////////////
 ///////// URL PABAIGA
 /////////////////////////////////////////////////////////////
