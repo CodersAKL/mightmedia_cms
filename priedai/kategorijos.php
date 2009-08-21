@@ -159,7 +159,7 @@ HTML;
 		if ($kieno == 'vartotojai')
 			$teises = $_POST['Teises'];
 		else
-			$teises = serialize($_POST['Teises']);
+			$teises = (isset($_POST['Teises'])?serialize($_POST['Teises']):serialize(0));
 		$moderuoti = ((isset($_POST['punktai'])) ? serialize($_POST['punktai']) : '');
 		$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "grupes` SET
 			`pavadinimas` = " . escape($pavadinimas) . ",
