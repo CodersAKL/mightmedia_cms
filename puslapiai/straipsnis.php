@@ -76,11 +76,11 @@ if ($k >= 0 && empty($url['m'])) {
 
 	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape($row['kat']) . " AND `kieno`='straipsniai' ORDER BY `pavadinimas` LIMIT 1", 86400);
 	//$sqlas = mysql_fetch_assoc($sqlas);
-	if (teises($sqlas['teises'], $_SESSION['level'])) {
+	if (teises($sqlas['teises'], $_SESSION['level'])&&!empty($row['date'])) {
 		$text = "<blockquote><i>" . $row['t_text'] . "</i><br><hr></hr><br>\n
 		" . $row['f_text'] . "</blockquote>
 		<hr />{$lang['article']['date']}: " . date('Y-m-d H:i:s ', $row['date']) . "; {$lang['article']['author']}: <b>" . $row['autorius'] . "</b>";
-		lentele($sqlas['pavadinimas'] . " > " . $row['pav'], $text);
+		lentele("<a href=\"?id,{$_GET['id']};k,{$row['kat']}\">".$sqlas['pavadinimas'] . "</a> > " . $row['pav'], $text);
 		include ("priedai/komentarai.php");
 
 		komentarai($url['m'], true);
