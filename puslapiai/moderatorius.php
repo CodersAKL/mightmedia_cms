@@ -19,7 +19,7 @@ if (isset($_SESSION['mod']) && !empty($_SESSION['mod'])) {
 <div>";
 	foreach ($failai as $id => $failas) {
 		if ($failas != 'com' && $failas != 'frm') {
-			$text .= "<div class=\"blokas\"><center><a href=\"?id," . $url['id'] . ";a," . ($id + 1) . "\"><img src=\"images/admin/" . basename($failas, ".php") . ".png\" />" . nice_name($failas) . "</a></center></div>";
+			$text .= "<div class=\"blokas\"><center><a href=\"?id," . $url['id'] . ";a," . ($id + 1) . "\"><img src=\"images/admin/" . basename($failas, ".php") . ".png\" />" .(isset($lang['admin'][basename($failas, ".php")])?$lang['admin'][basename($failas, ".php")]:nice_name($failas)) . "</a></center></div>";
 		}
 		//$text.=$failas;
 	}
