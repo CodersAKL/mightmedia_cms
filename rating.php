@@ -9,7 +9,7 @@ class rating {
 	function __construct($page, $id){
 		$this->page =$page;
 		$this->id =$id;
-		$sel = mysql_query1("SELECT rating_num FROM " . LENTELES_PRIESAGA . "ratings WHERE rating_id = ".escape($this->id)." AND psl = ".escape($this->page)."");
+		$sel = mysql_query1("SELECT `rating_num` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `rating_id` = ".escape($this->id)." AND `psl` = ".escape($this->page)."");
 		if (sizeof($sel) > 0){
 			$total = 0;
 			$rows = 0;
@@ -26,15 +26,15 @@ class rating {
 		}
 	}
 	function set_score($rating, $ip, $page, $id){
-		if (count(mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `IP` = '" . $_SERVER['REMOTE_ADDR'] . "' AND `rating_id` = '$id' AND `psl` = '$page'"))==0){
-			mysql_query1("INSERT INTO " . LENTELES_PRIESAGA . "ratings (rating_id,rating_num,IP,psl) VALUES ('$id','$rating','" . $_SERVER['REMOTE_ADDR'] . "','$page')") or die(mysql_error());
+		if (count(mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `IP` = " . escape($_SERVER['REMOTE_ADDR']) . " AND `rating_id` = ".escape($id)." AND `psl` = ".escape($page).""))==0){
+			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "ratings` (`rating_id`,`rating_num`,`IP`,`psl`) VALUES (".escape($id).",".escape($rating).",".escape($_SERVER['REMOTE_ADDR']) . ",".escape($page).")") or die(mysql_error());
 			$this->votes++;
 			$this->status = '<img src="images/icons/tick_circle.png" alt="yes" />';
 		}
 		else{
 			$this->status = '<img src="images/icons/cross_circle.png" alt="no" />';
 		}
-		$sel = mysql_query1("SELECT rating_num FROM " . LENTELES_PRIESAGA . "ratings WHERE rating_id = '$id'AND psl = '$page'");
+		$sel = mysql_query1("SELECT `rating_num` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `rating_id` = ".escape($id)." AND `psl` = ".escape($page)."");
 		if (sizeof($sel) > 0)		{
 			$total = 0;
 			$rows = 0;
