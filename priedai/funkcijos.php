@@ -21,7 +21,7 @@ if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['Q
 	$remoteaddress = $_SERVER["REMOTE_ADDR"];
 	ban();
 }
-if (isset($_POST) && !empty($_POST) && (isset($_GET['id'])&&$_GET['id']!=999)&& $_SESSION['level']!=1) {
+if (isset($_POST) && !empty($_POST) && (isset($_GET['id'])&&$_GET['id']!=999)&&(isset($conf['puslapiai']['moderatorius.php']['id'])&&$_GET['id']!=$conf['puslapiai']['moderatorius.php']['id'])&& $_SESSION['level']!=1) {
 	include_once (ROOTAS . 'priedai/safe_html.php');
 	foreach ($_POST as $key => $value) {
 		if (!is_array($value))
@@ -718,7 +718,7 @@ function url($str, $link = '') {
 /**
  * Seo url TODO
  */
-function url($url,$id) {   
+function seo_url($url,$id) {   
 	//sušveplinam   
 	$url = iconv('UTF-8', 'US-ASCII//TRANSLIT', $url);   
 	//neaiškius simbolius pakeičiam brūkšniukais   
