@@ -15,7 +15,7 @@ lentele("{$lang['about']['about']} - " . $conf['Pavadinimas'], '<div class="sara
 
 $adminai = '';
 $moderatoriai = '';
-
+ include_once('rating.php');
 //Kešuojam 24 valandom
 $sql = mysql_query1("SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2", 86400);
 if (sizeof($sql) > 0) {
@@ -31,6 +31,6 @@ if (!empty($adminai))
 	lentele("{$lang['about']['admins']}:", $adminai);
 if (!empty($moderatoriai)) //lentele("{$lang['about']['moderators']}:", $moderatoriai);
 
-	unset($adminai, $moderatoriai);
 
+ //rating_form("apie"); 
 ?>

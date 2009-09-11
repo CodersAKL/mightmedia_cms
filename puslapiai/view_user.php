@@ -11,11 +11,11 @@
  **/
 
 if (isset($url['m']) && $url['m'] > 0) {
-	include_once ("priedai/rating_functions.php");
+	include_once ("rating.php");
 	if (isset($_SESSION['id']) && $_SESSION['id'] != $url['m']) {
-		$vote = pullRating($url['m'], true, true, true);
+		$vote = rating_form($page,$url['m']);
 	} else {
-		$vote = pullRating($url['m'], true, true, true, 'novote');
+		$vote = rating_form($page,$url['m'],false);
 	}
 
 	$sql = mysql_query1("SELECT *, INET_NTOA(ip) AS ip FROM `" . LENTELES_PRIESAGA . "users` WHERE `id`='" . $url['m'] . "' LIMIT 1");

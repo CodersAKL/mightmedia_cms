@@ -10,7 +10,7 @@
  * @$Date$
  **/
 
-include_once ("priedai/rating_functions.php");
+include_once ("rating.php");
 
 $text = "";
 $limit = $conf['fotoperpsl'];
@@ -221,7 +221,7 @@ if (!empty($url['m'])) {
 			}
 
 			if ((int)$conf['galbalsuot'] == 1) {
-				$balsavimas = pullRating($row['nid'], false, true, true);
+				$balsavimas = rating_form($page,$row['nid']);
 			} else {
 				$balsavimas = '';
 			}
