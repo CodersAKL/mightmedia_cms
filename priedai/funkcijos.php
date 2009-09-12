@@ -59,9 +59,9 @@ function header_info() {
   <meta name="keywords" content="' . input(strip_tags($conf['Keywords'])) . '" />
   <meta name="author" content="' . input(strip_tags($conf['Copyright'])) . '" />
   <link rel="stylesheet" type="text/css" href="stiliai/system.css" />
+  <link rel="stylesheet" type="text/css" href="stiliai/rating.css" />
   <link rel="stylesheet" type="text/css" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/default.css" />
-  <link href="stiliai/rating_style.css" rel="stylesheet" type="text/css" media="all" />
-  <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="shortcut icon" href="favicon.ico" />
   ' . (isset($conf['puslapiai']['rss.php']) ? '<link rel="alternate" type="application/rss+xml" title="' . input(strip_tags($conf['Pavadinimas'])) . '" href="rss.php" />' : '') . '
   <link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox.css" />
   <!--[if IE]>
@@ -72,7 +72,7 @@ function header_info() {
   <script type="text/javascript" src="javascript/jquery/jquery-ui-personalized-1.6rc6.min.js"></script> 
   <script type="text/javascript" src="javascript/jquery/jquery.tablesorter.js"></script> 
   <script type="text/javascript" src="javascript/pagrindinis.js"></script>  
-  <script type="text/javascript" src="javascript/rating_update.js"></script>	
+  <script type="text/javascript" src="javascript/jquery/rating.js"></script>	
   <script type="text/javascript" src="javascript/jquery/tooltip.js"></script>
   <script type="text/javascript" src="javascript/jquery/jquery.colorbox.js"></script>
   <script type="text/javascript" src="javascript/jquery/jquery.hint.js"></script>
