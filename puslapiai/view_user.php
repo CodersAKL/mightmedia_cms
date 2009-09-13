@@ -13,9 +13,9 @@
 if (isset($url['m']) && $url['m'] > 0) {
 	include_once ("rating.php");
 	if (isset($_SESSION['id']) && $_SESSION['id'] != $url['m']) {
-		$vote = rating_form($page,$url['m']);
+		$vote = rating_form($page,(int)$url['m']);
 	} else {
-		$vote = rating_form($page,$url['m'],false);
+		$vote = rating_form($page,(int)$url['m'],false);
 	}
 
 	$sql = mysql_query1("SELECT *, INET_NTOA(ip) AS ip FROM `" . LENTELES_PRIESAGA . "users` WHERE `id`='" . $url['m'] . "' LIMIT 1");
@@ -113,7 +113,7 @@ if (isset($url['m']) && $url['m'] > 0) {
 		unset($text);
 
 
-		// Jeigu pereziurima TIK informacija, o vartotojas SAVES NEZIURI per nustatyta puslapi
+		// Jeigu perziurima TIK informacija, o vartotojas SAVES NEZIURI per nustatyta puslapi
 		//komentarų nereikės
 		//if(isset($_SESSION['id'])){	include("priedai/komentarai.php");komentarai($url['m'],true);}
 	}

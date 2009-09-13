@@ -351,11 +351,11 @@ CREATE TABLE IF NOT EXISTS `nustatymai` (
 
 INSERT INTO `nustatymai` (`key`, `val`) VALUES
 ('Pavadinimas', 'MightMedia TVS'),
-('Apie', '<br />'),
-('Keywords', ''),
+('Apie', 'Trumpai apie svetainę'),
+('Keywords', 'TVS, mightmedia, coders'),
 ('Copyright', '<a href="http://www.mightmedia.lt" target="_blank">MightMedia TVS</a>'),
-('Palaikymas', '0'),
-('Maintenance', 'Remontuojame<br />'),
+('Palaikymas', '1'),
+('Maintenance', 'Atsiprašome<br /> Svetainė šiuo metu yra tvarkoma.<br /> Prisijungti gali tik administratoriai.'),
 ('Chat_limit', '5'),
 ('News_limit', '5'),
 ('Stilius', 'default'),
