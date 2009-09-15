@@ -5,7 +5,7 @@
 -- Darbinė stotis: mysql2.bendras.com
 -- Atlikimo laikas:  2008 m. Gruodžio 29 d.  15:30
 -- Serverio versija: 5.0.32
--- PHP versija: 5.2.2-2
+-- PHP versija: 5.2.2-2 
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -405,6 +405,7 @@ INSERT INTO `page` (`pavadinimas`, `file`, `place`, `show`) VALUES
 ('Asmeniniai pranešimai', 'pm.php', 0, 'N'),
 ('Profilis', 'view_user.php', 0, 'N'),
 ('Nariai', 'nariai.php', 0, 'Y'),
+('Galerija', 'galerija.php', 0, 'Y'),
 ('Straipsniai', 'straipsnis.php', 0, 'Y');
 
 -- --------------------------------------------------------
