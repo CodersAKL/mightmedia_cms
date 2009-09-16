@@ -58,11 +58,11 @@ if (isset($url['d']) && isnum($url['d']) && LEVEL == 1) {
 	}
 } elseif (isset($url['v']) && !empty($url['v']) && isnum($url['v'])) {
 	$sql = mysql_query1("SELECT id, INET_NTOA(ip) AS ip, action, time FROM `" . LENTELES_PRIESAGA . "logai` WHERE id=" . escape($url['v']) . " LIMIT 1");
-	lentele($sql['ip'] . " - " . kada($sql['time']), input($sql['action']));
+	lentele($sql['ip'] . " - " . date('Y-m-d H:i:s',$sql['time']), input($sql['action']));
 }
 if (!empty($url['t'])) {
 	mysql_query1("TRUNCATE TABLE `" . LENTELES_PRIESAGA . "logai`");
-	mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("Administratorius: " . $_SESSION['username'] . " ištrynė logus.") . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
+	mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape(" " . $_SESSION['username'] . ":{$lang['admin']['logs_logsdeleted'}.") . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
 	header("location: ?id," . $url['id'] . ";a,{$_GET['a']}");
 } else {
 	include_once ("priedai/class.php");
