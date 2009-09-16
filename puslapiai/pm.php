@@ -76,7 +76,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'pm_send' && isset($_SESSION[
 	$msg = $_POST['msg'];
 	$date = time();
 	$sql = mysql_query1("SELECT nick,email FROM " . LENTELES_PRIESAGA . "users WHERE nick=" . escape($to) . " LIMIT 1");
-	if (count($sql) == 0) {
+	if (!isset($sql['nick'])) {
 		$error = "{$lang['user']['pm_noreceiver']}";
 	}
 	if (!isset($error)) {
@@ -96,6 +96,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'pm_send' && isset($_SESSION[
 			klaida("{$lang['system']['error']}", "{$lang['user']['pm_users'] } <b>" . $to . "</b> {$lang['user']['pm_full']}.");
 			redirect("?id," . $url['id'] . "", "meta");
 		}
+	}	else {
+	    klaida($lang['system']['error'],$error);
 	}
 }
 // ######### Paneles rodymas ir zinuciu isvedimas ######################
