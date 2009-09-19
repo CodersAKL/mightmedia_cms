@@ -40,6 +40,7 @@ $chmod_files[] = "galerija/mini";
 $chmod_files[] = "puslapiai";
 $chmod_files[] = "paneles";
 $chmod_files[] = "images/avatars";
+$chmod_files[] = "images/nuorodu";
 // Unikalus kodas, naudojamas svetainės identifikacijai.
 $slaptas = md5(uniqid(rand(), true));
 
