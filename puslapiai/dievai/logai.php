@@ -62,7 +62,7 @@ if (isset($url['d']) && isnum($url['d']) && LEVEL == 1) {
 }
 if (!empty($url['t'])) {
 	mysql_query1("TRUNCATE TABLE `" . LENTELES_PRIESAGA . "logai`");
-	mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape(" " . $_SESSION['username'] . ":{$lang['admin']['logs_logsdeleted'}.") . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
+	mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape(" " . $_SESSION['username'] . ":{$lang['admin']['logs_logsdeleted']}.") . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
 	header("location: ?id," . $url['id'] . ";a,{$_GET['a']}");
 } else {
 	include_once ("priedai/class.php");

@@ -61,7 +61,9 @@ function header_info() {
   <link rel="stylesheet" type="text/css" href="stiliai/system.css" />
   <link rel="stylesheet" type="text/css" href="stiliai/rating.css" />
   <link rel="stylesheet" type="text/css" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/default.css" />
-    <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="shortcut icon" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/favicon.ico" type="image/x-icon">
+
   ' . (isset($conf['puslapiai']['rss.php']) ? '<link rel="alternate" type="application/rss+xml" title="' . input(strip_tags($conf['Pavadinimas'])) . '" href="rss.php" />' : '') . '
   <link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox.css" />
   <!--[if IE]>
