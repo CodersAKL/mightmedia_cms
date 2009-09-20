@@ -85,7 +85,7 @@ if (sizeof($sql2) > 0) {
 			$tr = "2";
 		else
 			$tr = "";
-		$text .= "<div class=\"tr$tr\"><em><a href=\"?id," . $url['id'] . ";p,$p#" . $row['id'] . "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " . user($row['nikas'], $row['niko_id']) . " $extra (" . $row['time'] . ") - " . kada($row['time']) . "</em><br />" . smile(bbchat($row['msg'])) . "</div>";
+		$text .= "<div class=\"tr$tr\"><em><a href=\"?id," . $url['id'] . ";p,$p#" . $row['id'] . "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " . user($row['nikas'], $row['niko_id']) . " $extra (" . $row['time'] . ")</em><br />" . smile(bbchat($row['msg'])) . "</div>";
 
 	}
 } else {

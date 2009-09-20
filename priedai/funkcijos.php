@@ -921,18 +921,19 @@ function kada($ts) {
 	$year = floor($month / 12);
 	$days -= $year * 12;
 	if ($year)
-		return $year . " " . ($year > 1 ? "{$lang['system']['years']}" : "{$lang['system']['year']}") . " " . $lang['system']['ago'];
+			return ($year > 1 ? sprintf($lang['system']['years'],$year) : sprintf($lang['system']['year'],$year));
 	if ($month)
-		return $month . " " . ($month > 1 ? "{$lang['system']['months']}" : "{$lang['system']['month']}") . " " . $lang['system']['ago'];
+				return ($month > 1 ? sprintf($lang['system']['months'],$month) : sprintf($lang['system']['month'],$month));
 	if ($weeks)
-		return $weeks . " " . ($weeks > 1 ? "{$lang['system']['weeks']}" : "{$lang['system']['week']}") . " " . $lang['system']['ago'];
+				return ($weeks > 1 ? sprintf($lang['system']['weeks'],$weeks) : sprintf($lang['system']['week'],$weeks));
 	if ($days)
-		return $days . " " . ($days > 1 ? "{$lang['system']['days']}" : "{$lang['system']['day']}") . " " . $lang['system']['ago'];
+				return ($days > 1 ? sprintf($lang['system']['days'],$days) : sprintf($lang['system']['day'],$days));
 	if ($hours)
-		return $hours . " " . ($hours > 1 ? "{$lang['system']['hours']}" : "{$lang['system']['hour']}") . " " . $lang['system']['ago'];
+				return ($hours > 1 ? sprintf($lang['system']['hours'],$hours) : sprintf($lang['system']['hour'],$hours));
 	if ($mins)
-		return $mins . " " . ($mins > 1 ? "{$lang['system']['minutes']}" : "{$lang['system']['minute']}") . " " . $lang['system']['ago'];
-	return "&lt; 1 {$lang['system']['minute']} {$lang['system']['ago']}";
+				return ($mins > 1 ? sprintf($lang['system']['minutes'],$mins) : sprintf($lang['system']['minute'],$mins));
+	//return "&lt; 1 {$lang['system']['minute']} {$lang['system']['ago']}";
+	return sprintf($lang['system']['minute'],'&lt; 1');
 }
 
 //vercia baitus i zmoniu kalba
