@@ -124,7 +124,7 @@ if ($sekme == false) {
 	$text = registracijos_forma();
 	lentele($title, $text);
 }
-
+unset($title;$text);
 //unset($email, $vardas, $error, $einfo, $pass, $pass, $reg_info);
 
 
