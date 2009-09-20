@@ -612,6 +612,50 @@ $lang['download']['title'] = 'Pavadinimas';
 $lang['download']['no'] = 'Siuntinių nėra';
 $lang['download']['cant'] = 'Jūs neturite teisės siųstis šį failą';
 $lang['download']['notfound'] = 'Failas nerastas';
-$lang['download']['notallowed'] = 'Jums neleid=iama matyti šių failų.';
-
+$lang['download']['notallowed'] = 'Jums neleidžiama matyti šių failų.';
+//setupo kalba
+$lang['setup']['liceanse']='Licensija';
+$lang['setup']['crete_db']='Bandyti sukurti duombazę';
+$lang['setup']['mysql_connected']='Prisijungimas prie MySQL serverio pavyko.';
+$lang['setup']['query']='Užklausa';
+$lang['setup']['mysql_created']='Lentelės sėkmingai sukurtos. Galite tęsti instaliaciją.';
+$lang['setup']['next']='Toliau';
+$lang['setup']['try_again']='Bandyti iš naujo';
+$lang['setup']['create_tables']='Sukurti lenteles';
+$lang['setup']['cant_open']='Nepavyko atverti failo';
+$lang['setup']['cant_write']='Nepavyko įrašyti į failą';
+$lang['setup']['steps']='Įdiegimo stadijos';
+$lang['setup']['file_check']='Failų tikrinimas';
+$lang['setup']['database']='Duomenų bazė';
+$lang['setup']['admin']='Administratoriaus kūrimas';
+$lang['setup']['end']='Pabaiga';
+$lang['setup']['product']='Produktas';
+$lang['setup']['agree']='Sutinku';
+$lang['setup']['file_check_info1']='Žemiau surašyti failai kurie bus reikalingi įdiegiant šią sistemą. Jei sistema surado klaidų prašome jas ištaisyti ir spausti atnaujinti. Kitu atveju jums nebus leidžiama tęsti įdiegimo.';
+$lang['setup']['file_check_legend']='Legenda';
+$lang['setup']['file_check_info2']='Jei prie failo nustatyta ši ikonėlė vadinasi failas yra tinkamai nustatytas.';
+$lang['setup']['file_check_info3']='Jei rasite šią ikonėlę prie nurodyto failo tuomet reikia jį sutvarkyti.';
+$lang['setup']['note']='Priminimas';
+$lang['setup']['file_check_info3']='Sutvarkyti failus, t.y. jums reikia atlikti <strong>chmod</strong>. Visur kur matote įkonėlę <img src="images/icons/cross.png" /> būtina nurodyti <strong>chmod      777</strong> FTP serveryje. <br /><br />';
+$lang['setup']['file']='Failas';
+$lang['setup']['point']='Būsena';
+$lang['setup']['about_error']='Apie klaidą';
+$lang['setup']['chmod_777']='Būtina nurodyti chmod 777 failui';
+$lang['setup']['chmod_777_2']='kadangi esamas chmod yra';
+$lang['setup']['reload']='Atnaujinti';
+$lang['setup']['if_you_think_ok']='Jeigu esate isitikines, kad viskas gerai';
+$lang['setup']['mysql_info']='Žemiau pateiktuose laukeliuose suveskite savo MySQL serverio prisijungimus. Prisijungimai yra reikalingi norint sukurti MightMedia TVS sistemos lenteles nurodytoje duomenų bazėje. <br /><br />
+									Suvedę visus reikiamus duomenis spauskite <strong>"Sukurti lenteles"</strong>. Jei prisijungimas sėkmingai pavyko tuomet išvysite papildomą mygtuką <b>"Toliau"</b>.<br /><br />
+									Atlikę visus veiksmus išvysite sekantį mygtuką pereiti į kitą Meniu punktą. Jei bent vienas iš žingsnių nepavyks jums bus draudžiama tęsti įdiegimą.';
+$lang['setup']['mysql_connect']='MySQL prisijungimo duomenys';
+$lang['setup']['mysql_host']='Serverio adresas';
+$lang['setup']['mysql_user']='Prisijungimo vartotojas';
+$lang['setup']['mysql_pass']='Slaptažodis';
+$lang['setup']['mysql_db']='Duomenų bazė';
+$lang['setup']['mysql_prfx']='Duomenų bazės lentelių pavadinimų priesaga';
+$lang['setup']['admin_info']='Sukurkite pagrindinį administratorių kuris administruos MightMedia
+									TVS.';
+$lang['setup']['end_info']='Sveikiname įdiegus MightMedia TVS (Turinio Valdymo Sistemą).<br />
+									Spauskite "Pabaigti" galutinai užbaigti instaliaciją. Bus ištrintas <b>setup.php</b> failas. Dėl visa ko - patikrinkite prisijungę prie FTP serverio.<br /><br />';
+$lang['setup']['agree_please']='Prašome sutikti su licensija';
 ?>

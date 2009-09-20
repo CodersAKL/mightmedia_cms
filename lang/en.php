@@ -653,5 +653,50 @@ $lang['download']['no'] = 'No downloads';
 $lang['download']['cant'] = 'You cant download this file';
 $lang['download']['notfound'] = 'File not found';
 $lang['download']['notallowed'] = 'You are not allowed to download from here.';
-
+//setupo kalba
+$lang['setup']['liceanse']='Liceanse';
+$lang['setup']['crete_db']='Try to create db';
+$lang['setup']['mysql_connected']='Connected to mysql.';
+$lang['setup']['query']='Query';
+$lang['setup']['mysql_created']='Tables created. Continue, please';
+$lang['setup']['next']='Go';
+$lang['setup']['try_again']='Try again';
+$lang['setup']['create_tables']='Create tables';
+$lang['setup']['cant_open']='Can not open file';
+$lang['setup']['cant_write']='Can not write to file';
+$lang['setup']['steps']='Steps';
+$lang['setup']['file_check']='Files';
+$lang['setup']['database']='Database';
+$lang['setup']['admin']='Admin creation';
+$lang['setup']['end']='End';
+$lang['setup']['product']='Product';
+$lang['setup']['agree']='agree';
+$lang['setup']['file_check_info1']='Below are listed files will be needed for deployment. If the system has found errors, please correct them and click update. Otherwise, you will not be allowed to continue the installation.';
+$lang['setup']['file_check_legend']='Legend';
+$lang['setup']['file_check_info2']='means OK';
+$lang['setup']['file_check_info3']='means bad premission.';
+$lang['setup']['note']='Note';
+$lang['setup']['file_check_info3']='Please <strong>chmod</strong> files with <img src="images/icons/cross.png" /> icon <strong>chmod  to    777</strong> in FTP server. <br /><br />';
+$lang['setup']['file']='File';
+$lang['setup']['point']='State';
+$lang['setup']['about_error']='About error';
+$lang['setup']['chmod_777']='chmod this file to 777';
+$lang['setup']['chmod_777_2']=' now it is ';
+$lang['setup']['reload']='Reload';
+$lang['setup']['if_you_think_ok']='If you believe that all is well';
+$lang['setup']['mysql_info']='	
+Enter into the fields below to your MySQL server logins. Logins are required to create MightMedia CMS system tables into the data base. <br /> <br />
+Bring together all the data <strong> click on "Create tables" </ strong>. If you login successfully then you will see an additional <b> "Go" </ b>. <br /> <br />
+After completing all the steps you will see the next button to switch to another menu item. If at least one of the steps fail you will not continue the installation.';
+$lang['setup']['mysql_connect']='MySQL Connection form';
+$lang['setup']['mysql_host']='Host';
+$lang['setup']['mysql_user']='User';
+$lang['setup']['mysql_pass']='Password';
+$lang['setup']['mysql_db']='Database';
+$lang['setup']['mysql_prfx']='Prefix';
+$lang['setup']['admin_info']='Create a master administrator who will manage MightMedia
+CMS.';
+$lang['setup']['end_info']='Welcome to the introduction of MightMedia CMS (Content Management System). <br />
+Click "Finish" to complete the final installation. Will be deleted <b> setup.php </ b> file. Just in case - check online to an FTP server. <br /> <br />';
+$lang['setup']['agree_please']='Please agree to the License';
 ?>

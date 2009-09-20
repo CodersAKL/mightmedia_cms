@@ -368,7 +368,6 @@ INSERT INTO `nustatymai` (`key`, `val`) VALUES
 ('pirminis', 'naujienos.php'),
 ('keshas', '1'),
 ('kmomentarai_sveciams', '0'),
-('kalba', 'lt.php');
 -- --------------------------------------------------------
 
 --
