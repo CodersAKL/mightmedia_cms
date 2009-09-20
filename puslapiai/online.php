@@ -37,12 +37,14 @@ foreach ($result as $row) {
 	//if (!empty($row['user'])) {
 	$narsykle = ((isset($row['agent'])) ? browser($row['agent']) : '?');
 	$info[$i] = array("{$lang['online']['who']}" => user($row['user'], $row['id']), "{$lang['online']['timestamp']}" => date('i:s', $timestamp - $row['timestamp']), "{$lang['online']['clicks']}" => $row['clicks']);
+	$flag = getUserCountry(); //"http://api.wipmania.com/$row['ip']";
+
 	if (defined("LEVEL") && LEVEL == 1) {
 		$info[$i]['IP'] = "<a href='http://whois.serveriai.lt/" . $row['ip'] . "' target='_blank' title='" . $row['ip'] . "'>" . $row['ip'] . "</a>";
 		$info[$i][$lang['online']['page']] = '<a href="?' . $row['file'] . '"><img src="images/icons/link.png" alt="page" border="0" class="middle"/></a>';
 		$info[$i][$lang['online']['browser']] = "<div>" . $narsykle . "</div>";
 		$info[$i]['OS'] = get_user_os();
-		$info[$i][$lang['online']['country']] = '<img src="http://api.hostip.info/flag.php?ip=' . $row['ip'] . '" height="16" ALT="' . $lang['online']['country'] . '" />';
+		$info[$i][$lang['online']['country']] = '<img src="images/icons/flags/' . $flag . '.png " height="12" />';
 	}
 	$i++;
 }
@@ -55,4 +57,20 @@ lentele("{$lang['online']['users']} - " . $u, $bla->render($info));
 //unset($user,$nekvepuoja,$file,$img,$content,$i,$u,$q,$row,$extra);
 
 
+
+function getUserCountry() {
+    $url = 'http://api.wipmania.com/'.getip().'?'.adresas();
+    $ch = curl_init();
+    $headers = "Typ: phpcurl\r\n";
+    $headers .= "Ver: 1.0\r\n";
+    $headers .= "Connection: Close\r\n\r\n";
+    $timeout = 5;
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array($headers));
+    $content = curl_exec($ch);
+    curl_close($ch);
+    return $content;
+}
 ?>
