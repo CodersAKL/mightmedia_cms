@@ -232,6 +232,7 @@ HTML;
 		die("{$lang['setup']['cant_write']} (" . $chmod_files[0] . ")");
 	}
 	fclose($handle);
+	@chmod('setup.php', 0777 );
 	unlink('setup.php');
 	//}
 	header("Location: index.php");
