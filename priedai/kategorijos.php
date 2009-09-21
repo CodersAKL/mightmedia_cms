@@ -266,7 +266,8 @@ HTML;
 			foreach ($failai as $file) {
 				if ($file['type'] == 'file') {
 
-					$puslapiai[basename($file['name'])] = basename($file['name']);
+					//$puslapiai[basename($file['name'])] = basename($file['name']);
+					$puslapiai[basename($file['name'])] =(isset($lang['admin'][basename($file['name'],'.php')])?$lang['admin'][basename($file['name'],'.php')]:nice_name(basename($file['name'],'.php')));
 				}
 			}
 			$puslapiai['com'] = "<b>" . $lang['admin']['komentarai'] . "(mod)</b>";

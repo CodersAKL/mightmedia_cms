@@ -699,4 +699,41 @@ CMS.';
 $lang['setup']['end_info']='Welcome to the introduction of MightMedia CMS (Content Management System). <br />
 Click "Finish" to complete the final installation. Will be deleted <b> setup.php </ b> file. Just in case - check online to an FTP server. <br /> <br />';
 $lang['setup']['agree_please']='Please agree to the License';
+//puslapiai
+$lang['pages']['view_user.php']='Profile';
+$lang['pages']['user_gal.php']='User gallery';
+$lang['pages']['straipsnis.php']='Articles';
+$lang['pages']['slaptazodzio_priminimas.php']='Password remain';
+$lang['pages']['siustis.php']='Downloads';
+$lang['pages']['search.php']='Search';
+$lang['pages']['rss.php']='RSS';
+$lang['pages']['reg.php']='Registration';
+$lang['pages']['pm.php']='PM';
+$lang['pages']['online.php']='Online';
+$lang['pages']['nuorodos.php']='Links';
+$lang['pages']['naujkat.php']='News categories';
+$lang['pages']['naujienos.php']='News';
+$lang['pages']['nariai.php']='Members';
+$lang['pages']['moderatorius.php']='Moderator';
+$lang['pages']['kontaktas.php']='Contact';
+$lang['pages']['knyga.php']='Guestbook';
+$lang['pages']['kas_naujo.php']='what is new?';
+$lang['pages']['galerija.php']='Gallery';
+$lang['pages']['frm.php']='Forum';
+$lang['pages']['edit_user.php']='Edit profile';
+$lang['pages']['duk.php']='FAQ';
+$lang['pages']['deze.php']='Shoutbox archive';
+$lang['pages']['blsavimo_archyvas.php']='Poll archive';
+$lang['pages']['apie.php']='About';
+//blokai
+$lang['blocks']['vartotojas.php']='User';
+$lang['blocks']['user_top.php']='User TOP 10';
+$lang['blocks']['shoutbox.php']='Shoutbox';
+$lang['blocks']['online2.php']='Online';
+$lang['blocks']['meniu.php']='Menuu';
+$lang['blocks']['kas_naujo.php']='What is new?';
+$lang['blocks']['kalendorius.php']='Calendar';
+$lang['blocks']['info.php']='Info';
+$lang['blocks']['apklausa.php']='Poll';
+$lang['blocks']['admin.php']='Admin info';
 ?>

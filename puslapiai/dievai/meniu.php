@@ -168,7 +168,9 @@ lentele($page_pavadinimas,$text);
 			if ($file['type'] == 'file') {
 				//$sql = mysql_query1("SELECT pavadinimas FROM `" . LENTELES_PRIESAGA . "page` WHERE file=" . escape(basename($file['name'])) . " LIMIT 1");
 				//if (($sql) == 0) {
-				$puslapiai[basename($file['name'])] = basename($file['name']) . ": " . $file['sizetext'] . "\n";
+				//$puslapiai[basename($file['name'])] = basename($file['name']) . ": " . $file['sizetext'] . "\n";
+				if($file['name']!=='klaida.php' && !isset($conf['puslapiai'][$file['name']]['id']))
+				$puslapiai[basename($file['name'])] = (isset($lang['pages'][$file['name']])?$lang['pages'][$file['name']]:nice_name(basename($file['name'],'.php')));
 				//}
 			}
 		}
@@ -223,7 +225,7 @@ return fale;\">[{$lang['admin']['page_link']}]</a>" => array("type" => "select",
 
 			include_once ("priedai/class.php");
 			$bla = new forma();
-			lentele(input($sql['file'] . " - " . $sql['pavadinimas']), $bla->form($psl, $lang['admin']['edit']));
+			lentele($sql['pavadinimas'], $bla->form($psl, $lang['admin']['edit']));
 		}
 	}
 
@@ -284,7 +286,7 @@ lentele($page_pavadinimas,$text);
 
 				include_once ("priedai/class.php");
 				$bla = new forma();
-				lentele(input($sql['file'] . " - " . $sql['pavadinimas']), $bla->form($puslapis, $lang['admin']['edit']));
+				lentele($sql['pavadinimas'], $bla->form($puslapis, $lang['admin']['edit']));
 			} else {
 				klaida($lang['system']['warning'], $lang['admin']['page_cantedit']);
 			}

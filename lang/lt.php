@@ -658,4 +658,41 @@ $lang['setup']['admin_info']='Sukurkite pagrindinį administratorių kuris admin
 $lang['setup']['end_info']='Sveikiname įdiegus MightMedia TVS (Turinio Valdymo Sistemą).<br />
 									Spauskite "Pabaigti" galutinai užbaigti instaliaciją. Bus ištrintas <b>setup.php</b> failas. Dėl visa ko - patikrinkite prisijungę prie FTP serverio.<br /><br />';
 $lang['setup']['agree_please']='Prašome sutikti su licensija';
+//puslapiai
+$lang['pages']['view_user.php']='Nario profilis';
+$lang['pages']['user_gal.php']='Nario galerija';
+$lang['pages']['straipsnis.php']='Straipsniai';
+$lang['pages']['slaptazodzio_priminimas.php']='Slaptažodžio priminimas';
+$lang['pages']['siustis.php']='Siuntiniai';
+$lang['pages']['search.php']='Paieška';
+$lang['pages']['rss.php']='RSS';
+$lang['pages']['reg.php']='Registracija';
+$lang['pages']['pm.php']='Privačios žinutės';
+$lang['pages']['online.php']='Naršo';
+$lang['pages']['nuorodos.php']='Nuorodos';
+$lang['pages']['naujkat.php']='Naujienų kategorijos';
+$lang['pages']['naujienos.php']='Naujienos';
+$lang['pages']['nariai.php']='Nariai';
+$lang['pages']['moderatorius.php']='Moderatorius';
+$lang['pages']['kontaktas.php']='Kontaktai';
+$lang['pages']['knyga.php']='Svečių knyga';
+$lang['pages']['kas_naujo.php']='Kas naujo?';
+$lang['pages']['galerija.php']='Galerija';
+$lang['pages']['frm.php']='Forumas';
+$lang['pages']['edit_user.php']='Redaguoti profilį';
+$lang['pages']['duk.php']='D.U.K';
+$lang['pages']['deze.php']='Šaukyklos archyvas';
+$lang['pages']['blsavimo_archyvas.php']='Apklausų archyvas';
+$lang['pages']['apie.php']='Apie';
+//blokai
+$lang['blocks']['vartotojas.php']='Narys';
+$lang['blocks']['user_top.php']='Narių TOP 10';
+$lang['blocks']['shoutbox.php']='Šaukykla';
+$lang['blocks']['online2.php']='Naršo';
+$lang['blocks']['meniu.php']='Meniu';
+$lang['blocks']['kas_naujo.php']='Kas naujo?';
+$lang['blocks']['kalendorius.php']='Kalendorius';
+$lang['blocks']['info.php']='Informacija';
+$lang['blocks']['apklausa.php']='Apklausa';
+$lang['blocks']['admin.php']='Administracijos info';
 ?>

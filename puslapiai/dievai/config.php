@@ -48,7 +48,8 @@ foreach ($kalbos as $file) {
 }
 $puslapiai = array_keys($conf['puslapiai']);
 foreach ($puslapiai as $key) {
-	$psl[$key] = $conf['puslapiai'][$key]['file'];
+	//$psl[$key] = $conf['puslapiai'][$key]['file'];
+	$psl[$key] = (isset($lang['pages'][$key])?$lang['pages'][$key]:nice_name(basename($key,'.php')));
 }
 
 $nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), 

@@ -161,7 +161,8 @@ HTML;
 				$sql = mysql_query1("SELECT file FROM `" . LENTELES_PRIESAGA . "panel` WHERE file=" . escape(basename($file['name'])) . " LIMIT 1");
 				//echo $sql['file'];
 				if ($sql['file'] != basename($file['name'])) {
-					$paneles[basename($file['name'])] = basename($file['name']) . ": " . $file['sizetext'] . "\n";
+					//$paneles[basename($file['name'])] = basename($file['name']) . ": " . $file['sizetext'] . "\n";
+					$paneles[basename($file['name'])] =(isset($lang['blocks'][$file['name']])?$lang['blocks'][$file['name']]:nice_name(basename($file['name'],'.php')));
 				}
 			}
 		}
@@ -219,7 +220,7 @@ HTML;
 
 			include_once ("priedai/class.php");
 			$bla = new forma();
-			lentele(input(basename($sql['file']) . " - " . $sql['panel']), $bla->form($panele, "Bloko redagavimas"));
+			lentele($sql['panel'], $bla->form($panele, "Bloko redagavimas"));
 		}
 	}
 
@@ -282,7 +283,7 @@ HTML;
 
 					include_once ("priedai/class.php");
 					$bla = new forma();
-					lentele(input($sql['file'] . " - " . $sql['panel']), $bla->form($panele));
+					lentele($sql['panel'], $bla->form($panele));
 				} else {
 					klaida($lang['system']['warning'], $lang['admin']['panel_cantedit']);
 				}
