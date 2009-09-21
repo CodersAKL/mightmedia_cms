@@ -112,9 +112,9 @@ if (isset($_POST['next_msyql'])) {
 
 		// Sukuriamos visos MySQL leneteles is SVN Trunk
 		if (!file_exists('sql.sql')) {
-			$sql = file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql.sql');
+			$sql = file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql'.($_SESSION['language']=='en.php'?'(en.php)':'').'.sql');
 		} else {
-			$sql = file_get_contents('sql.sql');
+			$sql = file_get_contents('sql'.($_SESSION['language']=='en.php'?'(en.php)':'').'.sql');
 		}
 
 		// Paruošiam užklausas
