@@ -145,7 +145,7 @@ HTML;
 				if (strlen($show) > 1) {
 					$align = 'Y';
 				}
-				$teisess = serialize($_POST['Teises']);
+				$teisess = serialize((isset($_POST['Teises'])?$_POST['Teises']:0));
 				$sql = "INSERT INTO `" . LENTELES_PRIESAGA . "panel` (`panel`, `file`, `place`, `align`, `show`, `teises`) VALUES (" . escape($panel) . ", " . escape($file) . ", '0', " . escape($align) . ", " . escape($show) . ", " . escape($teisess) . ")";
 				mysql_query1($sql);
 				delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC");
@@ -186,7 +186,7 @@ HTML;
 	elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
 		if (isset($_POST['Redaguoti_panele']) && $_POST['Redaguoti_panele'] == "{$lang['admin']['edit']}") {
 			$panel = input($_POST['Panel']);
-			$teisess = serialize($_POST['Teises']);
+			$teisess = serialize((isset($_POST['Teises'])?$_POST['Teises']:0));
 			if (empty($panel) || $panel == '') {
 				$panel = $lang['admin']['panel_new'];
 			}

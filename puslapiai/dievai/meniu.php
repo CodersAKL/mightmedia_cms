@@ -143,7 +143,7 @@ lentele($page_pavadinimas,$text);
 	} elseif (isset($url['n']) && $url['n'] == 1) {
 		if (isset($_POST['Naujas_puslapis']) && $_POST['Naujas_puslapis'] == $lang['admin']['page_create']) {
 			$psl = input($_POST['Page']);
-			$teises = serialize($_POST['Teises']);
+			$teises = serialize((isset($_POST['Teises'])?$_POST['Teises']:0));
 			$file = input($_POST['File']);
 		/*if (!file_exists("puslapiai/" . $file)) {
 				klaida($lang['system']['error'], "<font color='red'>" . $file . "</font> ");
@@ -197,7 +197,7 @@ return fale;\">[{$lang['admin']['page_link']}]</a>" => array("type" => "select",
 	elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
 		if (isset($_POST['Redaguoti_psl']) && $_POST['Redaguoti_psl'] == $lang['admin']['edit']) {
 			$psl = input($_POST['pslp']);
-			$teises = serialize($_POST['Teises']);
+			$teises = serialize((isset($_POST['Teises'])?$_POST['Teises']:0));
 			if (empty($psl) || $psl == '') {
 				$psl = $lang['admin']['page_text'];
 			}

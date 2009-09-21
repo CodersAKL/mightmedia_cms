@@ -390,22 +390,21 @@ CREATE TABLE IF NOT EXISTS `page` (
 --
 
 INSERT INTO `page` (`pavadinimas`, `file`, `place`, `show`) VALUES
-('Forumas', 'frm.php', 4, 'Y'),
-('Naujienos', 'naujienos.php', 3, 'Y'),
-('Apie', 'apie.php', 2, 'Y'),
-('Registracija', 'reg.php', 0, 'N'),
-('Nuorodos', 'nuorodos.php', 0, 'Y'),
-('Slaptažodis', 'slaptazodzio_priminimas.php', 2, 'N'),
-('Profilio redagavimas', 'edit_user.php', 1, 'N'),
+('Forumas', 'frm.php', 3, 'Y'),
+('Naujienos', 'naujienos.php', 1, 'Y'),
+('Apie', 'apie.php', 5, 'Y'),
+('Registracija', 'reg.php', 13, 'N'),
+('Slaptažodis', 'slaptazodzio_priminimas.php', 12, 'N'),
+('Profilio redagavimas', 'edit_user.php', 11, 'N'),
 ('Paieška', 'search.php', 6, 'Y'),
-('Kontaktai', 'kontaktas.php', 7, 'Y'),
-('Prisijungę', 'online.php', 1, 'Y'),
-('Archyvas', 'deze.php', 0, 'N'),
+('Kontaktai', 'kontaktas.php', 6, 'Y'),
+('Prisijungę', 'online.php', 7, 'Y'),
+('Archyvas', 'deze.php', 8, 'N'),
 ('Asmeniniai pranešimai', 'pm.php', 0, 'N'),
-('Profilis', 'view_user.php', 0, 'N'),
-('Nariai', 'nariai.php', 0, 'Y'),
-('Galerija', 'galerija.php', 0, 'Y'),
-('Straipsniai', 'straipsnis.php', 0, 'Y');
+('Profilis', 'view_user.php', 9, 'N'),
+('Nariai', 'nariai.php', 10, 'Y'),
+('Galerija', 'galerija.php', 4, 'Y'),
+('Straipsniai', 'straipsnis.php', 2, 'Y');
 
 -- --------------------------------------------------------
 
