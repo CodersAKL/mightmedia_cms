@@ -33,7 +33,7 @@ else {
 }
 
 if (isset($_SERVER['HTTP_REFERER'])) {
-	$ref = $_SERVER['HTTP_REFERER'];
+	$ref = strip_tags($_SERVER['HTTP_REFERER']);
 } //is kur atejo
 else {
 	$ref = 'Direct Link';
@@ -62,7 +62,7 @@ if (!isset($_COOKIE["uid"])) {
 }
 
 if (!check_name($uid)) {
-	echo "unsetinau";
+	//echo "unsetinau";
 	setcookie("uid", "", time() - 3600);
 	unset($uid);
 }
@@ -257,6 +257,7 @@ function curl_get_file_contents($URL) {
 	if (function_exists('curl_init')) {
 		$c = curl_init();
 		curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 5);
 		curl_setopt($c, CURLOPT_URL, $URL);
 		$contents = curl_exec($c);
 		curl_close($c);
@@ -277,6 +278,11 @@ function browser($browser) {
 	} else {
 		return 'curl error';
 	}
+}
+function getUserCountry() {
+    $url = 'http://api.wipmania.com/'.getip().'?'.adresas();
+    $content = curl_get_file_contents($ch);
+    return $content;
 }
 
 ?>

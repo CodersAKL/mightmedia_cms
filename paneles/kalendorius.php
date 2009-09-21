@@ -13,7 +13,7 @@ $redagavimas = "Ne";
 
 function svente($array, $siandien = '', $return = '') {
 
-	//Gauname šiandienos (mėnesis-diena)
+//Gauname šiandienos (mėnesis-diena)
 	if (!$siandien) {
 		$siandien = date('n-j');
 	}
@@ -108,7 +108,7 @@ function showCalendar($year = 0, $month = 0) {
 		if (!empty($svente)) {
 			$return .= "<td$class ><div style='color:red' title=\"<b>{$lang['calendar']['this']}</b><br/>" . $svente . "<br/>\">$actday</div></td>";
 		} else {
-			$return .= "<td$class>$actday</td>";
+			$return .= "<td$class>".($actday<=$today['mday']&&puslapis('kas_naujo.php')?"<a href='?id,".puslapis('kas_naujo.php').';d,'.mktime(23, 59, 59, $month, $actday, $year)."'>$actday</a>":$actday)."</td>";
 		}
 	}
 
@@ -131,7 +131,7 @@ function showCalendar($year = 0, $month = 0) {
 			if (!empty($svente)) {
 				$return .= "<td$class ><div style='color:red' title=\"<b>{$lang['calendar']['this']}</b><br/>" . $svente . "<br/>\">$actday</div></td>";
 			} else {
-				$return .= "<td$class>$actday</td>";
+				$return .= "<td$class>".($actday<=$today['mday']&&puslapis('kas_naujo.php')?"<a href='?id,".puslapis('kas_naujo.php').';d,'.mktime(23, 59, 59, $month, $actday, $year)."'>$actday</a>":$actday)."</td>";
 			}
 		}
 
@@ -156,7 +156,7 @@ function showCalendar($year = 0, $month = 0) {
 				if (!empty($svente)) {
 					$return .= "<td$class ><div style='color:red' title=\"<b>{$lang['calendar']['this']}</b><br/>" . $svente . "<br/>\">$actday</div></td>";
 				} else {
-					$return .= "<td$class>$actday</td>";
+					$return .= "<td$class>".($actday<=$today['mday']&&puslapis('kas_naujo.php')?"<a href='?id,".puslapis('kas_naujo.php').';d,'.mktime(23, 59, 59, $month, $actday, $year)."'>$actday</a>":$actday)."</td>";
 				}
 			} else {
 				$return .= '<td>&nbsp;</td>';
