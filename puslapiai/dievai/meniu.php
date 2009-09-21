@@ -8,7 +8,7 @@
 				var order = $('#test-list').sortable('serialize');
 				$("#la").show("slow");
 				$("#la").hide("slow");
-				$.post("<?php echo "?" . $_SERVER['QUERY_STRING']; ?>",{'order':'order'});
+				$.post("<?php echo "?" . $_SERVER['QUERY_STRING']; ?>",{order:order});
 			}
 		});
 		$("select[multiple]").asmSelect({
@@ -294,7 +294,7 @@ lentele($page_pavadinimas,$text);
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] . '" style="align:right"><img src="images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
 <a href="?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record1['id'] . '" style="align:right"><img src="images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '" align="right" /></a> 
-<img src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
+<img src="images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" style="'.($record1['parent'] != 0 ? "padding-left:20px" : "").'" />
 ' . ($record1['parent'] != 0 ? $parents[$record1['parent']] . " > " : "") . $record1['pavadinimas'] . '
 </li> ';
 			
