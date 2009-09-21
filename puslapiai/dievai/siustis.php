@@ -46,29 +46,27 @@ unset($buttons);
 include_once ("priedai/kategorijos.php");
 kategorija("siuntiniai", true);
 $sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `path`=0 ORDER BY `id` DESC");
-if (sizeof($sql) > 0) {
-	foreach ($sql as $row) {
+	if (sizeof($sql) > 0) {
+		foreach ($sql as $row) {
 
-		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
+			$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
+			if (sizeof($sql2) > 0) {
+				$subcat = '';
+				foreach ($sql2 as $path) {
 
-		$subcat = '';
-		if (sizeof($sql2) > 0) {
-			foreach ($sql as $path) {
+					$subcat .= "->" . $path['pavadinimas'];
+					$kategorijos[$row['id']] = $row['pavadinimas'];
+					$kategorijos[$path['id']] = $row['pavadinimas'] . $subcat;
 
-				$subcat .= "->" . $path['pavadinimas'];
+
+				}
+			} else {
 				$kategorijos[$row['id']] = $row['pavadinimas'];
-				$kategorijos[$path['id']] = $row['pavadinimas'] . $subcat;
-
-
 			}
-		} else {
-			$kategorijos[$row['id']] = $row['pavadinimas'];
+
 
 		}
-
-
 	}
-}
 /*else
 {
 $kategorijos[] = "{$lang['system']['nocategories']}";
