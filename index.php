@@ -86,13 +86,20 @@ include_once ("priedai/header.php");
 if (is_file('setup.php') && defined('LEVEL') && LEVEL == 1 && !@unlink('setup.php')) {
 	klaida('Demesio / Warning', '<h3>Neištrintas setup.php failas.</h3> Tai saugumo spraga. Prašome pašalinkite šį failą iš serverio arba pakeiskite jo pavadinimą. /Please, remove setup.php file from server.');
 }
-include_once ('stiliai/' . $conf['Stilius'] . '/index.php');
+if (empty($_GET['ajax'])) {
+	include_once ('stiliai/' . $conf['Stilius'] . '/index.php');
+}
+else {
+	include_once($page . ".php");
+}
+
 mysql_close($prisijungimas_prie_mysql);
 $m2 = explode(" ", microtime());
 $etime = $m2[1] + $m2[0];
 $ttime = ($etime - $stime);
 $ttime = number_format($ttime, 7);
-//echo '<!-- Generated '.apvalinti($ttime,2 ).'s. -->';
+if (defined("LEVEL") && LEVEL ==1)
+	echo '<!-- Generated '.apvalinti($ttime,2 ).'s. -->';
 ob_end_flush();
 
 ?>
