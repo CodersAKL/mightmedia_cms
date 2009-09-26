@@ -368,7 +368,7 @@ INSERT INTO `nustatymai` (`key`, `val`) VALUES
 ('galkom', '1'),
 ('pirminis', 'naujienos.php'),
 ('keshas', '1'),
-('kmomentarai_sveciams', '0'),
+('kmomentarai_sveciams', '0');
 -- --------------------------------------------------------
 
 --
