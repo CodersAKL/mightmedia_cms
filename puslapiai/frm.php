@@ -279,7 +279,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
   </tr>
   <tr class="tr">
     <td class="td" height="93" align="center" valign="middle">' . avatar($row['email']) . '</td>
-    <td class="td" valign="top"><br />' . bbcode($row['zinute']) . '</td>
+    <td class="td" valign="top"><br />' . bbcode(wrap($row['zinute'],60) . '</td>
   </tr>
   <tr class="tr2">
     <td class="td2" ><a href="javascript:window.scroll(0,0)"><font size="1">▲</font></a></td>
