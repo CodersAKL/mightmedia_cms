@@ -56,13 +56,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'siusti') {
 		} else {
 		//$sql = mysql_fetch_assoc($sql);
 			$slaptas = random_name();
-			$msg = "
-				 {$lang['user']['hello']} <b>" . $sql['nick'] . "</b>,<br/>
+			$msg = "<b>" . $sql['nick'] . "</b>,<br/>
 				 {$lang['pass']['mail']}
  <a href='http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "/?id," . $_GET['id'] . ";c," . $slaptas . "'>http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "/?id," . $_GET['id'] . ";c," . $slaptas . "</a>
 <hr>";
 			ini_set("sendmail_from", $conf['Pastas']);
-			mail($email, strip_tags($conf['Pastas']) . " {$lang['pass']['remain']}", $msg, "From: " . $conf['Pavadinimas'] . "<" . $conf['Pastas'] . ">\r\nContent-type: text/html; charset=utf-8");
+			mail($email, "=?UTF-8?Q?".strip_tags($conf['Pavadinimas']) ." ". $lang['pass']['remain']."?=", $msg, "From: " . $conf['Pavadinimas'] . "<" . $conf['Pastas'] . ">\r\nContent-type: text/html; charset=utf-8");
 			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `slaptas` = " . escape($slaptas) . " WHERE nick=" . escape($sql['nick']) . " LIMIT 1");
 			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['pass']['remain']}: Nick: " . $sql['nick'] . " Emailas: " . $sql['email']) . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
 
