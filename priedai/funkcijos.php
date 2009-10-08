@@ -101,18 +101,37 @@ function header_info() {
 <![endif]-->
 ';
 }
-// Nupiesiam vartotojo avatara
+
+/**
+ * Gražina vartotojo avatarą
+ * @param emeilas $mail
+ * @param dydis px $size
+ * @return formated html
+ */
 function avatar($mail, $size = 80) {
-	if(file_exists('images/avatars/'.md5($mail).'.jpeg')){
-	$result='<img src="images/avatars/'.md5($mail).'.jpeg"  width="' . $size . '" height="' . $size . '" alt="avataras" />';}else{	$result = '<img src="http://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . htmlentities($size . '&r=any&default=' . urlencode(adresas() . 'images/avatars/no_image.jpg') . '&time=' . time()) . '"  width="' . $size . '" alt="avataras" />';}
+	if(file_exists('images/avatars/'.md5($mail).'.jpeg')) {
+		$result='<img src="images/avatars/'.md5($mail).'.jpeg"  width="' . $size . '" height="' . $size . '" alt="avataras" />';}else {	$result = '<img src="http://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . htmlentities($size . '&r=any&default=' . urlencode(adresas() . 'images/avatars/no_image.jpg') . '&time=' . time()) . '"  width="' . $size . '" alt="avataras" />';}
 	return $result;
 }
+
+/**
+ * Sutvarkom failo pavadinimą
+ * @param string $name
+ * @return formated string
+ */
 function nice_name($name) {
 	$name = ucfirst_utf8($name);
-	$name = str_replace(".php", "", $name);
+	$name = basename($name,'.php');
 	$name = str_replace("_", " ", $name);
 	return $name;
 }
+
+/**
+ *
+ * @global <type> $_SESSION
+ * @param <type> $failas
+ * @return <type>
+ */
 function ar_admin($failas) {
 	global $_SESSION;
 	if ((is_array(unserialize($_SESSION['mod'])) && in_array($failas, unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1)
@@ -120,6 +139,12 @@ function ar_admin($failas) {
 	else
 		return false;
 }
+
+/**
+ * Pirma raidė didžioji (utf-8)
+ * @param string $str
+ * @return string
+ */
 function ucfirst_utf8($str) {
 	if (mb_check_encoding($str, 'UTF-8')) {
 		$first = mb_substr(mb_strtoupper($str, "utf-8"), 0, 1, 'utf-8');
@@ -128,6 +153,13 @@ function ucfirst_utf8($str) {
 		return $str;
 	}
 }
+
+/**
+ * Sutrumpina stringa iki nurodyto ilgio (saugiai utf-8)
+ * @param string $str
+ * @param ilgis $start
+ * @return string
+ */
 function utf8_substr($str, $start) {
 	preg_match_all("/./u", $str, $ar);
 
@@ -138,11 +170,14 @@ function utf8_substr($str, $start) {
 		return join("", array_slice($ar[0], $start));
 	}
 }
-// Svetaines adresui gauti
+
+/**
+ * Svetainės adresui gauti
+ * @return string
+ */
 function adresas() {
 	return "http://" . $_SERVER["HTTP_HOST"] . preg_replace("/[^\/]*$/", "", $_SERVER["PHP_SELF"]);
 }
-
 
 /**
  * Patikrina ar puslapis egzistuoja ir ar vartotojas turi teise ji matyti bei grazinam puslapio ID
@@ -167,6 +202,13 @@ function puslapis($puslapis, $extra = false) {
 	} else
 		return false;
 }
+
+/**
+ * Gražina true arba false (nustatom vartotojo teises)
+ * @param serialize array $mas
+ * @param int $lvl
+ * @return true/false
+ */
 function teises($mas, $lvl) {
 	$teises = @unserialize($mas);
 	if ($lvl == 1 || (is_array($teises) && in_array($lvl, $teises)) || empty($teises))
@@ -174,6 +216,7 @@ function teises($mas, $lvl) {
 	else
 		return false;
 }
+
 /**
  * Uždrausti IP ant serverio
  *
@@ -185,14 +228,7 @@ function ban($ipas = '', $kodel = '') {
 		$kodel = $lang['system']['forhacking'].' - '.input(str_replace("\n","",$_SERVER['QUERY_STRING']));
 	if (!isset($ipas) || empty($ipas))
 		$ipas = getip();
-	//$lines = file('.htaccess');
-	//foreach ($lines as $key => $value) {
-		//echo "$key+1=>$value<br />";
-		//if ($value == 'Allow from all')
-		//	$trinti = $key + 1;
-//	}
-	//echo $trinti;
-	//delLineFromFile('.htaccess', $trinti);
+
 	$atidaryti = fopen(".htaccess", "a");
 	fwrite($atidaryti, '# '.$kodel." \nSetEnvIf Remote_Addr \"^{$ipas}\" draudziam\n");
 	fclose($atidaryti);
@@ -215,16 +251,23 @@ HTML;
 		die("<center><h1>{$lang['system']['nohacking']}!</h1><font color='red'><b>" . $kodel . " - {$lang['system']['forbidden']}<blink>!</blink></b></font><hr/></center>");
 	}
 }
+
+/**
+ * Nurodytai eilutei iš failo trinti
+ * @global kalba $lang
+ * @param failas $fileName
+ * @param eilutė $lineNum
+ */
 function delLineFromFile($fileName, $lineNum) {
 	global $lang;
 	// check the file exists
 	if (!is_writable($fileName)) {
-		// print an error
+	// print an error
 		klaida($lang['system']['error'], $lang['system']['error']);
 		// exit the function
 		exit;
 	} else {
-		// read the file into an array
+	// read the file into an array
 		$arr = file($fileName);
 	}
 
@@ -233,7 +276,7 @@ function delLineFromFile($fileName, $lineNum) {
 
 	// check if the line to delete is greater than the length of the file
 	if ($lineToDelete > sizeof($arr)) {
-		// print an error
+	// print an error
 		klaida($lang['system']['error'], "{$lang['system']['error']} <b>[$lineNum]</b>.");
 		// exit the function
 		exit;
@@ -244,7 +287,7 @@ function delLineFromFile($fileName, $lineNum) {
 
 	// open the file for reading
 	if (!$fp = fopen($fileName, 'w+')) {
-		// print an error
+	// print an error
 		klaida($lang['system']['error'], "{$lang['system']['error']} ($fileName)");
 		// exit the function
 		exit;
@@ -252,7 +295,7 @@ function delLineFromFile($fileName, $lineNum) {
 
 	// if $fp is valid
 	if ($fp) {
-		// write the array to the file
+	// write the array to the file
 		foreach ($arr as $line) {
 			fwrite($fp, $line);
 		}
@@ -261,18 +304,8 @@ function delLineFromFile($fileName, $lineNum) {
 		fclose($fp);
 	}
 
-	//msg($lang['system']['done'],"IP {$lang['admin']['unbaned']}.");
+//msg($lang['system']['done'],"IP {$lang['admin']['unbaned']}.");
 }
-/// ASPAUGA - NETRINK - Pagal php-fusion
-
-/*foreach ($_GET as $check_url) {
-* if ((eregi("<[^>]*script*\"?[^>]*>", $check_url)) || (eregi("<[^>]*object*\"?[^>]*>", $check_url)) ||
-* (eregi("<[^>]*iframe*\"?[^>]*>", $check_url)) || (eregi("<[^>]*applet*\"?[^>]*>", $check_url)) ||
-* (eregi("<[^>]*meta*\"?[^>]*>", $check_url)) || (eregi("<[^>]*style*\"?[^>]*>", $check_url)) ||
-* (eregi("<[^>]*form*\"?[^>]*>", $check_url)) || (eregi("\([^>]*\"?[^)]*\)", $check_url)) ||
-* (eregi("\"", $check_url))) { ban('GET patikra'); }
-* }
-* unset($check_url);*/
 
 //Tvarkom $_SERVER globalus. Pagal php-fusion
 $_SERVER['PHP_SELF'] = cleanurl($_SERVER['PHP_SELF']);
@@ -352,14 +385,14 @@ foreach ($sql as $row) {
  * @return string
  */
 function user($user, $id = 0, $level = 0, $extra = false) {
-	//kadangi vëjai gaunas jeigu nikas su utf-8 simboliais, tai pm sistema pakeiciu
+//kadangi vëjai gaunas jeigu nikas su utf-8 simboliais, tai pm sistema pakeiciu
 	global $lang, $conf;
 	if ($user == '' || $user == $lang['system']['guest']) {
 		$user = $lang['system']['guest'];
 		return $lang['system']['guest'];
 	} else {
 		if (isset($conf['puslapiai']['view_user.php']['id'])) {
-			//Jeigu galiam ziuret vartotojo profili tada nickas paspaudziamas
+		//Jeigu galiam ziuret vartotojo profili tada nickas paspaudziamas
 			if ($level > 0 && $id > 0) {
 				return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="?id,' . $conf['puslapiai']['view_user.php']['id'] . ';m,' . (int)$id . '" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
 			} elseif ($id == 0 && $level != 0) {
@@ -371,7 +404,7 @@ function user($user, $id = 0, $level = 0, $extra = false) {
 			}
 
 		} else {
-			//Kitu atveju nickas nepaspaudziamas
+		//Kitu atveju nickas nepaspaudziamas
 			if ($level == 0 || $id == 0) {
 				return '<div style="display:inline;" title="' . input($user) . " " . $extra . '"><u>' . $user . '</u></div>';
 			} else {
@@ -398,13 +431,13 @@ function mysql_query1($query, $lifetime = 0) {
 
 	if ($conf['keshas'] && $lifetime > 0 && !in_array(strtolower(substr($query, 0, 6)), array('delete', 'insert', 'update'))) {
 
-		//Tikrinam ar keshavimas ijungtas ir ar keshas egzistuoja
+	//Tikrinam ar keshavimas ijungtas ir ar keshas egzistuoja
 		if (is_file($keshas) && filemtime($keshas) > $_SERVER['REQUEST_TIME'] - $lifetime) {
-			//uzkraunam kesha
+		//uzkraunam kesha
 			include ($keshas);
 
 		} else {
-			//Irasom i kesh faila
+		//Irasom i kesh faila
 			$mysql_num++;
 
 			$sql = mysql_query($query, $prisijungimas_prie_mysql) or die(mysql_error());
@@ -450,6 +483,11 @@ function mysql_query1($query, $lifetime = 0) {
 	}
 	return $return;
 }
+
+/**
+ * Sandeliukui valyti
+ * @param <type> $query
+ */
 function delete_cache($query) {
 	$filename = realpath(dirname(__file__) . '/..') . 'sandeliukas/' . md5($query) . '.php';
 	if (is_file($filename)) {
@@ -457,6 +495,7 @@ function delete_cache($query) {
 	}
 
 }
+
 /**
  * Nuskaitom turin¯ iš adreso
  *
@@ -499,7 +538,7 @@ function get_tag_contents($xml, $tag) {
 }
 
 /**
- * SuskaiÄiuojam kiek nurodytoje lentelÄ—je yra Ä¯rašų
+ * Suskaičiuojam kiek nurodytoje lentelėje yra įrašų
  *
  * @param string $table
  * @param string $where
@@ -566,9 +605,9 @@ function puslapiai($start, $count, $total, $range = 0) {
  * @return 1 arba NULL
  */
 function isNum($value) {
-	//	if(is_string($value)){
+//	if(is_string($value)){
 	return @preg_match("/^[0-9]+$/", $value); //}
-	//else {return false;}
+//else {return false;}
 }
 
 /**
@@ -620,7 +659,7 @@ function random_name($i = 10) {
  * @return escaped string
  */
 function escape($sql) {
-	// Stripslashes
+// Stripslashes
 	if (get_magic_quotes_gpc()) {
 		$sql = stripslashes($sql);
 	}
@@ -777,7 +816,7 @@ function amzius($data) {
  * @return string
  */
 function descript($text, $striptags = true) {
-	// Convert problematic ascii characters to their true values
+// Convert problematic ascii characters to their true values
 	$search = array("40", "41", "58", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "97", "98", "99", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "239");
 	$replace = array("(", ")", ":", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "");
 	$entities = count($search);
@@ -813,8 +852,8 @@ function descript($text, $striptags = true) {
  * @return string
  */
 function isImage1($img) {
-	//$img = $matches[1].str_replace(array("?","&","="),"",$matches[3]).$matches[4];
-	//$img = $matches[1].$matches[3].$matches[4];
+//$img = $matches[1].str_replace(array("?","&","="),"",$matches[3]).$matches[4];
+//$img = $matches[1].$matches[3].$matches[4];
 	if (@getimagesize($img)) {
 		$res = "<img src='" . $img . "' style='border:0px;'>";
 	} else {
@@ -887,6 +926,12 @@ function linkas($str) {
 
 // apvalinti:
 
+/**
+ * Suapavalinimas
+ * @param skaicius $sk
+ * @param kiek po kableliu apvalinti $kiek
+ * @return skaičių
+ */
 function apvalinti($sk, $kiek = 2) {
 	if ($kiek < 0) {
 		$kiek = 0;
@@ -895,6 +940,12 @@ function apvalinti($sk, $kiek = 2) {
 	return ceil($sk * $mult) / $mult;
 }
 
+/**
+ * Gražina paveiksliuką "new" jei elementas naujas
+ * @param data $data
+ * @param apsilankymas $nick
+ * @return formated string
+ */
 function naujas($data, $nick = null) {
 	if (isset($_SESSION['lankesi'])) {
 		return (($data > $_SESSION['lankesi']) ? '<img src="images/icons/new.png" onload="new Effect.Pulsate(this)" alt="New" border="0" style="vertical-align: middle;" />' : '');
@@ -903,7 +954,12 @@ function naujas($data, $nick = null) {
 	}
 }
 
-//Pries kiek laiko
+/**
+ * Gražina išsireiškimą nusakantį įvykio laiką
+ * @global kalba $lang
+ * @param laikas $ts
+ * @return išsireiškimą
+ */
 function kada($ts) {
 	global $lang;
 	if ($ts == '' || $ts == "0000-00-00 00:00:00") {
@@ -936,13 +992,18 @@ function kada($ts) {
 	return sprintf($lang['system']['minute'],'&lt; 1');
 }
 
-//vercia baitus i zmoniu kalba
-function baitai($size, $digits = 2, $dir = false) {
+/**
+ * Verčiam baitus į žmonių kalbą
+ * @param dydis baitais $size
+ * @param po kableliu $digits
+ * @return formated string
+ */
+function baitai($size, $digits = 2) {
 	$kb = 1024;
 	$mb = 1024 * $kb;
 	$gb = 1024 * $mb;
 	$tb = 1024 * $gb;
-	if (($size == 0) && ($dir)) {
+	if ($size == 0) {
 		return " Nulis";
 	} elseif ($size < $kb) {
 		return $size . " Baitai";
@@ -1017,7 +1078,7 @@ function pic1($off_site, $size = false, $url = 'images/nuorodu/', $sub = 'url') 
 		//set new height
 		$src = @imagecreatefromstring($data);
 		imagealphablending($src, true);
-		
+
 		if (empty($src)) {
 			return false;
 		}
@@ -1239,7 +1300,7 @@ function versija($failas = false) {
 		$scid = utf8_substr($svnid, 6);
 		return apvalinti((intval(utf8_substr($scid, 0, strlen($scid) - 2)) / 5000) + '1.26', 2);
 	} else {
-		//Nuskaityti faila ir paimti su regexp versijos numeri
+	//Nuskaityti faila ir paimti su regexp versijos numeri
 		return '$Rev$';
 	}
 }
@@ -1348,13 +1409,13 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 	require_once ('javascript/htmlarea/Xinha0.96beta2/contrib/php-xinha.php');
 
 	xinha_pass_to_php_backend(array('images_dir' => '../../../../../siuntiniai/images', 'images_url' => adresas() . 'siuntiniai/images', 'files_dir' => '../../../../../siuntiniai/failai', 'files_url' => adresas() . 'siuntiniai/failai', //'base_dir' => '../../../../../siuntiniai',
-		//'base_url' => adresas() . 'siuntiniai',
+		 //'base_url' => adresas() . 'siuntiniai',
 
-	'allow_upload' => true //,
-		//'thumbnail_prefix'=>'',
-	//'thumbnail_dir'=>'sumazinti'
-	//'resized_prefix'=>'.pakeistas',
-	//'resized_dir'=>'.resized'
+		 'allow_upload' => true //,
+		 //'thumbnail_prefix'=>'',
+		 //'thumbnail_dir'=>'sumazinti'
+		 //'resized_prefix'=>'.pakeistas',
+		 //'resized_dir'=>'.resized'
 	));
 	echo '
      }

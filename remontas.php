@@ -9,6 +9,7 @@
  * @$Revision$
  * @$Date$
  **/
+
 ob_start();
 session_start();
 include_once (dirname(__file__) . "/priedai/conf.php");
@@ -23,11 +24,7 @@ include_once (dirname(__file__) . "/priedai/prisijungimas.php");
 	<body>
 		<table width="400px" align="center" class="main">
 			<tr class="center_header"><td>
-					<?php
-
-					klaida($lang['admin']['maintenance'], $conf['Maintenance']);
-
-					?>
+					<?php klaida($lang['admin']['maintenance'], $conf['Maintenance']); ?>
 				</td>
 			</tr>
 			<tr>
@@ -49,12 +46,7 @@ include_once (dirname(__file__) . "/priedai/prisijungimas.php");
 				</td></tr>
 			<tr>
 				<td class="center_footer">
-					<?php
-
-					copyright($conf['Copyright']);
-					unset($text);
-
-					?>
+					<?php copyright($conf['Copyright']); unset($text); ?>
 				</td>
 			</tr>
 		</table>

@@ -30,10 +30,8 @@ if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
 if (isset($d) && $d > 0) {
 	$sql = mysql_query1("SELECT `file`,`categorija` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` = " . escape($d) . " LIMIT 1");
 	if (count($sql) > 0) {
-	//$sql = mysql_fetch_assoc($sql);
 		$row = mysql_query1("SELECT `teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = '" . $sql['categorija'] . "'");
 		if (isset($_SESSION['level']) && (!$row || teises($row['teises'], $_SESSION['level']))) {
-
 			download("siuntiniai/" . $sql['file'] . "", ".htaccess|.|..|remontas.php|index.php|config.php|conf.php");
 		} else {
 			die(klaida($lang['system']['sorry'], $lang['download']['cant']));
@@ -80,7 +78,7 @@ function download($file, $filter) {
 				readfile('' . $file . '');
 				exit;
 			} else {
-				header("location: $_SERVER[PHP_SELF]");
+				header("location: ".$_SERVER['PHP_SELF']);
 				exit;
 			}
 		} else {
@@ -88,7 +86,7 @@ function download($file, $filter) {
 			header("HTTP/1.0 404 Not Found");
 		}
 	} else {
-		header("location: " . $sql['file'] . "");
+		header("location: " . $sql['file']);
 	}
 }
 

@@ -198,9 +198,13 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 
 
 	//Cia nesugalvojau kaip visas 3 sujungt :(
-		$msql = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_atsakyta`=`forum_atsakyta`-1 , `taskai`=`taskai`-1 WHERE id=(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . "  LIMIT 1);
-");
-		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . "");
+		$msql = mysql_query1(
+			"UPDATE `" . LENTELES_PRIESAGA . "users` SET
+			`forum_atsakyta`=`forum_atsakyta`-1 ,
+			`taskai`=`taskai`-1
+			WHERE id=(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . "  LIMIT 1);
+		");
+		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did));
 
 
 		if ($msql) {
