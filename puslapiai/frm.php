@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @Projektas: MightMedia TVS
  * @Puslapis: www.coders.lt
@@ -145,7 +144,7 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 //temu sarasas
 if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 	if (isset($_SESSION['username'])) {
-		echo "<a href='" . url("a,1") . "'><img src='images/forum/post.gif' border=0 alt='{$lang['forum']['newpost']}'/></a><br/><br/>";
+		echo "<br /><a href='" . url("a,1") . "'><img src='images/forum/post.gif' border=0 alt='{$lang['forum']['newpost']}'/></a><br/><br/>";
 	}
 	$limit = 20;
 	$tem = mysql_query1("
@@ -194,17 +193,13 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 
 //trinam posta
-	if (isset($tid) && isset($sid) && isset($did) && $did > 0 && defined("LEVEL") && ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1)) {
+	if (isset($tid) && isset($sid) && isset($did) && $did > 0 && isset($_SESSION['level']) && ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1)) {
 
 
 	//Cia nesugalvojau kaip visas 3 sujungt :(
-		$msql = mysql_query1(
-			"UPDATE `" . LENTELES_PRIESAGA . "users` SET
-			`forum_atsakyta`=`forum_atsakyta`-1 ,
-			`taskai`=`taskai`-1
-			WHERE id=(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . "  LIMIT 1);
-		");
-		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did));
+		$msql = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_atsakyta`=`forum_atsakyta`-1 , `taskai`=`taskai`-1 WHERE id=(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . "  LIMIT 1);
+");
+		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . "");
 
 
 		if ($msql) {
@@ -219,7 +214,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 	$tsql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`=" . escape((int)$sid) . " AND `id`=" . escape((int)$tid) . " limit 1");
 	$straipsnis = $tsql['pav'];
 	if (!empty($straipsnis)) {
-		if (defined("LEVEL") && ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1)) {
+		if (isset($_SESSION['level']) && ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1)) {
 			$f_text = '';
 
 			if ($tsql['uzrakinta'] == "taip") {
@@ -266,10 +261,10 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 				$extra .= "<a href='" . $row['url'] . "' target='_blank'><img src='images/forum/icon_www.gif' border=0 alt='www' /></a>  ";
 			}
 
-			if (isset($_SESSION['id']) && $row['nikas'] == $_SESSION['id'] || defined("LEVEL") && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1) {
+			if (isset($_SESSION['id']) && $row['nikas'] == $_SESSION['id'] || isset($_SESSION['level']) && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
 				$tool .= "<a href='" . url("e," . $row['zid'] . "") . "#end'><img src='images/forum/icon_edit.gif' border='0' alt='edit'/></a>";
 				if ($a != 1) {
-					if (defined("LEVEL") && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1) {
+					if (isset($_SESSION['level']) && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
 						$tool .= "<a href='?id," . $url['id'] . ";t," . $tid . ";s," . $sid . ";d," . $row['zid'] . "'><img src='images/forum/icon_trinti.gif' border='0' alt='trinti'/></a>";
 					}
 				}
@@ -283,11 +278,11 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
   </tr>
   <tr class="tr">
     <td class="td" height="93" align="center" valign="middle">' . avatar($row['email']) . '</td>
-    <td class="td" valign="top"><br />' . bbcode(wrap($row['zinute'],60) . '</td>
+    <td class="td" valign="top"><br />' . bbcode(wrap($row['zinute'],60)) . '</td>
   </tr>
   <tr class="tr2">
     <td class="td2" ><a href="javascript:window.scroll(0,0)"><font size="1">▲</font></a></td>
-    <td class="td2">' . $extra . '<small align="right">' . $tool . ' '.($_SESSION['level']>0?'<a href="' . url("q," . $row['zid'] . "") . '"><img src="images/forum/atsakyti.gif" border="0" alt="re"></a>':'').'</small></td>
+    <td class="td2">' . $extra . '<small style="float:right;">' . $tool . ' '.($_SESSION['level']>0?'<a href="' . url("q," . $row['zid'] . "") . '"><img src="images/forum/atsakyti.gif" border="0" alt="re"></a>':'').'</small></td>
   </tr>
 </table> </fieldset>';
 
@@ -302,15 +297,15 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 
 			$extra = '';
 			if (!empty($_POST['msg']) && $_POST['action'] == 'f_update') {
-				if ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1) {
+				if ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
 					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]Redagavo: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . "");
 				} else {
 					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]Redagavo: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . " AND `nick`=" . escape($_SESSION['id']) . "");
 				}
-				//redirect("?id," . $url['id'] . ";s,$sid;t,$tid;p,$p");
-				redirect($_SERVER['HTTP_REFERAL']);
+				redirect("?id," . $url['id'] . ";s,$sid;t,$tid;p,{$_GET['p']}");
+				//redirect($_SERVER['HTTP_REFERAL']);
 			} else {
-				if ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1) {
+				if ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
 					$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($eid) . "  LIMIT 1";
 				} else {
 					$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($eid) . " AND `nick`='" . escape($_SESSION['id']) . "' LIMIT 1";
@@ -357,7 +352,7 @@ WHERE `" . LENTELES_PRIESAGA . "users`.`nick`=" . escape($_SESSION['username']) 
 AND `" . LENTELES_PRIESAGA . "d_straipsniai`.`id`=" . escape($tid) . " AND `" . LENTELES_PRIESAGA . "d_temos`.`id`=" . escape($sid) . "
 ");
 					mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_zinute` (`tid`, `sid`, `nick`, `zinute`, `laikas`) VALUES (" . escape($sid) . ", " . escape($tid) . ", " . escape($uid) . ", " . escape($zinute) . ", '" . time() . "')");
-					header('location: ' . $_SERVER['HTTP_REFERER'] . '');
+					header("location: ?id,{$_GET['id']};s,{$_GET['s']};t,{$_GET['t']};p,".((int)($kur['zinute']/15)*15)."#end");
 
 					unset($zinute, $uid, $f_atsakyta);
 				}
@@ -379,12 +374,22 @@ AND `" . LENTELES_PRIESAGA . "d_straipsniai`.`id`=" . escape($tid) . " AND `" . 
 
 
 			}
+						echo "<script type=\"text/javascript\">$(document).ready(function() {
+  $('.perveiza').click(function() {
+      $.post('javascript/forum/perview.php', {'msg':$('textarea#msg').val()}, function(data) {
+          $(\"#perveiza\").empty().append($(data));
+      }, \"text\");
+  });
+});</script>
+";
 			$bla = new forma();
 			$forma = array(
 				 "Form" => array("action" => "", "method" => "post", "name" => "msg"),
+				 "    " => array("type" => "string", "value" => "<div id='perveiza'></div>"),
 				 " " => array("type" => "string", "value" => bbs('msg')),
-				 $lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : $citata), "name" => "msg", "class" => "input"),
+				 $lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : $citata), "name" => "msg", "class" => "input", "id"=>"msg"),
 				 "  " => array("type" => "string", "value" => bbk('msg')),
+				 "       \n" => array("type" => "button","class"=>"perveiza", "value" => "{$lang['forum']['perview']}"),
 				 "   " => array("type" => "submit", "value" => ((!empty($extra)) ? "{$lang['admin']['edit']}" : "{$lang['forum']['submit']}")),
 				 "     " => array("type" => "hidden", "name" => "action", "value" => ((!empty($extra)) ? "f_update" : "f_send"))
 			);
@@ -395,7 +400,7 @@ AND `" . LENTELES_PRIESAGA . "d_straipsniai`.`id`=" . escape($tid) . " AND `" . 
 }
 // Uzrakinam/Atrakinam tema
 elseif ((int)$lid != 0 && $kid == 0 && $rid == 0) {
-	if (defined("LEVEL") && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1) {
+	if (isset($_SESSION['level']) && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
 
 		$sql = mysql_query1("SELECT `uzrakinta` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`=" . escape($sid) . " AND `id`=" . escape($lid) . " limit 1");
 		if (isset($sql['uzrakinta'])) {
@@ -419,7 +424,7 @@ elseif ((int)$lid != 0 && $kid == 0 && $rid == 0) {
 
 // Trinti tema
 elseif ((int)$kid && (int)$kid && (int)$kid > 0) {
-	if (defined("LEVEL") && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1) {
+	if (isset($_SESSION['level']) && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
 
 	//atimam autoriui tema
 		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_temos`=`forum_temos`-1 WHERE id=(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `sid`=" . escape($kid) . " ORDER BY laikas ASC LIMIT 1) LIMIT 1");
@@ -441,7 +446,7 @@ elseif ((int)$kid && (int)$kid && (int)$kid > 0) {
 	}
 }
 //redaguojam tema
-elseif (((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || LEVEL == 1) && (int)$rid != 0) {
+elseif (((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) && (int)$rid != 0) {
 	unset($tsql);
 	$tsql = mysql_query1("SELECT pav,sticky FROM " . LENTELES_PRIESAGA . "d_straipsniai WHERE `id`=" . escape((int)$rid) . " limit 1",15);
 	if (isset($tsql['pav'])) {
@@ -499,7 +504,7 @@ elseif ($aid == 1 && $kid == 0 && $lid == 0 && $rid == 0) {
 			if (!isset($error)) {
 				unset($result);
 				//`pav`=" . escape($pavadinimas) . " AND
-				$inf = mysql_query1("SELECT max(id)AS`id` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE  autorius=" . escape($_SESSION['username']) . " limit 1");
+				$inf = mysql_query1("SELECT max(id) AS `id` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE  autorius=" . escape($_SESSION['username']) . " limit 1");
 				//prirasiau kad atsinaujintu informacija apie paskutini foruma
 				//mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_temos` SET `last_data`= '" . time() . "', `last_nick`=" . escape($_SESSION['username']) . " WHERE `id`=" . escape($sid) . "") or die(mysql_error());
 				// mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_temos`=`forum_temos`+1 , `taskai`=`taskai`+1 WHERE nick=" . escape($_SESSION['username']) . "") or die(mysql_error());
@@ -526,13 +531,23 @@ WHERE `" . LENTELES_PRIESAGA . "users`.nick=" . escape($_SESSION['username']) . 
 		}
 		unset($uid, $pavadinimas, $zinute, $error, $result, $inf);
 	}
+		echo "<script type=\"text/javascript\">$(document).ready(function() {
+  $('.perveiza').click(function() {
+      $.post('javascript/forum/perview.php', {'msg':$('textarea#msg').val()}, function(data) {
+          $(\"#perveiza\").empty().append($(data));
+      }, \"text\");
+  });
+});</script>
+";
 	$bla = new forma();
 	$forma = array(
 		 "Form" => array("action" => "", "method" => "post", "name" => "post_msg"),
+		 "    " => array("type" => "string", "value" => "<div id='perveiza'></div>"),
 		 $lang['forum']['topicname'] => array("type" => "text", "class" => "input", "name" => "post_pav"),
-		 " " => array("type" => "string", "value" => bbs('post_msg')),
-		 $lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : ''), "name" => "post_msg", "class" => "input"),
+		 		 " " => array("type" => "string", "value" => bbs('post_msg')),
+		 		 $lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : ''), "name" => "post_msg", "class" => "input", "id"=>"msg"),
 		 "  " => array("type" => "string", "value" => bbk('post_msg')),
+		 "       \n" => array("type" => "button","class"=>"perveiza", "value" => "{$lang['forum']['perview']}"),
 		 "   " => array("type" => "submit", "value" => $lang['forum']['submit'])
 	);
 	lentele($lang['forum']['newtopic'], $bla->form($forma));
