@@ -174,7 +174,7 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 				$sticky = "";
 			}
 
-			$info[] = array("#" => $extra . $sticky, "{$lang['forum']['topic']}" => "<div style='width:auto;'><a href='?id," . $url['id'] . ";s," . $sid . ";t," . $temos['id'] . "' style='display:block'>" . $temos['pav'] . "</a></div>", "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" =>(($zinutes>0)?$temos['last_nick'] . ' - ' . (($temos['last_data'] == '0000000000') ? '' : '<a href="?id,'.$_GET['id'].';s,'.$_GET['s'].';t,'.$temos['id'].';p,'.((int)($zinutes/15)*15).'#end">'.kada(date('Y-m-d H:i:s ', $temos['last_data']))).'</a>':'-'));//' . naujas($row['last_data']) . '
+			$info[] = array("#" => $extra . $sticky, "{$lang['forum']['topic']}" => "<div style='width:auto;'><a href='?id," . $url['id'] . ";s," . $sid . ";t," . $temos['id'] . "' style='display:block'>" . $temos['pav'] . "</a></div>", "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" =>(($zinutes>0)?$temos['last_nick'] . ' - ' . (($temos['last_data'] == '0000000000') ? '' : '<a href="?id,'.$_GET['id'].';s,'.$_GET['s'].';t,'.$temos['id'].';p,'.((int)($zinutes/15-0.1)*15).'#end">'.kada(date('Y-m-d H:i:s ', $temos['last_data']))).'</a>':'-'));//' . naujas($row['last_data']) . '
 
 		}
 
