@@ -227,7 +227,7 @@ if (defined("LEVEL") && LEVEL > 0 && $a == 1 && !isset($s)) {
 			}
 			$info[] = array("<input type=\"checkbox\" name='visi' onclick='checkedAll(\"pm\");'/>"=>"<input type=\"checkbox\" name=\"pm_s[]\" value=\"{$row['id']}\" />","" => $extra, "{$lang['user']['pm_subject']}:" => "<a href='?id," . $url['id'] . ";v," . $row['id'] . "' style=\"display: block\">" . (isset($row['Pavadinimas']) && !empty($row['Pavadinimas']) ? input(trimlink($row['Pavadinimas'], 40)) : "{$lang['user']['pm_nosubject']}") . "</a></div>", "{$lang['user']['pm_from']}:" => user($row['Nuo'], $row['from_id']), "{$lang['user']['pm_time']}:" => kada(date('Y-m-d H:i:s ', $row['Data'])), " " => "<a href='?id," . $url['id'] . ";n,1;u," . str_replace("=", "", base64_encode($row['from'])) . ";i," . $row['id'] . "'><img src='images/pm/replay.png' border=0 alt=\"{$lang['user']['pm_reply']}\" title=\"{$lang['user']['pm_reply']}\"/></a><a href='" . url('d,' . $row['id'] . '') . "'><img src='images/pm/delete.png' border=0 alt=\"{$lang['user']['pm_delete']}\" title=\"{$lang['user']['pm_delete']}\"/></a>");
 		}
-		lentele("{$lang['user']['pm_inbox']}", puslapiai($p, $limit, $pm_sk, 10) . "<br/><form method=\"post\" id=\"pm\">" . $bla->render($info) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form><br/>" . puslapiai($p, $limit, $pm_sk, 10));
+		lentele("{$lang['user']['pm_inbox']}", puslapiai($p, $limit, $pm_sk, 10) . "<br/><form method=\"post\" id=\"pm\" astion=\"\">" . $bla->render($info) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form><br/>" . puslapiai($p, $limit, $pm_sk, 10));
 	} else {
 		lentele("{$lang['user']['pm_inbox']}", "{$lang['user']['pm_empty_msg']}");
 	}
