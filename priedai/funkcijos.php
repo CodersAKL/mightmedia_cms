@@ -210,8 +210,9 @@ function puslapis($puslapis, $extra = false) {
  * @return true/false
  */
 function teises($mas, $lvl) {
-	$teises = @unserialize($mas);
-	if ($lvl == 1 || (is_array($teises) && in_array($lvl, $teises)) || empty($teises))
+	if (!is_array($mas))
+			$mas = @unserialize($mas);
+	if ($lvl == 1 || (is_array($mas) && in_array($lvl, $mas)) || empty($mas))
 		return true;
 	else
 		return false;
