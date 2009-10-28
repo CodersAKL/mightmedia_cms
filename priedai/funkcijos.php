@@ -1480,10 +1480,10 @@ function build_menu($data, $id=0, $active_class='active'){
 	$re="";
    foreach ($data[$id] as $row){
       if (isset($data[$row['id']])){
-         $re.= "<li><a href=\"?id,{$row['id']}\" ".($_GET['id']==$row['id']?'class="'.$active_class.'"':'').">".$row['pavadinimas']."</a><ul>";
+         $re.= "<li ".($_GET['id']==$row['id']?'class="'.$active_class.'"':'')."><a href=\"?id,{$row['id']}\">".$row['pavadinimas']."</a><ul>";
          $re.=build_menu($data, $row['id'],$active_class);
          $re.= "</ul></li>";
-      } else $re.= "<li><a href=\"?id,{$row['id']}\" ".($_GET['id']==$row['id']?'class="'.$active_class.'"':'').">".$row['pavadinimas']."</a></li>";
+      } else $re.= "<li ".($_GET['id']==$row['id']?'class="'.$active_class.'"':'')."><a href=\"?id,{$row['id']}\">".$row['pavadinimas']."</a></li>";
    }
    return $re;
 }
