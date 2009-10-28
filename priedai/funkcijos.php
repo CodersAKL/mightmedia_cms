@@ -1476,5 +1476,15 @@ if (!function_exists('scandir')) {
 		return ($files);
 	}
 }
-
+function build_menu($data, $id=0){
+	$re="";
+   foreach ($data[$id] as $row){
+      if (isset($data[$row['id']])){
+         $re.= "<li><a href=\"?id,{$row['id']}\">".$row['pavadinimas']."</a><ul>";
+         $re.=build_menu($data, $row['id']);
+         $re.= "</ul></li>";
+      } else $re.= "<li><a href=\"?id,{$row['id']}\">".$row['pavadinimas']."</a></li>";
+   }
+   return $re;
+}
 ?>

@@ -10,18 +10,6 @@
  * @$Date$
  **/
 
-function build_menu($data, $id=0){
-	$re="";
-   foreach ($data[$id] as $row){
-      if (isset($data[$row['id']])){
-         $re.= "<li><a href=\"?id,{$row['id']}\">".$row['pavadinimas']."</a><ul>";
-         $re.=build_menu($data, $row['id']);
-         $re.= "</ul></li>";
-      } else $re.= "<li><a href=\"?id,{$row['id']}\">".$row['pavadinimas']."</a></li>";
-   }
-   return $re;
-}
-
 $res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`='Y' ORDER BY `place` ASC");
 foreach ($res as $row){
 	if(teises($row['teises'],$_SESSION['level']))
