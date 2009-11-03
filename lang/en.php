@@ -9,7 +9,7 @@ $lang['system']['sorry'] = 'Sorry';
 $lang['system']['updated'] = 'Updated';
 $lang['system']['done'] = 'Done!';
 $lang['system']['no_items'] = 'Empty!';
-$lang['system']['contactadmin'] = 'Contact admin'; //susisiek su adminu (nezinau kaip)
+$lang['system']['contactadmin'] = 'Contact admin';
 $lang['system']['notadmin'] = 'You are not admin!';
 $lang['system']['pleaselogin'] = 'You must login!';
 $lang['system']['nopage'] = 'Page not exists!';
@@ -62,7 +62,7 @@ $lang['system']['name'] = 'Name';
 $lang['system']['about'] = 'About';
 $lang['system']['picture'] = 'Picture';
 $lang['system']['picture'] = 'Picture';
-$lang['system']['nomorecategories'] = 'You can\'t cretae more categories.';
+$lang['system']['nomorecategories'] = 'You can\'t create more categories.';
 $lang['system']['category'] = 'Category';
 $lang['system']['categories'] = 'Categories';
 //user
@@ -147,7 +147,7 @@ $lang['reg']['secuarity'] = 'Secuarity code';
 $lang['reg']['faction'] = 'Faction';
 $lang['reg']['register'] = 'Register';
 $lang['reg']['bademail'] = 'Bad email adress';
-$lang['reg']['only_letters_numbers'] = 'Only letters and numbers allowed in username.'; //kažkas tokio :)
+$lang['reg']['only_letters_numbers'] = 'Only letters and numbers allowed in username.';
 $lang['reg']['badpass'] = 'Wrong password confirmation';
 $lang['reg']['takenusername'] = 'Username is taken.';
 $lang['reg']['registered'] = 'You are registered, now you can log in';
@@ -528,7 +528,7 @@ $lang['user']['user_signature'] = 'Signature';
 $lang['user']['user_online'] = 'Online';
 $lang['user']['user_ofline'] = 'Offline';
 $lang['user']['user_rate'] = 'Rate';
-//guestbook
+//guest book
 $lang['guestbook']['guestbook'] = 'Guestbook';
 $lang['guestbook']['write'] = 'Write';
 $lang['guestbook']['name'] = 'Name';
@@ -601,7 +601,7 @@ $lang['search']['search'] = 'Search';
 $lang['search']['short'] = 'Phrase too short.';
 $lang['search']['results'] = 'Search results';
 $lang['search']['notfound'] = 'not found';
-//shoutbox
+//shout box
 $lang['sb']['loading'] = 'Loading...';
 $lang['sb']['refresh'] = 'Refresh';
 $lang['sb']['send'] = 'Send';
