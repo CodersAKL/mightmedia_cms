@@ -138,11 +138,11 @@ if (isset($url['v']) &&(int)$url['v'] == 2) {
 
 if (isset($_POST['b_create']) && $_POST['b_create'] == $lang['admin']['poll_create']) {
 	$kl = $_POST['b_kl'];
-	$ats1 = (isset($_POST[0]) && !empty($_POST[0]) ? strip_tags($_POST[0]) . ';0' : ';0');
-	$ats2 = (isset($_POST[1]) && !empty($_POST[1]) ? strip_tags($_POST[1]) . ';0' : ';0');
-	$ats3 = (isset($_POST[2]) && !empty($_POST[2]) ? strip_tags($_POST[2]) . ';0' : ';0');
-	$ats4 = (isset($_POST[3]) && !empty($_POST[3]) ? strip_tags($_POST[3]) . ';0' : ';0');
-	$ats5 = (isset($_POST[4]) && !empty($_POST[4]) ? strip_tags($_POST[4]) . ';0' : ';0');
+	$ats1 = (isset($_POST[1]) && !empty($_POST[1]) ? strip_tags($_POST[1]) . ';0' : ';0');
+	$ats2 = (isset($_POST[2]) && !empty($_POST[2]) ? strip_tags($_POST[2]) . ';0' : ';0');
+	$ats3 = (isset($_POST[3]) && !empty($_POST[3]) ? strip_tags($_POST[3]) . ';0' : ';0');
+	$ats4 = (isset($_POST[4]) && !empty($_POST[4]) ? strip_tags($_POST[4]) . ';0' : ';0');
+	$ats5 = (isset($_POST[5]) && !empty($_POST[5]) ? strip_tags($_POST[5]) . ';0' : ';0');
 
 	$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "balsavimas` (`info`, `autorius`, `laikas`, `klausimas`, `pirmas`, `antras`, `trecias`, `ketvirtas`,`penktas`) VALUES ('" . $_POST['leid'] . "', '" . $_SESSION['id'] . "', '" . time() . "','" . $kl . "','" . $ats1 . "','" . $ats2 . "','" . $ats3 . "','" . $ats4 . "','" . $ats5 . "')");
 	delete_cache("SELECT * ,autorius ,(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE id=autorius LIMIT 1)AS nick FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE ijungtas='TAIP' ORDER BY `laikas` DESC LIMIT 1");
