@@ -490,7 +490,7 @@ function mysql_query1($query, $lifetime = 0) {
  * @param <type> $query
  */
 function delete_cache($query) {
-	$filename = realpath(dirname(__file__) . '/..') . 'sandeliukas/' . md5($query) . '.php';
+	$filename = realpath(dirname(__file__) . '/..') . '/sandeliukas/' . md5($query) . '.php';
 	if (is_file($filename)) {
 		unlink($filename);
 	}
