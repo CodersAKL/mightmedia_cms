@@ -487,6 +487,7 @@ $lang['forum']['func'] = 'Functions';
 $lang['forum']['points'] = 'Points';
 $lang['forum']['messages'] = 'Messages';
 $lang['forum']['date'] = 'Date';
+$lang['forum']['perview']= 'Perview';
 $lang['forum']['newtopic'] = 'New topic';
 $lang['forum']['sticky'] = 'Scicky';
 $lang['forum']['topicname'] = 'Topic name';

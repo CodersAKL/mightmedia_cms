@@ -464,6 +464,7 @@ $lang['forum']['points'] = 'Taškai';
 $lang['forum']['messages'] = 'Žinutės';
 $lang['forum']['message_short'] = 'Žinutė per trumpa';
 $lang['forum']['date'] = 'Data';
+$lang['forum']['perview'] = 'Peržiūra';
 $lang['forum']['sticky'] = 'Svarbu';
 $lang['forum']['newtopic'] = 'Nauja tema';
 $lang['forum']['topicname'] = 'Temos pavadinimas';
