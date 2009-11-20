@@ -14,7 +14,7 @@ ob_start();
 session_start();
 include_once (dirname(__file__) . "/priedai/conf.php");
 include_once (dirname(__file__) . "/priedai/prisijungimas.php");
-
+$page_pavadinimas = $lang['admin']['maintenance'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -22,17 +22,13 @@ include_once (dirname(__file__) . "/priedai/prisijungimas.php");
 		<?php header_info(); ?>
 	</head>
 	<body>
-		<table width="400px" align="center" class="main">
-			<tr class="center_header"><td>
+		<div style="width:45%; text-align:center; margin:auto;margin-top:20px;">
 					<?php klaida($lang['admin']['maintenance'], $conf['Maintenance']); ?>
-				</td>
-			</tr>
-			<tr>
-				<td class="center_middle">
+			
 					<?php
 
 					if ($conf['Palaikymas'] == 1 && !isset($_SESSION['id'])) {
-						admin_login_form();
+						lentele($lang['user']['administration'],admin_login_form());
 					} elseif (isset($_SESSION['id']) && $_SESSION['level'] > 1 && $_SESSION['level'] > 0 && $conf['Palaikymas'] == 1) {
 						echo "<a href='?id,Atsijungti'>{$lang['user']['logout']}</a>";
 					} elseif (isset($_SESSION['id']) && $_SESSION['level'] == 1) {
@@ -43,13 +39,10 @@ include_once (dirname(__file__) . "/priedai/prisijungimas.php");
 					}
 
 					?>
-				</td></tr>
-			<tr>
-				<td class="center_footer">
+				<div class="title">
 					<?php copyright($conf['Copyright']); unset($text); ?>
-				</td>
-			</tr>
-		</table>
+				</div>
+		</div>
 	</body>
 </html>
 <?php ob_end_flush(); ?>

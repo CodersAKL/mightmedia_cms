@@ -110,7 +110,7 @@ function header_info() {
  */
 function avatar($mail, $size = 80) {
 	if(file_exists('images/avatars/'.md5($mail).'.jpeg')) {
-		$result='<img src="images/avatars/'.md5($mail).'.jpeg"  width="' . $size . '" height="' . $size . '" alt="avataras" />';}else {	$result = '<img src="http://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . htmlentities($size . '&r=any&default=' . urlencode(adresas() . 'images/avatars/no_image.jpg') . '&time=' . time()) . '"  width="' . $size . '" alt="avataras" />';}
+		$result='<img src="images/avatars/'.md5($mail).'.jpeg?'.time().'"  width="' . $size . '" height="' . $size . '" alt="avataras" />';}else {	$result = '<img src="http://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . htmlentities($size . '&r=any&default=' . urlencode(adresas() . 'images/avatars/no_image.jpg') . '&time=' . time()) . '"  width="' . $size . '" alt="avataras" />';}
 	return $result;
 }
 
@@ -547,8 +547,21 @@ function get_tag_contents($xml, $tag) {
  * @return int
  */
 function kiek($table, $where = '', $as = "viso") {
-	$viso = mysql_query1("SELECT count(*) AS `$as` FROM `" . LENTELES_PRIESAGA . $table . "` " . $where . " limit 1", 60);
-	return (isset($viso[$as]) && $viso[$as] > 0 ? (int)$viso[$as] : (int)0);
+	//$viso = mysql_query1("SELECT count(*) AS `$as` FROM `" . LENTELES_PRIESAGA . $table . "` " . $where . " limit 1", 60);
+	//return (isset($viso[$as]) && $viso[$as] > 0 ? (int)$viso[$as] : (int)0);
+	$i = 0;
+	$sql = mysql_query1("SELECT *  FROM `" . LENTELES_PRIESAGA . $table . "` " . $where . "", 60);
+	if(sizeof($sql > 0)){
+		foreach($sql as $row){
+			if(isset($sql['teises'])){
+				if(teises($sql['teises'],$_SESSION['level']))
+				$i++;
+			} else {
+				$i++;
+			}
+		}
+	}
+	return $i;
 }
 
 /**

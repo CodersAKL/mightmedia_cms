@@ -277,6 +277,6 @@ function Go(id) {
 </body>
 </html>
 <?php }else{?><head><title>MightMedia TVS atnaujinimas</title>
-<link href="stiliai/default/default.css" rel="stylesheet" type="text/css" media="all" /></head><body><center><div class="title">Tik instaliuotojui</div><div class="vidus"><?php admin_login_form();?></div></center></body><?php }
+<link href="stiliai/default/default.css" rel="stylesheet" type="text/css" media="all" /></head><body><center><div class="title">Tik instaliuotojui</div><div class="vidus"><?php echo admin_login_form();?></div></center></body><?php }
 ob_end_flush();
 ?>

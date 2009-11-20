@@ -15,7 +15,7 @@ if ($_SERVER['PHP_SELF'] == 'index.php') {
 }
 include_once ("priedai/prisijungimas.php");
 if (!isset($_SESSION['username'])) {
-	admin_login_form();
+	lentele($lang['user']['administration'], admin_login_form());
 }elseif(isset($_SESSION['username'])&&$_SESSION['level']==1){
 // Jei lanktytojas neprisijungęs arba, jei nėra administratorius
 /*elseif (!defined("LEVEL") || LEVEL > 1 || !defined("OK") || !isset($_SESSION['username'])) {

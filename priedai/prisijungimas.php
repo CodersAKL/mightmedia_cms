@@ -137,9 +137,10 @@ function admin_login_form($strError = false) {
         </form>
       </center>
     ";
-	echo $text;
-	unset($text);
+	//echo $text;
+	//unset($text);
 	//exit();
+	return $text;
 }
 
 ?> 
