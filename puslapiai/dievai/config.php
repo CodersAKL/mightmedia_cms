@@ -10,9 +10,9 @@
  * @$Date$
  **/
 
-if (!defined("LEVEL") || LEVEL > 1 || !defined("OK") || $_SESSION['id'] != 1) {
+/*if (!defined("LEVEL") || LEVEL > 1 || !defined("OK") || $_SESSION['id'] != 1) {
 	die($lang['system']['error']);
-}
+}*/
 
 if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
 	$q = array();
