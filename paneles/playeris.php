@@ -19,6 +19,7 @@ so.addParam("quality", "high");
 so.addVariable("content_path","../siuntiniai/media"); // Location of a folder with mp3 files (relative to php script).
 so.addVariable("color_path","flashmp3player/default.xml"); // Location of xml file with color settings.
 so.addVariable("script_path","flashmp3player/flashmp3player.php"); // Location of php script.
+so.addVariable("wmode","transparent"); // transparent wmode="transparent"
 so.write("player");
 </script>
 ';
