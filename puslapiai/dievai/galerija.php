@@ -454,13 +454,18 @@ if (isset($_GET['v'])) {
 
 		if (sizeof($sql) > 0) {
 
-			$forma = array("Form" => array("enctype" => "multipart/form-data", "action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "method" => "post", "name" => "action"), (!isset($extra)) ? "{$lang['admin']['gallery_file']}:" : "" => array("name" => "failas", "type" => (!isset($extra)) ? "file" : "hidden", "value" => ""), "{$lang['admin']['gallery_title']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', "name" => "Pavadinimas"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '')), "{$lang['admin']['gallery_about']}:" =>
-				array("type" => "textarea", "name" => "Aprasymas",  "rows" => "3", "class" => "input", "value" => (isset($extra['apie'])) ? input($extra['apie']) : ''), //"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","class"=>"input"),
-				(isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add']), );
+			$forma = array(
+				"Form" => array("enctype" => "multipart/form-data", "action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "method" => "post", "name" => "action"),
+				(!isset($extra)) ? "{$lang['admin']['gallery_file']}:" : "" => array("name" => "failas", "type" => (!isset($extra)) ? "file" : "hidden", "value" => ""),
+				"{$lang['admin']['gallery_title']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', "name" => "Pavadinimas"), 
+				"{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '')), 
+				"{$lang['admin']['gallery_about']}:" =>	array("type" => "textarea", "name" => "Aprasymas",  "rows" => "3", "class" => "input", "value" => (isset($extra['apie'])) ? input($extra['apie']) : ''), //"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","class"=>"input"),
+				(isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add'])
+			);
 			if (isset($extra)) {
 				$forma[''] = array("type" => "hidden", "name" => "news_id", "value" => (isset($extra) ? input($extra['ID']) : ''));
 			}
-			lentele(((isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add']), ((isset($extra['file'])) ? '<center><img src="galerija/' . input($extra['file']) . '"></center>' : '') . $bla->form($forma));
+			lentele(((isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add']), '<a name="edit"></a>'.((isset($extra['file'])) ? '<center><img src="galerija/' . input($extra['file']) . '"></center>' : '') . $bla->form($forma));
 		} else {
 			klaida($lang['system']['warning'], "{$lang['system']['nocategories']}");
 		}
@@ -478,14 +483,14 @@ if (isset($_GET['v'])) {
 			redirect('?id,999;a,' . $url['a'] . ';v,6');
 		}
 		$nustatymai = array(
-"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"),
-"{$lang['admin']['gallery_maxwidth']}:" => array("type" => "text", "value" => input($conf['fotodyd']), "name" => "fotodyd"),
-"{$lang['admin']['gallery_minwidth']}:" => array("type" => "text", "value" => input($conf['minidyd']), "name" => "minidyd"),
-"{$lang['admin']['gallery_rate']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galbalsuot']), "name" => "galbalsuot"),
-"{$lang['admin']['gallery_comments']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galkom']), "name" => "galkom"),
-"{$lang['admin']['gallery_images_per_page']}:" => array("type" => "text", "value" => input((int)$conf['fotoperpsl']), "name" => "fotoperpsl"),
-"" => array("type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}")
-);
+			"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"),
+			"{$lang['admin']['gallery_maxwidth']}:" => array("type" => "text", "value" => input($conf['fotodyd']), "name" => "fotodyd"),
+			"{$lang['admin']['gallery_minwidth']}:" => array("type" => "text", "value" => input($conf['minidyd']), "name" => "minidyd"),
+			"{$lang['admin']['gallery_rate']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galbalsuot']), "name" => "galbalsuot"),
+			"{$lang['admin']['gallery_comments']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galkom']), "name" => "galkom"),
+			"{$lang['admin']['gallery_images_per_page']}:" => array("type" => "text", "value" => input((int)$conf['fotoperpsl']), "name" => "fotoperpsl"),
+			"" => array("type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}")
+		);
 
 		include_once ("priedai/class.php");
 		$bla = new forma();

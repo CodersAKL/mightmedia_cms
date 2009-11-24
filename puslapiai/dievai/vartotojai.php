@@ -43,7 +43,7 @@ if (isset($url['d']) && $url['d'] != "" && $url['d'] != 0) {
 	header("Location: " . url('d,0'));
 }
 if (isset($_POST['action']) && $_POST['action'] == $lang['admin']['save'] && $_POST['id'] > 0) {
-	$info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $_POST['id'] . "'AND `levelis` > 1 LIMIT 1");
+	$info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $_POST['id'] . "'".($_SESSION['id']==1?'':'AND `levelis` > 1')." LIMIT 1");
 
 	if (!empty($_POST['tsk'])) {
 		$tsk = (int)$_POST['tsk'];
@@ -66,7 +66,7 @@ if (isset($_POST['action']) && $_POST['action'] == $lang['admin']['save'] && $_P
 		$mail = $info['email'];
 	}
 
-	$resut = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `taskai`='$tsk' , `levelis`='$lvl' , `pass`='$slapt' , `email`='$mail' WHERE id=" . escape((int)$_POST['id']) . " AND `levelis` >1");
+	$resut = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `taskai`='$tsk' , `levelis`='$lvl' , `pass`='$slapt' , `email`='$mail' WHERE id=" . escape((int)$_POST['id']) . "".($_SESSION['id']==1?'':'AND `levelis` > 1'));
 	if ($resut) {
 		msg($lang['system']['done'], $lang['admin']['user_updated']);
 		unset($_POST);
@@ -78,7 +78,7 @@ if (isset($_POST['action']) && $_POST['action'] == $lang['admin']['save'] && $_P
 
 //Jei redaguojam
 if (isset($url['r']) && $url['r'] != "" && $url['r'] != 0) {
-	$info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $url['r'] . "'AND `levelis` > 1 LIMIT 1");
+	$info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $url['r'] . "'".($_SESSION['id']==1?'':' AND `levelis` > 1')." LIMIT 1");
 	if ($info) {
 		$lygiai2 = array_keys($conf['level']);
 		foreach ($lygiai2 as $key) {

@@ -54,8 +54,8 @@ function komentarai($id, $hide = false) {
 				$nick = user($row['nick'], $row['nick_id'], $row['levelis']);
 			}
 			$text .= $nick;
-			$text .= " (" . date('Y-m-d H:i:s ', $row['data']) . ") " . naujas($row['data'], $row['nick']) . "</em><br />" . smile(bbchat(wrap(input($row['zinute']), 80))) . "</div>";
-			//  <div class=\"avatar\" align=\"left\" style=\"display:inline;margin:4px;padding:2px;height:auto;\">" . avatar($row['email'], 40) . "</div>
+			$text .= " (" . date('Y-m-d H:i:s ', $row['data']) . ") " . naujas($row['data'], $row['nick']) . "</em><br />
+			  <div class=\"avatar\" align=\"left\">" . avatar($row['email'], 40) . "</div>" . smile(bbchat(wrap(input($row['zinute']), 80))) . "</div>";
 		}
 		if (!empty($text)) {
 			lentele($lang['comments']['comments'], $text);

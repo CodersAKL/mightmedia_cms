@@ -117,26 +117,23 @@ if (empty($url['m'])) {
 			}
 
 			$text .= "
-				
-				<div id=\"gallery\" class=\"img_left\" >
-			<a rel=\"lightbox\" href=\"galerija/" . $row['file'] . "\" title=\"" . (!empty($row['pavadinimas'])?$row['pavadinimas'] . ": ":'') . trimlink(strip_tags($row['apie']), 50) . "\">
-				<img src=\"galerija/mini/" . $row['file'] . "\" alt=\"\" />
-			</a><br />
-      <a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date('Y-m-d H:i:s ', $row['data']) . "\">
-        <img src='images/icons/information.png' border='0' alt='info' />
-      </a>
-      <a href=\"?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['id'] . "\" title=\"{$lang['admin']['gallery_comments']}\">
-        <img src='images/icons/comment.png' alt='C' border='0' />
-      </a>
-			<a href=\"galerija/originalai/" . $row['file'] . "\" title=\"{$lang['download']['download']}\">
-        <img src='images/icons/disk.png' border='0' alt='save' />
-      </a>";
-			$text .= (defined('LEVEL') && LEVEL == 1 ? "
-      <a href=\"#\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('?id,999;a,{$admin_pagesid['galerija']};t," . $row['id'] . "'); $(this).parent('.img_left').remove(); return false } else { return false }\" title=\"{$lang['system']['delete']}\">
-        <img src='images/icons/cross.png' alt='X' border='0' />
-      </a>
-				 " : "") . "
-		</div>
+			<div id=\"gallery\" class=\"img_left\" >
+				<a rel=\"lightbox\" href=\"galerija/" . $row['file'] . "\" title=\"" . (!empty($row['pavadinimas'])?$row['pavadinimas'] . "<br>":'') . trimlink(strip_tags($row['apie']), 50) . "\">
+					<img src=\"galerija/mini/" . $row['file'] . "\" alt=\"\" />
+				</a>
+				<div class='gallery_menu'>
+					<a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date('Y-m-d H:i:s ', $row['data']) . "\"><img src='images/icons/information.png' border='0' alt='info' /></a>
+					<a href=\"?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['id'] . "\" title=\"{$lang['admin']['gallery_comments']}\"><img src='images/icons/comment.png' alt='C' border='0' /></a>
+					<a href=\"galerija/originalai/" . $row['file'] . "\" title=\"{$lang['download']['download']}\"><img src='images/icons/disk.png' border='0' alt='save' /></a>";
+					$text .= (defined('LEVEL') && LEVEL == 1 ? "
+					<a href=\"#\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('?id,999;a,{$admin_pagesid['galerija']};t," . $row['id'] . "'); $(this).parent('.img_left').remove(); return false } else { return false }\" title=\"{$lang['system']['delete']}\"><img src='images/icons/cross.png' alt='X' border='0' /></a>
+					<a href='?id,999;a,{$admin_pagesid['galerija']};h," . $row['id'] . "#edit' title=\"{$lang['admin']['edit']}\"><img src='images/icons/picture_edit.png'  /></a>
+					" : "") . "
+				</div>
+				<div class='gallery_title'>
+					" . trimlink((!empty($row['pavadinimas'])?$row['pavadinimas']:''),20) . "
+				</div>
+			</div>
 		";
 
 			$foto = true;

@@ -446,3 +446,37 @@ div.btns a.btn img {
 margin-right : 3px;
 vertical-align : middle;
 }
+.avatar img {
+background-color:white;
+border:1px solid silver;
+display:block;
+margin:2px 10px 2px 2px;
+padding:2px;
+float:left
+}
+.tr, .tr2 {
+overflow-y: hidden;
+}
+
+/* Galerija */
+#gallery { 
+	position:relative;
+}
+.gallery_title, .gallery_menu {
+	background-color:black;
+	color:white;
+	font-weight:bold;
+	opacity:0.7;
+	position:absolute;
+	text-align:center;
+	width:100%;
+}
+.gallery_title {
+	top: 0;
+}
+.gallery_menu {
+	bottom: 0;
+}
+.gallery_menu img {
+	vertical-align:middle
+}

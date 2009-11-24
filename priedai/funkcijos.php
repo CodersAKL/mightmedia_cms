@@ -110,7 +110,7 @@ function header_info() {
  */
 function avatar($mail, $size = 80) {
 	if(file_exists('images/avatars/'.md5($mail).'.jpeg')) {
-		$result='<img src="images/avatars/'.md5($mail).'.jpeg?'.time().'"  width="' . $size . '" height="' . $size . '" alt="avataras" />';}else {	$result = '<img src="http://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . htmlentities($size . '&r=any&default=' . urlencode(adresas() . 'images/avatars/no_image.jpg') . '&time=' . time()) . '"  width="' . $size . '" alt="avataras" />';}
+		$result='<img src="images/avatars/'.md5($mail).'.jpeg?'.time().'" width="' . $size . '" height="' . $size . '" alt="avataras" />';}else {	$result = '<img src="http://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . htmlentities($size . '&r=any&default=' . urlencode(adresas() . 'images/avatars/no_image.jpg') . '&time=' . time()) . '"  width="' . $size . '" alt="avataras" />';}
 	return $result;
 }
 
