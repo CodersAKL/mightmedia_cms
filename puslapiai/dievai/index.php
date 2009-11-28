@@ -39,10 +39,11 @@ $glob = glob('puslapiai/dievai/*.php');
 $text = "<table border=\"0\"><tr><td><div class=\"btns\">\n";
 foreach($glob as $id => $file) {
 	$file = basename($file,'.php');
+	$image = (is_file("images/admin/{$file}.png")?"images/admin/{$file}.png":'images/admin/module.png');
 	$admin_pages[$id] = $file;
 	$admin_pagesid[$file] = $id;
 	if ((isset($conf['puslapiai'][$file.'.php']['id']) || in_array($file, array('config','meniu','logai','paneles','vartotojai','komentarai','banai','balsavimas'))) && !in_array($file, array('index','pokalbiai'))) {
-		$text .= "<a href=\"?id," . $url['id'] . ";a,{$id}\" class=\"btn\"><span style=\"min-width:95px;\"><img src=\"images/admin/{$file}.png\" alt=\"".(isset($lang['admin'][$file])?$lang['admin'][$file]:$file)."\" title=\"".(isset($lang['admin'][$file])?$lang['admin'][$file]:$file)."\" /><br />".(isset($lang['admin'][$file])?$lang['admin'][$file]:$file)."</span></a>";
+		$text .= "<a href=\"?id," . $url['id'] . ";a,{$id}\" class=\"btn\"><span style=\"min-width:95px;\"><img src=\"{$image}\" alt=\"".(isset($lang['admin'][$file])?$lang['admin'][$file]:$file)."\" title=\"".(isset($lang['admin'][$file])?$lang['admin'][$file]:$file)."\" /><br />".(isset($lang['admin'][$file])?$lang['admin'][$file]:$file)."</span></a>";
 	}
 }
 $text .= "</div><br style=\"clear:left\"/></td></tr></table>\n";
