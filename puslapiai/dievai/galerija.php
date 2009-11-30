@@ -30,7 +30,16 @@ if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,5'">{$lang['system']['createsubcategory']}</button>
 
 HTML;*/
-$buttons="<div id=\"admin_menu\" class=\"btns\"><a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,6\"><span><img src=\"images/icons/photo_album__arrow.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_conf']}</span></a> <a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,7\"><span><img src=\"images/icons/picture__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_unpublished']}</span></a> <a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,1\"><span><img src=\"images/icons/picture__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_add']}</span></a> <a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,8\"><span><img src=\"images/icons/picture__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_edit']}</span></a> <a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\"><span><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a> <a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,3\"><span><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>  <a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,5\"><span><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</span></a></div>";
+$buttons="
+<div id=\"admin_menu\" class=\"btns\">
+	<a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,6\"><span><img src=\"images/icons/photo_album__arrow.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_conf']}</span></a>
+	<a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,7\"><span><img src=\"images/icons/picture__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_unpublished']}</span></a>
+	<a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,1\"><span><img src=\"images/icons/picture__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_add']}</span></a>
+	<a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,8\"><span><img src=\"images/icons/picture__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_edit']}</span></a>
+	<a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\"><span><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
+	<a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,3\"><span><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>
+	<a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,5\"><span><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</span></a>
+</div>";
 
 if (empty($url['s'])) {
 	$url['s'] = 0;

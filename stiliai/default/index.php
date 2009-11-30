@@ -11,10 +11,10 @@
 						<ul>
 							<?php
 
-							$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC LIMIT 12");
+							$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent` = 0 AND `show` = 'Y' ORDER BY `place` ASC LIMIT 12");
 							$text = '';
 							foreach ($sql1 as $row1) {
-								if ($row1['show'] == "Y" && (int)$_SESSION['level'] >= (int)$row1['teises']) {
+								if (teises($row1['teises'], $_SESSION['level'])) {
 									$text .= '<li><a href="?id,' . (int)$row1['id'] . '">' . input($row1['pavadinimas']) . '</a></li>';
 								}
 							}

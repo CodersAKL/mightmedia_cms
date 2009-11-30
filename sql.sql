@@ -338,11 +338,12 @@ CREATE TABLE IF NOT EXISTS `nuorodos` (
 -- Sukurta duomenų struktūra lentelei `nustatymai`
 --
 
-CREATE TABLE IF NOT EXISTS `nustatymai` (
-  `id` int(6) NOT NULL auto_increment,
-  `key` varchar(128) collate utf8_lithuanian_ci default NULL,
-  `val` text collate utf8_lithuanian_ci default NULL,
-  PRIMARY KEY  (`id`)
+CREATE TABLE `nustatymai` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `key` varchar(128) COLLATE utf8_lithuanian_ci DEFAULT NULL,
+  `val` text COLLATE utf8_lithuanian_ci,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `key` (`key`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci ;
 
 --

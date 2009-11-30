@@ -1037,7 +1037,7 @@ function trimlink($text, $length) {
 	$dec = array("\"", "'", "\\", '\"', "\'", "<", ">");
 	$enc = array("&quot;", "&#39;", "&#92;", "&quot;", "&#39;", "&lt;", "&gt;");
 	$text = str_replace($enc, $dec, $text);
-	if (strlen($text) > $length)
+	if (strlen(strip_tags($text)) > $length)
 		$text = utf8_substr($text, 0, ($length - 3)) . "...";
 	$text = str_replace($dec, $enc, $text);
 	return $text;
