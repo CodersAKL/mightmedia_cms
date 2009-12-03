@@ -31,7 +31,7 @@ $buttons = "
 	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,7\" class=\"btn\"><span><img src=\"images/icons/disk__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['download_edit']}</span></a>
 	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\" class=\"btn\"><span><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
 	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,3\" class=\"btn\"><span><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>
-	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,5\" class=\"btn\"><span><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</span></a>
+	
 </div>";
 if (empty($url['s'])) {
 	$url['s'] = 0;
@@ -47,7 +47,7 @@ include_once ("priedai/kategorijos.php");
 kategorija("siuntiniai", true);
 $sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `path`=0 ORDER BY `id` DESC");
 	if (sizeof($sql) > 0) {
-		foreach ($sql as $row) {
+		/*foreach ($sql as $row) {
 
 			$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
 			if (sizeof($sql2) > 0) {
@@ -65,7 +65,8 @@ $sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kie
 			}
 
 
-		}
+		}*/
+	$kategorijoss=cat('siuntiniai', 0);
 	}
 /*else
 {

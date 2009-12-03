@@ -63,6 +63,11 @@ if (isset($_POST['order'])) {
 	
 
 } else {
+	$tekstas = "
+<div class=\"btns\">
+	<a href=\"?id," . $url['id'] . ";a,{$_GET['a']};n,1\" class=\"btn\"><span><img src=\"images/icons/script__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['page_select']}</span></a>
+	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};n,2\" class=\"btn\"><span><img src=\"images/icons/script__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['page_create']}</span></a>
+</div>";
 	$parent = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent`='0' ORDER BY `place` ASC");
 	$parents[0] = "";
 	foreach ($parent as $parent_row) {
@@ -301,7 +306,7 @@ lentele($page_pavadinimas,$text);
 		}
 	}
 	
-	$tekstas = '';
+	//$tekstas = '';
 	$tekstas .= '
 <div id="la" style="display:none"><b>' . $lang['system']['updated'] . '</b></div>
 
@@ -328,8 +333,8 @@ lentele($page_pavadinimas,$text);
 		}
 	}
 	$tekstas .= '</ul></fieldset>';
-	$tekstas .= "<button onClick=\"window.location='?id," . $url['id'] . ";a," . $url['a'] . ";n,2';\">{$lang['admin']['page_create']}</button>";
-	$tekstas .= "<button onClick=\"window.location='?id," . $url['id'] . ";a," . $url['a'] . ";n,1';\">{$lang['admin']['page_select']}</button>";
+	//$tekstas .= "<button onClick=\"window.location='?id," . $url['id'] . ";a," . $url['a'] . ";n,2';\">{$lang['admin']['page_create']}</button>";
+	//$tekstas .= "<button onClick=\"window.location='?id," . $url['id'] . ";a," . $url['a'] . ";n,1';\">{$lang['admin']['page_select']}</button>";
 	
 	lentele($lang['admin']['meniu'], $tekstas);
 	

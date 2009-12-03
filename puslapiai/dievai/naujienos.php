@@ -25,13 +25,17 @@ unset($extra);
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,5'">{$lang['system']['createsubcategory']}</button>
 
 HTML;*/
-$buttons = "<div class=\"btns\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,6\" class=\"btn\"><span><img src=\"images/icons/sticky_note__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['news_unpublished']}</span></a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,1\" class=\"btn\"><span><img src=\"images/icons/sticky_note__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['news_create']}</span></a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,4\" class=\"btn\"><span><img src=\"images/icons/sticky_note__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['news_edit']}</span></a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\" class=\"btn\"><span><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,3\" class=\"btn\"><span><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,5\" class=\"btn\"><span><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</span></a></div>";
+$buttons = "<div class=\"btns\"><a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,6\" class=\"btn\"><span><img src=\"images/icons/sticky_note__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['news_unpublished']}</span></a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,1\" class=\"btn\"><span><img src=\"images/icons/sticky_note__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['news_create']}</span></a> <a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,4\" class=\"btn\"><span><img src=\"images/icons/sticky_note__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['news_edit']}</span></a>
+<a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\" class=\"btn\"><span><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
+<a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,3\" class=\"btn\"><span><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>
+</div>";
+//<a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,5\" class=\"btn\"><span><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</span></a>
 lentele($lang['admin']['naujienos'], $buttons);
 include_once ("priedai/kategorijos.php");
 kategorija("naujienos", true);
 $sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `path`=0 ORDER BY `id` DESC");
 if (sizeof($sql) > 0) {
-	foreach ($sql as $row) {
+	/*foreach ($sql as $row) {
 
 		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
 		if (sizeof($sql2) > 0) {
@@ -49,7 +53,8 @@ if (sizeof($sql) > 0) {
 		}
 
 
-	}
+	}*/
+	$kategorijoss=cat('naujienos', 0);
 }
 /*else
 {

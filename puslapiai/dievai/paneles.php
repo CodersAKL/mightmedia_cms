@@ -62,6 +62,9 @@ if (!defined("LEVEL") || LEVEL > 1 || !defined("OK")) {
 	header('location: http://' . $_SERVER["HTTP_HOST"]);
 	exit;
 }
+
+
+//lentele($lang['admin']['paneles'], $buttons);
 if (isset($_POST['order'])) {
 	$array = str_replace("&", ",", $_POST['order']);
 	$array = str_replace("listItem[]=", "", $array);
@@ -83,6 +86,11 @@ if (isset($_POST['order'])) {
 	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
 
 } else {
+	$text = "
+<div class=\"btns\">
+	<a href=\"?id," . $url['id'] . ";a,{$_GET['a']};n,1\" class=\"btn\"><span><img src=\"images/icons/script__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['panel_select']}</span></a>
+	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};n,2\" class=\"btn\"><span><img src=\"images/icons/script__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['panel_create']}</span></a>
+</div>";
 	$lygiai = array_keys($conf['level']);
 
 	foreach ($lygiai as $key) {
@@ -312,7 +320,7 @@ HTML;
 	//atvaizduojam paneles
 	$li = "";
 	$li1 = "";
-	$text = "";
+	//$text = "";
 	$sql = "SELECT id, panel, place from `" . LENTELES_PRIESAGA . "panel` WHERE align='L' order by place";
 	$recordSet = mysql_query1($sql);
 	$listArray = array();
@@ -362,8 +370,8 @@ HTML;
 		</td>
 	</tr>
 	</table>";
-	$text .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,{$_GET['a']};n,1';\">{$lang['admin']['panel_select']}</button>";
-	$text .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,{$_GET['a']};n,2';\">{$lang['admin']['panel_create']}</button>";
+	//$text .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,{$_GET['a']};n,1';\">{$lang['admin']['panel_select']}</button>";
+	//$text .= "<button onClick=\"window.location='?id," . $url['id'] . ";a,{$_GET['a']};n,2';\">{$lang['admin']['panel_create']}</button>";
 
 	lentele($lang['admin']['paneles'], $text);
 

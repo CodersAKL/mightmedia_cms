@@ -30,7 +30,7 @@ $buttons = "
 	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,4\" class=\"btn\"><span><img src=\"images/icons/script__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['article_edit']}</span></a>
 	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\" class=\"btn\"><span><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
 	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,3\" class=\"btn\"><span><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>
-	<a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,5\" class=\"btn\"><span><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</span></a>
+	
 </div>";
 if (empty($_GET['v'])) {
 	$_GET['v'] = 0;
@@ -146,7 +146,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 if (isset($_GET['v'])) {
 	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `path`=0 ORDER BY `id` DESC");
 	if (sizeof($sql) > 0) {
-		foreach ($sql as $row) {
+		/*foreach ($sql as $row) {
 
 			$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
 			if (count($sql2) > 0) {
@@ -164,7 +164,8 @@ if (isset($_GET['v'])) {
 			}
 
 
-		}
+		}*/
+		$kategorijoss=cat('straipsniai', 0);
 	}
 	/*else
 	{

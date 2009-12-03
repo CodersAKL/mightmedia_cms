@@ -38,9 +38,9 @@ $buttons="
 	<a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,8\"><span><img src=\"images/icons/picture__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_edit']}</span></a>
 	<a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,2\"><span><img src=\"images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
 	<a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,3\"><span><img src=\"images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>
-	<a class=\"btn\" href=\"?id,{$_GET['id']};a,{$_GET['a']};v,5\"><span><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</span></a>
+	
 </div>";
-
+//<a href=\"?id,{$_GET['id']};a,{$_GET['a']};v,5\" class=\"btn\"><span><img src=\"images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</span></a>
 if (empty($url['s'])) {
 	$url['s'] = 0;
 }
@@ -55,7 +55,7 @@ include_once ("priedai/kategorijos.php");
 kategorija("galerija", true);
 $sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `path`=0 ORDER BY `id` DESC");
 if (sizeof($sql) > 0) {
-	foreach ($sql as $row) {
+	/*foreach ($sql as $row) {
 
 		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
 
@@ -74,7 +74,8 @@ if (sizeof($sql) > 0) {
 		}
 
 
-	}
+	}*/
+	$kategorijoss=cat('galerija', 0);
 }
 $kategorijos[0] = "--";
 if (isset($_GET['p'])) {
