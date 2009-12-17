@@ -1417,21 +1417,23 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
        //xinha_config.stylistLoadStylesheet(\'stiliai/' . input($conf['Stilius']) . '/default.css\');
        //xinha_config.pageStyleSheets = [\'stiliai/' . input($conf['Stilius']) . '/default.css\'];
        //xinha_config.htmlRemoveTags = /body|head|html/;
-      with (xinha_config.ExtendedFileManager)
-     { 
+      //xinha_config.htmlRemoveTags = /body|head|html/;
+      ' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ?'with (xinha_config.ExtendedFileManager)
+     {':'').'
        ';
-	require_once ('javascript/htmlarea/Xinha0.96beta2/contrib/php-xinha.php');
-
-	xinha_pass_to_php_backend(array('images_dir' => '../../../../../siuntiniai/images', 'images_url' => adresas() . 'siuntiniai/images', 'files_dir' => '../../../../../siuntiniai/failai', 'files_url' => adresas() . 'siuntiniai/failai', //'base_dir' => '../../../../../siuntiniai',
-		 //'base_url' => adresas() . 'siuntiniai',
-
-		 'allow_upload' => true //,
-		 //'thumbnail_prefix'=>'',
-		 //'thumbnail_dir'=>'sumazinti'
-		 //'resized_prefix'=>'.pakeistas',
-		 //'resized_dir'=>'.resized'
-	));
+	if(isset($_SESSION['level']) && $_SESSION['level'] == 1){
+		require_once ('javascript/htmlarea/Xinha0.96beta2/contrib/php-xinha.php');
+		xinha_pass_to_php_backend(array('images_dir' => '../../../../../siuntiniai/images', 'images_url' => adresas() . 'siuntiniai/images', 'files_dir' => '../../../../../siuntiniai/failai', 'files_url' => adresas() . 'siuntiniai/failai', //'base_dir' => '../../../../../siuntiniai',
+		//'base_url' => adresas() . 'siuntiniai',
+		'allow_upload' => true //,
+		//'thumbnail_prefix'=>'',
+		//'thumbnail_dir'=>'sumazinti'
+		//'resized_prefix'=>'.pakeistas',
+		//'resized_dir'=>'.resized'
+		));
+	}
 	echo '
+     ' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ?'}':'').'
      }
       
        xinha_editors   = Xinha.makeEditors(xinha_editors, xinha_config, xinha_plugins);
