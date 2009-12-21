@@ -343,11 +343,11 @@ if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
  * @return array
  */
 unset($sql, $row);
-$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `path`='0' ORDER BY `id` DESC");
+$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' ORDER BY `id` DESC");
 
 if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
-		$sql2 = mysql_query1("SELECT `pavadinimas` FROM  `" . LENTELES_PRIESAGA . "grupes`  WHERE  `kieno` = 'vartotojai' AND path!=0 and `path` like'" . $row['id'] . "%' ORDER BY `id` ASC");
+		/*$sql2 = mysql_query1("SELECT `pavadinimas` FROM  `" . LENTELES_PRIESAGA . "grupes`  WHERE  `kieno` = 'vartotojai' ORDER BY `id` ASC");
 		if (sizeof($sql2) > 0) {
 			$subcat = '';
 			foreach ($sql2 as $path) {
@@ -357,9 +357,9 @@ if (sizeof($sql) > 0) {
 				$levels[(int)$path['teises']] = array('pavadinimas' => $row['pavadinimas'] . $subcat, 'aprasymas' => $row['aprasymas'], 'pav' => $row['pav']);
 
 			}
-		} else {
+		} else {*/
 			$levels[(int)$row['teises']] = array('pavadinimas' => $row['pavadinimas'], 'aprasymas' => $row['aprasymas'], 'pav' => $row['pav']);
-		}
+		//}
 	}
 }
 $levels[1] = array('pavadinimas' => $lang['system']['admin'], 'aprasymas' => $lang['system']['admin'], 'pav' => 'admin.png');
@@ -1434,7 +1434,7 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 	}
 	echo '
      ' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ?'}':'').'
-     }
+     
       
        xinha_editors   = Xinha.makeEditors(xinha_editors, xinha_config, xinha_plugins);
 

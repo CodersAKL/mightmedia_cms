@@ -9,21 +9,19 @@
  * @$Revision$
  * @$Date$
  **/
-function cat($kieno,$cat_id, $space= 1, $x ='')
-{
-$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' and `path`='$cat_id'");
+function cat($kieno,$cat_id = 0, $space= 1, $x ='') {
+	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' and `path`='$cat_id'");
 
-foreach($sql as $select)
-{
-//echo $select['pavadinimas'];
-$x[$select['id']]=str_repeat('-', $space).$select['pavadinimas'];  // making a list with all categories names. we add "_" to in front of category name. It adds degree of category times. For example asus deggre is 2 therefore it will be __asus, pda’s degree is one therefore it will be _pda
+	foreach($sql as $select) {
+		//echo $select['pavadinimas'];
+		$x[$select['id']]=str_repeat('-', $space).$select['pavadinimas'];  // making a list with all categories names. we add "_" to in front of category name. It adds degree of category times. For example asus deggre is 2 therefore it will be __asus, pda’s degree is one therefore it will be _pda
 
-$x =cat($kieno,$select['id'], ($space+1), $x);  // function calls itself, with this, it finds subcategory of a category.
-}
+		$x =cat($kieno,$select['id'], ($space+1), $x);  // function calls itself, with this, it finds subcategory of a category.
+	}
 //print_r($x);
-return $x;
+	return $x;
 
-// This is list of all categories. Each category is separating with "-", be careful this is not an array , this is a string
+
 }
 
 function kategorija($kieno, $leidimas = false) {
@@ -56,27 +54,9 @@ HTML;
 	}
 	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' ORDER BY `id` DESC");
 	if (sizeof($sql) > 0) {
-		//foreach ($sql as $row) {
-
-			/*$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
-			if (sizeof($sql2) > 0) {
-				$subcat = '';
-				foreach ($sql2 as $path) {
-
-					$subcat .= "->" . $path['pavadinimas'];
-					$kategorijoss[$row['id']] = $row['pavadinimas'];
-					$kategorijoss[$path['id']] = $row['pavadinimas'] . $subcat;
-					//sub($path['id'], $kieno);
-
-				}
-			} else {
-				$kategorijoss[$row['id']] = $row['pavadinimas'];
-			}*/
-			//$kategorijoss[$row['id']] = $row['pavadinimas'];
-			$kategorijoss=cat($kieno, 0);
-			//$get_array_categories =get_cat($kieno, 0);
-//print_r($get_array_categories);
-		//}
+	
+			$kategorijoss=cat($kieno);
+		
 	} /*else {
 		$kategorijoss[] = "{$lang['system']['nocategories']}.";
 	}*/
@@ -131,9 +111,9 @@ HTML;
 		if (isset($_POST['path'])) {
 			$path = mysql_query1("Select * from`" . LENTELES_PRIESAGA . "grupes` WHERE id=" . escape($_POST['path']) . " Limit 1");
 			if ($path) {
-				if ($kieno == 'vartotojai')
+				/*if ($kieno == 'vartotojai')
 					$teises = $_POST['Teises'];
-				else
+				else*/
 					$teises = serialize($_POST['Teises']);
 			}
 
@@ -144,7 +124,7 @@ HTML;
 				$pathas = $path['id'];
 			//}
 		}else{
-			$pathas='0';
+			$pathas=0;
 		}
 		
 		if ($kieno == 'vartotojai') {
@@ -311,7 +291,7 @@ HTML;
 			//print_r($puslapiai);
 			$kategorijoss[0]='';
 			$kategorijos = array("Form" => array("action" => '' . "?id,{$_GET['id']};a,{$_GET['a']}" . '', "method" => "post", "name" => "reg"), "{$lang['system']['name']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', "name" => "Pavadinimas", "class"=>"input"),
-				$lang['system']['subcat/cat'] =>array("type" => "select", "value" => @$kategorijoss, "name" => "path", "selected" => (isset($extra['path']) ? input($extra['path']):""), "disabled" => @$kategorijoss),
+				($kieno != 'vartotojai' ? $lang['system']['subcat/cat'] : '') => ($kieno != 'vartotojai' ? array("type" => "select", "value" => @$kategorijoss, "name" => "path", "selected" => (isset($extra['path']) ? input($extra['path']):""), "disabled" => @$kategorijoss):''),
 					"{$lang['system']['about']}:" => array("type" => "textarea", "value" => (isset($extra['aprasymas'])) ? input($extra['aprasymas']) : '', "name" => "Aprasymas", "rows" => "3", "class" => "input",
 				"class"=>"input", "id" => "Aprasymas"), "{$lang['system']['picture']}:" => array("type" => "select", "value" => $kategoriju_pav, "name" => "Pav", "class" => "input", "class"=>"input", "selected" => (isset($extra['pav']) ? input($extra['pav']) : ''), "extra" => "onchange=\"$('#kategorijos_img').attr({ src: '" . $dir . "/'+this.value });\""), $lang['admin']['what_moderate'] => "", $textas => "", "" => array("type" => "hidden", "name" => "Kategorijos_id", "value" => (isset($extra['id']) ? input($extra['id']) : '')), (isset($extra)) ? $lang['system']['editcategory'] : $lang['system']['createcategory'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['system']['editcategory'] : $lang['system']['createcategory']), );
 			if ($kieno == 'vartotojai') {
