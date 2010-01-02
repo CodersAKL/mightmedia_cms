@@ -23,6 +23,30 @@ if (isset($url['id']) && isnum($url['id']) && $url['id'] > 0) {
 } else {
 	$url['id'] = 0;
 }
+function check_email($email) {
+	if (!ereg("^[^@]{1,64}@[^@]{1,255}$", $email)) {
+		return false;
+	}
+	$email_array = explode("@", $email);
+	$local_array = explode(".", $email_array[0]);
+	for ($i = 0; $i < sizeof($local_array); $i++) {
+		if (!ereg("^(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-][A-Za-z0-9!#$%&'*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $local_array[$i])) {
+			return false;
+		}
+	}
+	if (!ereg("^\[?[0-9\.]+\]?$", $email_array[1])) {
+		$domain_array = explode(".", $email_array[1]);
+		if (sizeof($domain_array) < 2) {
+			return false;
+		}
+		for ($i = 0; $i < sizeof($domain_array); $i++) {
+			if (!ereg("^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$", $domain_array[$i])) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
 // ############ Apdorojomi duomenys kurie buvo pateikti is tam tikros redagavimo lenteles #####################
 // ######### Slaptazodzio keitimas #############
 if (isset($_POST['old_pass']) && count($_POST['old_pass']) > 0 && count($_POST['new_pass']) > 0 && count($_POST['new_pass2']) > 0) {
@@ -45,19 +69,23 @@ if (isset($_POST['old_pass']) && count($_POST['old_pass']) > 0 && count($_POST['
 }
 // ################# kontaktu keitimas ######################
 if (isset($_POST['action']) && $_POST['action'] == 'contacts_change') {
-	$icq = input($_POST['icq']);
-	$msn = input($_POST['msn']);
-	$skype = input($_POST['skype']);
-	$yahoo = input($_POST['yahoo']);
-	$aim = input($_POST['aim']);
-	$url = input($_POST['url']);
-	$email = input($_POST['email']);
+	if(!empty($_POST['email']) && check_email($_POST['email'])){
+		$icq = input($_POST['icq']);
+		$msn = input($_POST['msn']);
+		$skype = input($_POST['skype']);
+		$yahoo = input($_POST['yahoo']);
+		$aim = input($_POST['aim']);
+		$url = input($_POST['url']);
+		$email = input($_POST['email']);
 		$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
-	if(file_exists('images/avatars/'.md5($sql['email']).'.jpeg'))
-	rename('images/avatars/'.md5($sql['email']).'.jpeg','images/avatars/'.md5($email).'.jpeg');
-	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET icq=" . escape($icq) . ", msn=" . escape($msn) . ", skype=" . escape($skype) . ", yahoo=" . escape($yahoo) . ", aim=" . escape($aim) . ", url=" . escape($url) . ", email=" . escape($email) . " WHERE nick=" . escape($_SESSION['username']) . "");
-	msg("{$lang['system']['done']}", "{$lang['user']['edit_updated']}");
-	unset($icq, $msn, $skype, $yahoo, $aim, $url, $email);
+		if(file_exists('images/avatars/'.md5($sql['email']).'.jpeg'))
+			rename('images/avatars/'.md5($sql['email']).'.jpeg','images/avatars/'.md5($email).'.jpeg');
+		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET icq=" . escape($icq) . ", msn=" . escape($msn) . ", skype=" . escape($skype) . ", yahoo=" . escape($yahoo) . ", aim=" . escape($aim) . ", url=" . escape($url) . ", email=" . escape($email) . " WHERE nick=" . escape($_SESSION['username']) . "");
+		msg("{$lang['system']['done']}", "{$lang['user']['edit_updated']}");
+		unset($icq, $msn, $skype, $yahoo, $aim, $url, $email);
+	}else{
+		klaida($lang['system']['error'],$lang['reg']['bademail']);
+	}
 }
 // ################ Salies bei miesto nustatymai #############
 if (isset($_POST['action']) && $_POST['action'] == 'country_change') {
@@ -243,9 +271,9 @@ $avatar .= "<div align='center' id='gravatar'>
 			"Form" => array("action" => "", "method" => "post", "name" => "pagr_nustatymai"), 
 			"{$lang['user']['edit_name']}:" => array("type" => "text", "value" => $sql['vardas'], "name" => "vardas", "class" => "input"), 
 			"{$lang['user']['edit_secondname']}:" => array("type" => "text", "value" => $sql['pavarde'], "name" => "pavarde", "class" => "input"), 
-			"{$lang['user']['edit_dateOfbirth']}:" => array("type" => "select", "value" => $year, "selected" => $data[0], "class" => "select", "name" => "metai"), 
-			" " => array("type" => "select", "class" => "select", "value" => $month, "selected" => $data[1], "name" => "menesis"), 
-			"\r " => array("type" => "select", "class" => "select", "value" => $day, "selected" => $data[2], "name" => "diena"), 
+			"{$lang['user']['edit_dateOfbirth']}:" => array("type" => "select", "value" => $year, "selected" => (isset($data[0])?$data[0]:(date("Y") - 7)), "class" => "select", "name" => "metai"),
+			" " => array("type" => "select", "class" => "select", "value" => $month, "selected" => (isset($data[1])?$data[1]:1), "name" => "menesis"),
+			"\r " => array("type" => "select", "class" => "select", "value" => $day, "selected" => (isset($data[2])?$data[0]:1), "name" => "diena"),
 			"{$lang['user']['edit_signature']}" => array("type" => "textarea", "class" =>	"input", "value" => $sql['parasas'], "name" => "parasas"), 
 			" \r \n" => array("type" => "hidden", "name" => "action", "value" => "default_change"), 
 			"" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}")

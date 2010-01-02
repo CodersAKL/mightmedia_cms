@@ -29,7 +29,7 @@ if (isset($url['c']) && !empty($url['c']) && strlen($url['c']) == 11) {
 		$up=mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `slaptas`='', pass=" . escape(koduoju($slaptas)) . " WHERE `nick`=" . escape($nick) . " LIMIT 1") or die(mysql_error());
 
 		if (!empty($up)) {
-			msg($lang['system']['done'], "{$lang['user']['hello']} <b>" . $nick . "</b>,<br/>{$lang['pass']['new']} <b>" . $slaptas . "</b><br/>");
+			msg($lang['system']['done'], sprintf($lang['user']['hello'],$nick).",<br/>{$lang['pass']['new']} <b>" . $slaptas . "</b><br/>");
 		} else {
 			klaida($lang['system']['systemerror'], "{$lang['system']['contactadmin']}.");
 		}
@@ -50,7 +50,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'siusti') {
 	} elseif ($_POST['email'] == $_POST['email1']) {
 		$email = input(strip_tags($_POST['email']));
 		$sql = mysql_query1("SELECT `nick`,`email` FROM `" . LENTELES_PRIESAGA . "users` WHERE email=" . escape($email) . " LIMIT 1");
-		if (count($sql) < 1) {
+		if (!isset($sql['nick'])) {
 			$error .= " {$lang['pass']['wrongemail']}.<br />";
 			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['pass']['wrongemail']}({$lang['pass']['remain']}) : " . $email) . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
 		} else {
@@ -58,7 +58,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'siusti') {
 			$slaptas = random_name();
 			$msg = "<b>" . $sql['nick'] . "</b>,<br/>
 				 {$lang['pass']['mail']}
- <a href='http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "/?id," . $_GET['id'] . ";c," . $slaptas . "'>http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "/?id," . $_GET['id'] . ";c," . $slaptas . "</a>
+ <a href='http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "?id," . $_GET['id'] . ";c," . $slaptas . "'>http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "?id," . $_GET['id'] . ";c," . $slaptas . "</a>
 <hr>";
 			ini_set("sendmail_from", $conf['Pastas']);
 			mail($email, "=?UTF-8?Q?".strip_tags($conf['Pavadinimas']) ." ". $lang['pass']['remain']."?=", $msg, "From: " . $conf['Pavadinimas'] . "<" . $conf['Pastas'] . ">\r\nContent-type: text/html; charset=utf-8");
