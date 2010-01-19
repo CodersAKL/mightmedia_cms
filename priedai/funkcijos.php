@@ -82,7 +82,7 @@ function header_info() {
   $(document).ready(function(){
 
 	//Examples of how to assign the ColorBox event to elements.
-	$("#gallery a[rel=\'lightbox\']").colorbox({transition:"fade"});
+	$(".gallery a[rel=\'lightbox\']").colorbox({transition:"fade"});
 
 	//Example of preserving a JavaScript event for inline calls.
 	$("#click").click(function(){

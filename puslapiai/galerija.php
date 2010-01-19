@@ -117,7 +117,7 @@ if (empty($url['m'])) {
 			}
 
 			$text .= "
-			<div id=\"gallery\" class=\"img_left\" >
+			<div class=\"gallery img_left\" >
 				<a rel=\"lightbox\" href=\"galerija/" . $row['file'] . "\" title=\"" . (!empty($row['pavadinimas'])?$row['pavadinimas'] . "<br>":'') . trimlink(strip_tags($row['apie']), 50) . "\">
 					<img src=\"galerija/mini/" . $row['file'] . "\" alt=\"\" />
 				</a>
@@ -131,7 +131,7 @@ if (empty($url['m'])) {
 					" : "") . "
 				</div>
 				<div class='gallery_title'>
-					" . trimlink((!empty($row['pavadinimas'])?$row['pavadinimas']:''),20) . "
+					" . trimlink((!empty($row['pavadinimas'])?$row['pavadinimas']:''),10) . "
 				</div>
 			</div>
 		";
