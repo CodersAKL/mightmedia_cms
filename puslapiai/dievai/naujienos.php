@@ -54,7 +54,7 @@ if (sizeof($sql) > 0) {
 
 
 	}*/
-	$kategorijoss=cat('naujienos', 0);
+	$kategorijos=cat('naujienos', 0);
 }
 /*else
 {

@@ -61,7 +61,7 @@ if (sizeof($sql) > 0) {
 
 
 	}*/
-	$kategorijoss=cat('nuorodos', 0);
+	$kategorijos=cat('nuorodos', 0);
 }
 /*else
 {

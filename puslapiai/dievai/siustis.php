@@ -66,7 +66,7 @@ $sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kie
 
 
 		}*/
-	$kategorijoss=cat('siuntiniai', 0);
+	$kategorijos=cat('siuntiniai', 0);
 	}
 /*else
 {

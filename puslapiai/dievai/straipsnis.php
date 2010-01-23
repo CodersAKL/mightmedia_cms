@@ -165,7 +165,7 @@ if (isset($_GET['v'])) {
 
 
 		}*/
-		$kategorijoss=cat('straipsniai', 0);
+		$kategorijos=cat('straipsniai', 0);
 	}
 	/*else
 	{

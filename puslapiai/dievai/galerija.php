@@ -75,7 +75,7 @@ if (sizeof($sql) > 0) {
 
 
 	}*/
-	$kategorijoss=cat('galerija', 0);
+	$kategorijos=cat('galerija', 0);
 }
 $kategorijos[0] = "--";
 if (isset($_GET['p'])) {
