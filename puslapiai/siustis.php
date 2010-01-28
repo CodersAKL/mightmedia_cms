@@ -87,7 +87,7 @@ if ($vid > 0) {
 	if (!isset($sql['id'])) {
 		$sql = mysql_query1("SELECT *, `ID` as id  FROM  `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` = '$vid' AND `rodoma` =  'TAIP'  LIMIT 1", 86400);
 	}
-	if (sizeof($sql) > 0) {
+	if (sizeof($sql) > 0 && isset($sql['id'])) {
 		//$sql = mysql_fetch_assoc($sql);
 		if (!isset($sql['teises']) || teises($sql['teises'], $_SESSION['level'])) {
 			if (isset($sql['Nick'])) {
