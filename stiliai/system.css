@@ -389,6 +389,7 @@ white-space : nowrap;
 .img_left {
 float : left;
 margin-right : 5px;
+position:relative;
 }
 .drag_block {
 display : block;
