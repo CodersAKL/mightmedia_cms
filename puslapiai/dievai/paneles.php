@@ -100,7 +100,7 @@ if (isset($_POST['order'])) {
 	if (isset($_POST['Naujaa_pnl']) && $_POST['Naujaa_pnl'] == $lang['admin']['panel_create']) {
 		// Nurodote failo pavadinimą:
 		$failas = "paneles/" . preg_replace("/[^a-z0-9-]/", "_", strtolower($_POST['pav'])) . ".php";
-		$tekstas = str_replace(array('$', 'HTML', '<br>'), array('\$', 'html', '<br/>'), $_POST['pnl']);
+		$tekstas = str_replace(array('$', 'HTML', '<br>'), array('&#36;', 'html', '<br/>'), $_POST['pnl']);
 		//$tekstas = str_replace('HTML', 'html', $tekstas);
 
 		// Nurodote įrašą kuris bus faile kai jį sukurs:
@@ -108,7 +108,7 @@ if (isset($_POST['order'])) {
 		$irasas = '<?php
 $text =
 <<<HTML
-' . stripslashes($tekstas) . '
+' . $tekstas . '
 HTML;
 ?>';
 
@@ -245,15 +245,14 @@ HTML;
 				//echo $_POST['Turinys'];
 				//irasom('paneles/' . $sql['file'], $_POST['Turinys']);
 				$failas = "paneles/" . $sql['file'];
-				$tekstas = str_replace(array('$', '<br>'), array('\$', '<br/>'), $_POST['Turinys']);
-				$tekstas = str_replace('HTML', 'html', $tekstas);
+				$tekstas = str_replace(array('$', '<br>', 'HTML'), array('&#36;', '<br/>', 'html'), $_POST['Turinys']);
 
 				// Nurodote įrašą kuris bus faile kai jį sukurs:
 				//$apsauga = random_name();
 				$irasas = '<?php
 $text =
 <<<HTML
-' . stripslashes($tekstas) . '
+' . $tekstas . '
 HTML;
 ?>';
 				//Irasom faila
@@ -381,8 +380,7 @@ HTML;
 		if (is_writable($Failas)) {
 			if ($fh = fopen($Failas, 'w')) {
 				//$apsauga = random_name();
-				$tekstas = str_replace('$', '\$', $Info);
-				$tekstas = str_replace('HTML', 'html', $tekstas);
+				$tekstas = str_replace(array('$','HTML', '<br>'), array('&#36;','html','<br />'), $Info);
 
 				$Info = '<?php
 $text =

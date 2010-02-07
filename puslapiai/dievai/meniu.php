@@ -95,13 +95,12 @@ if (isset($_POST['order'])) {
 		
 		// Nurodote įrašą kuris bus faile kai jį sukurs:
 		//$apsauga = random_name();
-		$tekstas = str_replace('$', '\$', $_POST['Page']);
-		$tekstas = str_replace('HTML', 'html', $tekstas);
+		$tekstas = str_replace(array('$','HTML'), array('&#36;','html'), $_POST['Page']);
 		
 		$irasas = '<?php
 $text =
 <<<HTML
-' . stripslashes($tekstas) . '
+' . $tekstas . '
 HTML;
 lentele($page_pavadinimas,$text);
 ?>';
@@ -229,8 +228,7 @@ lentele($page_pavadinimas,$text);
 		if (isset($_POST['Redaguoti_txt']) && $_POST['Redaguoti_txt'] == $lang['admin']['edit']) {
 			$sql = "SELECT `file`,`pavadinimas` FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape($psl_id) . " LIMIT 1";
 			$sql = mysql_query1($sql);
-			$tekstas = str_replace('$', '\$', $_POST['Page']);
-			$tekstas = str_replace('HTML', 'html', $tekstas);
+			$tekstas = str_replace(array('$','HTML'), array('&#36;','html'), $_POST['Page']);
 			
 			$irasas = '<?php
 $text =
