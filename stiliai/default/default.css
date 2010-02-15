@@ -1,0 +1,403 @@
+* {
+/*padding: 0;
+margin: 0;*/
+} 
+
+body {
+margin:0;
+padding: 0;
+color: #444;
+font: 13px Arial, Verdana, Tahoma, sans-serif;
+line-height: 17px;
+background-image: url(images/bg.jpg);
+background-color: #CCCCCC;
+}
+.tooltip{
+ padding: 3px;
+ border: 1px solid #666;
+ display: none;
+ background: #000;
+ color: #FFF;
+ font: bold 9px Verdana, Arial, Helvetica, sans-serif;
+ text-align: left;
+ position: absolute;
+ z-index: 1000;
+}
+.title {
+background-image:url(images/titlas.gif);
+background-repeat:repeat-x;
+border-top:1px solid #CCC;
+color:#CCCCCC;
+font-family:"Lucida Grande",verdana,helvetica,arial,sans-serif;
+font-size:10px;
+/*font-weight:bold;*/
+height:17px;
+padding:3px 5px 0;
+text-align:center;
+text-transform:uppercase;
+vertical-align:middle;
+}
+div .title a, div #footer a {
+	color: white;
+	text-decoration: underline;
+}
+.content {
+	background-color : white;
+	background-image: url(images/bgas.jpg);
+	/*padding: 10px;*/
+	border: 1px solid;
+	border-color: #999999;
+	margin-bottom: 0px; /* buvo 10 */
+	font-family: Verdana, Arial, Helvetica, sans-serif, webdings;
+	font-size : 11px;
+	font-weight : normal;
+	margin-bottom: 5px;
+}
+.pagr{
+	background-color: #FFF;
+}
+.vidus {
+	background-color : white;
+	background-image: url(images/block_vidus_fonas.gif);
+	background-repeat: repeat-x;
+	/*padding: 10px;*/
+	border-left: 1px solid;
+	border-right: 1px solid;
+	border-top: 1px solid;
+	border-bottom: 1px solid; /* */
+	border-color: #90A7B5;
+	margin-bottom: 0px; /* buvo 10 */
+	border-top : 0px;
+	font-family: Verdana, Arial, Helvetica, sans-serif, webdings;
+	font-size : 11px;
+	font-weight : normal;
+}
+.virsus {
+	background-color : white;
+	background-image: url(images/virsus.png);
+	background-repeat: repeat-x;
+	height:12px;
+	
+}
+.vidus , .content{
+	padding-top:5px;
+}
+.shadow{
+ background-image: url(images/shadow.png);	
+ background-repeat: repeat-y;
+ width:190px;
+ padding-left:5px; 
+ padding-right:5px;
+ 
+}
+.shadow_bottom{
+ background-image: url(images/shadow_bottom.png);	
+ background-repeat: no-repeat;
+ width:200px;
+ height:10px;
+ }
+.aplink{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.text{
+	padding:3px;
+}
+img {border: none;}
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+hr, fieldset{
+	margin:2px;
+	border: 1px dotted #CCC;
+}
+img { border: 0; }
+a, a:visited { color: #0A5087; text-decoration: none; }
+a:hover { color: #266493; text-decoration: underline; }
+input, textarea, button, select {
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-size : 9px;
+	color : #0A3F67;
+	background-color : white;
+	border : 1px solid #0A3F67;
+	padding-left: 5px;
+}
+input[type="submit"], .submit{
+background-image:url(images/submit.png);
+background-repeat: repeat-x;
+border:1px solid red;
+color:#FFF;	
+}
+#contentt {
+background: #ccc;
+padding: 20px;
+}
+
+
+#wrap {
+width: 970px;
+margin: 0 auto;
+}
+
+
+#header{
+font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 100%;
+}
+.header_bar{
+background-image: url(images/hdr_bg.jpg);
+background-repeat:repeat-x;
+height:100px;
+width:100%;
+text-align:left;
+}
+/* Meniu */
+#vertikalus_meniu {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	width: 160px;
+	padding: 0px;
+	margin: 0px;
+}
+
+#vertikalus_meniu ul {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	border: none;
+}
+#vertikalus_meniu ul li {
+	margin: 0px;
+	padding: 0px;
+}
+#vertikalus_meniu ul li a {
+	font-size: 80%;
+	display: block;
+	border-bottom: 1px dashed #73A4BF;
+	padding: 5px 0px 2px 4px;
+	text-decoration: none;
+	color: #666666;
+	width:160px;
+}
+
+#vertikalus_meniu ul li a:hover, #vertikalus_meniu ul li a:focus {
+	color: #000000;
+	background-color: #73A4BF;
+}
+#navigation {width:100%; font-size:12px;}
+
+/*Main Menu*/
+#navigation ul {	
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	border: none;}
+
+#navigation ul li a{
+	font-size: 10px;
+	display: block;
+	border-bottom: 1px dashed #73A4BF;
+	padding: 5px 0px 2px 4px;
+	text-decoration: none;
+	color: #666666;
+	width:160px;
+
+}
+#navigation ul li:hover {
+	color: #000000;
+	background-color: #73A4BF;
+	 position:relative;
+	 }
+
+/*Sub Menu*/
+#navigation ul ul {background-image: url(images/block_vidus_fonas.gif);
+	background-repeat: repeat-x;display:none; position:absolute; left:160px; top:0px; }
+#navigation ul li:hover ul {display:block;}
+#navigation ul ul li{ font-size: 10px;
+	display: block;
+	padding: 5px 0px 2px 4px;
+	text-decoration: none;
+	color: #666666;
+	width:165px;}
+#navigation ul ul li:hover {}
+
+#navigation li:hover ul li ul {display:none;}
+
+#navigation ul ul li ul {left:110px; }
+#navigation ul ul li:hover ul {display:block;}
+
+
+/* Meniu juosta*/
+#juosta {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	width: 100%;	
+	padding-top:3px;
+	background-image:url(images/menius.jpg);
+	text-align:center;
+	height: 25px;
+	
+}
+
+#juosta ul {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+#juosta ul li {
+  display: inline;
+	margin: 0px;
+	padding: 0px;
+}
+#juosta ul li a {
+  border-right:1px solid #000;
+  font-size: 11px;
+  padding-left:4px;
+  padding-top:5px;
+   padding-bottom:5px;
+  padding-right:4px;
+   display: inline;
+   vertical-align:middle;
+	text-decoration: none;
+	color: #CCCCCC;
+	
+}
+
+#juosta ul li a:hover, #vertikalus_meniu ul li a:focus {
+	color: #FFF;
+	
+}
+/* Knopkems administravimo */
+.blokas {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	width:78px;
+	text-align: center;
+	float: left;
+	cursor: pointer;
+	background-color: #ECF2F2;
+	border: 1px solid #CCCCCC;
+	/*-moz-border-radius: 10px;*/
+	padding:3px;
+	margin:3px;
+	height:65px;
+	/*clear: both;*/
+}
+div.blokas a {
+	/*-moz-opacity:0.6; */
+	font-size:9px;
+	font-weight: bold;
+	text-decoration: none;
+	display: block;
+	margin: 3px;
+}
+div.blokas a:active, div.blokas a:hover { 
+	/*-moz-opacity:1.0; */
+	
+	/*background-color:#DBE6E6;*/
+	margin-left:4px;
+	margin-top:4px;
+	margin-right:2px;
+	margin-bottom:2px;
+}
+div.blokas img { 
+	display:block;
+	border:0;
+	/*filter:alpha(opacity=60);*/
+}
+div.blokas img:hover { 
+	display:block;
+	border:0;
+	/*filter:alpha(opacity=100);*/
+}
+/* Lentelems */
+.table {
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
+}
+.th {
+	text-align:center;
+	color: white;
+	background-image: url(images/menius.jpg);
+	border-left: 1px solid gray;
+	background-color: #E4C9BB;
+	height: 20px;
+	font-weight: normal;
+}
+.th a {
+	color: white;
+}
+.tr:hover, .tr2:hover {
+	/*background-color: #FFFFCC;*/
+	background-color: #FAECAB;
+	cursor:pointer;
+}
+.tr2 {
+	background-color: #FBF8F4;
+}
+.td {
+	padding-left:5px;
+	border-left:1px solid gray
+}
+.td2 {
+	padding-left: 5px;
+	border-left: 1px solid gray;
+}
+.kaire {
+	margin-top: 10px;
+	float: left;
+	width: 200px;
+	line-height: 15px;
+
+}
+
+
+.center { 
+	margin-top: 10px;
+	float: left;
+	width: 490px;
+	margin-left: 10px;
+	line-height: 20px;
+}
+
+
+.desine {
+	margin-top: 10px;
+	float: right;
+	width: 200px;
+	
+}
+
+#footer { 
+	color: #777;
+	text-align: center;
+	padding-bottom: 10px;
+	height:8px;
+}
+#footer a {  color: #777; text-decoration: none; }
+#footer a:hover { color: #777; } 
+.line {
+border-bottom: 1px dashed #73A4BF;padding:5px
+}
+textarea.input {
+	width: 95%;
+	background-color:#FFF;
+	/*background:#FFF url(images/block_vidus_fonas.gif) left top repeat-x;*/
+}
+input.input {
+	height: 16px;
+	width: auto
+}
+table tr td { 
+padding:1px;
+}
+.kalendorius table tr td {
+border-bottom: 1px dashed #73A4BF;
+text-align:center;
+}
+.kalendorius .siandien {
+background-color: #73A4BF;
+font-weight: bold;
+color: white
+}

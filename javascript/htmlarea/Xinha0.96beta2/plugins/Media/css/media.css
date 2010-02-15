@@ -1,0 +1,138 @@
+a{ 
+	padding: 2px; 
+	border: 1px solid ButtonFace;
+	vertical-align: top;
+	margin-bottom: -3px;
+}	
+a img{
+	border: 0;
+}	
+a:hover{
+	border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight; 
+}
+.tabs {
+	float: left;
+	width: 100%;
+	line-height: normal;
+	background-image: url("../img/tabs_bg.gif");
+}
+.tabs ul {
+	margin: 0;
+	padding: 0 0 0;
+	list-style: none;
+}
+.tabs li {
+	float: left;
+	background: url("../img/tab_bg.gif") no-repeat left top;
+	margin: 0;
+	margin-left: 0;
+	margin-right: 2px;
+	padding: 0 0 0 10px;
+	line-height: 18px;
+}
+
+.tabs li.current {
+	background: url("../img/tab_sel_bg.gif") no-repeat left top;
+	margin-right: 2px;
+}
+
+.tabs span {
+	float: left;
+	display: block;
+	background: url("../img/tab_end.gif") no-repeat right top;
+	padding: 0px 10px 0 0;
+}
+
+.tabs .current span {
+	background: url("../img/tab_sel_end.gif") no-repeat right top;
+}
+
+.tabs a {
+	text-decoration: none;
+	font-family: Verdana, Arial;
+	font-size: 10px;
+}
+
+.tabs a:link, .tabs a:visited, .tabs a:hover {
+	color: black;
+	border: none;
+}
+
+.panel_wrapper div.panel {
+	display: none;
+}
+
+.panel_wrapper div.current {
+	display: block;
+	width: 100%;
+	overflow: visible; /* Should be auto but that breaks Safari height: 300px;*/
+}
+
+.panel_wrapper {
+	border-top: 0px;
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-right: 5px;
+	clear: both;
+} 
+#id, #name, #hspace, #vspace, #class_name, #align {
+	width: 100px;
+}
+#hspace, #vspace {
+	width: 50px;
+}
+#flash_quality, #flash_align, #flash_scale, #flash_salign, #flash_wmode {
+	width: 100px;
+}
+#flash_base, #flash_flashvars {
+	width: 240px;
+}
+#width, #height {
+	width: 40px;
+}
+#src, #media_type {
+	width: 240px;
+}
+#class {
+	width: 120px;
+}
+#prev {
+	margin: 0;
+	border: 1px solid black;
+	width: 99%;
+	height: 230px;
+	overflow: auto;
+}
+.panel_wrapper div.current {
+	height: 450px;
+	overflow: auto;
+}
+#flash_options, #shockwave_options, #qt_options, #wmp_options, #rmp_options {
+	display: none;
+}
+.AddSelectValue {
+	background-color: #DDDDDD;
+}
+#qt_starttime, #qt_endtime, #qt_fov, #qt_href, #qt_moveid, #qt_moviename, #qt_node, #qt_pan, #qt_qtsrc, #qt_qtsrcchokespeed, #qt_target, #qt_tilt, #qt_urlsubstituten, #qt_volume {
+	width: 70px;
+}
+#wmp_balance, #wmp_baseurl, #wmp_captioningid, #wmp_currentmarker, #wmp_currentposition, #wmp_defaultframe, #wmp_playcount, #wmp_rate, #wmp_uimode, #wmp_volume {
+	width: 70px;
+}
+#rmp_console, #rmp_numloop, #rmp_controls, #rmp_scriptcallbacks {
+	width: 70px;
+}
+
+#shockwave_swvolume, #shockwave_swframe, #shockwave_swurl, #shockwave_swstretchvalign, #shockwave_swstretchhalign, #shockwave_swstretchstyle {
+	width: 90px;
+}
+#qt_qtsrc {
+	width: 200px;
+}
+.table_folder{
+	display: inline; 
+	padding-top: 4px; 
+	margin-bottom: 4px; 
+	margin-left: 3px; 
+	vertical-align: middle;
+}

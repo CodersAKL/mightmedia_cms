@@ -1,0 +1,28 @@
+	AddDefaultCharset UTF-8
+
+<IfModule mod_php5.c>
+  php_value upload_max_filesize 8M
+	php_flag short_open_tag on
+	php_value magic_quotes_gpc off
+	php_flag register_globals off
+	php_value allow_url_fopen 0
+	php_value magic_quotes_runtime 0
+	RewriteEngine On
+	RewriteRule ^admin? /?id,999 [R=302,NC]
+</IfModule>
+
+<IfModule mod_headers.c>
+	<FilesMatch "\.(xml|png|jpg|gif|css|js|txt|mp3)$">
+		Header set Cache-Control "max-age=172800, proxy-revalidate"
+	</FilesMatch>
+</IfModule>
+
+ErrorDocument 400 /klaida.php
+ErrorDocument 401 /klaida.php
+ErrorDocument 403 /klaida.php
+ErrorDocument 404 /klaida.php
+ErrorDocument 500 /klaida.php
+
+Order Allow,Deny
+Deny from env=draudziam
+Allow from all 

@@ -1,0 +1,1367 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html class="pageview">
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<base target="_top">
+<style type="text/css">
+  
+
+/* default css */
+
+table {
+  font-size: 1em;
+  line-height: inherit;
+  border-collapse: collapse;
+}
+
+
+tr {
+  
+  text-align: left;
+  
+}
+
+
+div, address, ol, ul, li, option, select {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+p {
+  margin: 0px;
+}
+
+
+pre {
+  font-family: Courier New;
+  white-space: pre-wrap;
+  margin:0;
+}
+
+body {
+  margin: 6px;
+  padding: 0px;
+  font-family: Verdana, sans-serif;
+  font-size: 10pt;
+  background-color: #ffffff;
+}
+
+
+img {
+  -moz-force-broken-image-icon: 1;
+}
+
+@media screen {
+  html.pageview {
+    background-color: #f3f3f3 !important;
+  }
+
+  
+
+  body {
+    min-height: 1100px;
+    
+    counter-reset: __goog_page__;
+  }
+  * html body {
+    height: 1100px;
+  }
+  .pageview body {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 2px solid #bbb;
+    border-bottom: 2px solid #bbb;
+    width: 648px !important;
+    margin: 15px auto 25px;
+    padding: 40px 50px;
+  }
+  /* IE6 */
+  * html {
+    overflow-y: scroll;
+  }
+  * html.pageview body {
+    overflow-x: auto;
+  }
+  /* Prevent repaint errors when scrolling in Safari. This "Star-7" css hack
+     targets Safari 3.1, but not WebKit nightlies and presumably Safari 4.
+     That's OK because this bug is fixed in WebKit nightlies/Safari 4 :-). */
+  html*#wys_frame::before {
+    content: '\A0';
+    position: fixed;
+    overflow: hidden;
+    width: 0;
+    height: 0;
+    top: 0;
+    left: 0;
+  }
+  
+  
+
+  
+    .writely-callout-data {
+      display: none;
+      *display: inline-block;
+      *width: 0;
+      *height: 0;
+      *overflow: hidden;
+    }
+    .writely-footnote-marker {
+      background-image: url('MISSING');
+      background-color: transparent;
+      background-repeat: no-repeat;
+      width: 7px;
+      overflow: hidden;
+      height: 16px;
+      vertical-align: top;
+
+      
+      -moz-user-select: none;
+    }
+    .editor .writely-footnote-marker {
+      cursor: move;
+    }
+    .writely-footnote-marker-highlight {
+      background-position: -15px 0;
+      -moz-user-select: text;
+    }
+    .writely-footnote-hide-selection ::-moz-selection, .writely-footnote-hide-selection::-moz-selection {
+      background: transparent;
+    }
+    .writely-footnote-hide-selection ::selection, .writely-footnote-hide-selection::selection {
+      background: transparent;
+    }
+    .writely-footnote-hide-selection {
+      cursor: move;
+    }
+
+    
+    .editor .writely-comment-yellow {
+      background-color: #FF9;
+      background-position: -240px 0;
+    }
+    .editor .writely-comment-yellow-hover {
+      background-color: #FF0;
+      background-position: -224px 0;
+    }
+    .editor .writely-comment-blue {
+      background-color: #C0D3FF;
+      background-position: -16px 0;
+    }
+    .editor .writely-comment-blue-hover {
+      background-color: #6292FE;
+      background-position: 0 0;
+    }
+    .editor .writely-comment-orange {
+      background-color: #FFDEAD;
+      background-position: -80px 0;
+    }
+    .editor .writely-comment-orange-hover {
+      background-color: #F90;
+      background-position: -64px 0;
+    }
+    .editor .writely-comment-green {
+      background-color: #99FBB3;
+      background-position: -48px 0;
+    }
+    .editor .writely-comment-green-hover {
+      background-color: #00F442;
+      background-position: -32px 0;
+    }
+    .editor .writely-comment-cyan {
+      background-color: #CFF;
+      background-position: -208px 0;
+    }
+    .editor .writely-comment-cyan-hover {
+      background-color: #0FF;
+      background-position: -192px 0;
+    }
+    .editor .writely-comment-purple {
+      background-color: #EBCCFF;
+      background-position: -144px 0;
+    }
+    .editor .writely-comment-purple-hover {
+      background-color: #90F;
+      background-position: -128px 0;
+    }
+    .editor .writely-comment-magenta {
+      background-color: #FCF;
+      background-position: -112px 0;
+    }
+    .editor .writely-comment-magenta-hover {
+      background-color: #F0F;
+      background-position: -96px 0;
+    }
+    .editor .writely-comment-red {
+      background-color: #FFCACA;
+      background-position: -176px 0;
+    }
+    .editor .writely-comment-red-hover {
+      background-color: #FF7A7A;
+      background-position: -160px 0;
+    }
+
+    .editor .writely-comment-marker {
+      background-image: url('MISSING');
+      background-color: transparent;
+      padding-right: 11px;
+      background-repeat: no-repeat;
+      width: 16px;
+      height: 16px;
+      -moz-user-select: none;
+    }
+
+    .editor .writely-comment-hidden {
+      padding: 0;
+      background: none;
+    }
+    .editor .writely-comment-marker-hidden {
+      background: none;
+      padding: 0;
+      width: 0;
+    }
+    .editor .writely-comment-none {
+      opacity: .2;
+      filter:progid:DXImageTransform.Microsoft.Alpha(opacity=20);
+      -moz-opacity: .2;
+    }
+    .editor .writely-comment-none-hover {
+      opacity: .2;
+      filter:progid:DXImageTransform.Microsoft.Alpha(opacity=20);
+      -moz-opacity: .2;
+    }
+  
+
+
+  
+  .br_fix span+br:not(:-moz-last-node) {
+    
+    position:relative;
+    
+    left: -1ex
+    
+  }
+
+  
+  #cb-p-tgt {
+    font-size: 8pt;
+    padding: .4em;
+    background-color: #ddd;
+    color: #333;
+  }
+  #cb-p-tgt-can {
+    text-decoration: underline;
+    color: #36c;
+    font-weight: bold;
+    margin-left: 2em;
+  }
+  #cb-p-tgt .spin {
+    width: 16px;
+    height: 16px;
+    background: url(//ssl.gstatic.com/docs/clipboard/spin_16o.gif) no-repeat;
+  }
+}
+
+h6 { font-size: 8pt }
+h5 { font-size: 8pt }
+h4 { font-size: 10pt }
+h3 { font-size: 12pt }
+h2 { font-size: 14pt }
+h1 { font-size: 18pt }
+
+blockquote {padding: 10px; border: 1px #DDD dashed }
+
+.webkit-indent-blockquote { border: none; }
+
+a img {border: 0}
+
+.pb {
+  border-width: 0;
+  page-break-after: always;
+  /* We don't want this to be resizeable, so enforce a width and height
+     using !important */
+  height: 1px !important;
+  width: 100% !important;
+}
+
+.editor .pb {
+  border-top: 1px dashed #C0C0C0;
+  border-bottom: 1px dashed #C0C0C0;
+}
+
+div.google_header, div.google_footer {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+
+/* Table of contents */
+.editor div.writely-toc {
+  background-color: #f3f3f3;
+  border: 1px solid #ccc;
+}
+.writely-toc > ol {
+  padding-left: 3em;
+  font-weight: bold;
+}
+ol.writely-toc-subheading {
+  padding-left: 1em;
+  font-weight: normal;
+}
+/* IE6 only */
+* html writely-toc ol {
+  list-style-position: inside;
+}
+.writely-toc-none {
+  list-style-type: none;
+}
+.writely-toc-decimal {
+  list-style-type: decimal;
+}
+.writely-toc-upper-alpha {
+  list-style-type: upper-alpha;
+}
+.writely-toc-lower-alpha {
+  list-style-type: lower-alpha;
+}
+.writely-toc-upper-roman {
+  list-style-type: upper-roman;
+}
+.writely-toc-lower-roman {
+  list-style-type: lower-roman;
+}
+.writely-toc-disc {
+  list-style-type: disc;
+}
+
+/* Ordered lists converted to numbered lists can preserve ordered types, and
+   vice versa. This is confusing, so disallow it */
+ul[type="i"], ul[type="I"], ul[type="1"], ul[type="a"], ul[type="A"] {
+  list-style-type: disc;
+}
+
+ol[type="disc"], ol[type="circle"], ol[type="square"] {
+  list-style-type: decimal;
+}
+
+/* end default css */
+
+
+  /* default print css */
+  
+  @media print {
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    div.google_header, div.google_footer {
+      display: block;
+      min-height: 0;
+      border: none;
+    }
+
+    div.google_header {
+      flow: static(header);
+    }
+
+    /* used to insert page numbers */
+    div.google_header::before, div.google_footer::before {
+      position: absolute;
+      top: 0;
+    }
+
+    div.google_footer {
+      flow: static(footer);
+    }
+
+    /* always consider this element at the start of the doc */
+    div#google_footer {
+      flow: static(footer, start);
+    }
+
+    span.google_pagenumber {
+      content: counter(page);
+    }
+
+    span.google_pagecount {
+      content: counter(pages);
+    }
+
+
+    callout.google_footnote {
+      
+      display: prince-footnote;
+      footnote-style-position: inside;
+      /* These styles keep the footnote from taking on the style of the text
+         surrounding the footnote marker. They can be overridden in the
+         document CSS. */
+      color: #000;
+      font-family: Verdana;
+      font-size: 10.0pt;
+      font-weight: normal;
+    }
+
+    /* Table of contents */
+    #WritelyTableOfContents a::after {
+      content: leader('.') target-counter(attr(href), page);
+    }
+
+    #WritelyTableOfContents a {
+      text-decoration: none;
+      color: black;
+    }
+  }
+
+  @page {
+    @top {
+      content: flow(header);
+    }
+    @bottom {
+      content: flow(footer);
+    }
+    @footnotes {
+      border-top: solid black thin;
+      padding-top: 8pt;
+    }
+  }
+  /* end default print css */
+
+
+/* custom css */
+
+
+/* end custom css */
+
+/* ui edited css */
+
+body {
+  font-family: Verdana;
+  
+  font-size: 10.0pt;
+  line-height: normal;
+  background-color: #ffffff;
+}
+/* end ui edited css */
+
+
+/* editor CSS */
+.editor a:visited {color: #551A8B}
+.editor table.zeroBorder {border: 1px dotted gray}
+.editor table.zeroBorder td {border: 1px dotted gray}
+.editor table.zeroBorder th {border: 1px dotted gray}
+
+
+.editor div.google_header, .editor div.google_footer {
+  border: 2px #DDDDDD dashed;
+  position: static;
+  width: 100%;
+  min-height: 2em;
+}
+
+.editor .misspell {background-color: yellow}
+
+.editor .writely-comment {
+  font-size: 9pt;
+  line-height: 1.4;
+  padding: 1px;
+  border: 1px dashed #C0C0C0
+}
+
+
+/* end editor CSS */
+
+</style>
+
+  
+  <title>MightMedia TVS dokumentacija EN</title>
+
+</head>
+
+<body 
+    
+    >
+    
+    
+    
+<DIV id=wiki-content>
+  <DIV id=wiwt style=TEXT-ALIGN:center>
+    <IMG src="images/dcw2n9gt_33dzf8ft2k_b.gif" style="WIDTH:468px; HEIGHT:60px">
+  </DIV>
+  <H1 id=mightmedia_tvs_dokumentacija style=TEXT-ALIGN:center>
+    MightMedia CMS manual
+  </H1>
+  <OL>
+    <LI>
+      Features, requirements, and license server
+    </LI>
+    <LI>
+      The concepts and terms, the system architecture
+    </LI>
+    <LI>
+      The installation process (AP)
+    </LI>
+    <LI>
+      The first step after installing the system (AP)
+    </LI>
+    <LI>
+      The main site settings
+    </LI>
+    <LI>
+      Pages and menu editing and administration
+    </LI>
+    <LI>
+      Block Management
+    </LI>
+    <LI>
+      Categories of users and rights
+    </LI>
+    <LI>
+      Attachments: concepts and terms, and abbreviations
+    </LI>
+  </OL>
+</DIV>
+<HR>
+<OL>
+  <LI>
+    <DIV class=comment>
+      <P>
+        <B>License:</B> <A href=http://code.assembla.com/mightmedia/subversion/nodes/v1/license.txt>http://code.assembla.com/mightmedia/subversion/nodes/v1/license.txt</A><BR>
+        <B>ELIGIBILITY server:</B>
+      </P>
+      <UL>
+        <LI>
+          PHP 5
+        </LI>
+        <LI>
+          MySQL 5
+        </LI>
+        <LI>
+          htaccess support
+        </LI>
+        <LI>
+          curl support
+        </LI>
+        <LI>
+          25 MB of storage
+        </LI>
+      </UL>
+    </DIV>
+  </LI>
+  <LI>
+    <H2>
+      The concepts and terms, the system architecture
+    </H2>
+    <DIV>
+      <B>CMS</B> <I>(content management system),</I> otherwise the ITU <I>(CMS)</I> - c<FONT size=2>omputer system for documents located in a network, collectively, to create and manage.</FONT>
+    </DIV>
+    <DIV>
+      <B><FONT color=#000000><STRIKE>Administration</STRIKE></FONT> control panel</B> <I><FONT size=2>(called</FONT> the Control</I> <FONT size=2><I>Panel)</I> - <FONT size=3><SPAN style="FONT-FAMILY:'Times New Roman'"><FONT class=Apple-style-span face=Verdana>Panel, which includes the key elements of governance systems.</FONT> Mightmedia CMS control panel consists of: ballot, Banas, configuration, gallery, comments, error, pages, news blocks, users, forum, message. (REFILL)</SPAN></FONT></FONT>
+    </DIV>
+    <DIV>
+      <B>Configuration</B> <I>(called configuration)</I> - <STRIKE>r</STRIKE> <FONT size=2><STRIKE>CTION by man to the program or one program to another program.</STRIKE> MightMedia CMS on this page indicate the site name, keyword, author, e-mail. E-mail address, establishment registration, comment Determination of news articles per page, Cache, design, language (Lithuanian / English).</FONT>
+    </DIV>
+    <DIV style=BACKGROUND-COLOR:#ffe599>
+      <B>News</B> <I>(called news)</I> - is the most important events, reports ad placement. News published on the front page. This dynamic page.
+    </DIV>
+    <DIV>
+      <B>Forum</B> <I>(the forum)</I> - <FONT size=2>exchange of views on the place.</FONT>
+    </DIV>
+    <DIV>
+      <B>Poll</B> <I>(called polls)</I> - c <FONT size=2>UESTIONS presentation and the answers to their collection.</FONT>
+    </DIV>
+    <DIV>
+      <B>Users</B> <I>(called users)</I> - <FONT size=2>the electronic record users.</FONT>
+    </DIV>
+    <DIV>
+      <B>Blocks</B> <I>(called blocks)</I> - <FONT size=2>MM SDS blocks are promotional or informational panels with a link. More about the blocks read <U>here</U> [link].</FONT>
+    </DIV>
+    <DIV>
+      <B>Prohibitions</B> <I>(called Banned)</I> - a system that prohibits certain IP addresses access to the site. More on Banus read <U>here</U> [link].
+    </DIV>
+    <DIV>
+      <B>Messages</B> - MightMedia SDS so-called letters of characters is limited.
+    </DIV>
+    <DIV>
+      <SPAN style=BACKGROUND-COLOR:#ffe599><B>Articles</B> - a small essays on particular topics.</SPAN>
+    </DIV>
+    <DIV>
+      <B>Downloads</B> - variable format documents to Web <U>users</U> can download.
+    </DIV>
+    <DIV>
+      <B>Errors</B> - the systematic errors, incorrect connections, and attempts to elbow the magazine.
+    </DIV>
+    <DIV>
+      <B>Pages</B> - a web site representing pages. Each page has a name, a link type (static, dynamic).
+    </DIV>
+    <DIV>
+      <B>Gallery</B> - the place where deposited in photos / pictures. MM.TVS gallery created categories of aid. Each category can be attributed to the icon, the name of the granting of rights. In addition, the convenient categories of sort (AZ or ZA) gallery albums ".<BR>
+      <B>Frequently Asked Questions</B> <I>(FAQs called)</I> - the phrase "frequently asked questions" shortcut. Here are accumulated consumer issues, and (you) answers.<BR>
+      <FONT color=#ff0000><U>PHP code to</U></FONT> <B>the original program text</B> <I>(called source code)</I> - A program written in the form of the developer. Typically, this is the program text written in a programming language. In order for the computer to carry out, it is transmitted to the compilation or a computer language.<BR>
+      <B>Site</B> - a set of web pages linked by common themes, affiliation to one office or other common concerns.<BR>
+      <B>Web page</B> - written in hypertext saityno <I>(called WWW)</I> document, also known as the home page.<BR style=COLOR:#000000>
+      <BR style=COLOR:#000000>
+    </DIV>
+  </LI>
+  <LI style=COLOR:#ff0000>
+    <B style=COLOR:#000000><SPAN style=COLOR:#000000><FONT color=#000000>Installation Videos</FONT></SPAN></B><BR>
+    <A href=http://www.youtube.com/watch?v=pXA1cwfcStI id=ne2l title=http://www.youtube.com/watch?v=pXA1cwfcStI><SPAN style=COLOR:#000000>http://www.youtube.com/watch?v=pXA1cwfcStI</SPAN></A> <B><BR>
+    </B>
+  </LI>
+  <LI>
+    <B style=COLOR:#000000>Video Configuration</B><BR>
+    <A href=http://www.youtube.com/watch?v=LydD9eVx4T8 id=ophq title=http://www.youtube.com/watch?v=LydD9eVx4T8>http://www.youtube.com/watch?v=LydD9eVx4T8</A>
+  </LI>
+  <LI>
+    <DIV>
+      <B>The main site settings:</B>
+    </DIV>
+  </LI>
+  <OL>
+    <LI>
+      Dynamic content is based on categories such as news, gallery, articles, forum, links consumers.
+    </LI>
+    <LI>
+      All - both static and dynamic - Pages lie in the directory / page. Dynamic pages, such as "News", the content can not be edited through the control panel. Dynamic content files stored in the database.
+    </LI>
+    <LI>
+      Any documents that are loaded (load) placed in the directory "Downloads". Yes, this method is safe. Note. Here you can lie and PHP files.
+    </LI>
+    <LI>
+      Design files are stored in the directory / name of the design styles of the sub-category, for example, styles / default.
+    </LI>
+    <LI>
+      Directory / panels lie blocks. To create / insert a block by hand, requires a block of PHP file placed in the directory / panels.
+    </LI>
+    <LI>
+      Management of files - the page that the menu of the Forum page - lie in the directory pages of God.
+    </LI>
+    <LI>
+      Directory / sandeliukas lies query results (cache (cache)). Here should not touch the files. / Pantry is used when a configuration is described in "Cache."<BR>
+      <BR>
+    </LI>
+  </OL>
+  <LI>
+    <B>Pages and menu editing and administration<BR>
+    Management pages.</B><BR>
+    No one is physically or dynamically (OM) is not deleted. Considered that the page was turned off.<BR>
+    <BR>
+    Sample. To create a personal Web site. You will be sufficient to remove the registration, profile editing, password reminder page, etc.. Some of these pages prisireiks, they may be "on".<BR>
+    <BR>
+    <B>ERROR.</B><BR>
+    This site is not clear, as is a systematic module. It is recommended to maximize the track. On this page, the site recorded more serious error. Recorded attempts to guess passwords to break into the site, recorded incorrect logins, etc.. List should be cleaned with very low, which will "recognize" hackers.<BR>
+    <BR>
+    <B>Insurance.</B><BR>
+    Click here to put on the banned IP addresses. The CMS will automatically detect and block these users attempt to enter the site.<BR>
+    It is also possible to manually block certain IP addresses.<BR>
+    <BR>
+    <B>REFERENCES.</B><BR>
+    This is a directory.<BR>
+    <BR>
+    <B>Message.</B><BR>
+    If activated from "Private Message" (pm.php), the control panel will point "message." In this management page is displayed in all user messages. An administrator can clean, read, and so on. sender / receiver message (for security reasons).<BR>
+    <BR>
+    <B>COMMENTS.</B><BR>
+    The administrator can read, edit, view all user comments.<BR>
+    <BR>
+    <B style=COLOR:#000000>CONSUMER POINTS.<BR>
+    </B> <SPAN style=COLOR:#000000>All registered members for written comments and forum messages received after the point of aggregation points is a list of active users (switch block <I>user_top.php)</I><BR>
+    <BR>
+    </SPAN>
+  </LI>
+  <LI>
+    <B>ADMINISTRATION BLOCKS</B><BR>
+    The blocks are shown on the left and / or right side of the site. It depends on the site. If the design of the units place only on one side, it blocks the management of left and right side one takes on meaning.<BR>
+    <BR>
+    Choose the block - the block of existing non-active option.<BR>
+    <BR>
+    Create a block - the building block of building form. This creates a physical file directory / panels.<BR>
+    <BR>
+    <U><I>Note.</I></U> Block development - not its activation!<BR>
+    <BR>
+  </LI>
+  <LI>
+    <B>Categories of users and rights<BR>
+    </B> By going to the User Manager you can create the categories, category creation form, you can choose an image category to be displayed next to your nickname, select the category pages which will be assigned to a member of the management (if the page <I>moderatorius.php</I> will be turned on)<BR>
+    <BR>
+    <BR>
+    There are two categories of editable (can not delete, edit, create):
+  </LI>
+  <OL>
+    <LI>
+      Administrator (not the language of choice)
+    </LI>
+    <LI>
+      member
+    </LI>
+  </OL>
+</OL>
+<DIV>
+  <B>IMPORTANT:</B> When logging into the site administration, sensitive to different meanings.<BR>
+  <BR>
+</DIV>
+Consumer rights: category understood as a group of users.<BR>
+Cluster development model. To be filled in the form of:<BR>
+<BR>
+<DIV>
+  <TABLE border=1 bordercolor=#ff9900 cellpadding=3 cellspacing=0 class="" id=x5td width=100%>
+    <TBODY>
+    <TR bgcolor=#ffe599>
+      <TD width=50%>
+        <B>Title<BR>
+        </B>
+      </TD>
+      <TD width=50%>
+        <B>Reason<BR>
+        </B>
+      </TD>
+    </TR>
+    <TR>
+      <TD width=50%>
+        Title<BR>
+      </TD>
+      <TD width=50%>
+        Moderator (required)<BR>
+      </TD>
+    </TR>
+    <TR>
+      <TD width=50%>
+        About<BR>
+      </TD>
+      <TD width=50%>
+        Description<BR>
+      </TD>
+    </TR>
+    <TR>
+      <TD width=50%>
+        Image<BR>
+      </TD>
+      <TD width=50%>
+        relevant (directory: images / icons)<BR>
+      </TD>
+    </TR>
+    <TR>
+      <TD width=50%>
+        Allow moderate (if not the moderators, a group of wacky blank)<BR>
+      </TD>
+      <TD width=50%>
+        chosen from which they will be able to administer (dynamic pages). They can sort<BR>
+      </TD>
+    </TR>
+    <TR>
+      <TD width=50%>
+        The group level<BR>
+      </TD>
+      <TD width=50%>
+        the higher the number, the worse the level of<BR>
+      </TD>
+    </TR>
+    </TBODY>
+  </TABLE>
+</DIV>
+<BR>
+The development of cluster, it is necessary to enable the administration pages "moderatorius.php the page file.<BR>
+<BR>
+Continue to form "To see?" finding a group of users who will have the right to see this page.<BR>
+<BR>
+Administrators group "sees" everything is, therefore, to assign certain pages do not need.<BR>
+<H2>
+  <P>
+    <FONT color=#0b5394>Site Management</FONT>
+  </P>
+</H2>
+<DIV>
+  <UL>
+    <LI>
+      <FONT color=#0b5394><B>How to connect / disconnect the Webmaster?</B></FONT>
+    </LI>
+  </UL>
+  <DIV>
+    <BLOCKQUOTE>
+      <P>
+        <FONT color=#3d85c6>Usually, the administrator of the site connects your browser's address field, in addition to their Web site address prirašydamas? Id, 999th For example, your site address http://www.index.lt. So, to connect to the site administration, you only need to address this subjoin the combination, ie http://www.index.lt?id, 999th<BR>
+        </FONT>
+      </P>
+    </BLOCKQUOTE>
+    <DIV>
+      <DIV>
+        <BLOCKQUOTE>
+          <P>
+            <FONT color=#3d85c6>This browser's address field, enter takes you to the login page, where you are asked to enter your login information: username and password. By default, the initial management of data access are:</FONT>
+          </P>
+        </BLOCKQUOTE>
+        <DIV>
+          <DIV>
+            <TABLE border=1 bordercolor=#000000 cellpadding=3 cellspacing=0 class="" id=y9ao width=100%>
+              <TBODY>
+              <TR>
+                <TD width=50%>
+                  <FONT color=#3d85c6><B>Username</B></FONT>
+                </TD>
+                <TD width=50%>
+                  <FONT color=#3d85c6>admin</FONT>
+                </TD>
+              </TR>
+              <TR>
+                <TD width=50%>
+                  <FONT color=#3d85c6><B>Password</B></FONT>
+                </TD>
+                <TD width=50%>
+                  <FONT color=#3d85c6>admin</FONT>
+                </TD>
+              </TR>
+              </TBODY>
+            </TABLE>
+          </DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV>
+      <BLOCKQUOTE>
+        <FONT color=#3d85c6>Participants will take you to the window to the administration panel. For more information see the section below.</FONT>
+      </BLOCKQUOTE>
+    </DIV>
+    <UL>
+      <LI>
+        <FONT color=#0b5394><B>How do I temporarily suspend the operation of the site? <I>(offline</I> mode)</B></FONT>
+      </LI>
+    </UL>
+    <DIV>
+      <BLOCKQUOTE>
+        <P>
+          <FONT color=#3d85c6>In order for any search engine (like <I>Google)</I> is not indexed (neatsimintų) for your website, which is under construction, you must run the site "repair" mode.</FONT>
+        </P>
+      </BLOCKQUOTE>
+      <DIV>
+        <BLOCKQUOTE>
+          <FONT color=#3d85c6>The administrative panel, pressing the button "Configure". Window opened, we find the field labeled "Repair" and choose "Yes." It is also recommended to write a "closed site text. For example, enter "repairs".</FONT>
+        </BLOCKQUOTE>
+      </DIV>
+    </DIV>
+    <UL>
+      <LI>
+        <FONT color=#0b5394><B>How do I change my site design?</B></FONT>
+      </LI>
+    </UL>
+    <DIV>
+      <BLOCKQUOTE>
+        <FONT color=#3d85c6>To change the design of the website, you will need the administration panel, click "Configuration" and the window opened, the line "Design" from the list choose a design you like.</FONT>
+      </BLOCKQUOTE>
+    </DIV>
+    <UL>
+      <LI>
+        <FONT color=#0b5394><B>How do I configure my site?</B></FONT>
+      </LI>
+    </UL>
+    <DIV>
+      <BLOCKQUOTE>
+        <P>
+          <FONT color=#3d85c6>The administrative panel by clicking the button "Configure" should (recommended) to fill the following fields:</FONT>
+        </P>
+      </BLOCKQUOTE>
+      <DIV>
+        <DIV id=mv9p style=TEXT-ALIGN:left>
+          <IMG src="images/drwp2kc_196fxfcjcfp_b.jpg" style="WIDTH:363px; HEIGHT:544px">
+        </DIV>
+      </DIV>
+    </DIV>
+    <P>
+    </P>
+    <BLOCKQUOTE>
+      <FONT color=#3d85c6>Briefly, for each field:</FONT>
+    </BLOCKQUOTE>
+    <DIV>
+      <DIV>
+        <DIV>
+          <BLOCKQUOTE>
+            <FONT color=#3d85c6><B>Site name</B> - filling in this field appears in the browser window title, the cover is usually at the top of the site (it may be that not a single location).</FONT>
+          </BLOCKQUOTE>
+        </DIV>
+        <DIV>
+          <BLOCKQUOTE>
+            <P>
+              <FONT color=#3d85c6><B>Home page</B> - usually enough to leave it as it is. For example, <I>naujienos.php</I></FONT>
+            </P>
+          </BLOCKQUOTE>
+          <DIV>
+            <BLOCKQUOTE>
+              <P>
+                <FONT color=#3d85c6><B>About</B> - this is your site's description. Usually appears in the menu name such as "About Us" page.</FONT>
+              </P>
+            </BLOCKQUOTE>
+            <DIV>
+              <BLOCKQUOTE>
+                <P>
+                  <FONT color=#3d85c6><B>Keywords</B> - the keywords that describe your site's content. The words can be written quite a lot, but steps should be limited to 240 characters.</FONT>
+                </P>
+              </BLOCKQUOTE>
+              <DIV>
+                <BLOCKQUOTE>
+                  <P>
+                    <FONT color=#3d85c6><B>Copyright inventor</B> or <B>text</B> - is normally supplied with the name, a brief description of the ownership of the Web site authoring rights.</FONT>
+                  </P>
+                </BLOCKQUOTE>
+                <DIV>
+                  <BLOCKQUOTE>
+                    <P>
+                    <FONT color=#3d85c6><B>Site e-mail. mail. In</B> this field, enter your e-mail or your company. E-mail address that you had reached the site visitors.</FONT>
+                    </P>
+                  </BLOCKQUOTE>
+                  <DIV>
+                    <BLOCKQUOTE>
+                    <P>
+                    <FONT color=#3d85c6><B>Allow to register.</B> Before you create your site, you must provide a number of things to come. One of them - Registration. If the new user registration is required - choose "Yes", if not - accordingly.</FONT>
+                    </P>
+                    </BLOCKQUOTE>
+                    <DIV>
+                    <BLOCKQUOTE>
+                    <P>
+                    <FONT color=#3d85c6><B>Website repaired</B> - this box to choose "Yes" if the site is closed or not ready for use, if you choose 'No', the site is accessible to the general public and search engines.</FONT>
+                    </P>
+                    </BLOCKQUOTE>
+                    <DIV>
+                    <BLOCKQUOTE>
+                    <P>
+                    <FONT color=#3d85c6>All other fields may be completed, but it is not necessary.</FONT>
+                    </P>
+                    </BLOCKQUOTE>
+                    <DIV>
+                    <BLOCKQUOTE>
+                    <P>
+                    <FONT color=#3d85c6><B>Or show sugeneravimo time?</B> Sugeneravimo time - the time during which the data "suvaikšto" in the database and the generated code and the site is presented on the website. These data are visible only to administrators.</FONT>
+                    </P>
+                    </BLOCKQUOTE>
+                    <DIV>
+                    <BLOCKQUOTE>
+                    <P>
+                    <FONT color=#3d85c6><B>Closure of the site text. In</B> this field, followed by the text that will appear when you choose a site close to making that is not accessible to the public.</FONT>
+                    </P>
+                    </BLOCKQUOTE>
+                    <DIV>
+                    <DIV>
+                    <BLOCKQUOTE>
+                    <P>
+                    <FONT color=#3d85c6><B>How to show news?</B> This is also the number indicating how much news will be seen in the title page of your site. Minimum number - five. When the news is over the number of configurations, there is news puslapiavimas. <U>Note:</U> news are arranged from most recent to the oldest written.</FONT>
+                    </P>
+                    </BLOCKQUOTE>
+                    <DIV>
+                    <BLOCKQUOTE>
+                    <P>
+                    <FONT color=#3d85c6><B>Site styles.</B> This list can be chosen from your own site design.</FONT>
+                    </P>
+                    </BLOCKQUOTE>
+                    <DIV>
+                    <BLOCKQUOTE>
+                    <FONT color=#3d85c6>After completing all fields, be sure to click 'Save' button.</FONT>
+                    </BLOCKQUOTE>
+                    </DIV>
+                    </DIV>
+                    </DIV>
+                    </DIV>
+                    </DIV>
+                    </DIV>
+                    </DIV>
+                    </DIV>
+                  </DIV>
+                </DIV>
+              </DIV>
+            </DIV>
+          </DIV>
+        </DIV>
+      </DIV>
+      <UL>
+        <LI>
+          <FONT color=#0b5394><B>What should I do to make your site would be "visible" to search engines?<BR>
+          </B></FONT>
+          <P>
+            <FONT color=#0b5394 style="COLOR:#3d85c6; BACKGROUND-COLOR:#ffffff">Administration, configuration in the form of 'Keywords' box, you have to subjoin as many words related to your site's content (words separated by commas), as well as fill in the fields, "Page Title" and "on"<BR>
+            </FONT><BR>
+          </P>
+        </LI>
+      </UL>
+      <DIV>
+        <H2>
+          <FONT color=#0b5394>Consumer Management</FONT>
+        </H2>
+      </DIV>
+      <DIV>
+        <UL>
+          <LI>
+            <FONT color=#0b5394><B>How to activate registered user?</B></FONT>
+          </LI>
+        </UL>
+        <DIV>
+          <BLOCKQUOTE>
+            <FONT color=#3d85c6>If you decide that your site will be a registered user, click administration panel, "Pages" and the window opened, select the "Select page" and the list of files, locate and select the file "reg.php.</FONT>
+          </BLOCKQUOTE>
+        </DIV>
+        <UL>
+          <LI>
+            <FONT color=#0b5394><B>How to provide the consumer rights?</B></FONT>
+          </LI>
+        </UL>
+        <DIV>
+          <BLOCKQUOTE>
+            <FONT color=#3d85c6>Each time, writing news, articles, creating galleries category should be selected which group of users will have the right to see the part of the website content. In order pertinent part, that is accessible to all, without exception, at this point neparinkite any groups (left blank).</FONT>
+          </BLOCKQUOTE>
+        </DIV>
+        <UL>
+          <LI>
+            <FONT color=#0b5394><B>What are the consumer groups and their rights?</B></FONT>
+          </LI>
+        </UL>
+        <DIV>
+          <BLOCKQUOTE>
+            <P>
+              <FONT color=#3d85c6>Creating a site with CMS MightMedia defaults to create two user groups / categories: <B>administrator</B> and <B>member.</B> These categories editable and not deleted.</FONT>
+            </P>
+          </BLOCKQUOTE>
+          <DIV>
+            <BLOCKQUOTE>
+              <DIV>
+                <FONT color=#3d85c6><B>IMPORTANT:</B> When logging into the site administration, sensitive to different meanings.</FONT><BR>
+                <BR>
+              </DIV>
+              <FONT color=#3d85c6>Consumer rights: category understood as a group of users.</FONT><BR>
+              <P>
+                <FONT color=#3d85c6>It is possible to create user groups. For example, create the cluster. In order to fill in the form and indicate which pages will be moderate:</FONT>
+              </P>
+            </BLOCKQUOTE>
+            <DIV>
+              <DIV>
+                <TABLE border=1 bordercolor=#000000 cellpadding=3 cellspacing=0 class="" id=yeqm width=100%>
+                  <TBODY>
+                  <TR bgcolor=#ffd966>
+                    <TD width=50%>
+                    <SPAN style=BACKGROUND-COLOR:#ffd966><SPAN style=BACKGROUND-COLOR:#ffe599><B>Title</B></SPAN></SPAN>
+                    </TD>
+                    <TD width=50%>
+                    <SPAN style=BACKGROUND-COLOR:#ffd966><SPAN style=BACKGROUND-COLOR:#ffe599><B>Reason</B></SPAN></SPAN>
+                    </TD>
+                  </TR>
+                  <TR>
+                    <TD width=50%>
+                    Title
+                    </TD>
+                    <TD width=50%>
+                    Moderator (required)
+                    </TD>
+                  </TR>
+                  <TR>
+                    <TD width=50%>
+                    About
+                    </TD>
+                    <TD width=50%>
+                    Description
+                    </TD>
+                  </TR>
+                  <TR>
+                    <TD width=50%>
+                    Image
+                    </TD>
+                    <TD width=50%>
+                    relevant (directory: images / icons)
+                    </TD>
+                  </TR>
+                  <TR>
+                    <TD width=50%>
+                    Allow moderate (if not the moderators, a group of wacky blank)
+                    </TD>
+                    <TD width=50%>
+                    chosen from which they will be able to administer (dynamic pages). They can sort
+                    </TD>
+                  </TR>
+                  <TR>
+                    <TD width=50%>
+                    The group level
+                    </TD>
+                    <TD width=50%>
+                    the higher the number, the worse the level of<BR>
+                    </TD>
+                  </TR>
+                  </TBODY>
+                </TABLE>
+              </DIV>
+            </DIV>
+          </DIV>
+        </DIV>
+        <DIV>
+          <P>
+          </P>
+          <BLOCKQUOTE>
+            <P>
+              <FONT color=#0b5394>The development of cluster, it is necessary to enable the administration pages "moderatorius.php the page file.</FONT>
+            </P>
+          </BLOCKQUOTE>
+          <DIV>
+            <BLOCKQUOTE>
+              <P>
+                <FONT color=#0b5394>Continue to form "To see?" finding a group of users who will have the right to see this page.</FONT>
+              </P>
+            </BLOCKQUOTE>
+            <DIV>
+              <BLOCKQUOTE>
+                <FONT color=#0b5394>Administrators group "sees" everything is, therefore, to assign certain pages do not need.</FONT>
+              </BLOCKQUOTE>
+            </DIV>
+          </DIV>
+          <H2>
+            <FONT color=#0b5394>Site Content Management</FONT>
+          </H2>
+        </DIV>
+        <DIV>
+          <UL>
+            <LI>
+              <FONT color=#0b5394><B>Site structure perception.</B></FONT>
+            </LI>
+          </UL>
+          <DIV>
+            <BLOCKQUOTE>
+              <FONT color=#3d85c6>MightMedia CMS creates dynamic content on the site, which is based on categories such as news, gallery, articles, forum, links, users.<BR>
+              Site consists of static and dynamic pages. They are all the directory <I>/ page.</I> Dynamic pages, such as <I><B>News,</B></I> the contents can not edit pages within the control panel. Dynamic content files stored in the database.<BR>
+              Any documents that are uploaded (download), added to the directory <I>/ packages.</I> <U>Note.</U> Here you can lie and PHP files, but for security reasons (in some cases) do not recommend this.<BR>
+              Design files are stored in the directory <I>/ styles</I> to design subdirektorija name, for example, <I>styles / default.</I><BR>
+              Directory <I>/ panels</I> can be found blocks. To create / insert a block by hand, requires a block of PHP file placed in the directory <I>/ panels.</I><BR>
+              <B>Management of files</B> - the page that the menu of the Forum page - a <I>page</I> directory <I>/ gods.</I><BR>
+              Directory <I>/ sandeliukas</I> the query results <I>(cache</I> (Lithuanian cache)). Here the files should not touch. <I>/ Sandeliukas</I> used when the configuration is described in "Cache."<BR>
+              </FONT>
+            </BLOCKQUOTE>
+          </DIV>
+          <UL>
+            <LI>
+              <FONT color=#0b5394><B>Website creation, editing and management.</B></FONT>
+            </LI>
+          </UL>
+          <DIV>
+            <BLOCKQUOTE>
+              <P>
+                <FONT color=#3d85c6>Site editor panel:</FONT>
+              </P>
+            </BLOCKQUOTE>
+            <DIV>
+              <DIV style=TEXT-ALIGN:center>
+                <DIV id=x-0b style=TEXT-ALIGN:center>
+                  <IMG src="images/drwp2kc_198dh6w7vdg_b.jpg" style="WIDTH:568px; HEIGHT:385px">
+                </DIV>
+              </DIV>
+              <DIV style=TEXT-ALIGN:left>
+                <BLOCKQUOTE>
+                  <P>
+                    <FONT color=#3d85c6>Here you can see all the pages you create can not because they are systemic. Site <I><B>Navigation</B></I> Group - the main site menu. These menu items, you can sort and view the tensile mouse (on the blue arrow).</FONT>
+                  </P>
+                </BLOCKQUOTE>
+                <DIV>
+                  <BLOCKQUOTE>
+                    <FONT color=#3d85c6><B>Icon explanations:</B><BR>
+                    <I>Pencil</I> - the content / text editing.<BR>
+                    <I>Screwdriver</I> - administration.<BR>
+                    </FONT>
+                    <P>
+                    <FONT color=#3d85c6><I>Iksiukas</I> - off the page.<BR>
+                    </FONT>
+                    </P>
+                  </BLOCKQUOTE>
+                  <DIV>
+                    <BLOCKQUOTE>
+                    <FONT color=#3d85c6><B>New page creation.</B><BR>
+                    Pressing the <B>Create Page</B> button.<BR>
+                    </FONT>
+                    <P>
+                    <FONT color=#3d85c6>Step 1.<BR>
+                    </FONT>
+                    </P>
+                    </BLOCKQUOTE>
+                    <DIV>
+                    <DIV id=l1n. style=TEXT-ALIGN:left>
+                    <IMG src="images/drwp2kc_199hhg637c5_b.jpg" style="WIDTH:580px; HEIGHT:485px">
+                    </DIV>
+                    </DIV>
+                    <DIV>
+                    <BLOCKQUOTE>
+                    <P>
+                    <FONT color=#3d85c6>Step 2<BR>
+                    </FONT>
+                    </P>
+                    </BLOCKQUOTE>
+                    <DIV>
+                    <DIV id=tk:0 style=TEXT-ALIGN:left>
+                    <IMG src="images/drwp2kc_200dcv2qwdr_b.jpg" style="WIDTH:648px; HEIGHT:255.42px"><BR>
+                    <BR>
+                    </DIV>
+                    </DIV>
+                    </DIV>
+                  </DIV>
+                </DIV>
+              </DIV>
+            </DIV>
+          </DIV>
+          <UL>
+            <LI>
+              <SPAN style=BACKGROUND-COLOR:#ffffff><SPAN style=BACKGROUND-COLOR:#ff9900><FONT color=#0b5394><B>News Writing.</B></FONT></SPAN></SPAN>
+            </LI>
+          </UL>
+          <DIV>
+            <BLOCKQUOTE>
+              <P>
+                <SPAN style=BACKGROUND-COLOR:#ffffff><SPAN style=BACKGROUND-COLOR:#ff9900><FONT color=#3d85c6>News panel:</FONT></SPAN></SPAN>
+              </P>
+              <P>
+                <BR>
+              </P>
+              <P>
+              </P>
+              <DIV id=gsku style=TEXT-ALIGN:left>
+                <IMG src="images/drwp2kc_201ddr779cp_b.jpg" style="WIDTH:516px; HEIGHT:97px">
+              </DIV>
+              <P class=MsoNormal>
+                <BR>
+              </P>
+              <P class=MsoNormal>
+                <SPAN style="FONT-FAMILY:Arial; COLOR:red"><B><SPAN style="FONT-FAMILY:Verdana; COLOR:#3d85c6">First you must</SPAN> <I style="FONT-FAMILY:Verdana; COLOR:#3d85c6">establish a <SPAN style="FONT-FAMILY:Verdana; COLOR:#3d85c6">category!</SPAN></I><BR>
+                </B></SPAN>
+              </P>
+              <P class=MsoNormal>
+                <BR>
+              </P>
+              <DIV id=gmp3 style=TEXT-ALIGN:left>
+                <IMG src="images/drwp2kc_202fn3n2x4c_b.jpg" style="WIDTH:579px; HEIGHT:360px">
+              </DIV>
+              <P class=MsoNormal>
+                <BR>
+              </P>
+              <P class=MsoNormal>
+                <SPAN style=FONT-FAMILY:Arial><SPAN style="FONT-FAMILY:Verdana; COLOR:#3d85c6">Then write <I style="FONT-FAMILY:Verdana; COLOR:#3d85c6">news.</I></SPAN><BR>
+                </SPAN>
+              </P>
+              <P class=MsoNormal>
+                <BR>
+              </P>
+              <DIV id=a8-g style=TEXT-ALIGN:left>
+                <IMG src="images/drwp2kc_203hpvb8kgd_b.jpg" style="WIDTH:640px; HEIGHT:417px">
+              </DIV>
+              <DIV id=u9l3 style=TEXT-ALIGN:left>
+                <DIV style=TEXT-ALIGN:left>
+                  <IMG src="images/drwp2kc_204gpt7kxf6_b.jpg" style="WIDTH:496px; HEIGHT:369px"><BR>
+                </DIV>
+                <BR>
+              </DIV>
+              <P class=MsoNormal style="FONT-FAMILY:Verdana; COLOR:#3d85c6">
+                <FONT size=2><U><B>Note:</B></U> Each newsletter is not necessary to create a separate category. One category can be assigned to an unlimited quantity of news.</FONT>
+              </P>
+              <P class=MsoNormal style="FONT-FAMILY:Verdana; COLOR:#3d85c6">
+                <BR>
+              </P>
+              <P class=MsoNormal style="FONT-FAMILY:Verdana; COLOR:#3d85c6">
+              </P>
+              <P class=MsoNormal style="FONT-FAMILY:Verdana; COLOR:#3d85c6">
+                <FONT size=2>There will always be possible to <I>edit the</I> news well, and category.<BR>
+                </FONT>
+              </P>
+            </BLOCKQUOTE>
+          </DIV>
+          <UL>
+            <LI style=BACKGROUND-COLOR:#ffffff>
+              <FONT color=#0b5394><B>Article Writing.</B></FONT>
+            </LI>
+          </UL>
+          <DIV style=MARGIN-LEFT:40px>
+            <SPAN style=FONT-FAMILY:Verdana><FONT size=2 style=COLOR:#3d85c6><SPAN style=FONT-FAMILY:Arial><FONT size=3>Articles panel:<BR>
+            <BR>
+            </FONT></SPAN></FONT></SPAN>
+            <DIV id=sukb style=TEXT-ALIGN:left>
+              <IMG src="images/drwp2kc_205d9w5m9vk_b.jpg" style="WIDTH:521px; HEIGHT:90px">
+            </DIV>
+            <BR>
+            <B style=FONT-FAMILY:Verdana><FONT size=2 style=COLOR:#3d85c6>First developed category, followed by Art!<BR>
+            </FONT></B>
+            <P class=MsoNormal style="FONT-FAMILY:Verdana; COLOR:#3d85c6">
+              <FONT size=2><U><B>Note:</B></U> Each item to create a separate category is needed. One category can be assigned to an unlimited quantity of items.</FONT>
+            </P>
+            <BR>
+          </DIV>
+          <UL>
+            <LI>
+              <FONT color=#0b5394><B>Photo gallery of the training.</B></FONT>
+            </LI>
+          </UL>
+          <DIV style=MARGIN-LEFT:40px>
+            <SPAN style=FONT-FAMILY:Verdana><FONT size=2 style=COLOR:#3d85c6><SPAN style=FONT-FAMILY:Arial><FONT size=3>Within the Gallery editor panel:<BR>
+            <BR>
+            </FONT></SPAN></FONT></SPAN>
+            <DIV id=x5q5 style=TEXT-ALIGN:left>
+              <IMG src="images/drwp2kc_206g2fp995m_b.jpg" style="WIDTH:519px; HEIGHT:127px">
+            </DIV>
+            <BR>
+            <FONT size=2 style=COLOR:#3d85c6><SPAN style=FONT-FAMILY:Verdana>Not recommend this</SPAN> <I style=FONT-FAMILY:Verdana>configuration</I> <SPAN style=FONT-FAMILY:Verdana>change. There is the fixed photo size.<BR>
+            </SPAN> <B style=FONT-FAMILY:Verdana>Start to create a "gallery", you must first <I>create a category!</I><BR>
+            </B></FONT>
+            <P class=MsoNormal style="FONT-FAMILY:Verdana; COLOR:#3d85c6">
+              <FONT size=2><B>Uploading a new picture, be sure to specify a category.<BR>
+              <U><I>Note:</I></U></B> Each photo to create a separate category is needed. One category can be assigned to an unlimited amount of photos.</FONT>
+            </P>
+            <P class=MsoNormal style="FONT-FAMILY:Verdana; COLOR:#3d85c6">
+              <BR>
+            </P>
+            <DIV id=dm_w style=TEXT-ALIGN:left>
+              <IMG src="images/drwp2kc_207dqqxw9fg_b.jpg" style="WIDTH:456px; HEIGHT:307px">
+            </DIV>
+            <BR>
+            <SPAN style=FONT-FAMILY:Verdana><FONT size=2 style=COLOR:#3d85c6>"Image" section, choose "no_picture.png" if we want to see in the category icons.<BR>
+            Each category can have <I>a sub-category</I> (according to need).<BR>
+            </FONT></SPAN>
+            <P class=MsoNormal style="MARGIN:6pt 0pt 12pt; FONT-FAMILY:Verdana; COLOR:#3d85c6">
+              <FONT size=2><I>Add a photo</I> to be as follows:</FONT>
+            </P>
+            <DIV id=ifx1 style=TEXT-ALIGN:left>
+              <IMG src="images/drwp2kc_208cks9dwfg_b.jpg" style="WIDTH:601px; HEIGHT:228px">
+            </DIV>
+            <SPAN style=FONT-FAMILY:Arial><FONT size=3><BR>
+            <FONT size=2 style=COLOR:#3d85c6><SPAN style=FONT-FAMILY:Verdana>To edit a photo, click on</SPAN> <I style=FONT-FAMILY:Verdana>the Edit Photo</I> <SPAN style=FONT-FAMILY:Verdana>button.</SPAN><BR style=FONT-FAMILY:Verdana>
+            </FONT></FONT></SPAN> <FONT size=2 style=COLOR:#3d85c6><I style=FONT-FAMILY:Verdana>Photos do not show</I> <SPAN style=FONT-FAMILY:Verdana>the button that you are not.</SPAN></FONT><BR>
+          </DIV>
+          <UL>
+            <LI>
+              <SPAN style=COLOR:#0b5394><B>Building blocks.</B></SPAN>
+            </LI>
+          </UL>
+          <DIV style=MARGIN-LEFT:40px>
+            <SPAN style=FONT-FAMILY:Verdana><FONT size=2 style=COLOR:#3d85c6>Here's what the blocks:</FONT></SPAN><BR>
+            <BR>
+            <DIV id=kyl1 style=TEXT-ALIGN:left>
+              <B>We must conclude</B>
+            </DIV>
+            <DIV id=hv0g style=TEXT-ALIGN:left>
+              <BR>
+              <BR>
+              <BR>
+            </DIV>
+          </DIV>
+          <UL style=BACKGROUND-COLOR:#e06666>
+            <LI>
+              <FONT color=#0b5394><B>Articles, galleries and other parts of the site access restriction (right).</B></FONT>
+            </LI>
+            <LI>
+              <FONT color=#0b5394><B>Menu design. <SPAN style=COLOR:#ff0000>The same as PAGES</SPAN><BR>
+              </B></FONT>
+            </LI>
+            <LI>
+              <FONT color=#0b5394><B>Content editing and trinimas.</B></FONT>
+            </LI>
+            <LI>
+              <FONT color=#0b5394><B>How do you protect your site from hackers?</B></FONT>
+            </LI>
+          </UL>
+        </DIV>
+      </DIV>
+    </DIV>
+    <BR>
+  </DIV>
+</DIV>
+<BR></body>
+</html>
