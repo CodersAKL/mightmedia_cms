@@ -23,30 +23,7 @@ if (isset($url['id']) && isnum($url['id']) && $url['id'] > 0) {
 } else {
 	$url['id'] = 0;
 }
-function check_email($email) {
-	if (!ereg("^[^@]{1,64}@[^@]{1,255}$", $email)) {
-		return false;
-	}
-	$email_array = explode("@", $email);
-	$local_array = explode(".", $email_array[0]);
-	for ($i = 0; $i < sizeof($local_array); $i++) {
-		if (!ereg("^(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-][A-Za-z0-9!#$%&'*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $local_array[$i])) {
-			return false;
-		}
-	}
-	if (!ereg("^\[?[0-9\.]+\]?$", $email_array[1])) {
-		$domain_array = explode(".", $email_array[1]);
-		if (sizeof($domain_array) < 2) {
-			return false;
-		}
-		for ($i = 0; $i < sizeof($domain_array); $i++) {
-			if (!ereg("^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$", $domain_array[$i])) {
-				return false;
-			}
-		}
-	}
-	return true;
-}
+
 // ############ Apdorojomi duomenys kurie buvo pateikti is tam tikros redagavimo lenteles #####################
 // ######### Slaptazodzio keitimas #############
 if (isset($_POST['old_pass']) && count($_POST['old_pass']) > 0 && count($_POST['new_pass']) > 0 && count($_POST['new_pass2']) > 0) {
@@ -91,7 +68,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'contacts_change') {
 if (isset($_POST['action']) && $_POST['action'] == 'country_change') {
 	$miestas = input($_POST['miestas']);
 	$salis = input($_POST['salis']);
-	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET salis=" . escape($salis) . ", miestas=" . escape($miestas) . " WHERE nick=" . escape($_SESSION['username']) . "");
+	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET salis=" . escape($salis) . ", miestas=" . escape($miestas) . " WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
 	msg("{$lang['system']['done']}", "{$lang['user']['edit_updated']}");
 }
 
@@ -105,7 +82,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'default_change') {
 	$diena = (int)$_POST['diena'];
 	$parasas = input($_POST['parasas']);
 	$gimimas = $metai . "-" . $menesis . "-" . $diena;
-	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET vardas='" . $vardas . "', pavarde='" . $pavarde . "', parasas='" . $parasas . "', gim_data='" . $gimimas . "' WHERE nick='" . $_SESSION['username'] . "'");
+	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET vardas=" . escape($vardas) . ", pavarde=" . escape($pavarde). ", parasas=" . escape($parasas) . ", gim_data=" . escape($gimimas) . " WHERE nick=" . escape($_SESSION['username']) . "");
 	msg("{$lang['system']['done']}", "{$lang['user']['edit_updated']}");
 }
 // ################ Siulomi punktai redagavimui MENIU ##########################
@@ -113,11 +90,11 @@ $text = "
  <table width=100% border=0>
 	<tr>
 		<td>
-			<div class=\"blokas\"><center><a href='?id," . $id . ";m,1'><img src=\"images/user/user-auth.png\" alt=\"slaptazodis\" />{$lang['user']['edit_pass']}</a></center></div>
-			<div class=\"blokas\"><center><a href='?id," . $id . ";m,2'><img src=\"images/user/user-contact.png\" alt=\"kontaktai\" />{$lang['user']['edit_contacts']}</a></center></div>
-			<div class=\"blokas\"><center><a href='?id," . $id . ";m,3'><img src=\"images/user/user-place.png\" alt=\"vietove\" />{$lang['user']['edit_locality']}</a></center></div>
-<div class=\"blokas\"><center><a href='?id," . $id . ";m,4'><img src=\"images/user/user-avatar.png\" alt=\"avataras\" />{$lang['user']['edit_avatar']}</a></center></div>
-			<div class=\"blokas\"><center><a href='?id," . $id . ";m,5'><img src=\"images/user/user-settings.png\" alt=\"nustatymai\" />{$lang['user']['edit_signature']}</a></center></div>
+			<div class=\"blokas\"><center><a href='".url("?id," . $id . ";m,1")."'><img src=\"images/user/user-auth.png\" alt=\"slaptazodis\" />{$lang['user']['edit_pass']}</a></center></div>
+			<div class=\"blokas\"><center><a href='".url("?id," . $id . ";m,2")."'><img src=\"images/user/user-contact.png\" alt=\"kontaktai\" />{$lang['user']['edit_contacts']}</a></center></div>
+			<div class=\"blokas\"><center><a href='".url("?id," . $id . ";m,3")."'><img src=\"images/user/user-place.png\" alt=\"vietove\" />{$lang['user']['edit_locality']}</a></center></div>
+<div class=\"blokas\"><center><a href='".url("?id," . $id . ";m,4")."'><img src=\"images/user/user-avatar.png\" alt=\"avataras\" />{$lang['user']['edit_avatar']}</a></center></div>
+			<div class=\"blokas\"><center><a href='".url("?id," . $id . ";m,5")."'><img src=\"images/user/user-settings.png\" alt=\"nustatymai\" />{$lang['user']['edit_signature']}</a></center></div>
 			
 		</td>
 	</tr>
@@ -181,8 +158,9 @@ if (isset($mid) && isnum($mid)) {
 	//Žaidime mano šito nereikės
 
 	elseif ($mid == 4) {
-		$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`='" . $_SESSION['username'] . "' LIMIT 1");
-		if(isset($_GET['a'])&&$_GET['a']==1)@unlink('images/avatars/'.md5($sql['email']).'.jpeg');
+		$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape($_SESSION['username']). " LIMIT 1");
+		if(isset($_GET['a'])&&$_GET['a']==1)
+      @unlink('images/avatars/'.md5($sql['email']).'.jpeg');
 $avataras=avatar($sql['email']);
 $name=md5($sql['email']);
 		$avatar =<<<HTML

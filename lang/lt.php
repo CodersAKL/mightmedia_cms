@@ -451,6 +451,7 @@ $lang['admin']['download_select'] = 'Pasirinkti';
 $lang['admin']['download_uploaded'] = 'Įkeltas';
 $lang['admin']['download_link'] = 'Nuoroda';
 $lang['forum']['forum'] = 'Forumas';
+$lang['forum']['edited_by'] = 'Redagavo';
 $lang['forum']['topicname?'] = 'Parašykite temos pavadinimą';
 $lang['forum']['message?'] = 'Tuščias žinutės laukelis';
 $lang['forum']['badurl'] = 'Blogas adresas';

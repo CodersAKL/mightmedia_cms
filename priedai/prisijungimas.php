@@ -107,11 +107,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'prisijungimas') {
 	}
 }
 
-if (isset($_GET['id']) && !empty($_GET['id']) && preg_match('/[^\d]/simx', $_GET['id'])) {
-	//unset($_SESSION);
+if (isset($_GET['id']) && !empty($_GET['id']) && $_GET['id'] == $lang['user']['logout']) {
+
 		unset($_SESSION['username'],$_SESSION['password'],$_SESSION['id'],$_SESSION['level'],$_SESSION['mod'],$_SESSION['level']); 
-	//session_unset();
-	//session_destroy();
 	$_SESSION['level'] = 0;
 	setcookie("user", "", time() - 3600);
 	setcookie("PHPSESSID", "", time() - 3600);

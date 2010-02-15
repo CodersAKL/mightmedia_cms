@@ -308,14 +308,14 @@ function delLineFromFile($fileName, $lineNum) {
 //msg($lang['system']['done'],"IP {$lang['admin']['unbaned']}.");
 }
 
-//Tvarkom $_SERVER globalus. Pagal php-fusion
+//Tvarkom $_SERVER globalus.
 $_SERVER['PHP_SELF'] = cleanurl($_SERVER['PHP_SELF']);
 $_SERVER['QUERY_STRING'] = isset($_SERVER['QUERY_STRING']) ? cleanurl($_SERVER['QUERY_STRING']) : "";
 $_SERVER['REQUEST_URI'] = isset($_SERVER['REQUEST_URI']) ? cleanurl($_SERVER['REQUEST_URI']) : "";
 $PHP_SELF = cleanurl($_SERVER['PHP_SELF']);
 
 /**
- * Adreso apsauga pagal php-fusion
+ * Adreso apsauga
  *
  * @param unknown_type $url
  * @return unknown
@@ -329,13 +329,7 @@ function cleanurl($url) {
 
 /// ASPAUGA - END
 
-//sutvarkom nuorodas
-if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
-	$_GET = url_arr(cleanurl(urldecode($_SERVER['QUERY_STRING'])));
-	$url = $_GET;
-} else {
-	$url = array();
-}
+
 
 
 /**
@@ -347,23 +341,12 @@ $sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kien
 
 if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
-		/*$sql2 = mysql_query1("SELECT `pavadinimas` FROM  `" . LENTELES_PRIESAGA . "grupes`  WHERE  `kieno` = 'vartotojai' ORDER BY `id` ASC");
-		if (sizeof($sql2) > 0) {
-			$subcat = '';
-			foreach ($sql2 as $path) {
-
-				$subcat .= "->" . $path['pavadinimas'];
-				$levels[(int)$row['teises']] = array('pavadinimas' => $row['pavadinimas'], 'aprasymas' => $row['aprasymas'], 'pav' => $row['pav']);
-				$levels[(int)$path['teises']] = array('pavadinimas' => $row['pavadinimas'] . $subcat, 'aprasymas' => $row['aprasymas'], 'pav' => $row['pav']);
-
-			}
-		} else {*/
+		
 			$levels[(int)$row['teises']] = array('pavadinimas' => $row['pavadinimas'], 'aprasymas' => $row['aprasymas'], 'pav' => $row['pav']);
-		//}
+
 	}
 }
 $levels[1] = array('pavadinimas' => $lang['system']['admin'], 'aprasymas' => $lang['system']['admin'], 'pav' => 'admin.png');
-//$levels[2] = array('pavadinimas' => $lang['system']['mod'], 'aprasymas' => $lang['system']['mod'], 'pav' => 'mod.png');
 $levels[2] = array('pavadinimas' => $lang['system']['user'], 'aprasymas' => $lang['system']['user'], 'pav' => 'user.png');
 
 $conf['level'] = $levels;
@@ -376,8 +359,43 @@ unset($levels, $sql, $row);
 $sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC", 120);
 foreach ($sql as $row) {
 	$conf['puslapiai'][$row['file']] = array('id' => $row['id'], 'pavadinimas' => $row['pavadinimas'], 'file' => $row['file'], 'place' => (int)$row['place'], 'show' => $row['show'], 'teises' => $row['teises']);
+	$conf['titles'][$row['id']] =(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file']));
+	$conf['titles_id'][str_replace(' ', '_',(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file'])))] = $row['id'];
+}
+//sutvarkom nuorodas
+if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
+	$_GET = url_arr(cleanurl($_SERVER['QUERY_STRING']));
+	if(isset($_GET['id'])){
+    $_GET['id'] = (isset($conf['titles_id'][$_GET['id']])?$conf['titles_id'][$_GET['id']]:$_GET['id']);
+	}
+	$url = $_GET;
+	//print_r($_GET);
+} else {
+	$url = array();
 }
 
+function url_arr($params) {
+	$str2 = array();
+	if (!isset($params))
+		$params = $_SERVER['QUERY_STRING'];
+
+	if (strrchr($params, '&'))
+		$params = explode("&", $params); //Jeigu tai paprastas GET
+	else
+		$params = explode(";", $params); //Kitu atveju tai TVS ";," tipo GET
+
+	if (isset($params) && is_array($params) && count($params) > 0) {
+		foreach ($params as $key => $value) {
+			if (strrchr($value, '='))
+				$str1 = explode("=", $value);
+			else
+				$str1 = explode(",", $value);
+			if (isset($str1[1]))
+				$str2[$str1[0]] = $str1[1];
+		}
+	}
+	return $str2;
+}
 /**
  * Vartotojui atvaizduoti
  *
@@ -395,13 +413,14 @@ function user($user, $id = 0, $level = 0, $extra = false) {
 		if (isset($conf['puslapiai']['view_user.php']['id'])) {
 		//Jeigu galiam ziuret vartotojo profili tada nickas paspaudziamas
 			if ($level > 0 && $id > 0) {
-				return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="?id,' . $conf['puslapiai']['view_user.php']['id'] . ';m,' . (int)$id . '" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
+			
+				return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="'.url('?id,' . $conf['puslapiai']['view_user.php']['id'] . ';' . $user). '" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
 			} elseif ($id == 0 && $level != 0) {
-				return '<div style="display:inline;" title="' . input($user) . " " . $extra . '">' . (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . trimlink($user, 10) . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "") . '</div>';
+				return '<div style="display:inline;" title="' . input($user) . " " . $extra . '">' . (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . trimlink($user, 10) . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) ). "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "") . '</div>';
 			} elseif ($level == 0 && $id != 0) {
-				return '<a href="?id,' . $conf['puslapiai']['view_user.php']['id'] . ';m,' . (int)$id . '" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
+				return '<a href="'.url('?id,' . $conf['puslapiai']['view_user.php']['id'] . ';' . $user ). '" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)))  . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
 			} else {
-				return '<div style="display:inline;" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "") . '</div>';
+				return '<div style="display:inline;" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "") . '</div>';
 			}
 
 		} else {
@@ -409,7 +428,7 @@ function user($user, $id = 0, $level = 0, $extra = false) {
 			if ($level == 0 || $id == 0) {
 				return '<div style="display:inline;" title="' . input($user) . " " . $extra . '"><u>' . $user . '</u></div>';
 			} else {
-				return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="#" onclick="return false" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) . "\"><img src=\"images/pm/mail.png\" alt=\"pm\" style=\"vertical-align:middle\" border=\"0\" /></a>" : "");
+				return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="#" onclick="return false" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"images/pm/mail.png\" alt=\"pm\" style=\"vertical-align:middle\" border=\"0\" /></a>" : "");
 			}
 
 		}
@@ -498,7 +517,7 @@ function delete_cache($query) {
 }
 
 /**
- * Nuskaitom turin¯ iš adreso
+ * Nuskaitom turinį iš adreso
  *
  * @param string $url
  * @return string
@@ -581,7 +600,7 @@ function puslapiai($start, $count, $total, $range = 0) {
 		$idx_next = $start + $count;
 		$cur_page = ceil(($start + 1) / $count);
 		$res .= "";
-		$res .= "<center>\n";
+		$res .= "<div class=\"pg_links\"><center>\n";
 		if ($idx_back >= 0) {
 			if ($cur_page > ($range + 1))
 				$res .= "<a href='" . url("p,0") . "'>[<u>««</u>]</a>\n";
@@ -596,7 +615,7 @@ function puslapiai($start, $count, $total, $range = 0) {
 		for ($i = $idx_fst; $i <= $idx_lst; $i++) {
 			$offset_page = ($i - 1) * $count;
 			if ($i == $cur_page) {
-				$res .= "<font color='red'>[<u><b>$i</b></u>]</font>\n";
+				$res .= "<b>[<u><b>$i</b></u>]</b>\n";
 			} else {
 				$res .= "<a href='" . url("p,$offset_page") . "'>[<u>$i</u>]</a>\n";
 			}
@@ -607,7 +626,7 @@ function puslapiai($start, $count, $total, $range = 0) {
 				$res .= "<a href='" . url("p," . ($pg_cnt - 1) * $count . "") . "'>[<u>»»</u>]</a>\n";
 			}
 		}
-		$res .= "</center>\n";
+		$res .= "</center></div>\n";
 	}
 	return $res;
 }
@@ -703,73 +722,21 @@ function input($s) {
 //////// URL APDOROJIMUI
 ////////////////////////////////////////////////////////
 
-/**
- * Iš QUERY_STRING padarom masyvą
- *
- * @param QUERY_STRING $params
- * @return array
- */
-function url_arr($params) {
-	$str2 = array();
-	if (!isset($params))
-		$params = $_SERVER['QUERY_STRING'];
 
-	if (strrchr($params, '&'))
-		$params = explode("&", $params); //Jeigu tai paprastas GET
-	else
-		$params = explode(";", $params); //Kitu atveju tai TVS ";," tipo GET
-
-	if (isset($params) && is_array($params) && count($params) > 0) {
-		foreach ($params as $key => $value) {
-			if (strrchr($value, '='))
-				$str1 = explode("=", $value);
-			else
-				$str1 = explode(",", $value);
-			if (isset($str1[1]))
-				$str2[$str1[0]] = $str1[1];
-		}
-	}
-	return $str2;
+function url($str) {
+global $conf;
+//echo substr($str,0,1);
+if(substr($str,0,1) == '?'){
+$linkai = explode(";",$str);
+$start = explode(',', $linkai[0]);
+//unset($linkai[0], $linkai[1]);
+$linkai[0] = '';
+$return = str_replace(' ', '_', $conf['titles'][$start[1]]).implode(';',$linkai);
+} else{
+  $return = str_replace('id=', '', $_SERVER['QUERY_STRING']).';'.$str;
 }
-
-/**
- * Iš masyvo padarom į QUERY_STRING
- * dekui: "sliekas_kanibalas" uz patobulinima
- *
- * @param array $params
- * @param string $str
- * @return string
- */
-function arr_url($params, $str = '') {
-	$strs = array();
-	foreach ($params as $key => $value) {
-		if (!empty($value))
-			$strs[] = $key . ',' . rawurlencode($value);
-	}
-	$str .= implode(";", $strs);
-	return ($str);
+return $return;
 }
-
-/**
- * Papildo nuorodą naujais kintamaisiais
- * Esant reikalui atnaujina esamus
- *
- * @param string $str
- * @param string $link
- * @return formated string
- */
-function url($str, $link = '') {
-	if (!empty($_SERVER['QUERY_STRING'])) {
-		$url = url_arr($_SERVER['QUERY_STRING']);
-	} else {
-		$url = array();
-	}
-	if (!is_array($str)) {
-		$str = url_arr($str);
-	}
-	return $link . "?" . arr_url(array_merge($url, $str));
-}
-
 /**
  * Seo url TODO
  */
@@ -1218,6 +1185,10 @@ function strip_ext($name, $ext = '') {
 	}
 	return $ext; // jei tai failas grazinam jo pletini
 }
+//emailo validumas
+function check_email($email) {
+  return preg_match("/^([_a-zA-Z0-9-+]+)(\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+)(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,6})$/" , $email) ? true : false;
+}
 
 function admin_login() {
 	global $_SERVER, $admin_name, $admin_pass, $lang;
@@ -1495,10 +1466,10 @@ function build_menu($data, $id=0, $active_class='active'){
 	$re="";
    foreach ($data[$id] as $row){
       if (isset($data[$row['id']])){
-         $re.= "<li ".($_GET['id']==$row['id']?'class="'.$active_class.'"':'')."><a href=\"?id,{$row['id']}\">".$row['pavadinimas']."</a><ul>";
+         $re.= "<li ".($_GET['id']==$row['id']?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."</a><ul>";
          $re.=build_menu($data, $row['id'],$active_class);
          $re.= "</ul></li>";
-      } else $re.= "<li ".($_GET['id']==$row['id']?'class="'.$active_class.'"':'')."><a href=\"?id,{$row['id']}\">".$row['pavadinimas']."</a></li>";
+      } else $re.= "<li ".($_GET['id']==$row['id']?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."</a></li>";
    }
    return $re;
 }

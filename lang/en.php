@@ -475,6 +475,7 @@ $lang['admin']['download_uploaded'] = 'Uploaded';
 $lang['admin']['download_link'] = 'Link';
 //forum
 $lang['forum']['forum'] = 'Forum';
+$lang['forum']['edited_by'] = 'Edited by';
 $lang['forum']['topicname?'] = 'Empty topic name';
 $lang['forum']['message?'] = 'Empty message field';
 $lang['forum']['badurl'] = 'Bad url';

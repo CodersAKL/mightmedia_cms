@@ -48,14 +48,14 @@ if ($kid == 0) {
 	if (sizeof($sql) > 0) {
 		foreach ($sql as $row) {
 			if (isset($conf['puslapiai']['naujienos.php']['id'])) {
-				$extra = "<span class='read_more' style='float: right;display:block;'>" . (($row['kom'] == 'taip'&&isset($conf['kmomentarai_sveciams'])&&$conf['kmomentarai_sveciams'] != 3) ? "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>{$lang['news']['read']} • {$lang['news']['comments']} (" . $row['viso'] . ")</a>" : "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>{$lang['news']['read']}</a>") . "</span><br />";
+				$extra = "<span class='read_more' style='float: right;display:block;'>" . (($row['kom'] == 'taip'&&isset($conf['kmomentarai_sveciams'])&&$conf['kmomentarai_sveciams'] != 3) ? "<a href='".url("?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] ). "'>{$lang['news']['read']} • {$lang['news']['comments']} (" . $row['viso'] . ")</a>" : "<a href='".url("?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] ). "'>{$lang['news']['read']}</a>") . "</span><br />";
 			}
 
 			$kategorijos_pav = mysql_query1("SELECT `pav`,`id`,`teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape($row['kategorija']) . " limit 1");
 			$pav = "";
 			if (isset($kategorijos_pav['pav'])) {
 				if (isset($conf['puslapiai']['naujkat.php']['id'])) {
-					$pav .= "<div style='float:left;margin-right:25px' class='avataras'><a href='?id," . $conf['puslapiai']['naujkat.php']['id'] . ";k," . (int)$kategorijos_pav['id'] . "'><img src='images/naujienu_kat/" . input($kategorijos_pav['pav']) . "' alt='img' border='0' /></a></div>";
+					$pav .= "<div style='float:left;margin-right:25px' class='avataras'><a href='".url("?id," . $conf['puslapiai']['naujkat.php']['id'] . ";k," . (int)$kategorijos_pav['id'] ). "'><img src='images/naujienu_kat/" . input($kategorijos_pav['pav']) . "' alt='img' border='0' /></a></div>";
 				} else {
 					$pav .= "<div class='avataras' style='float:left;margin-right:25px'><img src='images/naujienu_kat/" . input($kategorijos_pav['pav']) . "' alt='img' border='0' /></div>";
 				}
@@ -96,7 +96,7 @@ if ($kid != 0) {
 			$text .= "</div><hr />" . date('Y-m-d H:i:s ', $sql['data']) . ",  <b>" . $sql['autorius'] . "</b>";
 			//$text .= "</div>";
 if ($_SESSION['level'] == 1) {
-			$admin = '<div style="float: right;" class="middle"><a href="?id,999;a,'.$admin_pagesid['naujienos'].';h,' . $sql['id'] . '" title="' . $lang['admin']['edit'] . '"><img src="images/icons/pencil.png" class="middle" border="0" alt="edit" /></a> <a href="?id,999;a,'.$admin_pagesid['naujienos'].';t,' . $sql['id'] . '" onClick=\"return confirm(\' '. $lang['admin']['delete'] .'?\');\" title="' . $lang['admin']['delete'] . '"><img src="images/icons/cross.png" class="middle" border="0" alt="delete" /></a></div>';
+			$admin = '<div style="float: right;" class="middle"><a href="'.url('?id,999;a,'.$admin_pagesid['naujienos'].';h,' . $sql['id'] ). '" title="' . $lang['admin']['edit'] . '"><img src="images/icons/pencil.png" class="middle" border="0" alt="edit" /></a> <a href="'.url('?id,999;a,'.$admin_pagesid['naujienos'].';t,' . $sql['id'] ). '" onClick=\"return confirm(\' '. $lang['admin']['delete'] .'?\');\" title="' . $lang['admin']['delete'] . '"><img src="images/icons/cross.png" class="middle" border="0" alt="delete" /></a></div>';
 		} else {
 			$admin = '';
 		}
@@ -107,7 +107,7 @@ if ($_SESSION['level'] == 1) {
 			if (sizeof($susijus) > 0) {
 				$naujienos = "<ul id=\"naujienos\">";
 				foreach ($susijus as $susijusios) {
-					$naujienos .= "<li><a href=\"?id," . $_GET['id'] . ";k," . $susijusios['id'] . "\" title=\"{$susijusios['pavadinimas']}\">" . trimlink($susijusios['pavadinimas'],55) . "</a> (" . date('Y-m-d H:i:s', $susijusios['data']) . ")</li>";
+					$naujienos .= "<li><a href=\"".url("?id," . $_GET['id'] . ";k," . $susijusios['id'] ). "\" title=\"{$susijusios['pavadinimas']}\">" . trimlink($susijusios['pavadinimas'],55) . "</a> (" . date('Y-m-d H:i:s', $susijusios['data']) . ")</li>";
 				}
 				$naujienos .= "</ul>";
 				lentele($lang['news']['related'], $naujienos);

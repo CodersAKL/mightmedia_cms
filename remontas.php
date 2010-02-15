@@ -30,7 +30,7 @@ $page_pavadinimas = $lang['admin']['maintenance'];
 					if ($conf['Palaikymas'] == 1 && !isset($_SESSION['id'])) {
 						lentele($lang['user']['administration'],admin_login_form());
 					} elseif (isset($_SESSION['id']) && $_SESSION['level'] > 1 && $_SESSION['level'] > 0 && $conf['Palaikymas'] == 1) {
-						echo "<a href='?id,Atsijungti'>{$lang['user']['logout']}</a>";
+						echo "<a href='".url("?id,Atsijungti")."'>{$lang['user']['logout']}</a>";
 					} elseif (isset($_SESSION['id']) && $_SESSION['level'] == 1) {
 						header('location: index.php'); exit;
 					}

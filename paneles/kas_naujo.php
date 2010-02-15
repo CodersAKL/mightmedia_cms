@@ -20,7 +20,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['forum']}:</b><br/>";
 			foreach ($q as $row) {
-				$text .= "\t <img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row['id'] . ";s," . $row['tid'] . "#end'>" . trimlink(input($row['pav']), 20) . "</a><br />\n";
+				$text .= "\t <img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='".url("?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row['id'] . ";s," . $row['tid'] ). "#end'>" . trimlink(input($row['pav']), 20) . "</a><br />\n";
 			}
 		}
 	}
@@ -30,7 +30,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['news']}:</b><br/>";
 			foreach ($q as $row) {
-				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>" . trimlink(input($row['pavadinimas']), 20) . "</a><br />\n";
+				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='".url("?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] ). "'>" . trimlink(input($row['pavadinimas']), 20) . "</a><br />\n";
 			}
 		}
 	}
@@ -40,7 +40,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['gallery']}:</b><br/>";
 			foreach ($q as $row) {
-				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['ID'] . ";'>" . trimlink(input($row['pavadinimas']), 20) . "</a><br />\n";
+				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='".url("?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['ID'] ). "'>" . trimlink(input($row['pavadinimas']), 20) . "</a><br />\n";
 			}
 		}
 	}
@@ -50,7 +50,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['downloads']}:</b><br/>";
 			foreach ($q as $row) {
-				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['siustis.php']['id'] . ";k," . $row['categorija'] . ";v," . $row['ID'] . "'>" . trimlink(input($row['pavadinimas']), 20) . "</a><br />\n";
+				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='".url("?id," . $conf['puslapiai']['siustis.php']['id'] . ";k," . $row['categorija'] . ";v," . $row['ID'] ). "'>" . trimlink(input($row['pavadinimas']), 20) . "</a><br />\n";
 			}
 		}
 	}
@@ -60,7 +60,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['articles']}:</b><br/>";
 			foreach ($q as $row) {
-				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] . "'>" . trimlink(input($row['pav']), 20) . "</a><br />\n";
+				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='".url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] ). "'>" . trimlink(input($row['pav']), 20) . "</a><br />\n";
 			}
 		}
 	}
@@ -107,7 +107,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 			    }else $author=$row['nick'];
 			       
 			      
-				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['' . $file . '.php']['id'] . ";" . $link . "#" . $row['id'] . "' title=\"{$lang['new']['author']}: <b>" . $author. "</b><br/>{$lang['new']['date']}: <b>" . date('Y-m-d H:i:s ', $row['data']) . "</b><br/>\">" . trimlink(input($row['zinute']), 20) . "</a><br />\n";
+				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='".url("?id," . $conf['puslapiai']['' . $file . '.php']['id'] . ";" . $link . "#" . $row['id'] ). "' title=\"{$lang['new']['author']}: <b>" . $author. "</b><br/>{$lang['new']['date']}: <b>" . date('Y-m-d H:i:s ', $row['data']) . "</b><br/>\">" . trimlink(input($row['zinute']), 20) . "</a><br />\n";
 			}
 		}
 	}

@@ -86,11 +86,11 @@ if ($tid > 0) {
 $tema = "";
 $sub = "";
 if (isset($kur['pav']) && !empty($kur['pav'])) {
-	$sub = " > <a href='?id," . $url['id'] . ";s," . $sid . "'>" . $kur['pav'] . "</a> (" . $kur['temos'] . ")";
+	$sub = " > <a href='".url("?id," . $url['id'] . ";s," . $sid ). "'>" . $kur['pav'] . "</a> (" . $kur['temos'] . ")";
 	if (!empty($kur['tema'])) {
-		$tema = " > <a href='?id," . $url['id'] . ";s," . $sid . ";t,$tid'>" . $kur['tema'] . "</a> (" . $kur['zinute'] . ")";
+		$tema = " > <a href='".url("?id," . $url['id'] . ";s," . $sid . ";t,$tid'>" . $kur['tema'] ). "</a> (" . $kur['zinute'] . ")";
 	}
-	lentele($lang['forum']['forum'], "<a href='?id," . $url['id'] . "'>{$lang['forum']['forum']}</a>" . $sub . $tema);
+	lentele($lang['forum']['forum'], "<a href='".url("?id," . $url['id']) . "'>{$lang['forum']['forum']}</a>" . $sub . $tema);
 }
 
 //kategoriju sarasas
@@ -125,7 +125,7 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 				$extra = "<img src='images/forum/folder.gif' alt='{$lang['forum']['topic']}' />";
 			}
 			//subkategorijø atvaizdavimo formatas
-			$info[$kat['katid']][] = array("#" => $extra, "{$lang['forum']['forum']}" => "<div style='width:200px;display:block;'><a href='?id," . $url['id'] . ";s," . $kat['temid'] . "'>" . $kat['pav'] . "</a> <i style='font-size:9px;width:auto;display:block;'>" . $kat['aprasymas'] . "</i></div>", "{$lang['forum']['topics']}" => $temos, "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" => (($zinutes>0)? $kat['last_nick'] . ' - ' . (($kat['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $kat['last_data']))):'-'));
+			$info[$kat['katid']][] = array("#" => $extra, "{$lang['forum']['forum']}" => "<div style='width:200px;display:block;'><a href='".url("?id," . $url['id'] . ";s," . $kat['temid'] ). "'>" . $kat['pav'] . "</a> <i style='font-size:9px;width:auto;display:block;'>" . $kat['aprasymas'] . "</i></div>", "{$lang['forum']['topics']}" => $temos, "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" => (($zinutes>0)? $kat['last_nick'] . ' - ' . (($kat['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $kat['last_data']))):'-'));
 			$blai = new Table();
 			$subai[$kat['katid']] = $blai->render($info[$kat['katid']]);
 			$kateg[$kat['katid']] = $kat['kategorija'];
@@ -174,7 +174,7 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 				$sticky = "";
 			}
 
-			$info[] = array("#" => $extra . $sticky, "{$lang['forum']['topic']}" => "<div style='width:auto;'><a href='?id," . $url['id'] . ";s," . $sid . ";t," . $temos['id'] . "' style='display:block'>" . $temos['pav'] . "</a></div>", "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" =>(($zinutes>0)?$temos['last_nick'] . ' - ' . (($temos['last_data'] == '0000000000') ? '' : '<a href="?id,'.$_GET['id'].';s,'.$_GET['s'].';t,'.$temos['id'].';p,'.((int)($zinutes/15-0.1)*15).'#end">'.kada(date('Y-m-d H:i:s ', $temos['last_data']))).'</a>':'-'));//' . naujas($row['last_data']) . '
+			$info[] = array("#" => $extra . $sticky, "{$lang['forum']['topic']}" => "<div style='width:auto;'><a href='".url("?id," . $url['id'] . ";s," . $sid . ";t," . $temos['id'] ). "' style='display:block'>" . $temos['pav'] . "</a></div>", "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" =>(($zinutes>0)?$temos['last_nick'] . ' - ' . (($temos['last_data'] == '0000000000') ? '' : '<a href="'.url('?id,'.$_GET['id'].';s,'.$_GET['s'].';t,'.$temos['id'].';p,'.((int)($zinutes/15-0.1)*15)).'#end">'.kada(date('Y-m-d H:i:s ', $temos['last_data']))).'</a>':'-'));//' . naujas($row['last_data']) . '
 
 		}
 
@@ -218,13 +218,13 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 			$f_text = '';
 
 			if ($tsql['uzrakinta'] == "taip") {
-				$f_text .= "<a href='?id," . $url['id'] . ";s,$sid;t," . $tid . ";l," . $tid . "'><img src='images/forum/atrakinti.gif' border=0 class='middle' alt='{$lang['forum']['unlock']}' title='{$lang['forum']['unlock']}'/></a>";
+				$f_text .= "<a href='".url("?id," . $url['id'] . ";s,$sid;t," . $tid . ";l," . $tid ). "'><img src='images/forum/atrakinti.gif' border=0 class='middle' alt='{$lang['forum']['unlock']}' title='{$lang['forum']['unlock']}'/></a>";
 			}
 			if ($tsql['uzrakinta'] == "ne") {
-				$f_text .= "<a href='?id," . $url['id'] . ";s,$sid;t," . $tid . ";l," . $tid . "'><img src='images/forum/uzrakinti.gif' border=0 class='middle' alt='{$lang['forum']['lock']}' title='{$lang['forum']['lock']}' /></a>";
+				$f_text .= "<a href='".url("?id," . $url['id'] . ";s,$sid;t," . $tid . ";l," . $tid ). "'><img src='images/forum/uzrakinti.gif' border=0 class='middle' alt='{$lang['forum']['lock']}' title='{$lang['forum']['lock']}' /></a>";
 			}
-			$f_text .= "<a href='?id," . $url['id'] . ";s,$sid;t," . $tid . ";k," . $tid . "'><img src='images/forum/trinti.gif' border=0 class='middle' alt='{$lang['admin']['delete']}' title='{$lang['admin']['delete']}'/></a>";
-			$f_text .= "<a href='?id," . $url['id'] . ";s,$sid;t," . $tid . ";r," . $tid . "'><img src='images/forum/redaguoti.png' border=0 class='middle' alt='{$lang['admin']['edit']}'title='{$lang['admin']['edit']}'/></a>";
+			$f_text .= "<a href='".url("?id," . $url['id'] . ";s,$sid;t," . $tid . ";k," . $tid ). "'><img src='images/forum/trinti.gif' border=0 class='middle' alt='{$lang['admin']['delete']}' title='{$lang['admin']['delete']}'/></a>";
+			$f_text .= "<a href='".url("?id," . $url['id'] . ";s,$sid;t," . $tid . ";r," . $tid ). "'><img src='images/forum/redaguoti.png' border=0 class='middle' alt='{$lang['admin']['edit']}'title='{$lang['admin']['edit']}'/></a>";
 			lentele($lang['forum']['func'], $f_text);
 		}
 		$viso = $kur['zinute'];
@@ -265,7 +265,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 				$tool .= "<a href='" . url("e," . $row['zid'] . "") . "#end'><img src='images/forum/icon_edit.gif' border='0' alt='edit'/></a>";
 				if ($a != 1) {
 					if (isset($_SESSION['level']) && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
-						$tool .= "<a href='?id," . $url['id'] . ";t," . $tid . ";s," . $sid . ";d," . $row['zid'] . "'><img src='images/forum/icon_trinti.gif' border='0' alt='trinti'/></a>";
+						$tool .= "<a href='".url("?id," . $url['id'] . ";t," . $tid . ";s," . $sid . ";d," . $row['zid'] ). "'><img src='images/forum/icon_trinti.gif' border='0' alt='trinti'/></a>";
 					}
 				}
 			}
@@ -298,9 +298,9 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 			$extra = '';
 			if (!empty($_POST['msg']) && $_POST['action'] == 'f_update') {
 				if ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
-					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]Redagavo: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . "");
+					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]{$lang['forum']['edited_by']}: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . "");
 				} else {
-					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]Redagavo: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . " AND `nick`=" . escape($_SESSION['id']) . "");
+					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]{$lang['forum']['edited_by']}: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . " AND `nick`=" . escape($_SESSION['id']) . "");
 				}
 				redirect("?id," . $url['id'] . ";s,$sid;t,$tid;p,{$_GET['p']}");
 				//redirect($_SERVER['HTTP_REFERAL']);

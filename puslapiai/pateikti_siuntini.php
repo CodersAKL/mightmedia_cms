@@ -79,7 +79,7 @@ if (isset($_SESSION['id']) && $_SESSION['id']) {
 				}
 			}
 			//unset($result,$_POST['action'],$_FILES['failas'],$file);
-			redirect("?id," . $_GET['id'] . ";", "meta");
+			redirect(url("?id," . $_GET['id'] ), "meta");
 		} else {
 			klaida("Dėmesio", "Užpildykite visus laukelius.");
 		}

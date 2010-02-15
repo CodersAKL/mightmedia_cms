@@ -58,7 +58,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'siusti') {
 			$slaptas = random_name();
 			$msg = "<b>" . $sql['nick'] . "</b>,<br/>
 				 {$lang['pass']['mail']}
- <a href='http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "?id," . $_GET['id'] . ";c," . $slaptas . "'>http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "?id," . $_GET['id'] . ";c," . $slaptas . "</a>
+ <a href='http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) .url("?id," . $_GET['id'] . ";c," . $slaptas) . "'>http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) .url("?id," . $_GET['id'] . ";c," . $slaptas) . "</a>
 <hr>";
 			ini_set("sendmail_from", $conf['Pastas']);
 			mail($email, "=?UTF-8?Q?".strip_tags($conf['Pavadinimas']) ." ". $lang['pass']['remain']."?=", $msg, "From: " . $conf['Pavadinimas'] . "<" . $conf['Pastas'] . ">\r\nContent-type: text/html; charset=utf-8");

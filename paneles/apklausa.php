@@ -117,7 +117,7 @@ if (isset($sql['klausimas'])) {
 	$text = '<b>' . $lang['poll']['no'] . '.</b><br />';
 }
 if (isset($conf['puslapiai']['blsavimo_archyvas.php'])) {
-	$text .= '<a href=?id,' . $conf['puslapiai']['blsavimo_archyvas.php']['id'] . '>' . $lang['poll']['archive'] . '</a>';
+	$text .= '<a href='.url('?id,' . $conf['puslapiai']['blsavimo_archyvas.php']['id'] ). '>' . $lang['poll']['archive'] . '</a>';
 }
 unset($rezultatai, $atsakymas, $ipsai, $nariai, $narys, $atsakymas, $ats, $atsa, $sql);
 

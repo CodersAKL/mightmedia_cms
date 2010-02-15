@@ -23,29 +23,29 @@ FROM " . LENTELES_PRIESAGA . "kom");
 foreach ($sqli as $sql) {
 	$text = '<ul>';
 	if (isset($conf['puslapiai']['nariai.php']['id'])) {
-		$text .= '<li><a href="?id,' . $conf['puslapiai']['nariai.php']['id'] . '">Narių: ' . $sql['users'] . '</a></li>';
+		$text .= '<li><a href="'.url('?id,' . $conf['puslapiai']['nariai.php']['id'] ). '">Narių: ' . $sql['users'] . '</a></li>';
 	}
 	$text .= '<li><a href="#">Komentarų: ' . $sql['kom'] . '</a></li>';
 	if (isset($conf['puslapiai']['naujienos.php']['id'])) {
 		$text .= '<li><a href="?id,' . $conf['puslapiai']['naujienos.php']['id'] . '">Naujienų: ' . $sql['news'] . '</a></li>';
 	}
 	if (isset($conf['puslapiai']['frm.php']['id'])) {
-		$text .= '<li><a href="?id,' . $conf['puslapiai']['frm.php']['id'] . '">Forumo temų: ' . $sql['straipsniai'] . '</a></li>';
+		$text .= '<li><a href="'.url('?id,' . $conf['puslapiai']['frm.php']['id'] ). '">Forumo temų: ' . $sql['straipsniai'] . '</a></li>';
 	}
 	if (isset($conf['puslapiai']['frm.php']['id'])) {
-		$text .= '<li><a href="?id,' . $conf['puslapiai']['frm.php']['id'] . '">Forumo pranešimų: ' . $sql['zin'] . '</a></li>';
+		$text .= '<li><a href="'.url('?id,' . $conf['puslapiai']['frm.php']['id'] ). '">Forumo pranešimų: ' . $sql['zin'] . '</a></li>';
 	}
 	if (isset($conf['puslapiai']['siustis.php']['id'])) {
-		$text .= '<li><a href="?id,' . $conf['puslapiai']['siustis.php']['id'] . '">Siuntinių: ' . $sql['siuntiniai'] . '</a></li>';
+		$text .= '<li><a href="'.url('?id,' . $conf['puslapiai']['siustis.php']['id'] ). '">Siuntinių: ' . $sql['siuntiniai'] . '</a></li>';
 	}
 	if (isset($conf['puslapiai']['nuorodos.php']['id'])) {
-		$text .= '<li><a href="?id,' . $conf['puslapiai']['nuorodos.php']['id'] . '">Nuorodų: ' . $sql['nuorodos'] . '</a></li>';
+		$text .= '<li><a href="'.url('?id,' . $conf['puslapiai']['nuorodos.php']['id'] ). '">Nuorodų: ' . $sql['nuorodos'] . '</a></li>';
 	}
 	if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
-		$text .= '<li><a href="?id,' . $conf['puslapiai']['straipsnis.php']['id'] . '">Straipsnių: ' . $sql['straipsniai2'] . '</a></li>';
+		$text .= '<li><a href="'.url('?id,' . $conf['puslapiai']['straipsnis.php']['id'] ). '">Straipsnių: ' . $sql['straipsniai2'] . '</a></li>';
 	}
 	if (isset($conf['puslapiai']['galerija.php']['id'])) {
-		$text .= '<li><a href="?id,' . $conf['puslapiai']['galerija.php']['id'] . '">Nuotraukų: ' . $sql['foto'] . '</a></li>';
+		$text .= '<li><a href="'.url('?id,' . $conf['puslapiai']['galerija.php']['id'] ). '">Nuotraukų: ' . $sql['foto'] . '</a></li>';
 	}
 
 	$text .= '</ul> ';

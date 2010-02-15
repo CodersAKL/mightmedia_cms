@@ -35,7 +35,7 @@ if (!isset($url['m'])) {
 
 			if ($path1[(count($path1) - 1)] == $k) {
 				$sqlkiek = kiek('galerija', "WHERE `categorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP'");
-				$info[] = array(" " => "<a href='?id," . $url['id'] . ";k," . $sql['id'] . "'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' /></a>", "{$lang['category']['about']}" => "<h2><a href='?id," . $url['id'] . ";k," . $sql['id'] . "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "", "{$lang['category']['images']}" => $sqlkiek, );
+				$info[] = array(" " => "<a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' /></a>", "{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "", "{$lang['category']['images']}" => $sqlkiek, );
 			}
 		}
 		include_once ("priedai/class.php");
@@ -123,7 +123,7 @@ if (empty($url['m'])) {
 				</a>
 				<div class='gallery_menu'>
 					<a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date('Y-m-d H:i:s ', $row['data']) . "\"><img src='images/icons/information.png' border='0' alt='info' /></a>
-					<a href=\"?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['id'] . "\" title=\"{$lang['admin']['gallery_comments']}\"><img src='images/icons/comment.png' alt='C' border='0' /></a>
+					<a href=\"".url("?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['id'])."\" title=\"{$lang['admin']['gallery_comments']}\"><img src='images/icons/comment.png' alt='C' border='0' /></a>
 					<a href=\"galerija/originalai/" . $row['file'] . "\" title=\"{$lang['download']['download']}\"><img src='images/icons/disk.png' border='0' alt='save' /></a>";
 					$text .= (defined('LEVEL') && LEVEL == 1 ? "
 					<a href=\"#\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('?id,999;a,{$admin_pagesid['galerija']};t," . $row['id'] . "'); $(this).parent('.img_left').remove(); return false } else { return false }\" title=\"{$lang['system']['delete']}\"><img src='images/icons/cross.png' alt='X' border='0' /></a>
@@ -240,10 +240,10 @@ if (!empty($url['m'])) {
 	";
 
 			if (!empty($nuoroda2['id'])) {
-				$text .= "<a href=\"?id," . $url['id'] . ";m," . $nuoroda2['id'] . "\" >< {$lang['admin']['gallery_prev']}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+				$text .= "<a href=\"".url("?id," . $url['id'] . ";m," . $nuoroda2['id']). "\" >< {$lang['admin']['gallery_prev']}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 			}
 			if (!empty($nuoroda['id'])) {
-				$text .= "<a href=\"?id," . $url['id'] . ";m," . $nuoroda['id'] . "\" >{$lang['admin']['gallery_next']} ></a>";
+				$text .= "<a href=\"".url("?id," . $url['id'] . ";m," . $nuoroda['id'] ). "\" >{$lang['admin']['gallery_next']} ></a>";
 			}
 			$text .= "</center>";
 

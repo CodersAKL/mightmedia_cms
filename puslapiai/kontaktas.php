@@ -28,7 +28,7 @@ if (isset($_POST['kontaktas']) && $_POST['kontaktas'] == 'Siųsti' && strtoupper
 
 	if (mail($to, input($title), $msg, $headers)) {
 		msg("{$lang['system']['done']}", "{$lang['contact']['sent']}");
-		redirect("?id," . (int)$_GET['id'], "meta");
+		redirect(url("?id," . (int)$_GET['id']), "meta");
 	}
 
 } elseif (isset($_POST) && !empty($_POST['kontaktas'])) {

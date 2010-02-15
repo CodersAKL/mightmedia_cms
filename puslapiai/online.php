@@ -41,7 +41,7 @@ foreach ($result as $row) {
 
 	if (defined("LEVEL") && LEVEL == 1) {
 		$info[$i]['IP'] = "<a href='http://whois.serveriai.lt/" . $row['ip'] . "' target='_blank' title='" . $row['ip'] . "'>" . $row['ip'] . "</a>";
-		$info[$i][$lang['online']['page']] = '<a href="?' . $row['file'] . '"><img src="images/icons/link.png" alt="page" border="0" class="middle"/></a>';
+		$info[$i][$lang['online']['page']] = '<a href="' . $row['file'] . '"><img src="images/icons/link.png" alt="page" border="0" class="middle"/></a>';
 		$info[$i][$lang['online']['browser']] = "<div>" . $narsykle . "</div>";
 		$info[$i]['OS'] = get_user_os();
 		$info[$i][$lang['online']['country']] = '<img src="images/icons/flags/' . $flag . '.png " height="12" />';

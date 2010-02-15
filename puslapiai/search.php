@@ -66,7 +66,7 @@ if (isset($_POST['s'])) {
 			if (sizeof($sqlas3) > 0) {
 				foreach ($sqlas3 as $row3) {
 					$i++;
-					$text .= "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row3['id'] . "'>" . trimlink(input($row3['pavadinimas']), 40) . "...</a><br />";
+					$text .= "<a href='".url("?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row3['id'] ). "'>" . trimlink(input($row3['pavadinimas']), 40) . "...</a><br />";
 				}
 				lentele($lang['search']['news'], $text);
 			}
@@ -78,7 +78,7 @@ if (isset($_POST['s'])) {
 			if (sizeof($sqlas4) > 0) {
 				foreach ($sqlas4 as $row4) {
 					$i++;
-					$text .= "<a href='?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row4['id'] . ";s," . $row4['tid'] . "'>" . trimlink(input($row4['pav']), 40) . "...</a><br />";
+					$text .= "<a href='".url("?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row4['id'] . ";s," . $row4['tid'] ). "'>" . trimlink(input($row4['pav']), 40) . "...</a><br />";
 				}
 				lentele($lang['search']['forum_topics'], $text);
 			}
@@ -90,7 +90,7 @@ if (isset($_POST['s'])) {
 			if (sizeof($sqlas5) > 0) {
 				foreach ($sqlas5 as $row5) {
 					$i++;
-					$text .= "<a href='?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row5['sid'] . ";s," . $row5['tid'] . "'>" . trimlink(input($row5['zinute']), 40) . "...</a><br />";
+					$text .= "<a href='".url("?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row5['sid'] . ";s," . $row5['tid'] ). "'>" . trimlink(input($row5['zinute']), 40) . "...</a><br />";
 				}
 				lentele($lang['search']['forum_messages'], $text);
 			}
@@ -103,7 +103,7 @@ if (isset($_POST['s'])) {
 			if (sizeof($sqlas6) > 0) {
 				foreach ($sqlas6 as $row6) {
 					$i++;
-					$text .= "<a href='?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";k," . $row6['kat'] . ";m," . $row6['id'] . "'>" . trimlink(input($row6['pav']), 40) . "...</a><br />";
+					$text .= "<a href='".url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";k," . $row6['kat'] . ";m," . $row6['id'] ). "'>" . trimlink(input($row6['pav']), 40) . "...</a><br />";
 				}
 				lentele($lang['search']['articles'], $text);
 			}
@@ -116,7 +116,7 @@ if (isset($_POST['s'])) {
 			if (sizeof($sqlas7) > 0) {
 				foreach ($sqlas7 as $row7) {
 					$i++;
-					$text .= "<a href='?id," . $conf['puslapiai']['siustis.php']['id'] . ";k," . $row7['categorija'] . ";v," . $row7['ID'] . "'>" . trimlink(input($row7['pavadinimas']), 40) . "...</a><br />";
+					$text .= "<a href='".url("?id," . $conf['puslapiai']['siustis.php']['id'] . ";k," . $row7['categorija'] . ";v," . $row7['ID'] ). "'>" . trimlink(input($row7['pavadinimas']), 40) . "...</a><br />";
 				}
 				lentele($lang['search']['downloads'], $text);
 			}
@@ -129,7 +129,7 @@ if (isset($_POST['s'])) {
 			if (sizeof($sqlas7) > 0) {
 				foreach ($sqlas7 as $row7) {
 					$i++;
-					$text .= "<a href='?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row7['ID'] . "'>" . trimlink(input($row7['pavadinimas']), 40) . "...</a><br />";
+					$text .= "<a href='".url("?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row7['ID'] ). "'>" . trimlink(input($row7['pavadinimas']), 40) . "...</a><br />";
 				}
 				lentele($lang['search']['images'], $text);
 			}
@@ -157,7 +157,7 @@ if (isset($_POST['s'])) {
 				foreach ($sqlas10 as $row10) {
 					$i++;
 
-					$text .= "<a href=\"?id,{$row10['id']}\">{$row10['pavadinimas']}</a><br />";
+					$text .= "<a href=\"".url("?id,{$row10['id']}")."\">{$row10['pavadinimas']}</a><br />";
 				}
 				lentele($lang['search']['pages'], $text);
 			}
@@ -190,7 +190,7 @@ if (isset($_POST['s'])) {
 					$i++;
 					$file = str_replace('puslapiai/', '', $row2['pid']);
 					if (isset($conf['puslapiai']['' . $file . '.php']['id'])) {
-						$text .= "<a href=?id," . $conf['puslapiai']['' . $file . '.php']['id'] . ";" . $link . "#" . $row2['id'] . ">" . substr(input($row2['zinute']), 0, 200) . "...</a><br />";
+						$text .= "<a href=".url("?id," . $conf['puslapiai']['' . $file . '.php']['id'] . ";" . $link . "#" . $row2['id'] ). ">" . substr(input($row2['zinute']), 0, 200) . "...</a><br />";
 					}
 				}
 				lentele($lang['search']['comments'], $text);

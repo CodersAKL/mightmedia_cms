@@ -30,7 +30,7 @@ if (defined("LEVEL") && LEVEL == 1) {
 		} else {
 			klaida($lang['system']['error'], mysql_error());
 		}
-		redirect("?id," . (int)$_GET['id'] . ";p,$p", 'header');
+		redirect(url("?id," . (int)$_GET['id'] . ";p,$p"), 'header');
 	}
 	//Jei adminas paspaude redaguoti
 	if (isset($url['r']) && !empty($url['r']) && $url['r'] > 0 && isnum($url['r'])) {
@@ -54,7 +54,7 @@ $form = array("Form" => array("action" => "", "method" => "post", "name" => "kny
 			if (mysql_affected_rows() > 0) {
 				msg($lang['system']['done'], "{$lang['guestbook']['messageupdated']}");
 			} 
-			redirect("?id,{$_GET['id']};p,$p#".escape($url['r'])."","meta");
+			redirect(url("?id,{$_GET['id']};p,$p#".escape($url['r'])), "meta");
 		}
 	}
 }
@@ -79,7 +79,7 @@ if (sizeof($sql2) > 0) {
 			$tr = "2";
 		else
 			$tr = "";
-		$text .= "<div class=\"tr$tr\"><em><a href=\"?id," . $url['id'] . ";p,$p#" . $row['id'] . "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " .$row['nikas']. " $extra (" . date('Y-m-d H:i:s',$row['time']) . ") - " . kada(date('Y-m-d H:i:s',$row['time'])) . "</em><br />" . smile(bbchat(wrap($row['msg'],80)) . "</div>";
+		$text .= "<div class=\"tr$tr\"><em><a href=\"".url("?id," . $url['id'] . ";p,$p#" . $row['id'] ). "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " .$row['nikas']. " $extra (" . date('Y-m-d H:i:s',$row['time']) . ") - " . kada(date('Y-m-d H:i:s',$row['time'])) . "</em><br />" . smile(bbchat(wrap($row['msg'],80)) . "</div>";
 
 	}
 }

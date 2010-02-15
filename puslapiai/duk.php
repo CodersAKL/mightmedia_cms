@@ -18,7 +18,7 @@ if ($_SESSION['level'] == 1) {
 	if (isset($_GET['d']) && isnum($_GET['d']) && $_GET['d'] > 0) {
 		$q = "DELETE FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` = " . escape((int)$_GET['d']);
 		mysql_query1($q);
-		redirect("?id," . $_GET['id'], "header");
+		redirect(url("?id," . $_GET['id']), "header");
 
 	} elseif (isset($_GET['n']) || isset($_GET['e'])) {
 
@@ -70,7 +70,7 @@ if (isset($_POST['dukas'])) {
 		" . escape($atsakymas) . ",
 		" . escape($order) . ");";
 		mysql_query1($q);
-		redirect("?id," . $url['id'], "header");
+		redirect(url("?id," . $url['id']), "header");
 	}
 
 	//jeigu redaguojam
@@ -80,7 +80,7 @@ if (isset($_POST['dukas'])) {
 		`klausimas` = " . escape($klausimas) . ",
 		`order` = " . escape((int)$_POST['Order']) . " WHERE `id`=" . $id . " LIMIT 1 ;";
 		mysql_query1($q);
-		redirect("?id," . $url['id'], "header");
+		redirect(url("?id," . $url['id']), "header");
 	}
 
 

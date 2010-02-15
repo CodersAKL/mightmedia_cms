@@ -50,7 +50,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'Pateikti') {
 		} else {
 			klaida("Klaida", $error);
 		}
-		redirect("?id," . $_GET['id'] . ";", "meta");
+		redirect(url("?id," . $_GET['id']), "meta");
 	} else {
 		klaida("Dėmesio", "Užpildykite visus laukelius.");
 	}

@@ -9,19 +9,19 @@
  * @$Revision$
  * @$Date$
  **/
-
-if (isset($url['m']) && $url['m'] > 0) {
-	include_once ("rating.php");
-	if (isset($_SESSION['id']) && $_SESSION['id'] != $url['m']) {
-		$vote = rating_form($page,(int)$url['m']);
-	} else {
-		$vote = rating_form($page,(int)$url['m'],false);
-	}
-
-	$sql = mysql_query1("SELECT *, INET_NTOA(ip) AS ip FROM `" . LENTELES_PRIESAGA . "users` WHERE `id`='" . $url['m'] . "' LIMIT 1");
+//print_r($_GET);
+$memb = explode(";", $_SERVER['QUERY_STRING']);
+if (isset($memb[1])) {	
+	$sql = mysql_query1("SELECT *, INET_NTOA(ip) AS ip FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape($memb[1]) . " LIMIT 1");
 	if (isset($sql['nick'])) {
+	include_once ("rating.php");
+	if (isset($_SESSION['id']) && $_SESSION['id'] != $sql['id']) {
+		$vote = rating_form($page,(int)$sql['id']);
+	} else {
+		$vote = rating_form($page,(int)$sql['id'],false);
+	}
 		//$sql2 = mysql_query1("SELECT * FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE user='" . $sql['nick'] . "' AND `timestamp`>'" . $timeout . "' LIMIT 1");
-		if (isset($user_online[(int)$url['m']])&&$user_online[(int)$url['m']]==true) {
+		if (isset($user_online[(int)$sql['id']])&&$user_online[(int)$sql['id']]==true) {
 			$prisijunges = 'images/icons/status_online.png';
 			$pr = $lang['user']['user_online'];
 		} else {
@@ -39,7 +39,7 @@ if (isset($url['m']) && $url['m'] > 0) {
 		} else {
 			$admin = '';
 		}
-		$text = '<table align="center" border="0" cellpadding="0" cellspacing="1" class="table" width="100%">
+	$text = '<table align="center" border="0" cellpadding="0" cellspacing="0" class="table" width="100%">
 			<tr class="th">
 				<th height="14" class="th" width="140"><b>' . $sql['nick'] . '</b> <img src="' . $prisijunges . '" title="' . $pr . '" style="vertical-align:middle" alt="' . $pr . '" /></th>
 				<th height="14" class="th" width="50%">' . $lang['user']['user_info'] . '</th>
@@ -94,13 +94,14 @@ if (isset($url['m']) && $url['m'] > 0) {
         </td>
       </tr>
 		</table>
+		
 ';
 		// Jei kitas vartotojas perziuri kita vartotoja BET ne SAVE
-		if (isset($_SESSION['id']) && $_SESSION['id'] != $url['m']) {
+		if (isset($_SESSION['id']) && $_SESSION['id'] != $sql['id']) {
 			if (isset($conf['puslapiai']['pm.php']['id'])) {
 				$text .= "
 				<center>
-				<form name=\"send_pm\" action='?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($sql['nick'])) . "' method=\"post\">
+				<form name=\"send_pm\" action='".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($sql['nick']))) . "' method=\"post\">
 				<input type=\"submit\" value=\"{$lang['user']['user_pm']}\" />
 				</form>
 				</center>
@@ -109,7 +110,7 @@ if (isset($url['m']) && $url['m'] > 0) {
 		}
 
 
-		lentele("{$lang['user']['user_profile']}", $text);
+		lentele("{$lang['user']['user_profile']} - {$sql['nick']}", $text);
 		unset($text);
 
 

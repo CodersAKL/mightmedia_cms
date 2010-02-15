@@ -152,7 +152,7 @@ VALUES (
 
 						if ($result) {
 							msg("Informacija", "Nuotrauka pateikta administracijos peržiūrai.");
-							redirect("?id," . $_GET['id'] . ";", "meta");
+							redirect(url("?id," . $_GET['id']), "meta");
 
 						} else {
 							klaida('Įkėlimo klaida', 'Dokumentas: <font color="#FF0000">' . $filename . '</font> nebuvo įkeltas. Klaida:<br><b>' . mysql_error() . '</b>');

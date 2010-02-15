@@ -55,10 +55,10 @@ $date['d'] = $pm_sk;
 if (isset($url['d']) && isnum($url['d']) && $url['d'] >= 0 && isset($_SESSION['username'])) {
 	if ($url['d'] == 0) {
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_SESSION['username']));
-		header("Location: ?id," . $url['id'] . ";p," . $url['p'] . "");
+		header("Location: ".url("?id," . $url['id'] . ";p," . $url['p']));
 	} elseif ((int)$url['d'] > 0) {
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_SESSION['username']) . " AND `id`=" . escape((int)$url['d']));
-		header("Location: ?id," . $url['id'] . ";p," . $url['p'] . "");
+		header("Location: ".url("?id," . $url['id'] . ";p," . $url['p'] ));
 	}
 }
 //print_r($_POST);
@@ -67,7 +67,7 @@ foreach($_POST['pm_s'] as $a=>$b){
 $trinti[]="`id`=".escape($b);
 }
 mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_SESSION['username']) . " AND  ".implode($trinti, " OR ")."");
-header("Location: ?id,{$_GET['id']};a,1");
+header("Location:".url("?id,{$_GET['id']};a,1"));
 exit;
 }
 // ################# Siunciam zinute ##########################
@@ -97,12 +97,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'pm_send' && isset($_SESSION[
 				$error = "{$lang['user']['pm_sent']}";
 				msg("{$lang['user']['pm_sent']}", $error);
 				unset($result, $error, $sql, $_POST);
-				redirect("?id," . $url['id'] . "", "meta");
+				redirect(url("?id," . $url['id']), "meta");
 			}
 		} else {
 			//kas cia? $sql = mysql_fetch_assoc($sql); //$result = mysql_query1("INSERT INTO `private_msg` (`from`, `to`, `title`, `msg`, `read`, `date`) VALUES (" . escape($conf['Pavadinimas']) .", " . escape($to) .", " . escape("Jūsų pašto dėžutė pilna") .", " . escape("Jūsų pašto dėžutė užsipildė. Kiti svetainės lankytojai jums nebegali siųsti žinu�?ių.") .", 'NO', '" . $date ."')");
 			klaida("{$lang['system']['error']}", "{$lang['user']['pm_users'] } <b>" . $to . "</b> {$lang['user']['pm_full']}.");
-			redirect("?id," . $url['id'] . "", "meta");
+			redirect(url("?id," . $url['id']), "meta");
 		}
 	}	else {
 	    klaida($lang['system']['error'],$error);
@@ -133,10 +133,10 @@ $text .= $pm_img . "
 	<table width='100%'>
 		<tr>
 			<td>
-				<div class=\"blokas\"><center><a href='?id," . $url['id'] . ";n,1'><img src=\"images/pm/new.png\" alt=\"{$lang['user']['pm_new']}\" />{$lang['user']['pm_new']}</a></center></div>
-				<div class=\"blokas\"><center><a href='?id," . $url['id'] . ";a,1'><img src=\"images/pm/inbox.png\" alt=\"{$lang['user']['pm_inbox']}\" />{$lang['user']['pm_inbox']}</a></center></div>
-				<div class=\"blokas\"><center><a href='?id," . $url['id'] . ";a,2'><img src=\"images/pm/outbox.png\" alt=\"{$lang['user']['pm_outbox']}\" />{$lang['user']['pm_outbox']}</a></center></div>
-				<div class=\"blokas\"><center><a href='?id," . $url['id'] . ";d,0' ><img src=\"images/pm/delete_all.png\" alt=\"{$lang['user']['pm_delete_all']}\" />{$lang['user']['pm_delete_all']}</a></center></div>
+				<div class=\"blokas\"><center><a href='".url("?id," . $url['id'] . ";n,1")."'><img src=\"images/pm/new.png\" alt=\"{$lang['user']['pm_new']}\" />{$lang['user']['pm_new']}</a></center></div>
+				<div class=\"blokas\"><center><a href='".url("?id," . $url['id'] . ";a,1")."'><img src=\"images/pm/inbox.png\" alt=\"{$lang['user']['pm_inbox']}\" />{$lang['user']['pm_inbox']}</a></center></div>
+				<div class=\"blokas\"><center><a href='".url("?id," . $url['id'] . ";a,2")."'><img src=\"images/pm/outbox.png\" alt=\"{$lang['user']['pm_outbox']}\" />{$lang['user']['pm_outbox']}</a></center></div>
+				<div class=\"blokas\"><center><a href='".url("?id," . $url['id'] . ";d,0")."' ><img src=\"images/pm/delete_all.png\" alt=\"{$lang['user']['pm_delete_all']}\" />{$lang['user']['pm_delete_all']}</a></center></div>
 			</td>
 		</tr>
 	</table>
@@ -157,7 +157,7 @@ if (isset($url['n'])) {
 		$text .= "
 				<fieldset>
 				<legend>" . ((isset($user) && (int)$pid > 0) ? "{$lang['user']['pm_reply']}" : "{$lang['user']['pm_send']}") . " </legend>
-				<form name=\"msg\" action=\"?id," . $url['id'] . ";\" method=\"post\">
+				<form name=\"msg\" action=\"".url("?id," . $url['id'])."\" method=\"post\">
 					<table border=0 width=\"100%\">
 					<tr>
 						<td width=\"15%\" class=\"sarasas\">{$lang['user']['pm_to']}:</td>
@@ -200,7 +200,7 @@ if (isset($url['v'])) {
 		if ($sql) {
 			$laiskas = "
 				<div class=\"pm_read\"><b>{$lang['user']['pm_from']}:</b>  " . $sql['from'] . "<br><b>{$lang['user']['pm_to']}:</b> " . $sql['to'] . "<br> <b>{$lang['user']['pm_subject']}:</b> " . (isset($sql['title']) && !empty($sql['title']) ? input(trimlink($sql['title'], 40)) : "{$lang['user']['pm_nosubject']}") . "<br><br><b>{$lang['user']['pm_message']}:</b><br>" . bbcode(wrap($sql['msg'], 40)) . "<br><br></div>
-				" . (strtolower($sql['to']) == strtolower($_SESSION['username']) ? "<form name=\"replay_pm\" action='?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($sql['from'])) . ";i," . $url['v'] . "' method=\"post\">
+				" . (strtolower($sql['to']) == strtolower($_SESSION['username']) ? "<form name=\"replay_pm\" action='".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($sql['from'])) . ";i," . $url['v'] ). "' method=\"post\">
 					<input type=\"submit\" value=\"{$lang['user']['pm_reply']}\"/> <input type=\"button\" value=\"{$lang['user']['pm_delete']}\" onclick=\"location.href='" . url("d," . $url['v'] . ";v,0") . "'\"/>
 				</form>" : "") . "
 				";
@@ -225,7 +225,7 @@ if (defined("LEVEL") && LEVEL > 0 && $a == 1 && !isset($s)) {
 			} else {
 				$extra = "<img src='images/pm/pm_read.png' />";
 			}
-			$info[] = array("<input type=\"checkbox\" name='visi' onclick='checkedAll(\"pm\");'/>"=>"<input type=\"checkbox\" name=\"pm_s[]\" value=\"{$row['id']}\" />","" => $extra, "{$lang['user']['pm_subject']}:" => "<a href='?id," . $url['id'] . ";v," . $row['id'] . "' style=\"display: block\">" . (isset($row['Pavadinimas']) && !empty($row['Pavadinimas']) ? input(trimlink($row['Pavadinimas'], 40)) : "{$lang['user']['pm_nosubject']}") . "</a></div>", "{$lang['user']['pm_from']}:" => user($row['Nuo'], $row['from_id']), "{$lang['user']['pm_time']}:" => kada(date('Y-m-d H:i:s ', $row['Data'])), " " => "<a href='?id," . $url['id'] . ";n,1;u," . str_replace("=", "", base64_encode($row['from'])) . ";i," . $row['id'] . "'><img src='images/pm/replay.png' border=0 alt=\"{$lang['user']['pm_reply']}\" title=\"{$lang['user']['pm_reply']}\"/></a><a href='" . url('d,' . $row['id'] . '') . "'><img src='images/pm/delete.png' border=0 alt=\"{$lang['user']['pm_delete']}\" title=\"{$lang['user']['pm_delete']}\"/></a>");
+			$info[] = array("<input type=\"checkbox\" name='visi' onclick='checkedAll(\"pm\");'/>"=>"<input type=\"checkbox\" name=\"pm_s[]\" value=\"{$row['id']}\" />","" => $extra, "{$lang['user']['pm_subject']}:" => "<a href='".url("?id," . $url['id'] . ";v," . $row['id'] ). "' style=\"display: block\">" . (isset($row['Pavadinimas']) && !empty($row['Pavadinimas']) ? input(trimlink($row['Pavadinimas'], 40)) : "{$lang['user']['pm_nosubject']}") . "</a></div>", "{$lang['user']['pm_from']}:" => user($row['Nuo'], $row['from_id']), "{$lang['user']['pm_time']}:" => kada(date('Y-m-d H:i:s ', $row['Data'])), " " => "<a href='".url("?id," . $url['id'] . ";n,1;u," . str_replace("=", "", base64_encode($row['from'])) . ";i," . $row['id'] ). "'><img src='images/pm/replay.png' border=0 alt=\"{$lang['user']['pm_reply']}\" title=\"{$lang['user']['pm_reply']}\"/></a><a href='" . url('d,' . $row['id'] . '') . "'><img src='images/pm/delete.png' border=0 alt=\"{$lang['user']['pm_delete']}\" title=\"{$lang['user']['pm_delete']}\"/></a>");
 		}
 		lentele("{$lang['user']['pm_inbox']}", puslapiai($p, $limit, $pm_sk, 10) . "<br/><form method=\"post\" id=\"pm\" astion=\"\">" . $bla->render($info) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form><br/>" . puslapiai($p, $limit, $pm_sk, 10));
 	} else {
@@ -245,7 +245,7 @@ if (defined("LEVEL") && LEVEL > 0 && $a == 2 && !isset($s)) {
 			} else {
 				$extra = "<img src='images/pm/pm_read.png' />";
 			}
-			$info[] = array("" => $extra, "{$lang['user']['pm_subject']}:" => "<a href='?id," . $url['id'] . ";v," . $row['id'] . "' title=\"{$lang['user']['pm_time']}: <b>" . date('Y-m-d H:i:s', $row['Data']) . "</b><br/>{$lang['user']['pm_message']}: <i>" . nl2br(strip_tags(input(str_replace(array("[", "]"), "", $row['Žinutė'])))) . "</i><br/>\" style=\"display: block\">" . input(trimlink($row['Pavadinimas'], 40)) . "</a>", "{$lang['user']['pm_to']}:" => user($row['to'], $row['to_id']), "{$lang['user']['pm_time']}:" => kada(date('Y-m-d H:i:s ', $row['Data'])));
+			$info[] = array("" => $extra, "{$lang['user']['pm_subject']}:" => "<a href='".url("?id," . $url['id'] . ";v," . $row['id'] ). "' title=\"{$lang['user']['pm_time']}: <b>" . date('Y-m-d H:i:s', $row['Data']) . "</b><br/>{$lang['user']['pm_message']}: <i>" . nl2br(strip_tags(input(str_replace(array("[", "]"), "", $row['Žinutė'])))) . "</i><br/>\" style=\"display: block\">" . input(trimlink($row['Pavadinimas'], 40)) . "</a>", "{$lang['user']['pm_to']}:" => user($row['to'], $row['to_id']), "{$lang['user']['pm_time']}:" => kada(date('Y-m-d H:i:s ', $row['Data'])));
 		}
 		asort($info);
 		lentele("{$lang['user']['pm_outbox']}", puslapiai($p, $limit, $pm_sk, 10) . "<br/>" . $bla->render($info) . "<br/>" . puslapiai($p, $limit, $pm_sk, 10), "");

@@ -46,7 +46,7 @@ if ($vid == 0) {
 
 			if ($path1[(count($path1) - 1)] == $k) {
 				$sqlkiek = kiek('siuntiniai', "WHERE `categorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP'");
-				$info[] = array(" " => "<a href='?id," . $url['id'] . ";k," . $sql['id'] . "'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' /></a>", "{$lang['category']['about']}" => "<h2><a href='?id," . $url['id'] . ";k," . $sql['id'] . "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br />", "{$lang['category']['downloads']}" => $sqlkiek);
+				$info[] = array(" " => "<a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' /></a>", "{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id']) . "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br />", "{$lang['category']['downloads']}" => $sqlkiek);
 			}
 		}
 		include_once ("priedai/class.php");

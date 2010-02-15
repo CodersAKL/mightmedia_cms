@@ -33,7 +33,7 @@ if ($_SESSION['level'] == 1 || (isset($_SESSION['mod']) && strlen($_SESSION['mod
 		} else {
 			klaida($lang['system']['error'], mysql_error());
 		}
-		redirect("?id," . $url['id'] . ";p,$p", $_SERVER['HTTP_REFERER']);
+		redirect(url("?id," . $url['id'] . ";p,$p"), $_SERVER['HTTP_REFERER']);
 	}
 	//Jei adminas paspaude redaguoti
 	if (isset($url['r']) && !empty($url['r']) && $url['r'] > 0 && isnum($url['r'])) {
@@ -58,7 +58,7 @@ if ($_SESSION['level'] == 1 || (isset($_SESSION['mod']) && strlen($_SESSION['mod
 			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "chat_box` SET `msg` = " . escape($msg) . " WHERE `id` =" . escape($url['r']) . " LIMIT 1");
 			if (mysql_affected_rows() > 0) {
 				msg($lang['system']['done'], $lang['sb']['updated']);
-			} redirect("?id,{$_GET['id']};p,$p#".escape($url['r'])."","meta");
+			} redirect(url("?id,{$_GET['id']};p,$p#".escape($url['r'])),"meta");
 
 		}
 	}
@@ -85,7 +85,7 @@ if (sizeof($sql2) > 0) {
 			$tr = "2";
 		else
 			$tr = "";
-		$text .= "<div class=\"tr$tr\"><em><a href=\"?id," . $url['id'] . ";p,$p#" . $row['id'] . "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " . user($row['nikas'], $row['niko_id']) . " $extra (" . $row['time'] . ")</em><br />" . smile(bbchat($row['msg'])) . "</div>";
+		$text .= "<div class=\"tr$tr\"><em><a href=\"".url("?id," . $url['id'] . ";p,$p#" . $row['id'] ). "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " . user($row['nikas'], $row['niko_id']) . " $extra (" . $row['time'] . ")</em><br />" . smile(bbchat($row['msg'])) . "</div>";
 
 	}
 } else {

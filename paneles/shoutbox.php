@@ -85,7 +85,7 @@ function chatbox() {
 	}
 
 	if(puslapis('deze.php')) {
-		$chat_box .= "<a href='?id,".$conf['puslapiai']['deze.php']['id']."' >{$lang['sb']['archive']}</a>";
+		$chat_box .= "<a href='".url("?id,".$conf['puslapiai']['deze.php']['id'])."' >{$lang['sb']['archive']}</a>";
 	}
 	return $chat_box;
 }
