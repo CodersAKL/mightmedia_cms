@@ -1473,4 +1473,24 @@ function build_menu($data, $id=0, $active_class='active'){
    }
    return $re;
 }
+
+/**
+ * Nuorodų tikrinimas
+ *
+ * @example if (checkUrl('http://delfi.lt')) echo 'ok'; else echo 'no';
+ * @param string $url
+ * @return true/false
+ */
+function checkUrl($url) {
+	if ($data = @get_headers($url)) {
+		preg_match('/^HTTP\/1\.[01] (\d\d\d)/', implode('',$data), $matches);
+		if ($matches[1] == 200) {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+}
 ?>
