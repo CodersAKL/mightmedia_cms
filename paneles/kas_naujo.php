@@ -71,7 +71,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['urls']}:</b><br/>";
 			foreach ($q as $row) {
-				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['nuorodos.php']['id'] . ";k,". $row['cat'] .";w," . $row['id'] . "'>" . trimlink(input($row['pavadinimas']), 20) . "</a><br />\n";
+				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['nuorodos.php']['id'] . ";k,". $row['cat'] .";w," . $row['id'] . "' target='_blank' rel='nofollow'>" . trimlink(input($row['pavadinimas']), 20) . "</a><br />\n";
 			}
 		}
 	}
