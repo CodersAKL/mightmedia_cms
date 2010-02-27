@@ -586,6 +586,7 @@ $lang['new']['articles'] = 'Straipsniai';
 $lang['new']['comments'] = 'Komentarai';
 $lang['new']['author'] = 'Autorius';
 $lang['new']['date'] = 'Data';
+$lang['new']['url'] = 'Nuorodos';
 $lang['comments']['send'] = 'Siųsti';
 $lang['comments']['write'] = 'Rašyti komentarą';
 $lang['comments']['comments'] = 'Komentarai';

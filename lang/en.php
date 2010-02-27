@@ -622,6 +622,7 @@ $lang['new']['articles'] = 'Articles';
 $lang['new']['comments'] = 'Comments';
 $lang['new']['author'] = 'Author';
 $lang['new']['date'] = 'Date';
+$lang['new']['urls'] = 'Web links';
 //comments
 $lang['comments']['send'] = 'Send';
 $lang['comments']['write'] = 'Write comment';

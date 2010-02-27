@@ -16,7 +16,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	$link = '';
 	//Forume
 	if (isset($conf['puslapiai']['frm.php']['id'])) {
-		$q = mysql_query1("SELECT `id`,`tid`,`pav` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `last_data` >= " . escape($_SESSION['lankesi']) . " ORDER BY `last_data` DESC LIMIT 0,5");
+		$q = mysql_query1("SELECT `id`,`tid`,`pav` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `last_data` >= " . escape($_SESSION['lankesi']) . " ORDER BY `last_data` DESC LIMIT 0,5",60);
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['forum']}:</b><br/>";
 			foreach ($q as $row) {
@@ -26,7 +26,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	}
 	//naujienose
 	if (isset($conf['puslapiai']['naujienos.php']['id'])) {
-		$q = mysql_query1("SELECT `id`, `pavadinimas` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `data` >= " . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' ORDER BY `data` DESC LIMIT 10");
+		$q = mysql_query1("SELECT `id`, `pavadinimas` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `data` >= " . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' ORDER BY `data` DESC LIMIT 10",60);
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['news']}:</b><br/>";
 			foreach ($q as $row) {
@@ -36,7 +36,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	}
 	//galerijoj
 	if (isset($conf['puslapiai']['galerija.php']['id'])) {
-		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `data`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' ORDER BY `data` DESC LIMIT 10");
+		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `data`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' ORDER BY `data` DESC LIMIT 10",60);
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['gallery']}:</b><br/>";
 			foreach ($q as $row) {
@@ -46,7 +46,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	}
 	//siuntiniuose
 	if (isset($conf['puslapiai']['siustis.php']['id'])) {
-		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas`, `categorija` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `data`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' ORDER BY `data` DESC LIMIT 10");
+		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas`, `categorija` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `data`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' ORDER BY `data` DESC LIMIT 10",60);
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['downloads']}:</b><br/>";
 			foreach ($q as $row) {
@@ -56,7 +56,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	}
 	//straipsniai
 	if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
-		$q = mysql_query1("SELECT `id`, `t_text`, `pav`, `kat` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `date`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP'  ORDER BY `date` DESC LIMIT 10");
+		$q = mysql_query1("SELECT `id`, `t_text`, `pav`, `kat` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `date`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP'  ORDER BY `date` DESC LIMIT 10",60);
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['articles']}:</b><br/>";
 			foreach ($q as $row) {
@@ -65,9 +65,19 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 		}
 	}
 
+	//nuorodos
+	if (isset($conf['puslapiai']['nuorodos.php']['id'])) {
+		$q = mysql_query1("SELECT `id`, `pavadinimas`, `apie`, `date` `cat` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `date`>=" . escape($_SESSION['lankesi']) . " AND `active`='TAIP' ORDER BY `date` DESC LIMIT 10",60);
+		if (sizeof($q) > 0) {
+			$text .= "<b>{$lang['new']['urls']}:</b><br/>";
+			foreach ($q as $row) {
+				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='?id," . $conf['puslapiai']['nuorodos.php']['id'] . ";k,". $row['cat'] .";w," . $row['id'] . "'>" . trimlink(input($row['pavadinimas']), 20) . "</a><br />\n";
+			}
+		}
+	}
 
 	//komentarai
-	$q = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `data`>=" . escape($_SESSION['lankesi']) . " ORDER BY `data` DESC LIMIT 10");
+	$q = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `data`>=" . escape($_SESSION['lankesi']) . " ORDER BY `data` DESC LIMIT 10",60);
 	if (sizeof($q) > 0) {
 		$text .= "<b>{$lang['new']['comments']}:</b><br/>";
 		foreach ($q as $row) {
@@ -75,7 +85,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 				//$extra = "Naujienos";
 				$link = "k," . $row['kid'];
 			} elseif ($row['pid'] == 'puslapiai/siustis' && isset($conf['puslapiai']['siustis.php']['id'])) {
-				$linkas = mysql_query1("SELECT categorija FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID`='" . $row['kid'] . "'LIMIT 1");
+				$linkas = mysql_query1("SELECT categorija FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID`='" . $row['kid'] . "'LIMIT 1",60);
 				$link = "k," . $linkas['categorija'] . ";v," . $row['kid'] . "";
 				//$extra = "Siuntiniai";
 				//$link = "v," . $row['kid'];
