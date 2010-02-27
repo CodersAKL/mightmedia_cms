@@ -67,7 +67,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 
 	//nuorodos
 	if (isset($conf['puslapiai']['nuorodos.php']['id'])) {
-		$q = mysql_query1("SELECT `id`, `pavadinimas`, `apie`, `date` `cat` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `date`>=" . escape($_SESSION['lankesi']) . " AND `active`='TAIP' ORDER BY `date` DESC LIMIT 10",60);
+		$q = mysql_query1("SELECT `id`, `pavadinimas`, `apie`, `date`, `cat` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `date`>=" . escape($_SESSION['lankesi']) . " AND `active`='TAIP' ORDER BY `date` DESC LIMIT 10",60);
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['urls']}:</b><br/>";
 			foreach ($q as $row) {
