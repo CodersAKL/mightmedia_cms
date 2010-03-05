@@ -62,6 +62,7 @@ $lang['system']['picture'] = 'Paveikslėlis';
 $lang['system']['nomorecategories'] = 'Jūs nebegalite kurti kategorijų.';
 $lang['system']['category'] = 'Kategorija';
 $lang['system']['categories'] = 'Kategorijos';
+$lang['system']['dashboard'] = 'Skydelis';
 $lang['user']['for_members'] = 'Tik vartotojams';
 $lang['user']['hello'] = 'Labas, %s';
 $lang['user']['edit_profile'] = 'Redaguoti profilį';

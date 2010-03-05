@@ -65,6 +65,7 @@ $lang['system']['picture'] = 'Picture';
 $lang['system']['nomorecategories'] = 'You can\'t create more categories.';
 $lang['system']['category'] = 'Category';
 $lang['system']['categories'] = 'Categories';
+$lang['system']['dashboard'] = 'Dashboard';
 //user
 $lang['user']['for_members'] = 'Members';
 $lang['user']['hello'] = 'Hello';
