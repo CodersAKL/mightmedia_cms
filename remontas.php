@@ -12,37 +12,70 @@
 
 ob_start();
 session_start();
+$out_page = true;
 include_once (dirname(__file__) . "/priedai/conf.php");
 include_once (dirname(__file__) . "/priedai/prisijungimas.php");
 $page_pavadinimas = $lang['admin']['maintenance'];
+if ($conf['Palaikymas'] == 0) {
+  //header('location: index.php'); exit;
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<?php header_info(); ?>
-	</head>
-	<body>
-		<div style="width:45%; text-align:center; margin:auto;margin-top:20px;">
-					<?php klaida($lang['admin']['maintenance'], $conf['Maintenance']); ?>
-			
-					<?php
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>MightMedia TVS - Administravimas</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="robots" content="index,follow" />
+	<!--[if IE]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen, projection" /><![endif]-->
+	<link rel="stylesheet" type="text/css" media="all" href="stiliai/remontas/css/style.css" />
+	
+	<!--[if IE]>
+		<style type="text/css">
+		  .clearfix {
+			zoom: 1;     /* triggers hasLayout */
+			display: block;     /* resets display for IE/Win */
+			}  /* Only IE can see inside the conditional comment
+			and read this CSS rule. Don't ever use a normal HTML
+			comment inside the CC or it will close prematurely. */
+		</style>
+	<![endif]-->
 
-					if ($conf['Palaikymas'] == 1 && !isset($_SESSION['id'])) {
-						lentele($lang['user']['administration'],admin_login_form());
-					} elseif (isset($_SESSION['id']) && $_SESSION['level'] > 1 && $_SESSION['level'] > 0 && $conf['Palaikymas'] == 1) {
-						echo "<a href='".url("?id,Atsijungti")."'>{$lang['user']['logout']}</a>";
-					} elseif (isset($_SESSION['id']) && $_SESSION['level'] == 1) {
-						header('location: index.php'); exit;
-					}
-					if ($conf['Palaikymas'] == 0) {
-						header('location: index.php'); exit;
-					}
+	
+</head>
+<body>
+<div  id="login_container">
+	<div  id="header">
 
-					?>
-				<div class="title">
-					<?php copyright($conf['Copyright']); unset($text); ?>
-				</div>
+		<div id="logo"><h1><a href="/">MightMedia TVS</a></h1></div>
+
+	</div><!-- end header -->
+
+	
+	
+		<div id="login" class="section">
+			<div id="warning">
+			<?php echo $conf['Maintenance']; ?>
+			</div>
+			© <a href="http://mightmedia.lt">MightMedia TVS</a>		
 		</div>
-	</body>
+	
+	
+
+
+
+</div><!-- end container -->
+
+</body>
 </html>
+
+
+
+
+
+
+
 <?php ob_end_flush(); ?>
+
+

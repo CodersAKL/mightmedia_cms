@@ -16,7 +16,7 @@ header("Content-type: text/html; charset=utf-8");
 header('P3P: CP="NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM"');
 if (!isset($_SESSION))
 	session_start();
-
+define('ROOT', '');
 //kad rodytu per kiek laiko sugeneravo koda
 $m1 = explode(" ", microtime());
 $stime = $m1[1] + $m1[0];
