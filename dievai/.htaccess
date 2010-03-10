@@ -1,0 +1,113 @@
+ServerSignature Off
+Options All -Indexes
+AddDefaultCharset UTF-8
+
+Options +FollowSymLinks
+IndexIgnore */*
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^(.*)$ main.php?id=$1 [NC,L]
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
+# už bandymą įsilaužti - id=javascript/jquery/jquery.asmselect.js 
+SetEnvIf Remote_Addr "^127.0.0.1" draudziam
