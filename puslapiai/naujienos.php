@@ -95,13 +95,9 @@ if ($kid != 0) {
 			}
 			$text .= "</div><hr />" . date('Y-m-d H:i:s ', $sql['data']) . ",  <b>" . $sql['autorius'] . "</b>";
 			//$text .= "</div>";
-if ($_SESSION['level'] == 1) {
-			$admin = '<div style="float: right;" class="middle"><a href="'.url('?id,999;a,'.$admin_pagesid['naujienos'].';h,' . $sql['id'] ). '" title="' . $lang['admin']['edit'] . '"><img src="images/icons/pencil.png" class="middle" border="0" alt="edit" /></a> <a href="'.url('?id,999;a,'.$admin_pagesid['naujienos'].';t,' . $sql['id'] ). '" onClick=\"return confirm(\' '. $lang['admin']['delete'] .'?\');\" title="' . $lang['admin']['delete'] . '"><img src="images/icons/cross.png" class="middle" border="0" alt="delete" /></a></div>';
-		} else {
-			$admin = '';
-		}
+
 			//Atvaizduojam naujieną, likę argumentai - mėnesis žodžiais ir diena skaičiumi
-			lentele($admin.$title, $text, false, array(menesis((int)date('m', strtotime($sql['data']))), (int)date('d', strtotime($sql['data']))));
+			lentele($title, $text, false, array(menesis((int)date('m', strtotime($sql['data']))), (int)date('d', strtotime($sql['data']))));
 			//Susijusios naujienos
 			$susijus = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija`=" . escape($sql['kategorija']) . " AND `id`!=" . escape($_GET['k']) . " ORDER by `data` DESC LIMIT 50", 30000);
 			if (sizeof($susijus) > 0) {

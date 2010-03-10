@@ -35,7 +35,7 @@ if (isset($memb[1])) {
 		}
 		//Profilio rodymas
 		if ($_SESSION['level'] == 1) {
-			$admin = '<a href="?id,999;a,'.$admin_pagesid['vartotojai'].';r,' . $sql['id'] . '" title="' . $lang['admin']['edit'] . '"><img src="images/icons/pencil.png" class="middle" border="0" alt="edit" /></a> <a href="?id,999;a,'.$admin_pagesid['vartotojai'].';d,' . $sql['id'] . '" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\');" title="' . $lang['admin']['delete'] . '"><img src="images/icons/cross.png" class="middle" border="0" alt="delete" /></a>  <a title="' . $lang['admin']['badip'] . '" href="?id,999;a,'.$admin_pagesid['banai'].';b,1;ip,' . $sql['ip'] . '"><img src="images/icons/delete.png" class="middle" border="0" alt="ban" /></a>';
+			$admin = 'IP: ' . $sql['ip'];
 		} else {
 			$admin = '';
 		}
@@ -80,7 +80,7 @@ if (isset($memb[1])) {
 			</tr>
 			<tr class="tr2">
 				<td class="td" rowspan="1" height="87" valign="top" width="140"><small>
-					<b>' . $lang['forum']['topic'] . ':</b> ' . $sql['forum_temos'] . '<br />
+					<b>' . $lang['user']['topics'] . ':</b> ' . $sql['forum_temos'] . '<br />
 					<b>' . $lang['forum']['messages'] . ':</b>	' . $sql['forum_atsakyta'] . '<br /></small>
         </td>
 				<td class="td" colspan="2" height="18" width="280">' . bbcode($sql['parasas']) . '</td>
