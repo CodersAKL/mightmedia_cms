@@ -10,7 +10,6 @@
  * @$Date$
  **/
 
-$arredaguoti = 'Ne';
 
 $sqli = mysql_query1("SELECT count(id) as kom, 
 (SELECT count(id) FROM " . LENTELES_PRIESAGA . "naujienos WHERE " . LENTELES_PRIESAGA . "naujienos.rodoma='NE') as news, 

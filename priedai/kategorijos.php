@@ -26,8 +26,9 @@ function cat($kieno,$cat_id = 0, $space= 1, $x ='') {
 
 function kategorija($kieno, $leidimas = false) {
 	global $conf, $url, $lang;
+	$root = ROOT;
 	echo <<< HTML
-<script type="text/javascript" src="javascript/jquery/jquery.asmselect.js"></script>
+<script type="text/javascript" src="{$root}javascript/jquery/jquery.asmselect.js"></script>
 
 	<script type="text/javascript">
 
@@ -67,12 +68,12 @@ HTML;
 		$dir = "images/icons";
 	}
 
-	$array = getFiles($dir);
+	$array = getFiles(ROOT.$dir);
 	foreach ($array as $key => $val) {
 		if ($array[$key]['type'] == 'file')
 			$kategoriju_pav[$array[$key]['name']] = $array[$key]['name'] . ' - ' . $array[$key]['sizetext'];
 	}
-	include_once ("priedai/class.php");
+	include_once (ROOT."priedai/class.php");
 
 	$bla = new forma();
 	$lygiai = array_keys($conf['level']);
@@ -207,7 +208,7 @@ HTML;
 
 					if (isset($row['file']) && !empty($row['file'])) {
 						mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/siustis' AND kid=" . escape($row['ID']) . "");
-						@unlink("siuntiniai/" . $row['file']);
+						@unlink(ROOT."siuntiniai/" . $row['file']);
 					}
 				}
 
@@ -219,9 +220,9 @@ HTML;
 				$sql = mysql_query1("SELECT `ID`,`file` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `categorija` = " . escape($id) . "");
 				foreach ($sql as $row) {
 					if (isset($row['file']) && !empty($row['file'])) {
-						@unlink("galerija/" . $row['file']);
-						@unlink("galerija/mini/" . $row['file']);
-						@unlink("galerija/originalai/" . $row['file']);
+						@unlink(ROOT."galerija/" . $row['file']);
+						@unlink(ROOT."galerija/mini/" . $row['file']);
+						@unlink(ROOT."galerija/originalai/" . $row['file']);
 						mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/galerija' AND kid=" . escape($row['ID']) . "");
 					}
 				}
@@ -261,7 +262,7 @@ HTML;
 		if ($kieno == 'vartotojai') {
 			$textas = "{$lang['system']['grouplevel']}:";
 			//$puslapiai[""]="";
-			$failai = getFiles('puslapiai/dievai', '.htaccess|index.php|index.html|index.htm|index.php3|conf.php|config.php|vartotojai.php|logai.php|upload.php|todo.php|paneles.php|meniu.php|komentarai.php|narsykle.php');
+			$failai = getFiles('.htaccess|index.php|index.html|index.htm|index.php3|conf.php|config.php|vartotojai.php|logai.php|upload.php|todo.php|paneles.php|meniu.php|komentarai.php|narsykle.php');
 			foreach ($failai as $file) {
 				if ($file['type'] == 'file') {
 

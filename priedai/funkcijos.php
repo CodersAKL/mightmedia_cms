@@ -15,7 +15,7 @@ if (basename($_SERVER['PHP_SELF']) == 'funkcijos.php') {
 }
 define("OK", true);
 define('ROOTAS', dirname(realpath(__file__)) . '/../');
-if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['QUERY_STRING'])) {
+if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['QUERY_STRING']) || (isset($_GET['id']) && preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_GET['id']))) {
 	$ip = getip();
 	$forwarded = (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : 'N/A');
 	$remoteaddress = $_SERVER["REMOTE_ADDR"];
@@ -33,17 +33,8 @@ if (isset($_POST) && !empty($_POST) && (isset($_GET['id'])&&$_GET['id']!=999)&&(
 	$_POST = $post;
 }
 
-//print_r($post);
 
-//admin links
-//if(isset($_SESSION['level']) && $_SESSION['level']==1) {
-$glob = glob('puslapiai/dievai/*.php');
-foreach ($glob as $id => $file) {
-	$file = basename(ROOTAS . $file, '.php');
-	$admin_pages[$id] = $file;
-	$admin_pagesid[$file] = $id;
 
-} //}
 
 //slaptaþodþio kodavimas
 function koduoju($pass) {
@@ -109,8 +100,8 @@ function header_info() {
  * @return formated html
  */
 function avatar($mail, $size = 80) {
-	if(file_exists('images/avatars/'.md5($mail).'.jpeg')) {
-		$result='<img src="images/avatars/'.md5($mail).'.jpeg?'.time().'" width="' . $size . '" height="' . $size . '" alt="avataras" />';}else {	$result = '<img src="http://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . htmlentities($size . '&r=any&default=' . urlencode(adresas() . 'images/avatars/no_image.jpg') . '&time=' . time()) . '"  width="' . $size . '" alt="avataras" />';}
+	if(file_exists(ROOT.'images/avatars/'.md5($mail).'.jpeg')) {
+		$result='<img src="'.ROOT.'images/avatars/'.md5($mail).'.jpeg?'.time().'" width="' . $size . '" height="' . $size . '" alt="avataras" />';}else {	$result = '<img src="http://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . htmlentities($size . '&r=any&default=' . urlencode(adresas() .ROOT.'images/avatars/no_image.jpg') . '&time=' . time()) . '"  width="' . $size . '" alt="avataras" />';}
 	return $result;
 }
 
@@ -176,7 +167,7 @@ function utf8_substr($str, $start) {
  * @return string
  */
 function adresas() {
-	return "http://" . $_SERVER["HTTP_HOST"] . preg_replace("/[^\/]*$/", "", $_SERVER["PHP_SELF"]);
+	return "http://" . $_SERVER["HTTP_HOST"].preg_replace("/[^\/]*$/", "", $_SERVER["PHP_SELF"]);
 }
 
 /**
@@ -362,6 +353,10 @@ foreach ($sql as $row) {
 	$conf['titles'][$row['id']] =(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file']));
 	$conf['titles_id'][str_replace(' ', '_',(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file'])))] = $row['id'];
 }
+//nieko geresnio nesugalvojau
+$dir = explode('/', dirname($_SERVER['PHP_SELF']));
+$conf['titles']['999'] = $dir[count($dir)-1].'/admin';
+$conf['titles_id']['admin'] = 999;
 //sutvarkom nuorodas
 if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
 	$_GET = url_arr(cleanurl($_SERVER['QUERY_STRING']));
@@ -414,13 +409,13 @@ function user($user, $id = 0, $level = 0, $extra = false) {
 		//Jeigu galiam ziuret vartotojo profili tada nickas paspaudziamas
 			if ($level > 0 && $id > 0) {
 			
-				return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="'.url('?id,' . $conf['puslapiai']['view_user.php']['id'] . ';' . $user). '" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
+				return (isset($conf['level'][$level]['pav']) ? '<img src="'.ROOT.'images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="'.url('?id,' . $conf['puslapiai']['view_user.php']['id'] . ';' . $user). '" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"".ROOT."images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
 			} elseif ($id == 0 && $level != 0) {
-				return '<div style="display:inline;" title="' . input($user) . " " . $extra . '">' . (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . trimlink($user, 10) . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) ). "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "") . '</div>';
+				return '<div style="display:inline;" title="' . input($user) . " " . $extra . '">' . (isset($conf['level'][$level]['pav']) ? '<img src="'.ROOT.'images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . trimlink($user, 10) . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) ). "\"><img src=\"".ROOT."images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "") . '</div>';
 			} elseif ($level == 0 && $id != 0) {
-				return '<a href="'.url('?id,' . $conf['puslapiai']['view_user.php']['id'] . ';' . $user ). '" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)))  . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
+				return '<a href="'.url('?id,' . $conf['puslapiai']['view_user.php']['id'] . ';' . $user ). '" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)))  . "\"><img src=\"".ROOT."images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
 			} else {
-				return '<div style="display:inline;" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "") . '</div>';
+				return '<div style="display:inline;" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"".ROOT."images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "") . '</div>';
 			}
 
 		} else {
@@ -428,7 +423,7 @@ function user($user, $id = 0, $level = 0, $extra = false) {
 			if ($level == 0 || $id == 0) {
 				return '<div style="display:inline;" title="' . input($user) . " " . $extra . '"><u>' . $user . '</u></div>';
 			} else {
-				return (isset($conf['level'][$level]['pav']) ? '<img src="images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="#" onclick="return false" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"images/pm/mail.png\" alt=\"pm\" style=\"vertical-align:middle\" border=\"0\" /></a>" : "");
+				return (isset($conf['level'][$level]['pav']) ? '<img src="'.ROOT.'images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="#" onclick="return false" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"".ROOT."images/pm/mail.png\" alt=\"pm\" style=\"vertical-align:middle\" border=\"0\" /></a>" : "");
 			}
 
 		}
@@ -735,7 +730,7 @@ $return = str_replace(' ', '_', $conf['titles'][$start[1]]).implode(';',$linkai)
 } else{
   $return = str_replace('id=', '', $_SERVER['QUERY_STRING']).';'.$str;
 }
-return $return;
+return ROOT.$return;
 }
 /**
  * Seo url TODO
@@ -929,7 +924,7 @@ function apvalinti($sk, $kiek = 2) {
  */
 function naujas($data, $nick = null) {
 	if (isset($_SESSION['lankesi'])) {
-		return (($data > $_SESSION['lankesi']) ? '<img src="images/icons/new.png" onload="new Effect.Pulsate(this)" alt="New" border="0" style="vertical-align: middle;" />' : '');
+		return (($data > $_SESSION['lankesi']) ? '<img src="'.ROOT.'images/icons/new.png" onload="new Effect.Pulsate(this)" alt="New" border="0" style="vertical-align: middle;" />' : '');
 	} else {
 		return '';
 	}
@@ -1014,9 +1009,9 @@ function trimlink($text, $length) {
 function procentai($reikia, $yra, $zenklas = false) {
 	$return = (int)round((100 * $yra) / $reikia);
 	if ($return > 100 && $zenklas) {
-		$return = "<img src='images/icons/accept.png' class='middle' alt='100%' title='100%' borders='0' />";
+		$return = "<img src='".ROOT."images/icons/accept.png' class='middle' alt='100%' title='100%' borders='0' />";
 	} elseif ($return > 0 && $zenklas) {
-		$return = "<img src='images/icons/cross.png' class='middle' alt='" . $return . "%' title='" . $reikia . "/" . $yra . " - " . $return . "%' borders='0' />";
+		$return = "<img src='".ROOT."images/icons/cross.png' class='middle' alt='" . $return . "%' title='" . $reikia . "/" . $yra . " - " . $return . "%' borders='0' />";
 	}
 	return $return;
 }
@@ -1111,6 +1106,7 @@ function menesis($men) {
 
 // grąžina failus iš nurodytos direktorijos ir sukiša Ä¯ masyvą
 function getFiles($path, $denny = '.htaccess|index.php|index.html|index.htm|index.php3|conf.php') {
+  global $lang;
 	$denny = explode('|', $denny);
 	$path = urldecode($path);
 	$files = array();
@@ -1165,10 +1161,10 @@ function getFiles($path, $denny = '.htaccess|index.php|index.html|index.htm|inde
 }
 
 //Grazina direktorijų sarašą
-function getDirs($dir) {
+function getDirs($dir, $skip = '') {
 	if ($handle = opendir($dir)) {
 		while (false !== ($file = readdir($handle))) {
-			if ($file != "." && $file != ".." && $file != ".svn" && is_dir($dir . $file)) {
+			if ($file != "." && $file != ".." && $file != ".svn" && is_dir($dir . $file) && (is_array($skip)?!in_array($file, $skip):true) && $skip  != $file) {
 				$return[$file] = $file;
 			}
 		}
@@ -1290,18 +1286,6 @@ function versija($failas = false) {
 	}
 }
 
-/**
- * Debuginimui
- */
-function debug() {
-	global $lang;
-	$array = debug_backtrace();
-	klaida($lang['system']['debuger'], '<code><pre>' . print_r(array_values($array), true) . '</pre></code>');
-}
-function sendcompressedcontent($content) {
-	header("Content-Encoding: gzip");
-	return gzencode($content, 9);
-}
 
 // compress HTML BLOGAS DUOMENŲ SUSPAUDIMO BŪDAS
 //ob_start('sendcompressedcontent');
@@ -1330,117 +1314,37 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 	} else {
 		$areos = "'$id'";
 	}
-	$return = "";
-	echo '<script type="text/javascript">
-   
-    _editor_url  = "javascript/htmlarea/Xinha0.96beta2/"
-    _editor_lang = "lt"; 
-    </script>
-
-  <!-- Load up the actual editor core -->
-  <script type="text/javascript" src="javascript/htmlarea/Xinha0.96beta2/XinhaCore.js"></script>
-  
-  <script type="text/javascript">
-    xinha_editors = null;
-    xinha_init    = null;
-    xinha_config  = null;
-    xinha_plugins = null;
-    
-
-    xinha_init = xinha_init ? xinha_init : function()
-    {
-      
-
-      xinha_plugins = xinha_plugins ? xinha_plugins :
-      [
-        \'CharacterMap\',\'Linker\', \'Media\', \'Abbreviation\', ' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ? '\'ExtendedFileManager\',' : '') . '\'HorizontalRule\',\'InsertAnchor\',\'SuperClean\',\'Stylist\'
-
-      ];
-             // THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
-             if(!Xinha.loadPlugins(xinha_plugins, xinha_init)) return;
-
-     
-
-      xinha_editors = xinha_editors ? xinha_editors :
-      [
-        ' . $areos . '
-      ];
-
-     
-       xinha_config = xinha_config ? xinha_config : new Xinha.Config();
-       xinha_config.fullPage = false;
-        xinha_config.toolbar =
-  [
-    
-    ["separator","popupeditor","formatblock","fontname","fontsize","separator","bold","italic","underline","strikethrough"],
-    ["separator","forecolor","hilitecolor","textindicator"],
-    ["separator","subscript","superscript"],
-    ["linebreak","separator","justifyleft","justifycenter","justifyright","justifyfull"],
-    ["separator","insertorderedlist","insertunorderedlist","outdent","indent"],
-    ["separator","inserthorizontalrule","createlink","insertimage","inserttable"],
-    ["linebreak","separator","undo","redo","selectall"], (Xinha.is_gecko ? [] : ["cut","copy","paste","overwrite","saveas"]),
-    ["separator","killword","clearfonts","removeformat","toggleborders","splitblock","lefttoright", "righttoleft"],
-    ["separator","htmlmode","showhelp"]
-  ];       
-       
-       xinha_config.showLoading = true;
-       xinha_config.CharacterMap.mode = \'panel\';
-       //xinha_config.stylistLoadStylesheet(\'stiliai/' . input($conf['Stilius']) . '/default.css\');
-       //xinha_config.pageStyleSheets = [\'stiliai/' . input($conf['Stilius']) . '/default.css\'];
-       //xinha_config.htmlRemoveTags = /body|head|html/;
-      //xinha_config.htmlRemoveTags = /body|head|html/;
-      ' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ?'with (xinha_config.ExtendedFileManager)
-     {':'').'
-       ';
-	if(isset($_SESSION['level']) && $_SESSION['level'] == 1){
-		require_once ('javascript/htmlarea/Xinha0.96beta2/contrib/php-xinha.php');
-		xinha_pass_to_php_backend(array('images_dir' => '../../../../../siuntiniai/images', 'images_url' => adresas() . 'siuntiniai/images', 'files_dir' => '../../../../../siuntiniai/failai', 'files_url' => adresas() . 'siuntiniai/failai', //'base_dir' => '../../../../../siuntiniai',
-		//'base_url' => adresas() . 'siuntiniai',
-		'allow_upload' => true //,
-		//'thumbnail_prefix'=>'',
-		//'thumbnail_dir'=>'sumazinti'
-		//'resized_prefix'=>'.pakeistas',
-		//'resized_dir'=>'.resized'
-		));
-	}
-	echo '
-     ' . ((isset($_SESSION['level']) && $_SESSION['level'] == 1) ?'}':'').'
-     
-      
-       xinha_editors   = Xinha.makeEditors(xinha_editors, xinha_config, xinha_plugins);
-
-     
-
-      Xinha.startEditors(xinha_editors);
-      window.onload = null;
-    }
-
-    window.onload   = xinha_init;
-  </script>
-
-  ';
+  $root = ROOT;
+	$return = <<<HTML
+<script type="text/javascript" src="{$root}javascript/htmlarea/markitup/jquery.markitup.pack.js"></script>
+<!-- markItUp! toolbar settings -->
+<script type="text/javascript" src="{$root}javascript/htmlarea/markitup/sets/default/set.js"></script>
+<!-- markItUp! skin -->
+<link rel="stylesheet" type="text/css" href="{$root}javascript/htmlarea/markitup/skins/markitup/style.css" />
+<!--  markItUp! toolbar skin -->
+<link rel="stylesheet" type="text/css" href="{$root}javascript/htmlarea/markitup/sets/default/style.css" />
+	
+HTML;
 
 	if (is_array($id)) {
 		foreach ($id as $key => $val) {
 
 
 			$return .= <<< HTML
-
- 
- 
-  <textarea id="{$key}" name="{$key}" class="input" style="min-height:320px;">
-				 {$value[$key]}
-    </textarea>
-
-
+			<script type="text/javascript">
+$(document).ready(function()	{
+		$('#{$key}').markItUp(mySettings);});
+	</script>
+<textarea id="{$key}" name="{$key}" style="min-height:320px;">{$value[$key]}</textarea>
 HTML;
 		}
 	} else {
 		$return .= <<< HTML
-		  <textarea id="{$id}" name="{$id}" class="input" style="min-height:320px;">
-			 {$value}
-    </textarea>
-
+		<script type="text/javascript">
+$(document).ready(function()	{
+		$('#{$id}').markItUp(mySettings);});
+	</script>
+<textarea id="{$id}" name="{$id}" style="min-height:320px;">{$value}</textarea>
 HTML;
 
 	}
@@ -1466,10 +1370,10 @@ function build_menu($data, $id=0, $active_class='active'){
 	$re="";
    foreach ($data[$id] as $row){
       if (isset($data[$row['id']])){
-         $re.= "<li ".($_GET['id']==$row['id']?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."</a><ul>";
+         $re.= "<li ".((isset($_GET['id']) && $_GET['id'] == $row['id'])?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."</a><ul>";
          $re.=build_menu($data, $row['id'],$active_class);
          $re.= "</ul></li>";
-      } else $re.= "<li ".($_GET['id']==$row['id']?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."</a></li>";
+      } else $re.= "<li ".((isset($_GET['id']) && $_GET['id'] == $row['id'])?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."".(isset($row['extra'])?$row['extra']:'')."</a></li>";
    }
    return $re;
 }

@@ -16,11 +16,11 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	$link = '';
 	//Forume
 	if (isset($conf['puslapiai']['frm.php']['id'])) {
-		$q = mysql_query1("SELECT `id`,`tid`,`pav` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `last_data` >= " . escape($_SESSION['lankesi']) . " ORDER BY `last_data` DESC LIMIT 0,5",60);
+		$q = mysql_query1("SELECT `id`,`id` AS strid,`tid`,`tid` as `temosid`,`pav`,`autorius`,`last_data`,`last_nick`, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=`temosid` AND`sid`=strid ) AS viso	 FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `last_data` >= " . escape($_SESSION['lankesi'])  . " ORDER BY `last_data` DESC LIMIT 5");
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['forum']}:</b><br/>";
 			foreach ($q as $row) {
-				$text .= "\t <img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='".url("?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row['id'] . ";s," . $row['tid'] ). "#end'>" . trimlink(input($row['pav']), 20) . "</a><br />\n";
+				$text .= "\t <img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='".url("?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row['id'] . ";s," . $row['tid'] ). ";p,".((int)($row['viso']/15-0.1)*15)."#end'>" . trimlink(input($row['pav']), 20) . "</a><br />\n";
 			}
 		}
 	}

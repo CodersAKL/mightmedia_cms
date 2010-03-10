@@ -59,12 +59,9 @@ HTML;
 	if (isset($_SESSION['level']) && $_SESSION['level'] == 1) {
 
 		$text .= "
-			<li><a href=\"admin\"><img src=\"images/icons/admin_block.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['administration']}</a></li>
+			<li><a href=\"dievai\"><img src=\"images/icons/admin_block.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['administration']}</a></li>
 			";
-			//<li><a href=\"".url("?id,999;a,{$admin_pagesid['naujienos']};v,1")."\"><img src=\"images/icons/sticky_note__pencil.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['write_news']}</a></li>
-
-		/*if (isset($conf['puslapiai']['galerija.php']['id']))
-			$text .= "<li><a href=\"?id,999;a,{$admin_pagesid['galerija']};v,1\"><img src=\"images/icons/camera_go.png\" style=\"vertical-align: middle;\" border=\"0\" alt=\"@\" /> {$lang['admin']['gallery_add']}</a></li>";*/
+			
 	}
 
 
