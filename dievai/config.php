@@ -26,7 +26,7 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape($_POST['Maintenance']). ",'Maintenance')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['Maintenance']);
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape(input(strip_tags($_POST['Stilius']))) . ",'Stilius')  ON DUPLICATE KEY UPDATE `val`=" . escape(input(strip_tags($_POST['Stilius'])));
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape(basename($_POST['pirminis'],'.php')) . ",'pirminis')  ON DUPLICATE KEY UPDATE `val`=" . escape(basename($_POST['pirminis'],'.php'));
-	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape(basename($_POST['kalba'],'.php')) . ",'kalba')  ON DUPLICATE KEY UPDATE `val`=" . escape(basename($_POST['kalba'],'.php'));
+	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape(basename($_POST['kalba'])) . ",'kalba')  ON DUPLICATE KEY UPDATE `val`=" . escape(basename($_POST['kalba']));
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape((int)$_POST['keshas']) . ",'keshas')  ON DUPLICATE KEY UPDATE `val`=" . escape((int)$_POST['keshas']);
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape((int)$_POST['koment']) . ",'kmomentarai_sveciams')  ON DUPLICATE KEY UPDATE `val`=" . escape((int)$_POST['koment']);
 	foreach ($q as $sql) {

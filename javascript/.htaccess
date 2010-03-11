@@ -2,6 +2,6 @@
 Deny from All
 </FilesMatch>
 
-<FilesMatch "uploader.php|scan.php|styles.php|backend.php|tidy.php|manager.php|perview.php">
+<FilesMatch "grab.php|perview.php">
 Allow from all
 </FilesMatch>

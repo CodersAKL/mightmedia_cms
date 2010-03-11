@@ -402,7 +402,7 @@ FROM " . LENTELES_PRIESAGA . "kom");
 		</div><!-- end container -->
 		<?php if(isset($_GET['a'])) { ?>
 		<script type="text/javascript">
-			$('body').scrollTo(600, 800);
+			$.scrollTo('#postedit', 800);
 		</script>
 		<?php } ?>
 	</body>

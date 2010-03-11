@@ -25,9 +25,10 @@ if ($conf['Palaikymas'] == 0) {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>MightMedia TVS - Administravimas</title>
-	<meta name="description" content="" />
-	<meta name="keywords" content="" />
-	<meta name="robots" content="index,follow" />
+	<meta name="description" content="<?php echo input(strip_tags($conf['Pavadinimas']) . ' - ' . trimlink(strip_tags($conf['Apie']), 120)); ?>" />
+	<meta name="keywords" content="<?php echo input(strip_tags($conf['Keywords']));?>" />
+	<meta name="author" content="<?php echo input(strip_tags($conf['Copyright']));?>" />
+
 	<!--[if IE]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen, projection" /><![endif]-->
 	<link rel="stylesheet" type="text/css" media="all" href="stiliai/remontas/css/style.css" />
 	
@@ -48,7 +49,7 @@ if ($conf['Palaikymas'] == 0) {
 <div  id="login_container">
 	<div  id="header">
 
-		<div id="logo"><h1><a href="/">MightMedia TVS</a></h1></div>
+		<div id="logo"><h1><a href="<?php echo adresas(); ?>"><?php echo input(strip_tags($conf['Pavadinimas']));?></a></h1></div>
 
 	</div><!-- end header -->
 
@@ -58,7 +59,7 @@ if ($conf['Palaikymas'] == 0) {
 			<div id="warning">
 			<?php echo $conf['Maintenance']; ?>
 			</div>
-			© <a href="http://mightmedia.lt">MightMedia TVS</a>		
+			<span class="date" style="text-align: right">&copy; <a href="http://mightmedia.lt" target="_blank">MightMedia TVS</a></span>
 		</div>
 	
 	

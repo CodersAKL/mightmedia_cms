@@ -47,7 +47,7 @@ include_once ("../priedai/prisijungimas.php");
 <div  id="login_container">
 	<div  id="header">
 
-		<div id="logo"><h1><a href="/">MightMedia TVS</a></h1></div>
+		<div id="logo"><h1><a href="<?php echo adresas()?>../">MightMedia TVS</a></h1></div>
 
 	</div><!-- end header -->
 
@@ -77,7 +77,9 @@ include_once ("../priedai/prisijungimas.php");
 		<?php redirect('main.php'); ?>
 	<?php endif ?>
 
-
+	<script type="text/javascript">
+		$(':input[name="vartotojas"]').focus();
+	</script>
 
 </div><!-- end container -->
 

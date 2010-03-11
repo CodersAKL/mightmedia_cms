@@ -86,6 +86,7 @@ include_once ("priedai/header.php");
 if (is_file('setup.php') && defined('LEVEL') && LEVEL == 1 && !@unlink('setup.php')) {
 	klaida('Demesio / Warning', '<h3>Neištrintas setup.php failas.</h3> Tai saugumo spraga. Prašome pašalinkite šį failą iš serverio arba pakeiskite jo pavadinimą. /Please, remove setup.php file from server.');
 }
+include_once 'stiliai/' . $conf['Stilius'] . '/sfunkcijos.php';
 if (empty($_GET['ajax'])) {
 	include_once ('stiliai/' . $conf['Stilius'] . '/index.php');
 }

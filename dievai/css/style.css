@@ -8,22 +8,22 @@ Description:
 --- RESETS
 ---------------------------------------------------------------------------------------*/
 html, body, div, span, applet, object, iframe, p, blockquote, pre,	a, abbr, acronym, address, big, cite, code,	del, dfn, em, font, img, ins, kbd, q, s, samp,	small, strike, strong, sub, sup, tt, var,	b, u, i, center,	dl, dt, dd, ol, ul, li,	fieldset, form, label, legend,	table, caption, tbody, tfoot, thead, tr, th, td {margin: 0;	padding: 0;	border: 0;	outline: 0;	font-size: 100%;	vertical-align: baseline;background: transparent;}
-	body {line-height: 1;}
-	ol, ul {list-style: none;}
-	blockquote, q {quotes: none;}
-	blockquote:before, blockquote:after,
-	q:before, q:after {content: '';content: none;}
-	:focus {outline: 0;}
-	ins {text-decoration: none;}
-	del {text-decoration: line-through;}
-	table {border-collapse: collapse;border-spacing: 0;}
+body {line-height: 1;}
+ol, ul {list-style: none;}
+blockquote, q {quotes: none;}
+blockquote:before, blockquote:after,
+q:before, q:after {content: '';content: none;}
+:focus {outline: 0;}
+ins {text-decoration: none;}
+del {text-decoration: line-through;}
+table {border-collapse: collapse;border-spacing: 0;}
 .clearfix:after {
 	content: ".";
 	display: block;
 	height: 0;
 	clear: both;
 	visibility: hidden;
-	}
+}
 
 .clearfix {display: inline-block;}  /* for IE/Mac */
 
@@ -32,7 +32,7 @@ html, body, div, span, applet, object, iframe, p, blockquote, pre,	a, abbr, acro
 ---------------------------------------------------------------------------------------*/
 body{ font-size:12px;font-family: Arial, Helvetica, sans-serif;color:#000;background:url(../img/bg.jpg) repeat-x #4780ae;line-height:16px;}
 a{	color:#162635;text-decoration:none;	}
-a:hover{text-decoration:underline;	}
+a:hover{text-decoration:none;	}
 a:active{	}
 a:visited{	}
 .left{ float:left; }
@@ -65,7 +65,7 @@ Login					 */
 #login{background:url(../img/security.jpg) #fff 220px 55px no-repeat;padding-left:10px;text-align:left;}
 #login_container{	overflow:hidden;   width:360px; margin:0 auto;background:url(../img/overlay.jpg) no-repeat;}
 #login label span{display:block;width:100px;float:left}
-div#login {width:260px;margin: 10px auto;border-top:2px solid #162635;}
+div#login {width:260px;margin: 10px auto;}
 a#passwordrecoverylink{font-size:10px;text-decoration:underline;display:block;text-align:right;color:#999;}
 a:hover#passwordrecoverylink{color:#000;}
 .loginbutton{margin-left:160px;}
@@ -115,7 +115,7 @@ STRUCTURE					 */
 #form_middle_cont{width:940px}
 /* ------------------------------------------------------------------------------------
 ICONS				 */
-.ico_mug{background:url(../img/ico_mug.jpg) no-repeat 5px center #f1f1f1; padding-left:40px;margin-bottom:20px; }
+.ico_mug{background:url(../img/ico_mug.png) no-repeat 5px center #f1f1f1; padding-left:40px;margin-bottom:20px; }
 .ico_posts{background:url(../img/ico_posts.jpg) no-repeat 5px center #f1f1f1; padding-left:30px;}
 .ico_page{background:url(../img/ico_page.jpg) no-repeat 5px center #f1f1f1; padding-left:30px;}
 .ico_settings{background:url(../img/ico_settings.jpg) no-repeat 5px center #f1f1f1; padding-left:30px;}
@@ -207,92 +207,91 @@ input#post_title{width:925px;margin:0px;border-left:1px solid #a8a8a8;border-top
 }
 
 .middle{
-vertical-align: middle;
+	vertical-align: middle;
 }
 ul#tree, ul#tree ul{
-list-style:none;
-list-style-type:none;
+	list-style:none;
+	list-style-type:none;
 }
 ul#tree li{
-background:#fff;border-bottom:solid #c3c3c3 1px;padding:5px;
+	background:#fff;border-bottom:solid #c3c3c3 1px;padding:5px;
 }
 .asmHighlight {
-color : #777;
+	color : #777;
 }
 .asmSelect {
-margin : 1em 0 0.25em 0;
+	margin : 1em 0 0.25em 0;
 }
 .asmSelect {
-display : inline;
+	display : inline;
 }
 .asmOptionDisabled {
-color : #999;
+	color : #999;
 }
 .asmHighlight {
-padding : 0;
-margin : 0 0 0 1em;
+	padding : 0;
+	margin : 0 0 0 1em;
 }
 .asmList {
-margin : 0.25em 0 1em 0;
-position : relative;
-display : block;
-padding-left : 0;
-list-style : none;
+	margin : 0.25em 0 1em 0;
+	position : relative;
+	display : block;
+	padding-left : 0;
+	list-style : none;
 }
 .asmListItem {
-position : relative;
-margin-left : 0;
-padding-left : 0;
-list-style : none;
-background : #ddd;
-border : 1px solid #bbb;
-/*width : 100%;*/
-margin : 0 0 -1px 0;
-line-height : 1em;
+	position : relative;
+	margin-left : 0;
+	padding-left : 0;
+	list-style : none;
+	background : #ddd;
+	border : 1px solid #bbb;
+	/*width : 100%;*/
+	margin : 0 0 -1px 0;
+	line-height : 1em;
 }
 .asmListItem:hover {
-background-color : #e5e5e5;
+	background-color : #e5e5e5;
 }
 .asmListItemLabel {
-padding : 5px;
-display : block;
+	padding : 5px;
+	display : block;
 }
 .asmListSortable .asmListItemLabel {
-cursor : move;
+	cursor : move;
 }
 .asmListItemRemove {
-position : absolute;
-right : 0;
-top : 0;
-padding : 5px;
+	position : absolute;
+	right : 0;
+	top : 0;
+	padding : 5px;
 }
 .drag_block {
-display : block;
-width : 95%;
-padding : 3px;
-margin : 3px;
-background-color : #dddddd;
+	display : block;
+	width : 95%;
+	padding : 3px;
+	margin : 3px;
+	background-color : #dddddd;
 }
 li.drag_block > img {
-cursor : move;
-vertical-align : middle;
+	cursor : move;
+	vertical-align : middle;
 }
 form td{
-vertical-align: middle;
-padding-right: 10px;
+	vertical-align: middle;
+	padding-right: 10px;
 }
 form table{
-float: left;
-width: auto;
+	float: left;
 }
 .tooltip{
- padding: 3px;
- border: 1px solid #666;
- display: none;
- background: #000;
- color: #FFF;
- font: bold 9px Verdana, Arial, Helvetica, sans-serif;
- text-align: left;
- position: absolute;
- z-index: 1000;
+	padding: 3px;
+	border: 1px solid #666;
+	display: none;
+	background: #000;
+	color: #FFF;
+	font: bold 9px Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+	position: absolute;
+	z-index: 1000;
 }
