@@ -36,14 +36,14 @@ $chmod_files[] = ".htaccess";
 $chmod_files[] = "siuntiniai/failai";
 $chmod_files[] = "siuntiniai/images";
 $chmod_files[] = "siuntiniai/media";
-$chmod_files[] = "galerija";
-$chmod_files[] = "galerija/originalai";
 $chmod_files[] = "sandeliukas";
-$chmod_files[] = "galerija/mini";
 $chmod_files[] = "puslapiai";
 $chmod_files[] = "paneles";
 $chmod_files[] = "images/avatars";
 $chmod_files[] = "images/nuorodu";
+$chmod_files[] = "images/galerija";
+$chmod_files[] = "images/galerija/originalai";
+$chmod_files[] = "images/galerija/mini";
 // Unikalus kodas, naudojamas svetainės identifikacijai.
 $slaptas = md5(uniqid(rand(), true));
 
@@ -218,8 +218,6 @@ if (isset(\$conf['kalba'])) {
 //Jeigu nepavyko nuskaityti nustatymų
 if (!isset(\$conf) || empty(\$conf)) die("<center><h1>Klaida 3</h1><br/>Svetainė laikinai neveikia. <h4>Prašome užsukti vėliau</h4></center>");
 
-//Stiliaus funkcijos
-require_once(realpath(dirname(__file__))."/../stiliai/".\$conf['Stilius']."/sfunkcijos.php");
 // Inkludinam tai ko mums reikia
 require_once(realpath(dirname(__file__))."/funkcijos.php");
 ?>
