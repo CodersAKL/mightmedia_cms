@@ -1,4 +1,4 @@
-<?
+<?php
 	// ----------------------------------------------------------------------------
 	// markItUp! Universal MarkUp Engine, JQuery plugin
 	// Add-on Rss Feed grabber

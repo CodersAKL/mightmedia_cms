@@ -1,4 +1,4 @@
-<?
+<?php
 	define('EOL', 			"\n");
 	define('STRIP_TAGS', 	false);
 	define('STRIP_NL', 		false);
