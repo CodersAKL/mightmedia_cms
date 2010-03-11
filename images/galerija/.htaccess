@@ -1,0 +1,15 @@
+order deny,allow
+Deny from All
+<FilesMatch "\.(gif|jpe?g|png|js|css|swf|bmp)$">
+Allow from All
+</FilesMatch>
+
+#<Files *.*>
+#ForceType application/octet-stream
+#Header set Content-Disposition attachment
+#</Files>
+
+#<Files *.*>
+#ForceType applicaton/octet-stream
+#</Files>
+

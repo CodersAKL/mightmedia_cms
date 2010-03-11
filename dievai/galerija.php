@@ -88,9 +88,9 @@ if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete']  &
 	$sql = mysql_query1("SELECT `file` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `ID` = " . escape($trinti) . " LIMIT 1");
 
 	if (isset($row['file']) && !empty($row['file'])) {
-		@unlink("galerija/" . $row['file']);
-		@unlink("galerija/mini/" . $row['file']);
-		@unlink("galerija/originalai/" . $row['file']);
+		@unlink("images/galerija/" . $row['file']);
+		@unlink("images/galerija/mini/" . $row['file']);
+		@unlink("images/galerija/originalai/" . $row['file']);
 	}
 	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "galerija` WHERE id=" . escape($trinti) . " LIMIT 1");
 
@@ -148,8 +148,8 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 	if (isset($_FILES['failas']['name'])) {
 
 
-		$big_img = ROOT."galerija/";			//Kur bus saugomi didesni paveiksliukai
-		$mini_img = ROOT."galerija/mini";	//Kur bus saugomos miniatiuros
+		$big_img = ROOT."images/galerija/";			//Kur bus saugomi didesni paveiksliukai
+		$mini_img = ROOT."images/galerija/mini";	//Kur bus saugomos miniatiuros
 		
 		$img_thumb_width = $conf['minidyd']; //Mini paveiksliukų dydis
 
@@ -422,12 +422,12 @@ if (isset($_GET['v'])) {
 				$text .= "
 				
 				<div id=\"gallery\" class=\"img_left\" >
-			<a rel=\"lightbox\" href=\"".ROOT."galerija/" . $row2['file'] . "\"  title=\"" . $row2['pavadinimas'] . ": " . $row2['apie'] . "\">
-				<img src=\"".ROOT."galerija/mini/" . $row2['file'] . "\" alt=\"\" />
+			<a rel=\"lightbox\" href=\"".ROOT."images/galerija/" . $row2['file'] . "\"  title=\"" . $row2['pavadinimas'] . ": " . $row2['apie'] . "\">
+				<img src=\"".ROOT."images/galerija/mini/" . $row2['file'] . "\" alt=\"\" />
 			</a><br>
 					<a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row2['ID'] ). "\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row2['ID'] . "'); $(this).parent('.img_left').remove(); return false } else { return false }\" title=\"{$lang['admin']['delete']}\"><img src='images/icons/cross.png'  border='0'></a>
 						<a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";h," . $row2['ID'] ). "\" title=\"{$lang['admin']['edit']}\"><img src='images/icons/picture_edit.png'  border='0'></a>
-			<a href=\"".ROOT."galerija/originalai/" . $row2['file'] . "\" title=\"{$lang['download']['download']}\"><img src='".ROOT."images/icons/disk.png' border='0'></a>
+			<a href=\"".ROOT."images/galerija/originalai/" . $row2['file'] . "\" title=\"{$lang['download']['download']}\"><img src='".ROOT."images/icons/disk.png' border='0'></a>
 		</div>";
 			}
 			/*$siuntiniaii[$row2['id']] = $row2['pavadinimas'];
@@ -465,7 +465,7 @@ if (isset($_GET['v'])) {
 			if (isset($extra)) {
 				$forma[''] = array("type" => "hidden", "name" => "news_id", "value" => (isset($extra) ? input($extra['ID']) : ''));
 			}
-			lentele(((isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add']), '<a name="edit"></a>'.((isset($extra['file'])) ? '<center><img src="'.ROOT.'galerija/' . input($extra['file']) . '"></center>' : '') . $bla->form($forma));
+			lentele(((isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add']), '<a name="edit"></a>'.((isset($extra['file'])) ? '<center><img src="'.ROOT.'images/galerija/' . input($extra['file']) . '"></center>' : '') . $bla->form($forma));
 		} else {
 			klaida($lang['system']['warning'], "{$lang['system']['nocategories']}");
 		}
@@ -529,7 +529,7 @@ if (isset($_GET['v'])) {
 					}
 
 					$info[] = array( //"ID"=> $row['ID'],
-						"{$lang['admin']['gallery_image']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']}")."' title='<img src=".ROOT."galerija/" . $row['file'] . "><br><b>{$lang['admin']['gallery_author']}:</b> " . $autorius . "<br>
+						"{$lang['admin']['gallery_image']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']}")."' title='<img src=".ROOT."images/galerija/" . $row['file'] . "><br><b>{$lang['admin']['gallery_author']}:</b> " . $autorius . "<br>
 		<b>{$lang['admin']['gallery_date']}:</b> " . date('Y-m-d H:i:s ', $row['data']) . "<br>
 		<b>{$lang['admin']['gallery_about']}:</b> " . $row['apie'] . "'>" . $row['pavadinimas'] . " ...</a>", "{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $row['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ). "' title='{$lang['admin']['delete']}'><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/picture_edit.png' border='0'></a>");
 

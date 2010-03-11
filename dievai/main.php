@@ -323,7 +323,7 @@ HTML;
   `" . LENTELES_PRIESAGA . "galerija`.`data` DESC LIMIT 8
   ");
 								foreach($q as $row) {
-									echo 	'<li><img width="80" src="'.ROOT.'galerija/mini/' . $row['file'].'" alt="photo"/><span>
+									echo 	'<li><img width="80" src="'.ROOT.'images/galerija/mini/' . $row['file'].'" alt="photo"/><span>
 <a href="'.url("?id,999;a,{$admin_pagesid['galerija']};p," . $row['id'] ). '"><img src="img/accept.jpg" alt="accept"/></a><a href="'.url("?id,999;a,{$admin_pagesid['galerija']};t," . $row['id'] ).'"><img src="img/cancel.jpg"  alt="deny"/></a></span></li>';
 								}
 							}
