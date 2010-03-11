@@ -4,7 +4,7 @@ RewriteEngine On
 # Fix Apache internal dummy connections from breaking [(site_url)] cache
 RewriteCond %{HTTP_USER_AGENT} ^.*internal\ dummy\ connection.*$ [NC]
 RewriteRule .* - [F,L]
-RewriteRule ^(siuntiniai|dievai) - [L]
+RewriteRule ^(siuntiniai|dievai|javascript) - [L]
 # For Friendly URLs
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
