@@ -2,6 +2,6 @@
 Deny from All
 </FilesMatch>
 
-<FilesMatch "grab.php|perview.php">
+<FilesMatch "grab.php|preview.php">
 Allow from all
 </FilesMatch>

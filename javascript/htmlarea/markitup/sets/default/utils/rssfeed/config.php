@@ -1,8 +1,8 @@
 <?php
 	define('EOL', 			"\n");
-	define('STRIP_TAGS', 	true);
-	define('STRIP_NL', 		true);
-	define('STRIP_SPACES', 	true);
+	define('STRIP_TAGS', 	false);
+	define('STRIP_NL', 		false);
+	define('STRIP_SPACES', 	false);
 	
 	// Url of the Rss Feed
 	$rssFeed = 'http://rss.news.yahoo.com/rss/topstories';
