@@ -26,20 +26,11 @@ if (sizeof($q) > 0) {
 			$img = "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
 		}
 		$text .= "<div class=\"sarasas\"><br/><b>" . $i . "</b> $img " . user($row['nick'], $row['id'], $row['levelis']) . "</div>";
-
-		/*title=\"header=[".$row['nick']."] body=[<br/>
-		* <p>Nick: <b>".$row['nick']."</b><br/>
-		* Taškai: <b>".$row['taskai']."</b><br/>
-		* Amžius: <b>".amzius($row['gim_data'])."</b>m.<br/>
-		* Užsiregistravo: <b>".$row['reg_data']."</b><br/>
-		* Lankėsi: <b>".kada($row['login_data'])."</b></p>
-		* ] fade=[on]\">".$row['nick']."
-		* </a> (".$row['taskai'].")</div>\n";*/
 	}
 } else {
 	$text = ' ';
 	$row_p['show'] = 'N';
 }
-unset($img, $q, $row);
+unset($img, $q, $i);
 
 ?>

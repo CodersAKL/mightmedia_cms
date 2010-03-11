@@ -9,8 +9,6 @@
  * @$Revision$
  * @$Date$
  **/
-$redagavimas = "Ne";
-
 function svente($array, $siandien = '', $return = '') {
 
 //Gauname šiandienos (mėnesis-diena)

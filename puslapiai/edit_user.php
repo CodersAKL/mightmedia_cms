@@ -138,12 +138,7 @@ if (isset($mid) && isnum($mid)) {
 		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "salis`");
 		$salis = array();
 		foreach ($sql as $row) {
-			//	$text .= "<option value='" . $row['iso'] . "' ";
-			//	if ($row['iso'] == $info['salis']) {
-			//		$text .= "selected";
-			//}
-			//$text .= ">" . $row['printable_name'] . "</option>\n";
-			$salis[$row['iso']] = $row['printable_name'];
+				$salis[$row['iso']] = $row['printable_name'];
 		}
 
 		$forma = array("Form" => array("action" => "", "method" => "post", "name" => "change_country"), "{$lang['user']['edit_country']}:" => array("type" => "select", "value" => $salis, "name" => "salis", "selected" => $info['salis']), "{$lang['user']['edit_city']}:" => array("type" => "text", "value" => $info['miestas'], "name" => "miestas"), " \r " => array("type" => "hidden", "name" => "action", "value" => "country_change"), "" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}"));
@@ -220,11 +215,8 @@ $('#example1 .files').replaceWith('<div class="files"><img id="ikeltas_avataras"
 HTML;
 if(isset($_GET['a'])&&$_GET['a']==1)
 $avatar .= "<div align='center' id='gravatar'>
-{$lang['user']['edit_avatarcontent']} <b>" . $sql['email'] . "</b> .</div>
-		";
-/*	<div class="wrapper">
-			<div id="button1" class="button  "><b>>Įkelti<</b></div>
-		</div>*/
+{$lang['user']['edit_avatarcontent']} <b>" . $sql['email'] . "</b> .</div>";
+
 		lentele($lang['user']['edit_avatar'], $avatar);
 	}
 	// Pagrindiniai nustatymai
@@ -263,9 +255,6 @@ $avatar .= "<div align='center' id='gravatar'>
 
 	}
 }
-//print_r($_POST);
-
-
 ?>
 <script language="JavaScript1.2">
 function checkMail(form,email) {

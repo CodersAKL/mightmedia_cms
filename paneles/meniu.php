@@ -12,10 +12,10 @@
 
 $res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`='Y' ORDER BY `place` ASC");
 foreach ($res as $row){
-	if(teises($row['teises'],$_SESSION['level']))
+	if(teises($row['teises'], $_SESSION['level']))
 	$data[$row['parent']][] = $row;
 }
-$text='<div id="navigation"><ul>'.build_menu($data).'</ul></div>';
-
+$text = '<div id="navigation"><ul>'.build_menu($data).'</ul></div>';
+unset($data, $res);
 
 ?>

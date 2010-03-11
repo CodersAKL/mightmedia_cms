@@ -29,11 +29,12 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape(basename($_POST['kalba'])) . ",'kalba')  ON DUPLICATE KEY UPDATE `val`=" . escape(basename($_POST['kalba']));
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape((int)$_POST['keshas']) . ",'keshas')  ON DUPLICATE KEY UPDATE `val`=" . escape((int)$_POST['keshas']);
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape((int)$_POST['koment']) . ",'kmomentarai_sveciams')  ON DUPLICATE KEY UPDATE `val`=" . escape((int)$_POST['koment']);
+	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape($_POST['F_urls']) . ",'F_urls')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['F_urls']);
 	foreach ($q as $sql) {
 		mysql_query1($sql);
 	}
 	delete_cache("SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2");
-	redirect('?id,999;a,'.$_GET['a'].'');
+	redirect(url('?id,999;a,'.$_GET['a'].''));
 }
 
 $stiliai = getDirs(ROOT.'stiliai/', 'remontas');
@@ -51,15 +52,13 @@ foreach ($puslapiai as $key) {
 $nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), 
 	"{$lang['admin']['sitename']}:" => array("type" => "text", "value" => input($conf['Pavadinimas']), "name" => "Pavadinimas", "class" => "input"), 
 	"{$lang['admin']['homepage']}:" => array("type" => "select", "value" => $psl, "selected" => input($conf['pirminis']), "name" => "pirminis", "class" => "select"), 
-	//"{$lang['admin']['about']}:" => array("type" => "string", "value" => editorius('spaw', 'mini', 'Apie', (isset($conf['Apie']) ? $conf['Apie'] : '')), 
 	"{$lang['admin']['about']}:" => array("type" => "textarea", "name" => "Apie", "value" => (isset($conf['Apie']) ? $conf['Apie'] : ''), "extra" => "rows=5", "class" => "input"), 
 	"{$lang['admin']['keywords']}:" => array("type" => "text", "value" => input($conf['Keywords']), "name" => "keywords", "rows" => "3", "class" => "input"), 
-	//"{$lang['admin']['generation']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}",	"{$lang['admin']['no']}" => "Ne"), "selected" => input($conf['Render']), "name" => "Render", "class" => "select"), 
 	"{$lang['admin']['copyright']}:" => array("type" => "text", "value" => input($conf['Copyright']), "name" => "Copyright", "class" => "input"), 
 	"{$lang['admin']['email']}:" => array("type" => "text", "value" => input($conf['Pastas']), "name" => "Pastas", "class" => "input"), 
-	//"{$lang['admin']['allow registration']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['Registracija']), "name" => "Registracija", "class" => "select"), 
 	"{$lang['admin']['maintenance']}?:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['Palaikymas']), "name" => "Palaikymas", "class" => "select"), 
-	"{$lang['admin']['maintenancetext']}:" =>	array("type" => "textarea", "name" => "Maintenance", "value" => (isset($conf['Maintenance']) ? $conf['Maintenance'] : ''), "extra" => "rows=5", "class" => "input"), //"Kiek rodyti ChatBox pranešimu?:"=>array("type"=>"select","value"=>array("5"=>"5","10"=>"10","15"=>"15","20"=>"20","25"=>"25","30"=>"30","35"=>"35","40"=>"40"),"selected"=>input($conf['Chat_limit']),"name"=>"Chat_limit"),
+	"{$lang['admin']['maintenancetext']}:" =>	array("type" => "textarea", "name" => "Maintenance", "value" => (isset($conf['Maintenance']) ? $conf['Maintenance'] : ''), "extra" => "rows=5", "class" => "input"),
+"Friendly url:"=>array("type"=>"select","value"=>array('/'=>'/',';'=>';'),"selected"=>input((isset($conf['F_urls'])?$conf['F_urls']:'')),"name"=>"F_urls"),
 	"{$lang['admin']['comm_guests']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}","3"=>"{$lang['admin']['comments_off']}"), "selected" => input(@$conf['kmomentarai_sveciams']), "name" => "koment", "class" => "select"), 
 	"{$lang['admin']['newsperpage']}:" => array("type" => "text", "value" => input($conf['News_limit']), "name" => "News_limit", 'extra' => "on`key`up=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\"", "class" => "select"), 
 	"{$lang['admin']['cache']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['keshas']), "name" => "keshas", "class" => "select"), 
@@ -68,11 +67,10 @@ $nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype
 	"" => array("type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}", "class" => "submit")
 );
 
-//"Aprašymas:"=>array("type"=>"string","value"=>editorius('spaw','mini','Aprasymas',(isset($extra['aprasymas']))?$extra['aprasymas']:'')),
 
 include_once (ROOT."priedai/class.php");
 $bla = new forma();
 lentele($lang['admin']['config'], $bla->form($nustatymai));
-//unset($_POST['Konfiguracija']);
+
 
 ?>

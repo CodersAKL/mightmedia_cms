@@ -34,8 +34,6 @@ if (isset($_POST) && !empty($_POST) && (isset($_GET['id'])&&$_GET['id']!=999)&&(
 }
 
 
-
-
 //slaptaþodþio kodavimas
 function koduoju($pass) {
 	return md5(sha1(md5($pass)));
@@ -44,6 +42,7 @@ function koduoju($pass) {
 function header_info() {
 	global $conf, $page_pavadinimas;
 	echo '
+	<base href="'.adresas().'"></base>
 	<meta name="generator" content="MightMedia TVS" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="description" content="' . input(strip_tags($conf['Pavadinimas']) . ' - ' . trimlink(strip_tags($conf['Apie']), 120)) . '" />
@@ -215,34 +214,34 @@ function teises($mas, $lvl) {
  * @param string $kodel
  */
 function ban($ipas = '', $kodel = '') {
-	global $lang, $_SERVER, $ip, $forwarded, $remoteaddress;
-	if (!isset($kodel) || empty($kodel))
-		$kodel = $lang['system']['forhacking'].' - '.input(str_replace("\n","",$_SERVER['QUERY_STRING']));
-	if (!isset($ipas) || empty($ipas))
-		$ipas = getip();
+  global $lang, $_SERVER, $ip, $forwarded, $remoteaddress;
+  if (empty($kodel))
+    $kodel = $lang['system']['forhacking'].' - '.input(str_replace("\n","",$_SERVER['QUERY_STRING']));
+  if (empty($ipas))
+    $ipas = getip();
+  $atidaryti = fopen(".htaccess", "a");
+  fwrite($atidaryti, '# '.$kodel." \nSetEnvIf Remote_Addr \"^{$ipas}$\" draudziam\n");
+  fclose($atidaryti);
+  //@chmod(".htaccess", 0777);
 
-	$atidaryti = fopen(".htaccess", "a");
-	fwrite($atidaryti, '# '.$kodel." \nSetEnvIf Remote_Addr \"^{$ipas}\" draudziam\n");
-	fclose($atidaryti);
-	//@chmod(".htaccess", 0777);
+  $forwarded = (isset($forwarded) ? $forwarded : 'N/A');
+  $remoteaddress = (isset($remoteaddress) ? $remoteaddress : 'N/A');
+  $ip = (isset($ip) ? $ip : getip());
+  $referer = (isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : 'N/A');
 
-	$forwarded = (isset($forwarded) ? $forwarded : 'N/A');
-	$remoteaddress = (isset($remoteaddress) ? $remoteaddress : 'N/A');
-	$ip = (isset($ip) ? $ip : getip());
-	$referer = (isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : 'N/A');
-
-	$message = <<< HTML
-	FROM:{$referer}
-	REQ:{$_SERVER['REQUEST_METHOD']}
-	FILE:{$_SERVER['SCRIPT_FILENAME']}
-	QUERY:{$_SERVER['QUERY_STRING']}
-	IP:{$ip} - Forwarded = {$forwarded} - Remoteaddress = {$remoteaddress}
+  $message = <<< HTML
+  FROM:{$referer}
+  REQ:{$_SERVER['REQUEST_METHOD']}
+  FILE:{$_SERVER['SCRIPT_FILENAME']}
+  QUERY:{$_SERVER['QUERY_STRING']}
+  IP:{$ip} - Forwarded = {$forwarded} - Remoteaddress = {$remoteaddress}
 HTML;
 
-	if ($kodel == $lang['system']['forhacking']) {
-		die("<center><h1>{$lang['system']['nohacking']}!</h1><font color='red'><b>" . $kodel . " - {$lang['system']['forbidden']}<blink>!</blink></b></font><hr/></center>");
-	}
+  if ($kodel == $lang['system']['forhacking']) {
+    die("<center><h1>{$lang['system']['nohacking']}!</h1><font color='red'><b>" . $kodel . " - {$lang['system']['forbidden']}<blink>!</blink></b></font><hr/></center>");
+  }
 }
+
 
 /**
  * Nurodytai eilutei iš failo trinti
@@ -321,8 +320,6 @@ function cleanurl($url) {
 /// ASPAUGA - END
 
 
-
-
 /**
  * Vartotojų lygiai
  * @return array
@@ -351,7 +348,7 @@ $sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORD
 foreach ($sql as $row) {
 	$conf['puslapiai'][$row['file']] = array('id' => $row['id'], 'pavadinimas' => $row['pavadinimas'], 'file' => $row['file'], 'place' => (int)$row['place'], 'show' => $row['show'], 'teises' => $row['teises']);
 	$conf['titles'][$row['id']] =(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file']));
-	$conf['titles_id'][str_replace(' ', '_',(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file'])))] = $row['id'];
+	$conf['titles_id'][strtolower(str_replace(' ', '_',(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file']))))] = $row['id'];
 }
 //nieko geresnio nesugalvojau
 $dir = explode('/', dirname($_SERVER['PHP_SELF']));
@@ -361,15 +358,16 @@ $conf['titles_id']['admin'] = 999;
 if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
 	$_GET = url_arr(cleanurl($_SERVER['QUERY_STRING']));
 	if(isset($_GET['id'])){
-    $_GET['id'] = (isset($conf['titles_id'][$_GET['id']])?$conf['titles_id'][$_GET['id']]:$_GET['id']);
+	  $element = strtolower($_GET['id']);
+    $_GET['id'] = (isset($conf['titles_id'][$element])?$conf['titles_id'][$element]:$_GET['id']);
 	}
 	$url = $_GET;
-	//print_r($_GET);
 } else {
 	$url = array();
 }
 
 function url_arr($params) {
+  global $conf;
 	$str2 = array();
 	if (!isset($params))
 		$params = $_SERVER['QUERY_STRING'];
@@ -377,7 +375,7 @@ function url_arr($params) {
 	if (strrchr($params, '&'))
 		$params = explode("&", $params); //Jeigu tai paprastas GET
 	else
-		$params = explode(";", $params); //Kitu atveju tai TVS ";," tipo GET
+		$params = explode(isset($conf['F_urls'])?$conf['F_urls']:';', $params); 
 
 	if (isset($params) && is_array($params) && count($params) > 0) {
 		foreach ($params as $key => $value) {
@@ -390,6 +388,25 @@ function url_arr($params) {
 		}
 	}
 	return $str2;
+}
+
+/////////////////////////////////////////////////////////
+//////// URL APDOROJIMUI
+////////////////////////////////////////////////////////
+
+
+function url($str) {
+global $conf;
+//echo substr($str,0,1);
+if(substr($str,0,1) == '?'){
+$linkai = explode(';',$str);
+$start = explode(',', $linkai[0]);
+$linkai[0] = '';
+$return = str_replace(' ', '_', $conf['titles'][$start[1]]).implode((isset($conf['F_urls'])?$conf['F_urls']:';'),$linkai);
+} else{
+  $return = str_replace('id=', '', $_SERVER['QUERY_STRING']).';'.$str;
+}
+return ROOT.$return;
 }
 /**
  * Vartotojui atvaizduoti
@@ -713,25 +730,7 @@ function input($s) {
 	return $s;
 }
 
-/////////////////////////////////////////////////////////
-//////// URL APDOROJIMUI
-////////////////////////////////////////////////////////
 
-
-function url($str) {
-global $conf;
-//echo substr($str,0,1);
-if(substr($str,0,1) == '?'){
-$linkai = explode(";",$str);
-$start = explode(',', $linkai[0]);
-//unset($linkai[0], $linkai[1]);
-$linkai[0] = '';
-$return = str_replace(' ', '_', $conf['titles'][$start[1]]).implode(';',$linkai);
-} else{
-  $return = str_replace('id=', '', $_SERVER['QUERY_STRING']).';'.$str;
-}
-return ROOT.$return;
-}
 /**
  * Seo url TODO
  */

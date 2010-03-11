@@ -75,16 +75,15 @@ if ($kid == 0) {
 	unset($sql, $row, $extra, $pav);
 }
 if ($kid != 0) {
-	//if (isset($kategorijos_pav['pav'])) {
-		$sql = "SELECT SQL_CACHE `" . LENTELES_PRIESAGA . "naujienos`.*, `" . LENTELES_PRIESAGA . "grupes`.`teises` AS `teises` FROM `" . LENTELES_PRIESAGA . "naujienos` Inner Join `" . LENTELES_PRIESAGA . "grupes` ON `" . LENTELES_PRIESAGA . "naujienos`.`kategorija` = `" . LENTELES_PRIESAGA . "grupes`.`id` WHERE `" . LENTELES_PRIESAGA . "naujienos`.`rodoma`='TAIP'  AND `" . LENTELES_PRIESAGA . "naujienos`.`id` = " . escape($kid) . " limit 1";
+	$sql = "SELECT SQL_CACHE `" . LENTELES_PRIESAGA . "naujienos`.*, `" . LENTELES_PRIESAGA . "grupes`.`teises` AS `teises` FROM `" . LENTELES_PRIESAGA . "naujienos` Inner Join `" . LENTELES_PRIESAGA . "grupes` ON `" . LENTELES_PRIESAGA . "naujienos`.`kategorija` = `" . LENTELES_PRIESAGA . "grupes`.`id` WHERE `" . LENTELES_PRIESAGA . "naujienos`.`rodoma`='TAIP'  AND `" . LENTELES_PRIESAGA . "naujienos`.`id` = " . escape($kid) . " limit 1";
 		$sql = mysql_query1($sql);
-	//} else {
+
 	
 	if(empty($sql['naujiena'])){
 		$sql = mysql_query1("			SELECT SQL_CACHE *, (SELECT SQL_CACHE COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`			FROM `" . LENTELES_PRIESAGA . "naujienos`	WHERE `rodoma`= 'TAIP' AND `id` = " . escape($kid) . " limit 1");
 	}
 	
-	//}
+
 	if (isset($sql['naujiena'])&& !empty($sql['naujiena'])) {
 		
 		if (teises((isset($sql['teises'])?$sql['teises']:0), $_SESSION['level'])) {
@@ -94,7 +93,7 @@ if ($kid != 0) {
 				$text .= '<div class="line"></div>' . $sql['daugiau'];
 			}
 			$text .= "</div><hr />" . date('Y-m-d H:i:s ', $sql['data']) . ",  <b>" . $sql['autorius'] . "</b>";
-			//$text .= "</div>";
+			
 
 			//Atvaizduojam naujieną, likę argumentai - mėnesis žodžiais ir diena skaičiumi
 			lentele($title, $text, false, array(menesis((int)date('m', strtotime($sql['data']))), (int)date('d', strtotime($sql['data']))));
@@ -116,11 +115,11 @@ if ($kid != 0) {
 			unset($text, $title, $data);
 		} else {
 			(!defined('LEVEL') ? klaida($lang['system']['forbidden'], $lang['news']['notallowed']) : klaida("{$lang['system']['error']}", $lang['news']['notallowed']));
-			//redirect("?id," . (int)$_GET['id'], "meta");
+			
 		}
 	} else {
 		klaida("{$lang['system']['error']}", "{$lang['news']['notexists']}");
-	//	redirect("?id," . (int)$_GET['id'], "meta");
+
 	}
 }
 

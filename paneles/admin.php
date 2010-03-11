@@ -38,7 +38,7 @@ foreach ($sqli as $sql) {
 	}
 
 	$text .= '</ul> ';
-	unset($sql);
-}
 
+}
+unset($sqli);
 ?>

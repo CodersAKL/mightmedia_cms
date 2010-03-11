@@ -38,13 +38,7 @@ if (defined("LEVEL") && LEVEL == 1) {
 		$nick_id = $_SESSION['id'];
 		if (empty($_POST)) {
 			$msg = mysql_query1("SELECT `msg` FROM `" . LENTELES_PRIESAGA . "knyga` WHERE `id`=" . escape(ceil((int)$url['r'])) . " LIMIT 1");
-		/*	$msg = '
-			<form name="knyga_edit" action="" method="post">
-        <textarea name="msg" rows="3" cols="25" wrap="on" class="input">' . input($msg['msg']) . '</textarea>
-        <br />
-        <input type="submit" name="knyga" value="' . $lang['admin']['edit'] . '" />
-      </form>
-      ';*/
+		
 $form = array("Form" => array("action" => "", "method" => "post", "name" => "knyga_edit"), "{$lang['guestbook']['message']}" => array("type" => "textarea", "value" => $msg['msg'], "name" => "msg","extra" => "rows=5", "class"=>"input"),
 		" " => array("type" => "submit", "name" => "knyga", "value" =>  $lang['admin']['edit']));
 			lentele($lang['guestbook']['Editmessage'], $bla->form($form));

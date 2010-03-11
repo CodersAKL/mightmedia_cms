@@ -51,7 +51,7 @@ include_once ("../priedai/prisijungimas.php");
 
 	</div><!-- end header -->
 
-	<?php if (!isset($_SESSION['username'])):?>
+	<?php if (!isset($_SESSION['username'])){?>
 	<form id="user_reg" name="user_reg" method="post" action="">
 		<div id="login" class="section">
 			<?php if (!empty($strError)):?>
@@ -73,9 +73,9 @@ include_once ("../priedai/prisijungimas.php");
 		
 		</div>
 	</form>
-	<?php elseif ($_SESSION['level']==1):?>
-		<?php redirect('main.php'); ?>
-	<?php endif ?>
+	<?php }elseif (isset($_SESSION['level']) && $_SESSION['level']==1)
+              redirect('main.php');
+  ?>
 
 	<script type="text/javascript">
 		$(':input[name="vartotojas"]').focus();

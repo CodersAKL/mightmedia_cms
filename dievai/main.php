@@ -40,10 +40,11 @@ if (is_file($root.'priedai/conf.php') && filesize($root.'priedai/conf.php') > 1)
 	die(klaida('Sistemos klaida / System error', 'Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.'));
 }
 if (empty($_SESSION['username']) || $_SESSION['level']!=1) {
-	redirect('index.php');
+	redirect(ROOT.'index.php');
 }
 if(isset($_GET['do'])){
 	unset($_SESSION['username'],$_SESSION['level'],$_SESSION['password']);
+	redirect(ROOT.'index.php');
 }
 $glob = glob('*.php');
 $admin_tools = "";
@@ -82,6 +83,7 @@ function build_tree($data, $id=0, $active_class='active') {
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
+    <base href="<?php echo adresas(); ?>"></base>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title><?php echo input(strip_tags($conf['Pavadinimas']) . ' - Admin')?></title>
 		<meta name="description" content="" />

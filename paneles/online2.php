@@ -28,7 +28,7 @@ foreach ($sqli as $sql) {
 ' . $lang['online']['registeredmembers'] . ': ' . (int)$sql['useriai'] . '<br />
 ' . $lang['online']['lastregistered'] . ': <br />' . user($sql['useris'], $sql['userid'], $sql['lvl']) . '
  ';
-	//unset($sql);
+	
 }
-
+unset($sqli);
 ?>

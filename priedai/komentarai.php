@@ -17,14 +17,6 @@ function komentarai($id, $hide = false) {
 	if (isset($conf['kmomentarai_sveciams']) && $conf['kmomentarai_sveciams'] != 3) {
 		if (isset($url['id']) && isnum($url['id']) && $url['id'] > 0 && isnum($id) && $id > 0) {
 			if (isset($_SESSION['id']) || (isset($conf['kmomentarai_sveciams']) && $conf['kmomentarai_sveciams'] == 1)) {
-				/*$text = "
-				<center>
-				<form name=\"n_kom\" id=\"n_kom\" action=\"\" method=\"post\">
-				" . bbs('n_kom') . " <textarea name=\"n_kom\" rows=5 cols=80 wrap=\"on\" style=\"width:90%\"></textarea><br/>
-				<input type=\"hidden\" name=\"id\" value=\"" . $id . "\">
-				<input type=\"submit\" name=\"Naujas\" value=\"{$lang['comments']['send']}\">
-				</form>
-				</center>";*/
 				include_once ("priedai/class.php");
 				$bla = new forma();
 				$form = array(
@@ -42,7 +34,7 @@ function komentarai($id, $hide = false) {
 			} else {
 				hide("{$lang['comments']['write']}", $lang['system']['pleaselogin']);
 			}
-			//$sql = mysql_query1("SELECT * FROM `".LENTELES_PRIESAGA."kom` WHERE kid = ".escape($id)." AND pid = ".escape((int)$url['id'])." ORDER BY `data` DESC LIMIT 50");
+			
 			$sql = mysql_query1("SELECT *, (SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `" . LENTELES_PRIESAGA . "kom`.`nick_id`=`id`) AS email,
                 (SELECT `levelis` FROM `" . LENTELES_PRIESAGA . "users` WHERE `" . LENTELES_PRIESAGA . "kom`.`nick_id`=`id`) AS levelis FROM `" . LENTELES_PRIESAGA . "kom` WHERE kid = " . escape($id) .
 				" AND pid = " . escape($page) . " ORDER BY `data` DESC LIMIT 50");
@@ -93,8 +85,7 @@ function komentarai($id, $hide = false) {
 				klaida($lang['system']['error'], $lang['reg']['wrongcode']);
 			}
 		}
-		//print_r($_SESSION);
-		//echo in_array('com',unserialize($_SESSION['mod']));
+
 		// Trinam komentara
 		if (isset($url['dk']) && isnum($url['dk']) && $url['dk'] > 0 && isset($url['id']) && !empty($url['id']) && isnum($url['id']) && defined("LEVEL") && (LEVEL == 1 || (isset($_SESSION['mod']) && is_array(unserialize
 			($_SESSION['mod'])) && in_array('com', unserialize($_SESSION['mod']))))) {

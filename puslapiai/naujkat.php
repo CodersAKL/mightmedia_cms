@@ -65,7 +65,6 @@ if ($viso > 0) {
 				if (sizeof($sql) > 0) {
 					foreach ($sql as $row) {
 						if (isset($conf['puslapiai']['naujienos.php']['id'])) {
-							//$text .= "<li><a href=?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . ">" . $row['pavadinimas'] . "</a></li>\n";
 							if (isset($conf['puslapiai']['naujienos.php']['id'])) {
 								$extra = "<div style='float: right;'>" . (($row['kom'] == 'taip') ? "<a href='".url("?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] ). "'>{$lang['news']['read']} • {$lang['news']['comments']} (" . $row['viso'] . ")</a>" : "<a href='".url("?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id']) . "'>{$lang['news']['read']}</a>") . "</div><br />";
 							}
@@ -73,8 +72,7 @@ if ($viso > 0) {
 						}
 					}
 				}
-				//$text .= '</ul>';
-				//lentele((isset($sqlas['pavadinimas']) ? $sqlas['pavadinimas'] : $lang['category']['-']), $text, false);
+			
 			} else {
 				klaida($lang['system']['warning'], "{$lang['category']['cant']}.");
 			}

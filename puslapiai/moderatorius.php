@@ -21,7 +21,6 @@ if (isset($_SESSION['mod']) && !empty($_SESSION['mod'])) {
 		if ($failas != 'com' && $failas != 'frm') {
 			$text .= "<div class=\"blokas\"><center><a href=\"".url("?id," . $url['id'] . ";a," . ($id + 1) ). "\"><img src=\"images/admin/" . basename($failas, ".php") . ".png\" />" .(isset($lang['admin'][basename($failas, ".php")])?$lang['admin'][basename($failas, ".php")]:nice_name($failas)) . "</a></center></div>";
 		}
-		//$text.=$failas;
 	}
 	$text .= "</div><br style=\"clear:left\"/></td>
 	</tr>

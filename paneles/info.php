@@ -19,7 +19,6 @@ $sqli = mysql_query1("SELECT count(id) as kom,
 (SELECT count(id) FROM " . LENTELES_PRIESAGA . "galerija WHERE " . LENTELES_PRIESAGA . "galerija.rodoma='TAIP') as foto,
 (SELECT count(id) FROM " . LENTELES_PRIESAGA . "nuorodos WHERE " . LENTELES_PRIESAGA . "nuorodos.active='TAIP') as nuorodos 
 FROM " . LENTELES_PRIESAGA . "kom");
-//$sql = mysql_fetch_assoc($sql);
 foreach ($sqli as $sql) {
 	$text = '<ul>';
 	if (isset($conf['puslapiai']['nariai.php']['id'])) {
@@ -49,7 +48,7 @@ foreach ($sqli as $sql) {
 	}
 
 	$text .= '</ul> ';
-	unset($sql);
-}
 
+}
+unset($sqli);
 ?>
