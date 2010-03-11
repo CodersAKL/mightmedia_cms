@@ -65,7 +65,7 @@ Login					 */
 #login{background:/*url(../img/security.jpg) */#fff 220px 55px no-repeat;padding-left:10px;text-align:left;}
 #login_container{	overflow:hidden;   width:360px; margin:0 auto;background:url(../img/overlay.jpg) no-repeat;}
 #login label span{display:block;width:100px;float:left}
-div#login {width:260px;margin: 10px auto;}
+div#login {margin: 10px auto;}
 a#passwordrecoverylink{font-size:10px;text-decoration:underline;display:block;text-align:right;color:#999;}
 a:hover#passwordrecoverylink{color:#000;}
 .loginbutton{margin-left:160px;}
