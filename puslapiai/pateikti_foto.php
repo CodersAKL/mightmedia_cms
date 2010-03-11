@@ -20,8 +20,8 @@ if (isset($_SESSION['id']) && $_SESSION['id']) {
 
 			if (isset($_FILES['failas']['name'])) {
 				//make sure this directory is writable!
-				$path_big = "galerija/";
-				$path_thumbs = "galerija/mini";
+				$path_big = "images/galerija/";
+				$path_thumbs = "images/galerija/mini";
 				//the new width of the resized image, in pixels.
 				$img_thumb_width = $conf['minidyd']; //
 				$extlimit = "yes"; //Limit allowed extensions? (no for all extensions allowed)
