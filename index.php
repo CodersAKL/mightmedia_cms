@@ -40,9 +40,9 @@ if (!isset($conf)) {
 if (isset($url['id']) && !empty($url['id']) && isnum($url['id'])) {
 	$pslid = (int)$url['id'];
 } else {
-	$pslid = $conf['puslapiai'][$conf['pirminis']]['id'];
-	$page = 'puslapiai/' . str_replace(".php", "", $conf['pirminis']);
-	$page_pavadinimas = $conf['puslapiai'][$conf['pirminis']]['pavadinimas'];
+	$pslid = $conf['puslapiai'][$conf['pirminis'].'.php']['id'];
+	$page = 'puslapiai/' .  $conf['pirminis'];
+	$page_pavadinimas = $conf['puslapiai'][$conf['pirminis'].'.php']['pavadinimas'];
 	$_GET['id'] = $pslid;
 	$url['id'] = $pslid;
 }

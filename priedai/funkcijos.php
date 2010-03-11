@@ -757,12 +757,12 @@ function seo_url($url,$id) {
  */
 function redirect($location, $type = "header") {
 	if ($type == "header") {
-		header("Location: " . $location);
+		header("Location: " . adresas().$location);
 		exit;
 	} elseif ($type == "meta") {
-		echo "<meta http-equiv='Refresh' content='1;url=$location'>";
+		echo "<meta http-equiv='Refresh' content='1;url=".adresas()."$location'>";
 	} else {
-		echo "<script type='text/javascript'>document.location.href='" . $location . "'</script>\n";
+		echo "<script type='text/javascript'>document.location.href='" .adresas(). $location . "'</script>\n";
 	}
 }
 

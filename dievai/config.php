@@ -18,6 +18,7 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
 		$q = array();
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape($_POST['Apie']) . ",'Apie')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['Apie'])."";
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape(input(strip_tags($_POST['keywords']))) . ",'keywords')  ON DUPLICATE KEY UPDATE `val`=" . escape(input(strip_tags($_POST['keywords'])))."";
+	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape(input(strip_tags($_POST['pirminis']))) . ",'pirminis')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['pirminis'])."";
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape(input(strip_tags($_POST['Pavadinimas']))) . ",'Pavadinimas')  ON DUPLICATE KEY UPDATE `val`=" . escape(input(strip_tags($_POST['Pavadinimas'])));
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape($_POST['Copyright']) . ",'Copyright')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['Copyright']);
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape(input(strip_tags($_POST['Pastas']))) . ",'Pastas')  ON DUPLICATE KEY UPDATE `val`=" . escape(input(strip_tags($_POST['Pastas'])));
@@ -51,7 +52,7 @@ foreach ($puslapiai as $key) {
 
 $nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), 
 	"{$lang['admin']['sitename']}:" => array("type" => "text", "value" => input($conf['Pavadinimas']), "name" => "Pavadinimas", "class" => "input"), 
-	"{$lang['admin']['homepage']}:" => array("type" => "select", "value" => $psl, "selected" => input($conf['pirminis']), "name" => "pirminis", "class" => "select"), 
+	"{$lang['admin']['homepage']}:" => array("type" => "select", "value" => $psl, "selected" =>$conf['pirminis'].'.php', "name" => "pirminis", "class" => "select"), 
 	"{$lang['admin']['about']}:" => array("type" => "textarea", "name" => "Apie", "value" => (isset($conf['Apie']) ? $conf['Apie'] : ''), "extra" => "rows=5", "class" => "input"), 
 	"{$lang['admin']['keywords']}:" => array("type" => "text", "value" => input($conf['Keywords']), "name" => "keywords", "rows" => "3", "class" => "input"), 
 	"{$lang['admin']['copyright']}:" => array("type" => "text", "value" => input($conf['Copyright']), "name" => "Copyright", "class" => "input"), 
