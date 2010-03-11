@@ -123,7 +123,7 @@ miu = {
         $.ajax({
                 async:     false,
                 type:     "POST",
-                url:     markItUp.root+"utils/rssfeed/grab.php",
+                url:     markItUp.root+"sets/default/utils/rssfeed/grab.php",
                 data:    "url="+url+"&limit="+limit,
                 success:function(content) {
                     feed = content;
