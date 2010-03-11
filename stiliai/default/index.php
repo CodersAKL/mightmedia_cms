@@ -15,7 +15,7 @@
 							$text = '';
 							foreach ($sql1 as $row1) {
 								if (teises($row1['teises'], $_SESSION['level'])) {
-									$text .= '<li><a href="?id,' . (int)$row1['id'] . '">' . input($row1['pavadinimas']) . '</a></li>';
+									$text .= '<li><a href="'.url('?id,' . (int)$row1['id']) . '">' . input($row1['pavadinimas']) . '</a></li>';
 								}
 							}
 							echo $text;
