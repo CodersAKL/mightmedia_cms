@@ -202,6 +202,9 @@ define("LENTELES_PRIESAGA", "{$_SESSION['mysql']['prefix']}");	//Lenteliu pavadi
 \$admin_pass="admin";	//slaptazodis
 \$admin_email="{$_SESSION['admin']['email']}";	//e-pastas
 
+//Versiju tikrinimas
+\$update_url = "http://www.assembla.com/code/mightmedia/subversion/node/blob/naujienos.json";
+
 // DB Prisijungimas
 \$prisijungimas_prie_mysql = mysql_connect(\$host, \$user, \$pass) or die("<center><h1>Klaida 1</h1><br/>Svetainė laikinai neveikia. <h4>Prašome užsukti vėliau</h4></center>");
 mysql_select_db(\$db,\$prisijungimas_prie_mysql) or die("<center><h1>Klaida 2</h1><br/>Svetainė neidiegta. <h4>Prašome užsukti vėliau</h4></center>");
