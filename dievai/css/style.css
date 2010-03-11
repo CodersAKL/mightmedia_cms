@@ -115,7 +115,7 @@ STRUCTURE					 */
 #form_middle_cont{width:940px}
 /* ------------------------------------------------------------------------------------
 ICONS				 */
-.ico_mug{background:url(../img/ico_mug.png) no-repeat 5px center #f1f1f1; padding-left:40px;margin-bottom:20px; }
+.ico_mug{background:/*url(../img/ico_mug.png) no-repeat 5px center*/ #f1f1f1; padding-left:10px;margin-bottom:20px; }
 .ico_posts{background:url(../img/ico_posts.jpg) no-repeat 5px center #f1f1f1; padding-left:30px;}
 .ico_page{background:url(../img/ico_page.jpg) no-repeat 5px center #f1f1f1; padding-left:30px;}
 .ico_settings{background:url(../img/ico_settings.jpg) no-repeat 5px center #f1f1f1; padding-left:30px;}
@@ -138,7 +138,7 @@ CUSTOM				 */
 .approved{font-weight:bold;color:#25a21f}
 #success{margin:-px 0px;border:1px solid #b2dc4d;color:#40550d;font-family:"Arial", Arial, sans-serif;font-size:12px;background:#cce297;font-weight:700;padding:5px;-moz-border-radius:3px;-webkit-border-radius: 3px;}
 #fail{margin:5px 0px;border:1px solid #c82820;color:#c82820;font-family:"Arial", Arial, sans-serif;font-size:12px;font-weight:700;background:#e7928d;padding:5px;-moz-border-radius:3px;-webkit-border-radius: 3px;}
-#warning{margin:5px 0px;border:1px solid #efdc90;color:#a9a014;font-family:"Arial", Arial, sans-serif;font-size:12px;font-weight:700;background:#fffecc;padding:5px;-moz-border-radius:3px;-webkit-border-radius: 3px;}
+#warning, .info{margin:5px 0px;border:1px solid #efdc90;color:#a9a014;font-family:"Arial", Arial, sans-serif;font-size:12px;font-weight:700;background:#fffecc;padding:5px;-moz-border-radius:3px;-webkit-border-radius: 3px;}
 
 .form_sidebar ul{margin:0px;padding:0px;list-style:none;}
 .form_sidebar ul li ul{margin:0px 10px;padding:0px;list-style:none;}

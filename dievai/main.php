@@ -136,7 +136,9 @@ function build_tree($data, $id=0, $active_class='active') {
 					persist: "location",
 					collapsed: true,
 					unique: true
-				});});
+				});
+				
+				});
 		</script>
 	</head>
 	<body>
@@ -179,17 +181,27 @@ function build_tree($data, $id=0, $active_class='active') {
 						<div id="dashboard">
 							<h2 class="ico_mug"><?php echo $lang['system']['dashboard']; ?></h2>
 							<div class="clearfix">
-								<!--<div class="left quickview">
-									<h3>Overview</h3>
-									<ul>
-										<li>Total Posts: <span class="number">15</span></li>
-										<li>Total Comments: <span class="number">340</span></li>
-										<li>Drafts: <span class="number">3</span></li>
-										<li>Things to do: <span class="number">3</span></li>
-										<li>Comments waiting for aproval: <span class="number">20</span></li>
-										<li>Visits Today: <span class="number">230</span></li>
-									</ul>
-								</div>-->
+								<div class="left quickview">
+									
+										<div style="width:180px;" id="version_check">Tikrinama versija...</div>
+								
+				<script type="text/javascript">
+		$(function(){
+			$.getJSON('<?php echo $update_url; ?>',function(data){
+				$('#version_check').html(
+					'<h3>'+data.title+'</h3>'+
+					'' + data.description + ' <span onclick="$(\'#version_check_more\').toggle(\'fast\')" style="cursor:pointer">▼</span><br />' +
+					'<div id="version_check_more" style="display:none"></div>'+
+					'Atsisiusti: <a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a>'
+				);
+				$(data.log).each(function(json,info){
+					$('#version_check_more').append('<li>'+info+'</li>');
+				});
+				$('#version_check_more').wrapInner('<ol>');
+			});
+		});
+	</script>
+								</div>
 								<div class="quickview left">
 									<?php
 										/*
@@ -260,6 +272,7 @@ HTML;
 
 						<div id="shortcuts" class="clearfix">
 							<h2 class="ico_mug"><?php echo $lang['system']['control']; ?></h2>
+
 							<ul>
 								<?php
 
@@ -292,6 +305,7 @@ HTML;
 
 					</div><!-- end #sidebar -->
 				</div><!-- end #content_main -->
+
 				<?php if (isset($url['a']) && file_exists(dirname(__file__) . "/" . $admin_pages[(int)$url['a']].'.php') && isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
 					include_once (dirname(__file__) . "/" . $admin_pages[(int)$url['a']].'.php');
 				} else {
