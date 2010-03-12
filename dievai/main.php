@@ -190,14 +190,17 @@ function build_tree($data, $id=0, $active_class='active') {
 											function versija(data) {
 												$('#version_check').html(
 													'<h3>'+data.title+'</h3>'+
-													'' + data.about + ' <span onclick="$(\'#version_check_more\').toggle(\'fast\')" style="cursor:pointer">▼</span><br />' +
+													'' + data.about + ' '+
+													(data.log?'<span onclick="$(\'#version_check_more\').toggle(\'fast\')" style="cursor:pointer" class="number">▼</span><br />':'') +
 													'<div id="version_check_more" style="display:none"></div>'+
-													'Atsisiusti: <a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a>'
+													(data.url?'Nuoroda: <span class="number"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':'')
 												);
-												$(data.log).each(function(json,info){
-													$('#version_check_more').append('<li>'+info+'</li>');
-												});
-												$('#version_check_more').wrapInner('<ol>');
+												if (data.log) {
+													$(data.log).each(function(json,info){
+														$('#version_check_more').append('<li>'+info+'</li>');
+													});
+													$('#version_check_more').wrapInner('<ol>');
+												}
 											}
 									</script>
 								</div>

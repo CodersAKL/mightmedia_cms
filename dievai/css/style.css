@@ -157,7 +157,7 @@ a.add{display:block;width:80px;text-align:center;color:#fff;background:#4780ae;b
 
 .quickview ul{margin:0px;padding:0px;list-style:none;}
 .quickview ul li{padding:3px;font-size:12px;}
-.quickview ul li span.number{font-family:Georgia;font-size:13px;color:#629fa8}
+.quickview ul li span.number, span.number, span.number a {font-family:Georgia;font-size:13px;color:#629fa8}
 
 #shortcuts{width:640px;}
 #shortcuts ul {margin:0px;padding:0px;list-style:none;margin-top:20px;}
