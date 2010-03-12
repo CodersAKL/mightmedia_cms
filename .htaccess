@@ -1,13 +1,34 @@
-Options +FollowSymlinks
-RewriteEngine On
+Options -Indexes
+<IfModule mod_php5.c>
+  php_flag magic_quotes_gpc                 off
+  php_flag magic_quotes_sybase              off
+  php_flag register_globals                 off
+  php_flag session.auto_start               off
+  php_value mbstring.http_input             pass
+  php_value mbstring.http_output            pass
+  php_flag mbstring.encoding_translation    off
+</IfModule>
+# Various rewrite rules.
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  #kai kuriuose netikusiuose hostinguose reikia
+  #RewriteBase /
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ index.php?id=$1 [L,QSA]
+</IfModule>
+<IfModule mod_headers.c>
+	<FilesMatch "\.(xml|png|jpg|gif|css|js|txt|mp3)$">
+		Header set Cache-Control "max-age=172800, proxy-revalidate"
+	</FilesMatch>
+</IfModule>
 
-# Fix Apache internal dummy connections from breaking [(site_url)] cache
-RewriteCond %{HTTP_USER_AGENT} ^.*internal\ dummy\ connection.*$ [NC]
-RewriteRule .* - [F,L]
-RewriteRule ^(siuntiniai|dievai|javascript) - [L]
-# For Friendly URLs
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?id=$1 [L,QSA]
+ErrorDocument 400 /klaida.php
+ErrorDocument 401 /klaida.php
+ErrorDocument 403 /klaida.php
+ErrorDocument 404 /klaida.php
+ErrorDocument 500 /klaida.php
 
-
+Order Allow,Deny
+Deny from env=draudziam
+Allow from all 

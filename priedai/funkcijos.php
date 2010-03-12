@@ -760,12 +760,12 @@ function seo_url($url,$id) {
  */
 function redirect($location, $type = "header") {
 	if ($type == "header") {
-		header("Location: " . adresas().$location);
+		header("Location: " .$location);
 		exit;
 	} elseif ($type == "meta") {
-		echo "<meta http-equiv='Refresh' content='1;url=".adresas()."$location'>";
+		echo "<meta http-equiv='Refresh' content='1;url=$location'>";
 	} else {
-		echo "<script type='text/javascript'>document.location.href='" .adresas(). $location . "'</script>\n";
+		echo "<script type='text/javascript'>document.location.href='" .$location . "'</script>\n";
 	}
 }
 
@@ -1214,17 +1214,18 @@ function get_user_os() {
 	} elseif (empty($HTTP_USER_AGENT)) {
 		$HTTP_USER_AGENT = "";
 	}
-	if (eregi("Win", $HTTP_USER_AGENT)) {
+	if (strpos($HTTP_USER_AGENT, 'Windows')) {
 		$global_info['user_os'] = "WIN";
-	} elseif (eregi("Mac", $HTTP_USER_AGENT)) {
+	} elseif (strpos($HTTP_USER_AGENT, 'Macintosh')) {
 		$global_info['user_os'] = "MAC";
-	} elseif (eregi("UNIX", $HTTP_USER_AGENT)) {
+	} elseif (strpos($HTTP_USER_AGENT, "Linux")) {
 		$global_info['user_os'] = "Linux";
 	} else {
 		$global_info['user_os'] = "OTHER";
 	}
 	return $global_info['user_os'];
 }
+/*
 function get_browser_info() {
 	global $global_info, $HTTP_USER_AGENT, $HTTP_SERVER_VARS;
 	if (!empty($global_info['browser_agent'])) {
@@ -1237,7 +1238,7 @@ function get_browser_info() {
 	} elseif (empty($HTTP_USER_AGENT)) {
 		$HTTP_USER_AGENT = "";
 	}
-	if (eregi("MSIE ([0-9].[0-9]{1,2})", $HTTP_USER_AGENT, $regs)) {
+	if (preg_match("MSIE ([0-9].[0-9]{1,2})", $HTTP_USER_AGENT, $regs)) {
 		$global_info['browser_agent'] = "MSIE";
 		$global_info['browser_version'] = $regs[1];
 	} elseif (eregi("Mozilla/([0-9].[0-9]{1,2})", $HTTP_USER_AGENT, $regs)) {
@@ -1252,7 +1253,7 @@ function get_browser_info() {
 	}
 	return $global_info['browser_agent'];
 }
-
+*/
 /**
  * Gražina patvirtinimo kodą
  *
