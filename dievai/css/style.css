@@ -144,8 +144,8 @@ CUSTOM				 */
 .form_sidebar ul li ul{margin:0px 10px;padding:0px;list-style:none;}
 
 span.date{display:block;padding-left:20px; font-style:italic;font-family:10px;}
-.odd{background:#eee;border-top:1px solid #DDDDDD;padding:3px;}
-.even{border-top:1px solid #DDDDDD;padding:3px;}
+.odd, .tr{background:#eee;border-top:1px solid #DDDDDD;padding:3px;}
+.even, .tr2{border-top:1px solid #DDDDDD;padding:3px;}
 a#visit{display:block;color:#fff;background:#4780ae;border-left:1px solid #084577;border:1px solid #7ab7e8;padding:4px;margin:5px 15px 0px 0px;-moz-border-radius:3px;}
 a.add{display:block;width:80px;text-align:center;color:#fff;background:#4780ae;border:1px solid #4780ae;padding:4px;margin:10px 15px 0px 0px;-moz-border-radius:3px;text-transform:uppercase;}
 #profile_info p{font-size:11px;padding-top:2px;padding-bottom:4px;}
@@ -193,7 +193,7 @@ input#post_title{width:925px;margin:0px;border-left:1px solid #a8a8a8;border-top
 #table .table_check{width:20px;background:#eee;}
 #table .table_title a{color:#26608e;text-decoration:underline;font-weight:bold;}
 
-#table_options, .tr{background:#fff;border:solid #c3c3c3;border-width:0px 1px 1px 1px;padding:5px;}
+#table_options{background:#fff;border:solid #c3c3c3;border-width:0px 1px 1px 1px;padding:5px;}
 #table_options label{margin:0px;padding-top:2px;}
 #table_options ul{list-style:none;margin:0px;padding:0px;}
 #table_options ul li{float:left;padding:5px;margin-right:10px;}

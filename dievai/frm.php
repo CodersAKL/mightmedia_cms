@@ -55,9 +55,7 @@ if (isset($_POST['order'])) {
 	$array = str_replace("&", ",", $_POST['order']);
 	$array = str_replace("listItem[]=", "", $array);
 	$array = explode(",", $array);
-	//$array=array($array);
-	//print_r($array);
-	//$sql=array();
+
 	foreach ($array as $position => $item):
 	
 		$case_place .= "WHEN " . (int)$item . " THEN '" . (int)$position . "' ";
@@ -74,13 +72,10 @@ if (isset($_POST['order2'])) {
 	$array = str_replace("&", ",", $_POST['order2']);
 	$array = str_replace("listItem[]=", "", $array);
 	$array = explode(",", $array);
-	//$array=array($array);
-	//print_r($array);
-	//$sql=array();
+
 	foreach ($array as $position => $item):
 	
 		$case_place .= "WHEN " . (int)$item . " THEN '" . (int)$position . "' ";
-		//$case_type .= "WHEN $phone_id THEN '" . $number['type'] . "' ";
 		$where .= "$item,";
 	endforeach;
 	$where = rtrim($where, ", ");
@@ -132,7 +127,7 @@ if (isset($_GET['d'])) {
 					$result2 = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_zinute`  WHERE sid=" . escape($zinsids['id']) . "");
 				}
 			}
-			//$result2 = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_zinute`  WHERE `tid`='" . $strid['id'] . "' AND sid='" . $f_id . "'");
+			
 			$result3 = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_straipsniai`  where `tid`=" . escape($stridi['id']) . "");
 
 		}
@@ -379,9 +374,6 @@ if (isset($url['f'])) {
 		unset($f_text, $sql, $row);
 	}
 }
-//gadina šiektiek
-//unset($_POST);
-
 
 ?>
 	

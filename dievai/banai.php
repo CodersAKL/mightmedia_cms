@@ -17,9 +17,6 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 }
 
 unset($resultatai, $i, $temp, $lines);
-/*$buttons = <<< HTML
-<button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};b,1'">IP {$lang['admin']['bans']}</button>
-HTML;*/
 $buttons = "
 <div class=\"btns\">
 	<a href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};b,1")."\" class=\"btn\"><span><img src=\"".ROOT."images/icons/bandaid__plus.png\" alt=\"\" class=\"middle\"/>IP {$lang['admin']['bans']}</span></a>
@@ -54,14 +51,8 @@ if (isset($_GET['b']) && $_GET['b'] == 1) {
 		if (preg_match("/^[0-9]{2,3}[.]{1,1}[0-9]{2,3}[.]{1,1}[0-9]{2,3}[.]{1,1}[0-9]{1,3}$/", $_POST['ip'])) {
 			$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE ip =INET_ATON(" . escape($_POST['ip']) . ") AND levelis=1");
 			if (count($sql) == 0) {
-				// $ip = "#" . $_POST['priezastis'] . "\ndeny from " . $_POST['ip'] . "\n";
-				//$banip = '.htaccess';
-				//$fp = fopen($banip, "a");
-				//$write = fputs($fp, $ip);
-				//fclose($fp);
 				ban($_POST['ip'], $_POST['priezastis']);
 				msg($lang['system']['done'], "IP {$_POST['ip']} {$lang['admin']['banned']}.");
-				//unset($_POST['ip'],$_POST['priezastis']);
 				redirect($_SERVER['HTTP_REFERER'], 'meta');
 			} else {
 				klaida($lang['system']['warning'], "{$lang['admin']['notallowed']}.");

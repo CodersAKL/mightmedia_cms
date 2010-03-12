@@ -46,26 +46,7 @@ include_once (ROOT."priedai/kategorijos.php");
 kategorija("galerija", true);
 $sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `path`=0 ORDER BY `id` DESC");
 if (sizeof($sql) > 0) {
-	/*foreach ($sql as $row) {
-
-		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
-
-		$subcat = '';
-		if (sizeof($sql2) > 0) {
-			foreach ($sql2 as $path) {
-
-				$subcat .= "->" . $path['pavadinimas'];
-				$kategorijos[$row['id']] = $row['pavadinimas'];
-				$kategorijos[$path['id']] = $row['pavadinimas'] . $subcat;
-
-
-			}
-		} else {
-			$kategorijos[$row['id']] = $row['pavadinimas'];
-		}
-
-
-	}*/
+	
 	$kategorijoss=cat('galerija', 0);
 }
 $kategorijos[0] = "--";
@@ -231,23 +212,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 					exit(0);
 				}
 
-				//the resizing is going on here!
-
-				//imagecopyresampled($resized_img, $new_img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-				//imagecopyresampled($resized_img, $new_img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-
-				//finally, save the image
-				/*
-				if ($file_type == "image/pjpeg" || $file_type == "image/jpeg") {
-					imagejpeg($new_img, $mini_img."/".$rand_name.$ext, 95);
-				} elseif ($file_type == "image/x-png" || $file_type == "image/png") {
-					imagepng($new_img, $mini_img."/".$rand_name.$ext, 95);
-				} elseif ($file_type == "image/gif") {
-					imagegif($new_img, $mini_img."/".$rand_name.$ext, 95);
-				} elseif ($file_type == "image/bmp") {
-					imagejpeg($new_img, $mini_img."/".$rand_name.$ext, 95);
-				}*/
-				imagejpeg($new_img, $mini_img."/".$rand_name.$ext, 95);
+			 imagejpeg($new_img, $mini_img."/".$rand_name.$ext, 95);
 
 				chmod($mini_img."/".$rand_name.$ext,0777);
 				ImageDestroy($img);
@@ -459,7 +424,7 @@ if (isset($_GET['v'])) {
 				(!isset($extra)) ? "{$lang['admin']['gallery_file']}:" : "" => array("name" => "failas", "type" => (!isset($extra)) ? "file" : "hidden", "value" => ""),
 				"{$lang['admin']['gallery_title']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', "name" => "Pavadinimas"), 
 				"{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '')), 
-				"{$lang['admin']['gallery_about']}:" =>	array("type" => "textarea", "name" => "Aprasymas",  "rows" => "3", "class" => "input", "value" => (isset($extra['apie'])) ? input($extra['apie']) : ''), //"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","class"=>"input"),
+				"{$lang['admin']['gallery_about']}:" =>	array("type" => "textarea", "name" => "Aprasymas",  "rows" => "3", "class" => "input", "value" => (isset($extra['apie'])) ? input($extra['apie']) : ''), 
 				(isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add'])
 			);
 			if (isset($extra)) {

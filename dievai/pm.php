@@ -18,7 +18,6 @@ $viso = kiek("private_msg");
 if (isset($url['d']) && isnum($url['d'])) {
 	if ($url['d'] == "0" && isset($_POST['to']) && !empty($_POST['to']) && $_POST['del_all'] == $lang['admin']['delete']) {
 		$sql = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_POST['to']) . "");
-		//$i = mysql_affected_rows();
 		if ($sql) {
 			msg($lang['system']['done'], "<b>" . input($_POST['to']) . "</b> {$lang['admin']['pm_msgsdeleted']}.");
 			redirect("?id,999;a," . $_GET['a'] . "", "meta");
@@ -55,7 +54,7 @@ if (isset($url['v'])) {
 		$sql = mysql_query1("SELECT `msg`, `from`,`to`, `title` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `id`=" . escape((int)$url['v']) . " LIMIT 1");
 		if (count($sql) > 0) {
 			$laiskas = "
-				<b>{$lang['admin']['pm_sender']}:</b>  " . $sql['from'] . "<br><b>{$lang['admin']['pm_reciever']}:</b> " . $sql['to'] . "<br> <b>{$lang['admin']['pm_subject']}:</b> " . (isset($sql['title']) && !empty($sql['title']) ? input(trimlink($sql['title'], 40)) : $lang['admin']['pm_nosubject']) . "<br><br><b>{$lang['admin']['pm_message']}:</b><br>" . bbcode($sql['msg']) . "<br><br>
+				<b>{$lang['admin']['pm_sender']}:</b>  " . $sql['from'] . "<br><b>{$lang['admin']['pm_reciever']}:</b> " . $sql['to'] . "<br> <b>{$lang['admin']['pm_subject']}:</b> " . (isset($sql['title']) && !empty($sql['title']) ? input(trimlink($sql['title'], 40)) : $lang['admin']['pm_nosubject']) . "<br><br><b>{$lang['admin']['pm_message']}:</b><br>" . bbcode($sql['msg']) . "<br /><br />
 				<form name=\"replay_pm\" action='' method=\"post\">
 					 <input type=\"button\" value=\"{$lang['admin']['delete']}\" onclick=\"location.href='" . url("d," . $url['v'] . ";v,0") . "'\"/>
 				</form>
@@ -89,7 +88,8 @@ if (sizeof($sql) > 0) {
 		}
 
 		$info[] = array("#" => $extra, "{$lang['admin']['pm_sender']}" => user($row['from_nick'], $row['from_id']), "{$lang['admin']['pm_reciever']}" => user($row['to_nick'], $row['to_id']), "{$lang['admin']['pm_subject'] }" => "<a href=\"".url("?id,{$_GET['id']};a," . $_GET['a'] . ";v," . $row['id'] ). "\" title=\"<b>Laiško ištrauka:</b> " . input(trim(strip_tags(str_replace(array('[', ']'), '', $row['msg'])))) . "...\" style=\"display:block\">" . (isset($row['title']) && !empty($row['title']) ? trimlink(input($row['title']), 10) : 'Be temos') . "</a>", //"Pavadinimas"=>"<a 
-			"{$lang['admin']['pm_date']}" => date('Y-m-d H:i:s ', $row['date']), "{$lang['admin']['action']}" => "<button onclick=\"if (confirm('{$lang['admin']['delete']}?')) window.location='" . url("d," . $row['id'] . "") . "'; else return false;\">X</button>");
+			"{$lang['admin']['pm_date']}" => date('Y-m-d H:i:s ', $row['date']), "{$lang['admin']['action']}" => "
+			<a href=\"" . url("d," . $row['id'] . "") . "\" onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src=\"".ROOT."images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a>");
 	}
 }
 //nupiesiam laisku lentele

@@ -38,31 +38,8 @@ include_once (ROOT."priedai/kategorijos.php");
 kategorija("siuntiniai", true);
 $sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `path`=0 ORDER BY `id` DESC");
 	if (sizeof($sql) > 0) {
-		/*foreach ($sql as $row) {
-
-			$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
-			if (sizeof($sql2) > 0) {
-				$subcat = '';
-				foreach ($sql2 as $path) {
-
-					$subcat .= "->" . $path['pavadinimas'];
-					$kategorijos[$row['id']] = $row['pavadinimas'];
-					$kategorijos[$path['id']] = $row['pavadinimas'] . $subcat;
-
-
-				}
-			} else {
-				$kategorijos[$row['id']] = $row['pavadinimas'];
-			}
-
-
-		}*/
-	$kategorijoss=cat('siuntiniai', 0);
+    $kategorijoss=cat('siuntiniai', 0);
 	}
-/*else
-{
-$kategorijos[] = "{$lang['system']['nocategories']}";
-}*/
 $kategorijos[0] = "--";
 if (isset($_GET['p'])) {
 	$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "siuntiniai` SET rodoma='TAIP' 
@@ -176,7 +153,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 		if (is_uploaded_file($_FILES['failas']['tmp_name'])) {
 
 			upload("failas", array("jpg", "bmp", "png", "psd", "zip", "rar", "mrc", "dll"), 1048576, "siuntiniai/");
-			//if (is_uploaded_file($_FILES['pic']['tmp_name'])) { upload("pic",array("jpg","bmp","png","psd","zip","rar","mrc","dll"), 1048576, "downloads/"); }
+			
 
 		}
 	}
@@ -270,7 +247,6 @@ if (isset($_GET['v'])) {
 
 
 unset($sql, $extra, $row);
-//unset($_POST);
 
 
 ?>

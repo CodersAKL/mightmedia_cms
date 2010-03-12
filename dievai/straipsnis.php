@@ -139,31 +139,10 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 if (isset($_GET['v'])) {
 	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `path`=0 ORDER BY `id` DESC");
 	if (sizeof($sql) > 0) {
-		/*foreach ($sql as $row) {
-
-			$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
-			if (count($sql2) > 0) {
-				$subcat = '';
-				foreach ($sql2 as $path ) {
-
-					$subcat .= "->" . $path['pavadinimas'];
-					$kategorijos[$row['id']] = $row['pavadinimas'];
-					$kategorijos[$path['id']] = $row['pavadinimas'] . $subcat;
-
-
-				}
-			} else {
-				$kategorijos[$row['id']] = $row['pavadinimas'];
-			}
-
-
-		}*/
+		
 		$kategorijoss=cat('straipsniai', 0);
 	}
-	/*else
-	{
-	$kategorijos[] = "{$lang['system']['nocategories']}";
-	}*/
+	
 	$kategorijos[0] = "--";
 }
 $sql2 = mysql_query1("SELECT id, pav FROM  `" . LENTELES_PRIESAGA . "straipsniai` ORDER BY ID DESC");
@@ -217,7 +196,5 @@ if ($_GET['v'] == 7 || isset($url['h'])) {
 	}
 
 }
-//unset($_POST);
-
 
 ?>

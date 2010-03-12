@@ -407,9 +407,9 @@ function url($str) {
 		$linkai[0] = '';
 		$return = str_replace(' ', '_', $conf['titles'][$start[1]]).implode((isset($conf['F_urls'])?$conf['F_urls']:';'),$linkai);
 	} else {
-		$return = str_replace('id=', '', $_SERVER['QUERY_STRING']).';'.$str;
+		$return = str_replace('id=', '', $_SERVER['QUERY_STRING']).(isset($conf['F_urls'])?$conf['F_urls']:';').$str;
 	}
-	return ROOT.$return;
+	return adresas().$return;
 }
 /**
  * Vartotojui atvaizduoti
