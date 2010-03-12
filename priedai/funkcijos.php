@@ -405,7 +405,7 @@ function url($str) {
 		$linkai = explode(';',$str);
 		$start = explode(',', $linkai[0]);
 		$linkai[0] = '';
-		$return = ROOT.str_replace(' ', '_', $conf['titles'][$start[1]]).implode($conf['F_urls']),$linkai);
+		$return = ROOT.str_replace(' ', '_', $conf['titles'][$start[1]]).implode($conf['F_urls'], $linkai);
 	} else {
 		$return = str_replace('id=', '', $_SERVER['QUERY_STRING']).$conf['F_urls'].$str;
 	}
