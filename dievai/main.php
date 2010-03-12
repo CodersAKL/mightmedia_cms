@@ -183,24 +183,23 @@ function build_tree($data, $id=0, $active_class='active') {
 							<div class="clearfix">
 								<div class="left quickview">
 									
-										<div style="width:180px;" id="version_check">Tikrinama versija...</div>
+									<div style="width:180px;" id="version_check">Tikrinama versija...</div>
 								
-				<script type="text/javascript">
-		$(function(){
-			$.getJSON('<?php echo $update_url; ?>',function(data){
-				$('#version_check').html(
-					'<h3>'+data.title+'</h3>'+
-					'' + data.description + ' <span onclick="$(\'#version_check_more\').toggle(\'fast\')" style="cursor:pointer">▼</span><br />' +
-					'<div id="version_check_more" style="display:none"></div>'+
-					'Atsisiusti: <a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a>'
-				);
-				$(data.log).each(function(json,info){
-					$('#version_check_more').append('<li>'+info+'</li>');
-				});
-				$('#version_check_more').wrapInner('<ol>');
-			});
-		});
-	</script>
+									<script type="text/javascript">
+											$.getJSON('<?php echo $update_url; ?>');
+											function versija(data) {
+												$('#version_check').html(
+													'<h3>'+data.title+'</h3>'+
+													'' + data.about + ' <span onclick="$(\'#version_check_more\').toggle(\'fast\')" style="cursor:pointer">▼</span><br />' +
+													'<div id="version_check_more" style="display:none"></div>'+
+													'Atsisiusti: <a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a>'
+												);
+												$(data.log).each(function(json,info){
+													$('#version_check_more').append('<li>'+info+'</li>');
+												});
+												$('#version_check_more').wrapInner('<ol>');
+											}
+									</script>
 								</div>
 								<div class="quickview left">
 									<?php
@@ -406,7 +405,10 @@ FROM " . LENTELES_PRIESAGA . "kom");
 
 					</div><!-- end #calendar -->
 				</div><!-- end #panels -->
-				<!-- end #dialog [if you don't want this, delete whole div and 6th line i custom.js -->
+				<div id="dialog" title="Welcome" style="display:none">
+					<p>Thank you for stopping by :) Hope you like that theme.</p>
+				</div><!-- end #dialog [if you don't want this, delete whole div and 6th line i custom.js -->
+
 
 
 			</div><!-- end #content -->
