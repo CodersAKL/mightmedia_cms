@@ -378,7 +378,7 @@ function url_arr($params) {
 	if (strrchr($params, '&'))
 		$params = explode("&", $params); //Jeigu tai paprastas GET
 	else
-		$params = explode(isset($conf['F_urls'])?$conf['F_urls']:';', $params);
+		$params = explode($conf['F_urls'], $params);
 
 	if (isset($params) && is_array($params) && count($params) > 0) {
 		foreach ($params as $key => $value) {
@@ -405,9 +405,9 @@ function url($str) {
 		$linkai = explode(';',$str);
 		$start = explode(',', $linkai[0]);
 		$linkai[0] = '';
-		$return = str_replace(' ', '_', $conf['titles'][$start[1]]).implode((isset($conf['F_urls'])?$conf['F_urls']:';'),$linkai);
+		$return = ROOT.str_replace(' ', '_', $conf['titles'][$start[1]]).implode($conf['F_urls']),$linkai);
 	} else {
-		$return = str_replace('id=', '', $_SERVER['QUERY_STRING']).(isset($conf['F_urls'])?$conf['F_urls']:';').$str;
+		$return = str_replace('id=', '', $_SERVER['QUERY_STRING']).$conf['F_urls'].$str;
 	}
 	return adresas().$return;
 }
