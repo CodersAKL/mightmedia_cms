@@ -144,7 +144,7 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_crea
 	//Trinam kategoriją
 
 	unset($naujiena, $placiau, $komentaras, $pavadinimas, $result, $error, $_POST['action']);
-	redirect("?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "meta");
+	redirect(url("?id," . $_GET['id'] . ";a," . $_GET['a']), "meta");
 
 }
 

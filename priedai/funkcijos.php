@@ -362,13 +362,14 @@ if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
 	$_GET = url_arr(cleanurl($_SERVER['QUERY_STRING']));
 	if(isset($_GET['id'])) {
 		$element = strtolower($_GET['id']);
-		$_GET['id'] = (isset($conf['titles_id'][$element])?$conf['titles_id'][$element]:$_GET['id']);
+		$_GET['id'] = ((isset($conf['titles_id'][$element]) && $conf['F_urls'] != '0')?$conf['titles_id'][$element]:$_GET['id']);
+		//echo $_GET['id'];
 	}
 	$url = $_GET;
 } else {
 	$url = array();
 }
-
+//print_r($_GET);
 function url_arr($params) {
 	global $conf;
 	$str2 = array();
@@ -378,7 +379,7 @@ function url_arr($params) {
 	if (strrchr($params, '&'))
 		$params = explode("&", $params); //Jeigu tai paprastas GET
 	else
-		$params = explode($conf['F_urls'], $params);
+		$params = explode(($conf['F_urls'] == '0'?';':$conf['F_urls']), $params);
 
 	if (isset($params) && is_array($params) && count($params) > 0) {
 		foreach ($params as $key => $value) {
@@ -400,12 +401,16 @@ function url_arr($params) {
 
 function url($str) {
 	global $conf;
-//echo substr($str,0,1);
+  
 	if(substr($str,0,1) == '?') {
 		$linkai = explode(';',$str);
 		$start = explode(',', $linkai[0]);
 		$linkai[0] = '';
-		$return = ROOT.str_replace(' ', '_', $conf['titles'][$start[1]]).implode($conf['F_urls'], $linkai);
+		if($conf['F_urls'] != '0'){
+      $return = ROOT.str_replace(' ', '_', $conf['titles'][$start[1]]).implode($conf['F_urls'], $linkai);
+     } else {
+      $return = (basename($_SERVER['SCRIPT_NAME']) != 'index.php'?basename($_SERVER['SCRIPT_NAME']):'').$str;
+     }
 	} else {
 		$return = str_replace('id=', '', $_SERVER['QUERY_STRING']).$conf['F_urls'].$str;
 	}

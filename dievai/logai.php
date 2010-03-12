@@ -19,10 +19,10 @@ if (isset($url['d']) && isnum($url['d']) && LEVEL == 1) {
 	if ($url['d'] == "0" && isset($_POST['ip']) && !empty($_POST['ip']) && $_POST['del_all'] == $lang['admin']['delete'] && isnum($_POST['ip'])) {
 		$sql = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "logai` WHERE `ip` = " . escape($_POST['ip']));
 		msg($lang['system']['done'], "<b>" . long2ip($_POST['ip']) . "</b> {$lang['admin']['logs_logsdeleted']}.");
-		redirect("?id," . $url['id'] . ";a,{$_GET['a']}", "meta");
+		redirect(url("?id," . $url['id'] . ";a,{$_GET['a']}"), "meta");
 	} elseif (!empty($url['d'])) {
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "logai` WHERE `id` = " . escape($url['d']) . " LIMIT 1;");
-		header("location: ?id," . $url['id'] . ";a,{$_GET['a']}");
+		header("location: ".url("?id," . $url['id'] . ";a,{$_GET['a']}"));
 	}
 } elseif (isset($url['v']) && !empty($url['v']) && isnum($url['v'])) {
 	$sql = mysql_query1("SELECT id, INET_NTOA(ip) AS ip, action, time FROM `" . LENTELES_PRIESAGA . "logai` WHERE id=" . escape($url['v']) . " LIMIT 1");
@@ -31,7 +31,7 @@ if (isset($url['d']) && isnum($url['d']) && LEVEL == 1) {
 if (!empty($url['t'])) {
 	mysql_query1("TRUNCATE TABLE `" . LENTELES_PRIESAGA . "logai`");
 	mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape(" " . $_SESSION['username'] . ":{$lang['admin']['logs_logsdeleted']}.") . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
-	header("location: ?id," . $url['id'] . ";a,{$_GET['a']}");
+	header("location: ".url("?id," . $url['id'] . ";a,{$_GET['a']}"));
 } else {
 	include_once (ROOT."priedai/class.php");
 	//$sql = mysql_query1("SELECT id, INET_NTOA(ip) AS ip, action, time FROM `logai` ORDER BY $order DESC LIMIT 0 , 100 ");

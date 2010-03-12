@@ -20,7 +20,7 @@ include_once ("../priedai/prisijungimas.php");
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>MightMedia TVS - Administravimas</title>
+<title>MightMedia TVS - Admin</title>
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index,follow" />

@@ -309,6 +309,25 @@ $lang['admin']['user_canteditadmin'] = 'You can not edit administrator.';
 $lang['admin']['user_details'] = 'User details';
 $lang['admin']['user_groups'] = 'User groups';
 $lang['admin']['user_notfound'] = 'User not found';
+//PAPILDYMAS
+$lang['system']['dashboard'] = 'Control panel';
+$lang['system']['some_data'] = 'Statistics';
+$lang['system']['visits'] = 'Visitors';
+$lang['system']['to_page'] = 'To page';
+$lang['system']['control'] = 'Control';
+$lang['online']['today'] = 'Visitors today';
+$lang['online']['traffic_in'] = 'Increase';
+$lang['info']['unpublished'] = 'Unpublished';
+$lang['info']['unnews'] = 'News';
+$lang['info']['undownloads'] = 'Downloads';
+$lang['info']['unlinks'] = 'Links';
+$lang['info']['unarticles'] = 'Articles';
+$lang['info']['unpics'] = 'Photos';
+$lang['system']['tree'] = 'Tree';
+$lang['info']['unpics_title'] = 'Unpublished photos';
+$lang['user']['topics'] = 'Topics';
+$lang['admin']['off'] = 'off';
+//PAPILDYMAS END
 //panel admin
 $lang['admin']['panel_create'] = 'Create panel';
 $lang['admin']['panel_created'] = 'Panel created';

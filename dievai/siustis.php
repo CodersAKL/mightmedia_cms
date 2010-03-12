@@ -167,7 +167,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 		}
 	}
 	unset($_FILES['failas'], $filename, $result, $_POST['Pavadinimas'], $_POST['Aprasymas'], $_POST['action'], $_POST['failas2']);
-	redirect("?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "meta");
+	redirect(url("?id," . $_GET['id'] . ";a," . $_GET['a']), "meta");
 
 }
 
@@ -189,7 +189,7 @@ if (isset($_GET['v'])) {
 		} else {
 			$siuntiniaii[] = $lang['admin']['download_no'];
 		}
-		$redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,1", "method" => "post", "name" => "reg"), "{$lang['admin']['download_download']}:" => array("type" => "select", "value" => $siuntiniaii, "name" => "edit_new"), "{$lang['admin']['edit']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "{$lang['admin']['delete']}:" => array("type" => "submit", "name" => "action","extra"=>"onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"", "value" => "{$lang['admin']['delete']}"));
+		$redagavimas = array("Form" => array("action" => url("?id,{$_GET['id']};a,{$_GET['a']};v,1"), "method" => "post", "name" => "reg"), "{$lang['admin']['download_download']}:" => array("type" => "select", "value" => $siuntiniaii, "name" => "edit_new"), "{$lang['admin']['edit']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "{$lang['admin']['delete']}:" => array("type" => "submit", "name" => "action","extra"=>"onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"", "value" => "{$lang['admin']['delete']}"));
 		lentele($lang['admin']['download_edit'], $bla->form($redagavimas));
 	} elseif ($_GET['v'] == 1 || isset($_GET['h'])) {
 		if (!isset($nocat)) {

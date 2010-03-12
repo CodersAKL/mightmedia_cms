@@ -467,6 +467,7 @@ $lang['info']['unpics'] = 'Nuotraukų';
 $lang['system']['tree'] = 'Medis';
 $lang['info']['unpics_title'] = 'Nerodomos nuotraukos';
 $lang['user']['topics'] = 'Temos';
+$lang['admin']['off'] = 'išjungta';
 //PAPILDYMAS END
 
 $lang['forum']['forum'] = 'Forumas';

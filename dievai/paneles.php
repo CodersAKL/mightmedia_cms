@@ -120,7 +120,7 @@ HTML;
 
 		// Rezultatas:
 	//	msg($lang['system']['done'], "{$lang['admin']['panel_created']}.");
-	redirect("?id,{$_GET['id']};a,{$_GET['a']};n,1","header");
+	redirect(url("?id,{$_GET['id']};a,{$_GET['a']};n,1"),"header");
 	}
 	if (isset($url['n']) && $url['n'] == 2) {
 		$psl = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "Naujaa_pnl"), "{$lang['admin']['panel_name']}:" => array("type" => "text", "value" => "Naujas blokas", "name" => "pav", "class" => "input"), "{$lang['admin']['panel_text']}:" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('pnl' => 'pnl'), false), "name" => "pnl", "class" => "input", "rows" => "8", "class" => "input"), "" => array("type" => "submit", "name" => "Naujaa_pnl", "value" => "{$lang['admin']['panel_create']}"));
@@ -132,7 +132,7 @@ HTML;
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`= " . escape((int)$url['d']) . " LIMIT 1");
 		delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC");
 	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
-		redirect("?id," . $url['id'] . ";a,{$_GET['a']}", "header");
+		redirect(url("?id," . $url['id'] . ";a,{$_GET['a']}"), "header");
 	}
 	//naujos paneles sukurimas
 	elseif (isset($url['n']) && $url['n'] == 1) {
@@ -158,7 +158,7 @@ HTML;
 				mysql_query1($sql);
 				delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC");
 	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
-				redirect("?id," . $url['id'] . ";a,{$_GET['a']}", "header");
+				redirect(url("?id," . $url['id'] . ";a,{$_GET['a']}"), "header");
 			}
 		}
 		$failai = getFiles(ROOT.'paneles/');
@@ -213,7 +213,7 @@ HTML;
 			mysql_query1($sql);
 			delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC");
 	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
-			redirect("?id," . $url['id'] . ";a,{$_GET['a']}", "header");
+			redirect(url("?id," . $url['id'] . ";a,{$_GET['a']}"), "header");
 		} else {
 
 			$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`=" . escape((int)$url['r']) . " LIMIT 1";
@@ -372,7 +372,7 @@ HTML;
 					msg($lang['system']['done'], $lang['admin']['panel_updated']);
 					fclose($fh);
 					chmod($Failas,0777);
-					redirect("?id," . $url['id'] . ";a," . $url['a'], "meta");
+					redirect(url("?id," . $url['id'] . ";a," . $url['a']), "meta");
 				}
 			} else {
 				klaida($lang['system']['error'], $lang['system']['systemerror']);

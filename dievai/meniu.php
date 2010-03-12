@@ -107,14 +107,14 @@ lentele($page_pavadinimas,$text);
 		
 		// Rezultatas:
 		//	msg($lang['system']['done'], "{$lang['admin']['page_created']}.");
-		redirect("?id,{$_GET['id']};a,{$_GET['a']};n,1", "header");
+		redirect(url("?id,{$_GET['id']};a,{$_GET['a']};n,1"), "header");
 		
 	}
 	
 	if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`= " . escape((int)$url['d']) . " LIMIT 1");
 		delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
-		redirect("?id," . $url['id'] . ";a," . $url['a'], "header");
+		redirect(url("?id," . $url['id'] . ";a," . $url['a']), "header");
 	} elseif (isset($url['n']) && $url['n'] == 1) {
 		if (isset($_POST['Naujas_puslapis']) && $_POST['Naujas_puslapis'] == $lang['admin']['page_create']) {
 			$psl = input($_POST['Page']);
@@ -131,7 +131,7 @@ lentele($page_pavadinimas,$text);
 			$sql = "INSERT INTO `" . LENTELES_PRIESAGA . "page` (`pavadinimas`, `file`, `place`, `show`, `teises`,`parent` ) VALUES (" . escape($psl) . ", " . escape($file) . ", '0', " . escape($show) . ", " . escape($teises) . "," . escape((int)$_POST['parent']) . ")";
 			mysql_query1($sql);
 			delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
-			redirect("?id," . $url['id'] . ";a," . $url['a'], "header");
+			redirect(url("?id," . $url['id'] . ";a," . $url['a']), "header");
 		//}
 		}
 		$failai = getFiles(ROOT.'puslapiai/');
@@ -192,7 +192,7 @@ lentele($page_pavadinimas,$text);
 			$sql = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `pavadinimas`=" . escape($psl) . ", `show`=" . escape($show) . ",`teises`=" . escape($teises) . ",`parent`= " . escape((int)$_POST['parent']) . "  WHERE `id`=" . escape((int)$url['r']);
 			mysql_query1($sql);
 			delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
-			redirect("?id," . $url['id'] . ";a," . $url['a'], "header");
+			redirect(url("?id," . $url['id'] . ";a," . $url['a']), "header");
 		} else {
 			$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape((int)$url['r']) . " LIMIT 1";
 			$sql = mysql_query1($sql);

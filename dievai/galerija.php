@@ -267,7 +267,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 					klaida("{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>");
 				}
 				unset($_FILES['failas'], $filename, $_POST['action']);
-				redirect("?id," . $_GET['id'] . ";a," . $_GET['a'] . ";v,1", "meta");
+				redirect(url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ";v,1"), "meta");
 
 			}
 		}
@@ -445,7 +445,7 @@ if (isset($_GET['v'])) {
 			foreach ($q as $sql) {
 				mysql_query1($sql);
 			}
-			redirect('?id,999;a,' . $url['a'] . ';v,6');
+			redirect(url('?id,999;a,' . $url['a'] . ';v,6'));
 		}
 		$nustatymai = array(
 			"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"),

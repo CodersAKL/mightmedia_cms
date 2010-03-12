@@ -120,7 +120,7 @@ if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete'] &&
 		klaida("{$lang['system']['error']}", $error);
 	}
 	unset($rodoma, $pavadinimas, $kategorija, $komentaras, $str, $apr, $_POST['action'], $result);
-	redirect("?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "meta");
+	redirect(url("?id," . $_GET['id'] . ";a," . $_GET['a']), "meta");
 
 }
 

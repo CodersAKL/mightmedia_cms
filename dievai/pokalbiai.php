@@ -49,12 +49,12 @@ if (isset($_POST['admin_chat_send']) && $_POST['admin_chat_send'] == $lang['admi
 
 
 	mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "admin_chat` (admin, msg, date) VALUES(" . escape($_SESSION['username']) . "," . escape($extra . $_POST['admin_chat']) . ",'" . time() . "')") or die(mysql_error());
-	header("Location: ?id,{$_GET['id']};");
+	header("Location: ".url("?id,{$_GET['id']}"));
 }
 //trinam zinute
 if (isset($url['d']) && !isset($url['a']) && isnum($url['d']) && $url['d'] > 0 && LEVEL == 1) {
 	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "admin_chat` WHERE id=" . (int)$url['d'] . "");
-	header("Location: ?id," . $url['id'] . "");
+	header("Location: ".url("?id," . $url['id']));
 }
 //redaguojam zinute
 if (isset($url['r']) && !isset($url['d']) && !isset($url['a']) && isnum($url['r']) && $url['r'] > 0) {
@@ -63,7 +63,7 @@ if (isset($url['r']) && !isset($url['d']) && !isset($url['a']) && isnum($url['r'
 		$extra = $extra['msg'];
 	} elseif ($_POST['admin_chat_send'] == $lang['admin']['edit']) {
 		mysql_query("UPDATE `" . LENTELES_PRIESAGA . "admin_chat` SET `msg`=" . escape($_POST['admin_chat']) . ",`date` = '" . time() . "' WHERE `admin`=" . escape($_SESSION['username']) . " AND id=" . escape((int)$url['r']) . " LIMIT 1");
-		header("Location: ?id," . $url['id'] . "");
+		header("Location: ".url("?id," . $url['id']));
 	}
 }
 $lygiai = array_keys($conf['level']);

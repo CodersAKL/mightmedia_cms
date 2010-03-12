@@ -83,11 +83,11 @@ if (isset($url['v']) && (int)$url['v'] == 1) {
 
 if (isset($_POST['b_delete']) && $_POST['b_delete'] == $lang['admin']['delete']) {
 	$result = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE `id`= " . escape((int)$_POST['id']) . " LIMIT 1");
-	header("Location: ?id," . $_GET['id'] . ";a," . $_GET['a']);
+	header("Location: ".url("?id," . $_GET['id'] . ";a," . $_GET['a']));
 }
 if (isset($_POST['b_edit']) && $_POST['b_edit'] == $lang['admin']['edit']) {
 	$result2 = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "balsavimas` SET info='" . $_POST['leid'] . "', `ijungtas` = " . escape($_POST['ar']) . " WHERE `id`='" . $url['n'] . "' LIMIT 1 ;");
-	header("Location: ?id," . $_GET['id'] . ";a," . $_GET['a']);
+	header("Location: ".url("?id," . $_GET['id'] . ";a," . $_GET['a']));
 }
 if (isset($_POST['b_delete']) && $_POST['b_delete'] == $lang['admin']['edit']) {
 
@@ -149,7 +149,7 @@ if (isset($_POST['b_create']) && $_POST['b_create'] == $lang['admin']['poll_crea
 	if ($result) {
 		msg("{$lang['system']['done']}", "{$lang['admin']['poll_created']}.");
 	}
-	redirect("?id," . $_GET['id'] . ";a," . $_GET['a'], "meta");
+	redirect(url("?id," . $_GET['id'] . ";a," . $_GET['a']), "meta");
 }
 unset($a, $ats1, $ats2, $ats3, $ats4, $ats5, $balsas, $sujungti);
 //unset($_POST['b_create'], $_POST['b_delete']);
