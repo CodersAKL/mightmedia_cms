@@ -37,7 +37,7 @@ foreach ($result as $row) {
 	//if (!empty($row['user'])) {
 	$narsykle = ((isset($row['agent'])) ? browser($row['agent']) : '?');
 	$info[$i] = array("{$lang['online']['who']}" => user($row['user'], $row['id']), "{$lang['online']['timestamp']}" => date('i:s', $timestamp - $row['timestamp']), "{$lang['online']['clicks']}" => $row['clicks']);
-	$flag = strtolower(getUserCountry($row['ip'])); //"http://api.wipmania.com/$row['ip']";
+	$flag = (isset($row['ip'])?strtolower(getUserCountry($row['ip'])):''); //"http://api.wipmania.com/$row['ip']";
 
 	if (defined("LEVEL") && LEVEL == 1) {
 		$info[$i]['IP'] = "<a href='http://whois.serveriai.lt/" . $row['ip'] . "' target='_blank' title='" . $row['ip'] . "'>" . $row['ip'] . "</a>";
