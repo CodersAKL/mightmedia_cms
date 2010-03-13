@@ -54,11 +54,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'contacts_change') {
 		$aim = input($_POST['aim']);
 		$url = input($_POST['url']);
 		$email = input($_POST['email']);
-		$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
-		if(file_exists('images/avatars/'.md5($sql['email']).'.jpeg'))
-			rename('images/avatars/'.md5($sql['email']).'.jpeg','images/avatars/'.md5($email).'.jpeg');
-		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET icq=" . escape($icq) . ", msn=" . escape($msn) . ", skype=" . escape($skype) . ", yahoo=" . escape($yahoo) . ", aim=" . escape($aim) . ", url=" . escape($url) . ", email=" . escape($email) . " WHERE nick=" . escape($_SESSION['username']) . "");
-		msg("{$lang['system']['done']}", "{$lang['user']['edit_updated']}");
+		$ep = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE email=" . escape($email) . " LIMIT 1");
+		if(!isset($ep['email'])){
+      $sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
+      if(file_exists('images/avatars/'.md5($sql['email']).'.jpeg'))
+        rename('images/avatars/'.md5($sql['email']).'.jpeg','images/avatars/'.md5($email).'.jpeg');
+		
+      mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET icq=" . escape($icq) . ", msn=" . escape($msn) . ", skype=" . escape($skype) . ", yahoo=" . escape($yahoo) . ", aim=" . escape($aim) . ", url=" . escape($url) . ", email=" . escape($email) . " WHERE nick=" . escape($_SESSION['username']) . "");
+      msg("{$lang['system']['done']}", "{$lang['user']['edit_updated']}");
+		} else {
+        klaida($lang['system']['error'], $lang['reg']['emailregistered']);
+      }
 		unset($icq, $msn, $skype, $yahoo, $aim, $url, $email);
 	}else{
 		klaida($lang['system']['error'],$lang['reg']['bademail']);
@@ -82,7 +88,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'default_change') {
 	$diena = (int)$_POST['diena'];
 	$parasas = input($_POST['parasas']);
 	$gimimas = $metai . "-" . $menesis . "-" . $diena;
-	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET vardas=" . escape($vardas) . ", pavarde=" . escape($pavarde). ", parasas=" . escape($parasas) . ", gim_data=" . escape($gimimas) . " WHERE nick=" . escape($_SESSION['username']) . "");
+		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET vardas=" . escape($vardas) . ", pavarde=" . escape($pavarde). ", parasas=" . escape($parasas) . ", gim_data=" . escape($gimimas) . " WHERE nick=" . escape($_SESSION['username']) . "");
 	msg("{$lang['system']['done']}", "{$lang['user']['edit_updated']}");
 }
 // ################ Siulomi punktai redagavimui MENIU ##########################
@@ -200,8 +206,8 @@ $('#example1 .files').replaceWith('<div class="files"><img id="ikeltas_avataras"
 });
 </script>
 <div align='center'>
-<ul>
-	<li id="example1" class="example">
+
+	<span id="example1" class="example">
 		
 	
 <div class="btns"><a onclick="return false" class="btn"><span id="button1"><img src="images/icons/picture__plus.png" alt="" class="middle"/>{$lang['user']['edit_upload']}</span></a>
@@ -210,8 +216,8 @@ $('#example1 .files').replaceWith('<div class="files"><img id="ikeltas_avataras"
 		<p>{$lang['user']['edit_avatar']}:</p>
 
 		<div class="files">{$avataras}</div>
-		</li>
-</ul></div>
+		</span>
+</div>
 HTML;
 if(isset($_GET['a'])&&$_GET['a']==1)
 $avatar .= "<div align='center' id='gravatar'>
@@ -243,7 +249,7 @@ $avatar .= "<div align='center' id='gravatar'>
 			"{$lang['user']['edit_secondname']}:" => array("type" => "text", "value" => $sql['pavarde'], "name" => "pavarde", "class" => "input"), 
 			"{$lang['user']['edit_dateOfbirth']}:" => array("type" => "select", "value" => $year, "selected" => (isset($data[0])?$data[0]:(date("Y") - 7)), "class" => "select", "name" => "metai"),
 			" " => array("type" => "select", "class" => "select", "value" => $month, "selected" => (isset($data[1])?$data[1]:1), "name" => "menesis"),
-			"\r " => array("type" => "select", "class" => "select", "value" => $day, "selected" => (isset($data[2])?$data[0]:1), "name" => "diena"),
+			"\r " => array("type" => "select", "class" => "select", "value" => $day, "selected" => (isset($data[2])?$data[2]:1), "name" => "diena"),
 			"{$lang['user']['edit_signature']}" => array("type" => "textarea", "class" =>	"input", "value" => $sql['parasas'], "name" => "parasas"), 
 			" \r \n" => array("type" => "hidden", "name" => "action", "value" => "default_change"), 
 			"" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}")
@@ -251,7 +257,7 @@ $avatar .= "<div align='center' id='gravatar'>
 
 		$bla = new forma();
 		lentele($lang['user']['edit_mainsettings'], $bla->form($forma));
-
+    unset($data, $viso, $day, $month, $year);
 
 	}
 }
