@@ -69,10 +69,10 @@ if (isset($pslid) && isnum($pslid) && $pslid > 0) {
 		$page = "puslapiai/klaida";
 		$page_pavadinimas = '404 - ' . $lang['system']['pagenotfounfd'] . '';
 	}
-	if ($pslid == 999) {
+	/*if ($pslid == 999) {
 		$page = "puslapiai/dievai/index";
 		$page_pavadinimas = $lang['user']['administration'];
-	}
+	}*/
 }
 //Jei svetaine uzdaryta remontui ir jei jungiasi ne administratorius
 if ($conf['Palaikymas'] == 1) {
