@@ -44,7 +44,7 @@ $form = array("Form" => array("action" => "", "method" => "post", "name" => "kny
 			lentele($lang['guestbook']['Editmessage'], $bla->form($form));
 		} elseif (isset($_POST['knyga']) && $_POST['knyga'] == $lang['admin']['edit'] && !empty($_POST['msg'])) {
 			$msg = trim($_POST['msg']) . "\n[sm][i]Redagavo: " . $_SESSION['username'] . "[/i][/sm]";
-			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "knyga` SET `msg` = " . escape($msg) . " WHERE `id` =" . escape($url['r']) . " LIMIT 1");
+			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "knyga` SET `msg` = " . escape(htmlspecialchars($msg)) . " WHERE `id` =" . escape($url['r']) . " LIMIT 1");
 			if (mysql_affected_rows() > 0) {
 				msg($lang['system']['done'], "{$lang['guestbook']['messageupdated']}");
 			} 
@@ -73,7 +73,7 @@ if (sizeof($sql2) > 0) {
 			$tr = "2";
 		else
 			$tr = "";
-		$text .= "<div class=\"tr$tr\"><em><a href=\"".url("?id," . $url['id'] . ";p,$p#" . $row['id'] ). "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " .$row['nikas']. " $extra (" . date('Y-m-d H:i:s',$row['time']) . ") - " . kada(date('Y-m-d H:i:s',$row['time'])) . "</em><br />" . smile(bbchat(wrap($row['msg'],80)) . "</div>";
+		$text .= "<div class=\"tr$tr\"><em><a href=\"".url("?id," . $url['id'] . ";p,$p#" . $row['id']). "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " .input($row['nikas']). " $extra (" . date('Y-m-d H:i:s',$row['time']) . ") - " . kada(date('Y-m-d H:i:s',$row['time'])) . "</em><br />" . smile(bbchat(wrap($row['msg'],80))) . "</div>";
 
 	}
 }
@@ -84,12 +84,12 @@ if (isset($_POST['knyga']) && $_POST['knyga'] == $lang['guestbook']['submit'] &&
 
 	mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "knyga` (`nikas`, `msg`, `time` ) VALUES (" . escape($nick) . ", " . escape($msg) . ", '" . time() . "');");
 
-	header('Location: ?id,' . (int)$_GET['id']);
+	header('Location: '.url('?id,' . (int)$_GET['id']));
 }
 
 
 if(!isset($_GET['r'])){
-		$form = array("Form" => array("action" => "", "method" => "post", "name" => "knyga"), "{$lang['guestbook']['name']}:" => array("type" => "text", "class"=>"input", "value" => (isset($_SESSION['username']) && !empty($_SESSION['username']) ? input($_SESSION['username']) : ''), "name" => "vardas", "class"=>"input"), "{$lang['guestbook']['message']}:" => array("type" => "textarea", "value" => "", "name" => "zinute","extra" => "rows=5", "class"=>"input"), kodas()=> array("type" => "text", "value" =>"","name"=>"code", "class"=>"chapter"),
+		$form = array("Form" => array("action" => "", "method" => "post", "name" => "knyga"), "{$lang['guestbook']['name']}:" => array("type" => "text", "class"=>"input", "value" => (isset($_SESSION['username']) && !empty($_SESSION['username']) ? input($_SESSION['username']) : ''), "name" => "vardas", "class"=>"input"), "{$lang['guestbook']['message']}" => array("type" => "textarea", "value" => "", "name" => "zinute","extra" => "rows=5", "class"=>"input"), kodas()=> array("type" => "text", "value" =>"","name"=>"code", "class"=>"chapter"),
 		" " => array("type" => "submit", "name" => "knyga", "value" => "{$lang['guestbook']['submit']}"));
 
 		hide($lang['guestbook']['write'], $bla->form($form), true);
