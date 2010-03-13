@@ -422,7 +422,7 @@ function url($str) {
 		$start = explode(',', $linkai[0]);
 		$linkai[0] = '';
 		if($conf['F_urls'] != '0') {
-			$return = ROOT.str_replace(' ', '_', $conf['titles'][$start[1]]).implode($conf['F_urls'], $linkai);
+			$return = ROOT.str_replace(' ', '_', $conf['titles'][$start[1]]).implode(($conf['F_urls'] != '0'?$conf['F_urls']:';'), $linkai);
 		} else {
 			$return = (basename($_SERVER['SCRIPT_NAME']) != 'index.php'?basename($_SERVER['SCRIPT_NAME']):'').$str;
 		}
