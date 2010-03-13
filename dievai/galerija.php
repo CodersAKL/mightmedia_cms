@@ -69,9 +69,9 @@ if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete']  &
 	$sql = mysql_query1("SELECT `file` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `ID` = " . escape($trinti) . " LIMIT 1");
 
 	if (isset($row['file']) && !empty($row['file'])) {
-		@unlink("images/galerija/" . $row['file']);
-		@unlink("images/galerija/mini/" . $row['file']);
-		@unlink("images/galerija/originalai/" . $row['file']);
+		@unlink(ROOT."images/galerija/" . $row['file']);
+		@unlink(ROOT."images/galerija/mini/" . $row['file']);
+		@unlink(ROOT."images/galerija/originalai/" . $row['file']);
 	}
 	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "galerija` WHERE id=" . escape($trinti) . " LIMIT 1");
 
