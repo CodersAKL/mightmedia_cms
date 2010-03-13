@@ -68,9 +68,14 @@ function header_info() {
   <script type="text/javascript" src="javascript/jquery/tooltip.js"></script>
   <script type="text/javascript" src="javascript/jquery/jquery.colorbox.js"></script>
   <script type="text/javascript" src="javascript/jquery/jquery.hint.js"></script>
+  <script type="text/javascript" src="javascript/jquery/break.js"></script> 
   <script type="text/javascript">
   $(document).ready(function(){
-
+  $(\'.tr\').breakly(20);
+  $(\'.tr2\').breakly(20);
+  $(\'.td\').breakly(20);
+  $(\'.td2\').breakly(20);
+  $(\'.th\').breakly(20);
 	//Examples of how to assign the ColorBox event to elements.
 	$(".gallery a[rel=\'lightbox\']").colorbox({transition:"fade"});
 
@@ -878,7 +883,8 @@ function wrap1($text, $chars = 25) {
  * @return string
  */
 function wrap($string, $width, $break = "\n") {
-	$string = preg_replace('/([^\s]{' . $width . '})/i', "$1$break", $string);
+   //Jei tvs be javascript naudosi, atkomentuok
+	//$string = preg_replace('/([^\s]{' . $width . '})/i', "$1$break", $string);
 	return $string;
 }
 
