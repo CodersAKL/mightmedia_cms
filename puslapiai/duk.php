@@ -92,13 +92,13 @@ $sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "duk` ORDER by `orde
 if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
 		$nr++;
-		$extra .= "<li><a href='#" . $row['id'] . "'>" . $row['klausimas'] . "</a></li>\n";
+		$extra .= "<li><a href='".url('?id,'.$_GET['id'])."#" . $row['id']."'>" . $row['klausimas'] . "</a></li>\n";
 		$text .= "<h3>" . $nr . ". " . (defined("LEVEL") && LEVEL == 1 ? "<a href='" . url("d," . (int)$row['id'] . "") . "' onclick=\"return confirm('" . $lang['faq']['delete'] . "?')\"><img src='images/icons/control_delete_small.png' class='middle' alt='" . $lang['faq']['delete'] . "' border='0' title='" . $lang['faq']['delete'] . "?' /></a><a href='" . url("e," . (int)$row['id'] . "") . "'><img src='images/icons/brightness_small_low.png' class='middle' alt='" . $lang['faq']['edit'] . "' border='0' title='" . $lang['faq']['edit'] . "?' /></a>" : "") . "<a name='" . $row['id'] . "'>" . $row['klausimas'] . "</a></h3>\n<blockquote>" . $row['atsakymas'] . "</blockquote>\n";
 	}
 
 }
 
-lentele($lang['faq']['questions'], $extra . "</ol>" . (defined("LEVEL") && LEVEL == 1 ? "<button onclick=\"location.href='?id," . $_GET['id'] . ";n,1'\">{$lang['faq']['new']}</button>" : "") . "<div style='padding-bottom:20px'></div>");
+lentele($lang['faq']['questions'], $extra . "</ol>" . (defined("LEVEL") && LEVEL == 1 ? "<button onclick=\"location.href='".url("?id," . $_GET['id'] . ";n,1")."'\">{$lang['faq']['new']}</button>" : "") . "<div style='padding-bottom:20px'></div>");
 lentele($lang['faq']['answers'], $text);
 unset($extra, $text);
 /*
