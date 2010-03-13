@@ -21,7 +21,7 @@ if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['Q
 	$remoteaddress = $_SERVER["REMOTE_ADDR"];
 	ban();
 }
-if (isset($_POST) && !empty($_POST) && (isset($_GET['id'])&&$_GET['id']!=999)&&(isset($conf['puslapiai']['moderatorius.php']['id'])&&$_GET['id']!=$conf['puslapiai']['moderatorius.php']['id'])&& $_SESSION['level']!=1) {
+if (!empty($_POST) && $_SESSION['level'] != 1) {
 	include_once (ROOTAS . 'priedai/safe_html.php');
 	foreach ($_POST as $key => $value) {
 		if (!is_array($value))
@@ -98,8 +98,8 @@ function header_info() {
 }
 
 function addtotitle($add) {
-  $add = input($add);
-  echo <<<HTML
+	$add = input($add);
+	echo <<<HTML
 		<script type="text/javascript">
 		var cur_title = new String(document.title);
       document.title = cur_title+" - {$add}";
@@ -416,16 +416,16 @@ function url_arr($params) {
 
 function url($str) {
 	global $conf;
-  
+
 	if(substr($str,0,1) == '?') {
 		$linkai = explode(';',$str);
 		$start = explode(',', $linkai[0]);
 		$linkai[0] = '';
-		if($conf['F_urls'] != '0'){
-      $return = ROOT.str_replace(' ', '_', $conf['titles'][$start[1]]).implode($conf['F_urls'], $linkai);
-     } else {
-      $return = (basename($_SERVER['SCRIPT_NAME']) != 'index.php'?basename($_SERVER['SCRIPT_NAME']):'').$str;
-     }
+		if($conf['F_urls'] != '0') {
+			$return = ROOT.str_replace(' ', '_', $conf['titles'][$start[1]]).implode($conf['F_urls'], $linkai);
+		} else {
+			$return = (basename($_SERVER['SCRIPT_NAME']) != 'index.php'?basename($_SERVER['SCRIPT_NAME']):'').$str;
+		}
 	} else {
 		$return = str_replace('id=', '', $_SERVER['QUERY_STRING']).$conf['F_urls'].$str;
 	}
@@ -883,7 +883,7 @@ function wrap1($text, $chars = 25) {
  * @return string
  */
 function wrap($string, $width, $break = "\n") {
-   //Jei tvs be javascript naudosi, atkomentuok
+	//Jei tvs be javascript naudosi, atkomentuok
 	//$string = preg_replace('/([^\s]{' . $width . '})/i', "$1$break", $string);
 	return $string;
 }
