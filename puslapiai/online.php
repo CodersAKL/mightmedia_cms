@@ -13,7 +13,7 @@
 //patikrinam ar teisingai uzkrautas puslapis
 
 if (!defined("OK")) {
-	header('location: ?');
+	header('location: '.url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 	exit;
 }
 unset($extra);

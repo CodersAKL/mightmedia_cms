@@ -11,7 +11,7 @@
  **/
 
 if (!defined("LEVEL") || !defined("OK")) {
-	header("Location: ?");
+	header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 }
 if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
 	$p = escape(ceil((int)$url['p']));

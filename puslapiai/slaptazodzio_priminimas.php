@@ -12,7 +12,7 @@
 
 //paziurim ar vartotojas neprisijunges, jei prisijunges tai jam nera cia ka veikti
 if (isset($_SESSION['username'])) {
-	header("Location: ?");
+	header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 }
 
 //nuskaitom saugos koda is nuorodos - jeigu toks egzistuoja patikrinam ar tinka ir vydom slaptazodzio atstatyma

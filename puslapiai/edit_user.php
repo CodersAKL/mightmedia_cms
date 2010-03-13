@@ -10,7 +10,7 @@
  * @$Date$
  **/
 if (!defined("LEVEL") || !defined("OK") || !isset($_SESSION['username'])) {
-	header("Location: ?");
+	header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 	exit;
 }
 if (isset($url['m']) && isnum($url['m']) && $url['m'] > 0) {

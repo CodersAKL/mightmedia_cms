@@ -318,16 +318,16 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 		//  Siunciam zinute
 		if (isset($_POST['action']) && $_POST['action'] == 'f_send' && isset($_POST['msg']) && $tikrinam['uzrakinta'] == "ne") {
 			if (!isset($_SESSION['username'])) {
-				header("Location: ?home");
+				header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 			}
 			if (strlen(str_replace(" ", "", $_POST['msg'])) > 0) {
 				$zinute = $_POST['msg'];
 				if ($tid == 0) {
-					header("Location: ?home");
+					header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 					exit;
 				}
 				if ($sid == 0) {
-					header("Location: ?home");
+					header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 					exit;
 				}
 				if ($tikrinam['uzrakinta'] == "taip") {
@@ -474,7 +474,7 @@ elseif (((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && 
 elseif ($aid == 1 && $kid == 0 && $lid == 0 && $rid == 0) {
 	if (isset($_POST['post_msg'])) {
 		if (!isset($_SESSION['username'])) {
-			header("Location: ?home");
+			header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 			exit;
 		}
 		if (isset($_POST['post_uid']) && $_POST['post_uid'] > 0) {

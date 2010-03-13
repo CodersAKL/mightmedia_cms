@@ -29,7 +29,7 @@ function registracijos_forma() {
 	return $bla->form($forma);
 }
 if (isset($_SESSION['username'])) {
-	header("Location: ?");
+	header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 }
 $error = '';
 $sekme = false;

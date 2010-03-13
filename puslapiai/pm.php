@@ -11,7 +11,7 @@
  **/
 
 if (!isset($_SESSION['username'])) {
-	header("Location: /");
+	header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 }
 unset($text);
 if (isset($url['u']) && !empty($url['u'])) {
@@ -184,7 +184,7 @@ if (isset($url['n'])) {
 			";
 		//}
 	} else {
-		header("Location: ?");
+		header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 	}
 }
 
