@@ -14,6 +14,7 @@ $memb = explode((isset($conf['F_urls'])?$conf['F_urls']:';'), $_SERVER['QUERY_ST
 if (isset($memb[1])) {	
 	$sql = mysql_query1("SELECT *, INET_NTOA(ip) AS ip FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape($memb[1]) . " LIMIT 1");
 	if (isset($sql['nick'])) {
+	addtotitle($sql['nick']);
 	include_once ("rating.php");
 	if (isset($_SESSION['id']) && $_SESSION['id'] != $sql['id']) {
 		$vote = rating_form($page,(int)$sql['id']);

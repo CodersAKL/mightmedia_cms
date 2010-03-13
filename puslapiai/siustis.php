@@ -98,6 +98,7 @@ if ($vid > 0) {
 
 			include_once ("priedai/class.php");
 			$ble = new Table();
+			addtotitle($sql['pavadinimas']);
 			if (isset($sql['Kategorija'])) {
 				$info2[0]["{$lang['system']['category']}"] = "<b>" . $sql['Kategorija'] . "</b><br /><div class='avataras'><img src='images/naujienu_kat/" . input($sql['img']) . "' alt='" . input($sql['Kategorija']) . "' /></div>";
 			}

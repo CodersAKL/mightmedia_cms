@@ -100,7 +100,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'pm_send' && isset($_SESSION[
 				redirect(url("?id," . $url['id']), "meta");
 			}
 		} else {
-			//kas cia? $sql = mysql_fetch_assoc($sql); //$result = mysql_query1("INSERT INTO `private_msg` (`from`, `to`, `title`, `msg`, `read`, `date`) VALUES (" . escape($conf['Pavadinimas']) .", " . escape($to) .", " . escape("Jūsų pašto dėžutė pilna") .", " . escape("Jūsų pašto dėžutė užsipildė. Kiti svetainės lankytojai jums nebegali siųsti žinu�?ių.") .", 'NO', '" . $date ."')");
 			klaida("{$lang['system']['error']}", "{$lang['user']['pm_users'] } <b>" . $to . "</b> {$lang['user']['pm_full']}.");
 			redirect(url("?id," . $url['id']), "meta");
 		}
@@ -198,6 +197,7 @@ if (isset($url['v'])) {
 
 		$sql = mysql_query1("SELECT `msg`, `from`,`to`, `title`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE (`to`=" . escape($_SESSION['username']) . " OR `from`=" . escape($_SESSION['username']) . ") AND `id`=" . escape($url['v']) . " LIMIT 1");
 		if ($sql) {
+      addtotitle($sql['title']);
 			$laiskas = "
 				<div class=\"pm_read\"><b>{$lang['user']['pm_from']}:</b>  " . $sql['from'] . "<br><b>{$lang['user']['pm_to']}:</b> " . $sql['to'] . "<br> <b>{$lang['user']['pm_subject']}:</b> " . (isset($sql['title']) && !empty($sql['title']) ? input(trimlink($sql['title'], 40)) : "{$lang['user']['pm_nosubject']}") . "<br><br><b>{$lang['user']['pm_message']}:</b><br>" . bbcode(wrap($sql['msg'], 40)) . "<br><br></div>
 				" . (strtolower($sql['to']) == strtolower($_SESSION['username']) ? "<form name=\"replay_pm\" action='".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($sql['from'])) . ";i," . $url['v'] ). "' method=\"post\">

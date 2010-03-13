@@ -85,7 +85,7 @@ if ($kid != 0) {
 	
 
 	if (isset($sql['naujiena'])&& !empty($sql['naujiena'])) {
-		
+		addtotitle($sql['pavadinimas']);
 		if (teises((isset($sql['teises'])?$sql['teises']:0), $_SESSION['level'])) {
 			$title = $sql['pavadinimas'];
 			$text = "<div class='naujiena'>" . $sql['naujiena'] . "";

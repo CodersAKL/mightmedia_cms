@@ -92,6 +92,16 @@ function header_info() {
 ';
 }
 
+function addtotitle($add) {
+  $add = input($add);
+  echo <<<HTML
+		<script type="text/javascript">
+		var cur_title = new String(document.title);
+      document.title = cur_title+" - {$add}";
+    </script>
+HTML;
+}
+
 /**
  * Gražina vartotojo avatarą
  * @param emeilas $mail

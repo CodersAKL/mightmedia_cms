@@ -71,11 +71,11 @@ if ($k >= 0 && empty($url['m'])) {
 
 	}
 } elseif (!empty($url['m'])) {
-
-	$row = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' AND `id`=" . escape((int)$url['m']) . " LIMIT 1", 86400);
+  	$row = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' AND `id`=" . escape((int)$url['m']) . " LIMIT 1", 86400);
 
 	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape($row['kat']) . " AND `kieno`='straipsniai' ORDER BY `pavadinimas` LIMIT 1", 86400);
 	//$sqlas = mysql_fetch_assoc($sqlas);
+	addtotitle($row['pav']);
 	if (teises($sqlas['teises'], $_SESSION['level'])&&!empty($row['date'])) {
 		$text = "<i>" . $row['t_text'] . "</i><br><hr></hr><br>\n
 		" . $row['f_text'] . "

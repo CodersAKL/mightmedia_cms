@@ -125,10 +125,7 @@ if (empty($url['m'])) {
 					<a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date('Y-m-d H:i:s ', $row['data']) . "\"><img src='images/icons/information.png' border='0' alt='info' /></a>
 					<a href=\"".url("?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['id'])."\" title=\"{$lang['admin']['gallery_comments']}\"><img src='images/icons/comment.png' alt='C' border='0' /></a>
 					<a href=\"images/galerija/originalai/" . $row['file'] . "\" title=\"{$lang['download']['download']}\"><img src='images/icons/disk.png' border='0' alt='save' /></a>";
-					$text .= (defined('LEVEL') && LEVEL == 1 ? "
-					<a href=\"#\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('?id,999;a,{$admin_pagesid['galerija']};t," . $row['id'] . "'); $(this).parent('.img_left').remove(); return false } else { return false }\" title=\"{$lang['system']['delete']}\"><img src='images/icons/cross.png' alt='X' border='0' /></a>
-					<a href='?id,999;a,{$admin_pagesid['galerija']};h," . $row['id'] . "#edit' title=\"{$lang['admin']['edit']}\"><img src='images/icons/picture_edit.png'  /></a>
-					" : "") . "
+					$text .= "
 				</div>
 				<div class='gallery_title'>
 					" . trimlink((!empty($row['pavadinimas'])?$row['pavadinimas']:''),10) . "
@@ -208,7 +205,7 @@ if (!empty($url['m'])) {
 
 	if (!empty($row['file']) && isset($row['file'])) {
 		if (defined('LEVEL') && teises($row['teises'], $_SESSION['level']) || ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('galerija.php', unserialize($_SESSION['mod']))))) {
-
+        addtotitle($row['pavadinimas']);
 			$nuoroda = mysql_query1("SELECT id FROM " . LENTELES_PRIESAGA . "galerija WHERE id > " . escape($url['m']) . " AND `categorija`=" . escape($row['kid']) . " order by id ASC LIMIT 1", 86400);
 			$nuoroda2 = mysql_query1("SELECT id FROM " . LENTELES_PRIESAGA . "galerija WHERE id < " . escape($url['m']) . " AND categorija=" . escape($row['kid']) . " order by id DESC LIMIT 1", 86400);
 			if (isset($row['Nick'])) {
