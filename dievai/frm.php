@@ -7,7 +7,7 @@
 			var order = $('#test-list').sortable('serialize');
 			$("#la").show("slow");
 			$("#la").hide("slow");
-			$.post("<?php echo "?" . $_SERVER['QUERY_STRING']; ?>",{order:order});
+			$.post("<?php echo url("?id,999;a," . $_GET['a']); ?>",{order:order});
 		}
     });
         $("#test-list2").sortable({
@@ -17,7 +17,7 @@
 			var order2 = $('#test-list2').sortable('serialize');
 			$("#la2").show("slow");
 			$("#la2").hide("slow");
-			$.post("<?php echo "?" . $_SERVER['QUERY_STRING']; ?>",{order2:order2});
+			$.post("<?php echo url("?id,999;a," . $_GET['a']); ?>",{order2:order2});
 		}
     });
 });
@@ -207,6 +207,7 @@ if (isset($_POST['subedit']) && $_POST['subedit'] == $lang['admin']['forum_selec
 		lentele($lang['admin']['forum_editsub'], $tekstas);
 	}
 }
+//subkategorijos redag. forma... gal :)
 if (isset($_GET['r']) && isset($_GET['f'])) {
 	$f_id = (int)$_GET['f'];
 	$f_temos_id = (int)$_GET['r'];
@@ -216,7 +217,7 @@ if (isset($_GET['r']) && isset($_GET['f'])) {
 	$t_info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`='" . $f_temos_id . "' limit 1");
 	$f_text = "
 					
-					<form name=\"subred\" action=\"?id," . $url['id'] . ";a,{$_GET['a']}\" method=\"post\">
+					<form name=\"subred\" action=\"".url("?id," . $url['id'] . ";a,{$_GET['a']}")."\" method=\"post\">
 					<table>
 						<tr>
 							<td width='10%'>{$lang['admin']['forum_category']}:</td>
@@ -258,7 +259,7 @@ if (isset($url['f'])) {
 	if ((int)$url['f'] == 1) {
 		$f_text = "
 				
-						<form name=\"1\" action=\"?id," . $url['id'] . ";a,{$_GET['a']}\" method=\"post\">
+						<form name=\"1\" action=\"".url("?id," . $url['id'] . ";a,{$_GET['a']}")."\" method=\"post\">
 							{$lang['admin']['forum_category']}:&nbsp;&nbsp;<input name=\"f_pav\" type=\"text\" value=\"\" class=\"input\">
 							<input type=\"submit\" value=\"{$lang['system']['createcategory']}\" class=\"submit\">
 							<input type=\"hidden\" name=\"action\"  value=\"f_sukurimas\" />
@@ -269,13 +270,13 @@ if (isset($url['f'])) {
 
 	}
 	//Kategorijos redagavimas
-	if ((int)$url['f'] == 2) {
+	if ((int)$url['f'] == 2 && !isset($_GET['r'])) {
 		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` ORDER BY `place` ASC");
 		if (sizeof($sql) > 0) {
 			$li = "";
 
 			$tekst = "
-<form name=\"keisti\" action=\"?id," . $url['id'] . ";a,{$_GET['a']}\" method=\"post\">
+<form name=\"keisti\" action=\"".url("?id," . $url['id'] . ";a,{$_GET['a']}")."\" method=\"post\">
 					<table border=0 width=100%>
 						<tr>
 							<td width='10%'>{$lang['admin']['forum_category']}:</td>
@@ -314,7 +315,7 @@ if (isset($url['f'])) {
 		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` ORDER BY `place` ASC");
 		if (sizeof($sql) > 0) {
 			$f_text = "
-					<form name=\"kurk\" action=\"?id," . $url['id'] . ";a,{$_GET['a']}\" method=\"post\">
+					<form name=\"kurk\" action=\"".url("?id," . $url['id'] . ";a,{$_GET['a']}")."\" method=\"post\">
 					<table border=0 width=100%>
 						<tr>
 							<td width='10%'>{$lang['admin']['forum_category']}:</td>
@@ -349,7 +350,7 @@ if (isset($url['f'])) {
 		if (sizeof($sql) > 0) {
 			$f_text = "
 					
-					<form name=\"subedit\" action=\"?id," . $url['id'] . ";a,{$_GET['a']}\" method=\"post\">
+					<form name=\"subedit\" action=\"".url("?id," . $url['id'] . ";a,{$_GET['a']}")."\" method=\"post\">
 					<table border=0 width=100%>
 						<tr>
 							<td width='50%'>{$lang['admin']['forum_subwhere']}:</td>

@@ -377,7 +377,7 @@ AND `" . LENTELES_PRIESAGA . "d_straipsniai`.`id`=" . escape($tid) . " AND `" . 
 			}
 						echo "<script type=\"text/javascript\">$(document).ready(function() {
   $('.perveiza').click(function() {
-      $.post('javascript/forum/perview.php', {'msg':$('textarea#msg').val()}, function(data) {
+      $.post('javascript/forum/preview.php', {'msg':$('textarea#msg').val()}, function(data) {
           $(\"#perveiza\").empty().append($(data));
       }, \"text\");
   });
@@ -531,7 +531,7 @@ WHERE `" . LENTELES_PRIESAGA . "users`.nick=" . escape($_SESSION['username']) . 
 	}
 		echo "<script type=\"text/javascript\">$(document).ready(function() {
   $('.perveiza').click(function() {
-      $.post('javascript/forum/perview.php', {'msg':$('textarea#msg').val()}, function(data) {
+      $.post('javascript/forum/preview.php', {'msg':$('textarea#msg').val()}, function(data) {
           $(\"#perveiza\").empty().append($(data));
       }, \"text\");
   });
