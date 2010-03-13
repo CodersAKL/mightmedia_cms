@@ -59,7 +59,7 @@ $nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype
 	"{$lang['admin']['email']}:" => array("type" => "text", "value" => input($conf['Pastas']), "name" => "Pastas", "class" => "input"), 
 	"{$lang['admin']['maintenance']}?:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['Palaikymas']), "name" => "Palaikymas", "class" => "select"), 
 	"{$lang['admin']['maintenancetext']}:" =>	array("type" => "textarea", "name" => "Maintenance", "value" => (isset($conf['Maintenance']) ? $conf['Maintenance'] : ''), "extra" => "rows=5", "class" => "input"),
-"Friendly url:"=>array("type"=>"select","value"=>array('/'=>'/',';'=>';','0'=>$lang['admin']['off']),"selected"=>input((isset($conf['F_urls'])?$conf['F_urls']:'')),"name"=>"F_urls"),
+"Friendly url:"=>array("type"=>"select","value"=>array('/'=>'/',';'=>';','0'=>$lang['admin']['off']),"selected"=>"".$conf['F_urls']."","name"=>"F_urls"),
 	"{$lang['admin']['comm_guests']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}","3"=>"{$lang['admin']['comments_off']}"), "selected" => input(@$conf['kmomentarai_sveciams']), "name" => "koment", "class" => "select"), 
 	"{$lang['admin']['newsperpage']}:" => array("type" => "text", "value" => input($conf['News_limit']), "name" => "News_limit", 'extra' => "on`key`up=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\"", "class" => "select"), 
 	"{$lang['admin']['cache']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['keshas']), "name" => "keshas", "class" => "select"), 

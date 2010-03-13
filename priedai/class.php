@@ -44,7 +44,7 @@ class forma {
 						if (is_array($array['value'])) {
 							$return = "<select" . (isset($array['name']) ? " name=\"" . $array['name'] . "\"" : "") . "" . (isset($array['class']) ? " class=\"" . $array['class'] . "\"" : "class=\"input\"") . "" . (isset($array['id']) ? " id=\"" . $array['id'] . "\"" : "") . "" . (isset($array['jump']) ? " onchange=\"top.location.href='" . $array['jump'] . "' + this.value;\"" : "") . "" . (isset($array['style']) ? " style=\"" . $array['style'] . "\"" : "") . (isset($array['extra']) ? ' ' . $array['extra'] : "") . ">\n";
 							foreach ($array['value'] as $val => $pav) {
-								$return .= "\t\t\t\t<option value=\"" . $val . "\"" . (((isset($array['selected']) && $array['selected'] == $val) || (isset($array['selected']) && is_array($array['selected']) && in_array($val, $array['selected']))) ? " selected=\"selected\"" : "") . "" . (isset($array['disabled']) && ($array['disabled'] == $val) ? " disabled=\"disabled\"" : "") . ">" . $pav . "</option>\n";
+								$return .= "\t\t\t\t<option value=\"" . $val . "\"" . (((isset($array['selected']) && stripslashes($array['selected']) == stripslashes($val)) || (isset($array['selected']) && is_array($array['selected']) && in_array($val, $array['selected']))) ? " selected=\"selected\"" : "") . "" . (isset($array['disabled']) && ($array['disabled'] == $val) ? " disabled=\"disabled\"" : "") . ">" . $pav . "</option>\n";
 							}
 							$return .= "\t\t\t</select>";
 						}
