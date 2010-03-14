@@ -29,9 +29,9 @@ $sqlas = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes`
 if ($sqlas && sizeof($sqlas) > 0) {
 	foreach ($sqlas as $sql) {
 		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas` LIMIT 1");
-		$path1 = explode(",", $path['path']);
+		//$path1 = explode(",", $path['path']);
 
-		if ($path1[(count($path1) - 1)] == $k) {
+		if ($path['path'] == $k) {
 			$sqlkiek = kiek('naujienos', "WHERE `kategorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP'");
 			$info[] = array(" " => "<img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' />", "{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br>", "{$lang['category']['news']}" => $sqlkiek, );
 		}
@@ -81,7 +81,7 @@ if ($viso > 0) {
 			klaida($lang['system']['warning'], "{$lang['category']['no_news']}.");
 		}*/
 	}
-}else {
+}elseif($k > 0) {
   klaida($lang['system']['warning'], "{$lang['category']['no_news']}.");
 }
 

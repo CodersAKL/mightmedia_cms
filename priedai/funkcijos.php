@@ -729,7 +729,7 @@ function random_name($i = 10) {
 function escape($sql) {
 // Stripslashes
 	if (get_magic_quotes_gpc()) {
-		$sql = stripslashes($sql);
+   		$sql = stripslashes($sql);
 	}
 	//Jei ne skaičius
 	if (!isnum($sql) || $sql[0] == '0') {

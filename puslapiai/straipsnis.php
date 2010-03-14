@@ -27,9 +27,9 @@ $sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `ki
 if ($sqlas && sizeof($sqlas) > 0 && !isset($url['m'])) {
 	foreach ($sqlas as $sql) {
 		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas` LIMIT 1", 86400);
-		$path1 = explode(",", $path['path']);
+		//$path1 = explode(",", $path['path']);
 
-		if ($path1[(count($path1) - 1)] == $k) {
+		if ($path['path'] == $k) {
 			$sqlkiek = kiek('straipsniai', "WHERE `kat`=" . escape($sql['id']) . " AND `rodoma`='TAIP'");
 			$info[] = array(" " => "<img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' />", "{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br>", "{$lang['category']['articles']}" => $sqlkiek, );
 		}
@@ -50,8 +50,8 @@ if ($k >= 0 && empty($url['m'])) {
 	$viso = count($sql);
 	if ($viso > 0) {
 		if (teises($pav['teises'], $_SESSION['level'])) {
-			if (sizeof($sql) > 0) {
-        lentele($pav['pavadinimas'], $pav['aprasymas']."<br /><i>{$lang['category']['articles']}: {$viso}</i>");
+			
+        lentele((!empty($pav['pavadinimas'])?$pav['pavadinimas']:$lang['pages']['straipsnis.php']), $pav['aprasymas']."<br /><i>{$lang['category']['articles']}: {$viso}</i>");
 				foreach ($sql as $row) {
 					if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
 						//$text .= "<h1>" . $row['pav'] . "</h1>		<i>" . $row['t_text'] . "</i><br><a href=".url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] ). ">{$lang['article']['read']}</a><hr></hr>\n";
@@ -60,7 +60,7 @@ if ($k >= 0 && empty($url['m'])) {
 				}
 
 				//lentele($pav['pavadinimas'], $text, false, array('Viso', $viso));
-			}
+			
 		} else {
 			klaida($lang['system']['warning'], "{$lang['article']['cant']}.");
 		}
@@ -69,18 +69,19 @@ if ($k >= 0 && empty($url['m'])) {
 		}
 		unset($text, $row, $sql);
 
-	}
+	}elseif($k > 0) 
+			klaida($lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
+    
 } elseif (!empty($url['m'])) {
   	$row = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' AND `id`=" . escape((int)$url['m']) . " LIMIT 1", 86400);
 
 	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape($row['kat']) . " AND `kieno`='straipsniai' ORDER BY `pavadinimas` LIMIT 1", 86400);
-	//$sqlas = mysql_fetch_assoc($sqlas);
 	addtotitle($row['pav']);
 	if (teises($sqlas['teises'], $_SESSION['level'])&&!empty($row['date'])) {
 		$text = "<i>" . $row['t_text'] . "</i><br><hr></hr><br>\n
 		" . $row['f_text'] . "
 		<hr />{$lang['article']['date']}: " . date('Y-m-d H:i:s', $row['date']) . ", {$lang['article']['author']}: <b>" . $row['autorius'] . "</b>";
-		lentele("<a href=\"".url("?id,{$_GET['id']};k,{$row['kat']}\">".$sqlas['pavadinimas'] ). "</a> > " . $row['pav'], $text);
+		lentele((!empty($pav['pavadinimas'])?'':$lang['pages']['straipsnis.php'])."<a href=\"".url("?id,{$_GET['id']};k,{$row['kat']}\">".$sqlas['pavadinimas'] ). "</a> > " . $row['pav'], $text);
 		include ("priedai/komentarai.php");
 
 		komentarai($url['m'], true);

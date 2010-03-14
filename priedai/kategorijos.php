@@ -97,18 +97,18 @@ HTML;
 
 		if (isset($_POST['Teises'])) {
 			if ($kieno == 'vartotojai')
-				$teises = $_POST['Teises'];
+				$teises_in = $_POST['Teises'];
 			else
-				$teises = serialize($_POST['Teises']);
-		}
+				$teises_in = serialize($_POST['Teises']);
+		} else
+      $teises_in = serialize(0);
 
-		if (isset($_POST['path'])) {
+		if (isset($_POST['path']) && !empty($_POST['path'])) {
 		//print_r($_POST);
 			$path = mysql_query1("Select * from`" . LENTELES_PRIESAGA . "grupes` WHERE id=" . escape($_POST['path']) . " Limit 1");
-			if ($path) {
-
-				$teises = (isset($_POST['Teises'])?serialize($_POST['Teises']):0);
-			}
+			/*if ($path) {
+				$teises = (isset($_POST['Teises'])?serialize($_POST['Teises']):serialize(0));
+			}*/
 
 
 			//if ($path['path'] == 0) {
@@ -121,10 +121,10 @@ HTML;
 		}
 
 		if ($kieno == 'vartotojai') {
-			$einfo = mysql_query("SELECT `teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `teises`='" . $teises . "'AND `kieno` = 'vartotojai'");
+			$einfo = mysql_query("SELECT `teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `teises`=" . escape($teises_in) . " AND `kieno` = 'vartotojai'");
 
 			if (sizeof($einfo) > 0) {
-				$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "grupes` (`pavadinimas`, `aprasymas`, `teises`, `pav`, `path`, `kieno`, `mod`) VALUES (" . escape($pavadinimas) . ",  " . escape($aprasymas) . ", " . escape($teises) . ", " . escape($pav) . ", " . escape($pathas) . ", " . escape($kieno) . ", " . escape($moderuoti) . ")");
+				$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "grupes` (`pavadinimas`, `aprasymas`, `teises`, `pav`, `path`, `kieno`, `mod`) VALUES (" . escape($pavadinimas) . ",  " . escape($aprasymas) . ", " . escape($teises_in) . ", " . escape($pav) . ", " . escape($pathas) . ", " . escape($kieno) . ", " . escape($moderuoti) . ")");
 
 				if ($result) {
 					msg($lang['system']['done'], $lang['system']['categorycreated']);
@@ -133,7 +133,7 @@ HTML;
 				klaida($lang['system']['warning'], "{$lang['system']['badlevel']}.");
 			}
 		} else {
-			$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "grupes` (`pavadinimas`,`aprasymas`, `teises`, `pav`, `path`, `kieno`, `mod`) VALUES (" . escape($pavadinimas) . ",  " . escape($aprasymas) . ", " . escape($teises) . ", " . escape($pav) . "," . escape($pathas) . "," . escape($kieno) . "," . escape($moderuoti) . ")");
+			$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "grupes` (`pavadinimas`,`aprasymas`, `teises`, `pav`, `path`, `kieno`, `mod`) VALUES (" . escape($pavadinimas) . ",  " . escape($aprasymas) . ", " . escape($teises_in) . ", " . escape($pav) . "," . escape($pathas) . "," . escape($kieno) . "," . escape($moderuoti) . ")");
 			if ($result) {
 				msg("{$lang['system']['done']}", $lang['system']['categorycreated']);
 				//print_r($path);
@@ -149,14 +149,14 @@ HTML;
 		$pav = strip_tags($_POST['Pav']);
 		$id = ceil((int)$_POST['Kategorijos_id']);
 		if ($kieno == 'vartotojai')
-			$teises = $_POST['Teises'];
+			$teises_in = $_POST['Teises'];
 		else
-			$teises = (isset($_POST['Teises'])?serialize($_POST['Teises']):serialize(0));
+			$teises_in = (isset($_POST['Teises'])?serialize($_POST['Teises']):serialize(0));
 		$moderuoti = ((isset($_POST['punktai'])) ? serialize($_POST['punktai']) : '');
 		$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "grupes` SET
 			`pavadinimas` = " . escape($pavadinimas) . ",
 			`aprasymas` = " . escape($aprasymas) . ",
-			`teises` = " . escape($teises) . ",
+			`teises` = " . escape($teises_in) . ",
 			`pav` = " . escape($pav) . ",
 			`mod` = " . escape($moderuoti) . "
 			WHERE `id`= " . escape($id) . ";
@@ -299,10 +299,7 @@ HTML;
 
 					$kategorijos[$textas] = array("type" => "select", "value" => $teises, "name" => "Teises", "selected" => (isset($extra['teises']) ? input($extra['teises']) : ""));
 				} else {
-					/*$box = "";
-					foreach ($teises as $name => $check) {
-					$box .= "<label><input type=\"checkbox\" " . (isset($extra) && in_array($name, unserialize($extra['teises'])) ? "checked" : "") . " name=\"Teises[]\" value=\"$name\"/> $check</label><br /> ";
-					}*/
+					
 					$kategorijos[$textas] = array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "class"=>"input", "name" => "Teises[]", "id" => "punktai", "selected" => (isset($extra['teises']) ? unserialize($extra['teises']) : "-1"));
 				}
 
