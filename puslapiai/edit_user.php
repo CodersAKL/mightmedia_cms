@@ -55,8 +55,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'contacts_change') {
 		$url = input($_POST['url']);
 		$email = input($_POST['email']);
 		$ep = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE email=" . escape($email) . " LIMIT 1");
-		if(!isset($ep['email'])){
-      $sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
+		$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
+		if(!isset($ep['email']) || (isset($ep['email']) && $ep['email'] == $sql['email'])){
       if(file_exists('images/avatars/'.md5($sql['email']).'.jpeg'))
         rename('images/avatars/'.md5($sql['email']).'.jpeg','images/avatars/'.md5($email).'.jpeg');
 		
