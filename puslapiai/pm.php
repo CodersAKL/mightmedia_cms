@@ -73,11 +73,11 @@ exit;
 // ################# Siunciam zinute ##########################
 if (isset($_POST['action']) && $_POST['action'] == 'pm_send' && isset($_SESSION['username'])) {
 	$from = $_SESSION['username'];
-	$to = input($_POST['to']);
+	$to = $_POST['to'];
 	if ($to == $_SESSION['username']) {
 		$error = "{$lang['user']['pm_error']}<br />";
 	}
-	$title = (isset($_POST['title']) && !empty($_POST['title']) ? input($_POST['title']) : "{$lang['user']['pm_nosubject']}");
+	$title = (isset($_POST['title']) && !empty($_POST['title']) ? $_POST['title'] : "{$lang['user']['pm_nosubject']}");
 	if (!isset($title)) {
 		$title = "{$lang['user']['pm_nosubject']}";
 	}
@@ -166,11 +166,11 @@ if (isset($url['n'])) {
 					</tr>
 					<tr>
 						<td class=\"sarasas\">{$lang['user']['pm_subject']}:</td>
-						<td><input name=\"title\" type=\"text\" size=\"50\" value=\"" . ((isset($user) && (int)$pid > 0) ? "Re: " . trimlink($sql['title'], 40) : "") . "\" style=\"width:95%\"></td>
+						<td><input name=\"title\" type=\"text\" size=\"50\" value=\"" . ((isset($user) && (int)$pid > 0) ? "Re: " . input(trimlink($sql['title'], 40) : "")) . "\" style=\"width:95%\"></td>
 					</tr>
 					<tr>
 						<td valign='top' align='left' class=\"sarasas\">{$lang['user']['pm_message']}:</td>
-						<td><textarea name=\"msg\" rows=\"10\" cols=\"50\" wrap=\"on\" style=\"width:95%\">" . ((isset($user) && (int)$pid > 0) ? "[quote=" . $user . "]" . input(trim(preg_replace(array("#\[quote=(http://)?(.*?)\](.*?)\[/quote]#si", "[/quote]"), "", $sql['msg']))) . "[/quote]\n\n" : "") . "</textarea>
+						<td><textarea name=\"msg\" rows=\"10\" cols=\"50\" wrap=\"on\" style=\"width:95%\">" . ((isset($user) && (int)$pid > 0) ? "[quote=" . $user . "]" . input(trim(preg_replace(array("#\[quote=(http://)?(.*?)\](.*?)\[/quote]#si", "[/quote]"), "", $sql['msg'])) . "[/quote]\n\n" : "")) . "</textarea>
 						<br />
 						" . bbk("msg") . "
 						<br />
@@ -199,7 +199,7 @@ if (isset($url['v'])) {
 		if ($sql) {
       addtotitle($sql['title']);
 			$laiskas = "
-				<div class=\"pm_read\"><b>{$lang['user']['pm_from']}:</b>  " . $sql['from'] . "<br><b>{$lang['user']['pm_to']}:</b> " . $sql['to'] . "<br> <b>{$lang['user']['pm_subject']}:</b> " . (isset($sql['title']) && !empty($sql['title']) ? input(trimlink($sql['title'], 40)) : "{$lang['user']['pm_nosubject']}") . "<br><br><b>{$lang['user']['pm_message']}:</b><br>" . bbcode(wrap($sql['msg'], 40)) . "<br><br></div>
+				<div class=\"pm_read\"><b>{$lang['user']['pm_from']}:</b>  " . input($sql['from']) . "<br><b>{$lang['user']['pm_to']}:</b> " . $sql['to'] . "<br> <b>{$lang['user']['pm_subject']}:</b> " . (isset($sql['title']) && !empty($sql['title']) ? input(trimlink($sql['title'], 40)) : "{$lang['user']['pm_nosubject']}") . "<br><br><b>{$lang['user']['pm_message']}:</b><br>" . input(bbcode(wrap($sql['msg'], 40))) . "<br><br></div>
 				" . (strtolower($sql['to']) == strtolower($_SESSION['username']) ? "<form name=\"replay_pm\" action='".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($sql['from'])) . ";i," . $url['v'] ). "' method=\"post\">
 					<input type=\"submit\" value=\"{$lang['user']['pm_reply']}\"/> <input type=\"button\" value=\"{$lang['user']['pm_delete']}\" onclick=\"location.href='" . url("d," . $url['v'] . ";v,0") . "'\"/>
 				</form>" : "") . "
@@ -225,7 +225,7 @@ if (defined("LEVEL") && LEVEL > 0 && $a == 1 && !isset($s)) {
 			} else {
 				$extra = "<img src='images/pm/pm_read.png' />";
 			}
-			$info[] = array("<input type=\"checkbox\" name='visi' onclick='checkedAll(\"pm\");'/>"=>"<input type=\"checkbox\" name=\"pm_s[]\" value=\"{$row['id']}\" />","" => $extra, "{$lang['user']['pm_subject']}:" => "<a href='".url("?id," . $url['id'] . ";v," . $row['id'] ). "' style=\"display: block\">" . (isset($row['Pavadinimas']) && !empty($row['Pavadinimas']) ? input(trimlink($row['Pavadinimas'], 40)) : "{$lang['user']['pm_nosubject']}") . "</a></div>", "{$lang['user']['pm_from']}:" => user($row['Nuo'], $row['from_id']), "{$lang['user']['pm_time']}:" => kada(date('Y-m-d H:i:s ', $row['Data'])), " " => "<a href='".url("?id," . $url['id'] . ";n,1;u," . str_replace("=", "", base64_encode($row['from'])) . ";i," . $row['id'] ). "'><img src='images/pm/replay.png' border=0 alt=\"{$lang['user']['pm_reply']}\" title=\"{$lang['user']['pm_reply']}\"/></a><a href='" . url('d,' . $row['id'] . '') . "'><img src='images/pm/delete.png' border=0 alt=\"{$lang['user']['pm_delete']}\" title=\"{$lang['user']['pm_delete']}\"/></a>");
+			$info[] = array("<input type=\"checkbox\" name='visi' onclick='checkedAll(\"pm\");'/>"=>"<input type=\"checkbox\" name=\"pm_s[]\" value=\"{$row['id']}\" />","" => $extra, "{$lang['user']['pm_subject']}:" => "<a href='".url("?id," . $url['id'] . ";v," . $row['id'] ). "' style=\"display: block\">" . (isset($row['Pavadinimas']) && !empty($row['Pavadinimas']) ? input(trimlink($row['Pavadinimas'], 40)) : "{$lang['user']['pm_nosubject']}") . "</a></div>", "{$lang['user']['pm_from']}:" => user($row['Nuo'], $row['from_id']), "{$lang['user']['pm_time']}:" => kada(date('Y-m-d H:i:s ', $row['Data'])), " " => "<a href='".url("?id," . $url['id'] . ";n,1;u," . str_replace("=", "", input(base64_encode($row['from']))) . ";i," . $row['id'] ). "'><img src='images/pm/replay.png' border=0 alt=\"{$lang['user']['pm_reply']}\" title=\"{$lang['user']['pm_reply']}\"/></a><a href='" . url('d,' . $row['id'] . '') . "'><img src='images/pm/delete.png' border=0 alt=\"{$lang['user']['pm_delete']}\" title=\"{$lang['user']['pm_delete']}\"/></a>");
 		}
 		lentele("{$lang['user']['pm_inbox']}", puslapiai($p, $limit, $pm_sk, 10) . "<br/><form method=\"post\" id=\"pm\" astion=\"\">" . $bla->render($info) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form><br/>" . puslapiai($p, $limit, $pm_sk, 10));
 	} else {

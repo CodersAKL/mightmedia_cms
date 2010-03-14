@@ -47,13 +47,13 @@ if (isset($_POST['old_pass']) && count($_POST['old_pass']) > 0 && count($_POST['
 // ################# kontaktu keitimas ######################
 if (isset($_POST['action']) && $_POST['action'] == 'contacts_change') {
 	if(!empty($_POST['email']) && check_email($_POST['email'])){
-		$icq = input($_POST['icq']);
-		$msn = input($_POST['msn']);
-		$skype = input($_POST['skype']);
-		$yahoo = input($_POST['yahoo']);
-		$aim = input($_POST['aim']);
-		$url = input($_POST['url']);
-		$email = input($_POST['email']);
+		$icq = $_POST['icq'];
+		$msn = $_POST['msn'];
+		$skype = $_POST['skype'];
+		$yahoo = $_POST['yahoo'];
+		$aim = $_POST['aim'];
+		$url = $_POST['url'];
+		$email = $_POST['email'];
 		$ep = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE email=" . escape($email) . " LIMIT 1");
 		$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
 		if(!isset($ep['email']) || (isset($ep['email']) && $ep['email'] == $sql['email'])){
@@ -72,8 +72,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'contacts_change') {
 }
 // ################ Salies bei miesto nustatymai #############
 if (isset($_POST['action']) && $_POST['action'] == 'country_change') {
-	$miestas = input($_POST['miestas']);
-	$salis = input($_POST['salis']);
+	$miestas = $_POST['miestas'];
+	$salis = $_POST['salis'];
 	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET salis=" . escape($salis) . ", miestas=" . escape($miestas) . " WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
 	msg("{$lang['system']['done']}", "{$lang['user']['edit_updated']}");
 }
@@ -81,12 +81,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'country_change') {
 
 // ################ Pagrindiniu nustatymu keitimas ###################
 if (isset($_POST['action']) && $_POST['action'] == 'default_change') {
-	$vardas = input($_POST['vardas']);
-	$pavarde = input($_POST['pavarde']);
+	$vardas = $_POST['vardas'];
+	$pavarde = $_POST['pavarde'];
 	$metai = (int)$_POST['metai'];
 	$menesis = (int)$_POST['menesis'];
 	$diena = (int)$_POST['diena'];
-	$parasas = input($_POST['parasas']);
+	$parasas = $_POST['parasas'];
 	$gimimas = $metai . "-" . $menesis . "-" . $diena;
 		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET vardas=" . escape($vardas) . ", pavarde=" . escape($pavarde). ", parasas=" . escape($parasas) . ", gim_data=" . escape($gimimas) . " WHERE nick=" . escape($_SESSION['username']) . "");
 	msg("{$lang['system']['done']}", "{$lang['user']['edit_updated']}");
@@ -245,12 +245,12 @@ $avatar .= "<div align='center' id='gravatar'>
 		}
 		$forma = array(
 			"Form" => array("action" => "", "method" => "post", "name" => "pagr_nustatymai"), 
-			"{$lang['user']['edit_name']}:" => array("type" => "text", "value" => $sql['vardas'], "name" => "vardas", "class" => "input"), 
-			"{$lang['user']['edit_secondname']}:" => array("type" => "text", "value" => $sql['pavarde'], "name" => "pavarde", "class" => "input"), 
+			"{$lang['user']['edit_name']}:" => array("type" => "text", "value" => input($sql['vardas']), "name" => "vardas", "class" => "input"), 
+			"{$lang['user']['edit_secondname']}:" => array("type" => "text", "value" => input($sql['pavarde']), "name" => "pavarde", "class" => "input"), 
 			"{$lang['user']['edit_dateOfbirth']}:" => array("type" => "select", "value" => $year, "selected" => (isset($data[0])?$data[0]:(date("Y") - 7)), "class" => "select", "name" => "metai"),
 			" " => array("type" => "select", "class" => "select", "value" => $month, "selected" => (isset($data[1])?$data[1]:1), "name" => "menesis"),
 			"\r " => array("type" => "select", "class" => "select", "value" => $day, "selected" => (isset($data[2])?$data[2]:1), "name" => "diena"),
-			"{$lang['user']['edit_signature']}" => array("type" => "textarea", "class" =>	"input", "value" => $sql['parasas'], "name" => "parasas"), 
+			"{$lang['user']['edit_signature']}" => array("type" => "textarea", "class" =>	"input", "value" => input($sql['parasas']), "name" => "parasas"), 
 			" \r \n" => array("type" => "hidden", "name" => "action", "value" => "default_change"), 
 			"" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}")
 		);
