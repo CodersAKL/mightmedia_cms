@@ -31,7 +31,7 @@ if ($sqlas && sizeof($sqlas) > 0 && !isset($url['m'])) {
 
 		if ($path['path'] == $k) {
 			$sqlkiek = kiek('straipsniai', "WHERE `kat`=" . escape($sql['id']) . " AND `rodoma`='TAIP'");
-			$info[] = array(" " => "<img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' />", "{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br>", "{$lang['category']['articles']}" => $sqlkiek, );
+			$info[] = array(" " => "<img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' />", "{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'>" . input($sql['pavadinimas']) . "</a></h2>" . $sql['aprasymas'] . "<br>", "{$lang['category']['articles']}" => $sqlkiek, );
 		}
 	}
 	include_once ("priedai/class.php");
@@ -81,7 +81,7 @@ if ($k >= 0 && empty($url['m'])) {
 		$text = "<i>" . $row['t_text'] . "</i><br><hr></hr><br>\n
 		" . $row['f_text'] . "
 		<hr />{$lang['article']['date']}: " . date('Y-m-d H:i:s', $row['date']) . ", {$lang['article']['author']}: <b>" . $row['autorius'] . "</b>";
-		lentele((!empty($pav['pavadinimas'])?'':$lang['pages']['straipsnis.php'])."<a href=\"".url("?id,{$_GET['id']};k,{$row['kat']}\">".$sqlas['pavadinimas'] ). "</a> > " . $row['pav'], $text);
+		lentele((!empty($pav['pavadinimas'])?'':$lang['pages']['straipsnis.php'])."<a href=\"".url("?id,{$_GET['id']};k,{$row['kat']}\">".input($sqlas['pavadinimas'])). "</a> > " . input($row['pav']), $text);
 		include ("priedai/komentarai.php");
 
 		komentarai($url['m'], true);

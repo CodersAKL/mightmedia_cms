@@ -63,7 +63,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'siusti') {
 			ini_set("sendmail_from", $conf['Pastas']);
 			mail($email, "=?UTF-8?Q?".strip_tags($conf['Pavadinimas']) ." ". $lang['pass']['remain']."?=", $msg, "From: " . $conf['Pavadinimas'] . "<" . $conf['Pastas'] . ">\r\nContent-type: text/html; charset=utf-8");
 			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `slaptas` = " . escape($slaptas) . " WHERE nick=" . escape($sql['nick']) . " LIMIT 1");
-			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['pass']['remain']}: Nick: " . $sql['nick'] . " Emailas: " . $sql['email']) . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
+			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['pass']['remain']}: Nick: " . $sql['nick'] . " Emailas: " . input($sql['email'])) . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
 
 			msg($lang['system']['done'], "{$lang['pass']['sent']}.");
 			echo "<img src='priedai/human.php' style='display:none' />";
