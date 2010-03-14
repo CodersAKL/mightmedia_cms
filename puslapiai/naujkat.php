@@ -58,28 +58,31 @@ if ($viso > 0) {
 		lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
 	}
 	if ($k >= 0) {
-		if (count($sql) > 0) {
+		//if (count($sql) > 0) {
 			if (teises($sqlas['teises'], $_SESSION['level']) || LEVEL == 1) {
 
 				//$text = '<ul>';
-				if (sizeof($sql) > 0) {
+				//if (sizeof($sql) > 0) {
+				//echo "asd";
 					foreach ($sql as $row) {
 						if (isset($conf['puslapiai']['naujienos.php']['id'])) {
-							if (isset($conf['puslapiai']['naujienos.php']['id'])) {
+							
 								$extra = "<div style='float: right;'>" . (($row['kom'] == 'taip') ? "<a href='".url("?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] ). "'>{$lang['news']['read']} • {$lang['news']['comments']} (" . $row['viso'] . ")</a>" : "<a href='".url("?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id']) . "'>{$lang['news']['read']}</a>") . "</div><br />";
-							}
-							lentele($row['pavadinimas'], "<table><tr valign='top'><td>" . $row['naujiena'] . "</td></tr></table>" . $extra, false, array(menesis((int)date('m', strtotime(date('Y-m-d H:i:s ', $row['data'])))), (int)date('d', strtotime(date('Y-m-d H:i:s ', $row['data'])))));
+							
+							lentele($row['pavadinimas'], "<table><tr valign='top'><td>" . $row['naujiena'] . "</td></tr></table>" . $extra, false, array(menesis((int)date('m', strtotime(date('Y-m-d H:i:s', $row['data'])))), (int)date('d', strtotime(date('Y-m-d H:i:s', $row['data'])))));
 						}
 					}
-				}
+				//} 
 			
 			} else {
 				klaida($lang['system']['warning'], "{$lang['category']['cant']}.");
 			}
-		} else {
+		/*} else {
 			klaida($lang['system']['warning'], "{$lang['category']['no_news']}.");
-		}
+		}*/
 	}
+}else {
+  klaida($lang['system']['warning'], "{$lang['category']['no_news']}.");
 }
 
 ?>

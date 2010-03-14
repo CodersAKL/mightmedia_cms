@@ -103,12 +103,11 @@ HTML;
 		}
 
 		if (isset($_POST['path'])) {
+		//print_r($_POST);
 			$path = mysql_query1("Select * from`" . LENTELES_PRIESAGA . "grupes` WHERE id=" . escape($_POST['path']) . " Limit 1");
 			if ($path) {
-				/*if ($kieno == 'vartotojai')
-					$teises = $_POST['Teises'];
-				else*/
-				$teises = serialize($_POST['Teises']);
+
+				$teises = (isset($_POST['Teises'])?serialize($_POST['Teises']):0);
 			}
 
 

@@ -27,26 +27,8 @@ include_once (ROOT."priedai/kategorijos.php");
 kategorija("naujienos", true);
 $sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `path`=0 ORDER BY `id` DESC");
 if (sizeof($sql) > 0) {
-	/*foreach ($sql as $row) {
 
-		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
-		if (sizeof($sql2) > 0) {
-			$subcat = '';
-			foreach ($sql2 as $path) {
-
-				$subcat .= "->" . $path['pavadinimas'];
-				$kategorijos[$row['id']] = $row['pavadinimas'];
-				$kategorijos[$path['id']] = $row['pavadinimas'] . $subcat;
-
-
-			}
-		} else {
-			$kategorijos[$row['id']] = $row['pavadinimas'];
-		}
-
-
-	}*/
-	$kategorijoss=cat('naujienos', 0);
+	$kategorijos = cat('naujienos', 0);
 }
 /*else
 {
@@ -115,7 +97,7 @@ $komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
 			`kom` = " . escape($komentaras) . "
 			WHERE `id`=" . escape($id) . ";
 			");
-	msg($lang['system']['done'], $lang['admin']['news_created']);
+	msg($lang['system']['done'], $lang['user']['edit_updated']);
 }
 
 //Išsaugojam naujieną
@@ -160,7 +142,7 @@ if (isset($_GET['v'])) {
 
 	if ($_GET['v'] == 4) {
 		if (isset($naujienos)) {
-			$redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,1", "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "select", "value" => $naujienos, "name" => "edit_new"), "{$lang['admin']['edit']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "{$lang['admin']['delete']}:" => array("type" => "submit", "name" => "action", "extra" => "onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"","value" => "{$lang['admin']['delete']}"));
+			$redagavimas = array("Form" => array("action" => url("?id,{$_GET['id']};a,{$_GET['a']};v,1"), "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "select", "value" => $naujienos, "name" => "edit_new"), "{$lang['admin']['edit']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "{$lang['admin']['delete']}:" => array("type" => "submit", "name" => "action", "extra" => "onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"","value" => "{$lang['admin']['delete']}"));
 			lentele($lang['admin']['edit'], $bla->form($redagavimas));
 		} else {
 			klaida($lang['system']['warning'], $lang['system']['no_items']);
@@ -168,7 +150,7 @@ if (isset($_GET['v'])) {
 	} elseif ($_GET['v'] == 1 || isset($_GET['h'])) {
 		if ($i = 1) {
 			$kom = array('taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no']);
-			$naujiena = array("Form" => array("action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pavadinimas'] : ''), "name" => "pav", "class" => "input"), $lang['admin']['komentarai'] => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input", "class" => "input"), "{$lang['admin']['news_category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')), "{$lang['admin']['news_text']}:" => array("type" => "string", "value" =>
+			$naujiena = array("Form" => array("action" => url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ""), "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pavadinimas'] : ''), "name" => "pav", "class" => "input"), $lang['admin']['komentarai'] => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input", "class" => "input"), "{$lang['admin']['news_category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')), "{$lang['admin']['news_text']}:" => array("type" => "string", "value" =>
 				editorius('jquery', 'standartinis', array('naujiena' => $lang['admin']['news_preface'], 'placiau' => $lang['admin']['news_more']), array('naujiena' => (isset($extra)) ? $extra['naujiena'] : $lang['admin']['news_preface'], 'placiau' => (isset($extra)) ? $extra['daugiau'] : $lang['admin']['news_more']))), (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create']));
 
 			if (isset($extra)) {
