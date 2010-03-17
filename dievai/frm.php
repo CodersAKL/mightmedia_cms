@@ -7,7 +7,7 @@
 			var order = $('#test-list').sortable('serialize');
 			$("#la").show("slow");
 			$("#la").hide("slow");
-			$.post("<?php echo url("?id,999;a," . $_GET['a']); ?>",{order:order});
+			$.post("<?php echo url("?id,".$_GET['id'].";a," . $_GET['a']); ?>",{order:order});
 		}
     });
         $("#test-list2").sortable({
@@ -17,7 +17,7 @@
 			var order2 = $('#test-list2').sortable('serialize');
 			$("#la2").show("slow");
 			$("#la2").hide("slow");
-			$.post("<?php echo url("?id,999;a," . $_GET['a']); ?>",{order2:order2});
+			$.post("<?php echo url("?id,".$_GET['id'].";a," . $_GET['a']); ?>",{order2:order2});
 		}
     });
 });

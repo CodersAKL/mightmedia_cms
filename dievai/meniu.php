@@ -8,7 +8,7 @@
 				var order = $('#test-list').sortable('serialize');
 				$("#la").show("slow");
 				$("#la").hide("slow");
-				$.post("<?php echo url('?id,999;a,'.$_GET['a'].';ajax,1');?>",{order:order});
+				$.post("<?php echo url('?id,'.$_GET['id'].';a,'.$_GET['a'].';ajax,1');?>",{order:order});
 			}
 		});
 		$("select[multiple]").asmSelect({

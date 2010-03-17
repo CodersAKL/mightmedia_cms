@@ -8,7 +8,7 @@
 		var order = $('#kaire').sortable('serialize');
 		$("#la").show("slow");
 		$("#la").hide("slow");
-		$.post("<?php echo "?" . $_SERVER['QUERY_STRING']; ?>",{order:order});
+		$.post("<?php echo url("?id,".$_GET['id'].";a," . $_GET['a']); ?>",{order:order});
 
 		}
     });
@@ -19,7 +19,7 @@
 		var order = $('#desine').sortable('serialize');
 		$("#la").show("slow");
 		$("#la").hide("slow");
-		$.post("<?php echo "?" . $_SERVER['QUERY_STRING']; ?>",{order:order});
+		$.post("<?php echo url("?id,".$_GET['id'].";a," . $_GET['a']); ?>",{order:order});
 
 		}
     });
