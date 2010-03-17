@@ -947,7 +947,8 @@ function apvalinti($sk, $kiek = 2) {
  */
 function naujas($data, $nick = null) {
 	if (isset($_SESSION['lankesi'])) {
-		return (($data > $_SESSION['lankesi']) ? '<img src="'.ROOT.'images/icons/new.png" onload="new Effect.Pulsate(this)" alt="New" border="0" style="vertical-align: middle;" />' : '');
+		return (($data > $_SESSION['lankesi']) ? '<img src="'.ROOT.'images/icons/new.png" onload="$(this).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+" alt="New" border="0" style="vertical-align: middle;" />' : '');
 	} else {
 		return '';
 	}
