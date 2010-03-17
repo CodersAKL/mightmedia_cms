@@ -11,7 +11,7 @@
  **/
 
 if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
-	$text = '';
+	$text = ''; 
 	$extra = '';
 	$link = '';
 	//Forume
