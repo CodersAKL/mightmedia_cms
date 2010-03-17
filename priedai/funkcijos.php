@@ -98,7 +98,7 @@ function header_info() {
 }
 
 function addtotitle($add) {
-	$add = input($add);
+	//$add = input($add);
 	echo <<<HTML
 		<script type="text/javascript">
 		var cur_title = new String(document.title);

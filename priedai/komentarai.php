@@ -76,7 +76,7 @@ function komentarai($id, $hide = false) {
 					}
 				}
 				$nick_id = (isset($_SESSION['id']) ? $_SESSION['id'] : 0);
-				$nick = (isset($_SESSION['username']) ? $_SESSION['username'] : (!empty($_POST['name']) ? serialize(array($_POST['name'], getip())) : serialize(array($lang['system']['guest'], getip()))));
+				$nick = (isset($_SESSION['username']) ? $_SESSION['username'] : (!empty($_POST['name']) ? serialize(array(trimlink(strip_tags($_POST['name']), 9), getip())) : serialize(array($lang['system']['guest'], getip()))));
 				mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "kom` (`kid`, `pid`, `zinute`, `nick`, `nick_id`, `data`) VALUES (" . escape($_POST['id']) . ", " . escape($page) . ", " . escape($_POST['n_kom']) . ", " .
 					escape($nick) . ", " . escape($nick_id) . ", '" . time() . "')");
 				unset($_POST['Naujas']);
