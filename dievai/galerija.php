@@ -420,7 +420,7 @@ if (isset($_GET['v'])) {
 		if (sizeof($sql) > 0) {
 
 			$forma = array(
-				"Form" => array("enctype" => "multipart/form-data", "action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . "", "method" => "post", "name" => "action"),
+				"Form" => array("enctype" => "multipart/form-data", "action" => url("?id," . $_GET['id'] . ";a," . $_GET['a']), "method" => "post", "name" => "action"),
 				(!isset($extra)) ? "{$lang['admin']['gallery_file']}:" : "" => array("name" => "failas", "type" => (!isset($extra)) ? "file" : "hidden", "value" => ""),
 				"{$lang['admin']['gallery_title']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', "name" => "Pavadinimas"), 
 				"{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '')), 

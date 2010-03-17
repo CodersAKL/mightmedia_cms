@@ -8,7 +8,7 @@
 				var order = $('#test-list').sortable('serialize');
 				$("#la").show("slow");
 				$("#la").hide("slow");
-				$.post("<?php echo "?" . $_SERVER['QUERY_STRING']; ?>",{order:order});
+				$.post("<?php echo url('?id,999;a,'.$_GET['a'].';ajax,1');?>",{order:order});
 			}
 		});
 		$("select[multiple]").asmSelect({
@@ -38,30 +38,27 @@
 
 unset($text);
 if (!defined("LEVEL") || LEVEL > 1 || !defined("OK")) {
-	header('location: http://' . $_SERVER["HTTP_HOST"] . '');
-	exit;
+	redirect('location: http://' . $_SERVER["HTTP_HOST"] . '');
 }
 if (isset($_POST['order'])) {
-	$array = str_replace("&", ",", $_POST['order']);
-	$array = str_replace("listItem[]=", "", $array);
-	$array = explode(",", $array);
-	//$array=array($array);
-	//print_r($array);
-	//$sql=array();
-	foreach ($array as $position => $item):
+	$case_place = ''; $where = '';
+	/*
+	 * Post pavyzdys: listItem[]=19&listItem[]=17&listItem[]=2&listItem[]=20&listItem[]=15&listItem[]=1&listItem[]=14&listItem[]=3&listItem[]=8&listItem[]=7&listItem[]=9&listItem[]=13
+	 */
+	parse_str($_POST['order'], $array);	//paverciam i masyva
+
+	foreach ($array['listItem'] as $position => $item):
 		
 		$case_place .= "WHEN " . (int)$item . " THEN '" . (int)$position . "' ";
 		//$case_type .= "WHEN $phone_id THEN '" . $number['type'] . "' ";
 		$where .= "$item,";
 	endforeach;
 	$where = rtrim($where, ", ");
-	$sqlas .= "UPDATE `" . LENTELES_PRIESAGA . "page` SET `place`=  CASE id " . $case_place . " END WHERE id IN (" . $where . ")";
+	$sqlas = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `place`=  CASE id " . $case_place . " END WHERE id IN (" . $where . ")";
 	
 	echo $sqlas;
 	$result = mysql_query1($sqlas);
 	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
-	
-
 } else {
 	$tekstas = "
 <div class=\"btns\">

@@ -6,11 +6,13 @@ header('P3P: CP="NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM"');
 if (!isset($_SESSION))
 	session_start();
 define('LEVEL', $_SESSION['level']);
-	/* detect root */
+/* detect root */
 $out_page = true;
 $inc="priedai/conf.php";
 $root = '';
-while(!file_exists($root.$inc) && strlen($root)<70 ) { $root="../".$root;}
+while(!file_exists($root.$inc) && strlen($root)<70 ) {
+	$root="../".$root;
+}
 
 #check if the file actually exists or if we crashed out.
 if (!file_exists($root.$inc)) {
@@ -19,7 +21,7 @@ if (!file_exists($root.$inc)) {
 if (is_file($root.'priedai/conf.php') && filesize($root.'priedai/conf.php') > 1) {
 
 	if (!defined('ROOT')) {
-	//_ROOT = $root;
+		//_ROOT = $root;
 		define('ROOT','../');
 	} else {
 		define('ROOT', $root);
@@ -42,7 +44,7 @@ if (is_file($root.'priedai/conf.php') && filesize($root.'priedai/conf.php') > 1)
 if (empty($_SESSION['username']) || $_SESSION['level']!=1) {
 	redirect(ROOT.'index.php');
 }
-if(isset($_GET['do'])){
+if(isset($_GET['do'])) {
 	unset($_SESSION['username'],$_SESSION['level'],$_SESSION['password']);
 	redirect(ROOT.'index.php');
 }
@@ -65,12 +67,12 @@ function build_tree($data, $id=0, $active_class='active') {
 	$re="";
 	foreach ($data[$id] as $row) {
 		if (isset($data[$row['id']])) {
-			$re.= "<li>".$row['pavadinimas']."<a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';d,' . $row['id'] ). "\" style=\"align:right\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"".ROOT."images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\" align=\"right\" /></a>
+			$re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a><a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';d,' . $row['id'] ). "\" style=\"align:right\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"".ROOT."images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\" align=\"right\" /></a>
 <a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';r,' . $row['id'] ). "\" style=\"align:right\"><img src=\"".ROOT."images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\" align=\"right\" /></a>
 <a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';e,' . $row['id'] ). "\" style=\"align:right\"><img src=\"".ROOT."images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" align=\"right\" /></a><ul>";
 			$re.=build_tree($data, $row['id'],$active_class);
 			$re.= "</ul></li>";
-		} else $re.= "<li>".$row['pavadinimas']."
+		} else $re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a>
 <a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';d,' . $row['id'] ). "\" style=\"align:right\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"".ROOT."images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\" align=\"right\" /></a>
 <a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';r,' . $row['id'] ). "\" style=\"align:right\"><img src=\"".ROOT."images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\" align=\"right\" /></a>
 <a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';e,' . $row['id'] ). "\" style=\"align:right\"><img src=\"".ROOT."images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" align=\"right\" /></a>
@@ -80,10 +82,13 @@ function build_tree($data, $id=0, $active_class='active') {
 }
 ?>
 
+<?php
+//Jeigu uzklausa yra AJAX
+if (empty($_GET['ajax'])):?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-    <base href="<?php echo adresas(); ?>"></base>
+		<base href="<?php echo adresas(); ?>"></base>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title><?php echo input(strip_tags($conf['Pavadinimas']) . ' - Admin')?></title>
 		<meta name="description" content="" />
@@ -137,18 +142,18 @@ function build_tree($data, $id=0, $active_class='active') {
 					collapsed: true,
 					unique: true
 				});
-				
-				});
+
+			});
 		</script>
 	</head>
 	<body>
 		<div class="container" id="container">
 			<div  id="header">
 				<div id="profile_info">
-					<?php
-					$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`='" . $_SESSION['username'] . "' LIMIT 1",360);
-					echo avatar($sql['email'],41);
-					?>
+						<?php
+						$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`='" . $_SESSION['username'] . "' LIMIT 1",360);
+	echo avatar($sql['email'],41);
+	?>
 					<p><?php echo sprintf($lang['user']['hello'], '<strong>'.$_SESSION['username'].'</strong>'); ?>. <a href="<?php echo url('?id,999;do,logout');?>"><?php echo $lang['user']['logout']; ?></a></p>
 					<p><?php echo $lang['system']['warning'].' '. $lang['admin']['logai']; ?>: <?php echo kiek('logai'); ?>. <a href="<?php echo url("?id,999;a,".$admin_pagesid['logai']); ?>"><?php echo $lang['system']['allcanread']; ?></a></p>
 					<p class="last_login"><?php echo $lang['admin']['user_lastvisit']; ?>: <?php echo date('Y-m-d H:i:s',$_SESSION['lankesi']);?></p>
@@ -159,20 +164,31 @@ function build_tree($data, $id=0, $active_class='active') {
 			<div id="content" >
 
 				<div id="top_menu" class="clearfix">
-					<ul class="sf-menu"> <!-- DROPDOWN MENU -->
-						<?php
+					<ul class="sf-menu" id="admin_menu"> <!-- DROPDOWN MENU -->
+						<li ><a href="<?php echo adresas().'../';?>"><?php echo $lang['system']['tree']; ?></a>
+							<ul>
 
-						$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`='Y' ORDER BY `place` ASC");
-						foreach ($res as $row) {
-							if(teises($row['teises'],$_SESSION['level'])) {
-								$data1[$row['parent']][] = $row;
-							}
-						}
-						echo build_menu($data1);
+									<?php
 
+									$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`='Y' ORDER BY `place` ASC");
+									foreach ($res as $row) {
+										if(teises($row['teises'],$_SESSION['level'])) {
+											$data1[$row['parent']][] = $row;
+										}
+									}
+									echo build_menu($data1);
 
-						?>
-
+	?>
+							</ul>
+						</li>
+						<li><a href="http://mightmedia.lt">MightMedia TVS</a>
+							<ul>
+								<li><a href="http://mightmedia.lt/help/<?php echo basename($conf['kalba'],'.php'); ?>/">TVS Pagalba</a></li>
+								<li><a href="#" onclick="alert('Jūs naudojate MightMedia TVS v'+<?php echo versija(); ?>); return false;">Tikrinti versiją</a></li>
+								<li><a>Pranešti apie klaidą</a></li>
+								<li><a>Apie MightMedia TVS</a></li>
+							</ul>
+						</li>
 					</ul>
 					<a href="<?php echo adresas(); ?>../" id="visit" class="right"><?php echo $lang['system']['to_page']; ?></a>
 				</div>
@@ -182,40 +198,65 @@ function build_tree($data, $id=0, $active_class='active') {
 							<h2 class="ico_mug"><?php echo $lang['system']['dashboard']; ?></h2>
 							<div class="clearfix">
 								<div class="left quickview">
-									
+
 									<div style="width:180px;" id="version_check">Tikrinama versija...</div>
-								
+
 									<script type="text/javascript">
-											$.getJSON('<?php echo $update_url; ?>');
-											function versija(data) {
-												$('#version_check').html(
-													'<h3>'+data.title+'</h3>'+
-													'' + data.about + ' '+
-													(data.log?'<span onclick="$(\'#version_check_more\').toggle(\'fast\')" style="cursor:pointer" class="number">▼</span><br />':'') +
-													'<div id="version_check_more" style="display:none"></div>'+
-													(data.url?'Nuoroda: <span class="number"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':'')
-												);
-												if (data.log) {
-													$(data.log).each(function(json,info){
-														$('#version_check_more').append('<li>'+info+'</li>');
-													});
-													$('#version_check_more').wrapInner('<ol>');
-												}
+										$.getJSON('<?php echo $update_url; ?>');
+										function versija(data) {
+											$('#version_check').html(
+											'<h3>'+data.title+'</h3>'+
+												'Naujausia versija:' + data.version + '<br />' +
+												'' + data.about + ' '+
+												(data.log?'<span onclick="$(\'#version_check_more\').toggle(\'fast\')" style="cursor:pointer" class="number">▼</span><br />':'') +
+												'<div id="version_check_more" style="display:none"></div>'+
+												(data.url?'Nuoroda: <span class="number"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':'')
+										);
+											if (data.log) {
+												$(data.log).each(function(json,info){
+													$('#version_check_more').append('<li>'+info+'</li>');
+												});
+												$('#version_check_more').wrapInner('<ol>');
 											}
+											if (data.menu.<?php echo basename($conf['kalba'],'.php'); ?>) {
+												$(data.menu.<?php echo basename($conf['kalba'],'.php'); ?>).each(function(json,menu){
+													$('#admin_menu').append('<li>'+ (typeof menu == 'object'?'<a href="">'+data.title+'</a>'+arr2html(menu):menu)+'</li>');
+												});
+											} else {
+												$(data.menu.en).each(function(json,menu){
+													$('#admin_menu').append('<li>'+ (typeof menu == 'object'?arr2html(menu):menu)+'</li>');
+												});
+											}
+										}
+										function arr2html(arr) {
+											var html='';
+											if(typeof arr == 'object') {
+												html+='<ul>';
+												for(var i in arr) {
+													html+='<li>';
+													html+=typeof arr[i] == 'object'?(i+arr2html(arr[i])):arr[i];
+													html+='</li>';
+												}
+												html+='</ul>';
+											}
+											return html;
+										}
+
+
 									</script>
 								</div>
 								<div class="quickview left">
-									<?php
+										<?php
 										/*
 										SELECT (SELECT COUNT(*) as total FROM 23_kas_prisijunges WHERE timestamp BETWEEN UNIX_TIMESTAMP(NOW() - INTERVAL 1 DAY) AND UNIX_TIMESTAMP()) as siandien,
 										(SELECT COUNT(*) as total FROM 23_kas_prisijunges WHERE timestamp BETWEEN UNIX_TIMESTAMP(NOW() - INTERVAL 2 DAY) AND UNIX_TIMESTAMP(NOW() - INTERVAL 1 DAY)) as vakar, (SELECT COUNT(*) as total FROM 23_kas_prisijunges WHERE timestamp BETWEEN UNIX_TIMESTAMP(NOW() - INTERVAL 3 DAY) AND UNIX_TIMESTAMP(NOW() - INTERVAL 2 DAY)) as uzvakar
 										*/
-									$stats = mysql_query1("SELECT
+										$stats = mysql_query1("SELECT
 										(SELECT COUNT(*) as total FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE timestamp BETWEEN UNIX_TIMESTAMP(NOW() - INTERVAL 1 DAY) AND UNIX_TIMESTAMP()) as siandien,
 										(SELECT COUNT(*) as total FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE timestamp BETWEEN UNIX_TIMESTAMP(NOW() - INTERVAL 2 DAY) AND UNIX_TIMESTAMP(NOW() - INTERVAL 1 DAY)) as vakar,
 										(SELECT COUNT(*) as total FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE timestamp BETWEEN UNIX_TIMESTAMP(NOW() - INTERVAL 3 DAY) AND UNIX_TIMESTAMP(NOW() - INTERVAL 2 DAY)) as uzvakar
 										LIMIT 1");
-									$sql = mysql_query1("SELECT count(id) as svec,
+										$sql = mysql_query1("SELECT count(id) as svec,
 										(SELECT count(id) FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE `timestamp`>'" . $timeout . "' AND user!='Svečias') as users, 
 										(SELECT count(id) FROM " . LENTELES_PRIESAGA . "users) as useriai, 
 										(SELECT `nick` FROM " . LENTELES_PRIESAGA . "users order by id DESC LIMIT 1 ) as useris,
@@ -224,10 +265,10 @@ function build_tree($data, $id=0, $active_class='active') {
 										FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE `timestamp`>'" . $timeout . "' AND user='Svečias'
 										LIMIT 1");
 
-									$progresas = procentai((!empty($stats['uzvakar'])?$stats['uzvakar']:1),(!empty($stats['vakar'])?$stats['vakar']:1));
-									$memberis = user($sql['useris'], $sql['userid'], $sql['lvl']);
+										$progresas = procentai((!empty($stats['uzvakar'])?$stats['uzvakar']:1),(!empty($stats['vakar'])?$stats['vakar']:1));
+										$memberis = user($sql['useris'], $sql['userid'], $sql['lvl']);
 
-									$text = <<<HTML
+										$text = <<<HTML
 					<ul>
 					<li>{$lang['online']['users']} {$lang['online']['usrs']}: <span class="number">{$sql['users']}</span></li>
 					<li>{$lang['online']['users']} {$lang['online']['guests']}: <span class="number">{$sql['svec']}</span></li>
@@ -239,9 +280,9 @@ function build_tree($data, $id=0, $active_class='active') {
 
 HTML;
 
-									//unset($sql);
+										//unset($sql);
 
-									?>
+	?>
 
 									<h3><?php echo $lang['system']['some_data']; ?></h3>
 									<?php echo $text; unset($text); ?>
@@ -253,15 +294,15 @@ HTML;
 								</div>
 							</div>
 						</div><!-- end #dashboard -->
-						<?php
-						$sqli = mysql_query1("SELECT FROM_UNIXTIME(`timestamp`,'%H') as `time`, count(*) as `viso` FROM `" . LENTELES_PRIESAGA . "kas_prisijunges` WHERE `timestamp` BETWEEN UNIX_TIMESTAMP(NOW() - INTERVAL 1 DAY) AND UNIX_TIMESTAMP() group by `time`");
-						foreach($sqli as $sql) {
-							$data[] = "[{$sql['time']}, {$sql['viso']}]";
-						}
-						//$data[0] = "[1, {$stats['uzvakar']}]";
-						//$data[1] = "[2, {$stats['vakar']}]";
-						//$data[2] = "[3, {$stats['siandien']}]";
-						?>
+							<?php
+							$sqli = mysql_query1("SELECT FROM_UNIXTIME(`timestamp`,'%H') as `time`, count(*) as `viso` FROM `" . LENTELES_PRIESAGA . "kas_prisijunges` WHERE `timestamp` BETWEEN UNIX_TIMESTAMP(NOW() - INTERVAL 1 DAY) AND UNIX_TIMESTAMP() group by `time`");
+							foreach($sqli as $sql) {
+								$data[] = "[{$sql['time']}, {$sql['viso']}]";
+							}
+							//$data[0] = "[1, {$stats['uzvakar']}]";
+							//$data[1] = "[2, {$stats['vakar']}]";
+							//$data[2] = "[3, {$stats['siandien']}]";
+							?>
 						<script type="text/javascript">
 							$.plot($("#placeholder"), [[<?php echo implode(', ',$data); ?>]], {
 								grid: {
@@ -276,12 +317,7 @@ HTML;
 							<h2 class="ico_mug"><?php echo $lang['system']['control']; ?></h2>
 
 							<ul>
-								<?php
-
-								echo $admin_tools;
-								?>
-
-
+									<?php echo $admin_tools; ?>
 							</ul>
 						</div><!-- end #shortcuts -->
 					</div>
@@ -297,23 +333,19 @@ HTML;
 								}
 							}
 							echo build_tree($data2);
-
-
 							?>
-
-
-
 						</ul>
 
 					</div><!-- end #sidebar -->
 				</div><!-- end #content_main -->
 
-				<?php if (isset($url['a']) && file_exists(dirname(__file__) . "/" . $admin_pages[(int)$url['a']].'.php') && isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
-					include_once (dirname(__file__) . "/" . $admin_pages[(int)$url['a']].'.php');
-				} else {
-
-					include_once (dirname(__file__) . "/pokalbiai.php");
-				}?>
+					<?php
+					if (isset($url['a']) && file_exists(dirname(__file__) . "/" . $admin_pages[(int)$url['a']].'.php') && isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
+						include_once (dirname(__file__) . "/" . $admin_pages[(int)$url['a']].'.php');
+					} else {
+						include_once (dirname(__file__) . "/pokalbiai.php");
+					}
+					?>
 				<!-- end #postedit -->
 
 
@@ -322,9 +354,9 @@ HTML;
 					<div class="panel photo left">
 						<h2 class="ico_mug"><?php echo $lang['info']['unpics_title']; ?></h2>
 						<ul class="clearfix">
-							<?php
-							if(isset($admin_pagesid['galerija'])) {
-								$q = mysql_query1("SELECT
+								<?php
+								if(isset($admin_pagesid['galerija'])) {
+									$q = mysql_query1("SELECT
   `" . LENTELES_PRIESAGA . "galerija`.`pavadinimas`,
   `" . LENTELES_PRIESAGA . "galerija`.`id` ,
   `" . LENTELES_PRIESAGA . "galerija`.`apie`,
@@ -340,12 +372,12 @@ HTML;
   ORDER BY
   `" . LENTELES_PRIESAGA . "galerija`.`data` DESC LIMIT 8
   ");
-								foreach($q as $row) {
-									echo 	'<li><img width="80" src="'.ROOT.'images/galerija/mini/' . $row['file'].'" alt="photo"/><span>
+									foreach($q as $row) {
+										echo 	'<li><img width="80" src="'.ROOT.'images/galerija/mini/' . $row['file'].'" alt="photo"/><span>
 <a href="'.url("?id,999;a,{$admin_pagesid['galerija']};p," . $row['id'] ). '"><img src="img/accept.jpg" alt="accept"/></a><a href="'.url("?id,999;a,{$admin_pagesid['galerija']};t," . $row['id'] ).'"><img src="img/cancel.jpg"  alt="deny"/></a></span></li>';
-								}
-							}
-							?>
+		}
+	}
+	?>
 
 						</ul>
 
@@ -354,46 +386,46 @@ HTML;
 						<h2 class="ico_mug"><?php echo $lang['info']['unpublished']; ?></h2>
 
 						<ul>
-							<?php
+								<?php
 
-							$sqli = mysql_query1("SELECT count(id) as kom,
+								$sqli = mysql_query1("SELECT count(id) as kom,
 (SELECT count(id) FROM " . LENTELES_PRIESAGA . "naujienos WHERE " . LENTELES_PRIESAGA . "naujienos.rodoma='NE') as news,
 (SELECT count(id) FROM " . LENTELES_PRIESAGA . "straipsniai WHERE " . LENTELES_PRIESAGA . "straipsniai.rodoma='NE') as straipsniai2,
 (SELECT count(id) FROM " . LENTELES_PRIESAGA . "siuntiniai WHERE " . LENTELES_PRIESAGA . "siuntiniai.rodoma='NE') as siuntiniai,
 (SELECT count(id) FROM " . LENTELES_PRIESAGA . "galerija WHERE " . LENTELES_PRIESAGA . "galerija.rodoma='NE') as foto,
 (SELECT count(id) FROM " . LENTELES_PRIESAGA . "nuorodos WHERE " . LENTELES_PRIESAGA . "nuorodos.active='NE') as nuorodos
 FROM " . LENTELES_PRIESAGA . "kom");
-							//$sql = mysql_fetch_assoc($sql);
-							foreach ($sqli as $sql) {
-								$text = '';
-								if (isset($conf['puslapiai']['naujienos.php']['id'])) {
-									$text .= '<li class="even"><a href="'.url('?id,999;a,'.$admin_pagesid['naujienos'].';v,6').'">'.$lang['info']['unnews'].': ' . $sql['news'] . '</a></li>';
-								}
-								if (isset($conf['puslapiai']['siustis.php']['id'])) {
-									$text .= '<li class="even"><a href="'.url('?id,999;a,'.$admin_pagesid['siustis'].';v,6').'">'.$lang['info']['undownloads'].': ' . $sql['siuntiniai'] . '</a></li>';
-								}
-								if (isset($conf['puslapiai']['nuorodos.php']['id'])) {
-									$text .= '<li class="even"><a href="'.url('?id,999;a,'.$admin_pagesid['nuorodos'].';v,6').'">'.$lang['info']['unlinks'].': ' . $sql['nuorodos'] . '</a></li>';
-								}
-								if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
-									$text .= '<li class="even"><a href="'.url('?id,999;a,'.$admin_pagesid['straipsnis'].';v,6').'">'.$lang['info']['unarticles'].': ' . $sql['straipsniai2'] . '</a></li>';
-								}
-								if (isset($conf['puslapiai']['galerija.php']['id'])) {
-									$text .= '<li class="even"><a href="'.url('?id,999;a,'.$admin_pagesid['galerija'].';v,7').'">'.$lang['info']['unpics'].': ' . $sql['foto'] . '</a></li>';
-								}
+								//$sql = mysql_fetch_assoc($sql);
+								foreach ($sqli as $sql) {
+									$text = '';
+									if (isset($conf['puslapiai']['naujienos.php']['id'])) {
+										$text .= '<li class="even"><a href="'.url('?id,999;a,'.$admin_pagesid['naujienos'].';v,6').'">'.$lang['info']['unnews'].': ' . $sql['news'] . '</a></li>';
+									}
+									if (isset($conf['puslapiai']['siustis.php']['id'])) {
+										$text .= '<li class="even"><a href="'.url('?id,999;a,'.$admin_pagesid['siustis'].';v,6').'">'.$lang['info']['undownloads'].': ' . $sql['siuntiniai'] . '</a></li>';
+									}
+									if (isset($conf['puslapiai']['nuorodos.php']['id'])) {
+										$text .= '<li class="even"><a href="'.url('?id,999;a,'.$admin_pagesid['nuorodos'].';v,6').'">'.$lang['info']['unlinks'].': ' . $sql['nuorodos'] . '</a></li>';
+									}
+									if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
+										$text .= '<li class="even"><a href="'.url('?id,999;a,'.$admin_pagesid['straipsnis'].';v,6').'">'.$lang['info']['unarticles'].': ' . $sql['straipsniai2'] . '</a></li>';
+									}
+									if (isset($conf['puslapiai']['galerija.php']['id'])) {
+										$text .= '<li class="even"><a href="'.url('?id,999;a,'.$admin_pagesid['galerija'].';v,7').'">'.$lang['info']['unpics'].': ' . $sql['foto'] . '</a></li>';
+									}
 
-								echo $text;
-							}
+									echo $text;
+	}
 
-							?>
+	?>
 						</ul>
 
 					</div><!-- end #todo -->
 					<div class="panel calendar left">
 						<h2 class="ico_mug"><?php echo $lang['admin']['logai']; ?></h2>
 						<ul>
-							<?php
-							$sql = mysql_query1("
+								<?php
+								$sql = mysql_query1("
 		SELECT `" . LENTELES_PRIESAGA . "logai`.`id`, INET_NTOA(`" . LENTELES_PRIESAGA . "logai`.`ip`) as ip, `" . LENTELES_PRIESAGA . "logai`.`action`, INET_NTOA(`" . LENTELES_PRIESAGA . "logai`.`ip`) AS ip1, `" . LENTELES_PRIESAGA . "logai`.`time`,
 		IF(`" . LENTELES_PRIESAGA . "users`.`nick` <> '', `" . LENTELES_PRIESAGA . "users`.`nick`, 'Svečias') AS nick,
 		IF(`" . LENTELES_PRIESAGA . "users`.`id` <> '', `" . LENTELES_PRIESAGA . "users`.`id`, '0') AS nick_id,
@@ -401,9 +433,9 @@ FROM " . LENTELES_PRIESAGA . "kom");
 		FROM `" . LENTELES_PRIESAGA . "logai` Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "logai`.`ip` = `" . LENTELES_PRIESAGA . "users`.`ip`
 	ORDER BY `id` DESC LIMIT 6
 		");
-							foreach($sql as $row) {
-								echo '<li class="even"><a href="'.url('?id,999;a,'.$admin_pagesid['logai'].';v,'.$row['id']).'">'.trimlink($row['action'],25). '</a></li>';
-							}						?>
+	foreach($sql as $row) {
+		echo '<li class="even"><a href="'.url('?id,999;a,'.$admin_pagesid['logai'].';v,'.$row['id']).'">'.trimlink($row['action'],25). '</a></li>';
+	}						?>
 						</ul>
 
 					</div><!-- end #calendar -->
@@ -421,10 +453,18 @@ FROM " . LENTELES_PRIESAGA . "kom");
 				<p class="right">© 2010 <a href="http://mightmedia.lt/">MightMedia</a></p>
 			</div><!-- end #footer -->
 		</div><!-- end container -->
-		<?php if(isset($_GET['a'])) { ?>
+	<?php if(isset($_GET['a'])) { ?>
 		<script type="text/javascript">
 			$.scrollTo('#postedit', 800);
 		</script>
 		<?php } ?>
 	</body>
 </html>
+<?php else:?>
+	<?php //Jei tai AJAX ?>
+	<?php if (isset($url['a']) && file_exists(dirname(__file__) . "/" . $admin_pages[(int)$url['a']].'.php') && isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
+		include_once (dirname(__file__) . "/" . $admin_pages[(int)$url['a']].'.php');
+	} else {
+		include_once (dirname(__file__) . "/pokalbiai.php");
+	}?>
+<?php endif?>

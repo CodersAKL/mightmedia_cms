@@ -1298,7 +1298,7 @@ HTML;
 	return "<p id='captcha_content'></p>$return";
 }
 
-/** Gražina versijos numerÄ¯ */
+/** Gražina versijos numerį */
 function versija($failas = false) {
 	if (!$failas) {
 		$svnid = '$Rev$';
@@ -1317,7 +1317,7 @@ function versija($failas = false) {
  * Editorius skirtas vaizdžiai redaguoti html
  *
  * @example echo editorius('tiny_mce','mini');
- * @example echo editorius('spaw','standartinis',array('Glaustai'=>'Glaustai','Placiau'=>'PlaÄiau'),array('Glaustai'=>'Naujiena glaustai','Placiau'=>'Naujiena plaÄiau'));
+ * @example echo editorius('spaw','standartinis',array('Glaustai'=>'Glaustai','Placiau'=>'Plačiau'),array('Glaustai'=>'Naujiena glaustai','Placiau'=>'Naujiena plačiau'));
  * @param string $tipas
  * @param string $dydis
  * @param string $id
@@ -1394,10 +1394,10 @@ function build_menu($data, $id=0, $active_class='active') {
 	$re="";
 	foreach ($data[$id] as $row) {
 		if (isset($data[$row['id']])) {
-			$re.= "<li ".((isset($_GET['id']) && $_GET['id'] == $row['id'])?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."</a><ul>";
+			$re.= "\n\t\t<li ".((isset($_GET['id']) && $_GET['id'] == $row['id'])?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."</a>\n<ul>\n\t";
 			$re.=build_menu($data, $row['id'],$active_class);
-			$re.= "</ul></li>";
-		} else $re.= "<li ".((isset($_GET['id']) && $_GET['id'] == $row['id'])?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."".(isset($row['extra'])?$row['extra']:'')."</a></li>";
+			$re.= "\t</ul>\n\t</li>";
+		} else $re.= "\n\t\t<li ".((isset($_GET['id']) && $_GET['id'] == $row['id'])?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."".(isset($row['extra'])?$row['extra']:'')."</a></li>";
 	}
 	return $re;
 }
