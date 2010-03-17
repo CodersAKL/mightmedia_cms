@@ -181,14 +181,6 @@ if (empty($_GET['ajax'])):?>
 	?>
 							</ul>
 						</li>
-						<li><a href="http://mightmedia.lt">MightMedia TVS</a>
-							<ul>
-								<li><a href="http://mightmedia.lt/help/<?php echo basename($conf['kalba'],'.php'); ?>/">TVS Pagalba</a></li>
-								<li><a href="#" onclick="alert('Jūs naudojate MightMedia TVS v'+<?php echo versija(); ?>); return false;">Tikrinti versiją</a></li>
-								<li><a>Pranešti apie klaidą</a></li>
-								<li><a>Apie MightMedia TVS</a></li>
-							</ul>
-						</li>
 					</ul>
 					<a href="<?php echo adresas(); ?>../" id="visit" class="right"><?php echo $lang['system']['to_page']; ?></a>
 				</div>
