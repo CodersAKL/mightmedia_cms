@@ -132,6 +132,7 @@ if (empty($_GET['ajax'])):?>
 		<script src="js/jquery.scrollTo.js" type="text/javascript"></script>
 		<script type="text/javascript" src="<?php echo ROOT; ?>javascript/jquery/jquery.tablesorter.js"></script>
 		<script type="text/javascript" src="<?php echo ROOT; ?>javascript/jquery/tooltip.js"></script>
+		<script type="text/javascript" src="<?php echo ROOT; ?>javascript/pagrindinis.js"></script>
 		<!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.pack.js"></script><![endif]-->
 		<script type="text/javascript">
 			$(document).ready(function(){
