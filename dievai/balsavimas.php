@@ -13,9 +13,7 @@
 
 //if (!defined("LEVEL") || LEVEL > 1 || !defined("OK")) {
 if (!defined("OK") || !ar_admin(basename(__file__))) {
-
-	header('location: ?');
-	exit();
+  redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 
 /*$buttons = <<< HTML

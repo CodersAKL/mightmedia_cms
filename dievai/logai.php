@@ -11,7 +11,7 @@
  **/
 
 if (!defined("LEVEL") || LEVEL > 1 || !defined("OK")) {
-	header('location: ?');
+	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 
 //trinam irasa

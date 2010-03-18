@@ -10,9 +10,9 @@
  * @$Date: 2009-11-20 17:27:27 +0200 (Fri, 20 Nov 2009) $
  **/
 
-/*if (!defined("LEVEL") || LEVEL > 1 || !defined("OK") || $_SESSION['id'] != 1) {
-	die($lang['system']['error']);
-}*/
+if (!defined("LEVEL") || !defined("OK")) {
+	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
+}
 
 if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
 		$q = array();

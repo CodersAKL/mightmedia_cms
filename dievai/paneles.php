@@ -59,8 +59,7 @@
  **/
 
 if (!defined("LEVEL") || LEVEL > 1 || !defined("OK")) {
-	header('location: http://' . $_SERVER["HTTP_HOST"]);
-	exit;
+	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 
 

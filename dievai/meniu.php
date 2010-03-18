@@ -11,6 +11,8 @@
 				$.post("<?php echo url('?id,'.$_GET['id'].';a,'.$_GET['a'].';ajax,1');?>",{order:order});
 			}
 		});
+		
+		
 		$("select[multiple]").asmSelect({
 			'addItemTarget': 'bottom',
 			'animate': true,
@@ -48,7 +50,7 @@ if (isset($_POST['order'])) {
 	parse_str($_POST['order'], $array);	//paverciam i masyva
 
 	foreach ($array['listItem'] as $position => $item):
-		
+		//echo $position." => ".$item."<br>";
 		$case_place .= "WHEN " . (int)$item . " THEN '" . (int)$position . "' ";
 		//$case_type .= "WHEN $phone_id THEN '" . $number['type'] . "' ";
 		$where .= "$item,";
@@ -279,19 +281,40 @@ lentele($page_pavadinimas,$text);
 	$li = '';
 	$recordSet1 = mysql_query1("SELECT * from `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'Y' order by place");
 	$listArray1 = array();
-	if (sizeof($recordSet1) > 0) {
-		foreach ($recordSet1 as $record1) {
-			
-			$li .= '<li id="listItem_' . $record1['id'] . '" class="drag_block">
-<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
-<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] ). '" style="align:right"><img src="'.ROOT.'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
-<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record1['id'] ). '" style="align:right"><img src="'.ROOT.'images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '" align="right" /></a> 
-<img src="'.ROOT.'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" style="'.($record1['parent'] != 0 ? "padding-left:20px" : "").'" />
-' . ($record1['parent'] != 0 ? $parents[$record1['parent']] . " > " : "") . $record1['pavadinimas'] . '
-</li> ';
-			
-		}
+function build_menu_admin($data, $id=0) {
+  global $url, $lang;
+	$re="";
+	foreach ($data[$id] as $row) {
+    $admin = '<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $row['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a> 
+<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $row['id'] ). '" style="align:right"><img src="'.ROOT.'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
+<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $row['id'] ). '" style="align:right"><img src="'.ROOT.'images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '" align="right" /></a> 
+<img src="'.ROOT.'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" style="'.($row['parent'] != 0 ? "padding-left:20px" : "").'" />';
+		if (isset($data[$row['id']])) {
+			$re.= "\n\t\t<li id=\"listItem_" . $row['id'] . "\" class=\"drag_block\">".$admin."<a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."</a>\n<ul id=\"test-list-".$row['id']."\">\n\t";
+			$re.=build_menu_admin($data, $row['id']);
+			$re.= "\t</ul>\n\t</li>
+			<script type=\"text/javascript\">
+			$(\"#test-list-".$row['id']."\").sortable({
+			'handle' : '.handle',
+			'axis': 'y',
+			'update' : function () {
+				var order = $('#test-list-".$row['id']."').sortable('serialize');
+				$(\"#la\").show(\"slow\");
+				$(\"#la\").hide(\"slow\");
+				$.post(\"".url('?id,'.$url['id'].';a,'.$url['a'].';ajax,1')."\",{order:order});
+			}
+		});
+			</script>
+			";
+		} else $re.= "\n\t\t<li id=\"listItem_" . $row['id'] . "\" class=\"drag_block\">".$admin."<a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."</a></li>";
 	}
+	return $re;
+}
+
+foreach ($recordSet1 as $row){
+	$data[$row['parent']][] = $row;
+}
+	$li = build_menu_admin($data);
 	
 	//$tekstas = '';
 	$tekstas .= '

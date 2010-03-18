@@ -11,8 +11,7 @@
  **/
 
 if (!defined("OK") || !ar_admin(basename(__file__))) {
-	header('location: ?');
-	exit();
+	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 ini_set("memory_limit", "50M");
 if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {

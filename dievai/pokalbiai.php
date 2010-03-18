@@ -11,8 +11,7 @@
  **/
 
 if (!defined("OK") || !ar_admin(basename(__file__))) {
-	header('location: ?');
-	exit();
+	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
 	$p = escape(ceil((int)$url['p']));
@@ -49,12 +48,12 @@ if (isset($_POST['admin_chat_send']) && $_POST['admin_chat_send'] == $lang['admi
 
 
 	mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "admin_chat` (admin, msg, date) VALUES(" . escape($_SESSION['username']) . "," . escape($extra . $_POST['admin_chat']) . ",'" . time() . "')") or die(mysql_error());
-	header("Location: ".url("?id,{$_GET['id']}"));
+	redirect($_SERVER['PHP_SELF']);
 }
 //trinam zinute
 if (isset($url['d']) && !isset($url['a']) && isnum($url['d']) && $url['d'] > 0 && LEVEL == 1) {
 	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "admin_chat` WHERE id=" . (int)$url['d'] . "");
-	header("Location: ".url("?id," . $url['id']));
+	redirect($_SERVER['PHP_SELF']);
 }
 //redaguojam zinute
 if (isset($url['r']) && !isset($url['d']) && !isset($url['a']) && isnum($url['r']) && $url['r'] > 0) {
@@ -63,7 +62,8 @@ if (isset($url['r']) && !isset($url['d']) && !isset($url['a']) && isnum($url['r'
 		$extra = $extra['msg'];
 	} elseif ($_POST['admin_chat_send'] == $lang['admin']['edit']) {
 		mysql_query("UPDATE `" . LENTELES_PRIESAGA . "admin_chat` SET `msg`=" . escape($_POST['admin_chat']) . ",`date` = '" . time() . "' WHERE `admin`=" . escape($_SESSION['username']) . " AND id=" . escape((int)$url['r']) . " LIMIT 1");
-		header("Location: ".url("?id," . $url['id']));
+		//header("Location: ".url("?id," . $url['id']));
+		redirect($_SERVER['PHP_SELF']);
 	}
 }
 $lygiai = array_keys($conf['level']);

@@ -1,8 +1,7 @@
 <?php
 
 if (!defined("OK") || !ar_admin(basename(__file__))) {
-	header('location: ?');
-	exit();
+	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
 	$p = escape(ceil((int)$url['p']));
@@ -20,7 +19,7 @@ if (isset($url['d']) && isnum($url['d'])) {
 		$sql = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_POST['to']) . "");
 		if ($sql) {
 			msg($lang['system']['done'], "<b>" . input($_POST['to']) . "</b> {$lang['admin']['pm_msgsdeleted']}.");
-			redirect(url("?id,999;a," . $_GET['a']), "meta");
+			redirect(url("?id,".$_GET['id'].";a," . $_GET['a']), "meta");
 		} else {
 			klaida($lang['system']['error'], $lang['admin']['pm_deleteerror']);
 		}
@@ -30,7 +29,7 @@ if (isset($url['d']) && isnum($url['d'])) {
 		//$i = mysql_affected_rows();
 		if ($sql) {
 			msg($lang['system']['done'], "<b>" . input($_POST['from']) . "</b> {$lang['admin']['pm_msgsdeleted']}.");
-			redirect(url("?id,999;a," . $_GET['a']), "meta");
+			redirect(url("?id,".$_GET['id'].";a," . $_GET['a']), "meta");
 		} else {
 			klaida($lang['system']['error'], $lang['admin']['pm_deleteerror']);
 		}
@@ -39,7 +38,7 @@ if (isset($url['d']) && isnum($url['d'])) {
 		$sql = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE id=" . escape((int)$url['d']));
 		if ($sql) {
 			msg($lang['system']['done'], "{$lang['admin']['pm_deleted']}.");
-			redirect(url("?id,999;a," . $_GET['a']), "meta");
+			redirect(url("?id,".$_GET['id'].";a," . $_GET['a']), "meta");
 		} else {
 			klaida($lang['system']['error'], $lang['admin']['pm_deleteerror']);
 		}

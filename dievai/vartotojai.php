@@ -11,8 +11,7 @@
  **/
 
 if (!defined("LEVEL") || LEVEL > 1 || !defined("OK")) {
-	header('location: ?');
-	exit;
+	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 include_once (ROOT."priedai/class.php");
 
