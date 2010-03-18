@@ -17,10 +17,13 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 $buttons = "
 <div class=\"btns\">
 	<a href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,1")."\" class=\"btn\"><span><img src=\"".ROOT."images/icons/chain__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['links_unpublished']}</span></a>
+	<a href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,5")."\" class=\"btn\"><span><img src=\"".ROOT."images/icons/chain__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['links_create']}</span></a>
 	<a href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,4")."\" class=\"btn\"><span><img src=\"".ROOT."images/icons/chain__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['links_edit']}</span></a>
 	<a href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,2")."\" class=\"btn\"><span><img src=\"".ROOT."images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
 	<a href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,3")."\" class=\"btn\"><span><img src=\"".ROOT."images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>
-</div>";
+</div>
+
+";
 
 if (empty($_GET['v'])) {
 	$_GET['v'] = 0;
@@ -51,10 +54,10 @@ $bla = new forma();
 
 if (isset($_POST['edit']) && $_POST['edit'] == $lang['system']['edit']) {
 
-	$pavadinimas = strip_tags($_POST['name']);
-	$url = strip_tags($_POST['url']);
-	$aktyvi = strip_tags($_POST['ar']);
-	$aprasymas = $_POST['apie'];
+	$pavadinimas = input(strip_tags($_POST['name']));
+	$url = input(strip_tags($_POST['url']));
+	$aktyvi = input(strip_tags($_POST['ar']));
+	$aprasymas = input(strip_tags($_POST['apie']));
 	$kategorija = ceil((int)$_POST['Kategorijos_id']);
 	$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET
 			`pavadinimas` = " . escape($pavadinimas) . ",
@@ -75,7 +78,7 @@ if (isset($_POST['edit']) && $_POST['edit'] == $lang['system']['edit']) {
 if (isset($_GET['r'])) {
 	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE id='" . $_GET['r'] . "' LIMIT 1");
 	$argi = array("TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}");
-	$nuorodos_redagavimas = array("Form" => array("action" => "?id,{$_GET['id']};a,{$_GET['a']};v,1", "method" => "post", "name" => "edit"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "Kategorijos_id"), "{$lang['admin']['links_title']}:" => array("type" => "text", "value" => $sql['pavadinimas'], "name" => "name"), "{$lang['admin']['links_about']}:" => array("type" => "textarea", "value" => $sql['apie'], "name" => "apie"), "{$lang['admin']['link']}:" => array("type" => "text", "value" => $sql['url'], "name" => "url"), "{$lang['admin']['links_active']}" => array("type" => "select", "value" => $argi, "name" => "ar"), "" => array("type" => "hidden", "name" => "nuorodos_id", "value" => $_GET['r']), "{$lang['admin']['edit']}:" => array("type" =>
+	$nuorodos_redagavimas = array("Form" => array("action" => url("?id,{$_GET['id']};a,{$_GET['a']};v,1"), "method" => "post", "name" => "edit"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijoss, "name" => "Kategorijos_id"), "{$lang['admin']['links_title']}:" => array("type" => "text", "value" => $sql['pavadinimas'], "name" => "name"), "{$lang['admin']['links_about']}:" => array("type" => "textarea", "value" => $sql['apie'], "name" => "apie"), "{$lang['admin']['link']}:" => array("type" => "text", "value" => $sql['url'], "name" => "url"), "{$lang['admin']['links_active']}:" => array("type" => "select", "value" => $argi, "name" => "ar"), "" => array("type" => "hidden", "name" => "nuorodos_id", "value" => $_GET['r']), "{$lang['admin']['edit']}:" => array("type" =>
 		"submit", "name" => "edit", "value" => "{$lang['admin']['edit']}"));
 
 	lentele($lang['admin']['links_edit'], $bla->form($nuorodos_redagavimas));
@@ -140,6 +143,36 @@ elseif ($_GET['v'] == 1) {
 	} else {
 		klaida($lang['system']['warning'], $lang['system']['no_items']);
 	}
+} elseif ($_GET['v'] == 5) { 
+   
+	if (isset($_POST['Submit_link']) && !empty($_POST['Submit_link'])) {
+
+	// Nustatom kintamuosius
+		$url = input(strip_tags($_POST['url']));
+		$apie = input(strip_tags($_POST['apie']));
+		$pavadinimas = input(strip_tags($_POST['name']));
+		$cat = input(strip_tags($_POST['kat']));
+    $active = input(strip_tags($_POST['act']));
+		// Patikrinam
+		//$pattern = "#^(http:\/\/|https:\/\/|www\.)(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?(\/)*$#i";
+		$pattern = "#([a-z]+?)://([a-z0-9\-\.,\?!%\*_\#:;~\\&$@\/=\+]+)#si";
+		if (!preg_match($pattern, $url)) {
+			klaida($lang['system']['error'], "{$lang['admin']['links_bad']}");
+
+		} else {
+
+			$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie`, `active`) VALUES (" . escape($cat) . ", " . escape($url) . ", " . escape($pavadinimas) . ", " . escape($_SESSION['id']) . ", '" . time() . "', " . escape($apie) . ", ".escape($active).");");
+			if ($result) {
+				msg($lang['system']['done'], "{$lang['admin']['links_sent']}.");
+				redirect(url("?id,{$_GET['id']};a,{$_GET['a']};v,{$_GET['v']}"), 'meta');
+			} else {
+				klaida($lang['system']['error'], "{$lang['admin']['links_allfields']}");
+			}
+		}
+	}
+    $nuorodos = array("Form" => array("action" => "", "method" => "post", "name" => "Submit_link"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijoss, "name" => "kat"), "{$lang['admin']['links_title']}:" => array("type" => "text", "value" => "", "name" => "name"), "Url:" => array("type" => "text", "value" => "http://", "name" => "url"),$lang['admin']['links_active'].":" => array("type" => "select", "value" => array("TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}"), "name" => "act"), "{$lang['admin']['links_about']}:" => array("type" => "textarea", "value" => "", "name" => "apie"), " " => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['admin']['links_create']}"));
+
+		lentele($lang['admin']['links_create'], $bla->form($nuorodos));
 }
 unset($bla, $info, $sql, $sql2, $q, $result, $result2);
 //unset($_POST);

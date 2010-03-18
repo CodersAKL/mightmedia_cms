@@ -40,15 +40,17 @@ if (isset($link) && strlen($link) > 0 && $link > 0) {
 	$link = mysql_query1("SELECT `url` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `id`=" . escape($link) . " LIMIT 1", 86400);
 	redirect($link['url']);
 }
+include_once(ROOT.'priedai/kategorijos.php');
 
 //kategorijos
-$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos'  ORDER BY `pavadinimas`");
+$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' ORDER BY `pavadinimas`");
+$kategorijos = cat('nuorodos', 0);
 if (sizeof($sqlas) > 0) {
 	foreach ($sqlas as $sql) {
 		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas` LIMIT 1");
-		$path1 = explode(",", $path['path']);
+		//$path1 = explode(",", $path['path']);
 
-		if ($path1[(count($path1) - 1)] == $k) {
+		if ($path['path'] == $k) {
 			$sqlkiek = kiek('nuorodos', "WHERE `cat`=" . escape($sql['id']) . " AND `active`='TAIP'");
 			$info[] = array(
 				" " => "<img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' />",
@@ -105,10 +107,10 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 	if (isset($_POST['Submit_link']) && !empty($_POST['Submit_link']) && $_POST['Submit_link'] == $lang['admin']['links_create']) {
 
 	// Nustatom kintamuosius
-		$url = strip_tags($_POST['url']);
-		$apie = strip_tags($_POST['apie']);
-		$pavadinimas = strip_tags($_POST['name']);
-		$cat = strip_tags($_POST['kat']);
+		$url = input(strip_tags($_POST['url']));
+		$apie = input(strip_tags($_POST['apie']));
+		$pavadinimas = input(strip_tags($_POST['name']));
+		$cat = input(strip_tags($_POST['kat']));
 
 		// Patikrinam
 		//$pattern = "#^(http:\/\/|https:\/\/|www\.)(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?(\/)*$#i";
@@ -117,16 +119,20 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 			klaida($lang['system']['error'], "{$lang['admin']['links_bad']}");
 
 		} else {
-
-			$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie` ) VALUES (" . escape($cat) . ", " . escape($url) . ", " . escape($pavadinimas) . ", " . escape($_SESSION['id']) . ", '" . time() . "', " . escape($apie) . ");");
+      $exists = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `url`=".escape($url)." LIMIT 1");
+      if(!isset($exists['id']))
+        $result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie` ) VALUES (" . escape($cat) . ", " . escape($url) . ", " . escape($pavadinimas) . ", " . escape($_SESSION['id']) . ", '" . time() . "', " . escape($apie) . ");");
+       else
+         $result = true;
 			if ($result) {
 				msg($lang['system']['done'], "{$lang['admin']['links_sent']}.");
+				redirect(url("?id,{$_GET['id']};k,{$k}"), 'meta');
 			} else {
 				klaida($lang['system']['error'], "{$lang['admin']['links_allfields']}");
 			}
 		}
 	}
-	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `path`=0 ORDER BY `id` DESC");
+	/*$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `path`=0 ORDER BY `id` DESC");
 	if (sizeof($sql) > 0) {
 		foreach ($sql as $row) {
 
@@ -146,15 +152,16 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 	} else {
 		$kategorijos[0] = "{$lang['system']['nocategories']}";
 		$nocat = 1;
-	}
-	if (!isset($nocat)) {
+	}*/
+	//$nocat = (count($kategorijos) > 1? 1:);
+	//if (!isset($nocat)) {
 		include_once ("priedai/class.php");
 
 		$bla = new forma();
 		$nuorodos = array("Form" => array("action" => "", "method" => "post", "name" => "Submit_link"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kat"), "{$lang['admin']['links_title']}:" => array("type" => "text", "value" => "", "name" => "name"), "Url:" => array("type" => "text", "value" => "http://", "name" => "url"), "{$lang['admin']['links_about']}:" => array("type" => "textarea", "value" => "", "name" => "apie"), " " => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['admin']['links_create']}"));
 
 		hide("{$lang['admin']['links_create']}", $bla->form($nuorodos), true);
-	}
+	//}
 }
 unset($bla, $nuorodos, $row, $sql, $cat, $url, $pavadinimas, $apie, $info, $q, $sql, $text, $link, $sqlas);
 if (count($_GET) == 1) {
