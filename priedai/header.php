@@ -73,7 +73,7 @@ if (isset($uid)) {
 //Jei tai ne botas atnaujinam
 	if (!botas($_SERVER['HTTP_USER_AGENT'])) {
 
-	//paskutinio prisijungimo atnaujinimas
+		//paskutinio prisijungimo atnaujinimas
 		$q = "INSERT INTO `" . LENTELES_PRIESAGA . "kas_prisijunges` (`id`,`uid`,`timestamp`,`ip`,`file`,`user`,`agent`,`ref`,`clicks`) VALUES (
 				" . escape($uzerid) . ",
 				" . escape($uid) . ",
@@ -132,37 +132,11 @@ if (isset($i) && $i == 1) {
 }
 
 //////////////////// ONLINE END /////////////////////
-function botas($agentas) {
-	if (preg_match("/\bGigabot\b/i", $agentas))
-		return true;
-	if (preg_match("/\bmsnbot\b/i", $agentas))
-		return true;
-	if (preg_match("/\bgoogle\b/i", $agentas))
-		return true;
-	if (preg_match("/\bIRLbot\b/i", $agentas))
-		return true;
-	if (preg_match("/\bHostTracker\b/i", $agentas))
-		return true;
-	if (preg_match("/\bEasyDL\b/i", $agentas))
-		return true;
-	if (preg_match("/\be-collector\b/i", $agentas))
-		return true;
-	if (preg_match("/\bEmailCollector\b/i", $agentas))
-		return true;
-	if (preg_match("/\bTelesoft\b/i", $agentas))
-		return true;
-	if (preg_match("/\bTwiceler\b/i", $agentas))
-		return true;
-	if (preg_match("/\bInternetSeer.com\b/i", $agentas))
-		return true;
-	if (preg_match("/\bMJ12bot\b/i", $agentas))
-		return true;
-
-	else {
-		return false;
-	}
+function botas($userAgent) {
+	$crawlers = 'HostTracker|EasyDL|e-collector|EmailCollector|Telesoft|Twiceler|InternetSeer.com|MJ12bot|YahooFeedSeeker|Yahoo-MMCrawler|Yandex|findlinks|Bloglines subscriber|Dumbot|Sosoimagespider|QihooBot|FAST-WebCrawler|Superdownloads Spiderman|LinkWalker|msnbot|ASPSeek|WebAlta Crawler|Lycos|FeedFetcher-Google|Yahoo|YoudaoBot|AdsBot-Google|Googlebot|Scooter|Gigabot|Charlotte|eStyle|AcioRobot|GeonaBot|msnbot-media|Baidu|CocoCrawler|Google|Charlotte t|Yahoo! Slurp China|Sogou web spider|YodaoBot|MSRBOT|AbachoBOT|Sogou head spider|AltaVista|IDBot|Sosospider|Yahoo! Slurp|Java VM|DotBot|LiteFinder|Yeti|Rambler|Scrubby|Baiduspider|accoona';
+	$isCrawler = (preg_match("/$crawlers/i", $userAgent) > 0);
+	return $isCrawler;
 }
-
 function check_name($name) {
 //return preg_match("/^w$/",$name);
 	return true;
@@ -194,22 +168,22 @@ function browser($browser) {
 	}
 }
 function getUserCountry($ip) {
-    if(function_exists('curl_init')){
-      $url = 'http://api.wipmania.com/'.$ip.'?'.adresas();
-      $ch = curl_init();
-      $headers = "Typ: phpcurl\r\n";
-      $headers .= "Ver: 1.0\r\n";
-      $headers .= "Connection: Close\r\n\r\n";
-      $timeout = 5;
-      curl_setopt($ch, CURLOPT_URL, $url);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-      curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-      curl_setopt($ch, CURLOPT_HTTPHEADER, array($headers));
-      $content = curl_exec($ch);
-      curl_close($ch);
-      return $content;
-    } else {
-      return 'lt';
-    }
+	if(function_exists('curl_init')) {
+		$url = 'http://api.wipmania.com/'.$ip.'?'.adresas();
+		$ch = curl_init();
+		$headers = "Typ: phpcurl\r\n";
+		$headers .= "Ver: 1.0\r\n";
+		$headers .= "Connection: Close\r\n\r\n";
+		$timeout = 5;
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array($headers));
+		$content = curl_exec($ch);
+		curl_close($ch);
+		return $content;
+	} else {
+		return 'lt';
+	}
 }
 ?>

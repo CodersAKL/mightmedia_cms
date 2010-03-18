@@ -153,8 +153,8 @@ if (empty($_GET['ajax'])):?>
 				<div id="profile_info">
 						<?php
 						$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`='" . $_SESSION['username'] . "' LIMIT 1",360);
-	echo avatar($sql['email'],41);
-	?>
+						echo avatar($sql['email'],41);
+						?>
 					<p><?php echo sprintf($lang['user']['hello'], '<strong>'.$_SESSION['username'].'</strong>'); ?>. <a href="<?php echo url('?id,999;do,logout');?>"><?php echo $lang['user']['logout']; ?></a></p>
 					<p><?php echo $lang['system']['warning'].' '. $lang['admin']['logai']; ?>: <?php echo kiek('logai'); ?>. <a href="<?php echo url("?id,999;a,".$admin_pagesid['logai']); ?>"><?php echo $lang['system']['allcanread']; ?></a></p>
 					<p class="last_login"><?php echo $lang['admin']['user_lastvisit']; ?>: <?php echo date('Y-m-d H:i:s',$_SESSION['lankesi']);?></p>
@@ -179,7 +179,7 @@ if (empty($_GET['ajax'])):?>
 									}
 									echo build_menu($data1);
 
-	?>
+									?>
 							</ul>
 						</li>
 					</ul>
@@ -275,10 +275,11 @@ HTML;
 
 										//unset($sql);
 
-	?>
+										?>
 
 									<h3><?php echo $lang['system']['some_data']; ?></h3>
-									<?php echo $text; unset($text); ?>
+										<?php echo $text;
+										unset($text); ?>
 								</div>
 								<div id="chart" class="left">
 									<h3><?php echo $lang['system']['visits']; ?></h3>
@@ -287,22 +288,17 @@ HTML;
 								</div>
 							</div>
 						</div><!-- end #dashboard -->
-							<?php
-							$sqli = mysql_query1("SELECT FROM_UNIXTIME(`timestamp`,'%H') as `time`, count(*) as `viso` FROM `" . LENTELES_PRIESAGA . "kas_prisijunges` WHERE `timestamp` BETWEEN UNIX_TIMESTAMP(NOW() - INTERVAL 1 DAY) AND UNIX_TIMESTAMP() group by `time`");
-							foreach($sqli as $sql) {
-								$data[] = "[{$sql['time']}, {$sql['viso']}]";
-							}
-							//$data[0] = "[1, {$stats['uzvakar']}]";
-							//$data[1] = "[2, {$stats['vakar']}]";
-							//$data[2] = "[3, {$stats['siandien']}]";
-							?>
 						<script type="text/javascript">
-							$.plot($("#placeholder"), [[<?php echo implode(', ',$data); ?>]], {
+							$('#test').append((new Date()).getTime());
+							var d = [[<?php echo ((time()-86400*2)*1000);?>,<?php echo $stats['uzvakar'];?>],[<?php echo ((time()-86400)*1000);?>,<?php echo $stats['vakar'];?>],[<?php echo (time()*1000);?>,<?php echo $stats['siandien'];?>]];
+							$.plot($("#placeholder"), [d], {
+								xaxis: {
+									mode: "time"
+								},
 								grid: {
 									color: "#000",
 									borderWidth: 1
 								}
-								//bars: { show: 'bars' }
 							});
 						</script>
 
@@ -317,16 +313,16 @@ HTML;
 					<div id="sidebar" class="right">
 						<h2 class="ico_mug"><?php echo $lang['system']['tree']; ?></h2>
 						<ul id="treemenu">
-							<?php
+								<?php
 
-							$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
-							foreach ($res as $row) {
-								if(teises($row['teises'],$_SESSION['level'])) {
-									$data2[$row['parent']][] = $row;
+								$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
+								foreach ($res as $row) {
+									if(teises($row['teises'],$_SESSION['level'])) {
+										$data2[$row['parent']][] = $row;
+									}
 								}
-							}
-							echo build_tree($data2);
-							?>
+								echo build_tree($data2);
+								?>
 						</ul>
 
 					</div><!-- end #sidebar -->
@@ -368,9 +364,9 @@ HTML;
 									foreach($q as $row) {
 										echo 	'<li><img width="80" src="'.ROOT.'images/galerija/mini/' . $row['file'].'" alt="photo"/><span>
 <a href="'.url("?id,999;a,{$admin_pagesid['galerija']};p," . $row['id'] ). '"><img src="img/accept.jpg" alt="accept"/></a><a href="'.url("?id,999;a,{$admin_pagesid['galerija']};t," . $row['id'] ).'"><img src="img/cancel.jpg"  alt="deny"/></a></span></li>';
-		}
-	}
-	?>
+									}
+								}
+								?>
 
 						</ul>
 
@@ -408,9 +404,9 @@ FROM " . LENTELES_PRIESAGA . "kom");
 									}
 
 									echo $text;
-	}
+								}
 
-	?>
+								?>
 						</ul>
 
 					</div><!-- end #todo -->
@@ -424,11 +420,11 @@ FROM " . LENTELES_PRIESAGA . "kom");
 		IF(`" . LENTELES_PRIESAGA . "users`.`id` <> '', `" . LENTELES_PRIESAGA . "users`.`id`, '0') AS nick_id,
 		IF(`" . LENTELES_PRIESAGA . "users`.`levelis` <> '', `" . LENTELES_PRIESAGA . "users`.`levelis`, '0') AS levelis
 		FROM `" . LENTELES_PRIESAGA . "logai` Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "logai`.`ip` = `" . LENTELES_PRIESAGA . "users`.`ip`
-	ORDER BY `id` DESC LIMIT 6
+	ORDER BY `id` DESC LIMIT 9
 		");
-	foreach($sql as $row) {
-		echo '<li class="even"><a href="'.url('?id,999;a,'.$admin_pagesid['logai'].';v,'.$row['id']).'">'.trimlink($row['action'],25). '</a></li>';
-	}						?>
+								foreach($sql as $row) {
+									echo '<li class="even"><a href="'.url('?id,999;a,'.$admin_pagesid['logai'].';v,'.$row['id']).'">'.trimlink($row['action'],25). '</a></li>';
+								}						?>
 						</ul>
 
 					</div><!-- end #calendar -->
@@ -446,11 +442,11 @@ FROM " . LENTELES_PRIESAGA . "kom");
 				<p class="right">© 2010 <a href="http://mightmedia.lt/">MightMedia</a></p>
 			</div><!-- end #footer -->
 		</div><!-- end container -->
-	<?php if(isset($_GET['a'])) { ?>
+			<?php if(isset($_GET['a'])) { ?>
 		<script type="text/javascript">
 			$.scrollTo('#postedit', 800);
 		</script>
-		<?php } ?>
+				<?php } ?>
 	</body>
 </html>
 <?php else:?>
