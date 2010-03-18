@@ -253,7 +253,7 @@ HTML;
 		if ($kieno == 'vartotojai') {
 			$textas = "{$lang['system']['grouplevel']}:";
 			//$puslapiai[""]="";
-			$failai = getFiles('.htaccess|index.php|index.html|index.htm|index.php3|conf.php|config.php|vartotojai.php|logai.php|upload.php|todo.php|paneles.php|meniu.php|komentarai.php|narsykle.php');
+			$failai = getFiles(ROOT.'dievai','.htaccess|index.php|index.html|index.htm|index.php3|conf.php|config.php|vartotojai.php|logai.php|upload.php|todo.php|paneles.php|meniu.php|komentarai.php|narsykle.php|main.php|sfunkcijos.php|pokalbiai.php');
 			foreach ($failai as $file) {
 				if ($file['type'] == 'file') {
 

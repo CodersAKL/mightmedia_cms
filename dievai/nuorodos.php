@@ -163,7 +163,7 @@ elseif ($_GET['v'] == 1) {
 
 			$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie`, `active`) VALUES (" . escape($cat) . ", " . escape($url) . ", " . escape($pavadinimas) . ", " . escape($_SESSION['id']) . ", '" . time() . "', " . escape($apie) . ", ".escape($active).");");
 			if ($result) {
-				msg($lang['system']['done'], "{$lang['admin']['links_sent']}.");
+				msg($lang['system']['done'], "{$lang['admin']['links_created']}.");
 				redirect(url("?id,{$_GET['id']};a,{$_GET['a']};v,{$_GET['v']}"), 'meta');
 			} else {
 				klaida($lang['system']['error'], "{$lang['admin']['links_allfields']}");

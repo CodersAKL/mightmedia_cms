@@ -30,8 +30,8 @@ if (isset($_SESSION['mod']) && !empty($_SESSION['mod'])) {
 
 	lentele($page_pavadinimas, $text);
 	if (isset($url['a'])) {
-		if (file_exists(dirname(__file__) . "/dievai/" . $failai[((int)$url['a'] - 1)])) {
-			include_once (dirname(__file__) . "/dievai/" . $failai[((int)$url['a'] - 1)]);
+    if (file_exists(ROOT . "dievai/" . $failai[((int)$url['a'] - 1)])) {
+			include_once (ROOT . "dievai/" . $failai[((int)$url['a'] - 1)]);
 		} else {
 			klaida("{$lang['system']['error']}", "{$lang['system']['nopage']}");
 		}
