@@ -42,9 +42,9 @@ if ($vid == 0) {
 	if ($sqlas && sizeof($sqlas) > 0) {
 		foreach ($sqlas as $sql) {
 			$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas` LIMIT 1", 86400);
-			$path1 = explode(",", $path['path']);
+			//$path1 = explode(",", $path['path']);
 
-			if ($path1[(count($path1) - 1)] == $k) {
+			if ($path['path'] == $k) {
 				$sqlkiek = kiek('siuntiniai', "WHERE `categorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP'");
 				$info[] = array(" " => "<a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' /></a>", "{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id']) . "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br />", "{$lang['category']['downloads']}" => $sqlkiek);
 			}
@@ -53,7 +53,7 @@ if ($vid == 0) {
 		$bla = new Table();
 		if (isset($info)) {
 			lentele("{$lang['system']['categories']}", $bla->render($info), false);
-		}
+		} 
 	}
 }
 //pabaiga
@@ -174,8 +174,7 @@ else {
 				} else {
 					$autorius = '';
 				}
-				$info[] = array( //""=> $extra,
-					"{$lang['download']['title']}:" => "<a href=\"" . url("v," . $sql['id'] . "") . "\">" . $sql['pavadinimas'] . "</a>", "{$lang['download']['date']}:" => date('Y-m-d H:i:s ', $sql['data']), "{$lang['download']['download']}:" => "<a href=\"siustis.php?d," . $sql['id'] . "\"><img src=\"images/icons/disk.png\" alt=\"" . $sql['file'] . "\" border=\"0\" /></a>");
+				$info[] = array("{$lang['download']['title']}:" => "<a href=\"" . url("v," . $sql['id'] . "") . "\">" . $sql['pavadinimas'] . "</a>", "{$lang['download']['date']}:" => date('Y-m-d H:i:s ', $sql['data']), "{$lang['download']['download']}:" => "<a href=\"siustis.php?d," . $sql['id'] . "\"><img src=\"images/icons/disk.png\" alt=\"" . $sql['file'] . "\" border=\"0\" /></a>");
 
 			} else {
 				klaida($lang['system']['error'], $lang['download']['notallowed']);
@@ -184,8 +183,8 @@ else {
 		$name = mysql_query1("SELECT pavadinimas FROM " . LENTELES_PRIESAGA . "grupes WHERE id= " . escape($k) . " LIMIT 1", 86400);
 		lentele("{$lang['download']['downloads']} >> " . $name['pavadinimas'] . "", $bla->render($info) . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
 
-
-	}
+    
+	} 
 
 	unset($bla, $info, $sql, $sql_d, $vid);
 }

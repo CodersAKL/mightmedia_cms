@@ -86,11 +86,11 @@ if (!empty($url['t'])) {
 		foreach ($sql as $row) {
 			$select[$row['ip']] = $row['ip1'] . " - " . $row['viso'];
 		}
-		$nustatymai = array("Form" => array("action" => "?id," . $url['id'] . ";a," . $url['a'] . ";d,0", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), "{$lang['admin']['logs_deletebyip']}:" => array("type" => "select", "value" => $select, "selected" => ip2long($_SERVER['REMOTE_ADDR']), "name" => "ip"), "" => array("type" => "submit", "name" => "del_all", "extra"=>"onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"","value" => $lang['admin']['delete']));
+		$nustatymai = array("Form" => array("action" => url("?id," . $url['id'] . ";a," . $url['a'] . ";d,0"), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), "{$lang['admin']['logs_deletebyip']}:" => array("type" => "select", "value" => $select, "selected" => ip2long($_SERVER['REMOTE_ADDR']), "name" => "ip"), "" => array("type" => "submit", "name" => "del_all", "extra"=>"onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"","value" => $lang['admin']['delete']));
 		$bla = new forma();
 		lentele("{$lang['admin']['logs_deletebyip']}", $bla->form($nustatymai));
 
-		$nustatymai = array("Form" => array("action" => "?id," . $url['id'] . ";a," . $url['a'] . ";t,1", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), $lang['admin']['logs_clear'] => array("type" => "submit", "name" => "del_all", "value" => "Valyti", "extra" => "onclick=\"return confirm('{$lang['system']['delete_confirm']}')\""));
+		$nustatymai = array("Form" => array("action" => url("?id," . $url['id'] . ";a," . $url['a'] . ";t,1"), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), $lang['admin']['logs_clear'] => array("type" => "submit", "name" => "del_all", "value" => "Valyti", "extra" => "onclick=\"return confirm('{$lang['system']['delete_confirm']}')\""));
 		$bla = new forma();
 		lentele($lang['admin']['logs_clear'], $bla->form($nustatymai));
 
