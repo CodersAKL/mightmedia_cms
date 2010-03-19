@@ -126,8 +126,6 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_crea
 	}
 
 
-	//Trinam kategoriją
-
 	unset($naujiena, $placiau, $komentaras, $pavadinimas, $result, $error, $_POST['action']);
 	redirect(url("?id," . $_GET['id'] . ";a," . $_GET['a']), "meta");
 
@@ -209,7 +207,10 @@ if (isset($_GET['v'])) {
 						"{$lang['admin']['news_name']}:" => '<a href="#" title="<b>' . $sql['pavadinimas'] . '</b>
 			<br /><br />
 			' . $lang['admin']['news_author'] . ': <b>' . $sql['autorius'] . '</b><br />
-			' . $lang['admin']['news_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['data']) . ' - ' . kada(date('Y-m-d H:i:s ', $sql['data'])) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
+			" target="_blank">' . $sql['pavadinimas'] . '</a>', 
+			 $lang['admin']['news_date'] => date('Y-m-d', $sql['data']), 
+        $lang['admin']['news_more'] => trimlink(strip_tags($sql['naujiena']), 55),
+			"{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
 
 			}
 			echo '<style type="text/css" title="currentStyle">
@@ -224,8 +225,9 @@ if (isset($_GET['v'])) {
           "bProcessing": true,
 					"aoColumns": [
 						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
-						{ "sWidth": "70%", "sType": "string" },
-						
+						{ "sWidth": "20%", "sType": "string" },
+						{ "sWidth": "10%", "sType": "date" },
+						{ "sWidth": "60%", "sType": "html" },
 						{ "sWidth": "20px", "sType": "html", "bSortable": false}
 					]
 				} );
