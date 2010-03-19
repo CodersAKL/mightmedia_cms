@@ -84,6 +84,7 @@ if (isset($_GET['r'])) {
 	lentele($lang['admin']['links_edit'], $bla->form($nuorodos_redagavimas));
 
 }
+//trinam linką
 if (isset($_GET['m'])) {
 	$result = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "nuorodos` 
 			WHERE `id`=" . escape($_GET['m']) . ";
@@ -93,6 +94,14 @@ if (isset($_GET['m'])) {
 	} else {
 		klaida($lang['system']['error'], "<br><b>" . mysql_error() . "</b>");
 	}
+}
+if(isset($_POST['links_delete'])){
+  foreach($_POST['links_delete'] as $a=>$b){
+    $trinti[]="`id`=".escape($b);
+  }
+  mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE ".implode($trinti, " OR ")."");
+  header("Location:".$_SERVER['HTTP_REFERER']);
+  exit;
 }
 if (isset($_GET['p'])) {
 	$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET active='TAIP' 
@@ -104,7 +113,6 @@ if (isset($_GET['p'])) {
 		klaida($lang['system']['error'], "<br><b>" . mysql_error() . "</b>");
 	}
 }
-//Kategorijos redagavimas
 
 
 elseif ($_GET['v'] == 1) {
@@ -118,11 +126,29 @@ elseif ($_GET['v'] == 1) {
 		foreach ($q as $sql) {
 			$sql2 = mysql_query1("SELECT nick FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $sql['nick'] . "' LIMIT 1");
 
-			$info[] = array("ID" => $sql['id'], "{$lang['admin']['link']}:" => '<a href="' . $sql['url'] . '" title="<b>' . $sql2['nick'] . '</b>
-			<br/><br/>' . $lang['admin']['links_about'] . ': <i>' . $sql['apie'] . '</i><br/>' . $lang['admin']['links_author'] . ': <b>' . $sql2['nick'] . '</b><br/>' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . ' - ' . kada(date('Y-m-d H:i:s ', $sql['date'])) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' alt='a' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};m," . $sql['id']). "'title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};r," . $sql['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
+			$info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('linksch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"links_delete[]\" />", "{$lang['admin']['link']}:" => '<a href="' . $sql['url'] . '" title="<b>' . $sql2['nick'] . '</b>			<br/><br/>' . $lang['admin']['links_about'] . ': <i>' . $sql['apie'] . '</i><br/>' . $lang['admin']['links_author'] . ': <b>' . $sql2['nick'] . '</b><br/>' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . ' - ' . kada(date('Y-m-d H:i:s ', $sql['date'])) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' alt='a' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};m," . $sql['id']). "'title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};r," . $sql['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
 
 		}
-		lentele($lang['admin']['links_unpublished'], $bla->render($info));
+		echo '<style type="text/css" title="currentStyle">
+			@import "'.ROOT.'javascript/table/css/demo_page.css";
+			@import "'.ROOT.'javascript/table/css/demo_table.css";
+		</style>
+		<script type="text/javascript" language="javascript" src="'.ROOT.'javascript/table/js/jquery.dataTables.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+				$(\'#links table\').dataTable( {
+          "bInfo": false,
+          "bProcessing": true,
+					"aoColumns": [
+						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
+						{ "sWidth": "70%", "sType": "string" },
+						
+						{ "sWidth": "20px", "sType": "html", "bSortable": false}
+					]
+				} );
+			} );
+		</script>';
+		lentele($lang['admin']['links_unpublished'], "<form id=\"linksch\" method=\"post\"><div id=\"links\">".$bla->render($info)."</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
 	}
 } elseif ($_GET['v'] == 4) {
 	$q = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE active='TAIP'");
@@ -135,11 +161,31 @@ elseif ($_GET['v'] == 1) {
 		foreach ($q as $sql) {
 			$sql2 = mysql_query1("SELECT nick FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $sql['nick'] . "' LIMIT 1");
 
-			$info[] = array("ID" => $sql['id'], "{$lang['admin']['link']}:" => '<a href="' . $sql['url'] . '" title="<b>' . $sql2['nick'] . '</b>
+			$info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('linksch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"links_delete[]\" />",
+			 "{$lang['admin']['link']}:" => '<a href="' . $sql['url'] . '" title="<b>' . $sql2['nick'] . '</b>
 			<br/><br/>' . $lang['admin']['links_about'] . ': <i>' . $sql['apie'] . '</i><br/>' . $lang['admin']['links_author'] . ': <b>' . $sql2['nick'] . '</b><br/>' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . ' - ' . kada(date('Y-m-d H:i:s ', $sql['date'])) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};m," . $sql['id'] ). "'title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};r," . $sql['id'] ). "'title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
 
 		}
-		lentele($lang['admin']['nuorodos'], $bla->render($info));
+		echo '<style type="text/css" title="currentStyle">
+			@import "'.ROOT.'javascript/table/css/demo_page.css";
+			@import "'.ROOT.'javascript/table/css/demo_table.css";
+		</style>
+		<script type="text/javascript" language="javascript" src="'.ROOT.'javascript/table/js/jquery.dataTables.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+				$(\'#links table\').dataTable( {
+          "bInfo": false,
+          "bProcessing": true,
+					"aoColumns": [
+						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
+						{ "sWidth": "70%", "sType": "string" },
+						
+						{ "sWidth": "20px", "sType": "html", "bSortable": false}
+					]
+				} );
+			} );
+		</script>';
+		lentele($lang['admin']['nuorodos'], "<form id=\"linksch\" method=\"post\"><div id=\"links\">".$bla->render($info)."</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
 	} else {
 		klaida($lang['system']['warning'], $lang['system']['no_items']);
 	}
