@@ -110,14 +110,16 @@ class Table {
 	var $style = 1;
 	function Table() {
 		$ids = uniqid();
-		$this->return .= "
-		<script> $(document).ready(function() 
+		/*<script> $(document).ready(function() 
     { 
         $(\"#$ids\").tablesorter(); 
     } 
 ); 
    </script>
-		<table id=\"$ids\"  width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"table\">";
+   id=\"$ids\"
+   */
+		$this->return .= "
+				<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"table\">";
 	}
 	function render($data) {
 		//sort($data);
@@ -132,6 +134,7 @@ class Table {
 			$this->return .= "<thead>";
 			$this->return .= $this->tr($this->th, "th");
 			$this->return .= "</thead>";
+			$this->return .= "<tbody>";
 			while ($i <= $num) {
 				$this->td = '';
 				if ($this->style == 2) {
@@ -139,12 +142,14 @@ class Table {
 				} else {
 					$this->style = 2;
 				}
+				
 				foreach ($data[$i] as $key => $val) {
 					$this->td .= $this->td($val);
 				}
 				$this->return .= $this->tr($this->td, (($this->style == 1) ? "tr2" : "tr"));
 				$i++;
 			}
+			$this->return .= "</tbody>";
 			$this->return .= $this->finish();
 			return $this->return;
 		}

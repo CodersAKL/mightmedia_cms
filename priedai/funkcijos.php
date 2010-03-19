@@ -62,7 +62,6 @@ function header_info() {
   <title>' . input(strip_tags($conf['Pavadinimas']) . ' - ' . $page_pavadinimas) . '</title>
   <script type="text/javascript" src="javascript/jquery/jquery-1.3.2.min.js"></script> 
   <script type="text/javascript" src="javascript/jquery/jquery-ui-personalized-1.6rc6.min.js"></script> 
-  <script type="text/javascript" src="javascript/jquery/jquery.tablesorter.js"></script> 
   <script type="text/javascript" src="javascript/pagrindinis.js"></script>  
   <script type="text/javascript" src="javascript/jquery/rating.js"></script>	
   <script type="text/javascript" src="javascript/jquery/tooltip.js"></script>
@@ -95,6 +94,7 @@ function header_info() {
 <script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
 <![endif]-->
 ';
+//<script type="text/javascript" src="javascript/jquery/jquery.tablesorter.js"></script> 
 }
 
 function addtotitle($add) {
