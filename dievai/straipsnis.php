@@ -184,9 +184,9 @@ if ($_GET['v'] == 4) {
           "bProcessing": true,
 					"aoColumns": [
 						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
-						{ "sWidth": "20%", "sType": "string" },
+						{ "sWidth": "10%", "sType": "string" },
 						{ "sWidth": "10%", "sType": "date" },
-						{ "sWidth": "60%", "sType": "html" },
+						{ "sWidth": "30%", "sType": "html" },
 						{ "sWidth": "20px", "sType": "html", "bSortable": false}
 					]
 				} );
@@ -242,9 +242,9 @@ if ($_GET['v'] == 7 || isset($url['h'])) {
           "bProcessing": true,
 					"aoColumns": [
 						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
-						{ "sWidth": "20%", "sType": "string" },
+						{ "sWidth": "10%", "sType": "string" },
 						{ "sWidth": "10%", "sType": "date" },
-						{ "sWidth": "60%", "sType": "html" },
+						{ "sWidth": "30%", "sType": "html" },
 						{ "sWidth": "20px", "sType": "html", "bSortable": false}
 					]
 				} );

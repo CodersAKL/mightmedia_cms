@@ -141,7 +141,7 @@ elseif ($_GET['v'] == 1) {
           "bProcessing": true,
 					"aoColumns": [
 						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
-						{ "sWidth": "70%", "sType": "string" },
+						{ "sWidth": "40%", "sType": "string" },
 						
 						{ "sWidth": "20px", "sType": "html", "bSortable": false}
 					]
@@ -178,7 +178,7 @@ elseif ($_GET['v'] == 1) {
           "bProcessing": true,
 					"aoColumns": [
 						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
-						{ "sWidth": "70%", "sType": "string" },
+						{ "sWidth": "40%", "sType": "string" },
 						
 						{ "sWidth": "20px", "sType": "html", "bSortable": false}
 					]
