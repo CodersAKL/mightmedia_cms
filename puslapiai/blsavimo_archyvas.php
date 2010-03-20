@@ -2,7 +2,7 @@
 $limit=6;
 $viso=kiek("balsavimas");
 $p=(isset($_GET['p'])?$_GET['p']:0);
-$sqlas = mysql_query1("SELECT * ,autorius ,(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE id=autorius LIMIT 1)AS nick FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE ijungtas='TAIP' ORDER BY `laikas` DESC LIMIT $p , $limit");
+$sqlas = mysql_query1("SELECT * ,autorius ,(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE id=autorius LIMIT 1)AS nick FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE ijungtas='TAIP' AND `lang` = ".escape(lang())." ORDER BY `laikas` DESC LIMIT $p , $limit");
 //$sql = mysql_fetch_assoc($sql);
 $text="";
 foreach($sqlas as $sql){

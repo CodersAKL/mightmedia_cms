@@ -1422,4 +1422,17 @@ function checkUrl($url) {
 		return false;
 	}
 }
+
+/**
+ * Gražina kalbą
+ * @global array $conf
+ * @return string
+ */
+function lang() {
+	if (empty($_SESSION['lang'])) {
+		global $conf;
+		$_SESSION['lang'] = basename($conf['kalba'],'.php');
+	}
+	return $_SESSION['lang'];
+}
 ?>

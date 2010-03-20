@@ -65,10 +65,11 @@ if (isset($_POST['dukas'])) {
 
 	//jeigu rasom nauja
 	if ($_POST['dukas'] == $lang['faq']['submit']) {
-		$q = "INSERT INTO `" . LENTELES_PRIESAGA . "duk` (`klausimas`,`atsakymas`,`order`) VALUES (
+		$q = "INSERT INTO `" . LENTELES_PRIESAGA . "duk` (`klausimas`,`atsakymas`,`order`,`lang`) VALUES (
 		" . escape($klausimas) . ",
 		" . escape($atsakymas) . ",
-		" . escape($order) . ");";
+		" . escape($order) . ",
+		" . escape(lang()) . ");";
 		mysql_query1($q);
 		redirect(url("?id," . $url['id']), "header");
 	}
@@ -88,7 +89,7 @@ if (isset($_POST['dukas'])) {
 $text = '';
 $extra = "<ol>";
 
-$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "duk` ORDER by `order` ASC", 2000);
+$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "duk` AND `lang` = ".escape(lang())." ORDER by `order` ASC", 2000);
 if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
 		$nr++;

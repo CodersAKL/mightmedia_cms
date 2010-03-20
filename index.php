@@ -47,7 +47,7 @@ if (isset($url['id']) && !empty($url['id']) && isnum($url['id'])) {
 	$url['id'] = $pslid;
 }
 if (isset($pslid) && isnum($pslid) && $pslid > 0) {
-	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int)$pslid) . " LIMIT 1", 259200); //keshas  3dienos.
+	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int)$pslid) . " and `lang` = ".escape(lang())." LIMIT 1", 259200); //keshas  3dienos.
 
 	if (!empty($sql1)) {
 		if (preg_match("/http:\/\//", $sql1['file'])) {
@@ -79,6 +79,13 @@ if ($conf['Palaikymas'] == 1) {
 	if (!isset($_SESSION['id']) || $_SESSION['level'] != 1) {
 		redirect("remontas.php");
 	}
+}
+if (!empty($_GET['lang'])) {
+	$_SESSION['lang'] = basename($_GET['lang'],'.php');
+	redirect(url("?id," . $_GET['id']));
+}
+if (!empty($_SESSION['lang']) && is_file(ROOT.'lang/'.basename($_SESSION['lang']).'.php')) {
+	require(ROOT.'lang/'.basename($_SESSION['lang'],'.php').'.php');
 }
 
 include_once ("priedai/header.php");

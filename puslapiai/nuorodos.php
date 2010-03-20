@@ -36,22 +36,22 @@ $p = 0;
 
 //Jei lankytojas paspaudžia ant nuorodos
 if (isset($link) && strlen($link) > 0 && $link > 0) {
-	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET click=click+1 WHERE `id`=" . escape($link) . " LIMIT 1");
-	$link = mysql_query1("SELECT `url` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `id`=" . escape($link) . " LIMIT 1", 86400);
+	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET click=click+1 WHERE `id`=" . escape($link) . " AND `lang` = ".escape(lang())." LIMIT 1");
+	$link = mysql_query1("SELECT `url` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `id`=" . escape($link) . " AND `lang` = ".escape(lang())." LIMIT 1", 86400);
 	redirect($link['url']);
 }
 include_once(ROOT.'priedai/kategorijos.php');
 
 //kategorijos
-$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' ORDER BY `pavadinimas`");
+$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`");
 $kategorijos = cat('nuorodos', 0);
 if (sizeof($sqlas) > 0) {
 	foreach ($sqlas as $sql) {
-		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas` LIMIT 1");
+		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1");
 		//$path1 = explode(",", $path['path']);
 
 		if ($path['path'] == $k) {
-			$sqlkiek = kiek('nuorodos', "WHERE `cat`=" . escape($sql['id']) . " AND `active`='TAIP'");
+			$sqlkiek = kiek('nuorodos', "WHERE `cat`=" . escape($sql['id']) . " AND `active`='TAIP' AND `lang` = ".escape(lang())."");
 			$info[] = array(
 				" " => "<img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' />",
 				"{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br>",
@@ -68,7 +68,7 @@ if (isset($info)) {
 //pabaiga
 
 if ($k >= 0) {
-	$teis = mysql_query1("SELECT teises FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "' LIMIT 1", 86400);
+	$teis = mysql_query1("SELECT teises FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "' AND `lang` = ".escape(lang())." LIMIT 1", 86400);
 	if (teises($teis['teises'], $_SESSION['level'])) {
 		$q = mysql_query1("SELECT `" . LENTELES_PRIESAGA . "nuorodos`.`id`,
 		`" . LENTELES_PRIESAGA . "nuorodos`.`url`,
@@ -78,7 +78,7 @@ if ($k >= 0) {
 		`" . LENTELES_PRIESAGA . "nuorodos`.`apie`,
 		`" . LENTELES_PRIESAGA . "users`.`nick`
 FROM `" . LENTELES_PRIESAGA . "nuorodos` 
-Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "nuorodos`.`nick` = `" . LENTELES_PRIESAGA . "users`.`id` WHERE `" . LENTELES_PRIESAGA . "nuorodos`.`cat`='" . $k . "' AND `" . LENTELES_PRIESAGA . "nuorodos`.`active`='TAIP'
+Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "nuorodos`.`nick` = `" . LENTELES_PRIESAGA . "users`.`id` WHERE `" . LENTELES_PRIESAGA . "nuorodos`.`cat`='" . $k . "' AND `" . LENTELES_PRIESAGA . "nuorodos`.`active`='TAIP' AND " . LENTELES_PRIESAGA . "nuorodos`.`lang` = ".escape(lang())."
 ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400);
 		if (count($q) > 0) {
 			include_once ("priedai/class.php");
@@ -119,9 +119,9 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 			klaida($lang['system']['error'], "{$lang['admin']['links_bad']}");
 
 		} else {
-      $exists = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `url`=".escape($url)." LIMIT 1");
+      $exists = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `url`=".escape($url)." AND `lang` = ".escape(lang())." LIMIT 1");
       if(!isset($exists['id']))
-        $result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie` ) VALUES (" . escape($cat) . ", " . escape($url) . ", " . escape($pavadinimas) . ", " . escape($_SESSION['id']) . ", '" . time() . "', " . escape($apie) . ");");
+        $result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie`, `lang` ) VALUES (" . escape($cat) . ", " . escape($url) . ", " . escape($pavadinimas) . ", " . escape($_SESSION['id']) . ", '" . time() . "', " . escape($apie) . ", ".escape(lang()).");");
        else
          $result = true;
 			if ($result) {
@@ -158,14 +158,20 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 		include_once ("priedai/class.php");
 
 		$bla = new forma();
-		$nuorodos = array("Form" => array("action" => "", "method" => "post", "name" => "Submit_link"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kat"), "{$lang['admin']['links_title']}:" => array("type" => "text", "value" => "", "name" => "name"), "Url:" => array("type" => "text", "value" => "http://", "name" => "url"), "{$lang['admin']['links_about']}:" => array("type" => "textarea", "value" => "", "name" => "apie"), " " => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['admin']['links_create']}"));
+		$nuorodos = array(
+			"Form" => array("action" => "", "method" => "post", "name" => "Submit_link"),
+			"{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kat"),
+			"{$lang['admin']['links_title']}:" => array("type" => "text", "value" => "", "name" => "name"),
+			"Url:" => array("type" => "text", "value" => "http://", "name" => "url"),
+			"{$lang['admin']['links_about']}:" => array("type" => "textarea", "value" => "", "name" => "apie"),
+			" " => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['admin']['links_create']}"));
 
 		hide("{$lang['admin']['links_create']}", $bla->form($nuorodos), true);
 	//}
 }
 unset($bla, $nuorodos, $row, $sql, $cat, $url, $pavadinimas, $apie, $info, $q, $sql, $text, $link, $sqlas);
 if (count($_GET) == 1) {
-	if (kiek("nuorodos", "WHERE active='TAIP'") == 0)
+	if (kiek("nuorodos", "WHERE active='TAIP' AND `lang` = ".escape(lang())) == 0)
 		klaida($lang['system']['warning'], $lang['system']['no_content']);
 }
 /**

@@ -38,14 +38,14 @@ if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
 
 //kategorijos
 if ($vid == 0) {
-	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai'  ORDER BY `pavadinimas`");
+	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`");
 	if ($sqlas && sizeof($sqlas) > 0) {
 		foreach ($sqlas as $sql) {
-			$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas` LIMIT 1", 86400);
+			$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 86400);
 			//$path1 = explode(",", $path['path']);
 
 			if ($path['path'] == $k) {
-				$sqlkiek = kiek('siuntiniai', "WHERE `categorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP'");
+				$sqlkiek = kiek('siuntiniai', "WHERE `categorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
 				$info[] = array(" " => "<a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' /></a>", "{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id']) . "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br />", "{$lang['category']['downloads']}" => $sqlkiek);
 			}
 		}
@@ -81,11 +81,12 @@ if ($vid > 0) {
    `" . LENTELES_PRIESAGA . "siuntiniai`.`categorija` =  '$k'
    AND
    `" . LENTELES_PRIESAGA . "siuntiniai`.`rodoma` =  'TAIP'
+   AND `" . LENTELES_PRIESAGA . "siuntiniai`.`lang` = ".escape(lang())."
   ORDER BY
   `" . LENTELES_PRIESAGA . "siuntiniai`.`data` DESC
   LIMIT 1", 86400);
 	if (!isset($sql['id'])) {
-		$sql = mysql_query1("SELECT *, `ID` as id  FROM  `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` = '$vid' AND `rodoma` =  'TAIP'  LIMIT 1", 86400);
+		$sql = mysql_query1("SELECT *, `ID` as id  FROM  `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` = '$vid' AND `rodoma` =  'TAIP' AND `lang` = ".escape(lang())." LIMIT 1", 86400);
 	}
 	if (sizeof($sql) > 0 && isset($sql['id'])) {
 		//$sql = mysql_fetch_assoc($sql);
@@ -139,6 +140,7 @@ else {
   `" . LENTELES_PRIESAGA . "siuntiniai`.`categorija` =  '$k'
   AND
    `" . LENTELES_PRIESAGA . "siuntiniai`.`rodoma` =  'TAIP'
+   AND `" . LENTELES_PRIESAGA . "siuntiniai`.`lang` = ".escape(lang())."
     ORDER BY
     `" . LENTELES_PRIESAGA . "siuntiniai`.`data` DESC
     LIMIT 0, 50
@@ -159,6 +161,7 @@ else {
   `" . LENTELES_PRIESAGA . "siuntiniai`.`categorija` =  '$k'
   AND
    `" . LENTELES_PRIESAGA . "siuntiniai`.`rodoma` =  'TAIP'
+	AND `" . LENTELES_PRIESAGA . "siuntiniai`.`lang` = ".escape(lang())."
     ORDER BY
     `" . LENTELES_PRIESAGA . "siuntiniai`.`data` DESC
     LIMIT 0, 50", 86400);
@@ -189,7 +192,7 @@ else {
 	unset($bla, $info, $sql, $sql_d, $vid);
 }
 if (count($_GET) == 1) {
-	if (kiek("siuntiniai", "WHERE rodoma='TAIP'") <= 0)
+	if (kiek("siuntiniai", "WHERE rodoma='TAIP' AND `lang` = ".escape(lang())) <= 0)
 		klaida($lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
 }
 

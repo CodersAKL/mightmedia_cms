@@ -139,7 +139,7 @@ if (isset($_SESSION['id']) && $_SESSION['id']) {
 						}
 
 						$result = mysql_query1("
-INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`)
+INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`,`lang`)
 VALUES (
 " . escape($_POST['Pavadinimas']) . ",
 " . escape($rand_name . "." . $file_ext) . ",
@@ -147,7 +147,8 @@ VALUES (
 " . escape($autorius) . ",
 '" . time() . "',
 " . escape($_POST['cat']) . ",
-'NE'
+'NE',
+".escape(lang())."
 )");
 
 						if ($result) {
@@ -256,7 +257,7 @@ VALUES (
 		}
 	}
 
-	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' ORDER BY `pavadinimas` DESC");
+	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` DESC");
 	if (sizeof($sql) > 0) {
 		foreach ($sql as $row) {
 			$kategorijos[$row['id']] = $row['pavadinimas'];

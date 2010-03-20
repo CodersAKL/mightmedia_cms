@@ -71,7 +71,7 @@ if (isset($url['q']) && isnum($url['q']) && $url['q'] > 0) {
 }
 include_once ("priedai/class.php");
 //kur tu?
-$kur = mysql_query1("SELECT pav, (SELECT pav from " . LENTELES_PRIESAGA . "d_straipsniai Where id=$tid )AS tema,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_zinute Where sid=$tid AND tid=$sid )AS zinute,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_zinute Where tid=$sid)AS subzinute,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_straipsniai Where tid=$sid)AS temos FROM " . LENTELES_PRIESAGA . "d_temos WHERE id=$sid limit 1",120);
+$kur = mysql_query1("SELECT pav, (SELECT pav from " . LENTELES_PRIESAGA . "d_straipsniai Where id=$tid AND `lang` = ".escape(lang()).")AS tema,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_zinute Where sid=$tid AND tid=$sid  AND `lang` = ".escape(lang()).")AS zinute,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_zinute Where tid=$sid AND `lang` = ".escape(lang()).")AS subzinute,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_straipsniai Where tid=$sid AND `lang` = ".escape(lang()).")AS temos FROM " . LENTELES_PRIESAGA . "d_temos WHERE id=$sid AND `lang` = ".escape(lang())." limit 1",120);
 //Sausainiai naujiems fiksuoti
 if ($sid > 0) {
 	setcookie("sub_$sid", $kur['subzinute'], time() + (60 * 60 * 24 * 365));
@@ -107,9 +107,9 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 	`" . LENTELES_PRIESAGA . "d_forumai`.`id` AS `katid`,
 	(SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=`temid`) AS zinutes,
     (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`=`temid`) AS temos
-    FROM
-  `" . LENTELES_PRIESAGA . "d_forumai`
+    FROM `" . LENTELES_PRIESAGA . "d_forumai`
     inner Join `" . LENTELES_PRIESAGA . "d_temos` ON `" . LENTELES_PRIESAGA . "d_forumai`.`id`=`" . LENTELES_PRIESAGA . "d_temos`.`fid` 
+	WHERE  `" . LENTELES_PRIESAGA . "d_forumai`.`lang` = ".escape(lang())."
 	ORDER by `" . LENTELES_PRIESAGA . "d_forumai`.`place` ASC, `" . LENTELES_PRIESAGA . "d_temos`.`place` ASC",60);
 	//$info = array();
 	if (sizeof($sqlis) > 0) {
@@ -150,9 +150,9 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 	$tem = mysql_query1("
 	SELECT " . LENTELES_PRIESAGA . "d_straipsniai.* ,
 	" . LENTELES_PRIESAGA . "d_straipsniai.id as strid ,
-	(SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=" . escape($sid) . " AND`sid`=strid ) AS viso	
+	(SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=" . escape($sid) . " AND `sid`=strid AND `lang` = ".escape(lang()).") AS viso
 	from " . LENTELES_PRIESAGA . "d_straipsniai 
-	WHERE " . LENTELES_PRIESAGA . "d_straipsniai.tid=" . escape($sid) . " ORDER by " . LENTELES_PRIESAGA . "d_straipsniai.sticky DESC, " . LENTELES_PRIESAGA . "d_straipsniai.last_data DESC LIMIT " . $pid . ", " . $limit . "",120);
+	WHERE " . LENTELES_PRIESAGA . "d_straipsniai.tid=" . escape($sid) . " AND `" . LENTELES_PRIESAGA . "d_straipsniai`.`lang` = ".escape(lang())." ORDER by " . LENTELES_PRIESAGA . "d_straipsniai.sticky DESC, " . LENTELES_PRIESAGA . "d_straipsniai.last_data DESC LIMIT " . $pid . ", " . $limit . "",120);
 	if (sizeof($tem) > 0) {
 		foreach ($tem as $temos) {
 		//$tsql = mysql_fetch_assoc(mysql_query1("SELECT count(id) AS viso FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=" . escape($sid) . " AND `sid`=" . escape($temos['id']) . ""));
@@ -197,7 +197,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 
 
 	//Cia nesugalvojau kaip visas 3 sujungt :(
-		$msql = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_atsakyta`=`forum_atsakyta`-1 , `taskai`=`taskai`-1 WHERE id=(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . "  LIMIT 1);
+		$msql = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_atsakyta`=`forum_atsakyta`-1 , `taskai`=`taskai`-1 WHERE id=(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . " LIMIT 1);
 ");
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($did) . "");
 
@@ -211,7 +211,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 		}
 	}
 
-	$tsql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`=" . escape((int)$sid) . " AND `id`=" . escape((int)$tid) . " limit 1");
+	$tsql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`=" . escape((int)$sid) . " AND `id`=" . escape((int)$tid) . " AND `lang` = ".escape(lang())." limit 1");
 	$straipsnis = $tsql['pav'];
 	if (!empty($straipsnis)) {
 		if (isset($_SESSION['level']) && ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1)) {
@@ -299,9 +299,9 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 			$extra = '';
 			if (!empty($_POST['msg']) && $_POST['action'] == 'f_update') {
 				if ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
-					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]{$lang['forum']['edited_by']}: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . "");
+					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]{$lang['forum']['edited_by']}: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid));
 				} else {
-					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]{$lang['forum']['edited_by']}: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . " AND `nick`=" . escape($_SESSION['id']) . "");
+					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]{$lang['forum']['edited_by']}: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s ', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . " AND `nick`=" . escape($_SESSION['id']));
 				}
 				redirect(url("?id," . $url['id'] . ";s,$sid;t,$tid;p,{$_GET['p']}"));
 				//redirect($_SERVER['HTTP_REFERAL']);
@@ -318,20 +318,18 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 		//  Siunciam zinute
 		if (isset($_POST['action']) && $_POST['action'] == 'f_send' && isset($_POST['msg']) && $tikrinam['uzrakinta'] == "ne") {
 			if (!isset($_SESSION['username'])) {
-				header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
+				redirect(url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 			}
 			if (strlen(str_replace(" ", "", $_POST['msg'])) > 0) {
 				$zinute = $_POST['msg'];
 				if ($tid == 0) {
-					header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
-					exit;
+					redirect(url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 				}
 				if ($sid == 0) {
-					header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
-					exit;
+					redirect(url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 				}
 				if ($tikrinam['uzrakinta'] == "taip") {
-					header("Location: ".url("?id," . $url['id'] . ";t," . $tid . ";s," . $sid ));
+					redirect(url("?id," . $url['id'] . ";t," . $tid . ";s," . $sid ));
 				} else {
 
 					if (isset($_POST['post_uid']) && $_POST['post_uid'] > 0) {
@@ -353,7 +351,7 @@ WHERE `" . LENTELES_PRIESAGA . "users`.`nick`=" . escape($_SESSION['username']) 
 AND `" . LENTELES_PRIESAGA . "d_straipsniai`.`id`=" . escape($tid) . " AND `" . LENTELES_PRIESAGA . "d_temos`.`id`=" . escape($sid) . "
 ");
 					mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_zinute` (`tid`, `sid`, `nick`, `zinute`, `laikas`) VALUES (" . escape($sid) . ", " . escape($tid) . ", " . escape($uid) . ", " . escape($zinute) . ", '" . time() . "')");
-					header("location: ".url("?id,{$_GET['id']};s,{$_GET['s']};t,{$_GET['t']};p,".((int)($kur['zinute']/15)*15)."#end"));
+					redirect(url("?id,{$_GET['id']};s,{$_GET['s']};t,{$_GET['t']};p,".((int)($kur['zinute']/15)*15)."#end"));
 
 					unset($zinute, $uid, $f_atsakyta);
 				}
@@ -415,7 +413,7 @@ elseif ((int)$lid != 0 && $kid == 0 && $rid == 0) {
 				;
 			}
 
-			header("Location: ".url("?id," . $url['id'] . ";s," . $sid . ";t,$tid"));
+			redirect(url("?id," . $url['id'] . ";s," . $sid . ";t,$tid"));
 
 
 		}
@@ -440,8 +438,7 @@ elseif ((int)$kid && (int)$kid && (int)$kid > 0) {
 		$result = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `id`=" . escape($kid) . "");
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `sid`=" . escape($kid) . "");
 		if ($result) {
-			header("Location: ".url("?id," . $url['id'] . ";s," . $sid));
-			exit;
+			redirect(url("?id," . $url['id'] . ";s," . $sid));
 		}
 
 	}
@@ -474,8 +471,7 @@ elseif (((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && 
 elseif ($aid == 1 && $kid == 0 && $lid == 0 && $rid == 0) {
 	if (isset($_POST['post_msg'])) {
 		if (!isset($_SESSION['username'])) {
-			header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
-			exit;
+			redirect(url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 		}
 		if (isset($_POST['post_uid']) && $_POST['post_uid'] > 0) {
 			$uid = (int)$_POST['post_uid'];
@@ -491,14 +487,14 @@ elseif ($aid == 1 && $kid == 0 && $lid == 0 && $rid == 0) {
 		if (empty($zinute) || strlen(str_replace(" ", "", $zinute)) < 1) {
 			$error .= $lang['forum']['message?'];
 		}
-		$result = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`=" . escape($sid) . " limit 1");
+		$result = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`=" . escape($sid) . " AND `lang` = ".escape(lang())." limit 1");
 		if ($result == 0) {
 			$error .= "{$lang['forum']['badurl']}.<br/>";
 		}
 		unset($result);
 		if (strlen($error) < 1) {
 			unset($error);
-			$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_straipsniai` (`tid`, `pav`, `autorius`,`last_data`,`last_nick`) VALUES(" . escape($sid) . ", " . escape($pavadinimas) . ", " . escape($_SESSION['username']) . ", '" . time() . "', " . escape($_SESSION['username']) . ")");
+			$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_straipsniai` (`tid`, `pav`, `autorius`,`last_data`,`last_nick`,`lang`) VALUES(" . escape($sid) . ", " . escape($pavadinimas) . ", " . escape($_SESSION['username']) . ", '" . time() . "', " . escape($_SESSION['username']) . ", ".escape(lang()).")");
 			if (!$result) {
 				$error .= "<b> " . mysql_error() . "</b>.";
 			}
@@ -520,8 +516,7 @@ WHERE `" . LENTELES_PRIESAGA . "users`.nick=" . escape($_SESSION['username']) . 
 					$error .= "<b> " . mysql_error() . "</b>";
 				}
 				if (!isset($error)) {
-					header("Location: ".url("?id," . $url['id'] . ";s," . $sid . ";t," . $inf['id']));
-					exit;
+					redirect(url("?id," . $url['id'] . ";s," . $sid . ";t," . $inf['id']));
 				}
 			}
 		} else {

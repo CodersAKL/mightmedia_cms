@@ -10,7 +10,7 @@
  * @$Date$
  **/
 
-$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' ORDER BY `pavadinimas` DESC");
+$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' ORDER BY `pavadinimas` AND `lang` = ".escape(lang())." DESC");
 if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
 		$kategorijos[$row['id']] = $row['pavadinimas'];
@@ -37,8 +37,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'Pateikti') {
 		}
 		if (!isset($error)) {
 			$result = mysql_query1("
-				INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija)
-				VALUES (" . escape($pavadinimas) . ", " . escape($naujiena) . ", '',  '" . time() . "', '" . $autorius . "', " . escape($komentaras) . ", " . escape($kategorija) . ")");
+				INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija, lang)
+				VALUES (" . escape($pavadinimas) . ", " . escape($naujiena) . ", '',  '" . time() . "', '" . $autorius . "', " . escape($komentaras) . ", " . escape($kategorija) . ", ".escape(lang()).")");
 			if ($result) {
 				msg("Informacija", "Naujiena sėkmingai pateikta administracijos peržiūrai");
 			} else {
@@ -56,7 +56,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'Pateikti') {
 if ($i == 1) {
 	include_once ("priedai/class.php");
 	$bla = new forma();
-	$naujiena = array("Form" => array("action" => "", "method" => "post", "name" => "reg"), "Pavadinimas:" => array("type" => "text", "value" => '', "name" => "pav", "class"=>"input"), "Komentarai:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"), "Kategorija:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class"=>"input"), "Naujiena:" => array("type" => "string", "value" => editorius('tiny_mce', 'standartinis', array('naujiena' => 'Glaustai', 'placiau' => 'Plačiau'))), 'Pateikti' => array("type" => "submit", "name" => "action", "value" => 'Pateikti'));
+	$naujiena = array(
+		"Form" => array("action" => "", "method" => "post", "name" => "reg"),
+		"Pavadinimas:" => array("type" => "text", "value" => '', "name" => "pav", "class"=>"input"),
+		"Komentarai:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"),
+		"Kategorija:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class"=>"input"),
+		"Naujiena:" => array("type" => "string", "value" => editorius('tiny_mce', 'standartinis', array('naujiena' => 'Glaustai', 'placiau' => 'Plačiau'))),
+		'Pateikti' => array("type" => "submit", "name" => "action", "value" => 'Pateikti')
+	);
 	lentele('Naujienos rašymas', $bla->form($naujiena));
 } else {
 	klaida("Dėmesio", "Nėra kategorijų.");

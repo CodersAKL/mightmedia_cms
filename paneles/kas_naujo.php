@@ -16,7 +16,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	$link = '';
 	//Forume
 	if (isset($conf['puslapiai']['frm.php']['id'])) {
-		$q = mysql_query1("SELECT `id`,`id` AS strid,`tid`,`tid` as `temosid`,`pav`,`autorius`,`last_data`,`last_nick`, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=`temosid` AND`sid`=strid ) AS viso	 FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `last_data` >= " . escape($_SESSION['lankesi'])  . " ORDER BY `last_data` DESC LIMIT 5");
+		$q = mysql_query1("SELECT `id`,`id` AS strid,`tid`,`tid` as `temosid`,`pav`,`autorius`,`last_data`,`last_nick`, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=`temosid` AND`sid`=strid AND `lang` = ".escape(lang())." ) AS viso	 FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `last_data` >= " . escape($_SESSION['lankesi'])  . " AND `lang` = ".escape(lang())." ORDER BY `last_data` DESC LIMIT 5");
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['forum']}:</b><br/>";
 			foreach ($q as $row) {
@@ -26,7 +26,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	}
 	//naujienose
 	if (isset($conf['puslapiai']['naujienos.php']['id'])) {
-		$q = mysql_query1("SELECT `id`, `pavadinimas` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `data` >= " . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' ORDER BY `data` DESC LIMIT 10",60);
+		$q = mysql_query1("SELECT `id`, `pavadinimas` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `data` >= " . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())." ORDER BY `data` DESC LIMIT 10",60);
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['news']}:</b><br/>";
 			foreach ($q as $row) {
@@ -36,7 +36,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	}
 	//galerijoj
 	if (isset($conf['puslapiai']['galerija.php']['id'])) {
-		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `data`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' ORDER BY `data` DESC LIMIT 10",60);
+		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `data`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())." ORDER BY `data` DESC LIMIT 10",60);
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['gallery']}:</b><br/>";
 			foreach ($q as $row) {
@@ -46,7 +46,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	}
 	//siuntiniuose
 	if (isset($conf['puslapiai']['siustis.php']['id'])) {
-		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas`, `categorija` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `data`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' ORDER BY `data` DESC LIMIT 10",60);
+		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas`, `categorija` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `data`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())." ORDER BY `data` DESC LIMIT 10",60);
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['downloads']}:</b><br/>";
 			foreach ($q as $row) {
@@ -56,7 +56,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 	}
 	//straipsniai
 	if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
-		$q = mysql_query1("SELECT `id`, `t_text`, `pav`, `kat` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `date`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP'  ORDER BY `date` DESC LIMIT 10",60);
+		$q = mysql_query1("SELECT `id`, `t_text`, `pav`, `kat` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `date`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())." ORDER BY `date` DESC LIMIT 10",60);
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['articles']}:</b><br/>";
 			foreach ($q as $row) {
@@ -67,7 +67,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 
 	//nuorodos
 	if (isset($conf['puslapiai']['nuorodos.php']['id'])) {
-		$q = mysql_query1("SELECT `id`, `pavadinimas`, `apie`, `date`, `cat` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `date`>=" . escape($_SESSION['lankesi']) . " AND `active`='TAIP' ORDER BY `date` DESC LIMIT 10",60);
+		$q = mysql_query1("SELECT `id`, `pavadinimas`, `apie`, `date`, `cat` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `date`>=" . escape($_SESSION['lankesi']) . " AND `active`='TAIP' AND `lang` = ".escape(lang())." ORDER BY `date` DESC LIMIT 10",60);
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['pages']['nuorodos.php']}:</b><br/>";
 			foreach ($q as $row) {

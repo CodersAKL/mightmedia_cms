@@ -41,6 +41,7 @@ if ($kid == 0) {
 	$sql = mysql_query1("SELECT SQL_CACHE *, (SELECT SQL_CACHE COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
 			FROM `" . LENTELES_PRIESAGA . "naujienos`
 			WHERE `rodoma`= 'TAIP'
+			AND `lang` = ".escape(lang())."
 			ORDER BY `data` DESC
 			LIMIT {$p},{$limit}", 100);
 
@@ -51,7 +52,7 @@ if ($kid == 0) {
 				$extra = "<span class='read_more' style='float: right;display:block;'>" . (($row['kom'] == 'taip'&&isset($conf['kmomentarai_sveciams'])&&$conf['kmomentarai_sveciams'] != 3) ? "<a href='".url("?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] ). "'>{$lang['news']['read']} • {$lang['news']['comments']} (" . $row['viso'] . ")</a>" : "<a href='".url("?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] ). "'>{$lang['news']['read']}</a>") . "</span><br />";
 			}
 
-			$kategorijos_pav = mysql_query1("SELECT `pav`,`id`,`teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape($row['kategorija']) . " limit 1");
+			$kategorijos_pav = mysql_query1("SELECT `pav`,`id`,`teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape($row['kategorija']) . " AND `lang` = ".escape(lang())." limit 1");
 			$pav = "";
 			if (isset($kategorijos_pav['pav'])) {
 				if (isset($conf['puslapiai']['naujkat.php']['id'])) {
@@ -80,7 +81,15 @@ if ($kid != 0) {
 
 	
 	if(empty($sql['naujiena'])){
-		$sql = mysql_query1("			SELECT SQL_CACHE *, (SELECT SQL_CACHE COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`			FROM `" . LENTELES_PRIESAGA . "naujienos`	WHERE `rodoma`= 'TAIP' AND `id` = " . escape($kid) . " limit 1");
+		$sql = mysql_query1("
+			SELECT SQL_CACHE *, (SELECT SQL_CACHE COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom`
+				WHERE `pid`='puslapiai/naujienos'
+				AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
+			FROM `" . LENTELES_PRIESAGA . "naujienos`
+				WHERE `rodoma`= 'TAIP'
+				AND `id` = " . escape($kid) . "
+				AND `lang` = ".escape(lang())."
+			limit 1");
 	}
 	
 
@@ -98,7 +107,7 @@ if ($kid != 0) {
 			//Atvaizduojam naujieną, likę argumentai - mėnesis žodžiais ir diena skaičiumi
 			lentele($title, $text, false, array(menesis((int)date('m', strtotime($sql['data']))), (int)date('d', strtotime($sql['data']))));
 			//Susijusios naujienos
-			$susijus = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija`=" . escape($sql['kategorija']) . " AND `id`!=" . escape($_GET['k']) . " ORDER by `data` DESC LIMIT 50", 30000);
+			$susijus = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija`=" . escape($sql['kategorija']) . " AND `id`!=" . escape($_GET['k']) . "AND `lang` = ".escape(lang())." ORDER by `data` DESC LIMIT 50", 30000);
 			if (sizeof($susijus) > 0) {
 				$naujienos = "<ul id=\"naujienos\">";
 				foreach ($susijus as $susijusios) {

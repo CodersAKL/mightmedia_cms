@@ -25,14 +25,14 @@ if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
 $limit = 50;
 $text = '';
 //Paulius svaigsta su kategoriju sarasu
-$sqlas = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos'  ORDER BY `pavadinimas`");
+$sqlas = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`");
 if ($sqlas && sizeof($sqlas) > 0) {
 	foreach ($sqlas as $sql) {
-		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' ORDER BY `pavadinimas` LIMIT 1");
+		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1");
 		//$path1 = explode(",", $path['path']);
 
 		if ($path['path'] == $k) {
-			$sqlkiek = kiek('naujienos', "WHERE `kategorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP'");
+			$sqlkiek = kiek('naujienos', "WHERE `kategorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
 			$info[] = array(" " => "<img src='images/naujienu_kat/" . input($sql['pav']) . "' alt='Kategorija' border='0' />", "{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'>" . input($sql['pavadinimas']) . "</a></h2>" . $sql['aprasymas'] . "<br>", "{$lang['category']['news']}" => $sqlkiek, );
 		}
 	}
@@ -48,11 +48,12 @@ $sql = mysql_query1("
 			SELECT SQL_CACHE *, (SELECT SQL_CACHE COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
 			FROM `" . LENTELES_PRIESAGA . "naujienos`
 			WHERE `rodoma`= 'TAIP' AND `kategorija`=$k
+			AND `lang` = ".escape(lang())."
 			ORDER BY `data` DESC
 			LIMIT {$p},{$limit}", 86400);
 $viso = count($sql);
 if ($viso > 0) {
-	$sqlas = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "' AND `kieno`='naujienos' ORDER BY `pavadinimas` LIMIT 1", 86400);
+	$sqlas = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "' AND `kieno`='naujienos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 86400);
 	//$sqlas = mysql_fetch_assoc($sqlas);
 	if ($viso > $limit) {
 		lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));

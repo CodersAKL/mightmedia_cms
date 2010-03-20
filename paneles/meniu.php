@@ -10,12 +10,17 @@
  * @$Date$
  **/
 
-$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`='Y' ORDER BY `place` ASC");
-foreach ($res as $row){
-	if(teises($row['teises'], $_SESSION['level']))
-	$data[$row['parent']][] = $row;
+$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`='Y' AND `lang` = ".escape(lang())." ORDER BY `place` ASC");
+
+if (sizeof($res) > 0) {
+	foreach ($res as $row) {
+		if(teises($row['teises'], $_SESSION['level']))
+			$data[$row['parent']][] = $row;
+	}
+	$text = '<div id="navigation"><ul>'.build_menu($data).'</ul></div>';
+} else {
+	$text = '';
 }
-$text = '<div id="navigation"><ul>'.build_menu($data).'</ul></div>';
 unset($data, $res);
 
 ?>
