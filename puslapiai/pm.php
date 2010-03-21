@@ -166,11 +166,11 @@ if (isset($url['n'])) {
 					</tr>
 					<tr>
 						<td class=\"sarasas\">{$lang['user']['pm_subject']}:</td>
-						<td><input name=\"title\" type=\"text\" size=\"50\" value=\"" . ((isset($user) && (int)$pid > 0) ? "Re: " . input(trimlink($sql['title'], 40) : "")) . "\" style=\"width:95%\"></td>
+						<td><input name=\"title\" type=\"text\" size=\"50\" value=\"" . ((isset($user) && (int)$pid > 0) ? "Re: " . input(trimlink($sql['title'], 40)) : "") . "\" style=\"width:95%\"></td>
 					</tr>
 					<tr>
 						<td valign='top' align='left' class=\"sarasas\">{$lang['user']['pm_message']}:</td>
-						<td><textarea name=\"msg\" rows=\"10\" cols=\"50\" wrap=\"on\" style=\"width:95%\">" . ((isset($user) && (int)$pid > 0) ? "[quote=" . $user . "]" . input(trim(preg_replace(array("#\[quote=(http://)?(.*?)\](.*?)\[/quote]#si", "[/quote]"), "", $sql['msg'])) . "[/quote]\n\n" : "")) . "</textarea>
+						<td><textarea name=\"msg\" rows=\"10\" cols=\"50\" wrap=\"on\" style=\"width:95%\">" . ((isset($user) && (int)$pid > 0) ? "[quote=" . $user . "]" . input(trim(preg_replace(array("#\[quote=(http://)?(.*?)\](.*?)\[/quote]#si", "[/quote]"), "", $sql['msg'])) . "[/quote]\n\n") : "") . "</textarea>
 						<br />
 						" . bbk("msg") . "
 						<br />
