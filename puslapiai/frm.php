@@ -125,7 +125,7 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 				$extra = "<img src='images/forum/folder.gif' alt='{$lang['forum']['topic']}' />";
 			}
 			//subkategorijø atvaizdavimo formatas
-			$info[$kat['katid']][] = array("#" => $extra, "{$lang['forum']['forum']}" => "<div style='width:200px;display:block;'><a href='".url("?id," . $url['id'] . ";s," . $kat['temid'] ). "'>" . $kat['pav'] . "</a> <i style='font-size:9px;width:auto;display:block;'>" . $kat['aprasymas'] . "</i></div>", "{$lang['forum']['topics']}" => $temos, "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" => (($zinutes>0)? $kat['last_nick'] . ' - ' . (($kat['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $kat['last_data']))):'-'));
+			$info[$kat['katid']][] = array("#" => $extra, "{$lang['forum']['forum']}" => "<div ><a href='".url("?id," . $url['id'] . ";s," . $kat['temid'] ). "'>" . $kat['pav'] . "</a> <i style='font-size:9px;width:auto;display:block;'>" . $kat['aprasymas'] . "</i></div>", "{$lang['forum']['topics']}" => $temos, "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" => (($zinutes>0)? $kat['last_nick'] . ' - ' . (($kat['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $kat['last_data']))):'-'));
 			$blai = new Table();
 			$subai[$kat['katid']] = $blai->render($info[$kat['katid']]);
 			$kateg[$kat['katid']] = $kat['kategorija'];
