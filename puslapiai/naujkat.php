@@ -47,7 +47,7 @@ if (isset($info)) {
 $sql = mysql_query1("
 			SELECT SQL_CACHE *, (SELECT SQL_CACHE COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
 			FROM `" . LENTELES_PRIESAGA . "naujienos`
-			WHERE `rodoma`= 'TAIP' AND `kategorija`=$k
+			WHERE `rodoma`= 'TAIP' AND `kategorija`=$k 
 			AND `lang` = ".escape(lang())."
 			ORDER BY `data` DESC
 			LIMIT {$p},{$limit}", 86400);

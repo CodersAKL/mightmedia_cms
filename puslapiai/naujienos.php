@@ -107,7 +107,7 @@ if ($kid != 0) {
 			//Atvaizduojam naujieną, likę argumentai - mėnesis žodžiais ir diena skaičiumi
 			lentele($title, $text, false, array(menesis((int)date('m', strtotime($sql['data']))), (int)date('d', strtotime($sql['data']))));
 			//Susijusios naujienos
-			$susijus = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija`=" . escape($sql['kategorija']) . " AND `id`!=" . escape($_GET['k']) . "AND `lang` = ".escape(lang())." ORDER by `data` DESC LIMIT 50", 30000);
+			$susijus = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija`=" . escape($sql['kategorija']) . " AND `id`!=" . escape($_GET['k']) . " AND `lang` = ".escape(lang())." ORDER by `data` DESC LIMIT 50", 30000);
 			if (sizeof($susijus) > 0) {
 				$naujienos = "<ul id=\"naujienos\">";
 				foreach ($susijus as $susijusios) {

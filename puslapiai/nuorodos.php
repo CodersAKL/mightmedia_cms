@@ -36,8 +36,8 @@ $p = 0;
 
 //Jei lankytojas paspaudžia ant nuorodos
 if (isset($link) && strlen($link) > 0 && $link > 0) {
-	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET click=click+1 WHERE `id`=" . escape($link) . " AND `lang` = ".escape(lang())." LIMIT 1");
-	$link = mysql_query1("SELECT `url` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `id`=" . escape($link) . " AND `lang` = ".escape(lang())." LIMIT 1", 86400);
+	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET click=click+1 WHERE `id`=" . escape($link) . " AND  `lang` = ".escape(lang())." LIMIT 1");
+	$link = mysql_query1("SELECT `url` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `id`=" . escape($link) . " AND  `lang` = ".escape(lang())." LIMIT 1", 86400);
 	redirect($link['url']);
 }
 include_once(ROOT.'priedai/kategorijos.php');
@@ -78,7 +78,7 @@ if ($k >= 0) {
 		`" . LENTELES_PRIESAGA . "nuorodos`.`apie`,
 		`" . LENTELES_PRIESAGA . "users`.`nick`
 FROM `" . LENTELES_PRIESAGA . "nuorodos` 
-Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "nuorodos`.`nick` = `" . LENTELES_PRIESAGA . "users`.`id` WHERE `" . LENTELES_PRIESAGA . "nuorodos`.`cat`='" . $k . "' AND `" . LENTELES_PRIESAGA . "nuorodos`.`active`='TAIP' AND " . LENTELES_PRIESAGA . "nuorodos`.`lang` = ".escape(lang())."
+Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "nuorodos`.`nick` = `" . LENTELES_PRIESAGA . "users`.`id` WHERE `" . LENTELES_PRIESAGA . "nuorodos`.`cat`='" . $k . "' AND `" . LENTELES_PRIESAGA . "nuorodos`.`active`='TAIP' AND `" . LENTELES_PRIESAGA . "nuorodos`.`lang` = ".escape(lang())."  
 ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400);
 		if (count($q) > 0) {
 			include_once ("priedai/class.php");
@@ -119,7 +119,7 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 			klaida($lang['system']['error'], "{$lang['admin']['links_bad']}");
 
 		} else {
-      $exists = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `url`=".escape($url)." AND `lang` = ".escape(lang())." LIMIT 1");
+      $exists = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `url`=".escape($url)." AND  `lang` = ".escape(lang())." LIMIT 1");
       if(!isset($exists['id']))
         $result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie`, `lang` ) VALUES (" . escape($cat) . ", " . escape($url) . ", " . escape($pavadinimas) . ", " . escape($_SESSION['id']) . ", '" . time() . "', " . escape($apie) . ", ".escape(lang()).");");
        else

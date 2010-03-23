@@ -89,7 +89,7 @@ if (isset($_POST['dukas'])) {
 $text = '';
 $extra = "<ol>";
 
-$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "duk` AND `lang` = ".escape(lang())." ORDER by `order` ASC", 2000);
+$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "duk` WHERE `lang` = ".escape(lang())." ORDER by `order` ASC", 2000);
 if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
 		$nr++;
