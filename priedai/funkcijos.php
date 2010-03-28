@@ -343,7 +343,7 @@ function cleanurl($url) {
  * @return array
  */
 unset($sql, $row);
-$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' ORDER BY `id` DESC");
+$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `lang`=".escape(lang())." ORDER BY `id` DESC");
 
 if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
@@ -362,7 +362,7 @@ unset($levels, $sql, $row);
 /**
  * Gaunam visus puslapius ir sukisam i masyva
  */
-$sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC", 120);
+$sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=".escape(lang())." ORDER BY `place` ASC", 120);
 foreach ($sql as $row) {
 	$conf['puslapiai'][$row['file']] = array('id' => $row['id'], 'pavadinimas' => $row['pavadinimas'], 'file' => $row['file'], 'place' => (int)$row['place'], 'show' => $row['show'], 'teises' => $row['teises']);
 	$conf['titles'][$row['id']] =(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file']));
@@ -1392,17 +1392,18 @@ if (!function_exists('scandir')) {
 	}
 }
 function build_menu($data, $id=0, $active_class='active') {
-	$re="";
-	foreach ($data[$id] as $row) {
-		if (isset($data[$row['id']])) {
-			$re.= "\n\t\t<li ".((isset($_GET['id']) && $_GET['id'] == $row['id'])?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."</a>\n<ul>\n\t";
-			$re.=build_menu($data, $row['id'],$active_class);
-			$re.= "\t</ul>\n\t</li>";
-		} else $re.= "\n\t\t<li ".((isset($_GET['id']) && $_GET['id'] == $row['id'])?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."".(isset($row['extra'])?$row['extra']:'')."</a></li>";
-	}
-	return $re;
+  if(!empty($data)){
+    $re="";
+    foreach ($data[$id] as $row) {
+      if (isset($data[$row['id']])) {
+        $re.= "\n\t\t<li ".((isset($_GET['id']) && $_GET['id'] == $row['id'])?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."</a>\n<ul>\n\t";
+        $re.=build_menu($data, $row['id'],$active_class);
+        $re.= "\t</ul>\n\t</li>";
+      } else $re.= "\n\t\t<li ".((isset($_GET['id']) && $_GET['id'] == $row['id'])?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."".(isset($row['extra'])?$row['extra']:'')."</a></li>";
+    }
+    return $re;
+  }
 }
-
 /**
  * Nuorodų tikrinimas
  *

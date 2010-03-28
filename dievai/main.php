@@ -41,6 +41,21 @@ if (is_file($root.'priedai/conf.php') && filesize($root.'priedai/conf.php') > 1)
 } else {
 	die(klaida('Sistemos klaida / System error', 'Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.'));
 }
+//kalbos
+$kalbos = getFiles(ROOT.'lang/');
+$language = '';
+foreach ($kalbos as $file) {
+	if ($file['type'] == 'file') {
+		$language .= '<a id="visit" class="right" href="'.url('?id,999;lang,'.basename($file['name'],'.php')).'"><img src="'.ROOT.'images/icons/flags/'.basename($file['name'],'.php').'.png" alt="'.basename($file['name'],'.php').'" class="language flag '.basename($file['name'],'.php').'" /></a>';
+	}
+}
+if (!empty($_GET['lang'])) {
+	$_SESSION['lang'] = basename($_GET['lang'],'.php');
+	redirect(url("?id," . $_GET['id']));
+}
+if (!empty($_SESSION['lang']) && is_file(ROOT.'lang/'.basename($_SESSION['lang']).'.php')) {
+	require(ROOT.'lang/'.basename($_SESSION['lang'],'.php').'.php');
+}
 if (empty($_SESSION['username']) || $_SESSION['level']!=1) {
 	redirect(ROOT.'index.php');
 }
@@ -61,9 +76,11 @@ foreach($glob as $id => $file) {
 
 	}
 }
+
+//medzio darymo f-ja
 function build_tree($data, $id=0, $active_class='active') {
 	global $admin_pagesid, $lang;
-
+if(!empty($data)){
 	$re="";
 	foreach ($data[$id] as $row) {
 		if (isset($data[$row['id']])) {
@@ -79,7 +96,7 @@ function build_tree($data, $id=0, $active_class='active') {
 </li>";
 	}
 	return $re;
-}
+}}
 ?>
 
 <?php
@@ -170,8 +187,8 @@ if (empty($_GET['ajax'])):?>
 							<ul>
 
 									<?php
-
-									$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`='Y' ORDER BY `place` ASC");
+                  $data1 = '';
+									$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`='Y' AND `lang`=".escape(lang())." ORDER BY `place` ASC");
 									foreach ($res as $row) {
 										if(teises($row['teises'],$_SESSION['level'])) {
 											$data1[$row['parent']][] = $row;
@@ -184,6 +201,7 @@ if (empty($_GET['ajax'])):?>
 						</li>
 					</ul>
 					<a href="<?php echo adresas(); ?>../" id="visit" class="right"><?php echo $lang['system']['to_page']; ?></a>
+					<?php echo $language;?>
 				</div>
 				<div id="content_main" class="clearfix">
 					<div id="main_panel_container" class="left">
@@ -314,8 +332,8 @@ HTML;
 						<h2 class="ico_mug"><?php echo $lang['system']['tree']; ?></h2>
 						<ul id="treemenu">
 								<?php
-
-								$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` ORDER BY `place` ASC");
+                $data2 = '';
+								$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=".escape(lang())." ORDER BY `place` ASC");
 								foreach ($res as $row) {
 									if(teises($row['teises'],$_SESSION['level'])) {
 										$data2[$row['parent']][] = $row;
@@ -429,11 +447,7 @@ FROM " . LENTELES_PRIESAGA . "kom");
 
 					</div><!-- end #calendar -->
 				</div><!-- end #panels -->
-				<div id="dialog" title="Welcome" style="display:none">
-					<p>Thank you for stopping by :) Hope you like that theme.</p>
-				</div><!-- end #dialog [if you don't want this, delete whole div and 6th line i custom.js -->
-
-
+				
 
 			</div><!-- end #content -->
 

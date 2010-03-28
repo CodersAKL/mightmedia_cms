@@ -306,7 +306,7 @@ foreach ($recordSet1 as $row){
 	$tekstas .= '
 <div id="la" style="display:none"><b>' . $lang['system']['updated'] . '</b></div><fieldset><legend>' . $lang['admin']['page_navigation'] . '</legend><ul id="test-list">' . $li . '</ul>';
 	$tekstas .= '</fieldset>';
-	$sql25 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'N' order by id");
+	$sql25 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'N' AND `lang` = ".escape(lang())." order by id");
 	$tekstas .= '<fieldset><legend>' . $lang['admin']['page_other'] . '</legend><ul>';
 	if (sizeof($sql25) > 0) {
 		foreach ($sql25 as $sql2) {			

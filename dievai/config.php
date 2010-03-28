@@ -45,14 +45,16 @@ foreach ($kalbos as $file) {
 		$kalba[basename($file['name'])] = basename($file['name']);
 	}
 }
-$puslapiai = array_keys($conf['puslapiai']);
-foreach ($puslapiai as $key) {
-	$psl[$key] = (isset($lang['pages'][$key])?$lang['pages'][$key]:nice_name(basename($key,'.php')));
-}
-
+if(isset($conf['puslapiai']) && count($conf['puslapiai']) > 0){
+  $puslapiai = array_keys($conf['puslapiai']);
+  foreach ($puslapiai as $key) {
+    $psl[$key] = (isset($lang['pages'][$key])?$lang['pages'][$key]:nice_name(basename($key,'.php')));
+  }
+} else 
+    $psl[]='';
 $nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), 
 	"{$lang['admin']['sitename']}:" => array("type" => "text", "value" => input($conf['Pavadinimas']), "name" => "Pavadinimas", "class" => "input"), 
-	"{$lang['admin']['homepage']}:" => array("type" => "select", "value" => $psl, "selected" =>$conf['pirminis'].'.php', "name" => "pirminis", "class" => "select"), 
+	"{$lang['admin']['homepage']}:" => array("type" => "select", "value" => $psl, "selected" =>(isset($conf['pirminis'])?$conf['pirminis'].'.php':''), "name" => "pirminis", "class" => "select"), 
 	"{$lang['admin']['about']}:" => array("type" => "textarea", "name" => "Apie", "value" => (isset($conf['Apie']) ? $conf['Apie'] : ''), "extra" => "rows=5", "class" => "input"), 
 	"{$lang['admin']['keywords']}:" => array("type" => "text", "value" => input($conf['Keywords']), "name" => "keywords", "rows" => "3", "class" => "input"), 
 	"{$lang['admin']['copyright']}:" => array("type" => "text", "value" => input($conf['Copyright']), "name" => "Copyright", "class" => "input"), 
