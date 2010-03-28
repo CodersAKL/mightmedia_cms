@@ -34,14 +34,14 @@ unset($buttons);
 include_once (ROOT."priedai/kategorijos.php");
 kategorija("nuorodos");
 
-$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `path`=0 ORDER BY `id` DESC");
+$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `path`=0 AND `lang` = ".escape(lang())." ORDER BY `id` DESC");
 if (sizeof($sql) > 0) {
 
 	$kategorijoss = cat('nuorodos', 0);
 }
 
 $kategorijos[0] = "--";
-$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "nuorodos` ORDER BY `pavadinimas` DESC");
+$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "nuorodos` WHERE `lang` = ".escape(lang())." ORDER BY `pavadinimas` DESC");
 if (sizeof($sql2) > 0) {
 	foreach ($sql2 as $row2) {
 		$nuorodos[$row2['id']] = $row2['pavadinimas'];

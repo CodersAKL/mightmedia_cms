@@ -43,7 +43,7 @@ lentele($lang['admin']['galerija'], $buttons);
 unset($buttons, $extra, $text);
 include_once (ROOT."priedai/kategorijos.php");
 kategorija("galerija", true);
-$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `path`=0 ORDER BY `id` DESC");
+$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `path`=0 AND `lang` = ".escape(lang())." ORDER BY `id` DESC");
 if (sizeof($sql) > 0) {
 	
 	$kategorijoss=cat('galerija', 0);
@@ -258,7 +258,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 				move_uploaded_file($file_tmp, $big_img."/originalai/".$rand_name.$ext);
             chmod($big_img."/originalai/".$rand_name.$ext,0777);
 
-				$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`) VALUES (" . escape($_POST['Pavadinimas']) . "," . escape($rand_name . $ext) . "," . escape(strip_tags($_POST['Aprasymas'])) . "," . escape($_SESSION['id']) . ",'" . time() . "'," . escape($_POST['cat']) . ",'TAIP')");
+				$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`, `lang`) VALUES (" . escape($_POST['Pavadinimas']) . "," . escape($rand_name . $ext) . "," . escape(strip_tags($_POST['Aprasymas'])) . "," . escape($_SESSION['id']) . ",'" . time() . "'," . escape($_POST['cat']) . ",'TAIP', ".escape(lang()).")");
 
 				if ($result) {
 					msg($lang['system']['done'], "{$lang['admin']['gallery_added']}");
@@ -369,7 +369,7 @@ if (isset($_GET['v'])) {
 	$bla = new forma();
 	if ($_GET['v'] == 8) {
 		$limit = 10;
-		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "galerija` LIMIT $p,$limit");
+		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "galerija` WHERE `lang` = ".escape(lang())." LIMIT $p,$limit");
 		if (sizeof($sql2) > 0) {
 
 			$text = "<table border=\"0\">
@@ -475,7 +475,7 @@ if (isset($_GET['v'])) {
   Inner Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "galerija`.`autorius` = `" . LENTELES_PRIESAGA . "users`.`id`
   WHERE  
    `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'NE' 
-  ORDER BY
+    ORDER BY
   `" . LENTELES_PRIESAGA . "galerija`.`data` DESC
   ");
 		if ($q) {

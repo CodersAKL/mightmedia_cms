@@ -86,7 +86,7 @@ if (isset($_POST['order2'])) {
 // Paspaustas kazkoks mygtukas
 if (isset($_POST['action']) && $_POST['action'] == 'f_sukurimas') {
 	$forumas = input($_POST['f_pav']);
-	$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_forumai` (`pav`) VALUES ('" . $forumas . "')");
+	$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_forumai` (`pav`, `lang`) VALUES ('" . $forumas . "', ".escape(lang()).")");
 
 	if ($result) {
 		msg($lang['system']['done'], $lang['system']['categorycreated']);
@@ -117,10 +117,10 @@ if (isset($_POST['keisti']) && $_POST['keisti'] == $lang['admin']['edit']) {
 //Kategorijos trynimas (gali but problemu)
 if (isset($_GET['d'])) {
 	$f_id = (int)$_GET['d'];
-	$strid = mysql_query1("SELECT id from `" . LENTELES_PRIESAGA . "d_temos`  WHERE `fid`='" . $f_id . "'");
+	$strid = mysql_query1("SELECT id from `" . LENTELES_PRIESAGA . "d_temos`  WHERE `fid`='" . $f_id . "' AND `lang` = ".escape(lang())."");
 	if (sizeof($strid) > 0) {
 		foreach ($strid as $stridi) {
-			$zinsid = mysql_query1("SELECT id from `" . LENTELES_PRIESAGA . "d_straipsniai` where `tid`=" . escape($stridi['id']) . "");
+			$zinsid = mysql_query1("SELECT id from `" . LENTELES_PRIESAGA . "d_straipsniai` where `tid`=" . escape($stridi['id']) . " AND `lang` = ".escape(lang())."");
 			if (sizeof($zinsid) > 0) {
 				foreach ($zinsid as $zinsids) {
 					$result2 = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_zinute`  WHERE sid=" . escape($zinsids['id']) . "");
@@ -157,7 +157,7 @@ if (isset($_GET['t'])) {
 		}
 	}
 	//istina temas is kategorijos
-	$result2 = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_straipsniai`  WHERE `tid`='" . $f_id . "'");
+	$result2 = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_straipsniai`  WHERE `lang` = ".escape(lang())." AND `tid`='" . $f_id . "'");
 
 	if ($result) {
 		msg($lang['system']['done'], $lang['admin']['forum_deletesub']);
@@ -172,7 +172,7 @@ if (isset($_POST['kurk']) && $_POST['kurk'] == $lang['admin']['forum_createsub']
 	$f_id = (int)$_POST['f_forumas'];
 	$f_tema = input($_POST['f_tema']);
 	$f_aprasymas = input($_POST['f_aprasymas']);
-	$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_temos` (`fid`, `pav`, `aprasymas`) VALUES ('" . $f_id . "', '" . $f_tema . "', '" . $f_aprasymas . "')");
+	$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_temos` (`fid`, `pav`, `aprasymas`, `lang`) VALUES ('" . $f_id . "', '" . $f_tema . "', '" . $f_aprasymas . ", ".escape(lang())."')");
 	if ($result) {
 		msg($lang['system']['done'], $lang['admin']['forum_createdsub']);
 
@@ -187,7 +187,7 @@ if (isset($_POST['kurk']) && $_POST['kurk'] == $lang['admin']['forum_createsub']
 if (isset($_POST['subedit']) && $_POST['subedit'] == $lang['admin']['forum_select']) {
 
 	$f_id = (int)$_POST['f_forumas'];
-	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `fid`='" . $f_id . "' ORDER by place");
+	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `lang` = ".escape(lang())." AND `fid`='" . $f_id . "' ORDER by place");
 	if (sizeof($sql) > 0) {
 		$tema = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` where `id`='" . (int)$_POST['f_forumas'] . "'  ORDER BY `place` ASC limit 1");
 
@@ -270,7 +270,7 @@ if (isset($url['f'])) {
 	}
 	//Kategorijos redagavimas
 	if ((int)$url['f'] == 2 && !isset($_GET['r'])) {
-		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` ORDER BY `place` ASC");
+		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `lang` = ".escape(lang())." ORDER BY `place` ASC");
 		if (sizeof($sql) > 0) {
 			$li = "";
 
@@ -311,7 +311,7 @@ if (isset($url['f'])) {
 	}
 	//subkat. kūrimo forma
 	if ((int)$url['f'] == 3) {
-		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` ORDER BY `place` ASC");
+		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `lang` = ".escape(lang())." ORDER BY `place` ASC");
 		if (sizeof($sql) > 0) {
 			$f_text = "
 					<form name=\"kurk\" action=\"".url("?id," . $url['id'] . ";a,{$_GET['a']}")."\" method=\"post\">
@@ -345,7 +345,7 @@ if (isset($url['f'])) {
 	}
 	//subkat redag?
 	if ((int)$url['f'] == 4) {
-		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` ORDER BY `place` ASC");
+		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `lang` = ".escape(lang())." ORDER BY `place` ASC");
 		if (sizeof($sql) > 0) {
 			$f_text = "
 					

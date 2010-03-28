@@ -26,7 +26,7 @@ lentele($lang['admin']['poll'], $buttons);
 //	$url['v'] = 0;
 
 
-	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE `ijungtas`='TAIP'  ORDER BY `id` DESC LIMIT 1");
+	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE `ijungtas`='TAIP' AND `lang` = ".escape(lang())."  ORDER BY `id` DESC LIMIT 1");
 	if (sizeof($sql) > 0) {
 		if (!empty($sql['klausimas'])) {
 			$info = $sql['klausimas'];
@@ -109,7 +109,7 @@ if (isset($_POST['b_delete']) && $_POST['b_delete'] == $lang['admin']['edit']) {
 
 }
 if (isset($url['v']) &&(int)$url['v'] == 2) {
-	$sql2 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "balsavimas`");
+	$sql2 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE `lang` = ".escape(lang()));
 	if (sizeof($sql2) > 0) {
 		$text = "
 	<form name='b_delete' action='?id," . $_GET['id'] . ";a," . $_GET['a'] . "' method='post'>
@@ -142,7 +142,7 @@ if (isset($_POST['b_create']) && $_POST['b_create'] == $lang['admin']['poll_crea
 	$ats4 = (isset($_POST[4]) && !empty($_POST[4]) ? strip_tags($_POST[4]) . ';0' : ';0');
 	$ats5 = (isset($_POST[5]) && !empty($_POST[5]) ? strip_tags($_POST[5]) . ';0' : ';0');
 
-	$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "balsavimas` (`info`, `autorius`, `laikas`, `klausimas`, `pirmas`, `antras`, `trecias`, `ketvirtas`,`penktas`) VALUES ('" . $_POST['leid'] . "', '" . $_SESSION['id'] . "', '" . time() . "','" . $kl . "','" . $ats1 . "','" . $ats2 . "','" . $ats3 . "','" . $ats4 . "','" . $ats5 . "')");
+	$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "balsavimas` (`info`, `autorius`, `laikas`, `klausimas`, `pirmas`, `antras`, `trecias`, `ketvirtas`,`penktas`, `lang`) VALUES ('" . $_POST['leid'] . "', '" . $_SESSION['id'] . "', '" . time() . "','" . $kl . "','" . $ats1 . "','" . $ats2 . "','" . $ats3 . "','" . $ats4 . "','" . $ats5 . "', ".escape(lang()).")");
 	delete_cache("SELECT * ,autorius ,(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE id=autorius LIMIT 1)AS nick FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE ijungtas='TAIP' ORDER BY `laikas` DESC LIMIT 1");
 	if ($result) {
 		msg("{$lang['system']['done']}", "{$lang['admin']['poll_created']}.");

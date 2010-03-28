@@ -24,7 +24,7 @@ $buttons = "<div class=\"btns\"><a href=\"".url("?id,{$_GET['id']};a,{$_GET['a']
 lentele($lang['admin']['naujienos'], $buttons);
 include_once (ROOT."priedai/kategorijos.php");
 kategorija("naujienos", true);
-$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `path`=0 ORDER BY `id` DESC");
+$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `path`=0 AND `lang` = ".escape(lang())." ORDER BY `id` DESC");
 if (sizeof($sql) > 0) {
 
 	$kategorijos = cat('naujienos', 0);
@@ -115,7 +115,7 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_crea
 		$error = $lang['admin']['news_required'];
 	}
 	if (!isset($error)) {
-		$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija, rodoma) VALUES (" . escape($pavadinimas) . ", " . escape($naujiena) . ", " . escape($placiau) . ",  '" . time() . "', '" . $_SESSION['username'] . "', " . escape($komentaras) . ", " . escape($kategorija) . ", 'TAIP')");
+		$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija, rodoma, lang) VALUES (" . escape($pavadinimas) . ", " . escape($naujiena) . ", " . escape($placiau) . ",  '" . time() . "', '" . $_SESSION['username'] . "', " . escape($komentaras) . ", " . escape($kategorija) . ", 'TAIP', ".escape(lang()).")");
 		if ($result) {
 			msg($lang['system']['done'], "{$lang['admin']['news_created']}");
 		} else {
@@ -131,11 +131,7 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_crea
 
 }
 
-$sql_news = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "naujienos` ORDER BY ID DESC");
-/*foreach ($sql_news as $row) {
-	$naujienos[$row['id']] = $row['pavadinimas'];
-	
-}*/
+$sql_news = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "naujienos` WHERE `lang` = ".escape(lang())." ORDER BY ID DESC");
 
 
 if (isset($_GET['v'])) {
@@ -144,8 +140,6 @@ if (isset($_GET['v'])) {
 
 	if ($_GET['v'] == 4) {
 		if (count($sql_news) > 0) {
-			/*$redagavimas = array("Form" => array("action" => url("?id,{$_GET['id']};a,{$_GET['a']};v,1"), "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "select", "value" => $naujienos, "name" => "edit_new"), "{$lang['admin']['edit']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "{$lang['admin']['delete']}:" => array("type" => "submit", "name" => "action", "extra" => "onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"","value" => "{$lang['admin']['delete']}"));
-			lentele($lang['admin']['edit'], $bla->form($redagavimas));*/
 			$table = new Table();
 			foreach ($sql_news as $row){
         $info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('newsch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"news_delete[]\" />", 

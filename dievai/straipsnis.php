@@ -51,12 +51,8 @@ if(isset($_POST['articles_delete'])){
   header("Location:".$_SERVER['HTTP_REFERER']);
   exit;
 }
-if (/*((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete'] && isset($_POST['edit_new']) && $_POST['edit_new'] > 0)) || */isset($url['t'])) {
-	if (isset($url['t'])) {
-		$trinti = (int)$url['t'];
-	} /*elseif (isset($_POST['edit_new'])) {
-		$trinti = (int)$_POST['edit_new'];
-	}*/
+if (isset($url['t'])) {
+	$trinti = (int)$url['t'];
 	$ar = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE id=" . escape($trinti) . " LIMIT 1");
 	if ($ar) {
 		msg($lang['system']['done'], "{$lang['admin']['article_Deleted']}");
@@ -117,7 +113,8 @@ if (/*((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete'] 
 			`autorius` = " . escape($autorius) . ",
 			`autorius_id` = " . escape($autoriusid) . ",
 			`kom` = " . escape($komentaras) . ",
-			`rodoma` = " . escape($rodoma) . "");
+			`rodoma` = " . escape($rodoma) . ",
+			`lang` = ".escape(lang())."");
 		if ($result) {
 			msg($lang['system']['done'], "{$lang['admin']['article_created']}");
 		} else {
@@ -144,7 +141,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 	//$extra = mysql_fetch_assoc($extra);
 }
 if (isset($_GET['v'])) {
-	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `path`=0 ORDER BY `id` DESC");
+	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `path`=0 AND `lang` = ".escape(lang())." ORDER BY `id` DESC");
 	if (sizeof($sql) > 0) {
 		
 		$kategorijos=cat('straipsniai', 0);
@@ -152,14 +149,7 @@ if (isset($_GET['v'])) {
 	
 	$kategorijos[0] = "--";
 }
-$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "straipsniai` ORDER BY ID DESC");
-/*if (sizeof($sql2) > 0) {
-	foreach ($sql2 as $row2) {
-		$straipsniai[$row2['id']] = $row2['pav'];
-	}
-} else {
-	$straipsniai[] = "{$lang['admin']['article_no']}";
-}*/
+$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "straipsniai` WHERE `lang` = ".escape(lang())." ORDER BY ID DESC");
 include_once (ROOT."priedai/class.php");
 $bla = new forma();
 if ($_GET['v'] == 4) {
@@ -193,8 +183,7 @@ if ($_GET['v'] == 4) {
 			} );
 		</script>';
 			lentele($lang['admin']['article_edit'], "<form id=\"arch\" method=\"post\"><div id=\"news\">".$table->render($info)."</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
-	/*$redagavimas = array("Form" => array("action" => url("?id,{$_GET['id']};a,{$_GET['a']};v,7"), "method" => "post", "name" => "reg"), "{$lang['admin']['article']}:" => array("type" => "select", "value" => $straipsniai, "name" => "edit_new"), " " => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "" => array("type" => "submit", "name" => "action","extra"=>"onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"", "value" => "{$lang['admin']['delete']}"));
-	lentele($lang['admin']['article_edit'], $bla->form($redagavimas));*/
+	
 }
 
 if ($_GET['v'] == 7 || isset($url['h'])) {
