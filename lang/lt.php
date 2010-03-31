@@ -505,6 +505,12 @@ $lang['news']['read'] = 'Skaityti...';
 $lang['news']['comments'] = 'Komentarai';
 $lang['news']['notexists'] = 'Blogas id.';
 $lang['news']['notallowed'] = 'Tau negalima matyti šios naujienos.';
+//naujienlaiškiai
+$lang['news']['ordered'] = 'Naujienlaiškiai užsakyti.';
+$lang['news']['unordered'] = 'Naujienlaiškų atsisakyta.';
+$lang['news']['newsletter?'] = 'Siųsti kaip naujienlaiškį?';
+$lang['news']['unorder'] = 'Atsisakyti naujienlaiškių';
+$lang['news']['Order/Unorder'] = 'Užsisakyti/Atsisakyti';
 $lang['about']['about'] = 'Apie';
 $lang['about']['admins'] = 'Administratoriai';
 $lang['about']['moderators'] = 'Moderatoriai';

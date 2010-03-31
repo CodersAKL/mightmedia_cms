@@ -116,6 +116,25 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_crea
 	}
 	if (!isset($error)) {
 		$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija, rodoma, lang) VALUES (" . escape($pavadinimas) . ", " . escape($naujiena) . ", " . escape($placiau) . ",  '" . time() . "', '" . $_SESSION['username'] . "', " . escape($komentaras) . ", " . escape($kategorija) . ", 'TAIP', ".escape(lang()).")");
+		if(isset($_POST['letter'])){
+        require_once(ROOT.'priedai/class.phpmailer-lite.php');
+        $mail = new PHPMailerLite();
+        $mail->IsMail();
+        $mail->CharSet = 'UTF-8';
+        $body = "<b>" . $pavadinimas . "</b><br/>{$naujiena}<br /> <a href='".url("?id," . $conf['puslapiai']['naujienos.php']['id']). "'>".$lang['news']['read']."</a><br /><br /><a href='".url("?id," . $conf['puslapiai']['naujienlaiskiai.php']['id']). "'>".$lang['news']['unorder']. "</a>
+<hr>";
+        $mail->SetFrom($admin_email, $conf['Pavadinimas']);
+        $mail->Subject    = strip_tags($conf['Pavadinimas']) ." ". $pavadinimas;
+        $mail->MsgHTML($body);
+        $sql = mysql_query1("SELECT `email` FROM `".LENTELES_PRIESAGA."newsgetters`");
+        foreach ($sql as $row){
+            $name = explode('@', $row['email']);
+            $mail->AddAddress($row['email'], $name[0]);
+        }
+        $mail->Send(); 
+		}
+       
+		
 		if ($result) {
 			msg($lang['system']['done'], "{$lang['admin']['news_created']}");
 		} else {
@@ -176,13 +195,15 @@ if (isset($_GET['v'])) {
 	} elseif ($_GET['v'] == 1 || isset($_GET['h'])) {
 		if ($i = 1) {
 			$kom = array('taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no']);
-			$naujiena = array("Form" => array("action" => url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ""), "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pavadinimas'] : ''), "name" => "pav", "class" => "input"), $lang['admin']['komentarai'] => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input", "class" => "input"), "{$lang['admin']['news_category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')), "{$lang['admin']['news_text']}:" => array("type" => "string", "value" =>
+			$naujiena = array("Form" => array("action" => url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ""), "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pavadinimas'] : ''), "name" => "pav", "class" => "input"), $lang['admin']['komentarai'] => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input", "class" => "input"),(isset($conf['puslapiai']['naujienlaiskiai.php']['id'])?$lang['news']['newsletter?']:'') => "", "{$lang['admin']['news_category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')), "{$lang['admin']['news_text']}:" => array("type" => "string", "value" =>
 				editorius('jquery', 'standartinis', array('naujiena' => $lang['admin']['news_preface'], 'placiau' => $lang['admin']['news_more']), array('naujiena' => (isset($extra)) ? $extra['naujiena'] : $lang['admin']['news_preface'], 'placiau' => (isset($extra)) ? $extra['daugiau'] : $lang['admin']['news_more']))), (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create']));
 
 			if (isset($extra)) {
 				$naujiena[''] = array("type" => "hidden", "name" => "news_id", "value" => (isset($extra) ? input($extra['id']) : ''));
+			} 
+			if(!isset($extra) && isset($conf['puslapiai']['naujienlaiskiai.php']['id'])) {
+        $naujiena[$lang['news']['newsletter?']] = array("type" => "checkbox", "name" => "letter");
 			}
-
 			lentele($lang['admin']['news_create'], $bla->form($naujiena));
 		} else {
 			klaida($lang['system']['warning'], $lang['system']['nocategories']);

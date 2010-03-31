@@ -22,8 +22,8 @@ if(isset($_SESSION['username'])){
   $el = mysql_query1("SELECT `email` FROM `".LENTELES_PRIESAGA."users` WHERE `nick`=".escape($_SESSION['username'])." LIMIT 1");
   $email = $el['email'];
 //jeigu gauna linka is emailo deaktyvacijai
-} elseif(isset($_GET['email'])){
-    $email = input(base64decode($_GET['email']));
+} elseif(isset($_GET['e'])){
+    $email = input(base64decode($_GET['e']));
 }
 //jeigu paspaudzia mygtuka
 if(isset($_POST['email'])){
@@ -32,24 +32,24 @@ if(isset($_POST['email'])){
       $sql = mysql_query1("SELECT `email` FROM `".LENTELES_PRIESAGA."newsgetters` WHERE `email`=".escape($_POST['email'])." LIMIT 1");
       if(isset($sql['email'])){
         mysql_query1("DELETE FROM `".LENTELES_PRIESAGA."newsgetters` WHERE `email`=".escape($_POST['email'])."");
-        msg('Išaktyvuota', 'Jūs nebegausite naujienlaiškių.');
+        msg($lang['system']['done'], $lang['news']['unordered']);
         redirect(url('?id,'.$_GET['id']), 'meta');
       } else {
         mysql_query1("INSERT INTO `".LENTELES_PRIESAGA."newsgetters` (`email`) VALUES (".escape($_POST['email']).")");
-        msg('Užsakyta', 'Naujienlaiškiai užsakyti');
+        msg($lang['system']['done'], $lang['news']['ordered']);
         redirect(url('?id,'.$_GET['id']), 'meta');
       }
     } else {
-      klaida('Klaida', 'blokas el. paštas.');
+      klaida($lang['system']['warning'], $lang['reg']['bademail']);
     }
   } else {
-    klaida('Klaida', 'Blogas apsaugos kodas.');
+    klaida($lang['system']['warning'], $lang['reg']['wrongcode']);
   }
 }
 $form = array("Form" => array("action" => "", "method" => "post", "name" => "get"), 
 "{$lang['reg']['email']}:" => array("type" => "text", "value" => (isset($email) ? input($email) : ""), "name" => "email"),
 kodas()=>array("type"=>"text","name"=>"kode", "class"=>"chapter"),
-" " => array("type" => "submit", "name" => "submit", "value" => "Užsisakyti/Atsisakyti"));
+" " => array("type" => "submit", "name" => "submit", "value" => $lang['news']['Order/Unorder']));
 lentele($page_pavadinimas, $forma->form($form));
 
 

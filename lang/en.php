@@ -530,6 +530,12 @@ $lang['news']['comments'] = 'Comments';
 $lang['news']['related'] = 'Related news';
 $lang['news']['notexists'] = 'Bad id.';
 $lang['news']['notallowed'] = 'You are not allowed to view this article.';
+//naujienlaiškiai
+$lang['news']['ordered'] = 'News ordered.';
+$lang['news']['unordered'] = 'Email deleted.';
+$lang['news']['newsletter?'] = 'Send as newsletter?';
+$lang['news']['unorder'] = 'Delete my email';
+$lang['news']['Order/Unorder'] = 'Order/Delete my email';
 //about
 $lang['about']['about'] = 'About';
 $lang['about']['admins'] = 'Administrators';
