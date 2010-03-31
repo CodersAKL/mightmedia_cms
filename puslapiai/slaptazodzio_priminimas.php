@@ -54,18 +54,25 @@ if (isset($_POST['action']) && $_POST['action'] == 'siusti') {
 			$error .= " {$lang['pass']['wrongemail']}.<br />";
 			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['pass']['wrongemail']}({$lang['pass']['remain']}) : " . $email) . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
 		} else {
-		//$sql = mysql_fetch_assoc($sql);
 			$slaptas = random_name();
-			$msg = "<b>" . $sql['nick'] . "</b>,<br/>
-				 {$lang['pass']['mail']}
- <a href='http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) .url("?id," . $_GET['id'] . ";c," . $slaptas) . "'>http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) .url("?id," . $_GET['id'] . ";c," . $slaptas) . "</a>
+			require_once('priedai/class.phpmailer-lite.php');
+      $mail = new PHPMailerLite();
+      $mail->IsMail();
+      $mail->CharSet = 'UTF-8';
+      $body = "<b>" . $sql['nick'] . "</b>,<br/>{$lang['pass']['mail']} <a href='".url("?id," . $_GET['id'] . ";c," . $slaptas) . "'>".url("?id," . $_GET['id'] . ";c," . $slaptas) . "</a>
 <hr>";
-			ini_set("sendmail_from", $conf['Pastas']);
-			mail($email, "=?UTF-8?Q?".strip_tags($conf['Pavadinimas']) ." ". $lang['pass']['remain']."?=", $msg, "From: " . $conf['Pavadinimas'] . "<" . $conf['Pastas'] . ">\r\nContent-type: text/html; charset=utf-8");
+      $mail->SetFrom($admin_email, $conf['Pavadinimas']);
+      $mail->AddAddress($email, $sql['nick']);
+      $mail->Subject    = strip_tags($conf['Pavadinimas']) ." ". $lang['pass']['remain'];
+      $mail->MsgHTML($body);
+      if($mail->Send()) 
+         msg($lang['system']['done'], "{$lang['pass']['sent']}.");
+      else 
+          klaida($lang['system']['sorry'], $lang['system']['error'].":".$mail->ErrorInfo);
+			
 			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `slaptas` = " . escape($slaptas) . " WHERE nick=" . escape($sql['nick']) . " LIMIT 1");
 			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['pass']['remain']}: Nick: " . $sql['nick'] . " Emailas: " . input($sql['email'])) . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
 
-			msg($lang['system']['done'], "{$lang['pass']['sent']}.");
 			echo "<img src='priedai/human.php' style='display:none' />";
 		}
 	} else {
