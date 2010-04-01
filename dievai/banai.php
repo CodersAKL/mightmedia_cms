@@ -47,7 +47,8 @@ if (isset($_GET['b']) && $_GET['b'] == 1) {
 	$forma = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port"), "IP (xx.xxx.xxx.xx):" => array("type" => "text", "value" => "" . input((isset($url['ip'])) ? $url['ip'] : '') . "", "name" => "ip", ), //"Veiksmas:"=>array("type"=>"select","value"=>array("1"=>"Baninti","0"=>"Peradresuoti"),"name"=>"veiksmas"),
 		"{$lang['admin']['why']}:" => array("type" => "text", "value" => "", "name" => "priezastis"), "" => array("type" => "submit", "name" => "Portai", "value" => "{$lang['admin']['save']}"));
 	if (isset($_POST['ip']) && isset($_POST['priezastis'])) {
-		if (preg_match("/^[0-9]{2,3}[.]{1,1}[0-9]{2,3}[.]{1,1}[0-9]{2,3}[.]{1,1}[0-9]{1,3}$/", $_POST['ip'])) {
+		if (preg_match("/^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])" .
+            "(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$/", $_POST['ip'])) {
 			$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE ip =INET_ATON(" . escape($_POST['ip']) . ") AND levelis=1");
 			if (count($sql) == 0) {
 				ban($_POST['ip'], $_POST['priezastis']);
