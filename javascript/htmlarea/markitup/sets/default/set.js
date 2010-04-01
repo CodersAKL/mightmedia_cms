@@ -106,7 +106,10 @@ mySettings = {
 				{name:'Gray', 	openWith:'<font color="#555753">', closeWith:'</font>',	className:"col9-2" },
 				{name:'Gray',	openWith:'<font color="#000000">', closeWith:'</font>',	className:"col9-3" }
 			]
-		}
+		},{name:'Uploaded picture', key:'m', replaceWith:function(markItUp) {
+		window.open( markItUp.root+"sets/default/utils/manager/index.php?id="+tid, "Manager", "status = 1, height = 500, width = 750, resizable = 1"); 
+	//alert(tid);
+} }
 	]
 }
 //RSS grabber

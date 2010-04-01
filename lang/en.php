@@ -501,6 +501,9 @@ $lang['admin']['download_type'] = 'Download type';
 $lang['admin']['download_select'] = 'Select';
 $lang['admin']['download_uploaded'] = 'Uploaded';
 $lang['admin']['download_link'] = 'Link';
+$lang['admin']['file_list'] = 'File list';
+$lang['admin']['preview'] = 'Preview';
+$lang['admin']['insert'] = 'Insert';
 //forum
 $lang['forum']['forum'] = 'Forum';
 $lang['forum']['edited_by'] = 'Edited by';

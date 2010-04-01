@@ -1357,19 +1357,30 @@ HTML;
 
 			$return .= <<< HTML
 			<script type="text/javascript">
+			
 $(document).ready(function()	{
-		$('#{$key}').markItUp(mySettings);});
+    $('#{$key}').markItUp(mySettings);
+    $('#{$key}').focus(function() {
+    tid = $(this).attr('id');
+    });
+
+		});
+
 	</script>
-<textarea id="{$key}" name="{$key}" style="min-height:320px;">{$value[$key]}</textarea>
+<textarea id="{$key}" name="editorius" style="min-height:320px;">{$value[$key]}</textarea>
 HTML;
 		}
 	} else {
 		$return .= <<< HTML
 		<script type="text/javascript">
 $(document).ready(function()	{
-		$('#{$id}').markItUp(mySettings);});
+		$('#{$id}').markItUp(mySettings);
+		$('#{$id}').focus(function() {
+    tid = $(this).attr('id');
+    });
+		});
 	</script>
-<textarea id="{$id}" name="{$id}" style="min-height:320px;">{$value}</textarea>
+<textarea id="{$id}" name="editorius" style="min-height:320px;">{$value}</textarea>
 HTML;
 
 	}

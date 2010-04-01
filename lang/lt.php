@@ -458,6 +458,9 @@ $lang['admin']['antivirus_scan_completed'] = 'Paieška baigta';
 $lang['admin']['antivirus_scanning'] = 'Tikrinama byla';
 $lang['admin']['antivirus_infected'] = 'Užkrėstas';
 $lang['admin']['antivirus_clean'] = 'Švarus';
+$lang['admin']['file_list'] = 'Failų sąrašas';
+$lang['admin']['preview'] = 'Peržiūra';
+$lang['admin']['insert'] = 'Įterpti';
 //PAPILDYMAS
 $lang['system']['dashboard'] = 'Valdymo skydas';
 $lang['system']['some_data'] = 'Statistika';

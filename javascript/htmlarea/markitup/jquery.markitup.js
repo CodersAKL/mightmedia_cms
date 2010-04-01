@@ -87,8 +87,7 @@
 					id = 'id="'+options.id+'"';
 				} else if ($$.attr("id")) {
 					id = 'id="markItUp'+($$.attr("id").substr(0, 1).toUpperCase())+($$.attr("id").substr(1))+'"';
-
-				}
+        }
 				if (options.nameSpace) {
 					nameSpace = 'class="'+options.nameSpace+'"';
 				}
