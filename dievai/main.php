@@ -70,7 +70,7 @@ foreach($glob as $id => $file) {
 	$image = (is_file("img/{$file}.png")?"img/{$file}.png":'img/module.png');
 	$admin_pages[$id] = $file;
 	$admin_pagesid[$file] = $id;
-	if ((isset($conf['puslapiai'][$file.'.php']['id']) || in_array($file, array('config','meniu','logai','paneles','vartotojai','komentarai','banai','balsavimas'))) && !in_array($file, array('index','pokalbiai', 'main'))) {
+	if ((isset($conf['puslapiai'][$file.'.php']['id']) || in_array($file, array('config','meniu','logai','paneles','vartotojai','komentarai','banai','balsavimas', 'antivirus'))) && !in_array($file, array('index','pokalbiai', 'main'))) {
 
 		$admin_tools .= "<li ".(($id == 1 ||$id == 10 || $id == 20)?'class="first_li"':'')."><a href=\"".url("?id,999;a,$id")."\"><img src=\"{$image}\" alt=\"\" /><span>".(isset($lang['admin'][$file])?$lang['admin'][$file]:$file)."</span></a></li>";
 

@@ -217,6 +217,7 @@ $lang['faq']['new'] = 'Add New FAQ';
 //admin
 $lang['admin']['comments_off']='Turn off comments';
 $lang['admin']['adm_comments'] = 'Comments';
+$lang['admin']['antivirus'] = 'Antivirus';
 $lang['admin']['del_comments'] = 'Delete comments';
 $lang['admin']['comments_kid'] = 'id';
 $lang['admin']['for_guests'] = 'Guests';
@@ -309,6 +310,13 @@ $lang['admin']['user_canteditadmin'] = 'You can not edit administrator.';
 $lang['admin']['user_details'] = 'User details';
 $lang['admin']['user_groups'] = 'User groups';
 $lang['admin']['user_notfound'] = 'User not found';
+$lang['admin']['antivirus_scaned_folders'] = 'Scanned folders';
+$lang['admin']['antivirus_scaned_files'] = 'Scanned files';
+$lang['admin']['antivirus_infected_files'] = 'Infected files';
+$lang['admin']['antivirus_scan_completed'] = 'Scan copleted';
+$lang['admin']['antivirus_scanning'] = 'Scanning folder';
+$lang['admin']['antivirus_infected'] = 'Infected';
+$lang['admin']['antivirus_clean'] = 'Clean';
 //PAPILDYMAS
 $lang['system']['dashboard'] = 'Control panel';
 $lang['system']['some_data'] = 'Statistics';
