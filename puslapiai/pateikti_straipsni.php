@@ -68,7 +68,7 @@ if (sizeof($sql) > 0) {
 	include_once ("priedai/class.php");
 	$bla = new forma();
 
-	$straipsnis = array("Form" => array("action" => "", "method" => "post", "name" => "reg"), "Pavadinimas:" => array("type" => "text", "value" => "", "name" => "pav", "class"=>"input"), "Komentarai:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"), "Kategorija:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class"=>"input"), "Straipsnis:" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('apr' => 'Straipsnio įžanga', 'str' => 'straipsnis'), array('apr' => 'Straipsnio įžanga', 'str' => 'Straipsnis'))), 'Pateikti' => array("type" => "submit", "name" => "action", "value" => 'Pateikti'), );
+	$straipsnis = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "name" => "reg"), "Pavadinimas:" => array("type" => "text", "value" => "", "name" => "pav", "class"=>"input"), "Komentarai:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"), "Kategorija:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class"=>"input"), "Straipsnis:" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('apr' => 'Straipsnio įžanga', 'str' => 'straipsnis'), array('apr' => 'Straipsnio įžanga', 'str' => 'Straipsnis'))), 'Pateikti' => array("type" => "submit", "name" => "action", "value" => 'Pateikti'), );
 
 
 	lentele('Straipsnio rašymas', $bla->form($straipsnis));

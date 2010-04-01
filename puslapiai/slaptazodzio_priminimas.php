@@ -88,7 +88,7 @@ if (isset($error)) {
 
 	$bla = new forma();
 	$forma = array(
-		 "Form" => array("action" => "", "method" => "post", "name" => "siusti","extra"=>"onSubmit=\"return checkMail('reg','email')\""),
+		 "Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "name" => "siusti","extra"=>"onSubmit=\"return checkMail('reg','email')\""),
 		 "{$lang['pass']['email']}:" => array("type" => "text","name" => "email","extra"=>"title='{$lang['pass']['email']}'"),
 		 "{$lang['pass']['email2']}:" => array("type" => "text", "name" => "email1","extra"=>"title='{$lang['pass']['email']}'"),
 		 kodas()=>array("type"=>"text","name"=>"kode", "class"=>"chapter"),

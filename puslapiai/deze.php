@@ -42,7 +42,7 @@ if ($_SESSION['level'] == 1 || (isset($_SESSION['mod']) && strlen($_SESSION['mod
 		if (empty($_POST)) {
 			$msg = mysql_query1("SELECT `msg` FROM `" . LENTELES_PRIESAGA . "chat_box` WHERE `id`=" . escape(ceil((int)$url['r'])) . " LIMIT 1");
 			
-			$form = array("Form" => array("action" => "", "method" => "post", "name" => "chat_box_edit"), "{$lang['guestbook']['message']}:" => array("type" => "textarea", "value" => iinput($msg['msg']), "name" => "msg","extra" => "rows=5", "class"=>"input"),
+			$form = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id'].";r,".$_GET['r']), "method" => "post", "name" => "chat_box_edit"), "{$lang['guestbook']['message']}" => array("type" => "textarea", "value" => input($msg['msg']), "name" => "msg","extra" => "rows=5", "class"=>"input"),
 		" " => array("type" => "submit", "name" => "chat_box", "value" =>  $lang['admin']['edit']));
 			lentele($lang['sb']['edit'], $bla->form($form));
 		} elseif (isset($_POST['chat_box']) && $_POST['chat_box'] == $lang['admin']['edit'] && !empty($_POST['msg'])) {

@@ -46,7 +46,7 @@ if(isset($_POST['email'])){
     klaida($lang['system']['warning'], $lang['reg']['wrongcode']);
   }
 }
-$form = array("Form" => array("action" => "", "method" => "post", "name" => "get"), 
+$form = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "name" => "get"), 
 "{$lang['reg']['email']}:" => array("type" => "text", "value" => (isset($email) ? input($email) : ""), "name" => "email"),
 kodas()=>array("type"=>"text","name"=>"kode", "class"=>"chapter"),
 " " => array("type" => "submit", "name" => "submit", "value" => $lang['news']['Order/Unorder']));

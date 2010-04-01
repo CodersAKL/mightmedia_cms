@@ -47,7 +47,7 @@ if ($_SESSION['level'] == 1) {
 			$value = $lang['faq']['submit'];
 		}
 
-		$duk = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "duk"), "{$lang['faq']['question']}:" => array("type" => "text", "value" => input($klausimas), "name" => "Klausimas", "class" => "input"), "{$lang['faq']['answer']}:" => array("type" => "string", "value" => editorius('tiny_mce', 'mini', 'Atsakymas', (isset($atsakymas) ? $atsakymas : ''))), "{$lang['faq']['order']}:" => array("type" => "text", "value" => input((int)$order), "name" => "Order", "class" => "input"), "" => array("type" => "hidden", "value" => input($id), "name" => "id", "id" => "id"), "" => array("type" => "submit", "name" => "dukas", "value" => $value));
+		$duk = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "duk"), "{$lang['faq']['question']}:" => array("type" => "text", "value" => input($klausimas), "name" => "Klausimas", "class" => "input"), "{$lang['faq']['answer']}:" => array("type" => "string", "value" => editorius('tiny_mce', 'mini', 'Atsakymas', (isset($atsakymas) ? $atsakymas : ''))), "{$lang['faq']['order']}:" => array("type" => "text", "value" => input((int)$order), "name" => "Order", "class" => "input"), "" => array("type" => "hidden", "value" => input($id), "name" => "id", "id" => "id"), "" => array("type" => "submit", "name" => "dukas", "value" => $value));
 
 		include_once ("priedai/class.php");
 		$bla = new forma();

@@ -44,7 +44,7 @@ if (isset($_POST['kontaktas']) && $_POST['kontaktas'] == 'Siųsti' && strtoupper
 include_once ("priedai/class.php");
 $bla = new forma();
 	$form = array(
-		"Form" => array("action" => "", "method" => "post", "name" => "kontaktas"), 
+		"Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "name" => "kontaktas"), 
 		"{$lang['contact']['subject']}:" => array("type" => "text", "class"=>"input", "value" => (isset($title) && !empty($title) ? input($title) : ''), "name" => "pavadinimas", "class"=>"input"),
 		"{$lang['contact']['name']}:" => array("type" => "text", "class"=>"input", "value" => (isset($from) && !empty($from) ? input($from) : ''), "name" => "vardas", "class"=>"input"),
 		"{$lang['contact']['email']}:" => array("type" => "text", "class"=>"input", "value" => (isset($email) ? input($email) : ''), "name" => "email", "class"=>"input"), 

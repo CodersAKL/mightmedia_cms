@@ -16,7 +16,7 @@ function registracijos_forma() {
 
 	$bla = new forma();
 	$forma = array(
-		 "Form" => array("action" => "", "method" => "post", "name" => "reg","extra"=>"onSubmit=\"return checkMail('reg','email')\"", "class" => "input"),
+		 "Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "name" => "reg","extra"=>"onSubmit=\"return checkMail('reg','email')\"", "class" => "input"),
 		 "{$lang['reg']['username']}:" => array("type" => "text", "value" => (isset($vardas) ? input($vardas) : ""), "name" => "nick", "class" => "input", "extra"=>"title='{$lang['reg']['username']}'"),
 		 "{$lang['reg']['password']}:" => array("type" => "password", "value" => input($pass), "name" => "pass", "class" => "input"),
 		 "{$lang['reg']['confirmpassword']}:" => array("type" => "password", "value" => input($pass2), "name" => "pass2", "class" => "input"),

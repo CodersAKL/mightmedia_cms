@@ -121,7 +121,7 @@ if (isset($mid) && isnum($mid)) {
 		$info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . "LIMIT 1");
 
 		$form = array(
-			"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "extra" => "onSubmit=\"return checkMail('change_contacts','email')\"", "name" => "change_contacts"), 
+			"Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id'].";m,".$_GET['m']), "method" => "post", "enctype" => "", "id" => "", "extra" => "onSubmit=\"return checkMail('change_contacts','email')\"", "name" => "change_contacts"), 
 			"ICQ:" => array("type" => "text", "value" => input($info['icq']), "name" => "icq", "class" => "input"), 
 			"MSN:" => array("type" => "text", "value" => input($info['msn']), "name" => "msn", "class" => "input"), 
 			"Skype:" => array("type" => "text", "value" => input($info['skype']), "name" => "skype", "class" => "input"), 
@@ -147,7 +147,7 @@ if (isset($mid) && isnum($mid)) {
 				$salis[$row['iso']] = $row['printable_name'];
 		}
 
-		$forma = array("Form" => array("action" => "", "method" => "post", "name" => "change_country"), "{$lang['user']['edit_country']}:" => array("type" => "select", "value" => $salis, "name" => "salis", "selected" => $info['salis']), "{$lang['user']['edit_city']}:" => array("type" => "text", "value" => $info['miestas'], "name" => "miestas"), " \r " => array("type" => "hidden", "name" => "action", "value" => "country_change"), "" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}"));
+		$forma = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id'].";m,".$_GET['m']), "method" => "post", "name" => "change_country"), "{$lang['user']['edit_country']}:" => array("type" => "select", "value" => $salis, "name" => "salis", "selected" => $info['salis']), "{$lang['user']['edit_city']}:" => array("type" => "text", "value" => $info['miestas'], "name" => "miestas"), " \r " => array("type" => "hidden", "name" => "action", "value" => "country_change"), "" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}"));
 
 		$bla = new forma();
 		lentele($lang['user']['edit_locality'], $bla->form($forma));
@@ -244,7 +244,7 @@ $avatar .= "<div align='center' id='gravatar'>
 			$a++;
 		}
 		$forma = array(
-			"Form" => array("action" => "", "method" => "post", "name" => "pagr_nustatymai"), 
+			"Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id'].";m,".$_GET['m']), "method" => "post", "name" => "pagr_nustatymai"), 
 			"{$lang['user']['edit_name']}:" => array("type" => "text", "value" => input($sql['vardas']), "name" => "vardas", "class" => "input"), 
 			"{$lang['user']['edit_secondname']}:" => array("type" => "text", "value" => input($sql['pavarde']), "name" => "pavarde", "class" => "input"), 
 			"{$lang['user']['edit_dateOfbirth']}:" => array("type" => "select", "value" => $year, "selected" => (isset($data[0])?$data[0]:(date("Y") - 7)), "class" => "select", "name" => "metai"),

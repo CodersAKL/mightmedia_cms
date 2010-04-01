@@ -156,7 +156,7 @@ if (isset($url['n'])) {
 		$text .= "
 				<fieldset>
 				<legend>" . ((isset($user) && (int)$pid > 0) ? "{$lang['user']['pm_reply']}" : "{$lang['user']['pm_send']}") . " </legend>
-				<form name=\"msg\" action=\"".url("?id," . $url['id'])."\" method=\"post\">
+				<form name=\"msg\" action=\"".url("?id,".$conf['puslapiai'][basename(__file__)]['id'])."\" method=\"post\">
 					<table border=0 width=\"100%\">
 					<tr>
 						<td width=\"15%\" class=\"sarasas\">{$lang['user']['pm_to']}:</td>
