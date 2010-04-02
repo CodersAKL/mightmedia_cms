@@ -32,9 +32,6 @@ mySettings = {
         {separator:'---------------' },
         {name:'Picture', key:'P', replaceWith:'<img src="[![Source:!:http://]!]" alt="[![Alternative text]!]" />' },
         {name:'Link', key:'L', openWith:'<a href="[![Link:!:http://]!]"(!( title="[![Title]!]")!)>', closeWith:'</a>', placeHolder:'Your text to link...' },
-        {name:'File', key:'F',replaceWith:function(markItUp) {
-            return fileM.fileManager(markItUp)
-        }},
         {separator:'---------------' },
         {name:'Clean', className:'clean', replaceWith:function(markitup) {
             return markitup.selection.replace(/<(.*?)>/g, "")
@@ -151,19 +148,3 @@ miu = {
     }
 }
 
-fileM = {
-    fileManager: function(markItUp) {
-        alert('working');
-        /*$.ajax({
-         async:     false,
-         type:     "POST",
-         url:     markItUp.root+"sets/default/utils/rssfeed/grab.php",
-         data:    "url="+url+"&limit="+limit,
-         success:function(content) {
-         feed = content;
-         }
-         }
-         );*/
-        return feed;
-    }
-}
