@@ -1,12 +1,13 @@
 <?php
 
-  session_start();
- include_once('../../../../../../../../priedai/conf.php');
- include_once('../../../../../../../../priedai/prisijungimas.php');
+ session_start();
+ require_once('../../../../../../../../priedai/conf.php');
+ require_once('../../../../../../../../priedai/prisijungimas.php');
+
  if(!isset($_SESSION['level']) || $_SESSION['level'] != 1)
   die('eik lauk..');
 
-$file = '../../../../../../../../siuntiniai/'.$_POST['file'];
+$file = '../../../../../../../siuntiniai/'.$_POST['file'];
 $path_parts = pathinfo($file);
 /*
 echo $path_parts['dirname'], "\n";

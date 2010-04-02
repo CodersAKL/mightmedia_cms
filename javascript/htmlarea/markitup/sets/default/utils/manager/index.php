@@ -1,7 +1,7 @@
 <?php
  session_start();
- include_once('../../../../../../../priedai/conf.php');
- include_once('../../../../../../../priedai/prisijungimas.php');
+ require_once('../../../../../../../priedai/conf.php');
+ require_once('../../../../../../../priedai/prisijungimas.php');
 
  if(!isset($_SESSION['level']) || $_SESSION['level'] != 1)
   die('eik lauk..');
