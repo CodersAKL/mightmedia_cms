@@ -2,6 +2,6 @@
 Deny from All
 </FilesMatch>
 
-<FilesMatch "grab.php|preview.php|preview.html|index.php|jqueryFileTree.php|info.php|uploadify.php">
+<FilesMatch "grab.php|preview.php|preview.html|index.php|jqueryFileTree.php|info.php|uploadify.php|delete.php|check.php">
 Allow from all
 </FilesMatch>
