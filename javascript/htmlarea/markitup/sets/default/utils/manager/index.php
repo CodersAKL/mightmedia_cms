@@ -1,6 +1,7 @@
 <?php
  session_start();
  require_once('../../../../../../../priedai/conf.php');
+ require_once('../../../../../../../priedai/funkcijos.php');
  require_once('../../../../../../../priedai/prisijungimas.php');
 
  if(!isset($_SESSION['level']) || $_SESSION['level'] != 1)
@@ -12,6 +13,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><?php echo $conf['Pavadinimas'];?></title>
+<base href="<?php echo adresas();?>" />
 <link href="css/default.css" rel="stylesheet" type="text/css" />
 <link href="css/uploadify.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/jqueryFileTree.css" media="screen" />
@@ -41,13 +43,13 @@ $(document).ready(function() {
 	$("#uploadify").uploadify({
 		'uploader'       : 'scripts/uploadify.swf',
 		'script'         : 'scripts/uploadify.php',
-		//'checkScript'    : 'scripts/check.php',
+		'checkScript'    : 'scripts/check.php',
 		'sizeLimit': "2097152",  //2MB
 		'fileExt'     : "*.exe;*.bat;*.cmd;*.htm;*.html;*.php;*.css;*.sql;*.db;*.doc;*.txt;*.mpg4;*.avi;*.mov;*.mkv;*.swf;*.java;*.jnlp;*.mp3;*.wav;*.pdf;*.gif;*.jpg;*.png;*.bmp;*.ppt;*.psd;*.xls;*.zip;*.rar;*.7z",
-		'scriptData'     : {"<?php echo session_name(); ?>": "<?php echo session_id(); ?>","fileext":$(this).fileExt},
+		'scriptData'     : {'PHPSESSID': '<?php echo session_id();?>',"fileext":$(this).fileExt},
 		'fileDesc' : "All Files",
 		'cancelImg'      : 'cancel.png',
-		'folder'         : '/siuntiniai',
+		'folder'         : 'siuntiniai',
 		'queueID'        : 'fileQueue',
 		'auto'           : true,
 		'multi'          : true,

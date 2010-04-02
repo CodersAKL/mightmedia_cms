@@ -51,16 +51,21 @@ if(jQuery) (function($){
 				function showTree(c, t) {
 					$(c).addClass('wait');
 					$(".jqueryFileTree.start").remove();
-					$.post(o.script, { dir: t }, function(data) {
+					$.post(o.script, {
+						dir: t
+					}, function(data) {
 						$(c).find('.start').html('');
 						$(c).removeClass('wait').append(data);
-						if( o.root == t ) $(c).find('UL:hidden').show(); else $(c).find('UL:hidden').slideDown({ duration: o.expandSpeed, easing: o.expandEasing });
+						if( o.root == t ) $(c).find('UL:hidden').show(); else $(c).find('UL:hidden').slideDown({
+							duration: o.expandSpeed,
+							easing: o.expandEasing
+						});
 						bindTree(c);
 					});
 				}
 				
 				function select_folder(folder) {
-          $('#uploadify').uploadifySettings('folder','../../siuntiniai/'+folder);
+					$('#uploadify').uploadifySettings('folder','/siuntiniai/'+folder);
 				}
 				
 				function bindTree(t) {
@@ -69,7 +74,10 @@ if(jQuery) (function($){
 							if( $(this).parent().hasClass('collapsed') ) {
 								// Expand
 								if( !o.multiFolder ) {
-									$(this).parent().parent().find('UL').slideUp({ duration: o.collapseSpeed, easing: o.collapseEasing });
+									$(this).parent().parent().find('UL').slideUp({
+										duration: o.collapseSpeed,
+										easing: o.collapseEasing
+									});
 									$(this).parent().parent().find('LI.directory').removeClass('expanded').addClass('collapsed');
 								}
 								$(this).parent().find('UL').remove(); // cleanup
@@ -78,7 +86,10 @@ if(jQuery) (function($){
 								select_folder($(this).parent().find('a').attr('rel'));
 							} else {
 								// Collapse
-								$(this).parent().find('UL').slideUp({ duration: o.collapseSpeed, easing: o.collapseEasing });
+								$(this).parent().find('UL').slideUp({
+									duration: o.collapseSpeed,
+									easing: o.collapseEasing
+								});
 								$(this).parent().removeClass('expanded').addClass('collapsed');
 							}
 						} else {
@@ -87,7 +98,9 @@ if(jQuery) (function($){
 						return false;
 					});
 					// Prevent A from triggering the # on non-click events
-					if( o.folderEvent.toLowerCase != 'click' ) $(t).find('LI A').bind('click', function() { return false; });
+					if( o.folderEvent.toLowerCase != 'click' ) $(t).find('LI A').bind('click', function() {
+						return false;
+					});
 				}
 				// Loading message
 				$(this).html('<ul class="jqueryFileTree start"><li class="wait">' + o.loadMessage + '<li></ul>');

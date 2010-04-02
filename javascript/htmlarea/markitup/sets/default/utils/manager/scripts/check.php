@@ -23,13 +23,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+
+require_once('../../../../../../../../priedai/conf.php');
+require_once('../../../../../../../../priedai/funkcijos.php');
+
 $fileArray = array();
 foreach ($_POST as $key => $value) {
+	/*if ($key == 'folder') {
+		$folder = explode('//',$value);
+		file_put_contents(ROOTAS.'temp.txt', $key .'=>'.$folder[1]);
+	}*/
 	if ($key != 'folder') {
-		if (file_exists($_SERVER['DOCUMENT_ROOT'] . $_POST['folder'] . '/' . $value)) {
+		//file_put_contents(ROOTAS.'temp.txt',str_replace('javascript/htmlarea/markitup/sets/default/utils/manager/','',$_POST['folder']) . '/' . $value);
+		if (file_exists($_SERVER['DOCUMENT_ROOT'].str_replace('javascript/htmlarea/markitup/sets/default/utils/manager/','',$_POST['folder']) . '/' . $value)) {
 			$fileArray[$key] = $value;
 		}
 	}
+
 }
 echo json_encode($fileArray);
 ?>

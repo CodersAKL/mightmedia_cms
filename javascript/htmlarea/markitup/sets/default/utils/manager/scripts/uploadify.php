@@ -23,22 +23,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 'On');
+
+session_id($_POST['PHPSESSID']);
+session_start();
+
+require_once('../../../../../../../../priedai/conf.php');
+require_once('../../../../../../../../priedai/funkcijos.php');
+
+if (!isset($_SESSION['level']) || $_SESSION['level'] != 1)
+	die('eik lauk..');
 
 if (!empty($_FILES)) {
 	$tempFile = $_FILES['Filedata']['tmp_name'];
-	//$targetPath = /*$_SERVER['DOCUMENT_ROOT'] .*/ $_REQUEST['folder'] . '/';
-	//$targetFile =  str_replace('//','/',$targetPath) . $_FILES['Filedata']['name'];
-	$targetFile =  str_replace('//','/','../../../../../../../..'.$_REQUEST['folder']).'/' . $_FILES['Filedata']['name'];
+	$targetPath = /*$_SERVER['DOCUMENT_ROOT'] .*/ ROOTAS.$_REQUEST['folder'] . '/';
+	$targetFile =  str_replace('//','/',$targetPath) . $_FILES['Filedata']['name'];
 	$fileTypes  = str_replace('*.','',$_REQUEST['fileext']);
 	$fileTypes  = str_replace(';','|',$fileTypes);
-	$typesArray = split('\|',$fileTypes);
+	$typesArray = explode('|',$fileTypes);
 	$fileParts  = pathinfo($_FILES['Filedata']['name']);
 	
 	if (in_array($fileParts['extension'],$typesArray)) {
 		// Uncomment the following line if you want to make the directory if it doesn't exist
-		mkdir($targetPath, 0755, true);
+		//mkdir($targetPath, 0777, true);
 		
 		move_uploaded_file($tempFile,$targetFile);
+		chmod($targetFile, 0777);
 		
 		echo "1";
 	 } else {
