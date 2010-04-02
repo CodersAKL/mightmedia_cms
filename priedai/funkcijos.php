@@ -13,6 +13,7 @@
 if (basename($_SERVER['PHP_SELF']) == 'funkcijos.php') {
 	ban($lang['system']['forhacking']);
 }
+
 define("OK", true);
 define('ROOTAS', dirname(realpath(__file__)) . '/../');
 if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['QUERY_STRING']) || (isset($_GET['id']) && preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_GET['id']))) {
@@ -184,7 +185,8 @@ function utf8_substr($str, $start) {
  * @return string
  */
 function adresas() {
-	return "http://" . $_SERVER["HTTP_HOST"].preg_replace("/[^\/]*$/", "", $_SERVER["PHP_SELF"]);
+  //NEVEIKIA :/
+  return "http://".$_SERVER["HTTP_HOST"].preg_replace("/[^\/]*$/","",$_SERVER["PHP_SELF"]);
 }
 
 /**
@@ -1367,7 +1369,7 @@ $(document).ready(function()	{
 		});
 
 	</script>
-<textarea id="{$key}" name="editorius" style="min-height:320px;">{$value[$key]}</textarea>
+<textarea id="{$key}" name="{$key}" style="min-height:320px;">{$value[$key]}</textarea>
 HTML;
 		}
 	} else {
@@ -1380,7 +1382,7 @@ $(document).ready(function()	{
     });
 		});
 	</script>
-<textarea id="{$id}" name="editorius" style="min-height:320px;">{$value}</textarea>
+<textarea id="{$id}" name="{$id}" style="min-height:320px;">{$value}</textarea>
 HTML;
 
 	}
