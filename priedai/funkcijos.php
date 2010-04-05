@@ -22,11 +22,12 @@ if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['Q
 	$remoteaddress = $_SERVER["REMOTE_ADDR"];
 	ban();
 }
-if (!empty($_POST) && isset($_SESSION['level']) && $_SESSION['level'] != 1) {
+if (!empty($_POST)) {
 	include_once (ROOTAS . 'priedai/safe_html.php');
 	foreach ($_POST as $key => $value) {
-		if (!is_array($value))
+		if (!is_array($value)) {
 			$post[$key] = safe_html($value);
+		}
 		else
 			$post[$key] = $value;
 	}
@@ -424,7 +425,9 @@ function url($str) {
 		$start = explode(',', $linkai[0]);
 		$linkai[0] = '';
 		if($conf['F_urls'] != '0') {
-			$return = ROOT.str_replace(' ', '_', $conf['titles'][$start[1]]).implode(($conf['F_urls'] != '0'?$conf['F_urls']:';'), $linkai);
+			$url_title = !empty($conf['titles'][$start[1]]) ? $conf['titles'][$start[1]] : '';
+			$url_title = ROOT.str_replace(' ', '_', $url_title);
+			$return = $url_title.implode(($conf['F_urls'] != '0'?$conf['F_urls']:';'), $linkai);
 		} else {
 			$return = (basename($_SERVER['SCRIPT_NAME']) != 'index.php'?basename($_SERVER['SCRIPT_NAME']):'').$str;
 		}
@@ -733,7 +736,7 @@ function escape($sql) {
 	if (get_magic_quotes_gpc()) {
    		$sql = stripslashes($sql);
 	}
-	//Jei ne skaičius
+	//Jei ne skaičius
 	if (!isnum($sql) || $sql[0] == '0') {
 		if (!isnum($sql)) {
 			$sql = "'" . @mysql_real_escape_string($sql) . "'";
@@ -1356,31 +1359,21 @@ HTML;
 	if (is_array($id)) {
 		foreach ($id as $key => $val) {
 
-
 			$return .= <<< HTML
-			<script type="text/javascript">
-			
-$(document).ready(function()	{
-    $('#{$key}').markItUp(mySettings);
-    $('#{$key}').focus(function() {
-    tid = $(this).attr('id');
-    });
-
-		});
-
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#{$key}').markItUp(mySettings);
+	});
 	</script>
 <textarea id="{$key}" name="{$key}" style="min-height:320px;">{$value[$key]}</textarea>
 HTML;
 		}
 	} else {
 		$return .= <<< HTML
-		<script type="text/javascript">
-$(document).ready(function()	{
+	<script type="text/javascript">
+	$(document).ready(function()	{
 		$('#{$id}').markItUp(mySettings);
-		$('#{$id}').focus(function() {
-    tid = $(this).attr('id');
-    });
-		});
+	});
 	</script>
 <textarea id="{$id}" name="{$id}" style="min-height:320px;">{$value}</textarea>
 HTML;
@@ -1445,7 +1438,7 @@ function checkUrl($url) {
 function lang() {
 	if (empty($_SESSION['lang'])) {
 		global $conf;
-		$_SESSION['lang'] = basename($conf['kalba'],'.php');
+		$_SESSION['lang'] = basename(empty($conf['kalba'])?'lt':$conf['kalba'],'.php');
 	}
 	return $_SESSION['lang'];
 }

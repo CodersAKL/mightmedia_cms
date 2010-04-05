@@ -10,7 +10,7 @@
  * @$Date$
  **/
 function cat($kieno,$cat_id = 0, $space= 1, $x ='') {
-	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = ".escape($kieno)." and `path` = " . escape($cat_id));
+	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = ".escape($kieno)." and `path` = " . escape($cat_id). " AND `lang` = ".escpae(lang()));
 
 	foreach($sql as $select) {
 		//echo $select['pavadinimas'];
@@ -46,7 +46,7 @@ HTML;
 	if (empty($_GET['v'])) {
 		$_GET['v'] = 0;
 	}
-	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' ORDER BY `id` DESC");
+	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND `lang` = ".escape(lang())." ORDER BY `id` DESC");
 	if (sizeof($sql) > 0) {
 
 		$kategorijoss = cat($kieno);
@@ -133,7 +133,7 @@ HTML;
 				klaida($lang['system']['warning'], "{$lang['system']['badlevel']}.");
 			}
 		} else {
-			$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "grupes` (`pavadinimas`,`aprasymas`, `teises`, `pav`, `path`, `kieno`, `mod`) VALUES (" . escape($pavadinimas) . ",  " . escape($aprasymas) . ", " . escape($teises_in) . ", " . escape($pav) . "," . escape($pathas) . "," . escape($kieno) . "," . escape($moderuoti) . ")");
+			$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "grupes` (`pavadinimas`,`aprasymas`, `teises`, `pav`, `path`, `kieno`, `mod`, `lang`) VALUES (" . escape($pavadinimas) . ",  " . escape($aprasymas) . ", " . escape($teises_in) . ", " . escape($pav) . "," . escape($pathas) . "," . escape($kieno) . "," . escape($moderuoti) . ",".escape(lang()).")");
 			if ($result) {
 				msg("{$lang['system']['done']}", $lang['system']['categorycreated']);
 				//print_r($path);
@@ -325,7 +325,7 @@ HTML;
 			klaida($lang['system']['warning'],$lang['system']['nocategories']);
 		}
 	}
-	delete_cache("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai'  ORDER BY `pavadinimas`");
+	delete_cache("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `lang`=".escape(lang())." ORDER BY `pavadinimas`");
 	unset($bla, $info, $sql, $sql2, $q, $result, $result2);
 
 }
