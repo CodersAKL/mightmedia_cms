@@ -52,7 +52,7 @@ if(isset($conf['puslapiai']) && count($conf['puslapiai']) > 0){
   }
 } else 
     $psl[]='';
-$nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"), 
+$nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"),
 	"{$lang['admin']['sitename']}:" => array("type" => "text", "value" => input($conf['Pavadinimas']), "name" => "Pavadinimas", "class" => "input"), 
 	"{$lang['admin']['homepage']}:" => array("type" => "select", "value" => $psl, "selected" =>(isset($conf['pirminis'])?$conf['pirminis'].'.php':''), "name" => "pirminis", "class" => "select"), 
 	"{$lang['admin']['about']}:" => array("type" => "textarea", "name" => "Apie", "value" => (isset($conf['Apie']) ? $conf['Apie'] : ''), "extra" => "rows=5", "class" => "input"), 

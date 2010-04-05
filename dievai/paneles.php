@@ -78,11 +78,11 @@ if (isset($_POST['order'])) {
 		$where .= "$item,";
 	endforeach;
 	$where = rtrim($where, ", ");
-	$sqlas .= "UPDATE `" . LENTELES_PRIESAGA . "panel` SET `place`=  CASE id " . $case_place . " END WHERE id IN (" . $where . ")";
+	$sqlas .= "UPDATE `" . LENTELES_PRIESAGA . "panel` SET `place`= CASE id " . $case_place . " END WHERE id IN (" . $where . ")";
 	echo $sqlas;
 	$result = mysql_query1($sqlas);
-	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC");
-	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC");
+	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' AND `lang` = ".escape(lang())." ORDER BY `place` ASC");
+	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' AND `lang` = ".escape(lang())." ORDER BY `place` ASC");
 
 } else {
 	$text = "
@@ -115,7 +115,7 @@ HTML;
     redirect(url("?id,{$_GET['id']};a,{$_GET['a']};n,1"),"header");
 	}
 	if (isset($url['n']) && $url['n'] == 2) {
-		$psl = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "Naujaa_pnl"), "{$lang['admin']['panel_name']}:" => array("type" => "text", "value" => "Naujas blokas", "name" => "pav", "class" => "input"), "{$lang['admin']['panel_text']}:" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('pnl' => 'pnl'), false), "name" => "pnl", "class" => "input", "rows" => "8", "class" => "input"), "" => array("type" => "submit", "name" => "Naujaa_pnl", "value" => "{$lang['admin']['panel_create']}"));
+		$psl = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "Naujaa_pnl"), "{$lang['admin']['panel_name']}:" => array("type" => "text", "value" => "Naujas blokas", "name" => "pav", "class" => "input"), "{$lang['admin']['panel_text']}:" => array("type" => "string", "value" => editor('spaw', 'standartinis', array('pnl' => 'pnl'), false), "name" => "pnl", "class" => "input", "rows" => "8", "class" => "input"), "" => array("type" => "submit", "name" => "Naujaa_pnl", "value" => "{$lang['admin']['panel_create']}"));
 		include_once (ROOT."priedai/class.php");
 		$bla = new forma();
 		lentele("{$lang['admin']['panel_new']}", $bla->form($psl, "{$lang['admin']['panel_new']}"));
@@ -146,10 +146,10 @@ HTML;
 					$align = 'Y';
 				}
 				$teisess = serialize((isset($_POST['Teises'])?$_POST['Teises']:0));
-				$sql = "INSERT INTO `" . LENTELES_PRIESAGA . "panel` (`panel`, `file`, `place`, `align`, `show`, `teises`, `lang`) VALUES (" . escape($panel) . ", " . escape($file) . ", '0', " . escape($align) . ", " . escape($show) . ", " . escape($teisess) . ", ".lang().")";
+				$sql = "INSERT INTO `" . LENTELES_PRIESAGA . "panel` (`panel`, `file`, `place`, `align`, `show`, `teises`, `lang`) VALUES (" . escape($panel) . ", " . escape($file) . ", '0', " . escape($align) . ", " . escape($show) . ", " . escape($teisess) . ", ".escape(lang()).")";
 				mysql_query1($sql);
 				delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' AND `lang` = ".escape(lang())." ORDER BY `place` ASC");
-	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' AND `lang` = ".escape(lang())." ORDER BY `place` ASC");
+				delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' AND `lang` = ".escape(lang())." ORDER BY `place` ASC");
 				redirect(url("?id," . $url['id'] . ";a,{$_GET['a']}"), "header");
 			}
 		}
@@ -192,10 +192,10 @@ HTML;
 				$align = 'Y';
 			}
 
-			$sql = "UPDATE `" . LENTELES_PRIESAGA . "panel` SET `panel`=" . escape($panel) . ", `align`=" . escape($align) . ", `show`=" . escape($show) . ",`teises`=" . escape($teisess) . "   WHERE `id`=" . escape((int)$url['r']);
+			$sql = "UPDATE `" . LENTELES_PRIESAGA . "panel` SET `panel`=" . escape($panel) . ", `align`=" . escape($align) . ", `show`=" . escape($show) . ",`teises`=" . escape($teisess) . ", `lang` = ".escape(lang())." WHERE `id`=" . escape((int)$url['r']);
 			mysql_query1($sql);
 			delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' AND `lang` = ".escape(lang())." ORDER BY `place` ASC");
-      delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' AND `lang` = ".escape(lang())." ORDER BY `place` ASC");
+			delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' AND `lang` = ".escape(lang())." ORDER BY `place` ASC");
 			redirect(url("?id," . $url['id'] . ";a,{$_GET['a']}"), "header");
 		} else {
 
@@ -260,7 +260,7 @@ HTML;
 
 				if (isset($text) && is_writable(ROOT.'paneles/' . $sql['file'])) {
 					$paneles_txt = $text;
-					$panele = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "panel_txt"), $lang['admin']['panel_text'] => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('Turinys' => 'Bloko turinys'), array('Turinys' => (isset($paneles_txt)) ? $paneles_txt : ''))), "" => array("type" => "submit", "name" => "Redaguoti_txt", "value" => "{$lang['admin']['edit']}"));
+					$panele = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "panel_txt"), $lang['admin']['panel_text'] => array("type" => "string", "value" => editor('spaw', 'standartinis', array('Turinys' => 'Bloko turinys'), array('Turinys' => (isset($paneles_txt)) ? $paneles_txt : ''))), "" => array("type" => "submit", "name" => "Redaguoti_txt", "value" => "{$lang['admin']['edit']}"));
 
 					include_once (ROOT."priedai/class.php");
 					$bla = new forma();
@@ -284,7 +284,7 @@ HTML;
 		foreach ($recordSet as $record) {
 			$li .= '<li id="listItem_' . $record['id'] . '" class="drag_block"> 
 <a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
-<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record['id'] ). '" style="align:right"><img src="images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
+<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record['id'] ). '" style="align:right"><img src="'.ROOT.'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
 <a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record['id'] ). '" style="align:right"><img src="'.ROOT.'images/icons/pencil.png" title="' . $lang['admin']['panel_text'] . '" align="right" /></a> 
 <img src="'.ROOT.'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
 ' . $record['panel'] . '

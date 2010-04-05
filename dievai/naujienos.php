@@ -57,13 +57,13 @@ if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete']  &
 	redirect($_SERVER['HTTP_REFERER'],"meta");
 }
 //Naujienu trinimas
-if(isset($_POST['news_delete'])){
-  foreach($_POST['news_delete'] as $a=>$b){
-    $trinti[]="`id`=".escape($b);
-  }
-  mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE ".implode($trinti, " OR ")."");
-  header("Location:".$_SERVER['HTTP_REFERER']);
-  exit;
+if(isset($_POST['news_delete'])) {
+	foreach($_POST['news_delete'] as $a=>$b) {
+		$trinti[]="`id`=".escape($b);
+	}
+	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE ".implode($trinti, " OR ")."");
+	header("Location:".$_SERVER['HTTP_REFERER']);
+	exit;
 }
 
 //Naujienos redagavimas
@@ -81,9 +81,13 @@ elseif (/*((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['ed
 
 //Išsaugojam redaguojamą naujieną
 elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['edit']) {
-	$naujiena = $_POST['naujiena'];
-	$placiau =$_POST['placiau'];
-$komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
+	$naujiena = explode('===page===',$_POST['naujiena']);
+	$placiau =  explode('===page===',$_POST['naujiena']);
+
+	$naujiena = $naujiena[0];
+	$placiau = empty($placiau[1])?'':$placiau[1];
+
+	$komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
 	$kategorija = (int)$_POST['kategorija'];
 	$pavadinimas = strip_tags($_POST['pav']);
 	$id = ceil((int)$_POST['news_id']);
@@ -105,8 +109,12 @@ $komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
 
 //Išsaugojam naujieną
 elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_create']) {
-	$naujiena = $_POST['naujiena'];
-	$placiau =  $_POST['placiau'];
+	$naujiena = explode('===page===',$_POST['naujiena']);
+	$placiau =  explode('===page===',$_POST['naujiena']);
+
+	$naujiena = $naujiena[0];
+	$placiau = empty($placiau[1])?'':$placiau[1];
+
 	$komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
 	$pavadinimas = strip_tags($_POST['pav']);
 	$kategorija = (int)$_POST['kategorija'];
@@ -116,27 +124,28 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_crea
 	}
 	if (!isset($error)) {
 		$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija, rodoma, lang) VALUES (" . escape($pavadinimas) . ", " . escape($naujiena) . ", " . escape($placiau) . ",  '" . time() . "', '" . $_SESSION['username'] . "', " . escape($komentaras) . ", " . escape($kategorija) . ", 'TAIP', ".escape(lang()).")");
-		if(isset($_POST['letter'])){
-        require_once(ROOT.'priedai/class.phpmailer-lite.php');
-        $mail = new PHPMailerLite();
-        $mail->IsMail();
-        $mail->CharSet = 'UTF-8';
-        $body = "<b>" . $pavadinimas . "</b><br/>{$naujiena}<br /> <a href='".url("?id," . $conf['puslapiai']['naujienos.php']['id']). "'>".$lang['news']['read']."</a><br /><br /><a href='".url("?id," . $conf['puslapiai']['naujienlaiskiai.php']['id']). "'>".$lang['news']['unorder']. "</a>
-<hr>";
-        $mail->SetFrom($admin_email, $conf['Pavadinimas']);
-        $mail->Subject    = strip_tags($conf['Pavadinimas']) ." ". $pavadinimas;
-        $mail->MsgHTML($body);
-        $sql = mysql_query1("SELECT `email` FROM `".LENTELES_PRIESAGA."newsgetters`");
-        foreach ($sql as $row){
-            $name = explode('@', $row['email']);
-            $mail->AddAddress($row['email'], $name[0]);
-        }
-        $mail->Send(); 
+		if(isset($_POST['letter'])) {
+
+			//TODO:Reikalingi email templeytai
+			require_once(ROOT.'priedai/class.phpmailer-lite.php');
+			$mail = new PHPMailerLite();
+			$mail->IsMail();
+			$mail->CharSet = 'UTF-8';
+			$body = "<b>" . $pavadinimas . "</b><br/>{$naujiena}<br /> <a href='".adresas().url("?id," . $conf['puslapiai']['naujienos.php']['id']). "'>".$lang['news']['read']."</a><br /><br /><a href='".url("?id," . $conf['puslapiai']['naujienlaiskiai.php']['id']). "'>".$lang['news']['unorder']. "</a><hr>";
+			$mail->SetFrom($admin_email, $conf['Pavadinimas']);
+			$mail->Subject    = strip_tags($conf['Pavadinimas']) ." ". $pavadinimas;
+			$mail->MsgHTML($body);
+			$sql = mysql_query1("SELECT `email` FROM `".LENTELES_PRIESAGA."newsgetters`");
+			foreach ($sql as $row) {
+				$name = explode('@', $row['email']);
+				$mail->AddAddress($row['email'], $name[0]);
+			}
+			$mail->Send();
 		}
-       
-		
+
+
 		if ($result) {
-			msg($lang['system']['done'], "{$lang['admin']['news_created']}");
+			msg($lang['system']['done'], $lang['admin']['news_created']);
 		} else {
 			klaida($lang['system']['error'], "<b>" . mysql_error() . "</b>");
 		}
@@ -160,54 +169,58 @@ if (isset($_GET['v'])) {
 	if ($_GET['v'] == 4) {
 		if (count($sql_news) > 0) {
 			$table = new Table();
-			foreach ($sql_news as $row){
-        $info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('newsch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"news_delete[]\" />", 
-        $lang['admin']['news_name'] => $row['pavadinimas'], 
-        $lang['admin']['news_date'] => date('Y-m-d', $row['data']), 
-        $lang['admin']['news_more'] => trimlink(strip_tags($row['naujiena']), 55),
-        $lang['admin']['edit'] => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src=\"".ROOT."images/icons//cross.png\" border=\"0\"></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>"
-        );
+			foreach ($sql_news as $row) {
+				$info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('newsch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"news_delete[]\" />",
+						$lang['admin']['news_name'] => $row['pavadinimas'],
+						$lang['admin']['news_date'] => date('Y-m-d', $row['data']),
+						$lang['admin']['news_more'] => trimlink(strip_tags($row['naujiena']), 55),
+						$lang['admin']['edit'] => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src=\"".ROOT."images/icons/cross.png\" border=\"0\"></a>"
+				);
 			}
 			echo '<style type="text/css" title="currentStyle">
 			@import "'.ROOT.'javascript/table/css/demo_page.css";
 			@import "'.ROOT.'javascript/table/css/demo_table.css";
-		</style>
-		<script type="text/javascript" language="javascript" src="'.ROOT.'javascript/table/js/jquery.dataTables.js"></script>
-		<script type="text/javascript" charset="utf-8">
-			$(document).ready(function() {
-				$(\'#news table\').dataTable( {
-          "bInfo": false,
-          "bProcessing": true,
-					"aoColumns": [
-						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
-						{ "sWidth": "10%", "sType": "string" },
-						{ "sWidth": "10%", "sType": "date" },
-						{ "sWidth": "30%", "sType": "html" },
-						{ "sWidth": "20px", "sType": "html", "bSortable": false}
-					]
+			</style>
+			<script type="text/javascript" language="javascript" src="'.ROOT.'javascript/table/js/jquery.dataTables.js"></script>
+			<script type="text/javascript" charset="utf-8">
+				$(document).ready(function() {
+					$(\'#news table\').dataTable( {
+			  "bInfo": false,
+			  "bProcessing": true,
+						"aoColumns": [
+							{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
+							{ "sWidth": "10%", "sType": "string" },
+							{ "sWidth": "10%", "sType": "date" },
+							{ "sWidth": "30%", "sType": "html" },
+							{ "sWidth": "20px", "sType": "html", "bSortable": false}
+						]
+					} );
 				} );
-			} );
-		</script>';
+			</script>';
 			lentele($lang['admin']['edit'], "<form id=\"newsch\" method=\"post\"><div id=\"news\">".$table->render($info)."</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
 		} else {
 			klaida($lang['system']['warning'], $lang['system']['no_items']);
 		}
 	} elseif ($_GET['v'] == 1 || isset($_GET['h'])) {
-		if ($i = 1) {
-			$kom = array('taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no']);
-			$naujiena = array("Form" => array("action" => url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ""), "method" => "post", "name" => "reg"), "{$lang['admin']['news_name']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pavadinimas'] : ''), "name" => "pav", "class" => "input"), $lang['admin']['komentarai'] => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input", "class" => "input"),(isset($conf['puslapiai']['naujienlaiskiai.php']['id'])?$lang['news']['newsletter?']:'') => "", "{$lang['admin']['news_category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')), "{$lang['admin']['news_text']}:" => array("type" => "string", "value" =>
-				editorius('jquery', 'standartinis', array('naujiena' => $lang['admin']['news_preface'], 'placiau' => $lang['admin']['news_more']), array('naujiena' => (isset($extra)) ? $extra['naujiena'] : $lang['admin']['news_preface'], 'placiau' => (isset($extra)) ? $extra['daugiau'] : $lang['admin']['news_more']))), (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create']));
+		$kom = array('taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no']);
+		$naujiena = array(
+			"Form" => array("action" => url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ""), "method" => "post", "name" => "reg"),
+			"{$lang['admin']['news_name']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pavadinimas'] : ''), "name" => "pav", "class" => "input"),
+			$lang['admin']['komentarai'] => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input", "class" => "input"),
+			(isset($conf['puslapiai']['naujienlaiskiai.php']['id'])?$lang['news']['newsletter?']:'') => isset($conf['puslapiai']['naujienlaiskiai.php']['id'])?array("type" => "checkbox", "name" => "letter"):'',
+			"{$lang['admin']['news_category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')),
+			"{$lang['admin']['news_text']}:" => array("type" => "string", "value" => editor('jquery', 'standartinis', array('naujiena' => $lang['admin']['news_preface']), array('naujiena' => (isset($extra) ? $extra['naujiena'].(empty($extra['daugiau'])?'':"\n===page===\n".$extra['daugiau']) : $lang['admin']['news_preface'])))),
+			(isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create'])
+		);
 
-			if (isset($extra)) {
-				$naujiena[''] = array("type" => "hidden", "name" => "news_id", "value" => (isset($extra) ? input($extra['id']) : ''));
-			} 
-			if(!isset($extra) && isset($conf['puslapiai']['naujienlaiskiai.php']['id'])) {
-        $naujiena[$lang['news']['newsletter?']] = array("type" => "checkbox", "name" => "letter");
-			}
-			lentele($lang['admin']['news_create'], $bla->form($naujiena));
-		} else {
-			klaida($lang['system']['warning'], $lang['system']['nocategories']);
+		if (isset($extra)) {
+			$naujiena[''] = array("type" => "hidden", "name" => "news_id", "value" => (isset($extra) ? input($extra['id']) : ''));
 		}
+		if(!isset($extra) && isset($conf['puslapiai']['naujienlaiskiai.php']['id'])) {
+			$naujiena[$lang['news']['newsletter?']] = array("type" => "checkbox", "name" => "letter");
+		}
+		lentele($lang['admin']['news_create'], $bla->form($naujiena));
+
 	} elseif ($_GET['v'] == 6) {
 
 		$q = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE rodoma='NE'");
@@ -217,37 +230,37 @@ if (isset($_GET['v'])) {
 			$bla = new Table();
 			$info = array();
 			foreach ($q as $sql) {
-						$info[] = array(
+				$info[] = array(
 						"<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('newsch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"news_delete[]\" />",
 						"{$lang['admin']['news_name']}:" => '<a href="#" title="<b>' . $sql['pavadinimas'] . '</b>
-			<br /><br />
-			' . $lang['admin']['news_author'] . ': <b>' . $sql['autorius'] . '</b><br />
-			" target="_blank">' . $sql['pavadinimas'] . '</a>', 
-			 $lang['admin']['news_date'] => date('Y-m-d', $sql['data']), 
-        $lang['admin']['news_more'] => trimlink(strip_tags($sql['naujiena']), 55),
-			"{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
+						<br /><br />
+						' . $lang['admin']['news_author'] . ': <b>' . $sql['autorius'] . '</b><br />
+						" target="_blank">' . $sql['pavadinimas'] . '</a>',
+						$lang['admin']['news_date'] => date('Y-m-d', $sql['data']),
+						$lang['admin']['news_more'] => trimlink(strip_tags($sql['naujiena']), 55),
+						"{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='".ROOT."images/icons/cross.png' border='0'></a>");
 
 			}
 			echo '<style type="text/css" title="currentStyle">
 			@import "'.ROOT.'javascript/table/css/demo_page.css";
 			@import "'.ROOT.'javascript/table/css/demo_table.css";
-		</style>
-		<script type="text/javascript" language="javascript" src="'.ROOT.'javascript/table/js/jquery.dataTables.js"></script>
-		<script type="text/javascript" charset="utf-8">
-			$(document).ready(function() {
-				$(\'#news table\').dataTable( {
-          "bInfo": false,
-          "bProcessing": true,
-					"aoColumns": [
-						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
-						{ "sWidth": "10%", "sType": "string" },
-						{ "sWidth": "10%", "sType": "date" },
-						{ "sWidth": "30%", "sType": "html" },
-						{ "sWidth": "20px", "sType": "html", "bSortable": false}
-					]
+			</style>
+			<script type="text/javascript" language="javascript" src="'.ROOT.'javascript/table/js/jquery.dataTables.js"></script>
+			<script type="text/javascript" charset="utf-8">
+				$(document).ready(function() {
+					$(\'#news table\').dataTable( {
+			  "bInfo": false,
+			  "bProcessing": true,
+						"aoColumns": [
+							{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
+							{ "sWidth": "10%", "sType": "string" },
+							{ "sWidth": "10%", "sType": "date" },
+							{ "sWidth": "30%", "sType": "html" },
+							{ "sWidth": "20px", "sType": "html", "bSortable": false}
+						]
+					} );
 				} );
-			} );
-		</script>';
+			</script>';
 			lentele($lang['admin']['news_unpublished'], "<form id=\"newsch\" method=\"post\"><div id=\"news\">".$bla->render($info)."</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
 
 		} else {

@@ -159,7 +159,7 @@ lentele($page_pavadinimas,$text);
 		}
 	}
 	if (isset($url['n']) && $url['n'] == 2) {
-		$psl = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_page2"), "{$lang['admin']['page_filename']}:" => array("type" => "text", "value" => "{$lang['admin']['page_name']}", "name" => "pav", "class" => "input"), "{$lang['admin']['page_text']}:" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('Page' => 'Page'), false), "name" => "Page", "class" => "input", "rows" => "8", "class" => "input"), "" => array("type" => "submit", "name" => "Naujas_puslapis2", "value" => $lang['admin']['page_create']));
+		$psl = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_page2"), "{$lang['admin']['page_filename']}:" => array("type" => "text", "value" => "{$lang['admin']['page_name']}", "name" => "pav", "class" => "input"), "{$lang['admin']['page_text']}:" => array("type" => "string", "value" => editor('spaw', 'standartinis', array('Page' => 'Page'), false), "name" => "Page", "class" => "input", "rows" => "8", "class" => "input"), "" => array("type" => "submit", "name" => "Naujas_puslapis2", "value" => $lang['admin']['page_create']));
 		include_once (ROOT."priedai/class.php");
 		$bla = new forma();
 		lentele($lang['admin']['page_create'], $bla->form($psl, $lang['admin']['page_create']));
@@ -253,7 +253,7 @@ lentele($page_pavadinimas,$text);
 				$puslapio_txt = $text;
 				
 				$puslapis = array(
-					 "Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "psl_txt"),"{$lang['admin']['page_text']}" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('Page' => 'Page'), array('Page' => $puslapio_txt)), "name" => "Turinys", "class" => "input", "rows" => "10"),
+					 "Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "psl_txt"),"{$lang['admin']['page_text']}" => array("type" => "string", "value" => editor('spaw', 'standartinis', array('Page' => 'Page'), array('Page' => $puslapio_txt)), "name" => "Turinys", "class" => "input", "rows" => "10"),
 					 "" => array("type" => "submit", "name" => "Redaguoti_txt", "value" => $lang['admin']['edit'])
 				);
 				
@@ -302,7 +302,7 @@ function build_menu_admin($data, $id=0) {
 foreach ($recordSet1 as $row){
 	$data[$row['parent']][] = $row;
 }
-	$li = build_menu_admin($data);
+	$li = !empty($data)?build_menu_admin($data):'';
 	$tekstas .= '
 <div id="la" style="display:none"><b>' . $lang['system']['updated'] . '</b></div><fieldset><legend>' . $lang['admin']['page_navigation'] . '</legend><ul id="test-list">' . $li . '</ul>';
 	$tekstas .= '</fieldset>';

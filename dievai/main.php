@@ -45,7 +45,7 @@ if (is_file($root.'priedai/conf.php') && filesize($root.'priedai/conf.php') > 1)
 $kalbos = getFiles(ROOT.'lang/');
 $language = '';
 foreach ($kalbos as $file) {
-	if ($file['type'] == 'file') {
+	if ($file['type'] == 'file' && basename($file['name'],'.php') != lang()) {
 		$language .= '<a id="visit" class="right" href="'.url('?id,999;lang,'.basename($file['name'],'.php')).'"><img src="'.ROOT.'images/icons/flags/'.basename($file['name'],'.php').'.png" alt="'.basename($file['name'],'.php').'" class="language flag '.basename($file['name'],'.php').'" /></a>';
 	}
 }
@@ -80,23 +80,72 @@ foreach($glob as $id => $file) {
 //medzio darymo f-ja
 function build_tree($data, $id=0, $active_class='active') {
 	global $admin_pagesid, $lang;
-if(!empty($data)){
-	$re="";
-	foreach ($data[$id] as $row) {
-		if (isset($data[$row['id']])) {
-			$re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a><a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';d,' . $row['id'] ). "\" style=\"align:right\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"".ROOT."images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\" align=\"right\" /></a>
+	if(!empty($data)) {
+		$re="";
+		foreach ($data[$id] as $row) {
+			if (isset($data[$row['id']])) {
+				$re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a><a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';d,' . $row['id'] ). "\" style=\"align:right\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"".ROOT."images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\" align=\"right\" /></a>
 <a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';r,' . $row['id'] ). "\" style=\"align:right\"><img src=\"".ROOT."images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\" align=\"right\" /></a>
 <a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';e,' . $row['id'] ). "\" style=\"align:right\"><img src=\"".ROOT."images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" align=\"right\" /></a><ul>";
-			$re.=build_tree($data, $row['id'],$active_class);
-			$re.= "</ul></li>";
-		} else $re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a>
+				$re.=build_tree($data, $row['id'],$active_class);
+				$re.= "</ul></li>";
+			} else $re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a>
 <a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';d,' . $row['id'] ). "\" style=\"align:right\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"".ROOT."images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\" align=\"right\" /></a>
 <a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';r,' . $row['id'] ). "\" style=\"align:right\"><img src=\"".ROOT."images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\" align=\"right\" /></a>
 <a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';e,' . $row['id'] ). "\" style=\"align:right\"><img src=\"".ROOT."images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" align=\"right\" /></a>
 </li>";
+		}
+		return $re;
 	}
-	return $re;
-}}
+}
+
+function editor($tipas = 'rte', $dydis = 'standartinis', $id = false, $value = '') {
+	global $conf;
+	if (!$id) {
+		$id = md5(uniqid());
+	}
+
+	if (is_array($id)) {
+		foreach ($id as $key => $val) {
+			$arr[$val] = "'$key'";
+		}
+		$areos = implode($arr, ",");
+	} else {
+		$areos = "'$id'";
+	}
+	$root = ROOT;
+	$return = <<<HTML
+<script type="text/javascript" src="htmlarea/markitup/jquery.markitup.js"></script>
+<script type="text/javascript" src="htmlarea/markitup/sets/default/set.js"></script>
+<link rel="stylesheet" type="text/css" href="htmlarea/markitup/skins/markitup/style.css" />
+<link rel="stylesheet" type="text/css" href="htmlarea/markitup/sets/default/style.css" />
+
+HTML;
+
+	if (is_array($id)) {
+		foreach ($id as $key => $val) {
+			$return .= <<<HTML
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#{$key}').markItUp(mySettings);
+	});
+	</script>
+<textarea id="{$key}" name="{$key}" style="min-height:320px;">{$value[$key]}</textarea>
+HTML;
+		}
+	} else {
+		$return .= <<<HTML
+	<script type="text/javascript">
+	$(document).ready(function()	{
+		$('#{$id}').markItUp(mySettings);
+	});
+	</script>
+<textarea id="{$id}" name="{$id}" style="min-height:320px;">{$value}</textarea>
+HTML;
+
+	}
+	return $return;
+}
 ?>
 
 <?php
@@ -187,7 +236,7 @@ if (empty($_GET['ajax'])):?>
 							<ul>
 
 									<?php
-                  $data1 = '';
+									$data1 = '';
 									$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`='Y' AND `lang`=".escape(lang())." ORDER BY `place` ASC");
 									foreach ($res as $row) {
 										if(teises($row['teises'],$_SESSION['level'])) {
@@ -201,7 +250,7 @@ if (empty($_GET['ajax'])):?>
 						</li>
 					</ul>
 					<a href="<?php echo adresas(); ?>../" id="visit" class="right"><?php echo $lang['system']['to_page']; ?></a>
-					<?php echo $language;?>
+						<?php echo $language;?>
 				</div>
 				<div id="content_main" class="clearfix">
 					<div id="main_panel_container" class="left">
@@ -332,7 +381,7 @@ HTML;
 						<h2 class="ico_mug"><?php echo $lang['system']['tree']; ?></h2>
 						<ul id="treemenu">
 								<?php
-                $data2 = '';
+								$data2 = '';
 								$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=".escape(lang())." ORDER BY `place` ASC");
 								foreach ($res as $row) {
 									if(teises($row['teises'],$_SESSION['level'])) {
@@ -447,7 +496,7 @@ FROM " . LENTELES_PRIESAGA . "kom");
 
 					</div><!-- end #calendar -->
 				</div><!-- end #panels -->
-				
+
 
 			</div><!-- end #content -->
 
