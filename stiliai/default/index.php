@@ -11,7 +11,7 @@
 						<ul>
 							<?php
 
-							$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent` = 0 AND `show` = 'Y' ORDER BY `place` ASC LIMIT 12");
+							$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent` = 0 AND `show` = 'Y' AND `lang` = ".escape(lang())." ORDER BY `place` ASC LIMIT 12");
 							$text = '';
 							foreach ($sql1 as $row1) {
 								if (teises($row1['teises'], $_SESSION['level'])) {
@@ -33,8 +33,8 @@
 					<div class="aplink">
 
 						<?php
-						$desinespaneles = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' ORDER BY `place` ASC", 120);
-						$kairespaneles = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' ORDER BY `place` ASC", 120);
+						$desinespaneles = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' AND `lang` = ".escape(lang())." ORDER BY `place` ASC", 120);
+						$kairespaneles = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' AND `lang` = ".escape(lang())." ORDER BY `place` ASC", 120);
 						if (sizeof($kairespaneles)): ?>
 
 						<div class="kaire">
@@ -46,7 +46,6 @@
 						<?php endif; ?>
 
 						<div class="center" style="width:<?php echo (490 + (!sizeof($kairespaneles)?200:0) + (!sizeof($desinespaneles)?200:0)); ?>px">
-
 
 							<?php
 

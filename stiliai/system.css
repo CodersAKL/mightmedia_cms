@@ -481,3 +481,6 @@ overflow-y: hidden;
 .gallery_menu img {
 	vertical-align:middle
 }
+#captcha {
+  background-color: white
+}
