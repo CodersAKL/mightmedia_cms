@@ -26,12 +26,12 @@
 // 1.00 - released (24 March 2008)
 //
 // TERMS OF USE
-// 
-// jQuery File Tree is licensed under a Creative Commons License and is copyrighted (C)2008 by Cory S.N. LaViska.
-// For details, visit http://creativecommons.org/licenses/by/3.0/us/
+//
+// This plugin is dual-licensed under the GNU General Public License and the MIT License and
+// is copyright 2008 A Beautiful Site, LLC.
 //
 if(jQuery) (function($){
-	
+
 	$.extend($.fn, {
 		fileTree: function(o, h) {
 			// Defaults
@@ -45,35 +45,51 @@ if(jQuery) (function($){
 			if( o.collapseEasing == undefined ) o.collapseEasing = null;
 			if( o.multiFolder == undefined ) o.multiFolder = true;
 			if( o.loadMessage == undefined ) o.loadMessage = 'Loading...';
-			
+
 			$(this).each( function() {
-				
+
 				function showTree(c, t) {
 					$(c).addClass('wait');
 					$(".jqueryFileTree.start").remove();
-					$.post(o.script, { dir: t }, function(data) {
+					$.post(o.script, {
+						dir: t
+					}, function(data) {
 						$(c).find('.start').html('');
 						$(c).removeClass('wait').append(data);
-						if( o.root == t ) $(c).find('UL:hidden').show(); else $(c).find('UL:hidden').slideDown({ duration: o.expandSpeed, easing: o.expandEasing });
+						if( o.root == t ) $(c).find('UL:hidden').show(); else $(c).find('UL:hidden').slideDown({
+							duration: o.expandSpeed,
+							easing: o.expandEasing
+						});
 						bindTree(c);
 					});
 				}
-				
+
+				function select_folder(folder) {
+					$('#uploadify').uploadifySettings('folder','/siuntiniai/'+folder);
+				}
+
 				function bindTree(t) {
 					$(t).find('LI A').bind(o.folderEvent, function() {
 						if( $(this).parent().hasClass('directory') ) {
 							if( $(this).parent().hasClass('collapsed') ) {
 								// Expand
 								if( !o.multiFolder ) {
-									$(this).parent().parent().find('UL').slideUp({ duration: o.collapseSpeed, easing: o.collapseEasing });
+									$(this).parent().parent().find('UL').slideUp({
+										duration: o.collapseSpeed,
+										easing: o.collapseEasing
+									});
 									$(this).parent().parent().find('LI.directory').removeClass('expanded').addClass('collapsed');
 								}
 								$(this).parent().find('UL').remove(); // cleanup
 								showTree( $(this).parent(), escape($(this).attr('rel').match( /.*\// )) );
 								$(this).parent().removeClass('collapsed').addClass('expanded');
+								select_folder($(this).parent().find('a').attr('rel'));
 							} else {
 								// Collapse
-								$(this).parent().find('UL').slideUp({ duration: o.collapseSpeed, easing: o.collapseEasing });
+								$(this).parent().find('UL').slideUp({
+									duration: o.collapseSpeed,
+									easing: o.collapseEasing
+								});
 								$(this).parent().removeClass('expanded').addClass('collapsed');
 							}
 						} else {
@@ -82,7 +98,9 @@ if(jQuery) (function($){
 						return false;
 					});
 					// Prevent A from triggering the # on non-click events
-					if( o.folderEvent.toLowerCase != 'click' ) $(t).find('LI A').bind('click', function() { return false; });
+					if( o.folderEvent.toLowerCase != 'click' ) $(t).find('LI A').bind('click', function() {
+						return false;
+					});
 				}
 				// Loading message
 				$(this).html('<ul class="jqueryFileTree start"><li class="wait">' + o.loadMessage + '<li></ul>');
@@ -91,5 +109,5 @@ if(jQuery) (function($){
 			});
 		}
 	});
-	
+
 })(jQuery);
