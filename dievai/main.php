@@ -278,8 +278,8 @@ if (empty($_GET['ajax'])):?>
 												});
 												$('#version_check_more').wrapInner('<ol>');
 											}
-											if (data.menu.<?php echo basename($conf['kalba'],'.php'); ?>) {
-												$(data.menu.<?php echo basename($conf['kalba'],'.php'); ?>).each(function(json,menu){
+											if (data.menu.<?php echo lang(); ?>) {
+												$(data.menu.<?php echo lang(); ?>).each(function(json,menu){
 													$('#admin_menu').append('<li>'+ (typeof menu == 'object'?'<a href="">'+data.title+'</a>'+arr2html(menu):menu)+'</li>');
 												});
 											} else {
