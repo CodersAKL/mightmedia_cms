@@ -72,8 +72,8 @@ if (!isset($_GET['step']) || empty($_GET['step'])) {
 	}
 }
 if (isset($_POST['language'])) {
-$_SESSION['language']=$_POST['language'];
-header("Location: setup.php?step=1");
+	$_SESSION['language']=$_POST['language'];
+	header("Location: setup.php?step=1");
 }
 
 // Duomenų bazės prisijungimo tikrinimo ir lentelių sukūrimo dalis
@@ -182,6 +182,14 @@ if (!empty($_POST['acc_create'])) {
 	}
 }
 
+//Administravimo direktorijos keitimas
+if (!empty($_POST['admin_dir'])) {
+	if (is_dir('dievai'))	//Pervading "dievai" direktoriją į sunkiau nuspėjamą
+		header("Location: setup.php?step=5");
+	else
+		header("Location: setup.php?step=6");
+}
+
 // Diegimo pabaiga
 if (!empty($_POST['finish'])) {
 	$content = <<< HTML
@@ -214,7 +222,7 @@ if(mysql_num_rows(\$sql) > 1) while(\$row = mysql_fetch_assoc(\$sql)) \$conf[\$r
 unset(\$row,\$sql,\$user,\$host,\$pass,\$db);
 //kalba
 if (isset(\$conf['kalba'])) {
-    require_once (realpath(dirname(__file__)) . '/../lang/' . \$conf['kalba'] . '');
+    require_once (realpath(dirname(__file__)) . '/../lang/' . (empty(\$_SESSION['lang'])?basename(\$conf['kalba'],'.php'):\$_SESSION['lang']). '.php');
 } else {
     require_once (realpath(dirname(__file__)) . '/../lang/lt.php');
 }
@@ -261,8 +269,9 @@ HTML;
 		<center>
 			<table border="0" cellpadding="2" cellspacing="5" width="80%">
 				<tbody>
-						<tr><?php
-							  if($step!=0){ ?>
+						<tr>
+
+						<?php if($step!=0) { ?>
 						<td width="25%" valign="top">
 						<div class="title"><?php echo $lang['setup']['steps']; ?></div>
 							<div class="vidus">
@@ -281,56 +290,43 @@ HTML;
 								</ul>
 								<hr />
 								<?php echo $lang['setup']['product'];?>: <a href="http://www.mightmedia.lt/" target="_blank">MightMedia TVS</a><br /></div>
-						</td><?php } ?>
+						</td>
+						<?php } ?>
+
 						<td valign="top">
 							<div class="title">MightMedia TVS įdiegimas / MightMedia CMS setup</div>
 							<div class="vidus">
-								<?php
-
-								// HTML DALIS - Licensija
-								if ($step == 0) {
-								?>
+								<?php if ($step == 0) { ?>
 								<center>
-									<form name="lang" method="post">
+									<form name="lang" method="post" action="">
 										<h2>Language / Kalba</h2>
 										Select language / Pasirinkite kalbą:<br />
 										<select name="language">
-										<option value="lt.php">Lietuvių
-										<option value="en.php">English
+											<option value="lt.php">Lietuvių</option>
+											<option value="en.php">English</option>
 										</select><br />
 										<input name="go" type="submit" value=" >>" />
 									</form>
 								</center>
-								<?php
-								}
-								if ($step == 1) {
-
-									?>
+								<?php } if ($step == 1) { ?>
 								<center>
-									<form name="setup">
+									<form name="setup" action="">
 										<h2><?php echo $lang['setup']['liceanse'];?></h2>
 										<textarea name="copy" rows=15 cols=100 wrap="on" readonly="readonly"><?php include ('Skaityk.txt'); ?></textarea><br />
 										<label><input name="agree_check" type="checkbox" value="ON" /> <?php echo $lang['setup']['agree']; ?></label><br /><br />
 										<input name="agree" type="reset" value="<?php echo $lang['setup']['next'];?> >>" onClick="Check();" />
 									</form>
 								</center>
-								<?php
+								<?php } if ($step == 2) { ?>
 
-								}
-								//END
-
-
-								// HTML DALIS - Failų tikrinimas
-								if ($step == 2) {
-
-									?>
 								<h2><?php echo $lang['setup']['file_check'];?></h2>
-                        <?php echo $lang['setup']['file_check_info1'];?> <br /><br />
+								<?php echo $lang['setup']['file_check_info1'];?><br /><br />
 								<h2><?php echo $lang['setup']['file_check_legend'];?></h2>
-                        <img src="images/icons/tick.png" /> <?php echo $lang['setup']['file_check_info2'];?><br />
-                        <img src="images/icons/cross.png" /> <?php echo $lang['setup']['file_check_info3'];?><br /><br />
-                        <strong><?php echo $lang['setup']['note'];?>:</strong> <?php echo $lang['setup']['file_check_info3'];?>
-                        <table border="0">
+								<img src="images/icons/tick.png" alt="" /> <?php echo $lang['setup']['file_check_info2'];?><br />
+								<img src="images/icons/cross.png" alt="" /> <?php echo $lang['setup']['file_check_info3'];?><br /><br />
+								<strong><?php echo $lang['setup']['note'];?>:</strong>
+								<?php echo $lang['setup']['file_check_info3'];?>
+								<table border="0">
 									<tr>
 										<td class="title" valign="top" width="10%"><?php echo $lang['setup']['file'];?></td>
 										<td class="title" valign="top" width="5%"><?php echo $lang['setup']['point'];?></td>
@@ -345,13 +341,17 @@ HTML;
 												$file_error = 'Y';
 											}
 											echo "
-                        <tr>
-                                <td>" . $chmod_files[$i] . "</td>
-                                <td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "<img src=\"images/icons/tick.png\" />" : "<img src=\"images/icons/cross.png\" />") . "</td>
-                                <td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "" : "{$lang['setup']['chmod_777']} <strong>" . $chmod_files[$i] . "</strong> {$lang['setup']['chmod_777_2']} <strong>" . $teises . "</strong>") . "</td>
-                        </tr>";
+									<tr>
+											<td>" . $chmod_files[$i] . "</td>
+											<td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "<img src=\"images/icons/tick.png\" />" : "<img src=\"images/icons/cross.png\" />") . "</td>
+											<td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "" : "{$lang['setup']['chmod_777']} <strong>" . $chmod_files[$i] . "</strong> {$lang['setup']['chmod_777_2']} <strong>" . $teises . "</strong>") . "</td>
+									</tr>";
 										}
-										echo "\t\t\t</table>\n<br /><br />\n";
+										?>
+								</table>
+								<br />
+								<br />
+								<?php
 
 										if (isset($file_error) && $file_error == 'Y')
 											echo '<center><input type="reset" value="'.$lang['setup']['reload'].'" onClick="JavaScript:location.reload(true);"> <input type="reset" value="'.$lang['setup']['if_you_think_ok'].'" onClick="Go(\'3\');"><center>';
@@ -363,20 +363,18 @@ HTML;
 
 
 									// HTML DALIS - MySQL duomenų bazės nustatymai
-									if ($step == 3) {
+									if ($step == 3) { ?>
 
-										?>
 									<h2><?php echo $lang['setup']['database'];?></h2>
 									<?php echo $lang['setup']['mysql_info'];?>
-									<form name="mysql" method="post">
+									<form name="mysql" method="post" action="?step=3">
 										<table border="0" width="100%">
 											<tr>
 												<td class="title"><?php echo $lang['setup']['mysql_connect'];?></td>
 											</tr>
 											<tr>
 												<td>
-													<form name="mysql" action="?step=3" method="post">
-														<table border="0" width="80%">
+													<table border="0" width="80%">
 															<tr>
 																<td><?php echo $lang['setup']['mysql_host'];?>:</td>
 																<td><input name="host" type="text" value="<?php echo (isset($_SESSION['mysql']['host']) ? $_SESSION['mysql']['host'] : 'localhost'); ?>" /><br /></td>
@@ -385,28 +383,17 @@ HTML;
 																<td><?php echo $lang['setup']['mysql_user'];?>:</td>
 																<td><input name="user" type="text" value="<?php echo (isset($_SESSION['mysql']['user']) ? $_SESSION['mysql']['user'] : 'root'); ?>" /></td>
 															</tr>
-															<td><?php echo $lang['setup']['mysql_pass'];?>:</td>
-															<td><input name="pass" type="password" value="<?php
-
-																	echo (isset($_SESSION['mysql']['pass']) ? $_SESSION['mysql']['pass'] : '');
-
-																			  ?>"></td>
+															<tr>
+																<td><?php echo $lang['setup']['mysql_pass'];?>:</td>
+																<td><input name="pass" type="password" value="<?php echo (isset($_SESSION['mysql']['pass']) ? $_SESSION['mysql']['pass'] : ''); ?>" /></td>
 															</tr>
 															<tr>
 																<td><?php echo $lang['setup']['mysql_db'];?>:</td>
-																<td><input name="db" type="text" value="<?php
-
-																		echo (isset($_SESSION['mysql']['db']) ? $_SESSION['mysql']['db'] : 'mightmedia');
-
-																				  ?>"></td>
+																<td><input name="db" type="text" value="<?php echo (isset($_SESSION['mysql']['db']) ? $_SESSION['mysql']['db'] : 'mightmedia'); ?>" /></td>
 															</tr>
 															<tr>
 																<td><?php echo $lang['setup']['mysql_prfx'];?>:</td>
-																<td><input name="prefix" type="text" value="<?php
-
-																		echo (isset($_SESSION['mysql']['prefix']) ? $_SESSION['mysql']['prefix'] : random());
-
-																				  ?>"></td>
+																<td><input name="prefix" type="text" value="<?php echo (isset($_SESSION['mysql']['prefix']) ? $_SESSION['mysql']['prefix'] : random()); ?>" /></td>
 															</tr>
 														</table>
 												</td>
@@ -414,35 +401,19 @@ HTML;
 										</table>
 										<br />
 										<center>
-											<p id="mysql_response"><?php
-
-													echo $next_mysql;
-
-													?></p>
+											<p id="mysql_response"><?php echo $next_mysql; ?></p>
 										</center>
-											<?php
-
-											if (isset($mysql_info)) {
-
-												?>
+											<?php if (isset($mysql_info)):?>
 										<br />
 										<table border="0" width="50%">
 											<tr>
 												<td class="title"><?php echo $lang['user']['user_info'];?></td>
 											</tr>
 											<tr>
-												<td><div id="info"><?php
-
-																echo $mysql_info;
-
-																?></div></td>
+												<td><div id="info"><?php echo $mysql_info; ?></div></td>
 											</tr>
 										</table>
-											<?php
-
-											}
-
-											?>
+											<?php endif ?>
 									</form>
 									<?php
 
@@ -451,70 +422,60 @@ HTML;
 
 
 									// HTML DALIS - TVS administratoriaus sukūrimas
-									if ($step == 4) {
-
-										?>
+									if ($step == 4) { ?>
 									<h2><?php echo $lang['setup']['admin'];?></h2>
 									<?php echo $lang['setup']['admin_info'];?>
 									<br />
 									<br />
 									<br />
-									<span style="color: red"><?php
-
-											echo (isset($admin_info) ? $admin_info : '');
-
-											?></span>
+									<span style="color: red"><?php echo (isset($admin_info) ? $admin_info : ''); ?></span>
 									<br />
-									<form name="admin_form" method="post">
+									<form name="admin_form" method="post" action="">
 										<table border="0" width="70%">
 											<tr>
 												<td width="50%"><?php echo $lang['reg']['username'];?>:</td>
-												<td><input name="user" type="text" value="<?php
-
-														echo (isset($user) ? $user : '');
-
-																  ?>"></td>
+												<td><input name="user" type="text" value="<?php echo (isset($user) ? $user : ''); ?>" /></td>
 											</tr>
 											<tr>
 												<td><?php echo $lang['reg']['password'];?>:</td>
-												<td><input name="pass" type="password" value=""></td>
+												<td><input name="pass" type="password" value="" /></td>
 											</tr>
 											<tr>
 												<td><?php echo $lang['reg']['confirmpassword'];?>:</td>
-												<td><input name="pass2" type="password" value=""></td>
+												<td><input name="pass2" type="password" value="" /></td>
 											</tr>
 											<tr>
 												<td><?php echo $lang['reg']['email'];?>:</td>
-												<td><input name="email" type="text" value="<?php
-
-														echo (isset($email) ? $email : '');
-
-																  ?>"></td>
+												<td><input name="email" type="text" value="<?php echo (isset($email) ? $email : ''); ?>" /></td>
 											</tr>
 										</table>
 										<br />
-										<center><input name="acc_create" type="submit" value="<?php echo $lang['setup']['next'];?> >>"></center>
+										<center><input name="acc_create" type="submit" value="<?php echo $lang['setup']['next'];?>" /></center>
 									</form>
-									<?php
-
-									}
+									<?php }
 									//END
 
 
-									// HTML DALIS - Pabaiga
-									if ($step == 5) {
+									if ($step == 5) { ?>
+									<h2><?php echo $lang['setup']['admin_dir'];?></h2>
+									<?php echo $lang['setup']['admin_dir_info'];?>
+									<form name="admin_dir" method="post" action="">
+										<center><input name="admin_dir" type="submit" value="<?php echo $lang['setup']['next'];?>" /></center>
+									</form>
+									<?php
+									}
 
-										?>
+									// HTML DALIS - Pabaiga
+									if ($step == 6) { ?>
 									<h2><?php echo $lang['setup']['end'];?></h2>
 									<?php echo $lang['setup']['end_info'];?>
-									<form name="finish_install" method="post">
+									<form name="finish_install" method="post" action="">
 										<center><input name="finish" type="submit" value="<?php echo $lang['setup']['end'];?>" /></center>
 									</form>
 									<?php
 
 									}
 									//END
-
 
 									?>
 							</div>
