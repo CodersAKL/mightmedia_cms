@@ -71,7 +71,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 if (isset($_POST['action']) && $_POST['action'] == 'prisijungimas') {
 
 	//Jeigu prisijungimo bandymai nevirsyjo limito
-	if (!isset($_SESSION['login_error']) || $_SESSION['login_error'] <= $conf['Bandymai']) {
+	if (!isset($_SESSION['login_error']) /*|| $_SESSION['login_error'] <= $conf['Bandymai']*/) {
 
 		$strUsername = $_POST['vartotojas']; // Vartotojo vardas
 		$strPassword = koduoju($_POST['slaptazodis']); // Slaptazodis
