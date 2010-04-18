@@ -20,7 +20,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 		if (sizeof($q) > 0) {
 			$text .= "<b>{$lang['new']['forum']}:</b><br/>";
 			foreach ($q as $row) {
-				$text .= "\t <img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='".url("?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row['id'] . ";s," . $row['tid'] ). ";p,".((int)($row['viso']/15-0.1)*15)."#end'>" . trimlink(input($row['pav']), 20) . "</a><br />\n";
+				$text .= "\t <img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='".url("?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row['id'] . ";s," . $row['tid'] . ";p,".((int)($row['viso']/15-0.1)*15))."#end'>" . trimlink(input($row['pav']), 20) . "</a><br />\n";
 			}
 		}
 	}
