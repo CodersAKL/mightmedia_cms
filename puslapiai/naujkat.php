@@ -49,7 +49,7 @@ $sql = mysql_query1("
 			FROM `" . LENTELES_PRIESAGA . "naujienos`
 			WHERE `rodoma`= 'TAIP' AND `kategorija`=$k 
 			AND `lang` = ".escape(lang())."
-			ORDER BY `data` DESC
+			ORDER BY `sticky` DESC, `data` DESC
 			LIMIT {$p},{$limit}", 86400);
 $viso = count($sql);
 if ($viso > 0) {

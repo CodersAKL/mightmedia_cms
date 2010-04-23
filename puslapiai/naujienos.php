@@ -34,7 +34,7 @@ if ($kid == 0) {
 			FROM `" . LENTELES_PRIESAGA . "naujienos`
 			WHERE `rodoma`= 'TAIP'
 			AND `lang` = ".escape(lang())."
-			ORDER BY `data` DESC
+			ORDER BY `sticky` DESC,`data` DESC
 			LIMIT {$p},{$limit}", 100);
 
 	if (sizeof($sql) > 0) {

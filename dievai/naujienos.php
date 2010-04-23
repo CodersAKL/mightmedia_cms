@@ -91,7 +91,7 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['edit']) {
 	$kategorija = (int)$_POST['kategorija'];
 	$pavadinimas = strip_tags($_POST['pav']);
 	$id = ceil((int)$_POST['news_id']);
-
+  $sticky = (isset($_POST['sticky'])? 1 : 0);
 	if ($komentaras == 'ne') {
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid=" . escape((int)$_GET['id']) . " AND kid=" . escape($id));
 	}
@@ -101,7 +101,8 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['edit']) {
 			`kategorija` = " . escape($kategorija) . ",
 			`naujiena` = " . escape($naujiena) . ",
 			`daugiau` = " . escape($placiau) . ",
-			`kom` = " . escape($komentaras) . "
+			`kom` = " . escape($komentaras) . ",
+			`sticky` = " . escape($sticky) . " 
 			WHERE `id`=" . escape($id) . ";
 			");
 	msg($lang['system']['done'], $lang['user']['edit_updated']);
@@ -118,12 +119,12 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_crea
 	$komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
 	$pavadinimas = strip_tags($_POST['pav']);
 	$kategorija = (int)$_POST['kategorija'];
-
+  $sticky = (isset($_POST['sticky'])? 1 : 0);
 	if (empty($naujiena) || empty($pavadinimas)) {
 		$error = $lang['admin']['news_required'];
 	}
 	if (!isset($error)) {
-		$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija, rodoma, lang) VALUES (" . escape($pavadinimas) . ", " . escape($naujiena) . ", " . escape($placiau) . ",  '" . time() . "', '" . $_SESSION['username'] . "', " . escape($komentaras) . ", " . escape($kategorija) . ", 'TAIP', ".escape(lang()).")");
+		$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija, rodoma, lang, sticky) VALUES (" . escape($pavadinimas) . ", " . escape($naujiena) . ", " . escape($placiau) . ",  '" . time() . "', '" . $_SESSION['username'] . "', " . escape($komentaras) . ", " . escape($kategorija) . ", 'TAIP', ".escape(lang()).", ".escape($sticky).")");
 		if(isset($_POST['letter'])) {
 
 			//TODO:Reikalingi email templeytai
@@ -159,9 +160,9 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_crea
 
 }
 
-$sql_news = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "naujienos` WHERE `lang` = ".escape(lang())." ORDER BY ID DESC");
+$sql_news = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "naujienos` WHERE `lang` = ".escape(lang())." AND `rodoma`='TAIP' ORDER BY sticky DESC, ID DESC");
 
-
+//print_r($sql_news);
 if (isset($_GET['v'])) {
 	include_once (ROOT."priedai/class.php");
 	$bla = new forma();
@@ -209,9 +210,9 @@ if (isset($_GET['v'])) {
 			$lang['admin']['komentarai'] => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input", "class" => "input"),
 				"{$lang['admin']['news_category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')),
 				//more
-				"<a>more...</a>"=>array("type" => "string"),
-					(isset($conf['puslapiai']['naujienlaiskiai.php']['id'])?$lang['news']['newsletter?']:'') => isset($conf['puslapiai']['naujienlaiskiai.php']['id'])?array("type" => "checkbox", "name" => "letter"):'',
-					$lang['admin']['news_sticky'] => array("type" => "checkbox", "name" => "sticky"),
+				"<a href=\"javascript:rodyk('more')\">{$lang['admin']['news_moreoptions']}</a>"=>array("type" => "string", "value" =>"<div id=\"more\" style=\"display: none;\">".((!isset($extra) && isset($conf['puslapiai']['naujienlaiskiai.php']['id']))?$lang['news']['newsletter?']." <input type=\"checkbox\" name=\"letter\" /><br />":'')." ".$lang['admin']['news_sticky']." <input type=\"checkbox\" name=\"sticky\" ".((isset($extra) && $extra['sticky'] == 1)?'checked':'')." /></div>"),
+					//(isset($conf['puslapiai']['naujienlaiskiai.php']['id'])?$lang['news']['newsletter?']:'') => isset($conf['puslapiai']['naujienlaiskiai.php']['id'])?array("type" => "checkbox", "name" => "letter"):'',
+					//$lang['admin']['news_sticky'] => array("type" => "checkbox", "name" => "sticky"),
 					//more end;
 			"{$lang['admin']['news_text']}:" => array("type" => "string", "value" => editor('jquery', 'standartinis', array('naujiena' => $lang['admin']['news_preface']), array('naujiena' => (isset($extra) ? $extra['naujiena'].(empty($extra['daugiau'])?'':"\n===page===\n".$extra['daugiau']) : $lang['admin']['news_preface'])))),
 			(isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create'])
@@ -220,10 +221,10 @@ if (isset($_GET['v'])) {
 		if (isset($extra)) {
 			$naujiena[''] = array("type" => "hidden", "name" => "news_id", "value" => (isset($extra) ? input($extra['id']) : ''));
 		}
-		if(!isset($extra) && isset($conf['puslapiai']['naujienlaiskiai.php']['id'])) {
+		/*if(!isset($extra) && isset($conf['puslapiai']['naujienlaiskiai.php']['id'])) {
 			$naujiena[$lang['news']['newsletter?']] = array("type" => "checkbox", "name" => "letter");
-		}
-		lentele($lang['admin']['news_create'], $bla->form($naujiena));
+		}*/
+		lentele((!isset($extra)?$lang['admin']['news_create']:$lang['admin']['news_edit']), $bla->form($naujiena));
 
 	} elseif ($_GET['v'] == 6) {
 
