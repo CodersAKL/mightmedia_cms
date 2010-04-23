@@ -10,7 +10,7 @@
  * @$Date$
  **/
 function cat($kieno,$cat_id = 0, $space= 1, $x ='') {
-	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = ".escape($kieno)." and `path` = " . escape($cat_id). " AND `lang` = ".escpae(lang()));
+	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = ".escape($kieno)." and `path` = " . escape($cat_id). " AND `lang` = ".escape(lang()));
 
 	foreach($sql as $select) {
 		//echo $select['pavadinimas'];

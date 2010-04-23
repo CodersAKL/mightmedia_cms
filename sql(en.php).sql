@@ -316,6 +316,7 @@ CREATE TABLE `naujienos` (
   `autorius` varchar(25) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `kom` set('taip','ne') COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'taip',
   `rodoma` varchar(4) COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'NE',
+  `sticky` smallint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `lang` (`lang`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=2 ;

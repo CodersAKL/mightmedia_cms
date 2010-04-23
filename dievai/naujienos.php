@@ -207,8 +207,12 @@ if (isset($_GET['v'])) {
 			"Form" => array("action" => url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ""), "method" => "post", "name" => "reg"),
 			"{$lang['admin']['news_name']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pavadinimas'] : ''), "name" => "pav", "class" => "input"),
 			$lang['admin']['komentarai'] => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input", "class" => "input"),
-			(isset($conf['puslapiai']['naujienlaiskiai.php']['id'])?$lang['news']['newsletter?']:'') => isset($conf['puslapiai']['naujienlaiskiai.php']['id'])?array("type" => "checkbox", "name" => "letter"):'',
-			"{$lang['admin']['news_category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')),
+				"{$lang['admin']['news_category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')),
+				//more
+				"<a>more...</a>"=>array("type" => "string"),
+					(isset($conf['puslapiai']['naujienlaiskiai.php']['id'])?$lang['news']['newsletter?']:'') => isset($conf['puslapiai']['naujienlaiskiai.php']['id'])?array("type" => "checkbox", "name" => "letter"):'',
+					$lang['admin']['news_sticky'] => array("type" => "checkbox", "name" => "sticky"),
+					//more end;
 			"{$lang['admin']['news_text']}:" => array("type" => "string", "value" => editor('jquery', 'standartinis', array('naujiena' => $lang['admin']['news_preface']), array('naujiena' => (isset($extra) ? $extra['naujiena'].(empty($extra['daugiau'])?'':"\n===page===\n".$extra['daugiau']) : $lang['admin']['news_preface'])))),
 			(isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create'])
 		);

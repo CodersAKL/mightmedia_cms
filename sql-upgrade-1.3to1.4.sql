@@ -11,6 +11,7 @@ ALTER TABLE `d_straipsniai` ADD `lang` VARCHAR( 3 ) CHARACTER SET utf8 COLLATE u
 ALTER TABLE `d_forumai` ADD `lang` VARCHAR( 3 ) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language' AFTER `pav` , ADD INDEX ( `lang` );
 ALTER TABLE `duk` ADD `lang` VARCHAR( 3 ) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language' AFTER `atsakymas` , ADD INDEX ( `lang` );
 ALTER TABLE `balsavimas` ADD `lang` VARCHAR( 3 ) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language' AFTER `penktas` , ADD INDEX ( `lang` );
+ALTER TABLE `naujienos` ADD `sticky` SMALLINT( 1 ) NOT NULL DEFAULT '0' AFTER `rodoma`; 
 CREATE TABLE `newsgetters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(250) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,

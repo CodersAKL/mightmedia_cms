@@ -294,6 +294,7 @@ $lang['admin']['news_created'] = 'News created';
 $lang['admin']['news_required'] = 'All field required';
 $lang['admin']['news_author'] = 'Author';
 $lang['admin']['news_date'] = 'Date';
+$lang['admin']['news_sticky'] = 'Always on top?';
 //user admin
 $lang['admin']['user_list'] = 'User list';
 $lang['admin']['user_find'] = 'Find user';

@@ -281,6 +281,7 @@ $lang['admin']['news_created'] = 'Naujiena sukurta';
 $lang['admin']['news_required'] = 'Užpildykite visus laukelius';
 $lang['admin']['news_author'] = 'Autorius';
 $lang['admin']['news_date'] = 'Data';
+$lang['admin']['news_sticky'] = 'Visada viršuje?';
 $lang['admin']['user_list'] = 'Narių sąrašas';
 $lang['admin']['user_find'] = 'Rasti narį';
 $lang['admin']['user_name'] = 'Nario vardas';
