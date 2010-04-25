@@ -36,6 +36,7 @@ if (isset($_SESSION['mod']) && !empty($_SESSION['mod'])) {
 			klaida("{$lang['system']['error']}", "{$lang['system']['nopage']}");
 		}
 	}
-}
+} else 
+    klaida("{$lang['system']['error']}", "{$lang['system']['nopage']}");
 
 ?>
