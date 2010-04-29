@@ -71,7 +71,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'siusti') {
           klaida($lang['system']['sorry'], $lang['system']['error'].":".$mail->ErrorInfo);
 			
 			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `slaptas` = " . escape($slaptas) . " WHERE nick=" . escape($sql['nick']) . " LIMIT 1");
-			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['pass']['remain']}: Nick: " . $sql['nick'] . " Emailas: " . input($sql['email'])) . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
+			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['pass']['remain']}: Nick: " . $sql['nick'] . " Email: " . input($sql['email'])) . ", '" . time() . "', INET_ATON(" . escape(getip()) . "))");
 
 			echo "<img src='priedai/human.php' style='display:none' />";
 		}

@@ -23,7 +23,7 @@ if (isset($sql['klausimas'])) {
 		$userid = $_SESSION['id'] . ";";
 	} else {
 		$userid = "";
-		$narys = $_SERVER['REMOTE_ADDR'];
+		$narys = getip();
 	}
 
 	$ipasai = explode(";", $sql['ips']);
@@ -62,7 +62,7 @@ if (isset($sql['klausimas'])) {
 	}
 
 
-	if (!in_array($_SERVER['REMOTE_ADDR'], $ipasai) && !in_array($narys, $nariai)) {
+	if (!in_array(getip(), $ipasai) && !in_array($narys, $nariai)) {
 		$text = '<center><b>' . $sql['klausimas'] . '</b></center><br/>
 			<form name="vote" action="" method="post">';
 		for ($i = 1; $i <= 5; $i++) {
@@ -95,7 +95,7 @@ if (isset($sql['klausimas'])) {
 					$atsakymas = $_POST['balsas'] . ";" . ($ats[5][1] + 1);
 				}
 
-				$result2 = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "balsavimas` SET $stulp = " . escape($atsakymas) . ", ips=" . escape($sql['ips'] . $_SERVER['REMOTE_ADDR'] . ";") . ", nariai='" . $sql['nariai'] . $userid . "' WHERE `id`=" . escape($sql['id']));
+				$result2 = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "balsavimas` SET $stulp = " . escape($atsakymas) . ", ips=" . escape($sql['ips'] .getip(). ";") . ", nariai='" . $sql['nariai'] . $userid . "' WHERE `id`=" . escape($sql['id']));
 				header("Location: " . $_SERVER['PHP_SELF'] . "");
 			}
 

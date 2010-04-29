@@ -19,7 +19,7 @@ define('ROOTAS', dirname(realpath(__file__)) . '/../');
 if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['QUERY_STRING']) || (isset($_GET['id']) && preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_GET['id']))) {
 	$ip = getip();
 	$forwarded = (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : 'N/A');
-	$remoteaddress = $_SERVER["REMOTE_ADDR"];
+	$remoteaddress = getip();
 	ban();
 }
 if (!empty($_POST)) {
@@ -1221,7 +1221,7 @@ function admin_login() {
 		header("WWW-Authenticate: Basic realm='AdminAccess'");
 		header("HTTP/1.0 401 Unauthorized");
 		header("status: 401 Unauthorized");
-		mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("ADMIN pultas - Klaida loginantis: User: " . (isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : "N/A") . " Pass: " . (isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : "N/A")) . ",NOW(),INET_ATON(" . escape($_SERVER['REMOTE_ADDR']) . "));");
+		mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("ADMIN pultas - Klaida loginantis: User: " . (isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : "N/A") . " Pass: " . (isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : "N/A")) . ",NOW(),INET_ATON(" . escape(getip()) . "));");
 		die(klaida("{$lang['system']['forbidden']}!", "{$lang['system']['notadmin']}"));
 	} else {
 		unset($admin_name, $admin_pass);
