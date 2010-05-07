@@ -1,0 +1,130 @@
+/* RESET */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+	margin:0;
+	padding:0;
+	font:13px/1.231 arial,helvetica,clean,sans-serif;
+}
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+fieldset,img {
+	border:0;
+}
+address,caption,cite,code,dfn,em,strong,th,var {
+	font-style:normal;
+	font-weight:normal;
+}
+ol,ul {
+	list-style:none;
+}
+caption,th {
+	text-align:left;
+}
+h1,h2,h3,h4,h5,h6 {
+	font-size:100%;
+	font-weight:normal;
+}
+q:before,q:after {
+	content:'';
+}
+abbr,acronym { border:0;
+}
+/* RESET END */
+
+
+#admin_main {
+}
+#admin_header {
+	background: #85866D url('../images/header_bg.png') repeat-x;
+	height: 135px;
+	padding:3px 40px 7px;
+}
+#admin_logo {
+	clear:both;
+	display:block;
+	margin-left:-25px;
+	float: left;
+}
+
+
+#controls {
+	position: absolute;
+	top: 22px;
+	right: 40px;
+}
+#admin_lang,#admin_user {
+	border-width: 0px 1px 1px 1px;
+	border-color: #8A8F61;
+	border-style: solid;
+	float: right;
+	cursor: pointer;
+	padding: 3px 20px 3px 5px;
+	font-size: 12px;
+	margin:0 20px 0;
+}
+#admin_lang img,#admin_user img {
+	border: 1px solid white;
+	vertical-align: middle;
+	margin-right: 5px
+}
+#admin_lang.down,#admin_user.down {
+	background:#B3B593 url('../images/down.png') right center no-repeat;
+}
+#admin_lang.up,#admin_user.up {
+	background:#B3B593 url('../images/up.png') 99% 50% no-repeat;
+}
+#admin_user img {
+	border: none;
+}
+#admin_user {
+	right: 40px;
+}
+
+/* SELECT COLOR */
+#select_color {
+	float: left;
+}
+#select_color div {
+	float: left;
+	margin: 2px;
+}
+#select_color .color {
+	border: 1px solid white;
+	width: 18px;
+	height: 12px;
+	cursor: pointer;
+	line-height: 12px;
+}
+.color.c1 {
+	background-color: #85866D;
+}
+.color.c2 {
+	background-color: #FE760C;
+}
+.color.c3 {
+	background-color: #FFFFFF;
+}
+.color.c4 {
+	background-color: #333333;
+}
+
+/* Horizontal menu */
+#admin_hmenu {
+	height: 49px;
+	background: url('../images/hmenu_bg.png') repeat-x;
+	padding:0 40px;
+}
+#admin_hmenu ul {
+	/*margin: auto;*/
+}
+#admin_hmenu ul li {
+	min-width: 50px;
+	float: left;
+}
+#admin_hmenu ul li a {
+	display:inline-block;
+	height:43px;
+	line-height:43px;
+	padding: 0 10px;
+}
