@@ -78,8 +78,11 @@ foreach($glob as $id => $file) {
 		//sub punktai
 $(document).ready(function() {
 $(\'.btns a\').each(function(id,obj){
-$("div#veiksmai").append(\'<li><a href="\'+obj.href+\'">\'+obj.text+\'</a></li>\');
-});});</script></ul>':"")."</li>";
+$("div#veiksmai").append(\'<li><a href="\'+obj.href+\'">\'+$(this).text()+\'</a></li>\');
+
+});
+
+});</script></ul>':"")."</li>";
 
 	}
 }
