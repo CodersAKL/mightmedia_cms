@@ -13,7 +13,7 @@
 
 class forma {
 	function table($pav, $text) {
-		return "\n<table width=\"100%\" border=\"0\">\n\t<tr>\n\t\t<td><fieldset style=\"border:silver solid 1px\"><legend style=\"color: silver\">$pav</legend>$text</fieldset></td>\n\t</tr>\n</table>\n";
+		return "\n<table width=\"\" border=\"0\">\n\t<tr>\n\t\t<td><fieldset style=\"border:silver solid 1px\"><legend style=\"color: silver\">$pav</legend>$text</fieldset></td>\n\t</tr>\n</table>\n";
 	}
 	function form($inputs, $pavadinimas = '') {
 		if (is_array($inputs)) {
@@ -21,7 +21,7 @@ class forma {
 			if (isset($inputs['Form'])) {
 				$return .= "\n<form" . (isset($inputs['Form']['id']) ? " id=\"" . $inputs['Form']['id'] . "\"" : "") . "" . (isset($inputs['Form']['name']) ? " name=\"" . $inputs['Form']['name'] . "\"" : "") . "" . (isset($inputs['Form']['method']) ? " method=\"" . $inputs['Form']['method'] . "\"" : "") . "" . (isset($inputs['Form']['action']) ? " action=\"" . $inputs['Form']['action'] . "\"" : "") . "" . (isset($inputs['Form']['enctype']) ? " enctype=\"" . $inputs['Form']['enctype'] . "\"" : "") . "" . (isset($inputs['Form']['class']) ? " class=\"" . $inputs['Form']['class'] . "\"" : "") . "" . (isset($inputs['Form']['onSubmit']) ? " onSubmit=\"" . $inputs['Form']['onSubmit'] . "\"" : "") . ">\n";
 			}
-			$return .= "<table border=\"0\" width=\"100%\" align=\"center\" cellpadding=\"3\" cellspacing=\"0\">";
+			$return .= "<table border=\"0\" width=\"\" align=\"center\" cellpadding=\"3\" cellspacing=\"0\">";
 			foreach ($inputs as $pav => $type) {
 				if (!empty($type) && $pav != 'Form') {
 					$return .= "\n\t<tr>\n\t\t<td align=\"right\" >" . $pav . "</td>";
