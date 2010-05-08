@@ -463,6 +463,12 @@ ul#tree li{
 	margin : 3px;
 	background-color : #dddddd;
 }
+li.drag_block:hover{
+  background-color : #F2F2F2;
+  border: 1px solid #666;
+  padding: 2px;
+  
+}
 li.drag_block > img {
 	cursor : move;
 	vertical-align : middle;

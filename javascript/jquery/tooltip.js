@@ -43,5 +43,5 @@ function simple_tooltip(target_items, name){
 }
 
 $(document).ready(function(){
-	simple_tooltip("a[title],img[title],div[title],span[title]","tooltip");
+	simple_tooltip("a[title],img[title],div[title],span[title],button[title]", "tooltip");
 });
