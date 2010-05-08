@@ -82,10 +82,10 @@ elseif (/*((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['ed
 //Išsaugojam redaguojamą naujieną
 elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['edit']) {
 	$naujiena = explode('===page===',$_POST['naujiena']);
-	$placiau =  explode('===page===',$_POST['naujiena']);
+	//$placiau =  explode('===page===',$_POST['naujiena']);
 
 	$naujiena = $naujiena[0];
-	$placiau = empty($placiau[1])?'':$placiau[1];
+	$placiau = empty($naujiena[1])?'':$naujiena[1];
 
 	$komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
 	$kategorija = (int)$_POST['kategorija'];
@@ -111,10 +111,10 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['edit']) {
 //Išsaugojam naujieną
 elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_create']) {
 	$naujiena = explode('===page===',$_POST['naujiena']);
-	$placiau =  explode('===page===',$_POST['naujiena']);
+	//$placiau =  explode('===page===',$_POST['naujiena']);
 
 	$naujiena = $naujiena[0];
-	$placiau = empty($placiau[1])?'':$placiau[1];
+	$placiau = empty($naujiena[1])?'':$naujiena[1];
 
 	$komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
 	$pavadinimas = strip_tags($_POST['pav']);

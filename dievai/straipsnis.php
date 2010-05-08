@@ -14,7 +14,7 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 unset($text, $extra);
-if(!isset($_GET['v'])) $_GET['v'] = 7;
+if(count($_GET) < 3) $_GET['v'] = 7;
 
 $buttons = "
 <div class=\"btns\">
@@ -64,8 +64,11 @@ if (isset($url['t'])) {
 	//redirect("?id,".$_GET['id'].";a,".$_GET['a'],"header");
 } elseif (isset($_POST['action']) && isset($_POST['str']) && $_POST['action'] == $lang['admin']['edit']) {
 	
-	$apr = $_POST['apr'];
-	$str = $_POST['str'];
+	/*$apr = $_POST['apr'];
+	$str = $_POST['str'];*/
+	$straipsnis = explode('===page===',$_POST['str']);
+	$apr = $straipsnis[0];
+	$str = empty($straipsnis[1])?'':$straipsnis[1];
 	$komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'taip' ? 'taip' : 'ne');
 	$rodoma = (isset($_POST['rodoma']) && $_POST['rodoma'] == 'TAIP' ? 'TAIP' : 'NE');
 	$kategorija = (int)$_POST['kategorija'];
@@ -93,8 +96,12 @@ if (isset($url['t'])) {
 
 } elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['article_create']) {
 	
-	$apr = $_POST['apr'];
-	$str = $_POST['str'];
+	/*$apr = $_POST['apr'];
+	$str = $_POST['str'];*/
+	$straipsnis = explode('===page===',$_POST['str']);
+	$apr = $straipsnis[0];
+	$str = empty($straipsnis[1])?'':$straipsnis[1];
+	
 	$komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'taip' ? 'taip' : 'ne');
 	$kategorija = (int)$_POST['kategorija'];
 	$pavadinimas = strip_tags($_POST['pav']);
@@ -183,24 +190,29 @@ if ($_GET['v'] == 4) {
 				} );
 			} );
 		</script>';
-			if(!empty($info) && count($info) > 0)
+			if(!empty($info) && count($info))
         lentele($lang['admin']['article_edit'], "<form id=\"arch\" method=\"post\"><div id=\"news\">".$table->render($info)."</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
 	
 }
 
 if ($_GET['v'] == 7 || isset($url['h'])) {
-	if ($i == 1) {
+	//if ($i == 1) {
 		$ar = array("TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}");
 		$straipsnis = array("Form" => array("action" => url("?id," . $_GET['id'] . ";a," . $_GET['a']), "method" => "post", "name" => "reg"), "{$lang['admin']['article_title']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pav'] : ''), "name" => "pav", "class" => "input"), "" => array("type" => "hidden", "name" => "idas", "value" => (isset($extra['id']) ? input($extra['id']) : '')), "{$lang['admin']['article_comments']}:" => array("type" => "select", "value" => array('taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no']), "name" => "kom", "class" => "input", "class" => "input"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => (isset($extra['kat']) ?
-			input($extra['kat']) : '')), "{$lang['admin']['article_shown']}:" => array("type" => "select", "value" => $ar, "name" => "rodoma", "class" => "input", "class" => "input", "selected" => (isset($extra['rodoma']) ? input($extra['rodoma']) : '')), "{$lang['admin']['article']}:" => array("type" => "string", "value" => editor('spaw', 'standartinis', array('apr' => 'Straipsnio įžanga', 'str' => 'straipsnis'), array('apr' => (isset($extra)) ? $extra['t_text'] : $lang['admin']['article_preface'], 'str' => (isset($extra)) ? $extra['f_text'] : $lang['admin']['article']))), (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['article_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['article_create']));
+			input($extra['kat']) : '')), "{$lang['admin']['article_shown']}:" => array("type" => "select", "value" => $ar, "name" => "rodoma", "class" => "input", "class" => "input", "selected" => (isset($extra['rodoma']) ? input($extra['rodoma']) : '')), "{$lang['admin']['article']}:" => array("type" => "string", "value" => 
+			
+			//editor('spaw', 'standartinis', array('apr' => 'Straipsnio įžanga', 'str' => 'straipsnis'), array('apr' => (isset($extra)) ? $extra['t_text'] : $lang['admin']['article_preface'], 'str' => (isset($extra)) ? $extra['f_text'] : $lang['admin']['article']))
+editor('jquery', 'standartinis', array('str' => $lang['admin']['article']), array('str' => (isset($extra) ? $extra['t_text'].(empty($extra['f_text'])?'':"\n===page===\n".$extra['f_text']) : $lang['admin']['article'])))
+			
+			), (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['article_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['article_create']));
 		if (isset($extra['id'])) {
 			$naujiena[''] = array("type" => "text", "name" => "idas", "value" => (isset($extra['id']) ? input($extra['id']) : ''));
 		}
 
 		lentele($lang['admin']['article_create'], $bla->form($straipsnis));
-	} else {
+	/*} else {
 		klaida("{$lang['system']['warning']}", "{$lang['system']['nocategories']}.");
-	}
+	}*/
 } elseif ($_GET['v'] == 6) {
 
 	$q = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE rodoma='NE'");
