@@ -161,7 +161,7 @@ if (empty($_GET['ajax'])):?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<?php echo adresas(); ?>"></base>
+    <base href="<?php echo adresas(); ?>" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title><?php echo input(strip_tags($conf['Pavadinimas']) . ' - Admin')?></title>
 		<meta name="description" content="" />
@@ -180,7 +180,7 @@ if (empty($_GET['ajax'])):?>
 		<!--script type="text/javascript" src="js/custom.js"></script-->
 		<script src="js/jquery.cookie.js" type="text/javascript"></script>
 		<script src="js/jquery.treeview.js" type="text/javascript"></script>
-		<script src="js/jquery.scrollTo.js" type="text/javascript"></script>
+		<!--script src="js/jquery.scrollTo.js" type="text/javascript"></script-->
 		<script type="text/javascript" src="<?php echo ROOT; ?>javascript/jquery/jquery.tablesorter.js"></script>
 		<script type="text/javascript" src="<?php echo ROOT; ?>javascript/jquery/tooltip.js"></script>
 		<script type="text/javascript" src="<?php echo ROOT; ?>javascript/pagrindinis.js"></script>
@@ -241,13 +241,18 @@ if (empty($_GET['ajax'])):?>
 			  </div>
 		  </div>
       <div id="content">
-        <div id="left">
-          <div class="search">
+      <div id="top">
+      <div class="search">
             <form method="post" action="<?php echo url('?id,999;m,4');?>">
 						<input name="vis" value="vis" type="hidden" />
 						<input type="text" name="s"  value="" />
 					</form>
+          </div>  <div class="msg" id="version_check">
+            <img src="images/icons/lightbulb.png" alt="" />...
           </div>
+       </div>
+<div style="clear: both;"></div>
+        <div id="left">          
           <div class="buttons">
             <button onclick="window.location='<?php echo url('?id,999');?>'"><img src="images/icons/home.png" alt="" /></button>
             <button title="<?php echo $lang['admin']['antivirus']; ?>" onclick="window.location='<?php echo url('?id,999;m,3');?>'"><img src="images/icons/product-1.png" alt="" /></button>
@@ -260,12 +265,11 @@ if (empty($_GET['ajax'])):?>
             </ul>
           </div>
         </div>
+                
+
         <div id="right">
-          <div class="msg" id="version_check">
-            <img src="images/icons/lightbulb.png" alt="" />...
-          </div>
           				<script type="text/javascript">
-										$.getJSON('<?php echo $update_url; ?>');
+										//$.getJSON('<?php echo $update_url; ?>');
 										/*function versija(data) {
 											$('#version_check').html(
 											'<img src="images/icons/lightbulb.png" alt="" /><b>'+data.title+'</b> '+
@@ -357,7 +361,7 @@ if (empty($_GET['ajax'])):?>
             <div class="links"><a href="http://mightmedia.lt">MightMedia</a> | <a href="http://mightmedia.lt/Kontaktai"><?php echo $lang['pages']['kontaktas.php'];?></a> | <a href="http://www.gnu.org/licenses/gpl.html">GNU</a></div>MightMedia TVS - tai viena pirmuju Lietuvoje atviro kodo turinio valdymo sistema, sukurta CodeRS komandos.</div>
             <div class="images"><img src="images/mysql.png" alt="" /><img src="images/php.png" alt="" /><img src="images/gnu.png" alt="" /></div>
          </div>
-          
+          </div>
       </div>
 	  </div>
   </body>

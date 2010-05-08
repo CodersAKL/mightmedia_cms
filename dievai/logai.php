@@ -66,7 +66,7 @@ if (!empty($url['t'])) {
                 $lang['admin']['logs_log'] => "<a href=\"" . url("?id,{$_GET['id']};a,{$_GET['a']};v," . $row['id'] . "") . "\" title=\"
 						<br/>
 						{$lang['admin']['logs_date']}: <b>" . date('Y-m-d H:i:s', $row['time']) . "</b><br/>
-						IP: <b>" . $row['ip1'] . "</b><hr/>
+						IP: <b>" . $row['ip1'] . "</b><br/>
 						{$lang['admin']['logs_log']}: <i>" . wrap1(input($row['action']), 50) . "</i><br/>
 						\">" . trimlink(input(strip_tags($row['action'])), 50) . "</a>", //"Veiksmas"=>trimlink(input($row['action']),50),
                 //"IP"=>$row['ip1'],

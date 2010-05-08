@@ -42,7 +42,7 @@ lentele($lang['admin']['poll'], $buttons);
 //}
 if (isset($url['v']) && (int)$url['v'] == 1) {
 	$text = "
-<form name='b_create' action='?id," . $_GET['id'] . ";a," . $_GET['a'] . "' method='post'>
+<form name='b_create' action='".url("?id," . $_GET['id'] . ";a," . $_GET['a'])."' method='post'>
 	<table border=0>
 		<tr>
 			<td>{$lang['admin']['poll_question']}:</td>
@@ -92,7 +92,7 @@ if (isset($_POST['b_delete']) && $_POST['b_delete'] == $lang['admin']['edit']) {
 
 
 	$edit = "
-<form name='b_edit' action='?id," . $_GET['id'] . ";a," . $_GET['a'] . ";n," . $_POST['id'] . "' method='post'>	
+<form name='b_edit' action='".url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ";n," . $_POST['id']) . "' method='post'>	
 	Ar rodyti apklausą?
 	<select size=1 name='ar'>
 		<option name='ar' value='TAIP'>{$lang['admin']['yes']}</option>
@@ -113,7 +113,7 @@ if (isset($url['v']) &&(int)$url['v'] == 2) {
 	$sql2 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "balsavimas` WHERE `lang` = ".escape(lang()));
 	if (sizeof($sql2) > 0) {
 		$text = "
-	<form name='b_delete' action='?id," . $_GET['id'] . ";a," . $_GET['a'] . "' method='post'>
+	<form name='b_delete' action='".url("?id," . $_GET['id'] . ";a," . $_GET['a']) . "' method='post'>
 		<select size='1' name='id'>
 	";
 
