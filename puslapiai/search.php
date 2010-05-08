@@ -51,7 +51,7 @@ $search = array(
 );
 
 //Nupiešiam paieškos formą
-include_once ("priedai/class.php");
+include_once (ROOT."priedai/class.php");
 $bla = new forma();
 lentele($lang['search']['search'], $bla->form($search));
 $i = 0;
@@ -84,7 +84,7 @@ if (isset($_POST['s'])) {
 			}
 		}
 		if ((isset($_POST['frm']) || isset($_POST['vis'])) && isset($conf['puslapiai']['frm.php']['id'])) {
-			$sqlas5 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `zinute` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `lang` = ".escape(lang())." LIMIT 0,100");
+			$sqlas5 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `zinute` LIKE " . escape("%" . $_POST['s'] . "%") . " LIMIT 0,100");
 
 			$text = "";
 			if (sizeof($sqlas5) > 0) {

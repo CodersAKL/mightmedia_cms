@@ -13,19 +13,20 @@ function lentele_l($pavadinimas, $tekstas, $label = false) {
 }
 
 function lentele($pavadinimas, $tekstas, $label = false) {
-	echo '<div id="postedit" class="clearfix">
-					<h2 class="ico_mug">'.$pavadinimas.'</h2>
+	echo '
+					<h1>'.$pavadinimas.'</h1>
 								'.$tekstas.'
-				</div><br />';
+				';
 }
 
+function klaida($pavadinimas, $tekstas, $label = false) {
 
-function klaida($pavadinimas,$tekstas,$label=false) {
-	echo '<div id="fail" class="info_div"><span class="ico_cancel">'.$tekstas.'</span></div>';
+	echo "<div class=\"error\"><img src=\"../images/icons/emblem-important.png\" title=\"$pavadinimas\" align=\"left\" hspace=\"10\" alt=\"\"/>&nbsp;&nbsp;$tekstas</div>";
 	
 }
-function msg($pavadinimas,$tekstas,$label=false) {
-	echo '<div id="success" class="info_div"><span class="ico_success">'.$tekstas.'</span></div>';
+function msg($pavadinimas, $tekstas, $label = false) {
+
+		echo "<div class=\"success\"><img src=\"../images/icons/tick.png\" title=\"$pavadinimas\" align=\"left\" hspace=\"10\" alt=\"\"/>&nbsp;&nbsp;$tekstas</div>";
 	
 }
 function ofunc() {

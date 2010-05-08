@@ -98,6 +98,7 @@ ul.sf-menu li li li.sfHover ul {
 	text-indent: 	-999em;
 	overflow:		hidden;
 	background:		url('../img/arrows-ffffff.png') no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only */
+	
 }
 a > .sf-sub-indicator {  /* give all except IE6 the correct values */
 	top:			1.05em;
@@ -128,10 +129,10 @@ li.sfHover > a > .sf-sub-indicator {
 .sf-shadow ul {
 	background:	url('../img/shadows.png') no-repeat bottom right;
 	padding: 0 8px 9px 0;
-	-moz-border-radius-bottomleft: 17px;
+	/*-moz-border-radius-bottomleft: 17px;
 	-moz-border-radius-topright: 17px;
 	-webkit-border-top-right-radius: 17px;
-	-webkit-border-bottom-left-radius: 17px;
+	-webkit-border-bottom-left-radius: 17px;*/
 }
 .sf-shadow ul.sf-shadow-off {
 	background: transparent;

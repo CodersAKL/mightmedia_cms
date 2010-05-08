@@ -182,7 +182,8 @@ if ($_GET['v'] == 4) {
 				} );
 			} );
 		</script>';
-			lentele($lang['admin']['article_edit'], "<form id=\"arch\" method=\"post\"><div id=\"news\">".$table->render($info)."</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
+			if(count($info) > 0)
+        lentele($lang['admin']['article_edit'], "<form id=\"arch\" method=\"post\"><div id=\"news\">".$table->render($info)."</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
 	
 }
 

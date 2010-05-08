@@ -425,16 +425,19 @@ function url($str) {
 		$start = explode(',', $linkai[0]);
 		$linkai[0] = '';
 		if($conf['F_urls'] != '0') {
+      //žodinis linkas
 			$url_title = !empty($conf['titles'][$start[1]]) ? $conf['titles'][$start[1]] : '';
-			$url_title = ROOT.str_replace(' ', '_', $url_title);
+			//išmetam tarpus
+			$url_title = str_replace(' ', '_', $url_title);
+			//atskiriam atskirus getus pasirinktu simboliu
 			$return = $url_title.implode(($conf['F_urls'] != '0'?$conf['F_urls']:';'), $linkai);
 		} else {
-			$return = (basename($_SERVER['SCRIPT_NAME']) != 'index.php'?basename($_SERVER['SCRIPT_NAME']):'').$str;
+			$return = $str;
 		}
 	} else {
 		$return = ($conf['F_urls'] != '0'?'':'?').str_replace('id=', '', $_SERVER['QUERY_STRING']).($conf['F_urls'] != '0'?$conf['F_urls']:';').$str;
 	}
-	return adresas().$return;
+	return adresas().(substr($str,4,3) == '999' && $conf['F_urls'] == '0' ? 'main.php' : ROOT).$return;
 }
 /**
  * Vartotojui atvaizduoti

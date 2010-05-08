@@ -48,12 +48,12 @@ if (isset($_POST['admin_chat_send']) && $_POST['admin_chat_send'] == $lang['admi
 
 
 	mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "admin_chat` (admin, msg, date) VALUES(" . escape($_SESSION['username']) . "," . escape($extra . $_POST['admin_chat']) . ",'" . time() . "')") or die(mysql_error());
-	redirect($_SERVER['PHP_SELF']);
+	redirect($_SERVER['HTTP_REFERER']);
 }
 //trinam zinute
 if (isset($url['d']) && !isset($url['a']) && isnum($url['d']) && $url['d'] > 0 && LEVEL == 1) {
 	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "admin_chat` WHERE id=" . (int)$url['d'] . "");
-	redirect($_SERVER['PHP_SELF']);
+	redirect($_SERVER['HTTP_REFERER']);
 }
 //redaguojam zinute
 if (isset($url['r']) && !isset($url['d']) && !isset($url['a']) && isnum($url['r']) && $url['r'] > 0) {

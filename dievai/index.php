@@ -20,36 +20,22 @@ include_once ("../priedai/prisijungimas.php");
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>MightMedia TVS - Admin</title>
-	<meta name="description" content="" />
-	<meta name="keywords" content="" />
-	<meta name="robots" content="index,follow" />
-	<!--[if IE]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen, projection" /><![endif]-->
-	<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
-	<link rel="Stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.7.1.custom.css"  />
-	<!--[if IE]>
-		<style type="text/css">
-		  .clearfix {
-			zoom: 1;     /* triggers hasLayout */
-			display: block;     /* resets display for IE/Win */
-			}  /* Only IE can see inside the conditional comment
-			and read this CSS rule. Don't ever use a normal HTML
-			comment inside the CC or it will close prematurely. */
-		</style>
-	<![endif]-->
-	<!-- JavaScript -->
-	<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
-	<script type="text/javascript" src="js/jquery-ui-1.7.1.custom.min.js"></script>
-	<!--script type="text/javascript" src="js/custom.js"></script> -->
-	 <!--[if IE]><script language="javascript" type="text/javascript" src="js/excanvas.pack.js"></script><![endif]-->
+<title><?php echo input(strip_tags($conf['Pavadinimas'])); ?> - Admin</title>
+	<meta name="description" content="<?php echo input(strip_tags($conf['Pavadinimas']) . ' - ' . trimlink(strip_tags($conf['Apie']), 120)); ?>" />
+	<meta name="keywords" content="<?php echo input(strip_tags($conf['Keywords']));?>" />
+	<meta name="author" content="<?php echo input(strip_tags($conf['Copyright']));?>" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/default.css" />
 </head>
 <body>
-<div  id="login_container">
-	<div  id="header">
+<div id="admin_main">
+			  <div id="admin_header" style="height: 15px;">
+<div style="text-align: right;color: #666;"><b><?php echo date('H:i:s'); ?></b></div>
+			  </div>
 
-		<div id="logo"><h1><a href="<?php echo adresas()?>../">MightMedia TVS</a></h1></div>
-
-	</div><!-- end header -->
+		<div id="admin_hmenu" style="font-weight:bold; font-size:25px; color: #666; padding: 10px;margin-bottom: 100px;"><?php echo input(strip_tags($conf['Pavadinimas']));?></div>
+		<div id="container" style="border: 0;width:50%; margin:auto;">
+			<h2>Admin</h2>
+        <p style="border-top: 1px solid #7F7F7F;">
 
 	<?php if (!isset($_SESSION['username'])){?>
 	<form id="user_reg" name="user_reg" method="post" action="">
@@ -59,9 +45,9 @@ include_once ("../priedai/prisijungimas.php");
 			<?php endif ?>
 			<form name="loginform" id="loginform" action="panel.html" method="post">
 
-			<label><strong><?php echo $lang['user']['user'];?></strong></label><input type="text" name="vartotojas" id="user_login"  size="28" class="input"/>
+			<label><strong><?php echo $lang['user']['user'];?></strong></label><br /><input type="text" name="vartotojas" id="user_login"  size="28" class="input"/>
 			<br />
-			<label><strong><?php echo $lang['user']['password']; ?></strong></label><input type="password" name="slaptazodis" id="user_pass"  size="28" class="input"/>
+			<label><strong><?php echo $lang['user']['password']; ?></strong></label><br /><input type="password" name="slaptazodis" id="user_pass"  size="28" class="input"/>
 			<br />
 			<!--<strong>Remember Me</strong><input type="checkbox" id="remember" class="input noborder" />-->
 
@@ -77,11 +63,11 @@ include_once ("../priedai/prisijungimas.php");
               redirect('main.php');
   ?>
 
-	<script type="text/javascript">
-		$(':input[name="vartotojas"]').focus();
-	</script>
-
-</div><!-- end container -->
+	
+</p>
+<span style="text-align: right;position:absolute;bottom:0;right:0; padding: 5px;">&copy; <a href="http://mightmedia.lt" style="color: #666;" target="_blank">MightMedia TVS</a></span>
+		</div>
+</div>
 
 </body>
 </html>
