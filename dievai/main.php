@@ -266,7 +266,7 @@ if (empty($_GET['ajax'])):?>
           </div>
           				<script type="text/javascript">
 										$.getJSON('<?php echo $update_url; ?>');
-										function versija(data) {
+										/*function versija(data) {
 											$('#version_check').html(
 											'<img src="images/icons/lightbulb.png" alt="" /><b>'+data.title+'</b> '+
 												'' + data.version + ' - ' +
@@ -303,7 +303,7 @@ if (empty($_GET['ajax'])):?>
 												html+='</ul>';
 											}
 											return html;
-										}
+										}*/
 
 
 									</script>

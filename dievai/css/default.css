@@ -265,7 +265,8 @@ a{
 	font-family: "Tahoma";
 	text-decoration: none;
 	padding: 4px 4px 4px 30px;
-	width: 133px;
+	min-width: 133px; 
+	min-width: 133px;
 	display: block;
 }
 #left .nav ul li a:hover{
@@ -373,7 +374,6 @@ a{
   float: left;
   border-top: 1px solid #B3B593;
   font-size: 10px;
-  width: 810px;
 }
 #footer .links{
   padding-top: 25px;
