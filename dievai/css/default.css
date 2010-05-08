@@ -13,7 +13,7 @@ table {
 	border:0;
 }
 fieldset {
-  margin: 15px;
+	margin: 15px;
 }
 address,caption,cite,code,dfn,em,strong,th,var {
 	font-style:normal;
@@ -35,35 +35,39 @@ q:before,q:after {
 abbr,acronym { border:0;
 }
 input, textarea, select{
-  background: url('../images/input.png') repeat-x;
-  border: 1px solid #D7D7D7;
-  padding: 3px;
-  color: #999999;
-  margin-bottom: 3px;
+	background: url('../images/input.png') repeat-x;
+	border: 1px solid #D7D7D7;
+	padding: 3px;
+	color: #999999;
+	margin-bottom: 3px;
 }
 input[type="submit"]{
-  background: #F0EEDF;
-  border: 1px solid #C2C0B1;
-  border-left: 8px solid #C2C0B1;
-  color: #666666;
-  font-weight: bold;
-  text-decoration:none;
-  padding: 2px;
+	background: #F0EEDF;
+	border: 1px solid #C2C0B1;
+	border-left: 8px solid #C2C0B1;
+	color: #666666;
+	font-weight: bold;
+	text-decoration:none;
+	padding: 2px;
 }
 button, .btns a{
-  background: url('../images/button.png') repeat-x;
-  border: 1px solid #FF7910;
-  color: #FF7910;
-  padding: 2px;
-  text-decoration: none;
-  cursor: pointer;
+	background: url('../images/button.png') repeat-x;
+	border: 1px solid #FF7910;
+	color: #FF7910;
+	padding: 2px;
+	text-decoration: none;
+	cursor: pointer;
 }
 a{
-  color: #FF7910;
+	color: #FF7910;
 }
 /* RESET END */
 
-
+/*#admin_root {
+	margin:0 auto;
+	position:relative;
+	width:1024px;
+}*/
 #admin_main {
 }
 #admin_header {
@@ -106,21 +110,21 @@ a{
 	background:#B3B593 url('../images/up.png') 99% 50% no-repeat;
 }
 #admin_lang ul{
-  margin: -7px;
-  padding: 0px;
+	margin: -7px;
+	padding: 0px;
 }
 #admin_lang ul li{
-  background: none;
-  border: none;
+	background: none;
+	border: none;
 }
 #admin_lang ul li ul{
-  background: #B3B593;
-  width: 50px;
-  margin-left: 1px;
-  margin-top: -4px;
-  border-left: 1px solid #8A8F61;
-  border-right: 1px solid #8A8F61;
-  border-bottom: 1px solid #8A8F61;
+	background: #B3B593;
+	width: 50px;
+	margin-left: 1px;
+	margin-top: -4px;
+	border-left: 1px solid #8A8F61;
+	border-right: 1px solid #8A8F61;
+	border-bottom: 1px solid #8A8F61;
 }
 #admin_user img {
 	border: none;
@@ -158,20 +162,20 @@ a{
 }
 /*message*/
 .msg{
-  background-color: #FFFFCC;
-  border: 1px solid #FFCC99;
-  color: #FF770A;
-  width: 100%;
-  display: block;
-  padding: 3px;
-  background-image: url('../images/icons/check.png');
-  background-repeat: no-repeat;
-  background-position: 98% 48%;
-  margin: 7px;
+	background-color: #FFFFCC;
+	border: 1px solid #FFCC99;
+	color: #FF770A;
+	width: 100%;
+	display: block;
+	padding: 3px;
+	background-image: url('../images/icons/check.png');
+	background-repeat: no-repeat;
+	background-position: 98% 48%;
+	margin: 7px;
 }
 .msg img{
-  vertical-align: middle;
-  margin: 2px;
+	vertical-align: middle;
+	margin: 2px;
 }
 /* Horizontal menu */
 #admin_hmenu {
@@ -199,68 +203,68 @@ a{
 	font-family: "Tahoma";
 }
 #admin_hmenu ul li a:hover {
-  background-color: #85866D;
-  color: #FFFFFF;
+	background-color: #85866D;
+	color: #FFFFFF;
 }
 #admin_hmenu ul li ul{
-  margin-top: 10px;
+	margin-top: 10px;
 }
 
 #admin_hmenu ul li ul a {
-  /*background: url('../images/hmenu_bg.png') repeat-x;*/
-  width: auto;
-  /*padding:auto;*/
-  font-size: 11px;
-  line-height:15px;
-  padding: 5px;
-  color: #666666;
-  height: 15px;
-  min-width: 100px;
+	/*background: url('../images/hmenu_bg.png') repeat-x;*/
+	width: auto;
+	/*padding:auto;*/
+	font-size: 11px;
+	line-height:15px;
+	padding: 5px;
+	color: #666666;
+	height: 15px;
+	min-width: 100px;
 }
 #admin_hmenu ul li li {
-  background: url('../images/hmenu_bg.png') repeat-x;
+	background: url('../images/hmenu_bg.png') repeat-x;
 }
 #admin_hmenu ul li li a:hover {
-  background:none;
-  cursor: pointer;
-  color: black;
-  /*display: block;*/
+	background:none;
+	cursor: pointer;
+	color: black;
+	/*display: block;*/
 }
 
 /* Main content */
 #content{
-  background: url('../images/left.png') repeat-y;
+	background: url('../images/left.png') repeat-y;
 }
 /* Left side */
 #left{
-  float: left;
-  width: 168px;
+	float: left;
+	width: 168px;
 }
 /* search box */
 #left .search{
-  background: #FFF;
-  text-align: center;
-  height: 50px;
+	background: #FFF;
+	text-align: center;
+	height: 50px;
 }
 #left .search input{
-  background: url('../images/search.png') no-repeat;
-  width: 124px;
-  padding: 4px;
-  border: 0;
-  margin: 5px;
+	background: url('../images/search.png') no-repeat;
+	width: 124px;
+	padding: 4px;
+	border: 0;
+	margin: 5px;
 }
 /*Button bar*/
 #left .buttons{
-  text-align: center;
-  margin-bottom: 10px;
+	text-align: center;
+	margin-bottom: 10px;
 }
 /* Left navigation */
 #left .nav{
-  
+
 }
 #left .nav ul li a{
-  color: #666666;
-  font-size: 14px;
+	color: #666666;
+	font-size: 14px;
 	font-weight: bold;
 	font-family: "Tahoma";
 	text-decoration: none;
@@ -270,134 +274,132 @@ a{
 	display: block;
 }
 #left .nav ul li a:hover{
-  border: 1px solid #B3B593;
-  padding: 3px 3px 3px 29px;
+	border: 1px solid #B3B593;
+	padding: 3px 3px 3px 29px;
 }
 #left .nav ul li.active{
-  background: #FFFFFF;
-  border-top: 1px solid #B3B593;
-  border-bottom: 1px solid #B3B593;
-  padding: 5px;
+	background: #FFFFFF;
+	border-top: 1px solid #B3B593;
+	border-bottom: 1px solid #B3B593;
+	padding: 5px;
 }
 #left .nav ul li ul{
-  margin-left: 20px;
+	margin-left: 20px;
 }
 #left .nav ul li.active{
-  padding-left: 20px;
+	padding-left: 20px;
 }
 #left .nav ul li.active a{
-  /*font-weight: bold;*/
-  padding: 1px;
+	/*font-weight: bold;*/
+	padding: 1px;
 }
 #left ul li.active ul a{
-  font-weight: normal;
-  font-size: 12px;
-  padding: 1px;
+	font-weight: normal;
+	font-size: 12px;
+	padding: 1px;
 }
 #left .nav ul li.active a:hover{
-  /*font-weight: bold;*/
-  color: black;
-  border: none;
+	/*font-weight: bold;*/
+	color: black;
+	border: none;
 }
 #left .nav li img{
-  vertical-align: middle;
-  margin-right: 3px;
+	vertical-align: middle;
+	margin-right: 3px;
 }
 /*Right side */
 #right{
-  /*float: left;*/
-  /*width: 800px;*/
-  margin-left: 167px;
-  margin-right: 20px;
-  
+	/*float: left;*/
+	/*width: 800px;*/
+	margin-left: 167px;
+	margin-right: 20px;
+
 }
 #right .where{
-  color: #999999;
-  padding: 3px;
+	color: #999999;
+	padding: 3px;
 }
 #right .where img{
-  vertical-align: middle;
+	vertical-align: middle;
 }
 #right .where a{
-  color: #999999;
-  text-decoration: none;
+	color: #999999;
+	text-decoration: none;
 }
 #container{
-  border-top: 1px solid #B3B593;
-  padding-left: 10px;
+	border-top: 1px solid #B3B593;
+	padding-left: 10px;
+}
+#container h2, #container h1{
+	color: #666666;
+	font-size: 22px;
+	font-weight: bold;
+	padding: 5px;
+	border-left: 10px solid #C2C0B1;
+	margin-bottom: 5px;
+	display: block
 }
 #container h1{
-  color: #666666;
-  font-size: 22px;
-  font-weight: bold;
-  padding: 5px;
-  border-bottom: 1px solid #7F7F7F;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-#container h2{
-  color: #666666;
-  font-size: 22px;
-  font-weight: bold;
-  padding: 5px;
-  border-left: 10px solid #C2C0B1;
-  margin-bottom: 5px;
+	border-bottom: 1px solid #7F7F7F;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	display: block
 }
 .left{
-  width: 45%;
-  border-right: 2px dashed #C2C0B1;
-  float: left;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 10px;
+	width: 45%;
+	border-right: 2px dashed #C2C0B1;
+	float: left;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
 }
 .right{
-  width: 45%;
-  float: left;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 10px;
+	width: 45%;
+	float: left;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
 }
 #footer{
-  font-family: "Verdana";
-  color: #CCCCCC;
+	font-family: "Verdana";
+	color: #CCCCCC;
 }
 #footer .c{
-  font-size: 50px;
-  color: #CCCCCC;
-  padding: 20px;
-  float: left;
-  width: 118px;
-  text-align: right;
+	font-size: 50px;
+	color: #CCCCCC;
+	padding: 20px;
+	float: left;
+	width: 118px;
+	text-align: right;
 }
 #footer .text{
-  float: left;
-  border-top: 1px solid #B3B593;
-  font-size: 10px;
+	border-top:1px solid #B3B593;
+	font-size:10px;
+	margin-left:160px;
 }
 #footer .links{
-  padding-top: 25px;
-  padding-left: 10px;
-  padding-bottom: 5px;
-  color: #CCCCCC;
-  font-size: 12px;
-  width: 400px;
+	padding-top: 25px;
+	padding-left: 10px;
+	padding-bottom: 5px;
+	color: #CCCCCC;
+	font-size: 12px;
+	width: 400px;
 }
 #footer .links a{
-  color: #5F676C;
-  font-weight: bold;
-  text-decoration: none;
+	color: #5F676C;
+	font-weight: bold;
+	text-decoration: none;
 }
 #footer .copy{
-  width: 400px;
-  float: left;
+	width: 400px;
+	float: left;
 }
 #footer .images{
-  float: left;
-  width: 370px;
+	float: left;
+	width: 370px;
 }
 #footer .images img{
-  vertical-align:middle;
+	vertical-align:middle;
 }
 
 .middle{
@@ -468,10 +470,10 @@ ul#tree li{
 	background-color : #dddddd;
 }
 li.drag_block:hover{
-  background-color : #F2F2F2;
-  border: 1px solid #666;
-  padding: 2px;
-  
+	background-color : #F2F2F2;
+	border: 1px solid #666;
+	padding: 2px;
+
 }
 li.drag_block > img {
 	cursor : move;
@@ -480,9 +482,6 @@ li.drag_block > img {
 form td{
 	vertical-align: middle;
 	padding-right: 10px;
-}
-form table{
-	float: left;
 }
 .tooltip{
 	padding: 3px;
@@ -498,35 +497,35 @@ form table{
 #placeholder{width:180px;height:105px;padding-bottom:14px;}
 
 .table{
-  margin: .5em 0 1em;
-  border-bottom: 3px solid #d9d9d9;
-  border-left: 1px solid #d9d9d9;
-  border-right: 1px solid #d9d9d9;
+	margin: .5em 0 1em;
+	border-bottom: 3px solid #d9d9d9;
+	border-left: 1px solid #d9d9d9;
+	border-right: 1px solid #d9d9d9;
 }
 
 .table td, .table th, .tr,.tr2{
-  text-align: left;
-  padding: .2em .4em;
-  border-top: 1px solid #d9d9d9;
- /* border-right: 1px solid #d9d9d9;*/
+	text-align: left;
+	padding: .2em .4em;
+	border-top: 1px solid #d9d9d9;
+	/* border-right: 1px solid #d9d9d9;*/
 }
 .table td, .td{
-border-right: 1px solid #d9d9d9;
+	border-right: 1px solid #d9d9d9;
 }
 .table th{
-  background: #ebebeb;
-  border-bottom: 2px solid #d9d9d9;
+	background: #ebebeb;
+	border-bottom: 2px solid #d9d9d9;
 }
 
 .table tr.odd{
-  background: #ebebeb;
+	background: #ebebeb;
 }
 blockquote{
-  background: transparent url('../images/blockquote.png') no-repeat left top;
-  margin: 10px 65px 10px 10px;
-  padding: 20px 20px 10px 10px;
-  font-style: italic;
-  color: #939494;
+	background: transparent url('../images/blockquote.png') no-repeat left top;
+	margin: 10px 65px 10px 10px;
+	padding: 20px 20px 10px 10px;
+	font-style: italic;
+	color: #939494;
 }
 .error, .notice, .success {
 	border: 1px solid #DDD;
@@ -542,3 +541,5 @@ blockquote{
 
 .success {background: #E6EFC2; color: #264409; border-color: #C6D880;}
 .success a {color: #264409;}
+
+.btns { visibility: hidden }

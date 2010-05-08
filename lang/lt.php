@@ -336,6 +336,7 @@ $lang['admin']['logs_logsdeleted'] = 'Klaidos ištrintos';
 $lang['admin']['logs_yourip'] = 'Tavo ip';
 $lang['admin']['logs_nologs'] = 'Klaidų neužfiksuota';
 $lang['admin']['logs_clear'] = 'Trinti visus įrašus';
+$lang['admin']['logs_delete'] = 'Klaidų trynimas';
 $lang['admin']['logs_deletebyip'] = 'Trinti pagal ip';
 $lang['admin']['page_text'] = 'Puslapio turinys';
 $lang['admin']['page_create'] = 'Kurti puslapį';

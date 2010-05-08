@@ -378,6 +378,7 @@ $lang['admin']['logs_user'] = 'Username';
 $lang['admin']['logs_logsdeleted'] = 'logs deleted';
 $lang['admin']['logs_yourip'] = 'Your ip';
 $lang['admin']['logs_nologs'] = 'No logs';
+$lang['admin']['logs_delete'] = 'Delete logs';
 $lang['admin']['logs_deletebyip'] = 'Delete by ip';
 $lang['admin']['logs_clear'] = 'Delete all logs';
 //pages admin
