@@ -96,7 +96,7 @@ $bla = new Table();
 if ($viso > $limit) {
 	lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
 }
-lentele("{$lang['admin']['pm_messages']}", $bla->render($info));
+lentele($lang['admin']['pm_messages'], (count($info) > 0 ? $bla->render($info) : $lang['sb']['empty']));
 if ($viso > $limit) {
 	lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
 }

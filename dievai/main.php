@@ -72,7 +72,7 @@ foreach($glob as $id => $file) {
 	$image = (is_file("images/icons/{$file}.png")?"images/icons/{$file}.png":'images/icons/module.png');
 	$admin_pages[$id] = $file;
 	$admin_pagesid[$file] = $id;
-	if ((isset($conf['puslapiai'][$file.'.php']['id']) || in_array($file, array('config','meniu','logai','paneles','vartotojai','komentarai','banai','balsavimas'))) && !in_array($file, array('index','pokalbiai', 'main', 'search'))) {
+	if ((isset($conf['puslapiai'][$file.'.php']['id']) || in_array($file, array('config','meniu','logai','paneles','vartotojai','komentarai','banai','balsavimas'))) && !in_array($file, array('index','pokalbiai', 'main', 'search', 'antivirus'))) {
 
 		$admin_tools .= "<li ".(isset($_GET['a']) && $_GET['a'] == $id ?'class="active"':'')."><a href=\"".url("?id,999;a,$id")."\"><img src=\"{$image}\" alt=\"\" />".(isset($lang['admin'][$file])?$lang['admin'][$file]:$file)."</a>".(isset($_GET['a']) && $_GET['a'] == $id ? '<ul><div id="veiksmai"></div><script type="text/javascript">
 		//sub punktai
@@ -308,7 +308,7 @@ if (empty($_GET['ajax'])):?>
 
 									</script>
           <div id="container"> 
-            <div class="where"><img src="images/bullet.png" alt="" /> Admin > <?php echo (isset($_GET['a'])?$lang['admin'][	$admin_pages[$_GET['a']]]:$lang['admin']['homepage']); ?> </div>
+            <div class="where"><img src="images/bullet.png" alt="" /> <a href="<?php echo url('?id,999');?>">Admin</a> > <a href="<?php echo url('?id,999'.(isset($_GET['a'])?';a,'.$_GET['a']:''));?>"><?php echo (isset($_GET['a'])?$lang['admin'][	$admin_pages[$_GET['a']]]:$lang['admin']['homepage']); ?></a> </div>
             
          
 	<?php if (isset($url['a']) && file_exists(dirname(__file__) . "/" . $admin_pages[(int)$url['a']].'.php') && isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {

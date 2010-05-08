@@ -317,6 +317,10 @@ a{
 #right .where img{
   vertical-align: middle;
 }
+#right .where a{
+  color: #999999;
+  text-decoration: none;
+}
 #container{
   border-top: 1px solid #B3B593;
   padding-left: 10px;
