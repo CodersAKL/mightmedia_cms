@@ -53,6 +53,9 @@
 .markItUp .markItUpButton23 a {
 	background-image:url(images/uploaded.png);
 }
+.markItUp .markItUpButton24 a {
+	background-image:url(images/page_break.gif);
+}
 .markItUp .clean a {
 	background-image:url(images/clean.png);
 }
