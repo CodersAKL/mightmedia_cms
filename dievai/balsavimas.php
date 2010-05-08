@@ -20,6 +20,7 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,1'">{$lang['admin']['poll_create']}</button>
 <button onclick="location.href='?id,{$_GET['id']};a,{$_GET['a']};v,2'">{$lang['admin']['poll_edit']}</button>
 HTML;*/
+if(!isset($_GET['v'])){ $_GET['v'] = 1; $url['v'] = 1;}
 $buttons="<div id=\"admin_menu\" class=\"btns\"><a href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,1")."\"class=\"btn\"><span><img src=\"".ROOT."images/icons/heart__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['poll_create']}</span></a>  <a href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,2")."\" class=\"btn\"><span><img src=\"".ROOT."images/icons/heart__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['poll_edit']}</span></a></div>";
 lentele($lang['admin']['poll'], $buttons);
 //if (empty($url['v'])) {

@@ -19,7 +19,7 @@ if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
 } else {
 	$p = 0;
 }
-
+if(!isset($_GET['v'])) $_GET['v'] = 1;
 $buttons="
 <div id=\"admin_menu\" class=\"btns\">
 	<a class=\"btn\" href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,6")."\"><span><img src=\"".ROOT."images/icons/photo_album__arrow.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_conf']}</span></a>

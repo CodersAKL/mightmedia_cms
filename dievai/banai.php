@@ -16,6 +16,7 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 }
 
 unset($resultatai, $i, $temp, $lines);
+if(!isset($_GET['b'])) $_GET['b'] = 1;
 $buttons = "
 <div class=\"btns\">
 	<a href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};b,1")."\" class=\"btn\"><span><img src=\"".ROOT."images/icons/bandaid__plus.png\" alt=\"\" class=\"middle\"/>IP {$lang['admin']['bans']}</span></a>

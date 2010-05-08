@@ -13,7 +13,7 @@
 if (!defined("OK") || !ar_admin(basename(__file__))) {
 	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
-
+if(!isset($_GET['v'])) $_GET['v'] = 1;
 $buttons = "
 <div class=\"btns\">
 	<a href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,6")."\" class=\"btn\"><span><img src=\"".ROOT."images/icons/disk__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['download_unpublished']}</span></a>
@@ -242,7 +242,7 @@ if (isset($_GET['v'])) {
 				$type[2] = $lang['admin']['link'];
 
 				$tipas = array("Form" => array("action" => url("?id,{$_GET['id']};a,{$_GET['a']};v,1"), "method" => "post", "name" => "type"), "{$lang['admin']['download_type']}:" => array("type" => "select", "value" => $type, "name" => "tipas"), "{$lang['admin']['download_select']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['download_select']}"));
-				lentele($lang['admin']['download_type'], $bla->form($tipas));
+				lentele($lang['admin']['download_Create'], $bla->form($tipas));
 			}
 			if (isset($_POST['tipas']) || isset($extra)) {
 				//if(!isset($_post['tipas'])){$_POST['tipas']=3;}

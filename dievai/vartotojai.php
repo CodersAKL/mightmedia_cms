@@ -14,7 +14,7 @@ if (!defined("LEVEL") || LEVEL > 1 || !defined("OK")) {
 	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 include_once (ROOT."priedai/class.php");
-
+if(!isset($_GET['v'])) $_GET['v'] = 1;
 
 
 $buttons="<div class=\"btns\">

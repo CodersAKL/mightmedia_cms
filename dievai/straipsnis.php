@@ -14,6 +14,7 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 unset($text, $extra);
+if(!isset($_GET['v'])) $_GET['v'] = 7;
 
 $buttons = "
 <div class=\"btns\">

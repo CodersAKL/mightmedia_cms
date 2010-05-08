@@ -309,10 +309,10 @@ HTML;
 
 	$text .= '<div id="la" style="display:none"><b>' . $lang['system']['updated'] . '</b></div>
 
-			<fieldset style="width: 47%; float:left;"><legend>' . $lang['admin']['panel_left'] . '</legend>
+			<fieldset style="width: 40%; float:left;"><legend>' . $lang['admin']['panel_left'] . '</legend>
 			<ul id="kaire">' . $li . '</ul>';
 
-	$text .= '</fieldset><fieldset style="width: 47%;float:right;"><legend>' . $lang['admin']['panel_right'] . '</legend>
+	$text .= '</fieldset><fieldset style="width: 40%;float:right;"><legend>' . $lang['admin']['panel_right'] . '</legend>
 		<ul id="desine">' . $li1 . '</ul>';
 
 	$text .= "</fieldset>
