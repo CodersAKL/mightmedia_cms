@@ -174,10 +174,16 @@ if (empty($_GET['ajax'])):?>
     <link type='text/css' rel='stylesheet' href='css/default.css' />
     <link rel="stylesheet" type="text/css" href="css/superfish.css" media="screen" />
 		<link rel="stylesheet" href="css/jquery.treeview.css" />
-    <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
-    		<script type="text/javascript" src="js/jquery-ui-1.7.1.custom.min.js"></script>
-             		<script type="text/javascript" src="js/superfish.js"></script>
+		<link rel="stylesheet" href="../stiliai/system.css" />
+		<link type="text/css" media="screen" rel="stylesheet" href="../stiliai/colorbox.css" />
+    <!--[if IE]>
+    <link type="text/css" media="screen" rel="stylesheet" href="../stiliai/colorbox-ie.css" title="example" />
+    <![endif]-->
 
+    <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.7.1.custom.min.js"></script>
+    <script type="text/javascript" src="js/superfish.js"></script>
+    <script type="text/javascript" src="../javascript/jquery/jquery.colorbox.js"></script>
 		<script type="text/javascript" src="js/excanvas.pack.js"></script>
 		<script type="text/javascript" src="js/jquery.flot.pack.js"></script>
 		<!--script type="text/javascript" src="js/custom.js"></script-->
@@ -198,8 +204,17 @@ if (empty($_GET['ajax'])):?>
 					unique: true
 				});
 				$('ul.sf-menu').superfish();
+         //Examples of how to assign the ColorBox event to elements.
+        $(".gallery a[rel='lightbox']").colorbox({transition:"fade"});
 
+        //Example of preserving a JavaScript event for inline calls.
+        $("#click").click(function(){
+        $('#click').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+        });
+        $("#inline").colorbox({width:"50%", inline:true, href:"#inline_example1", title:"hello"});
+        // find all the input elements with title attributes and make them with a hint
 			});
+			
 		</script>
   </head>
   <body>
