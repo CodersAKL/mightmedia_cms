@@ -1,4 +1,23 @@
 <?php
+//                  _                   _   _     _
+//             _ __| |_  _ __  __ _ _ _| |_(_)_ _(_)_ _ _  _ ___
+//            | '_ \ ' \| '_ \/ _` | ' \  _| \ V / | '_| || (_-<
+//            | .__/_||_| .__/\__,_|_||_\__|_|\_/|_|_|  \_,_/__/
+//            |_|       |_|
+//                               Version 1.0.3
+//
+//    Official Site:                                     Authors:
+//    http://phpantivirus.sourceforge.net                KeyboardArtist
+//                                                       Deekay
+//    Sourceforge Page:                                  Nico
+//    http://sourceforge.net/projects/phpantivirus/      Murphy
+//
+//    This software is provided as-is, without warranty or guarantee of
+//    any kind. Use at your own risk. This software is licenced under the
+//    GNU GPL license. More information is available in 'COPYING' included
+//    with this distribution.
+//
+//
 // ROOT PATH TO SCAN
 // -----------------
 // This can be a relative or full path WITHOUT a trailing
@@ -36,6 +55,7 @@ $CONFIG['extensions'][] = 'php';
 $CONFIG['extensions'][] = 'php3';
 $CONFIG['extensions'][] = 'php4';
 $CONFIG['extensions'][] = 'php5';
+$CONFIG['extensions'][] = 'txt';
 $CONFIG['debug'] = 1;
 
 // declare variables
@@ -75,9 +95,9 @@ function file_scan($folder, $defs, $debug) {
 	if ($d = @dir($folder)) {
 		while (false !== ($entry = $d->read())) {
 			$isdir = @is_dir($folder.'/'.$entry);
-			if (!$isdir and $entry!='.' and $entry!='..') {
+			if (!$isdir and $entry!='.' and $entry!='..' and $entry!='.svn') {
 				virus_check($folder.'/'.$entry,$defs,$debug);
-			} elseif ($isdir  and $entry!='.' and $entry!='..') {
+			} elseif ($isdir  and $entry!='.' and $entry!='..' and $entry!='.svn') {
 				file_scan($folder.'/'.$entry,$defs,$debug);
 			}
 		}
@@ -100,10 +120,10 @@ function virus_check($file, $defs, $debug) {
 		// affectable formats
 		$filecount++;
 		$data = file($file);
-		$data = implode('\r\n', $data);
+		$data = implode("\r\n", $data);
 		$clean = 1;
 		foreach ($defs as $virus) {
-			if (strpos($data, $virus[1])) {
+			if (stripos($data, trim($virus[1]))) {
 				// file matches virus defs
 				$report .= '<p style="color:red;">'.$lang['admin']['antivirus_infected'].': ' . $file . ' (' . $virus[0] . ')</p>';
 				$infected++;
@@ -121,11 +141,11 @@ function load_defs($file, $debug) {
 	$counter = 0;
 	$counttop = sizeof($defs);
 	while ($counter < $counttop) {
-		$defs[$counter] = explode('	', $defs[$counter]);
+		$defs[$counter] = explode("\t", $defs[$counter]);
 		$counter++;
 	}
-	//if ($debug)
-		//echo '<p>Loaded ' . sizeof($defs) . ' virus definitions</p>';
+	if ($debug)
+		echo '<p>Loaded ' . sizeof($defs) . ' virus definitions</p>';
 	return $defs;
 }
 /*
