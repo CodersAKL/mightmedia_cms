@@ -72,7 +72,7 @@ if ($k > 0) {
    `" . LENTELES_PRIESAGA . "galerija`.`categorija` = " . escape($k) . " AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
 	AND `" . LENTELES_PRIESAGA . "galerija`.`lang` = ".escape(lang())."
   ORDER BY
-  `" . LENTELES_PRIESAGA . "galerija`.`id` DESC
+  `" . LENTELES_PRIESAGA . "galerija`.`".$conf['galorder']."` ".$conf['galorder_type']."
   LIMIT  $p,$limit", 86400);
 } else {
 	$sql = mysql_query1("SELECT
@@ -89,7 +89,7 @@ if ($k > 0) {
   WHERE  
    `" . LENTELES_PRIESAGA . "galerija`.`categorija` =  " . escape($k) . " AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
   ORDER BY
-  `" . LENTELES_PRIESAGA . "galerija`.`id` DESC
+  `" . LENTELES_PRIESAGA . "galerija`.`".$conf['galorder']."` ".$conf['galorder_type']."
   LIMIT  $p,$limit", 86400);
 
 }

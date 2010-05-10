@@ -405,7 +405,8 @@ INSERT INTO `nustatymai` VALUES(16, 'pirminis', 'naujienos.php');
 INSERT INTO `nustatymai` VALUES(17, 'keshas', '1');
 INSERT INTO `nustatymai` VALUES(18, 'kmomentarai_sveciams', '0');
 INSERT INTO `nustatymai` VALUES(19, 'F_urls', ';');
-
+INSERT INTO `nustatymai` VALUES(20, 'galorder', 'data');
+INSERT INTO `nustatymai` VALUES(21, 'galorder_type', 'DESC');
 -- --------------------------------------------------------
 
 --
