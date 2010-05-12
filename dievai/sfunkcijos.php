@@ -13,10 +13,7 @@ function lentele_l($pavadinimas, $tekstas, $label = false) {
 }
 
 function lentele($pavadinimas, $tekstas, $label = false) {
-	echo '
-					<h1>'.$pavadinimas.'</h1>
-								'.$tekstas.'
-				';
+	echo '<h1>'.$pavadinimas.'</h1>'.$tekstas;
 }
 
 function klaida($pavadinimas, $tekstas, $label = false) {

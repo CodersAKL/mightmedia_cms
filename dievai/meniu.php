@@ -303,15 +303,13 @@ foreach ($recordSet1 as $row){
 	$data[$row['parent']][] = $row;
 }
 	$li = !empty($data)?build_menu_admin($data):'';
-	$tekstas .= '
-<div id="la" style="display:none"><b>' . $lang['system']['updated'] . '</b></div><fieldset><legend>' . $lang['admin']['page_navigation'] . '</legend><ul id="test-list">' . $li . '</ul>';
+	$tekstas .= '<div id="la" style="display:none"><b>' . $lang['system']['updated'] . '</b></div><fieldset><legend>' . $lang['admin']['page_navigation'] . '</legend><ul id="test-list">' . $li . '</ul>';
 	$tekstas .= '</fieldset>';
 	$sql25 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'N' AND `lang` = ".escape(lang())." order by id");
 	$tekstas .= '<fieldset><legend>' . $lang['admin']['page_other'] . '</legend><ul>';
 	if (sizeof($sql25) > 0) {
 		foreach ($sql25 as $sql2) {			
-			$tekstas .= '<li class="drag_block">
-<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $sql2['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a><a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $sql2['id'] ). '" style="align:right"><img src="'.ROOT.'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a><a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $sql2['id'] ). '" style="align:right"><img src="'.ROOT.'images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '" align="right" /></a>' . $sql2['pavadinimas'] . '</li>';
+			$tekstas .= '<li class="drag_block"><a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $sql2['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a><a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $sql2['id'] ). '" style="align:right"><img src="'.ROOT.'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a><a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $sql2['id'] ). '" style="align:right"><img src="'.ROOT.'images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '" align="right" /></a>' . $sql2['pavadinimas'] . '</li>';
 		}
 	}
 	$tekstas .= '</ul></fieldset>';

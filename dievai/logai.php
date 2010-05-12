@@ -63,7 +63,7 @@ if (!empty($url['t'])) {
                 $kas = user($row['nick'], $row['nick_id'], $row['levelis']);
             }
             $info[] = array(//"Nr:"=>$row['id'],
-                $lang['admin']['logs_log'] => "<a href=\"" . url("?id,{$_GET['id']};a,{$_GET['a']};v," . $row['id'] . "") . "\" title=\"
+                $lang['admin']['logs_log'] => "<a href=\"" . url("?id,{$_GET['id']};a,{$_GET['a']};v," . $row['id']) . "\" title=\"
 						<br/>
 						{$lang['admin']['logs_date']}: <b>" . date('Y-m-d H:i:s', $row['time']) . "</b><br/>
 						IP: <b>" . $row['ip1'] . "</b><br/>

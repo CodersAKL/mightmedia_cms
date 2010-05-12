@@ -330,45 +330,31 @@ if (empty($_GET['ajax'])):?>
 
 									</script>
           <div id="container"> 
-            <div class="where"><img src="images/bullet.png" alt="" /> <a href="<?php echo url('?id,999');?>">Admin</a> > <a href="<?php echo url('?id,999'.(isset($_GET['a'])?';a,'.$_GET['a']:''));?>"><?php echo (isset($_GET['a'])?$lang['admin'][	$admin_pages[$_GET['a']]]:$lang['admin']['homepage']); ?></a> </div>
+            <div class="where"><img src="images/bullet.png" alt="" /> <a href="<?php echo url('?id,999');?>">Admin</a> > <a href="<?php echo url('?id,999'.(isset($_GET['a'])?';a,'.$_GET['a']:''));?>"><?php echo (isset($_GET['a'])?$lang['admin'][$admin_pages[$_GET['a']]]:$lang['admin']['homepage']); ?></a> </div>
             
-         
+
 	<?php if (isset($url['a']) && file_exists(dirname(__file__) . "/" . $admin_pages[(int)$url['a']].'.php') && isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
 		include_once (dirname(__file__) . "/" . $admin_pages[(int)$url['a']].'.php');
 	} elseif (isset($_GET['m'])) {
-    switch ($_GET['m']){
-      case 1:
-      $page = 'uncache.php';
-      break;
-      case 2:
-      $page = 'pokalbiai.php';
-      break;
-      case 3:
-      $page = 'antivirus.php';
-      break;
-      case 4:
-      $page = 'search.php';
-      break;
-    }
-    include_once (dirname(__file__) . "/". $page);
+		switch ($_GET['m']){
+		  case 1:
+		  $page = 'uncache.php';
+		  break;
+		  case 2:
+		  $page = 'pokalbiai.php';
+		  break;
+		  case 3:
+		  $page = 'antivirus.php';
+		  break;
+		  case 4:
+		  $page = 'search.php';
+		  break;
+		}
+		include_once (dirname(__file__) . "/". $page);
 	}
     else
       include_once (dirname(__file__) . "/start.php");
 	?>
-
-            <!--h1>Konfig...</h1>
-            <div class="left">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim metus velit. Aenean vitae adipiscing lorem. Nunc vel metus ac tellus imperdiet rutrum. Phasellus id purus non libero pretium malesuada id sed nisi. Praesent purus nulla, ultrices non porttitor vel, adipiscing vel sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque ullamcorper interdum nisi, quis feugiat erat pellentesque in.
-            </div>
-            <div class="right">
-              <h2>hgeading 2</h2>
-              <form>
-                input: <input type="text" value="text" /><br />
-                submit: <input type="submit" value="submit" /><br />
- 
-              </form>
-            </div>
-          </div-->
         </div>
         <div style="clear: both;"></div>
       </div>
@@ -381,6 +367,7 @@ if (empty($_GET['ajax'])):?>
          </div>
           </div>
       </div>
+	  </div>
 	  </div>
   </body>
 </html>

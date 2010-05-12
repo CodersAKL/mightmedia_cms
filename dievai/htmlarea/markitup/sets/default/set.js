@@ -115,7 +115,9 @@ mySettings = {
         },
         {
             name:'Uploaded picture', key:'m', replaceWith:function(markItUp) {
-                window.open(markItUp.root + "utils/manager/index.php?id=" + markItUp.textarea.id,"mywindow","menubar=1,resizable=1,width=820,height=500");
+                //window.open(markItUp.root + "utils/manager/index.php?id=" + markItUp.textarea.id,"mywindow","menubar=1,resizable=1,width=820,height=500");
+                window.open("../../htmlarea/markitup/utils/manager/index.php?id=" + markItUp.textarea.id,"mywindow","menubar=1,resizable=1,width=820,height=500");
+            //D:\Darbai\web\UniServer\www\mm\dievai\htmlarea\markitup\utils\manager
             }
         },
 		{
