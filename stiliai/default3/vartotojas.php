@@ -15,9 +15,9 @@ if (!defined("LEVEL") || !isset($_SESSION['username']) || empty($_SESSION['usern
 	$text = <<< HTML
 		<form id="user_reg" name="user_reg" method="post" action="">
 			 <div class="fields">
-			<script type="text/javascript">document.write(unescape(unescape('%3C')+'input name="vartotojas" class="input" id="vartotojas" type="text" value="{$lang['user']['user']}" maxlength="50" /'+unescape('%3E')));</script>
-			<input name="slaptazodis" class="input" id="slaptazodis" type="password" value="{$lang['user']['password']}" maxlength="50" />
-			{$lang['user']['login_remember']}:<input type="checkbox" class="checkbox" style="background-color:transparent;border:0; width: 5px;" name="Prisiminti" id="Prisiminti"/>
+			<script type="text/javascript">document.write(unescape(unescape('%3C')+'input name="vartotojas" class="input" id="vartotojas" type="text" title="{$lang['user']['user']}" maxlength="50" /'+unescape('%3E')));</script>
+			<input name="slaptazodis" class="input" id="slaptazodis" type="password" title="{$lang['user']['password']}" maxlength="50" />
+			<label>{$lang['user']['login_remember']}:<input type="checkbox" class="checkbox" style="background-color:transparent;border:0; width: 5px;" name="Prisiminti" id="Prisiminti" /></label>
 			</div> <input type="image" src="stiliai/{$conf['Stilius']}/img/loginbutton.jpg" class="button" name="Submit" value="{$lang['user']['login']}" />
 			<input type="hidden" name="action" value="prisijungimas" />
 		</form>
