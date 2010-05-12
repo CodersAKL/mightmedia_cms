@@ -486,8 +486,8 @@ $lang['admin']['gallery_prev'] = 'Previous';
 $lang['admin']['gallery_cant'] = 'You can not view this image';
 $lang['admin']['gallery_order'] = 'Order by';
 $lang['admin']['gallery_order_type'] = 'Order type';
-$lang['admin']['gallery_from_biggest'] = 'From biggest';
-$lang['admin']['gallery_from_smallest'] = 'From smallest';
+$lang['admin']['gallery_from_biggest'] = 'From newest';
+$lang['admin']['gallery_from_smallest'] = 'From oldest';
 //downloads admin
 $lang['admin']['download_Create'] = 'New download';
 $lang['admin']['download_edit'] = 'Edit download';
