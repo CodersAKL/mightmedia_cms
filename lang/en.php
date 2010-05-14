@@ -461,6 +461,7 @@ $lang['admin']['links_allfields'] = 'All fields are required';
 $lang['admin']['gallery_conf'] = 'Configuration';
 $lang['admin']['gallery_unpublished'] = 'Unpublished images';
 $lang['admin']['gallery_add'] = 'Add image';
+$lang['admin']['gallery_group_add'] = 'Add images';
 $lang['admin']['gallery_edit'] = 'Edit image';
 $lang['admin']['gallery_activated'] = 'Image activated';
 $lang['admin']['gallery_deleted'] = 'Image deleted';

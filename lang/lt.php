@@ -412,6 +412,7 @@ $lang['admin']['links_allfields'] = 'Užpildykite visus laukelius';
 $lang['admin']['gallery_conf'] = 'Konfigūracija';
 $lang['admin']['gallery_unpublished'] = 'Nerodomos nuotraukos';
 $lang['admin']['gallery_add'] = 'Pridėti nuotrauką';
+$lang['admin']['gallery_group_add'] = 'Pridėti nuotraukas';
 $lang['admin']['gallery_edit'] = 'Redaguoti nuotrauką';
 $lang['admin']['gallery_activated'] = 'Nuotrauka aktyvuota';
 $lang['admin']['gallery_deleted'] = 'Nuotrauka ištrinta';
