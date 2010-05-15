@@ -76,14 +76,14 @@ if (isset($_POST['next_msyql'])) {
 
 		if ($mysql_error == 0) {
 			$mysql_info = 'Lentelės sėkmingai atnaujintos. Galite tęsti atnaujinimą.';
-			$next_mysql = '<center><input type="reset" value="Toliau >>" onClick="Go(\'3\');"></center>';
+			$next_mysql = '<center><input type="reset" value="Toliau >>" onClick="Go(\'3\');" class="submit"></center>';
 		} else {
-			$next_mysql = '<center><input type="reset" value="Bandyti dar kartą" onClick="Go(\'2\');"></center>';
+			$next_mysql = '<center><input type="reset" value="Bandyti dar kartą" onClick="Go(\'2\');" class="submit"></center>';
 		}
 
 	}
 if(!isset($next_mysql)){
-	$next_mysql = '<input name="next_msyql" type="submit" value="Atnaujinti lenteles">';
+	$next_mysql = '<input name="next_msyql" type="submit" value="Atnaujinti lenteles" class="submit">';
 }
 
 // Administratoriaus sukūrimo dalis
@@ -96,13 +96,12 @@ if (!empty($_POST['finish'])) {
 	//}
 	header("Location: index.php");
 }
-
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="shortcut icon" href="favicon.ico" />
 <meta name="resource-type" content="document" />
 <meta name="distribution" content="global" />
 <meta name="author" content="CodeRS - MightMedia TVS scripts www.coders.lt" />
@@ -110,18 +109,24 @@ if (!empty($_POST['finish'])) {
 <meta name="rating" content="general" />
 <meta name="generator" content="notepad" />
 <script src="javascript/jquery/jquery-1.3.1.min.js" type="text/javascript" ></script>
-
 <script src="javascript/jquery/tooltip.js" type="text/javascript" ></script>
 <title>MightMedia TVS atnaujinimas</title>
-<link href="stiliai/default/default.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" type="text/css" media="all" href="stiliai/remontas/css/default.css" />
 </head>
 <body>
+<div id="admin_main">
+			  <div id="admin_header" style="height: 15px;">
+<div style="text-align: right;color: #666;"><b><?php echo date('H:i:s'); ?></b></div>
+			  </div>
+
+		<div id="admin_hmenu" style="font-weight:bold; font-size:25px; color: #666; padding: 10px; margin-bottom: 10px;"><?php echo input(strip_tags($conf['Pavadinimas']));?></div>
+<?php if(isset($_SESSION['id'])&&$_SESSION['id']==1) {?>
 <center>
-<table border="0" cellpadding="2" cellspacing="5" width="80%">
+<table border="0" cellpadding="2" cellspacing="5" width="80%" id="container">
 <tbody>
 <tr>
-        <td width="25%" valign="top">
-                <div class="title" title="Įdiegimo stadijos. Viską atlikite su įpatingu atidumu.">Įdiegimo stadijos</div>
+        <td width="30%" valign="top" class="left">
+                <h1 title="Įdiegimo stadijos. Viską atlikite su įpatingu atidumu.">Įdiegimo stadijos</h1>
                 <div class="vidus">
                 <ul>
 <?php
@@ -139,8 +144,8 @@ foreach ($menu_pavad as $key => $value) {
                 <hr />
                 Produktas: <a href="http://www.mightmedia.lt/" target="_blank">MightMedia TVS</a><br />
         </td>
-        <td valign="top">
-        <div class="title">MightMedia TVS atnaujinimas</div>
+        <td valign="top" class="right">
+        <h1>MightMedia TVS atnaujinimas</h1>
         <div class="vidus">
 
 <?php
@@ -154,11 +159,11 @@ if ($step == 1) {
                         <img src="images/icons/tick.png" /> Jei prie failo nustatyta ši ikonėlė vadinasi failas yra tinkamai nustatytas.<br />
                         <img src="images/icons/cross.png" /> Jei rasite šią ikonėlę prie nurodyto failo tuomet reikia jį sutvarkyti.<br /><br />
                         <strong>Priminimas:</strong> Sutvarkyti failus, t.y. jums reikia atlikti <strong>chmod</strong>. Visur kur matote įkonėlę <img src="images/icons/cross.png" /> būtina nurodyti <strong>chmod      777</strong> FTP serveryje. <br /><br />
-                        <table border="0">
+                        <table border="0" class="table">
                         <tr>
-                                <td class="title" valign="top" width="10%">Failas</td>
-                                <td class="title" valign="top" width="5%">Būsena</td>
-                                <td class="title" valign="top" width="35%">Klaidos aprašymas</td>
+                                <th class="th" valign="top" width="10%">Failas</th>
+                                <th class="th" valign="top" width="5%">Būsena</th>
+                                <th class="th" valign="top" width="35%">Klaidos aprašymas</th>
                         </tr>
 <?php
 
@@ -169,7 +174,7 @@ if ($step == 1) {
 			$file_error = 'Y';
 		}
 		echo "
-                        <tr>
+                        <tr class=\"tr\">
                                 <td>" . $chmod_files[$i] . "</td>
                                 <td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "<img src=\"images/icons/tick.png\" />" : "<img src=\"images/icons/cross.png\" />") . "</td>
                                 <td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "" : "Būtina nurodyti chmod 777 failui <strong>" . $chmod_files[$i] . "</strong> kadangi esamas chmod yra <strong>" . $teises . "</strong>") . "</td>
@@ -219,7 +224,7 @@ if ($step == 2) {
                 <br />
                 <table border="0" width="50%">
                 <tr>
-                        <td class="title">Informacija</td>
+                        <td class="title"><b>Informacija</b></td>
                 </tr>
                 <tr>
                         <td><div id="info"><?php
@@ -252,7 +257,7 @@ if ($step == 3) {
                                 Sveikiname įdiegus MightMedia TVS (Turinio Valdymo Sistemą).<br />
                                 Spauskite "Pabaigti" galutinai užbaigti instaliaciją. Bus ištrintas <b>upgrade.php</b> failas. Dėl visa ko - patikrinkite prisijungę prie FTP serverio.<br /><br />
                                 <form name="finish_install" method="post">
-                                <center><input name="finish" type="submit" value="Pabaigti" /></center>
+                                <center><input name="finish" type="submit" value="Pabaigti" class="submit" /></center>
                                 </form>
 <?php
 
@@ -273,10 +278,12 @@ function Go(id) {
         document.location.href = "upgrade.php?step="+id;
 }
 
-</script>
+</script><?php } else {?>
+<center id="container"><h1>Tik tinklalapio savininkui</h1><div class="vidus"><?php echo admin_login_form();?></div></center>
+<?php } ?>
+<span style="text-align: right;position:absolute;bottom:0;right:0; padding: 5px;">&copy; <a href="http://mightmedia.lt" style="color: #666;" target="_blank">MightMedia TVS</a></span>
 </body>
 </html>
-<?php }else{?><head><title>MightMedia TVS atnaujinimas</title>
-<link href="stiliai/default/default.css" rel="stylesheet" type="text/css" media="all" /></head><body><center><div class="title">Tik instaliuotojui</div><div class="vidus"><?php echo admin_login_form();?></div></center></body><?php }
+<?php
 ob_end_flush();
 ?>

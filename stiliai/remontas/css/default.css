@@ -335,16 +335,16 @@ a{
   margin-bottom: 5px;
 }
 .left{
-  width: 45%;
+  /*width: 45%;*/
   border-right: 2px dashed #C2C0B1;
-  float: left;
+  /*float: left;*/
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 10px;
 }
 .right{
-  width: 45%;
-  float: left;
+  /*width: 45%;
+  float: left;*/
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 10px;
