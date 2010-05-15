@@ -21,8 +21,10 @@ if (!isset($_SESSION))
 	session_start();
 ob_start();
 if(isset($_SESSION['language'])){
-include_once('lang/'.$_SESSION['language']);
-//echo $lang['system']['warning'];
+  include_once('lang/'.$_SESSION['language']);
+  //echo $lang['system']['warning'];
+} else {
+  include_once('lang/lt.php');
 }
 //slaptaþodþio kodavimas
 function koduoju($pass) {
@@ -263,17 +265,24 @@ HTML;
 
 		<script src="javascript/jquery/tooltip.js" type="text/javascript" ></script>
 		<title>MightMedia TVS/CMS</title>
-		<link href="stiliai/default/default.css" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" type="text/css" media="all" href="stiliai/remontas/css/default.css" />
 	</head>
 	<body>
-		<center>
-			<table border="0" cellpadding="2" cellspacing="5" width="80%">
+	<div id="admin_main">
+			  <div id="admin_header" style="height: 15px;">
+<div style="text-align: right;color: #666;"><b><?php echo date('H:i:s'); ?></b></div>
+			  </div>
+
+		<div id="admin_hmenu" style="font-weight:bold; font-size:25px; color: #666; padding: 10px; margin-bottom: 10px;">MightMedia</div>
+
+<center>
+			<table border="0" cellpadding="2" cellspacing="5" width="80%" id="container">
 				<tbody>
 						<tr>
 
 						<?php if($step!=0) { ?>
-						<td width="25%" valign="top">
-						<div class="title"><?php echo $lang['setup']['steps']; ?></div>
+						<td width="30%" valign="top" class="left">
+						<h1><?php echo $lang['setup']['steps']; ?></h1>
 							<div class="vidus">
 								<ul>
 									<?php
@@ -293,11 +302,11 @@ HTML;
 						</td>
 						<?php } ?>
 
-						<td valign="top">
-							<div class="title">MightMedia TVS įdiegimas / MightMedia CMS setup</div>
+						<td valign="top" class="right">
+							<h1>MightMedia TVS įdiegimas / MightMedia CMS setup</h1>
 							<div class="vidus">
 								<?php if ($step == 0) { ?>
-								<center>
+								
 									<form name="lang" method="post" action="">
 										<h2>Language / Kalba</h2>
 										Select language / Pasirinkite kalbą:<br />
@@ -307,16 +316,16 @@ HTML;
 										</select><br />
 										<input name="go" type="submit" value=" >>" />
 									</form>
-								</center>
+								
 								<?php } if ($step == 1) { ?>
-								<center>
+								
 									<form name="setup" action="">
 										<h2><?php echo $lang['setup']['liceanse'];?></h2>
-										<textarea name="copy" rows=15 cols=100 wrap="on" readonly="readonly"><?php include ('Skaityk.txt'); ?></textarea><br />
+										<textarea name="copy" rows=15 cols=80 wrap="on" readonly="readonly"><?php include ('Skaityk.txt'); ?></textarea><br />
 										<label><input name="agree_check" type="checkbox" value="ON" /> <?php echo $lang['setup']['agree']; ?></label><br /><br />
-										<input name="agree" type="reset" value="<?php echo $lang['setup']['next'];?> >>" onClick="Check();" />
+										<input class="submit" name="agree" type="reset" value="<?php echo $lang['setup']['next'];?> >>" onClick="Check();" />
 									</form>
-								</center>
+								
 								<?php } if ($step == 2) { ?>
 
 								<h2><?php echo $lang['setup']['file_check'];?></h2>
@@ -326,11 +335,11 @@ HTML;
 								<img src="images/icons/cross.png" alt="" /> <?php echo $lang['setup']['file_check_info3'];?><br /><br />
 								<strong><?php echo $lang['setup']['note'];?>:</strong>
 								<?php echo $lang['setup']['file_check_info3'];?>
-								<table border="0">
+								<table border="0" class="table">
 									<tr>
-										<td class="title" valign="top" width="10%"><?php echo $lang['setup']['file'];?></td>
-										<td class="title" valign="top" width="5%"><?php echo $lang['setup']['point'];?></td>
-										<td class="title" valign="top" width="35%"><?php echo $lang['setup']['about_error'];?></td>
+										<th class="th" valign="top" width="10%"><?php echo $lang['setup']['file'];?></td>
+										<th class="th" valign="top" width="5%"><?php echo $lang['setup']['point'];?></td>
+										<th class="th" valign="top" width="35%"><?php echo $lang['setup']['about_error'];?></td>
 									</tr>
 										<?php
 
@@ -341,7 +350,7 @@ HTML;
 												$file_error = 'Y';
 											}
 											echo "
-									<tr>
+									<tr class=\"tr\">
 											<td>" . $chmod_files[$i] . "</td>
 											<td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "<img src=\"images/icons/tick.png\" />" : "<img src=\"images/icons/cross.png\" />") . "</td>
 											<td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "" : "{$lang['setup']['chmod_777']} <strong>" . $chmod_files[$i] . "</strong> {$lang['setup']['chmod_777_2']} <strong>" . $teises . "</strong>") . "</td>
@@ -354,9 +363,9 @@ HTML;
 								<?php
 
 										if (isset($file_error) && $file_error == 'Y')
-											echo '<center><input type="reset" value="'.$lang['setup']['reload'].'" onClick="JavaScript:location.reload(true);"> <input type="reset" value="'.$lang['setup']['if_you_think_ok'].'" onClick="Go(\'3\');"><center>';
+											echo '<center><input class="submit" type="reset" value="'.$lang['setup']['reload'].'" onClick="JavaScript:location.reload(true);"> <input class="submit" type="reset" value="'.$lang['setup']['if_you_think_ok'].'" onClick="Go(\'3\');"><center>';
 										else
-											echo '<center><input type="reset" value="'.$lang['setup']['next'].' >>" onClick="Go(\'3\');"></center>';
+											echo '<center><input type="reset" class="submit" value="'.$lang['setup']['next'].' >>" onClick="Go(\'3\');"></center>';
 
 									}
 									//END
@@ -370,7 +379,7 @@ HTML;
 									<form name="mysql" method="post" action="?step=3">
 										<table border="0" width="100%">
 											<tr>
-												<td class="title"><?php echo $lang['setup']['mysql_connect'];?></td>
+												<td><h2><?php echo $lang['setup']['mysql_connect'];?></h2></td>
 											</tr>
 											<tr>
 												<td>
@@ -407,7 +416,7 @@ HTML;
 										<br />
 										<table border="0" width="50%">
 											<tr>
-												<td class="title"><?php echo $lang['user']['user_info'];?></td>
+												<td><h2><?php echo $lang['user']['user_info'];?></h2></td>
 											</tr>
 											<tr>
 												<td><div id="info"><?php echo $mysql_info; ?></div></td>
@@ -450,7 +459,7 @@ HTML;
 											</tr>
 										</table>
 										<br />
-										<center><input name="acc_create" type="submit" value="<?php echo $lang['setup']['next'];?>" /></center>
+										<center><input class="submit" name="acc_create" type="submit" value="<?php echo $lang['setup']['next'];?>" /></center>
 									</form>
 									<?php }
 									//END
@@ -470,7 +479,7 @@ HTML;
 									<h2><?php echo $lang['setup']['end'];?></h2>
 									<?php echo $lang['setup']['end_info'];?>
 									<form name="finish_install" method="post" action="">
-										<center><input name="finish" type="submit" value="<?php echo $lang['setup']['end'];?>" /></center>
+										<center><input class="submit" name="finish" type="submit" value="<?php echo $lang['setup']['end'];?>" /></center>
 									</form>
 									<?php
 
@@ -497,5 +506,6 @@ HTML;
 			}
 
 		</script>
+		<span style="text-align: right;position:absolute;bottom:0;right:0; padding: 5px;">&copy; <a href="http://mightmedia.lt" style="color: #666;" target="_blank">MightMedia TVS</a></span>
 	</body>
 </html>
