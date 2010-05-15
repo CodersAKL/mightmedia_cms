@@ -215,6 +215,8 @@ $lang['faq']['delete'] = 'Delete';
 $lang['faq']['submit'] = 'Submit';
 $lang['faq']['new'] = 'Add New FAQ';
 //admin
+$lang['admin']['editor'] = 'Editor';
+$lang['admin']['insert_image'] = 'Insert image';
 $lang['admin']['comments_off'] = 'Turn off comments';
 $lang['admin']['adm_comments'] = 'Comments';
 $lang['admin']['antivirus'] = 'Antivirus';

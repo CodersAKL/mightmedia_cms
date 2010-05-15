@@ -110,7 +110,7 @@ function build_tree($data, $id=0, $active_class='active') {
 }
 
 function editor($tipas = 'rte', $dydis = 'standartinis', $id = false, $value = '') {
-	global $conf;
+	global $conf, $lang;
 	if (!$id) {
 		$id = md5(uniqid());
 	}
@@ -124,7 +124,8 @@ function editor($tipas = 'rte', $dydis = 'standartinis', $id = false, $value = '
 		$areos = "'$id'";
 	}
 	$root = ROOT;
-	$return = <<<HTML
+	if($conf['Editor'] == 'markitup'){
+    $return = <<<HTML
 <script type="text/javascript" src="htmlarea/markitup/jquery.markitup.js"></script>
 <script type="text/javascript" src="htmlarea/markitup/sets/default/set.js"></script>
 <link rel="stylesheet" type="text/css" href="htmlarea/markitup/skins/markitup/style.css" />
@@ -132,9 +133,9 @@ function editor($tipas = 'rte', $dydis = 'standartinis', $id = false, $value = '
 
 HTML;
 
-	if (is_array($id)) {
-		foreach ($id as $key => $val) {
-			$return .= <<<HTML
+    if (is_array($id)) {
+      foreach ($id as $key => $val) {
+        $return .= <<<HTML
 	<script type="text/javascript">
 	$(document).ready(function(){
 		$('#{$key}').markItUp(mySettings);
@@ -142,9 +143,9 @@ HTML;
 	</script>
 <textarea id="{$key}" name="{$key}" style="min-height:320px;">{$value[$key]}</textarea>
 HTML;
-		}
-	} else {
-		$return .= <<<HTML
+      }
+    } else {
+      $return .= <<<HTML
 	<script type="text/javascript">
 	$(document).ready(function()	{
 		$('#{$id}').markItUp(mySettings);
@@ -153,6 +154,82 @@ HTML;
 <textarea id="{$id}" name="{$id}" style="min-height:320px;">{$value}</textarea>
 HTML;
 
+    }
+	} elseif($conf['Editor'] == 'textarea') {
+      $return = '';
+     if (is_array($id)) {
+      foreach ($id as $key => $val) {
+        $return .= <<<HTML
+        <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');
+" ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
+	<textarea id="{$key}" name="{$key}" style="min-height:200px; width: 100%;">{$value[$key]}</textarea>
+HTML;
+      }
+    } else {
+      $return .= <<<HTML
+      <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');
+" ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
+<textarea id="{$id}" name="{$id}" style="min-height:200px; width: 100%;">{$value}</textarea>
+HTML;
+
+    }
+	} elseif($conf['Editor'] == 'tiny_mce') {
+      $return = <<<HTML
+      <!-- Load TinyMCE -->
+<script type="text/javascript" src="htmlarea/tiny_mce/jquery.tinymce.js"></script>
+<script type="text/javascript">
+	$().ready(function() {
+		$('textarea.tinymce').tinymce({
+			// Location of TinyMCE script
+			script_url : 'htmlarea/tiny_mce/tiny_mce.js',
+
+			// General options
+			theme : "advanced",
+			plugins : "pagebreak,style,layer,table,advimage,advlink,emotions,insertdatetime,preview,media,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,advlist",
+
+			// Theme options
+			theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+			theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+			theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen,pagebreak",
+			
+			theme_advanced_toolbar_location : "top",
+			theme_advanced_toolbar_align : "left",
+			theme_advanced_statusbar_location : "bottom",
+			theme_advanced_resizing : true,
+
+			// Example content CSS (should be your site CSS)
+			content_css : "css/content.css",
+
+			// Drop lists for link/image/media/template dialogs
+			template_external_list_url : "lists/template_list.js",
+			external_link_list_url : "lists/link_list.js",
+			external_image_list_url : "lists/image_list.js",
+			media_external_list_url : "lists/media_list.js",
+      remove_script_host : false,
+
+			// Replace values for the template plugin
+			
+		});
+	});
+</script>
+<!-- /TinyMCE -->
+HTML;
+	 if (is_array($id)) {
+      foreach ($id as $key => $val) {
+        $return .= <<<HTML
+        <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;
+" ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
+	<textarea id="{$key}" name="{$key}" style="min-height:200px; width: 100%;" class="tinymce">{$value[$key]}</textarea>
+HTML;
+      }
+    } else {
+      $return .= <<<HTML
+      <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$id}','mywindow','menubar=1,resizable=1,width=820,height=500');
+"><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
+<textarea id="{$id}" name="{$id}" style="min-height:200px; width: 100%;" class="tinymce">{$value}</textarea>
+HTML;
+
+    }
 	}
 	return $return;
 }

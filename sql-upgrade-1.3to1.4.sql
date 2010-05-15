@@ -19,3 +19,4 @@ CREATE TABLE `newsgetters` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 INSERT INTO `nustatymai` VALUES(20, 'galorder', 'data');
 INSERT INTO `nustatymai` VALUES(21, 'galorder_type', 'DESC');
+INSERT INTO `nustatymai` VALUES(22, 'Editor', 'markitup');

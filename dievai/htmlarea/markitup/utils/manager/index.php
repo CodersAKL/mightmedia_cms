@@ -103,6 +103,13 @@ if(!isset($_SESSION['level']) || $_SESSION['level'] != 1)
 			})
 		});
 		</script>
+		<?php 
+           $array = explode('/', adresas());
+           $n = count($array);
+           unset($array[$n - 1], $array[$n - 2], $array[$n - 3], $array[$n - 4], $array[$n - 5], $array[$n - 6]);
+           $addr = implode('/', $array);
+           
+		 ?>
 		<script type="text/javascript">
 			function dialog_close(cual,type) {
 			if (!type) {
@@ -112,12 +119,18 @@ if(!isset($_SESSION['level']) || $_SESSION['level'] != 1)
 				else
 					type = 0;
 			}
-			var o = window.opener.document.getElementById('<?php echo strip_tags($_GET['id']); ?>');
+			//var o = window.opener.document.getElementById('<?php echo strip_tags($_GET['id']); ?>');
+			var o =  window.opener.jQuery('#<?php echo strip_tags($_GET['id']); ?>');
+			//alert(o.val());
 			if (type == 1)
-				o.value = o.value+'<img src="siuntiniai/'+cual+'" alt="'+cual.split('/')[1]+'" />';
+				//o.value = o.value+'<img src="siuntiniai/'+cual+'" alt="'+cual.split('/')[1]+'" />';
+				o.val(o.val()+'<img src="<?php echo $addr; ?>/siuntiniai/'+cual+'" alt="'+cual.split('/')[1]+'" />');
 			else
-				o.value = o.value+'<a href="siuntiniai/'+cual+'" title="'+cual.split('/')[1]+'" >'+cual.split('/')[1].split('.')[0]+'</a>';
+				//o.value = o.value+'<a href="siuntiniai/'+cual+'" title="'+cual.split('/')[1]+'" >'+cual.split('/')[1].split('.')[0]+'</a>';
+          o.val(o.val()+'<a href="<?php echo $addr; ?>/siuntiniai/'+cual+'" title="'+cual.split('/')[1]+'" >'+cual.split('/')[1].split('.')[0]+'</a>');
+
 			self.close();
+			
 			}
 		</script>
 	</head>
@@ -136,8 +149,8 @@ if(!isset($_SESSION['level']) || $_SESSION['level'] != 1)
 				<h2><?php echo $lang['admin']['preview']; ?></h2>
 				<div class="dragbox-content" >
 					<div id="fileQueue"></div>
-					<button type="image" name="select" id="select" style="float:right;background: url('../../../../../../../dievai/img/select.gif') center center no-repeat;width:110px;height:30px;border:none;color:white;cursor:pointer">Select</button>
 					<input type="file" name="uploadify" id="uploadify" />
+					<button type="image" name="select" id="select" style='background: #333;float: right; border:0; color: #FFF; padding: 5px;  display: inline;'><?php echo $lang['admin']['insert_image']; ?></button>
 				</div>
 			</div>
 		</div>

@@ -31,6 +31,7 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape((int)$_POST['keshas']) . ",'keshas')  ON DUPLICATE KEY UPDATE `val`=" . escape((int)$_POST['keshas']);
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape((int)$_POST['koment']) . ",'kmomentarai_sveciams')  ON DUPLICATE KEY UPDATE `val`=" . escape((int)$_POST['koment']);
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape($_POST['F_urls']) . ",'F_urls')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['F_urls']);
+	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape($_POST['Editor']) . ",'Editor')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['Editor']);
 	foreach ($q as $sql) {
 		mysql_query1($sql);
 	}
@@ -39,12 +40,15 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
 }
 
 $stiliai = getDirs(ROOT.'stiliai/', 'remontas');
+$editors = getDirs('htmlarea/', 'svn');
+$editors['textarea'] = 'textarea';
 $kalbos = getFiles(ROOT.'lang/');
 foreach ($kalbos as $file) {
 	if ($file['type'] == 'file') {
 		$kalba[basename($file['name'])] = basename($file['name']);
 	}
 }
+
 if(isset($conf['puslapiai']) && count($conf['puslapiai']) > 0){
   $puslapiai = array_keys($conf['puslapiai']);
   foreach ($puslapiai as $key) {
@@ -67,6 +71,7 @@ $nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype
 	"{$lang['admin']['cache']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['keshas']), "name" => "keshas", "class" => "select"), 
 	"{$lang['admin']['theme']}:" => array("type" => "select", "value" => $stiliai, "selected" => input($conf['Stilius']), "name" => "Stilius", "class" => "select"), 
 	"{$lang['admin']['lang']}:" => array("type" => "select", "value" => $kalba, "selected" => input($conf['kalba']), "name" => "kalba", "class" => "select"), 
+	"{$lang['admin']['editor']}:" => array("type" => "select", "value" => $editors, "selected" => input($conf['Editor']), "name" => "Editor", "class" => "select"), 
 	"" => array("type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}", "class" => "submit")
 );
 
