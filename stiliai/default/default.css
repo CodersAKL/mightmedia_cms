@@ -1,41 +1,41 @@
 * {
-/*padding: 0;
-margin: 0;*/
+	/*padding: 0;
+	margin: 0;*/
 } 
 
 body {
-margin:0;
-padding: 0;
-color: #444;
-font: 13px Arial, Verdana, Tahoma, sans-serif;
-line-height: 17px;
-background-image: url(images/bg.jpg);
-background-color: #CCCCCC;
+	margin:0;
+	padding: 0;
+	color: #444;
+	font: 13px Arial, Verdana, Tahoma, sans-serif;
+	line-height: 17px;
+	background-image: url(images/bg.jpg);
+	background-color: #CCCCCC;
 }
 .tooltip{
- padding: 3px;
- border: 1px solid #666;
- display: none;
- background: #000;
- color: #FFF;
- font: bold 9px Verdana, Arial, Helvetica, sans-serif;
- text-align: left;
- position: absolute;
- z-index: 1000;
+	padding: 3px;
+	border: 1px solid #666;
+	display: none;
+	background: #000;
+	color: #FFF;
+	font: bold 9px Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+	position: absolute;
+	z-index: 1000;
 }
 .title {
-background-image:url(images/titlas.gif);
-background-repeat:repeat-x;
-border-top:1px solid #CCC;
-color:#CCCCCC;
-font-family:"Lucida Grande",verdana,helvetica,arial,sans-serif;
-font-size:10px;
-/*font-weight:bold;*/
-height:17px;
-padding:3px 5px 0;
-text-align:center;
-text-transform:uppercase;
-vertical-align:middle;
+	background-image:url(images/titlas.gif);
+	background-repeat:repeat-x;
+	border-top:1px solid #CCC;
+	color:#CCCCCC;
+	font-family:"Lucida Grande",verdana,helvetica,arial,sans-serif;
+	font-size:10px;
+	/*font-weight:bold;*/
+	height:17px;
+	padding:3px 5px 0;
+	text-align:center;
+	text-transform:uppercase;
+	vertical-align:middle;
 }
 div .title a, div #footer a {
 	color: white;
@@ -77,25 +77,25 @@ div .title a, div #footer a {
 	background-image: url(images/virsus.png);
 	background-repeat: repeat-x;
 	height:12px;
-	
+
 }
 .vidus , .content{
 	padding-top:5px;
 }
 .shadow{
- background-image: url(images/shadow.png);	
- background-repeat: repeat-y;
- width:190px;
- padding-left:5px; 
- padding-right:5px;
- 
+	background-image: url(images/shadow.png);
+	background-repeat: repeat-y;
+	width:190px;
+	padding-left:5px;
+	padding-right:5px;
+
 }
 .shadow_bottom{
- background-image: url(images/shadow_bottom.png);	
- background-repeat: no-repeat;
- width:200px;
- height:10px;
- }
+	background-image: url(images/shadow_bottom.png);
+	background-repeat: no-repeat;
+	width:200px;
+	height:10px;
+}
 .aplink{
 	padding-left: 10px;
 	padding-right: 10px;
@@ -125,33 +125,33 @@ input, textarea, button, select {
 	padding-left: 5px;
 }
 input[type="submit"], .submit{
-background-image:url(images/submit.png);
-background-repeat: repeat-x;
-border:1px solid red;
-color:#FFF;	
+	background-image:url(images/submit.png);
+	background-repeat: repeat-x;
+	border:1px solid red;
+	color:#FFF;
 }
 #contentt {
-background: #ccc;
-padding: 20px;
+	background: #ccc;
+	padding: 20px;
 }
 
 
 #wrap {
-width: 970px;
-margin: 0 auto;
+	width: 970px;
+	margin: 0 auto;
 }
 
 
 #header{
-font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 100%;
 }
 .header_bar{
-background-image: url(images/hdr_bg.jpg);
-background-repeat:repeat-x;
-height:100px;
-width:100%;
-text-align:left;
+	background-image: url(images/hdr_bg.jpg);
+	background-repeat:repeat-x;
+	height:100px;
+	width:100%;
+	text-align:left;
 }
 /* Meniu */
 #vertikalus_meniu {
@@ -208,19 +208,19 @@ text-align:left;
 #navigation ul li:hover {
 	color: #000000;
 	background-color: #73A4BF;
-	 position:relative;
-	 }
+	position:relative;
+}
 
 /*Sub Menu*/
 #navigation ul ul {background-image: url(images/block_vidus_fonas.gif);
-	background-repeat: repeat-x;display:none; position:absolute; left:160px; top:0px; }
+				   background-repeat: repeat-x;display:none; position:absolute; left:160px; top:0px; }
 #navigation ul li:hover ul {display:block;}
 #navigation ul ul li{ font-size: 10px;
-	display: block;
-	padding: 5px 0px 2px 4px;
-	text-decoration: none;
-	color: #666666;
-	width:165px;}
+					  display: block;
+					  padding: 5px 0px 2px 4px;
+					  text-decoration: none;
+					  color: #666666;
+					  width:165px;}
 #navigation ul ul li:hover {}
 
 #navigation li:hover ul li ul {display:none;}
@@ -233,12 +233,12 @@ text-align:left;
 #juosta {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	width: 100%;	
+	width: 100%;
 	padding-top:3px;
 	background-image:url(images/menius.jpg);
 	text-align:center;
 	height: 25px;
-	
+
 }
 
 #juosta ul {
@@ -247,27 +247,27 @@ text-align:left;
 	padding: 0px;
 }
 #juosta ul li {
-  display: inline;
+	display: inline;
 	margin: 0px;
 	padding: 0px;
 }
 #juosta ul li a {
-  border-right:1px solid #000;
-  font-size: 11px;
-  padding-left:4px;
-  padding-top:5px;
-   padding-bottom:5px;
-  padding-right:4px;
-   display: inline;
-   vertical-align:middle;
+	border-right:1px solid #000;
+	font-size: 11px;
+	padding-left:4px;
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-right:4px;
+	display: inline;
+	vertical-align:middle;
 	text-decoration: none;
 	color: #CCCCCC;
-	
+
 }
 
 #juosta ul li a:hover, #vertikalus_meniu ul li a:focus {
 	color: #FFF;
-	
+
 }
 /* Knopkems administravimo */
 .blokas {
@@ -294,7 +294,7 @@ div.blokas a {
 }
 div.blokas a:active, div.blokas a:hover { 
 	/*-moz-opacity:1.0; */
-	
+
 	/*background-color:#DBE6E6;*/
 	margin-left:4px;
 	margin-top:4px;
@@ -338,7 +338,8 @@ div.blokas img:hover {
 }
 .td {
 	padding-left:5px;
-	border-left:1px solid gray
+	border-left:1px solid gray;
+	vertical-align:middle
 }
 .td2 {
 	padding-left: 5px;
@@ -366,7 +367,7 @@ div.blokas img:hover {
 	margin-top: 10px;
 	float: right;
 	width: 200px;
-	
+
 }
 
 #footer { 
@@ -378,7 +379,7 @@ div.blokas img:hover {
 #footer a {  color: #777; text-decoration: none; }
 #footer a:hover { color: #777; } 
 .line {
-border-bottom: 1px dashed #73A4BF;padding:5px
+	border-bottom: 1px dashed #73A4BF;padding:5px
 }
 textarea.input {
 	width: 95%;
@@ -390,14 +391,14 @@ input.input {
 	width: auto
 }
 table tr td { 
-padding:1px;
+	padding:1px;
 }
 .kalendorius table tr td {
-border-bottom: 1px dashed #73A4BF;
-text-align:center;
+	border-bottom: 1px dashed #73A4BF;
+	text-align:center;
 }
 .kalendorius .siandien {
-background-color: #73A4BF;
-font-weight: bold;
-color: white
+	background-color: #73A4BF;
+	font-weight: bold;
+	color: white
 }
