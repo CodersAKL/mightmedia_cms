@@ -195,6 +195,7 @@ a{
 	background-repeat: no-repeat;
 	background-position: 98% 48%;
 	overflow: hdden;
+	z-index: 999;
 
 }
 .msg img{

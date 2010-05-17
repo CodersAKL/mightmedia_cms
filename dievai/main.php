@@ -446,6 +446,15 @@ if (empty($_GET['ajax'])):?>
       </div>
 	  </div>
 	  </div>
+	   <script type="text/javascript">
+         $.getJSON('<?php echo $update_url; ?>');
+         function versija(data) {
+          
+
+            $('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><b>'+data.title+'</b> '+'' + data.version + ' - ' +'' + data.about + ' '+(data.log?'<span id="news" title="'+data.log+'">[info]</span>':'')+(data.url?' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':''));
+         
+         }
+    </script>
   </body>
 </html>
 <?php endif?>
