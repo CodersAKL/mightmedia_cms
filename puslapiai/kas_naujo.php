@@ -27,7 +27,7 @@ if (isset($_POST['dienos'])) {
         if (sizeof($q) > 0) {
             $text = '';
             foreach ($q as $row) {
-                $text .= "\t <a href='?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row['id'] . ";s," . $row['tid'] . ";p," . ((int) ($row['viso'] / 15 - 0.1) * 15) . "#end'>" . trimlink($row['pav'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['last_data']) . " - " . $row['last_nick'] . ")<br />\n";
+                $text .= "\t <a href='" . url("?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row['id'] . ";s," . $row['tid'] . ";p," . ((int) ($row['viso'] / 15 - 0.1) * 15)) . "#end'>" . trimlink($row['pav'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['last_data']) . " - " . $row['last_nick'] . ")<br />\n";
             }
             lentele($lang['new']['forum'], $text);
             unset($text, $row, $q);
