@@ -711,7 +711,9 @@ $lang['setup']['admin_info'] = 'Sukurkite pagrindinį administratorių kuris adm
 $lang['setup']['end_info'] = 'Sveikiname įdiegus MightMedia TVS (Turinio Valdymo Sistemą).<br /> Spauskite "Pabaigti" galutinai užbaigti instaliaciją. Bus ištrintas <b>setup.php</b> failas. Dėl visa ko - patikrinkite prisijungę prie FTP serverio.<br /><br />';
 $lang['setup']['agree_please'] = 'Prašome sutikti su licensija';
 $lang['setup']['admin_dir'] = 'Pervadink direktoriją';
-$lang['setup']['admin_dir_info'] = '"dievai" - šios direktorijos pavadinimas turi būti tik administratoriams žinomas. Pervadinkite ją į labiau sudetingą.';
+$lang['setup']['admin_dir_info'] = '"dievai" - šios direktorijos pavadinimas turi būti tik administratoriams žinomas. Pervadinkite ją į labiau sudėtingą.';
+$lang['setup']['time_zone'] = 'Laiko zona';
+$lang['setup']['time_zone_info'] = 'Pasirinkite savo laiko zoną, jeigu tinklalapį talpinate Lietuviškame serveryje, ji turėtų būti „Europe/Vilnius“.';
 //puslapiai
 $lang['pages']['view_user.php'] = 'Nario profilis';
 $lang['pages']['user_gal.php'] = 'Nario galerija';
