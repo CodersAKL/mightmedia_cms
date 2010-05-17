@@ -606,13 +606,14 @@ if (!empty($_POST['admin_dir'])) {
 
 // Diegimo pabaiga
 if (!empty($_POST['finish'])) {
+  $zone = (isset($_SESSION['time_zone']) ? $_SESSION['time_zone'] : 'Europe/Vilnius');
 	$content = <<< HTML
 <?php
 if (basename(\$_SERVER['PHP_SELF']) == 'conf.php') { die("Tiesioginis kreipimąsis į failą draudžiamas"); }
 define('SETUP',true);
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 'Off');	//Klaidu pranesimai On/Off
-date_default_timezone_set('{$_SESSION['time_zone']}');//Lithuanian time zone
+date_default_timezone_set('{$zone}');//Lithuanian time zone
 \$host = "{$_SESSION['mysql']['host']}";	//mysql sererio adresas
 \$user = "{$_SESSION['mysql']['user']}";	//db vartotojas
 \$pass = "{$_SESSION['mysql']['pass']}";	//slaptazodis
