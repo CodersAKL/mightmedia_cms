@@ -261,7 +261,7 @@ HTML;
 		<meta name="copyright" content="copyright (c) by CodeRS www.coders.lt" />
 		<meta name="rating" content="general" />
 		<meta name="generator" content="notepad" />
-		<script src="javascript/jquery/jquery-1.3.1.min.js" type="text/javascript" ></script>
+		<script src="javascript/jquery/jquery-1.3.2.min.js" type="text/javascript" ></script>
 
 		<script src="javascript/jquery/tooltip.js" type="text/javascript" ></script>
 		<title>MightMedia TVS/CMS</title>
@@ -287,7 +287,7 @@ HTML;
 								<ul>
 									<?php
 
-									$menu_pavad = array(1 => $lang['setup']['liceanse'], 2 => $lang['setup']['file_check'], 3 => $lang['setup']['database'], 4 => $lang['setup']['admin'], 5 => $lang['setup']['end']);
+									$menu_pavad = array(1 => $lang['setup']['liceanse'], 2 => $lang['setup']['file_check'], 3 => $lang['setup']['database'], 4 => $lang['setup']['admin'], 5 => $lang['setup']['admin_dir'], 6 => $lang['setup']['end']);
 									foreach ($menu_pavad as $key => $value) {
 										if ($key <= $step)
 											echo "\t\t\t<li><img src=\"images/icons/tick_circle.png\" style=\"vertical-align: middle;\" /><font color=\"green\"><b>" . $value . "</b></font></li>";
@@ -468,6 +468,7 @@ HTML;
 									if ($step == 5) { ?>
 									<h2><?php echo $lang['setup']['admin_dir'];?></h2>
 									<?php echo $lang['setup']['admin_dir_info'];?>
+									<br /><br />
 									<form name="admin_dir" method="post" action="">
 										<center><input name="admin_dir" type="submit" value="<?php echo $lang['setup']['next'];?>" /></center>
 									</form>

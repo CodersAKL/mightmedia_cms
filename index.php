@@ -24,13 +24,13 @@ $stime = $m1[1] + $m1[0];
 //Iterpiam nustatymu faila jei ne perkialiam i instaliacija
 clearstatcache();
 
-if (is_file('priedai/conf.php') && filesize('priedai/conf.php') > 1) {
+if (is_file('priedai/conf.php') && filesize('priedai/conf.php') > 10) {
 	include_once ("priedai/conf.php");
 } elseif (is_file('setup.php')) {
 	header('location: setup.php');
 	exit();
 } else {
-	die(klaida('Sistemos klaida / System error', 'Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.'));
+	die('<h1>Sistemos klaida / System error</h1>Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.');
 }
 include_once ('priedai/prisijungimas.php');
 if (!isset($conf)) {

@@ -467,9 +467,9 @@ form td{
 	vertical-align: middle;
 	padding-right: 10px;
 }
-form table{
+/*form table{
 	float: left;
-}
+}*/
 .tooltip{
 	padding: 3px;
 	border: 1px solid #FF7910;

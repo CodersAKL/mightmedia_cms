@@ -707,11 +707,11 @@ $lang['setup']['mysql_user'] = 'Prisijungimo vartotojas';
 $lang['setup']['mysql_pass'] = 'Slaptažodis';
 $lang['setup']['mysql_db'] = 'Duomenų bazė';
 $lang['setup']['mysql_prfx'] = 'Duomenų bazės lentelių pavadinimų priesaga';
-$lang['setup']['admin_info'] = 'Sukurkite pagrindinį administratorių kuris administruos MightMedia
-									TVS.';
-$lang['setup']['end_info'] = 'Sveikiname įdiegus MightMedia TVS (Turinio Valdymo Sistemą).<br />
-									Spauskite "Pabaigti" galutinai užbaigti instaliaciją. Bus ištrintas <b>setup.php</b> failas. Dėl visa ko - patikrinkite prisijungę prie FTP serverio.<br /><br />';
+$lang['setup']['admin_info'] = 'Sukurkite pagrindinį administratorių kuris administruos MightMedia TVS.';
+$lang['setup']['end_info'] = 'Sveikiname įdiegus MightMedia TVS (Turinio Valdymo Sistemą).<br /> Spauskite "Pabaigti" galutinai užbaigti instaliaciją. Bus ištrintas <b>setup.php</b> failas. Dėl visa ko - patikrinkite prisijungę prie FTP serverio.<br /><br />';
 $lang['setup']['agree_please'] = 'Prašome sutikti su licensija';
+$lang['setup']['admin_dir'] = 'Pervadink direktoriją';
+$lang['setup']['admin_dir_info'] = '"dievai" - šios direktorijos pavadinimas turi būti tik administratoriams žinomas. Pervadinkite ją į labiau sudetingą.';
 //puslapiai
 $lang['pages']['view_user.php'] = 'Nario profilis';
 $lang['pages']['user_gal.php'] = 'Nario galerija';

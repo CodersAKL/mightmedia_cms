@@ -749,11 +749,12 @@ $lang['setup']['mysql_user'] = 'User';
 $lang['setup']['mysql_pass'] = 'Password';
 $lang['setup']['mysql_db'] = 'Database';
 $lang['setup']['mysql_prfx'] = 'Prefix';
-$lang['setup']['admin_info'] = 'Create a master administrator who will manage MightMedia
-CMS.';
+$lang['setup']['admin_info'] = 'Create a master administrator who will manage MightMedia CMS.';
 $lang['setup']['end_info'] = 'Welcome to the introduction of MightMedia CMS (Content Management System). <br />
 Click "Finish" to complete the final installation. Will be deleted <b> setup.php </ b> file. Just in case - check online to an FTP server. <br /> <br />';
 $lang['setup']['agree_please'] = 'Please agree to the License';
+$lang['setup']['admin_dir'] = 'Rename directory';
+$lang['setup']['admin_dir_info'] = '"dievai" - the directory name must be known only to administrators. Rename it to the more difficult.';
 //puslapiai
 $lang['pages']['view_user.php'] = 'Profile';
 $lang['pages']['user_gal.php'] = 'User gallery';

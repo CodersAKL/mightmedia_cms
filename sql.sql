@@ -291,7 +291,7 @@ CREATE TABLE `naujienos` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=2 ;
 
 
-INSERT INTO `naujienos` VALUES(1, 'Sveikiname įdiegus MightMedia TVS', 0, 'Jūs sėkmingai įdiegėte <a target="_blank" href="http://www.mightmedia.lt">MightMedia TVS</a> . Jos autoriai <a target="_blank" href="http://code.google.com/p/coders/"><strong>CodeRS</strong></a> . Prašome nepasisavinti autorinių teisių, priešingu atveju jūs pažeisite GNU teises.', 'Kiekvienam puslapyje privalomas užrašas apačioje "<a target="_blank" href="http://www.mightmedia.lt/">MightMedia</a>" su nuoroda į <a target="_blank" href="http://www.mightmedia.lt/">http://www.mightmedia.lt</a>\r\n', 'lt', 1213129845, 'Admin', 'taip', 'TAIP');
+INSERT INTO `naujienos` VALUES(1, 'Sveikiname įdiegus MightMedia TVS', 0, 'Jūs sėkmingai įdiegėte <a target="_blank" href="http://www.mightmedia.lt">MightMedia TVS</a> . Jos autoriai <a target="_blank" href="http://code.google.com/p/coders/"><strong>CodeRS</strong></a> . Prašome nepasisavinti autorinių teisių, priešingu atveju jūs pažeisite GNU teises.', 'Kiekvienam puslapyje privalomas užrašas apačioje "<a target="_blank" href="http://www.mightmedia.lt/">MightMedia</a>" su nuoroda į <a target="_blank" href="http://www.mightmedia.lt/">http://www.mightmedia.lt</a>\r\n', 'lt', 1213129845, 'Admin', 'taip', 'TAIP', 0);
 
 -- --------------------------------------------------------
 
