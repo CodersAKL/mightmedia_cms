@@ -325,7 +325,7 @@ CREATE TABLE `naujienos` (
 -- Dumping data for table `naujienos`
 --
 
-INSERT INTO `naujienos` VALUES(1, 'Welcome to the introduction of MightMedia CMS ', 0, 'You have successfully installed <a target="_blank" href="http://www.mightmedia.lt"> MightMedia CMS </a>. They are the authors of the <a target =" _blank href = "http://coders.lt"> <strong> CodeRS </strong> </a>. \r\n', '', 'lt', 1213129845, 'Admin', 'taip', 'TAIP');
+INSERT INTO `naujienos` VALUES(1, 'Welcome to the introduction of MightMedia CMS ', 0, 'You have successfully installed <a target="_blank" href="http://www.mightmedia.lt"> MightMedia CMS </a>. They are the authors of the <a target =" _blank href = "http://coders.lt"> <strong> CodeRS </strong> </a>. \r\n', '', 'lt', 1213129845, 'Admin', 'taip', 'TAIP', 0);
 
 -- --------------------------------------------------------
 
