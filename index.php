@@ -26,7 +26,7 @@ clearstatcache();
 
 if (is_file('priedai/conf.php') && filesize('priedai/conf.php') > 10) {
 	include_once ("priedai/conf.php");
-} elseif (is_file('setup.php')) {
+} elseif (is_file('setup.php') && !isset($conf['Palaikymas'])) {
 	header('location: setup.php');
 	exit();
 } else {

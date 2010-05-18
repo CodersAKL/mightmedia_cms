@@ -485,7 +485,7 @@ if (!isset($_GET['step']) || empty($_GET['step'])) {
 	}
 }
 if (isset($_POST['language'])) {
-	$_SESSION['language']=$_POST['language'];
+	$_SESSION['language'] = $_POST['language'];
 	header("Location: setup.php?step=1");
 }
 
@@ -569,8 +569,10 @@ if (isset($_POST['next_msyql'])) {
 } else {
 	$next_mysql = '<input name="next_msyql" type="submit" value="'.$lang['setup']['create_tables'].'">';
 }
-if (isset($_POST['time_zone'])) 
+if (isset($_POST['time_zone'])) {
   $_SESSION['time_zone'] = $_POST['time_zone'];
+  header("Location: setup.php?step=7");
+}
 // Administratoriaus sukūrimo dalis
 if (!empty($_POST['acc_create'])) {
 	$user = htmlspecialchars($_POST['user']);
