@@ -180,7 +180,6 @@ function utf8_substr($str, $start) {
 		return join("", array_slice($ar[0], $start));
 	}
 }
-
 /**
  * Svetainės adresui gauti
  * @return string
@@ -189,7 +188,6 @@ function adresas() {
   //NEVEIKIA :/
   return "http://".$_SERVER["HTTP_HOST"].preg_replace("/[^\/]*$/","",$_SERVER["PHP_SELF"]);
 }
-
 /**
  * Patikrina ar puslapis egzistuoja ir ar vartotojas turi teise ji matyti bei grazinam puslapio ID
  * @param string $puslapis
@@ -430,14 +428,21 @@ function url($str) {
 			//išmetam tarpus
 			$url_title = str_replace(' ', '_', $url_title);
 			//atskiriam atskirus getus pasirinktu simboliu
-			$return = $url_title.implode(($conf['F_urls'] != '0'?$conf['F_urls']:';'), $linkai);
+			$return = adresas().ROOT.$url_title.implode(($conf['F_urls'] != '0'?$conf['F_urls']:';'), $linkai);
 		} else {
-			$return = $str;
+			$return = adresas().(substr($str,4,3) == '999' && $conf['F_urls'] == '0' ? 'main.php' : (substr($str,0,1) != '?' ? '' :ROOT)).$str;
 		}
 	} else {
-		$return = ($conf['F_urls'] != '0'?'':'?').str_replace('id=', '', $_SERVER['QUERY_STRING']).($conf['F_urls'] != '0'?$conf['F_urls']:';').$str;
+			//$return = ($conf['F_urls'] != '0'?'':'?').str_replace('id=', '', $_SERVER['QUERY_STRING']).($conf['F_urls'] != '0'?$conf['F_urls']:';').$str;
+			$g = '?';
+			foreach($_GET as $k => $v)
+        $g .= "{$k},{$v};";
+			$return = url($g.$str);
 	}
-	return adresas().(substr($str,4,3) == '999' && $conf['F_urls'] == '0' ? 'main.php' : ROOT).$return;
+	//echo $str.' /// '.$conf['F_urls'];
+	//$dir = (substr($str,4,3) == '999' && $conf['F_urls'] == '0' ? 'main.php' : (substr($str,0,1) != '?' ? '' :ROOT));
+	//echo adresas().realpath($dir.$return)."<br>";
+	return $return;
 }
 /**
  * Vartotojui atvaizduoti
