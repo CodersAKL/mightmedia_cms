@@ -368,7 +368,7 @@ a{
 	display: block
 }
 #container form {
-	float: left;
+	/*float: left;*/
 }
 .left{
 	width: 45%;
