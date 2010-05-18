@@ -335,6 +335,12 @@ div.blokas img:hover {
 }
 .tr2 {
 	background-color: #FBF8F4;
+	vertical-align: middle;
+	overflow: hidden
+}
+.tr {
+	vertical-align: middle;
+	overflow: hidden
 }
 .td {
 	padding-left:5px;
@@ -344,6 +350,7 @@ div.blokas img:hover {
 .td2 {
 	padding-left: 5px;
 	border-left: 1px solid gray;
+	vertical-align:middle
 }
 .kaire {
 	margin-top: 10px;
