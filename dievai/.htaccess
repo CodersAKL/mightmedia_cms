@@ -23,6 +23,6 @@ Options -Indexes
 		Header set Cache-Control "max-age=172800, proxy-revalidate"
 	</FilesMatch>
 </IfModule>
-<FilesMatch "grab.php|preview.php|preview.html|index.php|jqueryFileTree.php|info.php|uploadify.php|delete.php|check.php">
+<FilesMatch "grab.php|preview.php|preview.html|index.php|jqueryFileTree.php|info.php|uploadify.php|delete.php|check.php|editor_plugin.js">
 Allow from all
 </FilesMatch>

@@ -174,6 +174,7 @@ HTML;
 
     }
 	} elseif($conf['Editor'] == 'tiny_mce') {
+      $dir = adresas();
       $return = <<<HTML
       <!-- Load TinyMCE -->
 <script type="text/javascript" src="htmlarea/tiny_mce/jquery.tinymce.js"></script>
@@ -181,7 +182,7 @@ HTML;
 	$().ready(function() {
 		$('textarea.tinymce').tinymce({
 			// Location of TinyMCE script
-			script_url : 'htmlarea/tiny_mce/tiny_mce.js',
+			script_url : '{$dir}htmlarea/tiny_mce/tiny_mce.js',
 
 			// General options
 			theme : "advanced",
