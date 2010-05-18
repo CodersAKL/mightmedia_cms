@@ -68,7 +68,7 @@ if (!empty($url['t'])) {
 						{$lang['admin']['logs_date']}: <b>" . date('Y-m-d H:i:s', $row['time']) . "</b><br/>
 						IP: <b>" . $row['ip1'] . "</b><br/>
 						{$lang['admin']['logs_log']}: <i>" . wrap1(input($row['action']), 50) . "</i><br/>
-						\">" . trimlink(input(strip_tags($row['action'])), 50) . "</a>", //"Veiksmas"=>trimlink(input($row['action']),50),
+						\">" . trimlink(input(strip_tags($row['action'])), 100) . "</a>", //"Veiksmas"=>trimlink(input($row['action']),50),
                 //"IP"=>$row['ip1'],
                 $lang['admin']['logs_user'] => $kas, //"Kada"=>kada($row['time']),
                 $lang['admin']['action'] => "<a href=\"" . url("d," . $row['id'] . "") . "\" onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a> <a href='" . url("?id," . $url['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row['ip']) . "' title='{$lang['admin']['badip']}'><img src=\"" . ROOT . "images/icons/delete.png\" alt=\"[{$lang['admin']['badip']}]\" border=\"0\" class=\"middle\" /></a>");
