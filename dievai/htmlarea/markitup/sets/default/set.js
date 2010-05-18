@@ -11,6 +11,7 @@
 // ----------------------------------------------------------------------------
 mySettings = {
 	previewParserPath : 'htmlarea/markitup/utils/manager/scripts/preview.php',
+	fileManagerPath : 'utils/manager/index.php',
     onShiftEnter:      {keepDefault:false, replaceWith:'<br />\n'},
     onCtrlEnter:      {keepDefault:false, openWith:'\n<p>', closeWith:'</p>'},
     onTab:            {keepDefault:false, replaceWith:'    '},
@@ -116,7 +117,7 @@ mySettings = {
         {
             name:'Uploaded picture', key:'m', replaceWith:function(markItUp) {
                 //window.open(markItUp.root + "utils/manager/index.php?id=" + markItUp.textarea.id,"mywindow","menubar=1,resizable=1,width=820,height=500");
-                window.open("../../htmlarea/markitup/utils/manager/index.php?id=" + markItUp.textarea.id,"mywindow","menubar=1,resizable=1,width=820,height=500");
+                window.open(markItUp.root + mySettings.fileManagerPath +"?id=" + markItUp.textarea.id,"mywindow","menubar=1,resizable=1,width=850,height=500");
             //D:\Darbai\web\UniServer\www\mm\dievai\htmlarea\markitup\utils\manager
             }
         },
