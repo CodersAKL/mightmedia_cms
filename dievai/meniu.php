@@ -8,7 +8,7 @@
 				var order = $('#test-list').sortable('serialize');
 				$("#la").show("slow");
 				$("#la").hide("slow");
-				$.post("<?php echo url('?id,'.$_GET['id'].';a,'.$_GET['a'].';ajax,1');?>",{order:order});
+				$.post("<?php echo url('?id,'.$_GET['id'].';a,'.$_GET['a'].';');?>",{order:order});
 			}
 		});
 		
@@ -56,7 +56,7 @@ if (isset($_POST['order'])) {
 	$where = rtrim($where, ", ");
 	$sqlas = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `place`=  CASE id " . $case_place . " END WHERE id IN (" . $where . ")";
 	
-	echo $sqlas;
+	echo $sqlas." done";
 	$result = mysql_query1($sqlas);
 	delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang` = ".escape(lang())." ORDER BY `place` ASC");
 } else {
