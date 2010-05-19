@@ -451,7 +451,8 @@ ul#tree li{
 	display : inline;
 }
 .asmOptionDisabled {
-	color : #999;
+	color : #ccc;
+	font-size: 8px;
 }
 .asmHighlight {
 	padding : 0;
