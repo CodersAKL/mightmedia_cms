@@ -280,3 +280,11 @@ img.flag {
 #navigation ul li.active a {
 	color: #fff;
 }
+#navigation ul li.active ul a{
+  color: #666;
+  
+}
+#navigation ul li.active ul a:hover{
+  color: #FFF;
+  
+}
