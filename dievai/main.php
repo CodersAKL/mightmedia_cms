@@ -177,9 +177,9 @@ HTML;
       $dir = adresas();
       $return = <<<HTML
       <!-- Load TinyMCE -->
-<script type="text/javascript" src="htmlarea/tiny_mce/jquery.tinymce.js"></script>
+<script type="text/javascript" src="{$dir}htmlarea/tiny_mce/jquery.tinymce.js"></script>
 <script type="text/javascript">
-	$().ready(function() {
+	$(document).ready(function() {
 		$('textarea.tinymce').tinymce({
 			// Location of TinyMCE script
 			script_url : '{$dir}htmlarea/tiny_mce/tiny_mce.js',
@@ -199,14 +199,14 @@ HTML;
 			theme_advanced_resizing : true,
 
 			// Example content CSS (should be your site CSS)
-			content_css : "css/content.css",
+			//content_css : "css/content.css",
 
 			// Drop lists for link/image/media/template dialogs
 			template_external_list_url : "lists/template_list.js",
 			external_link_list_url : "lists/link_list.js",
 			external_image_list_url : "lists/image_list.js",
-			media_external_list_url : "lists/media_list.js",
-      remove_script_host : false,
+			media_external_list_url : "lists/media_list.js"//,
+      //remove_script_host : false,
 
 			// Replace values for the template plugin
 			
