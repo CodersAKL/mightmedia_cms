@@ -1539,7 +1539,7 @@ function lang() {
 
 		return $res;
 	}
-		function random($return = '') {
+	function random($return = '') {
 		$simboliai = "abcdefghijkmnopqrstuvwxyz0123456789";
 		for ($i = 1; $i < 3; ++$i) {
 			$num = rand() % 33;
@@ -1547,5 +1547,23 @@ function lang() {
 		}
 		return $return . '_';
 	}
+	function site_tree($data, $id=0, $active_class='active') {
+	global $admin_pagesid, $lang;
+	if(!empty($data)) {
+		$re="";
+		foreach ($data[$id] as $row) {
+			if (isset($data[$row['id']])) {
+        if(teises($row['teises'], $_SESSION['level'])){
+          $re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a><ul>";
+          $re.= site_tree($data, $row['id'],$active_class);
+          $re.= "</ul></li>";
+				}
+			} else 
+          if(teises($row['teises'], $_SESSION['level']))
+            $re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a></li>";
+		}
+		return $re;
+	}
+}
 
 ?>

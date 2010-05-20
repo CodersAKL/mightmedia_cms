@@ -667,6 +667,8 @@ $lang['download']['no'] = 'Siuntinių nėra';
 $lang['download']['cant'] = 'Jūs neturite teisės siųstis šį failą';
 $lang['download']['notfound'] = 'Failas nerastas';
 $lang['download']['notallowed'] = 'Jums neleidžiama matyti šių failų.';
+//tree
+$lang['tree']['hidden'] = 'Paslėpti puslapiai';
 //setupo kalba
 $lang['setup']['liceanse'] = 'Licensija';
 $lang['setup']['crete_db'] = 'Bandyti sukurti duombazę';
@@ -740,6 +742,7 @@ $lang['pages']['duk.php'] = 'D.U.K';
 $lang['pages']['deze.php'] = 'Šaukyklos archyvas';
 $lang['pages']['blsavimo_archyvas.php'] = 'Apklausų archyvas';
 $lang['pages']['apie.php'] = 'Apie';
+$lang['pages']['tree.php'] = 'Medis';
 //blokai
 $lang['blocks']['vartotojas.php'] = 'Narys';
 $lang['blocks']['user_top.php'] = 'Narių TOP 10';

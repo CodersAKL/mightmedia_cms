@@ -708,6 +708,8 @@ $lang['download']['no'] = 'No downloads';
 $lang['download']['cant'] = 'You cant download this file';
 $lang['download']['notfound'] = 'File not found';
 $lang['download']['notallowed'] = 'You are not allowed to download from here.';
+//tree
+$lang['tree']['hidden'] = 'Hidden pages';
 //setupo kalba
 $lang['setup']['liceanse'] = 'Liceanse';
 $lang['setup']['crete_db'] = 'Try to create db';
@@ -783,6 +785,7 @@ $lang['pages']['duk.php'] = 'FAQ';
 $lang['pages']['deze.php'] = 'Shoutbox archive';
 $lang['pages']['blsavimo_archyvas.php'] = 'Poll archive';
 $lang['pages']['apie.php'] = 'About';
+$lang['pages']['tree.php'] = 'Site tree';
 //blokai
 $lang['blocks']['vartotojas.php'] = 'User';
 $lang['blocks']['user_top.php'] = 'User TOP 10';
