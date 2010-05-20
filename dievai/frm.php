@@ -38,8 +38,8 @@
 if (!defined("OK") || !ar_admin(basename(__file__))) {
 	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
-
-if(!isset($_GET['f'])){ $_GET['f'] = 1; $url['f'] = 1;}
+include_once (ROOT.'priedai/class.php');
+if(!isset($_GET['f']) && !isset($_POST)){ $_GET['f'] = 1; $url['f'] = 1;}
 $buttons="
 <div class=\"btns\">
 	<a href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};f,1")."\" class=\"btn\"><span><img src=\"".ROOT."images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
@@ -85,9 +85,9 @@ if (isset($_POST['order2'])) {
 
 }
 // Paspaustas kazkoks mygtukas
-if (isset($_POST['action']) && $_POST['action'] == 'f_sukurimas') {
+if (isset($_POST['f_sukurimas'])) {
 	$forumas = input($_POST['f_pav']);
-	$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_forumai` (`pav`, `lang`) VALUES ('" . $forumas . "', ".escape(lang()).")");
+	$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_forumai` (`pav`, `lang`) VALUES (" . escape($forumas) . ", ".escape(lang()).")");
 
 	if ($result) {
 		msg($lang['system']['done'], $lang['system']['categorycreated']);
@@ -105,7 +105,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'f_sukurimas') {
 if (isset($_POST['keisti']) && $_POST['keisti'] == $lang['admin']['edit']) {
 	$f_id = (int)$_POST['f_edit'];
 	$f_pav_keitimas = input($_POST['f_pav_keitimas']);
-	$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_forumai` SET `pav`='" . $f_pav_keitimas . "' WHERE `id`='" . $f_id . "'");
+	$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_forumai` SET `pav`=" . escape($f_pav_keitimas) . " WHERE `id`=" . escape($f_id) . "");
 	if ($result) {
 		msg($lang['system']['done'], $lang['system']['categoryupdated']);
 
@@ -118,7 +118,7 @@ if (isset($_POST['keisti']) && $_POST['keisti'] == $lang['admin']['edit']) {
 //Kategorijos trynimas (gali but problemu)
 if (isset($_GET['d'])) {
 	$f_id = (int)$_GET['d'];
-	$strid = mysql_query1("SELECT id from `" . LENTELES_PRIESAGA . "d_temos`  WHERE `fid`='" . $f_id . "' AND `lang` = ".escape(lang())."");
+	$strid = mysql_query1("SELECT id from `" . LENTELES_PRIESAGA . "d_temos`  WHERE `fid`=" . escape($f_id) . " AND `lang` = ".escape(lang())."");
 	if (sizeof($strid) > 0) {
 		foreach ($strid as $stridi) {
 			$zinsid = mysql_query1("SELECT id from `" . LENTELES_PRIESAGA . "d_straipsniai` where `tid`=" . escape($stridi['id']) . " AND `lang` = ".escape(lang())."");
@@ -132,8 +132,8 @@ if (isset($_GET['d'])) {
 
 		}
 	}
-	$result = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_forumai`  WHERE `id`='" . $f_id . "'");
-	$result2 = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_temos`  WHERE `fid`='" . $f_id . "'");
+	$result = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_forumai`  WHERE `id`=" .escape($f_id) . "");
+	$result2 = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_temos`  WHERE `fid`=" . escape($f_id) . "");
 
 
 	if ($result && $result2) {
@@ -148,12 +148,12 @@ if (isset($_GET['d'])) {
 if (isset($_GET['t'])) {
 	$f_id = (int)$_GET['t'];
 	//sita atlieka (istrina subkategorija)
-	$result = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_temos`  WHERE `id`='" . $f_id . "'");
+	$result = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_temos`  WHERE `id`=" . escape($f_id) . "");
 	//turetu istrint zinutes
-	$sql12 = mysql_query1("SELECT id from `" . LENTELES_PRIESAGA . "d_straipsniai` where `tid`='" . $f_id . "'");
+	$sql12 = mysql_query1("SELECT id from `" . LENTELES_PRIESAGA . "d_straipsniai` where `tid`=" . escape($f_id) . "");
 	if (sizeof($sql12) > 0) {
 		foreach ($sql12 as $sidas) {
-			$result2 = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_zinute`  WHERE sid='" . $sidas['id'] . "'");
+			$result2 = mysql_query1("DELETE from `" . LENTELES_PRIESAGA . "d_zinute`  WHERE sid=" . escape($sidas['id']) . "");
 
 		}
 	}
@@ -173,7 +173,7 @@ if (isset($_POST['kurk']) && $_POST['kurk'] == $lang['admin']['forum_createsub']
 	$f_id = (int)$_POST['f_forumas'];
 	$f_tema = input($_POST['f_tema']);
 	$f_aprasymas = input($_POST['f_aprasymas']);
-	$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_temos` (`fid`, `pav`, `aprasymas`, `lang`) VALUES ('" . $f_id . "', '" . $f_tema . "', '" . $f_aprasymas . ", ".escape(lang())."')");
+	$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_temos` (`fid`, `pav`, `aprasymas`, `lang`) VALUES (" . escape($f_id) . ", " . escape($f_tema). ", " . escape($f_aprasymas) . ", ".escape(lang()).")");
 	if ($result) {
 		msg($lang['system']['done'], $lang['admin']['forum_createdsub']);
 
@@ -213,9 +213,10 @@ if (isset($_GET['r']) && isset($_GET['f'])) {
 	$f_temos_id = (int)$_GET['r'];
 	$sql = mysql_query1("SELECT pav FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `id`='" . $f_id . "' limit 1");
 	$f_forumas = $sql['pav'];
-	unset($sql);
+	unset($sql);	
 	$t_info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`='" . $f_temos_id . "' limit 1");
-	$f_text = "
+  $bla = new forma();
+	/*$f_text = "
 					
 					<form name=\"subred\" action=\"".url("?id," . $url['id'] . ";a,{$_GET['a']}")."\" method=\"post\">
 					<table>
@@ -233,9 +234,11 @@ if (isset($_GET['r']) && isset($_GET['f'])) {
 					<input type=\"submit\"name=\"subred\" value=\"{$lang['admin']['edit']}\" class=\"submit\">
 					</form>
 				
-				";
-	lentele($lang['admin']['forum_editsub'], $f_text);
-	unset($f_text, $t_info, $f_id, $f_temod_id, $sql, $f_forumas);
+				";*/
+				$forma = array("Form" => array("action" => url("?id," . $url['id'] . ";a,{$_GET['a']}"), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port"), "{$lang['admin']['forum_category']}:" => array("type" => "string", "value" => "<b>" . $f_forumas . "</b><input type=\"hidden\" name=\"forumo_id\"  value='" . $f_id . "' /><input type=\"hidden\" name=\"temos_id\"  value='" . $t_info['id'] . "' />"), "{$lang['admin']['forum_subcategory']}:"=>array("type"=>"text","value"=>$t_info['pav'],"name"=>"temos_pav"),
+		"{$lang['admin']['forum_subabout']}:" => array("type" => "text", "value" => $t_info['aprasymas'], "name" => "temos_apr"), "" => array("type" => "submit", "name" => "subred", "value" =>$lang['admin']['edit']));
+	lentele($lang['admin']['forum_editsub'], $bla->form($forma));
+	unset($t_info, $f_id, $f_temod_id, $sql, $f_forumas);
 }
 if (isset($_POST['subred']) && $_POST['subred'] == $lang['admin']['edit']) {
 	$f_forumas = (int)$_POST['forumo_id'];
@@ -257,7 +260,7 @@ if (isset($_POST['subred']) && $_POST['subred'] == $lang['admin']['edit']) {
 // ##############################################################
 if (isset($url['f'])) {
 	if ((int)$url['f'] == 1) {
-		$f_text = "
+		/*$f_text = "
 				
 						<form name=\"1\" action=\"".url("?id," . $url['id'] . ";a,{$_GET['a']}")."\" method=\"post\">
 							{$lang['admin']['forum_category']}:&nbsp;&nbsp;<input name=\"f_pav\" type=\"text\" value=\"\" class=\"input\">
@@ -265,8 +268,12 @@ if (isset($url['f'])) {
 							<input type=\"hidden\" name=\"action\"  value=\"f_sukurimas\" />
 						</form>
 					
-					";
-		lentele($lang['system']['createcategory'], $f_text);
+					";*/
+				$bla = new forma();
+
+				$forma = array("Form" => array("action" => url("?id," . $url['id'] . ";a,{$_GET['a']}"), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port"), "{$lang['admin']['forum_category']}:" => array("type" => "text", "name" => "f_pav"), 
+		 " " => array("type" => "submit", "name" => "f_sukurimas", "value" =>$lang['system']['createcategory']));
+		lentele($lang['system']['createcategory'], $bla->form($forma));
 
 	}
 	//Kategorijos redagavimas
@@ -275,21 +282,22 @@ if (isset($url['f'])) {
 		if (sizeof($sql) > 0) {
 			$li = "";
 
-			$tekst = "
+			/*$tekst = "
 <form name=\"keisti\" action=\"".url("?id," . $url['id'] . ";a,{$_GET['a']}")."\" method=\"post\">
 					<table border=0 width=100%>
 						<tr>
 							<td width='10%'>{$lang['admin']['forum_category']}:</td>
-							<td><select size=\"1\" name=\"f_edit\" class=\"select\">";
+							<td><select size=\"1\" name=\"f_edit\" class=\"select\">";*/
 			foreach ($sql as $record1) {
-				$tekst .= "<option value=" . $record1['id'] . ">" . $record1['pav'] . "</option>\n";
+				//$tekst .= "<option value=" . $record1['id'] . ">" . $record1['pav'] . "</option>\n";
+				$cats[$record1['id']] = $record1['pav'];
 				$li .= '<li id="listItem_' . $record1['id'] . '" class="drag_block"> 
 <a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
 <img src="'.ROOT.'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
 ' . $record1['pav'] . '
 </li> ';
 			}
-			$tekst .= "</select>
+			/*$tekst .= "</select>
   							</td>
   						</tr>
   						<tr>
@@ -298,12 +306,16 @@ if (isset($url['f'])) {
   						</tr>
   					</table>
   					<input type=\"submit\" name=\"keisti\" value=\"{$lang['admin']['edit']}\"> 
-";
+";*/
+				$bla = new forma();
+
+				$forma = array("Form" => array("action" => url("?id," . $url['id'] . ";a,{$_GET['a']}"), "method" => "post", "enctype" => "", "id" => "", "class" => ""), "{$lang['admin']['forum_category']}:" => array("type" => "select", "name" => "f_edit", "value"=>$cats),  "{$lang['admin']['forum_cangeto']}:" => array("type" => "text", "name" => "f_pav_keitimas"), 		 " " => array("type" => "submit", "name" => "keisti", "value" =>$lang['admin']['edit']));
+		lentele($lang['system']['editcategory'], $bla->form($forma));
 
 			$tekstas = '
 <div id="la" style="display:none"><b>' . $lang['system']['updated'] . '</b></div>
 			<ul id="test-list">' . $li . '</ul>';
-			lentele($lang['system']['editcategory'], $tekst);
+			//lentele($lang['system']['editcategory'], $tekst);
 			lentele($lang['admin']['forum_order'], $tekstas);
 		} else {
 			klaida($lang['system']['warning'], $lang['system']['nocategories']);
@@ -314,7 +326,12 @@ if (isset($url['f'])) {
 	if ((int)$url['f'] == 3) {
 		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `lang` = ".escape(lang())." ORDER BY `place` ASC");
 		if (sizeof($sql) > 0) {
-			$f_text = "
+		  $bla = new forma();
+			foreach ($sql as $row) {
+				$categories[$row['id']] = $row['pav'];
+			}
+
+			/*$f_text = "
 					<form name=\"kurk\" action=\"".url("?id," . $url['id'] . ";a,{$_GET['a']}")."\" method=\"post\">
 					<table border=0 width=100%>
 						<tr>
@@ -337,8 +354,11 @@ if (isset($url['f'])) {
   					</table>
   					<input type=\"submit\" name=\"kurk\" value=\"{$lang['admin']['forum_createsub']}\" class=\"submit\"></form>
 					
-					";
-			lentele($lang['admin']['forum_createsub'], $f_text);
+					";*/
+									$forma = array("Form" => array("action" => url("?id," . $url['id'] . ";a,{$_GET['a']}"), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "kurk"), "{$lang['admin']['forum_category']}:" => array("type" => "select", "value" => $categories, "name"=>"f_forumas"), "{$lang['admin']['forum_subcategory']}:"=>array("type"=>"text","value"=>"","name"=>"f_tema"),
+		"{$lang['admin']['forum_subabout']}:" => array("type" => "text", "name" => "f_aprasymas"), "" => array("type" => "submit", "name" => "kurk", "value" =>$lang['admin']['forum_createsub']));
+
+			lentele($lang['admin']['forum_createsub'], $bla->form($forma));
 		} else {
 			klaida($lang['system']['warning'], $lang['system']['nocategories']);
 		}
@@ -348,7 +368,10 @@ if (isset($url['f'])) {
 	if ((int)$url['f'] == 4) {
 		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `lang` = ".escape(lang())." ORDER BY `place` ASC");
 		if (sizeof($sql) > 0) {
-			$f_text = "
+      foreach ($sql as $row) {
+				$forums[$row['id']] = $row['pav'];
+			}
+			/*$f_text = "
 					
 					<form name=\"subedit\" action=\"".url("?id," . $url['id'] . ";a,{$_GET['a']}")."\" method=\"post\">
 					<table border=0 width=100%>
@@ -366,8 +389,11 @@ if (isset($url['f'])) {
   					<input type=\"submit\" name=\"subedit\" value=\"{$lang['admin']['forum_select']}\" class=\"submit\">
 					<input type=\"hidden\" name=\"action\"  value=\"f_temos_edit\" />
 					</form>
-									";
-			lentele($lang['admin']['forum_editsub'], $f_text);
+									";*/
+				$bla = new forma();
+				$forma = array("Form" => array("action" => url("?id," . $url['id'] . ";a,{$_GET['a']}"), "method" => "post", "enctype" => "", "id" => "", "class" => ""), "{$lang['admin']['forum_subwhere']}:" => array("type" => "select", "name" => "f_forumas", "value"=>$forums), 
+		 " " => array("type" => "submit", "name" => "subedit", "value" =>$lang['admin']['forum_select']));
+			lentele($lang['admin']['forum_editsub'], $bla->form($forma));
 		} else {
 			klaida($lang['system']['warning'], $lang['system']['nocategories']);
 		}
