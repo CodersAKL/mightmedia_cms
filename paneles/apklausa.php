@@ -9,7 +9,61 @@
  * @$Revision$
  * @$Date$
  **/
+$quest = mysql_query1("SELECT * FROM `".LENTELES_PRIESAGA."poll_questions` WHERE `shown`='1' AND `lang` = ".escape(lang())." ORDER BY `id` DESC LIMIT 1");
+if(isset($quest['question'])){
+  $answers = mysql_query1("SELECT * FROM  `".LENTELES_PRIESAGA."poll_answers` WHERE `question_id`=".escape($quest['id'])." ORDER BY `id` ASC");
+  $votes = mysql_query1("SELECT * FROM  `".LENTELES_PRIESAGA."poll_votes` WHERE `question_id`=".escape($quest['id'])."");
+  $ip = getip();
+  $show_rezults = false;
+  $viso = 0;
+  $voted = array();
+  foreach($votes as $vote){
+    if(!isset($voted[$vote['answer_id']]))
+      $voted[$vote['answer_id']] = 1;
+    else
+      $voted[$vote['answer_id']]++;
+    if ($ip == $vote['ip'])
+      $show_rezults = true;
+    $viso++;
+  }
 
+  if(!$show_rezults){
+    if(isset($_POST['answer']) && ($quest['radio'] == 0 || ($quest['radio'] == 1 && isset($_SESSION['username'])))){
+      if($quest['radio'] == 1)
+        mysql_query1("INSERT INTO `".LENTELES_PRIESAGA."poll_votes` (`ip`, `question_id`, `answer_id`) VALUES (".escape($ip).", ".escape($quest['id']).", ".escape($_POST['answer'][0]).")");
+      else
+        foreach($_POST['answer'] as $answer)
+          mysql_query1("INSERT INTO `".LENTELES_PRIESAGA."poll_votes` (`ip`, `question_id`, `answer_id`) VALUES (".escape($ip).", ".escape($quest['id']).", ".escape($answer).")");
+        header("LOCATION: ".$_SERVER['HTTP_REFERER']);
+    }
+    $text = '<b style="text-align: center;">'.input($quest['question']).'</b><form method="post">';
+    foreach ($answers as $row) {
+      $text .= "<label><input type=\"".($quest['radio'] == 1 ? 'radio' : 'checkbox')."\" name=\"answer[]\" class=\"middle\" value=\"{$row['id']}\" /> ".input($row['answer'])."</label><br />";
+    }
+    if ($quest['radio'] == 0 || ($quest['radio'] == 1 && isset($_SESSION['username'])))
+      $text .= '<div style="text-align: center;"><input name="vote" type="submit" value="' . $lang['poll']['vote'] . '" /></div>';
+    $text .= '</form>';
+  } else{
+    $text = '<b style="text-align: center;">'.input($quest['question']).'</b><br />';
+    foreach ($answers as $row) {
+      $voted[$row['id']] = (isset($voted[$row['id']]) ? $voted[$row['id']] : 0);
+      $text .= input($row['answer'])." (".$voted[$row['id']].")<br />   
+    <div style=\"width:".round((int)(100 / $viso * $voted[$row['id']]))."%;background:url(images/balsavimas/center.png) top left repeat-x; height:10px\">
+         
+			<div style=\"float:right;height:8px; width:1px; border-right:1px solid black;margin:1px -1px\"></div>
+			<div style=\"float:left;height:8px; width:1px; border-right:1px solid black;margin:1px -2px\"></div>
+
+		</div><br />";
+    }
+    $text .= '<br />	' . $lang['poll']['author'] . ': ' . user($quest['author_name'], $quest['author_id']) . '';
+    if (puslapis('blsavimo_archyvas.php')) 
+        $text .= '<a href='.url('?id,' . $conf['puslapiai']['blsavimo_archyvas.php']['id'] ). '>' . $lang['poll']['archive'] . '</a>';
+  }
+} else 
+  $text = '<b>' . $lang['poll']['no'] . '.</b><br />';
+//if(!in_array(getip(), $votes[]))
+
+/*
 unset($title);
 
 
@@ -120,5 +174,5 @@ if (isset($conf['puslapiai']['blsavimo_archyvas.php'])) {
 	$text .= '<a href='.url('?id,' . $conf['puslapiai']['blsavimo_archyvas.php']['id'] ). '>' . $lang['poll']['archive'] . '</a>';
 }
 unset($rezultatai, $atsakymas, $ipsai, $nariai, $narys, $atsakymas, $ats, $atsa, $sql);
-
+*/
 ?>

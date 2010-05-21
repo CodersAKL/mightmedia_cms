@@ -655,3 +655,35 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` VALUES(1, NULL, 'Admin', 1, '21232f297a57a5a743894a0e4a801fc3', 'info@localhost', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'LT', NULL, NULL, NULL, NULL, 'System Admin', 0, 0, '0', 0, NULL, 500, NULL, NULL, NULL);
+
+CREATE TABLE `poll_answers` (
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `question_id` int(255) NOT NULL DEFAULT '0',
+  `answer` text NOT NULL,
+  `lang` varchar(3) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language',
+  PRIMARY KEY (`id`),
+  KEY `lang` (`lang`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
+
+CREATE TABLE `poll_questions` (
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `question` text NOT NULL,
+  `radio` int(1) NOT NULL DEFAULT '0',
+  `shown` int(1) NOT NULL DEFAULT '0',
+  `only_guests` int(1) NOT NULL,
+  `author_id` int(11) NOT NULL DEFAULT '1',
+  `author_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'Admin',
+  `lang` varchar(3) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language',
+  PRIMARY KEY (`id`),
+  KEY `lang` (`lang`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
+
+CREATE TABLE `poll_votes` (
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(255) NOT NULL DEFAULT '0',
+  `question_id` int(255) NOT NULL DEFAULT '0',
+  `answer_id` int(255) NOT NULL DEFAULT '0',
+  `lang` varchar(3) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language',
+  PRIMARY KEY (`id`),
+  KEY `lang` (`lang`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;

@@ -410,7 +410,7 @@ $lang['admin']['forum_subcategory'] = 'Subcategory';
 $lang['admin']['forum_cangeto'] = 'Change to';
 $lang['admin']['forum_subabout'] = 'About';
 $lang['admin']['forum_subwhere'] = 'Where is subcategory?';
-$lang['admin']['forum_order'] = 'Isidestymas';
+$lang['admin']['forum_order'] = 'Order';
 //poll admin
 $lang['admin']['poll_active'] = 'Active poll';
 $lang['admin']['poll_no'] = 'No poll';
@@ -422,6 +422,9 @@ $lang['admin']['poll_info'] = 'Not all field required.';
 $lang['admin']['poll_create'] = 'Create poll';
 $lang['admin']['poll_edit'] = 'Edit poll';
 $lang['admin']['poll_created'] = 'Poll created';
+$lang['admin']['poll_active'] = 'Poll active';
+$lang['admin']['poll_type'] = 'Poll type';
+$lang['admin']['poll_answers'] = 'Answers';
 //articles admin
 $lang['admin']['article'] = 'Article';
 $lang['admin']['article_edit'] = 'Edit article';
