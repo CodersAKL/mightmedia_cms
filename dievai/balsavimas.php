@@ -73,11 +73,25 @@ HTML;
 	); 
   lentele($lang['admin']['poll_create'], $form->form($inputs));
 } elseif($_GET['v'] == 2){
+      if(isset($_GET['e'])){
+        if(isset($_POST['update']))
+           mysql_query1("UPDATE `".LENTELES_PRIESAGA."poll_questions` SET `question`=".escape($_POST['question']).", `radio`=".escape((int)$_POST['type']).", `shown`=".escape((int)$_POST['shown']).", `only_guests`=".escape((int)$_POST['only_guests'])." WHERE `id`=".escape($_GET['e'])."");
+          $quest = mysql_query1("SELECT * FROM  `".LENTELES_PRIESAGA."poll_questions` WHERE `id`=".escape($_GET['e'])." LIMIT 1");
+          $form = new forma();
+          $inputs = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"),
+          "{$lang['admin']['poll_question']}:" => array("type" => "text", "name" => "question", "value"=>input($quest['question']), "class" => "input"),
+          "{$lang['admin']['poll_votecan']}:" => array("type" => "select", "selected"=> input($quest['only_guests']) , "name" => "only_guests", "value" => array(0 => $lang['admin']['poll_all'], 1 => $lang['admin']['poll_membs']), "class" => "input"),
+          "{$lang['admin']['poll_type']}:" => array("type" => "select", "name" => "type", "value" => array(0 => 'checkbox', 1 => 'radio'), "class" => "input", "selected"=> input($quest['radio'])),
+            "{$lang['admin']['poll_active']}:" => array("type" => "select", "name" => "shown", "value" => array(0 => $lang['admin']['no'], 1 => $lang['admin']['yes']), "class" => "input", "selected"=> input($quest['shown'])),
+            " " => array("type" => "submit", "name"=>"update", "value" => $lang['admin']['edit'])
+          ); 
+          lentele($lang['admin']['poll_edit'], $form->form($inputs));
+      }
     $tbl = new Table();
     $quest = mysql_query1("SELECT * FROM `".LENTELES_PRIESAGA."poll_questions` ORDER BY `id` DESC");
     foreach ($quest as $row) {
       $info[] = array("#"=>($row['shown'] == 1 ? '<img src="'.ROOT.'/images/icons/status_online.png" alt="" />': '<img src="'.ROOT.'/images/icons/status_offline.png" alt="" />'), "{$lang['admin']['poll']}:" => input($row['question']),
-						"{$lang['admin']['action']}:" => " <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};e," . $row['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='".ROOT."images/icons/cross.png' border='0'></a>");
+						"{$lang['admin']['action']}:" => " <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};v,{$_GET['v']};e," . $row['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='".ROOT."images/icons/cross.png' border='0'></a>");
 
 			}
 			if(isset($info)){
@@ -104,8 +118,9 @@ HTML;
      } else 
         lentele($lang['admin']['poll_edit'], $lang['admin']['poll_no']);
   
-}
 
+  
+}
   
 
 //if (empty($url['v'])) {
