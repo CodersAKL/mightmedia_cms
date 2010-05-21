@@ -21,7 +21,7 @@ if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) $p = (int)$url['p']; 
 if ($conf['Palaikymas'] == 1) klaida("{$lang['admin']['maintenance']}", $conf['Maintenance']);
 
 $limit = $conf['News_limit'];
-$viso = kiek("naujienos", "WHERE `rodoma`='TAIP'");
+$viso = kiek("naujienos", "WHERE `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
 $text = '';
 $data = '';
 
