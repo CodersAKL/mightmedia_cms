@@ -901,7 +901,7 @@ HTML;
                         echo '<option '.($tz == 'Europe/Vilnius' ? 'selected':'').' value="'.$tz.'">'.$tz;
                       ?>
                     </select>
-										<input name="admin_dir" type="submit" value="<?php echo $lang['setup']['next'];?>" /></center>
+										<input name="tzone" type="submit" value="<?php echo $lang['setup']['next'];?>" /></center>
 									</form>
 									<?php
 									}
