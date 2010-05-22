@@ -679,6 +679,7 @@ $lang['new']['comments'] = 'Comments';
 $lang['new']['author'] = 'Author';
 $lang['new']['date'] = 'Date';
 $lang['new']['urls'] = 'Web links';
+$lang['new']['poll'] = 'Poll';
 //comments
 $lang['comments']['send'] = 'Send';
 $lang['comments']['write'] = 'Write comment';

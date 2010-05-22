@@ -43,7 +43,7 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 				$text .= "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/> <a href='".url("?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['ID'] ). "'>" . trimlink(input($row['pavadinimas']), 20) . "</a><br />\n";
 			}
 		}
-	}
+	}	
 	//siuntiniuose
 	if (isset($conf['puslapiai']['siustis.php']['id'])) {
 		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas`, `categorija` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `data`>=" . escape($_SESSION['lankesi']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())." ORDER BY `data` DESC LIMIT 10",60);
@@ -108,6 +108,9 @@ if (isset($_SESSION['lankesi']) && $_SESSION['lankesi'] > 0) {
 			} elseif ($row['pid'] == 'puslapiai/codebin' && isset($conf['puslapiai']['codebin.php']['id'])) {
 				//$extra = "Vartotojai";
 				$link = "c," . $row['kid'];
+			} elseif ($row['pid'] == 'puslapiai/blsavimo_archyvas' && isset($conf['puslapiai']['blsavimo_archyvas.php']['id'])) {
+				//$extra = "Vartotojai";
+				$link = "m," . $row['kid'];
 			}
 
 			$file = str_replace('puslapiai/', '', $row['pid']);

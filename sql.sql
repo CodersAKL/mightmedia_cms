@@ -629,7 +629,7 @@ INSERT INTO `users` VALUES(1, NULL, 'Admin', 1, '21232f297a57a5a743894a0e4a801fc
 CREATE TABLE `poll_answers` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `question_id` int(255) NOT NULL DEFAULT '0',
-  `answer` text NOT NULL,
+  `answer` text CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
   `lang` varchar(3) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language',
   PRIMARY KEY (`id`),
   KEY `lang` (`lang`)
@@ -637,7 +637,7 @@ CREATE TABLE `poll_answers` (
 
 CREATE TABLE `poll_questions` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
-  `question` text NOT NULL,
+  `question` text CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
   `radio` int(1) NOT NULL DEFAULT '0',
   `shown` int(1) NOT NULL DEFAULT '0',
   `only_guests` int(1) NOT NULL,

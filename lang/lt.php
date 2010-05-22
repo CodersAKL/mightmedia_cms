@@ -637,6 +637,7 @@ $lang['sb']['deleted'] = 'Ištrinta';
 $lang['new']['forum'] = 'Forumas';
 $lang['new']['news'] = 'Naujienos';
 $lang['new']['gallery'] = 'Galerija';
+$lang['new']['poll'] = 'Apklausa';
 $lang['new']['downloads'] = 'Siuntiniai';
 $lang['new']['articles'] = 'Straipsniai';
 $lang['new']['comments'] = 'Komentarai';

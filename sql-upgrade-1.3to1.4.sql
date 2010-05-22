@@ -24,7 +24,7 @@ INSERT INTO `nustatymai` VALUES(21, 'galorder_type', 'DESC');
 INSERT INTO `nustatymai` VALUES(22, 'Editor', 'markitup');
 CREATE TABLE `poll_questions` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
-  `question` text NOT NULL,
+  `question` text CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
   `radio` int(1) NOT NULL DEFAULT '0',
   `shown` int(1) NOT NULL DEFAULT '0',
   `only_guests` int(1) NOT NULL,
@@ -40,6 +40,14 @@ CREATE TABLE `poll_votes` (
   `ip` varchar(255) NOT NULL DEFAULT '0',
   `question_id` int(255) NOT NULL DEFAULT '0',
   `answer_id` int(255) NOT NULL DEFAULT '0',
+  `lang` varchar(3) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language',
+  PRIMARY KEY (`id`),
+  KEY `lang` (`lang`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+CREATE TABLE `poll_answers` (
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `question_id` int(255) NOT NULL DEFAULT '0',
+  `answer` text CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
   `lang` varchar(3) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language',
   PRIMARY KEY (`id`),
   KEY `lang` (`lang`)
