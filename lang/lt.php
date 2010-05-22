@@ -526,6 +526,7 @@ $lang['forum']['lastpost'] = 'Paskutinis pranešimas';
 $lang['forum']['topics'] = 'Temos';
 $lang['forum']['notopics'] = 'Nėra temų';
 $lang['forum']['nosubcat'] = 'Nėra subkategorijų';
+$lang['forum']['not_allowed'] = 'Jūs neturite teisės skaityti šią temą. Geros dienos.';
 $lang['news']['news'] = 'Naujienos';
 $lang['news']['nonews'] = 'Naujienų nėra';
 $lang['news']['related'] = 'Susijusios naujienos';

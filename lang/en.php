@@ -550,6 +550,7 @@ $lang['forum']['lastpost'] = 'Last post';
 $lang['forum']['topics'] = 'Topics';
 $lang['forum']['notopics'] = 'No topics';
 $lang['forum']['nosubcat'] = 'No subcategories';
+$lang['forum']['not_allowed'] = 'You are not allowed to read this topic.';
 //news
 $lang['news']['news'] = 'News';
 $lang['news']['nonews'] = 'No news.';

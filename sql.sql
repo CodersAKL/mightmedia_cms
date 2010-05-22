@@ -99,6 +99,7 @@ CREATE TABLE `d_forumai` (
   `pav` varchar(100) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `lang` varchar(3) COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language',
   `place` int(11) DEFAULT NULL,
+  `teises` varchar(250) COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'N;',
   PRIMARY KEY (`id`),
   KEY `lang` (`lang`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=1 ;
@@ -134,6 +135,7 @@ CREATE TABLE `d_temos` (
   `last_data` int(10) DEFAULT NULL,
   `last_nick` varchar(25) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `place` int(11) DEFAULT NULL,
+  `teises` varchar(250) COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'N;',
   PRIMARY KEY (`id`),
   KEY `lang` (`lang`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=1 ;

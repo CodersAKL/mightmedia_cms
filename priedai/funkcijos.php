@@ -63,7 +63,6 @@ function header_info() {
   <![endif]-->
   <title>' . input(strip_tags($conf['Pavadinimas']) . ' - ' . $page_pavadinimas) . '</title>
   <script type="text/javascript" src="javascript/jquery/jquery-1.3.2.min.js"></script> 
-  <script type="text/javascript" src="javascript/jquery/jquery-ui-personalized-1.6rc6.min.js"></script> 
   <script type="text/javascript" src="javascript/pagrindinis.js"></script>  
   <script type="text/javascript" src="javascript/jquery/rating.js"></script>	
   <script type="text/javascript" src="javascript/jquery/tooltip.js"></script>
