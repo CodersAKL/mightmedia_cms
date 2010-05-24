@@ -38,7 +38,7 @@ input, textarea, select{
 	background: url('../images/input.png') repeat-x;
 	border: 1px solid #D7D7D7;
 	padding: 3px;
-	color: #999999;
+	color: #666666;
 	margin-bottom: 3px;
 }
 input[type="submit"], .submit{
