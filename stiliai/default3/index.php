@@ -51,7 +51,7 @@
        </div>
     </div>
     <div class="login">
-      <?php include("stiliai/".$conf['Stilius']."/vartotojas.php"); echo $text; ?>
+      <?php include("stiliai/".$conf['Stilius']."/vartotojas.php"); echo $text; unset($title, $text);?>
     </div>
     <div id="content">
       <div class="left_blocks">
