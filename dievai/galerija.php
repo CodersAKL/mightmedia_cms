@@ -453,14 +453,14 @@ if (isset($_GET['v'])) {
 $(document).ready(function() {
 	$(\"#uploadify\").uploadify({
 		'uploader'       : 'uploadify/scripts/uploadify.swf',
-		'script'         : 'uploadify/scripts/uploadify.php',
+		'script'         : '".adresas()."/uploadify/scripts/uploadify.php',
 		'cancelImg'      : 'uploadify/cancel.png',
-		'folder'         : '".ROOT."/images/galerija',
+		'folder'         : 'images/galerija',
 		'scriptData'     : {'PHPSESSID': '".session_id()."', 'cat': $('#cat').val()},
 		'queueID'        : 'fileQueue',
 		'auto'           : true,
 		'multi'          : true
-		
+		  
 	});
 });
 </script>
