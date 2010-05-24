@@ -403,7 +403,7 @@ INSERT INTO `nustatymai` VALUES(12, 'minidyd', '150');
 INSERT INTO `nustatymai` VALUES(13, 'galbalsuot', '1');
 INSERT INTO `nustatymai` VALUES(14, 'fotoperpsl', '10');
 INSERT INTO `nustatymai` VALUES(15, 'galkom', '1');
-INSERT INTO `nustatymai` VALUES(16, 'pirminis', 'naujienos.php');
+INSERT INTO `nustatymai` VALUES(16, 'pirminis', 'naujienos');
 INSERT INTO `nustatymai` VALUES(17, 'keshas', '1');
 INSERT INTO `nustatymai` VALUES(18, 'kmomentarai_sveciams', '0');
 INSERT INTO `nustatymai` VALUES(19, 'F_urls', ';');
