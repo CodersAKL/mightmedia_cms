@@ -352,7 +352,9 @@ if (empty($_GET['ajax'])):?>
           <div class="buttons">
             <button onclick="window.location='<?php echo url('?id,999');?>'"><img src="images/icons/home.png" alt="" /></button>
             <button title="<?php echo $lang['admin']['antivirus']; ?>" onclick="window.location='<?php echo url('?id,999;m,3');?>'"><img src="images/icons/product-1.png" alt="" /></button>
-            <button title="<?php echo $lang['admin']['uncache']; ?>" onclick="window.location='<?php echo url('?id,999;m,1');?>'"><img src="images/icons/publish.png" alt="" /></button>
+            <?php if(!empty($conf['keshas'])):?>
+				<button title="<?php echo $lang['admin']['uncache']; ?>" onclick="window.location='<?php echo url('?id,999;m,1');?>'"><img src="images/icons/publish.png" alt="" /></button>
+			<?endif?>
             <button title="<?php echo $lang['admin']['admin_chat']; ?>" onclick="window.location='<?php echo url('?id,999;m,2');?>'"><img src="images/icons/finished-work.png" alt="" /></button>
           </div>
           <div class="nav">
@@ -445,7 +447,6 @@ if (empty($_GET['ajax'])):?>
          </div>
           </div>
       </div>
-	  </div>
 	  </div>
 	   <script type="text/javascript">
          $.getJSON('<?php echo $update_url; ?>');
