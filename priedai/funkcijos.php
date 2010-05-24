@@ -9,6 +9,7 @@
  * @$Revision$
  * @$Date$
  **/
+
 //patikrinimui ar puslapaia atveriami taip kaip reikia
 if (basename($_SERVER['PHP_SELF']) == 'funkcijos.php') {
 	ban($lang['system']['forhacking']);
