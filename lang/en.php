@@ -68,7 +68,7 @@ $lang['system']['categories'] = 'Categories';
 $lang['system']['dashboard'] = 'Dashboard';
 //user
 $lang['user']['for_members'] = 'Members';
-$lang['user']['hello'] = 'Hello';
+$lang['user']['hello'] = 'Hello, %s';
 $lang['user']['edit_profile'] = 'Edit profile';
 $lang['user']['messages'] = 'Messages';
 $lang['user']['logout'] = 'Log out';
@@ -791,6 +791,7 @@ $lang['pages']['deze.php'] = 'Shoutbox archive';
 $lang['pages']['blsavimo_archyvas.php'] = 'Poll archive';
 $lang['pages']['apie.php'] = 'About';
 $lang['pages']['tree.php'] = 'Site tree';
+$lang['pages']['naujienlaiskiai.php'] = 'Newsletters';
 //blokai
 $lang['blocks']['vartotojas.php'] = 'User';
 $lang['blocks']['user_top.php'] = 'User TOP 10';

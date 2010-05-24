@@ -748,6 +748,7 @@ $lang['pages']['deze.php'] = 'Šaukyklos archyvas';
 $lang['pages']['blsavimo_archyvas.php'] = 'Apklausų archyvas';
 $lang['pages']['apie.php'] = 'Apie';
 $lang['pages']['tree.php'] = 'Medis';
+$lang['pages']['naujienlaiskiai.php'] = 'Naujienlaiskiai';
 //blokai
 $lang['blocks']['vartotojas.php'] = 'Narys';
 $lang['blocks']['user_top.php'] = 'Narių TOP 10';
