@@ -9,10 +9,10 @@
  * @$Revision$
  * @$Date$
  **/
-$quest = mysql_query1("SELECT * FROM `".LENTELES_PRIESAGA."poll_questions` WHERE `shown`='1' AND `lang` = ".escape(lang())." ORDER BY `id` DESC LIMIT 1");
+$quest = mysql_query1("SELECT * FROM `".LENTELES_PRIESAGA."poll_questions` WHERE `shown`='1' AND `lang` = ".escape(lang())." ORDER BY `id` DESC LIMIT 1",3600);
 if(isset($quest['question'])){
-  $answers = mysql_query1("SELECT * FROM  `".LENTELES_PRIESAGA."poll_answers` WHERE `question_id`=".escape($quest['id'])." ORDER BY `id` ASC");
-  $votes = mysql_query1("SELECT * FROM  `".LENTELES_PRIESAGA."poll_votes` WHERE `question_id`=".escape($quest['id'])."");
+  $answers = mysql_query1("SELECT * FROM  `".LENTELES_PRIESAGA."poll_answers` WHERE `question_id`=".escape($quest['id'])." ORDER BY `id` ASC",3600);
+  $votes = mysql_query1("SELECT * FROM  `".LENTELES_PRIESAGA."poll_votes` WHERE `question_id`=".escape($quest['id']),3600);
   $ip = getip();
   $show_rezults = false;
   $viso = 0;
