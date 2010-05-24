@@ -13,9 +13,9 @@
 $sql_p = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' AND `lang` = ".escape(lang())." ORDER BY `place` ASC", 120);
 foreach ($sql_p as $row_p) {
 	if ( teises($row_p['teises'], $_SESSION['level'])) {
-		if (is_file("paneles/" . $row_p['file'])) {
-			include_once ("paneles/" . $row_p['file']);
-			if (!isset($title)) {
+		if (is_file("paneles/" . basename($row_p['file']))) {
+			include_once ("paneles/" . basename($row_p['file']));
+			if (empty($title)) {
 				$title = $row_p['panel'];
 			}
 			if ($row_p['show'] == 'Y' && isset($text) && !empty($text) && isset($_SESSION['level']) && teises($row_p['teises'], $_SESSION['level'])) {
