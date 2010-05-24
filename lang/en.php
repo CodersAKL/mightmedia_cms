@@ -802,4 +802,5 @@ $lang['blocks']['kalendorius.php'] = 'Calendar';
 $lang['blocks']['info.php'] = 'Info';
 $lang['blocks']['apklausa.php'] = 'Poll';
 $lang['blocks']['admin.php'] = 'Admin info';
+$lang['blocks']['kalbos.php'] = 'Select language';
 ?>

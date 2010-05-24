@@ -759,4 +759,5 @@ $lang['blocks']['kalendorius.php'] = 'Kalendorius';
 $lang['blocks']['info.php'] = 'Informacija';
 $lang['blocks']['apklausa.php'] = 'Apklausa';
 $lang['blocks']['admin.php'] = 'Administracijos info';
+$lang['blocks']['kalbos.php'] = 'Kalbos pasirinkimas';
 ?>
