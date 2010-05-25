@@ -31,9 +31,9 @@ if (!isset($url['m'])) {
 	if ($sqlas && sizeof($sqlas) > 0) {
 		foreach ($sqlas as $sql) {
 			$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 86400);
-			$path1 = explode(",", $path['path']);
+			//$path1 = explode(",", $path['path']);
 
-			if ($path1[(count($path1) - 1)] == $k) {
+			if ($path['path'] == $k) {
 				$sqlkiek = kiek('galerija', "WHERE `categorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang()));
 				$info[] = array(
 					" " => "<a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' /></a>",
@@ -213,8 +213,8 @@ if (!empty($url['m'])) {
 	if (!empty($row['file']) && isset($row['file'])) {
 		if (defined('LEVEL') && teises($row['teises'], $_SESSION['level']) || ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('galerija.php', unserialize($_SESSION['mod']))))) {
         addtotitle($row['pavadinimas']);
-			$nuoroda = mysql_query1("SELECT id FROM " . LENTELES_PRIESAGA . "galerija WHERE id > " . escape($url['m']) . " AND `categorija`=" . escape($row['kid']) . " AND `lang` = ".escape(lang())." order by id ASC LIMIT 1", 86400);
-			$nuoroda2 = mysql_query1("SELECT id FROM " . LENTELES_PRIESAGA . "galerija WHERE id < " . escape($url['m']) . " AND categorija=" . escape($row['kid']) . " AND `lang` = ".escape(lang())." order by id DESC LIMIT 1", 86400);
+			$nuoroda2 = mysql_query1("SELECT id FROM " . LENTELES_PRIESAGA . "galerija WHERE id > " . escape($url['m']) . " AND `categorija`=" . escape($row['kid']) . " AND `lang` = ".escape(lang())." order by id ASC LIMIT 1", 86400);
+			$nuoroda = mysql_query1("SELECT id FROM " . LENTELES_PRIESAGA . "galerija WHERE id < " . escape($url['m']) . " AND categorija=" . escape($row['kid']) . " AND `lang` = ".escape(lang())." order by id DESC LIMIT 1", 86400);
 			if (isset($row['Nick'])) {
 				$autorius = user($row['Nick'], $row['nick_id'], $row['levelis']);
 			} else {
@@ -225,6 +225,12 @@ if (!empty($url['m'])) {
 				$balsavimas = rating_form($page,$row['nid']);
 			} else {
 				$balsavimas = '';
+			}
+			if (!empty($nuoroda2['id'])) {
+				$text .= "<a href=\"".url("?id," . $url['id'] . ";m," . $nuoroda2['id']). "\" >< {$lang['admin']['gallery_prev']}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+			}
+			if (!empty($nuoroda['id'])) {
+				$text .= "<a href=\"".url("?id," . $url['id'] . ";m," . $nuoroda['id'] ). "\" >{$lang['admin']['gallery_next']} ></a>";
 			}
 			$text .= "
 			<div id=\"gallery\" >

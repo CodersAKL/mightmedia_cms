@@ -459,7 +459,8 @@ $(document).ready(function() {
 		'scriptData'     : {'PHPSESSID': '".session_id()."', 'cat': $('#cat').val()},
 		'queueID'        : 'fileQueue',
 		'auto'           : true,
-		'multi'          : true
+		'multi'          : true,
+		'buttonText'     : '".$lang['admin']['file_new']."'
 		  
 	});
 });

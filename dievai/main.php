@@ -236,9 +236,6 @@ HTML;
 }
 ?>
 
-<?php
-//Jeigu uzklausa yra AJAX
-if (empty($_GET['ajax'])):?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -354,7 +351,7 @@ if (empty($_GET['ajax'])):?>
             <button title="<?php echo $lang['admin']['antivirus']; ?>" onclick="window.location='<?php echo url('?id,999;m,3');?>'"><img src="images/icons/product-1.png" alt="" /></button>
             <?php if(!empty($conf['keshas'])):?>
 				<button title="<?php echo $lang['admin']['uncache']; ?>" onclick="window.location='<?php echo url('?id,999;m,1');?>'"><img src="images/icons/publish.png" alt="" /></button>
-			<?endif?>
+			<?php endif?>
             <button title="<?php echo $lang['admin']['admin_chat']; ?>" onclick="window.location='<?php echo url('?id,999;m,2');?>'"><img src="images/icons/finished-work.png" alt="" /></button>
           </div>
           <div class="nav">
@@ -459,4 +456,3 @@ if (empty($_GET['ajax'])):?>
     </script>
   </body>
 </html>
-<?php endif?>
