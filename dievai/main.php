@@ -109,7 +109,7 @@ function build_tree($data, $id=0, $active_class='active') {
 	}
 }
 
-function editor($tipas = 'rte', $dydis = 'standartinis', $id = false, $value = '') {
+function editor($tipas = 'jquery', $dydis = 'standartinis', $id = false, $value = '') {
 	global $conf, $lang;
 	if (!$id) {
 		$id = md5(uniqid());
@@ -141,7 +141,7 @@ HTML;
 		$('#{$key}').markItUp(mySettings);
 	});
 	</script>
-<textarea id="{$key}" name="{$key}" style="min-height:320px;">{$value[$key]}</textarea>
+<textarea id="{$key}" name="{$key}">{$value[$key]}</textarea>
 HTML;
       }
     } else {
@@ -151,7 +151,7 @@ HTML;
 		$('#{$id}').markItUp(mySettings);
 	});
 	</script>
-<textarea id="{$id}" name="{$id}" style="min-height:320px;">{$value}</textarea>
+<textarea id="{$id}" name="{$id}">{$value}</textarea>
 HTML;
 
     }
