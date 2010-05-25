@@ -89,9 +89,6 @@ $lang['new']['author'] => $nick, $lang['contact']['message'] => smile(bbchat(tri
 					} );
 				} );
 			</script>';
-		/*$form = array("Form" => array("action" => "", "method" => "post", "name" => "com2"), "{$lang['admin']['comments_kid']}:" => array("type" => "select", "value" => $pgs, "name" => "pg"), "\r\r " => array("type" => "hidden", "value" => $_POST['pg'], "name" => "page"), //" " => array("type" => "submit", "name" => "select2", "value" => "{$lang['admin']['page_select']}"),
-			"  " => array("type" => "submit", "name" => "del2", "value" => "{$lang['admin']['del_comments']}"));*/
-
 		lentele("{$lang['admin']['adm_comments']}", '<div id="com">'.$tbl->render($info).'</div>');
 	} else
 		klaida($lang['system']['warning'], $lang['system']['no_items']);

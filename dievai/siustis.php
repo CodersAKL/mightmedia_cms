@@ -195,15 +195,7 @@ if (isset($_GET['v'])) {
 	$bla = new forma();
 	if ($_GET['v'] == 7) {
 		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "siuntiniai` ORDER BY ID DESC");
-		/*if (sizeof($sql2) > 0) {
-			foreach ($sql2 as $row2) {
-				$siuntiniaii[$row2['id']] = $row2['pavadinimas'];
-			}
-		} else {
-			$siuntiniaii[] = $lang['admin']['download_no'];
-		}*/
-		/*$redagavimas = array("Form" => array("action" => url("?id,{$_GET['id']};a,{$_GET['a']};v,1"), "method" => "post", "name" => "reg"), "{$lang['admin']['download_download']}:" => array("type" => "select", "value" => $siuntiniaii, "name" => "edit_new"), "{$lang['admin']['edit']}:" => array("type" => "submit", "name" => "action", "value" => "{$lang['admin']['edit']}"), "{$lang['admin']['delete']}:" => array("type" => "submit", "name" => "action","extra"=>"onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"", "value" => "{$lang['admin']['delete']}"));
-		lentele($lang['admin']['download_edit'], $bla->form($redagavimas));*/
+
 	$table = new Table();
 	foreach ($sql2 as $row){
         $info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('siuntsch');\" />" => "<input type=\"checkbox\" value=\"{$row['ID']}\" name=\"siunt_delete[]\" />", 

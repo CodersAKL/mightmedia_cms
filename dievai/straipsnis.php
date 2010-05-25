@@ -196,12 +196,9 @@ if ($_GET['v'] == 4) {
 }
 
 if ($_GET['v'] == 7 || isset($url['h'])) {
-	//if ($i == 1) {
 		$ar = array("TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}");
 		$straipsnis = array("Form" => array("action" => url("?id," . $_GET['id'] . ";a," . $_GET['a']), "method" => "post", "name" => "reg"), "{$lang['admin']['article_title']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pav'] : ''), "name" => "pav", "class" => "input"), "" => array("type" => "hidden", "name" => "idas", "value" => (isset($extra['id']) ? input($extra['id']) : '')), "{$lang['admin']['article_comments']}:" => array("type" => "select", "value" => array('taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no']), "name" => "kom", "class" => "input", "class" => "input"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => (isset($extra['kat']) ?
 			input($extra['kat']) : '')), "{$lang['admin']['article_shown']}:" => array("type" => "select", "value" => $ar, "name" => "rodoma", "class" => "input", "class" => "input", "selected" => (isset($extra['rodoma']) ? input($extra['rodoma']) : '')), "{$lang['admin']['article']}:" => array("type" => "string", "value" => 
-			
-			//editor('spaw', 'standartinis', array('apr' => 'Straipsnio įžanga', 'str' => 'straipsnis'), array('apr' => (isset($extra)) ? $extra['t_text'] : $lang['admin']['article_preface'], 'str' => (isset($extra)) ? $extra['f_text'] : $lang['admin']['article']))
 editor('jquery', 'standartinis', array('str' => $lang['admin']['article']), array('str' => (isset($extra) ? $extra['t_text'].(empty($extra['f_text'])?'':"\n===page===\n".$extra['f_text']) : $lang['admin']['article'])))
 			
 			), (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['article_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['article_create']));
@@ -210,9 +207,6 @@ editor('jquery', 'standartinis', array('str' => $lang['admin']['article']), arra
 		}
 
 		lentele($lang['admin']['article_create'], $bla->form($straipsnis));
-	/*} else {
-		klaida("{$lang['system']['warning']}", "{$lang['system']['nocategories']}.");
-	}*/
 } elseif ($_GET['v'] == 6) {
 
 	$q = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE rodoma='NE'");

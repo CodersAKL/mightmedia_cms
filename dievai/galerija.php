@@ -295,16 +295,6 @@ if (isset($_GET['v'])) {
 				} else {
 					$autorius = $lang['system']['guest'];
 				}
-				/*$text .= "
-				
-				<div id=\"gallery\" class=\"img_left\" >
-			<a rel=\"lightbox\" href=\"".ROOT."images/galerija/" . $row2['file'] . "\"  title=\"" . $row2['pavadinimas'] . ": " . $row2['apie'] . "\">
-				<img src=\"".ROOT."images/galerija/mini/" . $row2['file'] . "\" alt=\"\" />
-			</a><br>
-					<a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row2['ID'] ). "\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row2['ID'] . "'); $(this).parent('.img_left').remove(); return false } else { return false }\" title=\"{$lang['admin']['delete']}\"><img src='images/icons/cross.png'  border='0'></a>
-						<a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";h," . $row2['ID'] ). "\" title=\"{$lang['admin']['edit']}\"><img src='images/icons/picture_edit.png'  border='0'></a>
-			<a href=\"".ROOT."images/galerija/originalai/" . $row2['file'] . "\" title=\"{$lang['download']['download']}\"><img src='".ROOT."images/icons/disk.png' border='0'></a>
-		</div>";*/
 				$text .= "
 			<div class=\"gallery img_left\" >
 				<a rel=\"lightbox\" href=\"".ROOT."images/galerija/" . $row2['file'] . "\" title=\"" . (!empty($row2['pavadinimas'])?$row2['pavadinimas'] . "<br>":'') . trimlink(strip_tags($row2['apie']), 50) . "\">
@@ -323,26 +313,12 @@ if (isset($_GET['v'])) {
 			</div>
 		";
 			}
-			/*$siuntiniaii[$row2['id']] = $row2['pavadinimas'];
-			}}else{$siuntiniaii[]=$lang['admin']['gallery_noimages'];}
-			$redagavimas = array(
-			"Form"=>array("action"=>"?id,{$_GET['id']};a,{$_GET['a']};v,1","method"=>"post","name"=>"reg"),
-			"{$lang['admin']['gallery_images']}:"=>array("type"=>"select","value"=>$siuntiniaii,"name"=>"edit_new"),
-			"{$lang['admin']['edit']}:"=>array("type"=>"submit","name"=>"action","value"=>"{$lang['admin']['edit']}"),
-			"{$lang['admin']['delete']}:"=>array("type"=>"submit","name"=>"action","value"=>"{$lang['admin']['delete']}")
-			);
-			lentele($lang['admin']['gallery_edit'],$bla->form($redagavimas));*/
 			$text .= '</td>
 	</tr>
 </table>';
       }
 			lentele($lang['admin']['gallery_edit'], $text);
 			$visos = kiek('galerija', "WHERE `lang` = ".escape(lang())." AND `categorija`=".escape((isset($_GET['k'])? $_GET['k'] : 0))."");
-
-
-			/*if ($visos > $limit) {
-				lentele($lang['system']['pages'], puslapiai($p, $limit, $visos, 10));
-			}*/
 		
 	} elseif ($_GET['v'] == 1 || isset($url['h'])) {
 
@@ -421,7 +397,6 @@ if (isset($_GET['v'])) {
 			$info = array();
 			if (sizeof($q) > 0) {
 				foreach ($q as $row) {
-					//$sql2 = mysql_fetch_assoc(mysql_query1("SELECT nick FROM `".LENTELES_PRIESAGA."users` WHERE id='".$sql['autorius']."'"));
 					if (isset($row['Nick'])) {
 						$autorius = $row['Nick'];
 					} else {
