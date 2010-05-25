@@ -62,6 +62,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 		unset($_SESSION['username'],$_SESSION['password'],$_SESSION['id'],$_SESSION['level'],$_SESSION['mod'],$_SESSION['level']); // Isvalom sesija
 		//session_unset();
 		//session_destroy();
+		$_SESSION['level'] = 0;
 		setcookie("user", "", time() - 3600); // Sunaikinam sesija
 	}
 	unset($linfo);
