@@ -32,6 +32,8 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape((int)$_POST['koment']) . ",'kmomentarai_sveciams')  ON DUPLICATE KEY UPDATE `val`=" . escape((int)$_POST['koment']);
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape($_POST['F_urls']) . ",'F_urls')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['F_urls']);
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape($_POST['Editor']) . ",'Editor')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['Editor']);
+	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape((int)$_POST['galbalsuot']) . ",'galbalsuot')  ON DUPLICATE KEY UPDATE `val`=" . escape((int)$_POST['galbalsuot']);
+
 	foreach ($q as $sql) {
 		mysql_query1($sql);
 	}
@@ -67,6 +69,7 @@ $nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype
 	"{$lang['admin']['maintenancetext']}:" =>	array("type" => "string", "value" => editor('jquery', 'mini', 'Maintenance', isset($conf['Maintenance']) ? $conf['Maintenance'] : '')),
 "Friendly url:"=>array("type"=>"select","value"=>array('/'=>'/',';'=>';','0'=>$lang['admin']['off']),"selected"=>"".$conf['F_urls']."","name"=>"F_urls"),
 	"{$lang['admin']['comm_guests']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}","3"=>"{$lang['admin']['comments_off']}"), "selected" => input(@$conf['kmomentarai_sveciams']), "name" => "koment", "class" => "select"), 
+		"{$lang['admin']['gallery_rate']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galbalsuot']), "name" => "galbalsuot"),
 	"{$lang['admin']['newsperpage']}:" => array("type" => "text", "value" => input($conf['News_limit']), "name" => "News_limit", 'extra' => "on`key`up=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\"", "class" => "select"), 
 	"{$lang['admin']['cache']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['keshas']), "name" => "keshas", "class" => "select"), 
 	"{$lang['admin']['theme']}:" => array("type" => "select", "value" => $stiliai, "selected" => input($conf['Stilius']), "name" => "Stilius", "class" => "select"), 

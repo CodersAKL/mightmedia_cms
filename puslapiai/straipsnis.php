@@ -21,7 +21,7 @@ if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
 }
 $limit = 50;
 $text = '';
-
+include_once ("rating.php");
 //Kategorijų sąrašas
 $sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`", 86400);
 if ($sqlas && sizeof($sqlas) > 0 && !isset($url['m'])) {
@@ -55,7 +55,7 @@ if ($k >= 0 && empty($url['m'])) {
 				foreach ($sql as $row) {
 					if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
 						//$text .= "<h1>" . $row['pav'] . "</h1>		<i>" . $row['t_text'] . "</i><br><a href=".url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] ). ">{$lang['article']['read']}</a><hr></hr>\n";
-            lentele($row['pav'], "<i>" . $row['t_text'] . "</i><br><a href=".url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] ). ">{$lang['article']['read']}</a>");
+            lentele($row['pav'], "<i>" . $row['t_text'] . "</i><br><a href=".url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] ). ">{$lang['article']['read']}</a>", rating_form($page,$row['id']));
 					}
 				}
 
@@ -81,7 +81,7 @@ if ($k >= 0 && empty($url['m'])) {
 		$text = "<i>" . $row['t_text'] . "</i><br><hr></hr><br>\n
 		" . $row['f_text'] . "
 		<hr />{$lang['article']['date']}: " . date('Y-m-d H:i:s', $row['date']) . ", {$lang['article']['author']}: <b>" . $row['autorius'] . "</b>";
-		lentele((!empty($pav['pavadinimas'])?'':$lang['pages']['straipsnis.php'])."<a href=\"".url("?id,{$_GET['id']};k,{$row['kat']}\">".input($sqlas['pavadinimas'])). "</a> > " . input($row['pav']), $text);
+		lentele((!empty($pav['pavadinimas'])?'':$lang['pages']['straipsnis.php'])."<a href=\"".url("?id,{$_GET['id']};k,{$row['kat']}\">".input($sqlas['pavadinimas'])). "</a> > " . input($row['pav']), $text, rating_form($page,$row['id']));
 		include ("priedai/komentarai.php");
 
 		komentarai($url['m'], true);

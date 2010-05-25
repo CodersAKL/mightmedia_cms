@@ -221,11 +221,11 @@ if (!empty($url['m'])) {
 				$autorius = $lang['system']['guest'];
 			}
 
-			if ((int)$conf['galbalsuot'] == 1) {
+			//if ((int)$conf['galbalsuot'] == 1) {
 				$balsavimas = rating_form($page,$row['nid']);
-			} else {
+			/*} else {
 				$balsavimas = '';
-			}
+			}*/
 			if (!empty($nuoroda2['id'])) {
 				$text .= "<a href=\"".url("?id," . $url['id'] . ";m," . $nuoroda2['id']). "\" >< {$lang['admin']['gallery_prev']}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 			}

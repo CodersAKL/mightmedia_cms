@@ -368,7 +368,7 @@ if (isset($_GET['v'])) {
 			$q = array();
 			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape((int)$_POST['fotodyd']) . " WHERE `key` = 'fotodyd' LIMIT 1 ; ";
 			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape((int)$_POST['minidyd']) . " WHERE `key` = 'minidyd' LIMIT 1 ; ";
-			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape((int)$_POST['galbalsuot']) . " WHERE `key` = 'galbalsuot' LIMIT 1 ; ";
+			//$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape((int)$_POST['galbalsuot']) . " WHERE `key` = 'galbalsuot' LIMIT 1 ; ";
 			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape((int)$_POST['fotoperpsl']) . " WHERE `key` = 'fotoperpsl' LIMIT 1 ; ";
 			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape((int)$_POST['galkom']) . " WHERE `key` = 'galkom' LIMIT 1 ; ";
 			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape($_POST['order']) . ",'galorder')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['order']);
@@ -382,7 +382,7 @@ if (isset($_GET['v'])) {
 			"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"),
 			"{$lang['admin']['gallery_maxwidth']}:" => array("type" => "text", "value" => input($conf['fotodyd']), "name" => "fotodyd"),
 			"{$lang['admin']['gallery_minwidth']}:" => array("type" => "text", "value" => input($conf['minidyd']), "name" => "minidyd"),
-			"{$lang['admin']['gallery_rate']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galbalsuot']), "name" => "galbalsuot"),
+			//"{$lang['admin']['gallery_rate']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galbalsuot']), "name" => "galbalsuot"),
 			"{$lang['admin']['gallery_comments']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galkom']), "name" => "galkom"),
 			"{$lang['admin']['gallery_images_per_page']}:" => array("type" => "text", "value" => input((int)$conf['fotoperpsl']), "name" => "fotoperpsl"),
 			

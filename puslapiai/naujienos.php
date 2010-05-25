@@ -19,7 +19,7 @@ if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) $kid = (int)$url['k']
 if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) $p = (int)$url['p']; else $p = 0;
 
 if ($conf['Palaikymas'] == 1) klaida("{$lang['admin']['maintenance']}", $conf['Maintenance']);
-
+include_once ("rating.php");
 $limit = $conf['News_limit'];
 $viso = kiek("naujienos", "WHERE `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
 $text = '';
@@ -56,7 +56,7 @@ if ($kid == 0) {
 			$pav .= "";
 
 			if(!isset($kategorijos_pav['pav'])|| teises($kategorijos_pav['teises'], $_SESSION['level'])) {
-				lentele($row['pavadinimas'], '<div>'.$pav . $row['naujiena'] .'<br />'.  $extra.'</div>', false, array(menesis((int)date('m', strtotime(date('Y-m-d H:i:s ', $row['data'])))), (int)date('d', strtotime(date('Y-m-d H:i:s ', $row['data'])))));
+				lentele($row['pavadinimas'], '<div>'.$pav . $row['naujiena'] .'<br />'.  $extra.'</div>', rating_form($page,$row['id']));
 			}
 		}
 	} else {
@@ -95,7 +95,7 @@ if ($kid != 0) {
 			$text .= "</div><div class='line'></div>" . date('Y-m-d H:i:s ', $sql['data']) . ",  <b>" . $sql['autorius'] . "</b>";
 
 			//Atvaizduojam naujieną, likę argumentai - mėnesis žodžiais ir diena skaičiumi
-			lentele($title, $text, false, array(menesis((int)date('m', strtotime($sql['data']))), (int)date('d', strtotime($sql['data']))));
+			lentele($title, $text, rating_form($page, $sql['id']));
 			//Susijusios naujienos
 			$susijus = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija`=" . escape($sql['kategorija']) . " AND `id`!=" . escape($_GET['k']) . " AND `lang` = ".escape(lang())." ORDER by `data` DESC LIMIT 5", 30000);
 			if (sizeof($susijus) > 0) {

@@ -16,7 +16,7 @@ function lentele_l($pavadinimas, $tekstas, $label = false) {
 }
 
 function lentele($pavadinimas, $tekstas, $label = false) {
-	echo "  <h1>{$pavadinimas}</h1>
+	echo "  <h1>{$pavadinimas}</h1><div style=\"float: right; width: 225px; font-size: 12px; vertical-align: middle; z-index: 22;\">{$label}</div>
     <p>{$tekstas}</p><br />";
 }
 
