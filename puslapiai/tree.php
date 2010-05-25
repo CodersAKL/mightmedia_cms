@@ -1,6 +1,6 @@
 <?php
 $data2 = '';
-$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=".escape(lang())." ORDER BY `place` ASC");
+$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=".escape(lang())." ORDER BY `place` ASC", 3600);
 foreach ($res as $row) {
 		if(teises($row['teises'],$_SESSION['level']) && $row['show'] == 'Y') {
 				$data2[$row['parent']][] = $row;

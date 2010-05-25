@@ -70,7 +70,7 @@ if ($kid == 0) {
 }
 if ($kid != 0) {
 	$sql = "SELECT SQL_CACHE `" . LENTELES_PRIESAGA . "naujienos`.*, `" . LENTELES_PRIESAGA . "grupes`.`teises` AS `teises` FROM `" . LENTELES_PRIESAGA . "naujienos` Inner Join `" . LENTELES_PRIESAGA . "grupes` ON `" . LENTELES_PRIESAGA . "naujienos`.`kategorija` = `" . LENTELES_PRIESAGA . "grupes`.`id` WHERE `" . LENTELES_PRIESAGA . "naujienos`.`rodoma`='TAIP'  AND `" . LENTELES_PRIESAGA . "naujienos`.`id` = " . escape($kid) . " limit 1";
-	$sql = mysql_query1($sql);
+	$sql = mysql_query1($sql, 3600);
 
 	if(empty($sql['naujiena'])) {
 		$sql = mysql_query1("
@@ -81,7 +81,7 @@ if ($kid != 0) {
 				WHERE `rodoma`= 'TAIP'
 				AND `id` = " . escape($kid) . "
 				AND `lang` = ".escape(lang())."
-			limit 1");
+			limit 1", 3600);
 	}
 
 	if (isset($sql['naujiena'])&& !empty($sql['naujiena'])) {

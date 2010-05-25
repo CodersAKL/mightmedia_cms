@@ -411,6 +411,8 @@ HTML;
             
 
 	<?php if (isset($url['a']) && file_exists(dirname(__file__) . "/" . $admin_pages[(int)$url['a']].'.php') && isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
+    if(count($_POST) > 0 && $conf['keshas'] == 1)
+        msg($lang['system']['warning'], $lang['system']['cache_info']);
 		include_once (dirname(__file__) . "/" . $admin_pages[(int)$url['a']].'.php');
 	} elseif (isset($_GET['m'])) {
 		switch ($_GET['m']){

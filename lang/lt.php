@@ -7,6 +7,7 @@ $lang['system']['warning'] = 'Dėmesio!';
 $lang['system']['sorry'] = 'Atsiprašome';
 $lang['system']['done'] = 'Atlikta!';
 $lang['system']['no_items'] = 'Įrašų nėra!';
+$lang['system']['cache_info'] = 'Įjungtas kešavimas, todėl Jūsų pateikti atnaujinimai gali vėluoti. Norėdami juos pamatyti dabar, spauskite <img src="images/icons/publish.png" alt="" /> esantį kairėje';
 $lang['system']['contactadmin'] = 'Susisiekite su tinklalapio administracija';
 $lang['system']['notadmin'] = 'Jūs nesate administratorius!';
 $lang['system']['pleaselogin'] = 'Prašome prisijungti!';

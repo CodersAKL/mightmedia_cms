@@ -36,18 +36,18 @@ $p = 0;
 
 //Jei lankytojas paspaudžia ant nuorodos
 if (isset($link) && strlen($link) > 0 && $link > 0) {
-	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET click=click+1 WHERE `id`=" . escape($link) . " AND  `lang` = ".escape(lang())." LIMIT 1");
+	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET click=click+1 WHERE `id`=" . escape($link) . " AND  `lang` = ".escape(lang())." LIMIT 1", 86400);
 	$link = mysql_query1("SELECT `url` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `id`=" . escape($link) . " AND  `lang` = ".escape(lang())." LIMIT 1", 86400);
 	redirect($link['url']);
 }
 include_once(ROOT.'priedai/kategorijos.php');
 
 //kategorijos
-$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`");
+$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`", 3600);
 $kategorijos = cat('nuorodos', 0);
 if (sizeof($sqlas) > 0) {
 	foreach ($sqlas as $sql) {
-		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1");
+		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 3600);
 		//$path1 = explode(",", $path['path']);
 
 		if ($path['path'] == $k) {
@@ -119,7 +119,7 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 			klaida($lang['system']['error'], "{$lang['admin']['links_bad']}");
 
 		} else {
-      $exists = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `url`=".escape($url)." AND  `lang` = ".escape(lang())." LIMIT 1");
+      $exists = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `url`=".escape($url)." AND  `lang` = ".escape(lang())." LIMIT 1", 3600);
       if(!isset($exists['id']))
         $result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie`, `lang` ) VALUES (" . escape($cat) . ", " . escape($url) . ", " . escape($pavadinimas) . ", " . escape($_SESSION['id']) . ", '" . time() . "', " . escape($apie) . ", ".escape(lang()).");");
        else
@@ -132,29 +132,7 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 			}
 		}
 	}
-	/*$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `path`=0 ORDER BY `id` DESC");
-	if (sizeof($sql) > 0) {
-		foreach ($sql as $row) {
 
-			$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND path!=0 and `path` like '" . $row['id'] . "%' ORDER BY `id` ASC");
-
-			$subcat = '';
-			if (sizeof($sql2) > 0) {
-				foreach ($sql2 as $row) {
-					$subcat .= "->" . $path['pavadinimas'];
-					$kategorijos[$row['id']] = $row['pavadinimas'];
-					$kategorijos[$path['id']] = $row['pavadinimas'] . $subcat;
-				}
-			} else {
-				$kategorijos[$row['id']] = $row['pavadinimas'];
-			}
-		}
-	} else {
-		$kategorijos[0] = "{$lang['system']['nocategories']}";
-		$nocat = 1;
-	}*/
-	//$nocat = (count($kategorijos) > 1? 1:);
-	//if (!isset($nocat)) {
 		include_once ("priedai/class.php");
 
 		$bla = new forma();
@@ -167,7 +145,6 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 			" " => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['admin']['links_create']}"));
 
 		hide("{$lang['admin']['links_create']}", $bla->form($nuorodos), true);
-	//}
 }
 unset($bla, $nuorodos, $row, $sql, $cat, $url, $pavadinimas, $apie, $info, $q, $sql, $text, $link, $sqlas);
 if (count($_GET) == 1) {

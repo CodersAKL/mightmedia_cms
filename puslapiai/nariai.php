@@ -19,7 +19,7 @@ include_once ("priedai/class.php");
 $limit = 30;
 $viso = kiek("users");
 //vartotojų sarašas
-$sql = mysql_query1("SELECT id, INET_NTOA(ip) AS ip, reg_data, gim_data, login_data, nick, vardas, pavarde, email, levelis FROM `" . LENTELES_PRIESAGA . "users` LIMIT $p, $limit");
+$sql = mysql_query1("SELECT id, INET_NTOA(ip) AS ip, reg_data, gim_data, login_data, nick, vardas, pavarde, email, levelis FROM `" . LENTELES_PRIESAGA . "users` LIMIT $p, $limit",  86400);
 $i = 0;
 
 if (sizeof($sql) > 0) {
@@ -33,7 +33,6 @@ if (sizeof($sql) > 0) {
 		$info[] = array("{$lang['ulist']['username']}" => user($row['nick'], $row['id'], $row['levelis']), "{$lang['ulist']['group']}" => $grupe);
 		if (defined("LEVEL") && LEVEL == 1) {
 			$info[($i - 1)][$lang['ulist']['email']] = input(preg_replace("#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)#i", "<a href=\"javascript:mailto:mail('\\1','\\2');\">\\1_(at)_\\2</a>", $row['email']));
-			//$info[($i - 1)][$lang['admin']['action']] = "<a href='".url("?id,999;a,{$admin_pagesid['vartotojai']};r," . $row['id'] ). "' title='{$lang['admin']['edit']}'><img src='images/icons/pencil.png' class='middle' border='0'></a> <a href='".url("?id,999;a,{$admin_pagesid['vartotojai']};d," . $row['id']). "' onclick=\"if (!confirm('{$lang['admin']['delete']}?')) return false;\" title='{$lang['admin']['delete']}'><img src='images/icons/cross.png' class='middle' border='0'></a>  <a href='".url("?id,999;a,{$admin_pagesid['banai']};b,1;ip," . $row['ip']) . "' title='{$lang['admin']['badip']}'><img src='images/icons/delete.png' class='middle' border='0'></a>";
 		}
 	}
 	//nupiesiam adminu lentele

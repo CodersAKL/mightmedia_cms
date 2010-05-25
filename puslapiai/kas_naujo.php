@@ -23,7 +23,7 @@ if (isset($_POST['dienos'])) {
 
     //forume
     if (isset($conf['puslapiai']['frm.php']['id'])) {
-        $q = mysql_query1("SELECT `id`,`id` AS strid,`tid`,`tid` as `temosid`,`pav`,`autorius`,`last_data`,`last_nick`, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=`temosid` AND`sid`=strid ) AS viso	 FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `last_data` >= " . escape($time) . " ORDER BY `last_data` DESC");
+        $q = mysql_query1("SELECT `id`,`id` AS strid,`tid`,`tid` as `temosid`,`pav`,`autorius`,`last_data`,`last_nick`, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=`temosid` AND`sid`=strid ) AS viso	 FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `last_data` >= " . escape($time) . " ORDER BY `last_data` DESC", 3600);
         if (sizeof($q) > 0) {
             $text = '';
             foreach ($q as $row) {
@@ -35,7 +35,7 @@ if (isset($_POST['dienos'])) {
     }
     //naujienose
     if (isset($conf['puslapiai']['naujienos.php']['id'])) {
-        $q = mysql_query1("SELECT `id`, `pavadinimas`,`data`,`autorius` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `data` >= " . escape($time) . " AND `rodoma`='TAIP' ORDER BY `data` DESC");
+        $q = mysql_query1("SELECT `id`, `pavadinimas`,`data`,`autorius` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `data` >= " . escape($time) . " AND `rodoma`='TAIP' ORDER BY `data` DESC", 3600);
         if (sizeof($q) > 0) {
             $text = '';
             foreach ($q as $row) {
@@ -47,7 +47,7 @@ if (isset($_POST['dienos'])) {
     }
     //galerijoj
     if (isset($conf['puslapiai']['galerija.php']['id'])) {
-        $q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas`,`data`,`autorius` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `data`>=" . escape($time) . " AND `rodoma`='TAIP' ORDER BY `data` DESC");
+        $q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas`,`data`,`autorius` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `data`>=" . escape($time) . " AND `rodoma`='TAIP' ORDER BY `data` DESC", 3600);
         if (sizeof($q) > 0) {
             $text = '';
             foreach ($q as $row) {
@@ -59,7 +59,7 @@ if (isset($_POST['dienos'])) {
     }
     //siuntiniuose
     if (isset($conf['puslapiai']['siustis.php']['id'])) {
-        $q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas`, `categorija`,`autorius`,`data` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `data`>=" . escape($time) . " AND `rodoma`='TAIP' ORDER BY `data` DESC");
+        $q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas`, `categorija`,`autorius`,`data` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `data`>=" . escape($time) . " AND `rodoma`='TAIP' ORDER BY `data` DESC", 3600);
         if (sizeof($q) > 0) {
             $text = '';
             foreach ($q as $row) {
@@ -71,7 +71,7 @@ if (isset($_POST['dienos'])) {
     }
     //straipsniai
     if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
-        $q = mysql_query1("SELECT `id`, `t_text`, `pav`, `kat` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `date`>=" . escape($time) . " AND `rodoma`='TAIP'  ORDER BY `date` DESC");
+        $q = mysql_query1("SELECT `id`, `t_text`, `pav`, `kat` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `date`>=" . escape($time) . " AND `rodoma`='TAIP'  ORDER BY `date` DESC", 3600);
         if (sizeof($q) > 0) {
             $text = '';
             foreach ($q as $row) {
@@ -81,7 +81,7 @@ if (isset($_POST['dienos'])) {
             unset($text, $row, $q);
         }
     }
-    $q = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `data`>=" . escape($time) . " ORDER BY `data` ");
+    $q = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `data`>=" . escape($time) . " ORDER BY `data`", 3600);
     if (sizeof($q) > 0) {
         $text = '';
         foreach ($q as $row) {
@@ -96,7 +96,10 @@ if (isset($_POST['dienos'])) {
                 $link = "m," . $row['kid'];
             } elseif ($row['pid'] == 'puslapiai/view_user' && isset($conf['puslapiai']['view_user.php']['id'])) {
                 $link = "m," . $row['kid'];
+            } elseif ($row['pid'] == 'puslapiai/blsavimo_archyvas' && isset($conf['puslapiai']['blsavimo_archyvas.php']['id'])) {
+                $link = "m," . $row['kid'];
             }
+
             $file = str_replace('puslapiai/', '', $row['pid']);
             if (isset($conf['puslapiai'][$file . ".php"]['id'])) {
                 if (strlen($row['nick']) > 15) {

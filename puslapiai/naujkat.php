@@ -25,10 +25,10 @@ if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
 $limit = 50;
 $text = '';
 //Paulius svaigsta su kategoriju sarasu
-$sqlas = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`");
+$sqlas = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`",  86400);
 if ($sqlas && sizeof($sqlas) > 0) {
 	foreach ($sqlas as $sql) {
-		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1");
+		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 3600);
 		//$path1 = explode(",", $path['path']);
 
 		if ($path['path'] == $k) {
