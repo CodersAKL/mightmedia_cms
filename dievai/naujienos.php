@@ -84,8 +84,8 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['edit']) {
 	$naujiena = explode('===page===',$_POST['naujiena']);
 	//$placiau =  explode('===page===',$_POST['naujiena']);
 
-	$naujiena = $naujiena[0];
-	$placiau = empty($naujiena[1])?'':$naujiena[1];
+	$izanga = $naujiena[0];
+	$placiau = (empty($naujiena[1])?'':$naujiena[1]);
 
 	$komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
 	$kategorija = (int)$_POST['kategorija'];
@@ -99,7 +99,7 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['edit']) {
 	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "naujienos` SET
 			`pavadinimas` = " . escape($pavadinimas) . ",
 			`kategorija` = " . escape($kategorija) . ",
-			`naujiena` = " . escape($naujiena) . ",
+			`naujiena` = " . escape($izanga) . ",
 			`daugiau` = " . escape($placiau) . ",
 			`kom` = " . escape($komentaras) . ",
 			`sticky` = " . escape($sticky) . " 
@@ -113,10 +113,9 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_crea
 	$naujiena = explode('===page===',$_POST['naujiena']);
 	//$placiau =  explode('===page===',$_POST['naujiena']);
 
-	$naujiena = $naujiena[0];
+	$izanga = $naujiena[0];
 	$placiau = empty($naujiena[1])?'':$naujiena[1];
-
-	$komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
+  $komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
 	$pavadinimas = strip_tags($_POST['pav']);
 	$kategorija = (int)$_POST['kategorija'];
   $sticky = (isset($_POST['sticky'])? 1 : 0);
@@ -124,7 +123,7 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_crea
 		$error = $lang['admin']['news_required'];
 	}
 	if (!isset($error)) {
-		$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija, rodoma, lang, sticky) VALUES (" . escape($pavadinimas) . ", " . escape($naujiena) . ", " . escape($placiau) . ",  '" . time() . "', '" . $_SESSION['username'] . "', " . escape($komentaras) . ", " . escape($kategorija) . ", 'TAIP', ".escape(lang()).", ".escape($sticky).")");
+		$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija, rodoma, lang, sticky) VALUES (" . escape($pavadinimas) . ", " . escape($izanga) . ", " . escape($placiau) . ",  '" . time() . "', '" . $_SESSION['username'] . "', " . escape($komentaras) . ", " . escape($kategorija) . ", 'TAIP', ".escape(lang()).", ".escape($sticky).")");
 		if(isset($_POST['letter'])) {
 
 			//TODO:Reikalingi email templeytai
