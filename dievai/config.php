@@ -18,7 +18,7 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
 		$q = array();
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape($_POST['Apie']) . ",'Apie')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['Apie'])."";
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape(input(strip_tags($_POST['keywords']))) . ",'keywords')  ON DUPLICATE KEY UPDATE `val`=" . escape(input(strip_tags($_POST['keywords'])))."";
-	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape(input(strip_tags($_POST['pirminis']))) . ",'pirminis')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['pirminis'])."";
+	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape(basename($_POST['pirminis'],'.php')) . ",'pirminis')  ON DUPLICATE KEY UPDATE `val`=" . escape(basename($_POST['pirminis'],'.php'))."";
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape(input(strip_tags($_POST['Pavadinimas']))) . ",'Pavadinimas')  ON DUPLICATE KEY UPDATE `val`=" . escape(input(strip_tags($_POST['Pavadinimas'])));
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape($_POST['Copyright']) . ",'Copyright')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['Copyright']);
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape(input(strip_tags($_POST['Pastas']))) . ",'Pastas')  ON DUPLICATE KEY UPDATE `val`=" . escape(input(strip_tags($_POST['Pastas'])));
