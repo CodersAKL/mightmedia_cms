@@ -17,12 +17,13 @@ if (basename($_SERVER['PHP_SELF']) == 'funkcijos.php') {
 
 define("OK", true);
 define('ROOTAS', dirname(realpath(__file__)) . '/../');
-if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['QUERY_STRING']) || (isset($_GET['id']) && preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_GET['id']))) {
+//if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['QUERY_STRING']) || (isset($_GET['id']) && preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_GET['id']))) {
+/*if (isset($_GET['id'])) {
 	$ip = getip();
 	$forwarded = (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : 'N/A');
 	$remoteaddress = getip();
 	ban();
-}
+}*/
 if (!empty($_POST)) {
 	include_once (ROOTAS . 'priedai/safe_html.php');
 	foreach ($_POST as $key => $value) {
@@ -403,8 +404,11 @@ function url_arr($params) {
 				$str1 = explode("=", $value);
 			else
 				$str1 = explode(",", $value);
-			if (isset($str1[1]))
-				$str2[$str1[0]] = $str1[1];
+			if (isset($str1[1])){
+        if(preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $str1[1]))
+          ban();
+          $str2[$str1[0]] = $str1[1];
+			}
 		}
 	}
 	return $str2;
