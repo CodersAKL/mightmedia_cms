@@ -29,6 +29,7 @@ if(isset($quest['question'])){
 
   if(!$show_rezults){
     if(isset($_POST['answer']) && ($quest['only_guests'] == 0 || ($quest['only_guests'] == 1 && isset($_SESSION['username'])))){
+      delete_cache("SELECT * FROM  `".LENTELES_PRIESAGA."poll_votes` WHERE `question_id`=".escape($quest['id']));
       if($quest['radio'] == 1)
         mysql_query1("INSERT INTO `".LENTELES_PRIESAGA."poll_votes` (`ip`, `question_id`, `answer_id`) VALUES (".escape($ip).", ".escape($quest['id']).", ".escape($_POST['answer'][0]).")");
       else
