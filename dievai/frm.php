@@ -55,7 +55,7 @@ echo <<< HTML
 </script>
 HTML;
 include_once (ROOT.'priedai/class.php');
-if(!isset($_GET['f']) && !isset($_POST)){ $_GET['f'] = 1; $url['f'] = 1;}
+//if(!isset($_GET['f']) && !isset($_POST)){ $_GET['f'] = 1; $url['f'] = 1;}
 $buttons="
 <div class=\"btns\">
 	<a href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};f,1")."\" class=\"btn\"><span><img src=\"".ROOT."images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
