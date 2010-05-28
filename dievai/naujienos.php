@@ -124,6 +124,7 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_crea
 	}
 	if (!isset($error)) {
 		$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija, rodoma, lang, sticky) VALUES (" . escape($pavadinimas) . ", " . escape($izanga) . ", " . escape($placiau) . ",  '" . time() . "', '" . $_SESSION['username'] . "', " . escape($komentaras) . ", " . escape($kategorija) . ", 'TAIP', ".escape(lang()).", ".escape($sticky).")");
+		$last_news = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "naujienos` ORDER BY `id` DESC LIMIT 1");
 		if(isset($_POST['letter'])) {
 
 			//TODO:Reikalingi email templeytai
@@ -131,9 +132,9 @@ elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['news_crea
 			$mail = new PHPMailerLite();
 			$mail->IsMail();
 			$mail->CharSet = 'UTF-8';
-			$body = "<b>" . $pavadinimas . "</b><br/>{$naujiena}<br /> <a href='".adresas().url("?id," . $conf['puslapiai']['naujienos.php']['id']). "'>".$lang['news']['read']."</a><br /><br /><a href='".url("?id," . $conf['puslapiai']['naujienlaiskiai.php']['id']). "'>".$lang['news']['unorder']. "</a><hr>";
+			$body = "<b>" . $pavadinimas . "</b><br/>{$izanga}<br /> <a href='".url("?id,{$conf['puslapiai']['naujienos.php']['id']};k,{$last_news['id']}"). "'>".$lang['news']['read']."</a><br /><br /><small><a href='".url("?id," . $conf['puslapiai']['naujienlaiskiai.php']['id']). "'>".$lang['news']['unorder']. "</a></small>";
 			$mail->SetFrom($admin_email, $conf['Pavadinimas']);
-			$mail->Subject    = strip_tags($conf['Pavadinimas']) ." ". $pavadinimas;
+			$mail->Subject = strip_tags($conf['Pavadinimas']) ." ". $pavadinimas;
 			$mail->MsgHTML($body);
 			$sql = mysql_query1("SELECT `email` FROM `".LENTELES_PRIESAGA."newsgetters`");
 			foreach ($sql as $row) {
