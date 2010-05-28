@@ -160,14 +160,14 @@ HTML;
      if (is_array($id)) {
       foreach ($id as $key => $val) {
         $return .= <<<HTML
-        <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');
+        <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;
 " ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
 	<textarea id="{$key}" name="{$key}" style="min-height:200px; width: 100%;">{$value[$key]}</textarea>
 HTML;
       }
     } else {
       $return .= <<<HTML
-      <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');
+      <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$id}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;
 " ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
 <textarea id="{$id}" name="{$id}" style="min-height:200px; width: 100%;">{$value}</textarea>
 HTML;
@@ -178,6 +178,7 @@ HTML;
       $return = <<<HTML
       <!-- Load TinyMCE -->
 <script type="text/javascript" src="{$dir}htmlarea/tiny_mce/jquery.tinymce.js"></script>
+<script src="{$dir}htmlarea/tiny_mce/tiny_mce_src.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('textarea.tinymce').tinymce({
@@ -210,8 +211,9 @@ HTML;
 			template_external_list_url : "lists/template_list.js",
 			external_link_list_url : "lists/link_list.js",
 			external_image_list_url : "lists/image_list.js",
-			media_external_list_url : "lists/media_list.js"//,
-      //remove_script_host : false,
+			media_external_list_url : "lists/media_list.js",
+      remove_script_host : false,
+      convert_urls : false
 
 			// Replace values for the template plugin
 			
@@ -230,7 +232,7 @@ HTML;
       }
     } else {
       $return .= <<<HTML
-      <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$id}','mywindow','menubar=1,resizable=1,width=820,height=500');
+      <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$id}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;
 "><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
 <textarea id="{$id}" name="{$id}" style="min-height:200px; width: 100%;" class="tinymce">{$value}</textarea>
 HTML;

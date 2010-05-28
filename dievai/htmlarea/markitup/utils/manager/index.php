@@ -128,7 +128,6 @@ if(!isset($_SESSION['level']) || $_SESSION['level'] != 1)
 			else
 				//o.value = o.value+'<a href="siuntiniai/'+cual+'" title="'+cual.split('/')[1]+'" >'+cual.split('/')[1].split('.')[0]+'</a>';
           o.val(o.val()+'<a href="<?php echo $addr; ?>/siuntiniai/'+cual+'" title="'+cual.split('/')[1]+'" >'+cual.split('/')[1].split('.')[0]+'</a>');
-
 			self.close();
 			
 			}
