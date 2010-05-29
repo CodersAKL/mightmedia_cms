@@ -322,7 +322,7 @@ HTML;
 
 			  <div id="admin_hmenu">
 				  <ul class="sf-menu">
-					  <li ><a href="<?php echo adresas().'../';?>"><?php echo $lang['system']['tree']; ?></a>
+					  <li><a href="<?php echo adresas().'../';?>"><?php echo $lang['system']['tree']; ?></a>
 							<ul>
 									<?php
 									$data1 = '';
@@ -370,49 +370,7 @@ HTML;
                 
 
         <div id="right">
-          				<script type="text/javascript">
-										//$.getJSON('<?php echo $update_url; ?>');
-										/*function versija(data) {
-											$('#version_check').html(
-											'<img src="images/icons/lightbulb.png" alt="" /><b>'+data.title+'</b> '+
-												'' + data.version + ' - ' +
-												'' + data.about + ' '+
-												(data.log?'<span onclick="$(\'#version_check_more\').toggle(\'fast\')" style="cursor:pointer" class="number">▼</span><br />':'') +
-												'<div id="version_check_more" style="display:none"></div>'+
-												(data.url?'<span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':'')
-										);
-											if (data.log) {
-												$(data.log).each(function(json,info){
-													$('#version_check_more').append('<li>'+info+'</li>');
-												});
-												$('#version_check_more').wrapInner('<ol>');
-											}
-											if (data.menu.<?php echo lang(); ?>) {
-												$(data.menu.<?php echo lang(); ?>).each(function(json,menu){
-													$('#admin_hmenu ul').append('<li>'+ (typeof menu == 'object'?'<a href="">'+data.title+'</a>'+arr2html(menu):menu)+'</li>');
-												});
-											} else {
-												$(data.menu.en).each(function(json,menu){
-													$('#admin_hmenu ul').append('<li>'+ (typeof menu == 'object'?arr2html(menu):menu)+'</li>');
-												});
-											}
-										}
-										function arr2html(arr) {
-											var html='';
-											if(typeof arr == 'object') {
-												html+='<ul>';
-												for(var i in arr) {
-													html+='<li>';
-													html+=typeof arr[i] == 'object'?(i+arr2html(arr[i])):arr[i];
-													html+='</li>';
-												}
-												html+='</ul>';
-											}
-											return html;
-										}*/
-
-
-									</script>
+          		
           <div id="container"> 
             <div class="where"><img src="images/bullet.png" alt="" /> <a href="<?php echo url('?id,999');?>">Admin</a> > <a href="<?php echo url('?id,999'.(isset($_GET['a'])?';a,'.$_GET['a']:''));?>"><?php echo (isset($_GET['a'])?$lang['admin'][$admin_pages[$_GET['a']]]:$lang['admin']['homepage']); ?></a> </div>
             
@@ -461,8 +419,30 @@ HTML;
               //class="msg"
               $('#version_check').attr('class', 'msg');
               $('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><b>'+data.title+'</b> '+'' + data.version + ' - ' +'' + data.about + ' '+(data.log?'<span id="news" title="'+data.log+'">[info]</span>':'')+(data.url?' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':''));
-           }           
-         }
+           }   
+           if (data.menu.<?php echo lang(); ?>) {
+              $(data.menu.<?php echo lang(); ?>).each(function(json,menu){              
+                $('#admin_hmenu ul.sf-menu').append('<li>'+ (typeof menu == 'object'?'<a href="">'+data.menu.title+'</a>'+arr2html(menu):menu)+'</li>');
+              }); 
+           }/* else {
+               $(data.menu.en).each(function(json,menu){
+                 $('#admin_hmenu ul').append('<li>'+ (typeof menu == 'object'?arr2html(menu):menu)+'</li>');
+               });
+          }*/
+       }
+       function arr2html(arr) {
+        var html='';
+        if(typeof arr == 'object') {
+          html+='<ul>';
+          for(var i in arr) {
+             html+='<li>';
+             html+=typeof arr[i] == 'object'?(i+arr2html(arr[i])):arr[i];
+             html+='</li>';
+          }
+          html+='</ul>';
+        }
+        return html;        
+      }
     </script>
   </body>
 </html>
