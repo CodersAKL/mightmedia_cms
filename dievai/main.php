@@ -347,8 +347,8 @@ HTML;
 						<input name="vis" value="vis" type="hidden" />
 						<input type="text" name="s"  value="" />
 					</form>
-          </div>  <div class="msg" id="version_check">
-            <img src="images/icons/lightbulb.png" alt="" />...
+          </div>  <div id="version_check">
+            
           </div>
        </div>
 <div style="clear: both;"></div>
@@ -457,10 +457,11 @@ HTML;
 	   <script type="text/javascript">
          $.getJSON('<?php echo $update_url; ?>');
          function versija(data) {
-          
-
-            $('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><b>'+data.title+'</b> '+'' + data.version + ' - ' +'' + data.about + ' '+(data.log?'<span id="news" title="'+data.log+'">[info]</span>':'')+(data.url?' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':''));
-         
+              if(<?php echo versija();?> <= data.version){
+              //class="msg"
+              $('#version_check').attr('class', 'msg');
+              $('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><b>'+data.title+'</b> '+'' + data.version + ' - ' +'' + data.about + ' '+(data.log?'<span id="news" title="'+data.log+'">[info]</span>':'')+(data.url?' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':''));
+           }           
          }
     </script>
   </body>
