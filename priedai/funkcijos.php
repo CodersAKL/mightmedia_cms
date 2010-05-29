@@ -14,7 +14,7 @@
 if (basename($_SERVER['PHP_SELF']) == 'funkcijos.php') {
 	ban($lang['system']['forhacking']);
 }
-
+ini_set("memory_limit", "50M");
 define("OK", true);
 define('ROOTAS', dirname(realpath(__file__)) . '/../');
 //if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['QUERY_STRING']) || (isset($_GET['id']) && preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_GET['id']))) {

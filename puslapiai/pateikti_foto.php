@@ -11,7 +11,7 @@
  **/
 
 if (isset($_SESSION['id']) && $_SESSION['id']) {
-	ini_set("memory_limit", "50M");
+	//ini_set("memory_limit", "50M");
 
 	include_once ("priedai/class.php");
 	$bla = new forma();

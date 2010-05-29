@@ -25,7 +25,7 @@ THE SOFTWARE.
 */
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 'On');
-ini_set("memory_limit", "50M");
+//ini_set("memory_limit", "50M");
 session_id($_POST['PHPSESSID']);
 session_start();
 define('ROOT', '../../../');

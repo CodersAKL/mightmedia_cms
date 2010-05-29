@@ -11,12 +11,12 @@
  * 
  **/
 if (isset($_SESSION['id']) && $_SESSION['id']) {
-	ini_set("memory_limit", "50M");
+//("memory_limit", "50M");
 
 	if (isset($_POST['action']) && $_POST['action'] == 'Pateikti siuntinį') {
 		if (isset($_FILES) && isset($_POST['Pavadinimas']) && isset($_POST['Aprasymas'])) {
 			
-			function upload($file, $file_types_array = array("BMP", "JPG", "PNG", "PSD", "ZIP"), $max_file_size = 1048576, $upload_dir = "siuntiniai") {
+			function upload($file, $file_types_array = array("BMP", "JPG", "PNG", "PSD", "ZIP"), $upload_dir = "siuntiniai") {
 				if ($_FILES["$file"]["name"] != "") {
 					$origfilename = $_FILES["$file"]["name"];
 					$filename = explode(".", $_FILES["$file"]["name"]);
@@ -31,7 +31,7 @@ if (isset($_SESSION['id']) && $_SESSION['id']) {
 						}
 					} // for
 					if ($file_ext_allow) {
-						if ($_FILES["$file"]["size"] < $max_file_size) {
+						//if ($_FILES["$file"]["size"] < $max_file_size) {
 							$ieskom = array("?", "&", "=", " ", "+", "-", "#");
 							$keiciam = array("", "", "", "_", "", "", "");
 							$filename = str_replace($ieskom, $keiciam, $filename);
@@ -62,9 +62,9 @@ if (isset($_SESSION['id']) && $_SESSION['id']) {
 							} else {
 								klaida('Įkėlimo klaida', 'Dokumentas: <font color="#FF0000">' . $filename . '</font> nebuvo įkeltas');
 							}
-						} else {
+						/*} else {
 							klaida('Įkėlimo klaida', '<font color="#FF0000">' . $filename . '</font> dokumentas perdidelis');
-						}
+						}*/
 					} // if
 					else {
 						klaida('Įkėlimo klaida', '<font color="#FF0000">' . $filename . '</font> dokumentas netinkamo plėtinio');
@@ -74,7 +74,7 @@ if (isset($_SESSION['id']) && $_SESSION['id']) {
 			if (isset($_FILES)) {
 				if (is_uploaded_file($_FILES['failas']['tmp_name'])) {
 					if (isset($_FILES['failas']) && !empty($_FILES['failas'])) {
-						upload("failas", array("jpg", "bmp", "png", "psd", "zip", "rar", "mrc", "dll"), 1048576, "siuntiniai/");
+						upload("failas", array("jpg", "bmp", "png", "psd", "zip", "rar", "mrc", "dll"), "siuntiniai/");
 					}
 				}
 			}

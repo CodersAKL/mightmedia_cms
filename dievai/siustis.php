@@ -117,7 +117,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 
 } elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['download_create']) {
 	
-	function upload($file, $file_types_array = array("BMP", "JPG", "PNG", "PSD", "ZIP", "RAR", "GIF"), $max_file_size = 1048576, $upload_dir = "../siuntiniai") {
+	function upload($file, $file_types_array = array("BMP", "JPG", "PNG", "PSD", "ZIP", "RAR", "GIF") $upload_dir = "../siuntiniai") {
 		global $lang;
 		if ($_FILES["$file"]["name"] != "") {
 			$origfilename = $_FILES["$file"]["name"];
@@ -133,7 +133,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 				}
 			} // for
 			if ($file_ext_allow) {
-				if ($_FILES["$file"]["size"] < $max_file_size) {
+				//if ($_FILES["$file"]["size"] < $max_file_size) {
 					$ieskom = array("?", "&", "=", " ", "+", "-", "#");
 					$keiciam = array("", "", "", "_", "", "", "");
 					$filename = str_replace($ieskom, $keiciam, $filename);
@@ -153,9 +153,9 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 					} else {
 						klaida($lang['system']['error'], '<font color="#FF0000">' . $filename . '</font>');
 					}
-				} else {
+			/*	} else {
 					klaida($lang['system']['error'], '<font color="#FF0000">' . $filename . '</font> ' . $lang['admin']['download_toobig'] . '');
-				}
+				}*/
 			} // if
 			else {
 				klaida($lang['system']['error'], '<font color="#FF0000">' . $filename . '</font> ' . $lang['admin']['download_badfile'] . '');
@@ -165,7 +165,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 	if (isset($_FILES['failas']) && !empty($_FILES['failas'])) {
 		if (is_uploaded_file($_FILES['failas']['tmp_name'])) {
 
-			upload("failas", array("jpg", "bmp", "png", "psd", "zip", "rar", "mrc", "dll"), 1048576, ROOT."siuntiniai/");
+			upload("failas", array("jpg", "bmp", "png", "psd", "zip", "rar", "mrc", "dll"), ROOT."siuntiniai/");
 			
 
 		}

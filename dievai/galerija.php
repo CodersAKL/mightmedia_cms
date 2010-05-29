@@ -13,7 +13,7 @@
 if (!defined("OK") || !ar_admin(basename(__file__))) {
 	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
-ini_set("memory_limit", "50M");
+//ini_set("memory_limit", "50M");
 if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
 	$p = escape(ceil((int)$url['p']));
 } else {
