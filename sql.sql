@@ -250,7 +250,7 @@ CREATE TABLE `kom` (
   `kid` int(11) NOT NULL DEFAULT '0',
   `pid` varchar(255) COLLATE utf8_lithuanian_ci NOT NULL DEFAULT '0',
   `zinute` text COLLATE utf8_lithuanian_ci,
-  `nick` char(50) COLLATE utf8_lithuanian_ci DEFAULT NULL,
+  `nick` VARCHAR( 250 ) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `nick_id` int(11) NOT NULL DEFAULT '0',
   `data` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)

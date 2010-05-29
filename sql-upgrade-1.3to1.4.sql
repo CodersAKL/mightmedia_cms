@@ -14,6 +14,7 @@ ALTER TABLE `balsavimas` ADD `lang` VARCHAR( 3 ) CHARACTER SET utf8 COLLATE utf8
 ALTER TABLE `naujienos` ADD `sticky` SMALLINT( 1 ) NOT NULL DEFAULT '0' AFTER `rodoma`; 
 ALTER TABLE `d_temos` ADD `teises` VARCHAR( 250 ) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'N;' AFTER `place`; 
 ALTER TABLE `d_forumai` ADD `teises` VARCHAR( 250 ) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'N;' AFTER `place`; 
+ALTER TABLE `kom` CHANGE `nick` `nick` VARCHAR( 250 ) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NULL DEFAULT NULL ;
 CREATE TABLE `newsgetters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(250) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
