@@ -79,7 +79,7 @@ if (isset($uid)) {
 				" . escape($uid) . ",
 				" . escape($timestamp) . ",
 				" . escape($ip) . ",
-				" . escape(htmlspecialchars($_SERVER['QUERY_STRING'])) . ",
+				" . escape(htmlspecialchars(str_replace('id=', '', $_SERVER['QUERY_STRING']))) . ",
 				" . escape($username) . ",
 				" . escape(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) . ",
 				" . escape($ref) . ",
@@ -89,7 +89,7 @@ if (isset($uid)) {
 			ip=" . escape($ip) . ",
 			clicks = clicks+1,
 			ref=" . escape($ref) . ",
-			file=" . escape(htmlspecialchars($_SERVER['QUERY_STRING'])) . ",
+			file=" . escape(htmlspecialchars(str_replace('id=', '', $_SERVER['QUERY_STRING']))) . ",
 			agent=" . escape(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) . ",
 			user=" . escape($username) . ",
 			timestamp=" . escape($timestamp) . ";";
