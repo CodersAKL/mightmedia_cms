@@ -46,7 +46,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 
 	}
 	$linformacija2 = mysql_query1("SELECT `levelis`,`pass`,`nick`,`login_data`,`login_before`,(SELECT `mod` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `teises`=levelis)as `mod` FROM `" . LENTELES_PRIESAGA . "users` WHERE `id`=" . escape((int)$user_id) . " LIMIT 1");
-	if (!empty($linformacija2['levelis']) && $linformacija2['levelis'] > 0 && koduoju($slaptas . getip() . $linformacija2['pass']) === $user_pass) {
+	if (!empty($linformacija2['levelis']) && $linformacija2['levelis'] > 0 && isset($user_pass) && koduoju($slaptas . getip() . $linformacija2['pass']) === $user_pass) {
 
 		$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `login_before`=login_data, `login_data` = '" . time() . "', `ip` = INET_ATON(" . escape(getip()) . ") WHERE `id` ='" . escape($user_id) . "' LIMIT 1");
 		$_SESSION['username'] = $linformacija2['nick'];
