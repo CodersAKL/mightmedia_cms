@@ -117,7 +117,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 
 } elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['download_create']) {
 	
-	function upload($file, $file_types_array = array("BMP", "JPG", "PNG", "PSD", "ZIP", "RAR", "GIF") $upload_dir = "../siuntiniai") {
+	function upload($file, $file_types_array = array("BMP", "JPG", "PNG", "PSD", "ZIP", "RAR", "GIF"), $upload_dir = "../siuntiniai") {
 		global $lang;
 		if ($_FILES["$file"]["name"] != "") {
 			$origfilename = $_FILES["$file"]["name"];
