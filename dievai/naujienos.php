@@ -64,10 +64,12 @@ if (isset($_POST['news_delete'])) {
 	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE " . implode($trinti, " OR ") . "");
 	header("Location:" . $_SERVER['HTTP_REFERER']);
 	exit;
+	//echo implode($trinti, " OR ");
+	//print_r($_POST['news_delete']);
 }
 
 //Naujienos redagavimas
-elseif (/* ((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit_new'] > 0)) || */isset($url['h'])) {
+if (/* ((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit_new'] > 0)) || */isset($url['h'])) {
 	if (isset($url['h'])) {
 		$redaguoti = (int) $url['h'];
 	} /* elseif (isset($_POST['edit_new'])) {
@@ -240,7 +242,7 @@ if (isset($_GET['v'])) {
 			$info = array();
 			foreach ($q as $sql) {
 				$info[] = array(
-					"<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('newsch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"news_delete[]\" />",
+					"<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('newsch');\" />" => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"news_delete[]\" />",
 					"{$lang['admin']['news_name']}:" => '<a href="#" title="<b>' . $sql['pavadinimas'] . '</b>
 						<br /><br />
 						' . $lang['admin']['news_author'] . ': <b>' . $sql['autorius'] . '</b><br />

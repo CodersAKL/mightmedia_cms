@@ -94,10 +94,10 @@ if ($kid != 0) {
 			}
 			$text .= "</div><div class='line'></div>" . date('Y-m-d H:i:s ', $sql['data']) . ",  <b>" . $sql['autorius'] . "</b>";
 
-			//Atvaizduojam naujieną, likę argumentai - mėnesis žodžiais ir diena skaičiumi
+			//Atvaizduojam naujieną
 			lentele($title, $text, rating_form($page, $sql['id']));
 			//Susijusios naujienos
-			$susijus = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija`=" . escape($sql['kategorija']) . " AND `id`!=" . escape($_GET['k']) . " AND `lang` = ".escape(lang())." ORDER by `data` DESC LIMIT 5", 30000);
+			$susijus = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija`=" . escape($sql['kategorija']) . " AND `id`!=" . escape($_GET['k']) . " AND `lang` = ".escape(lang())." AND `rodoma`= 'TAIP' ORDER by `data` DESC LIMIT 5", 30000);
 			if (sizeof($susijus) > 0) {
 				$naujienos = "<ul id=\"naujienos\">";
 				foreach ($susijus as $susijusios) {
