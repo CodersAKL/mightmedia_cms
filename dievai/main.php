@@ -94,15 +94,15 @@ function build_tree($data, $id=0, $active_class='active') {
 		$re="";
 		foreach ($data[$id] as $row) {
 			if (isset($data[$row['id']])) {
-				$re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a><a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';d,' . $row['id'] ). "\" style=\"align:right\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"".ROOT."images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\" align=\"right\" /></a>
-<a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';r,' . $row['id'] ). "\" style=\"align:right\"><img src=\"".ROOT."images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\" align=\"right\" /></a>
-<a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';e,' . $row['id'] ). "\" style=\"align:right\"><img src=\"".ROOT."images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" align=\"right\" /></a><ul>";
+				$re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a><span style=\"display: inline; width: 100px;margin:0; padding:0; height: 16px;\"><a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';d,' . $row['id'] ). "\"  onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"".ROOT."images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"  /></a>
+<a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';r,' . $row['id'] ). "\"><img src=\"".ROOT."images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\"/></a>
+<a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';e,' . $row['id'] ). "\"><img src=\"".ROOT."images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span><ul>";
 				$re.=build_tree($data, $row['id'],$active_class);
 				$re.= "</ul></li>";
-			} else $re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a>
-<a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';d,' . $row['id'] ). "\" style=\"align:right\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"".ROOT."images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\" align=\"right\" /></a>
-<a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';r,' . $row['id'] ). "\" style=\"align:right\"><img src=\"".ROOT."images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\" align=\"right\" /></a>
-<a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';e,' . $row['id'] ). "\" style=\"align:right\"><img src=\"".ROOT."images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" align=\"right\" /></a>
+			} else $re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a><span style=\"display: inline; width: 100px; margin:0; padding:0; height: 16px;\">
+<a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';d,' . $row['id'] ). "\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"".ROOT."images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"/></a>
+<a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';r,' . $row['id'] ). "\"><img src=\"".ROOT."images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\" /></a>
+<a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';e,' . $row['id'] ). "\" ><img src=\"".ROOT."images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span>
 </li>";
 		}
 		return $re;
