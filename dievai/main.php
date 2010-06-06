@@ -126,10 +126,10 @@ function editor($tipas = 'jquery', $dydis = 'standartinis', $id = false, $value 
 	$root = ROOT;
 	if($conf['Editor'] == 'markitup'){
     $return = <<<HTML
-<script type="text/javascript" src="htmlarea/markitup/jquery.markitup.js"></script>
-<script type="text/javascript" src="htmlarea/markitup/sets/default/set.js"></script>
-<link rel="stylesheet" type="text/css" href="htmlarea/markitup/skins/markitup/style.css" />
-<link rel="stylesheet" type="text/css" href="htmlarea/markitup/sets/default/style.css" />
+<script type="text/javascript" src="{$dir}htmlarea/markitup/jquery.markitup.js"></script>
+<script type="text/javascript" src="{$dir}htmlarea/markitup/sets/default/set.js"></script>
+<link rel="stylesheet" type="text/css" href="{$dir}htmlarea/markitup/skins/markitup/style.css" />
+<link rel="stylesheet" type="text/css" href="{$dir}htmlarea/markitup/sets/default/style.css" />
 
 HTML;
 
@@ -160,15 +160,13 @@ HTML;
      if (is_array($id)) {
       foreach ($id as $key => $val) {
         $return .= <<<HTML
-        <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;
-" ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
+        <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;" ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
 	<textarea id="{$key}" name="{$key}" style="min-height:200px; width: 100%;">{$value[$key]}</textarea>
 HTML;
       }
     } else {
       $return .= <<<HTML
-      <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$id}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;
-" ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
+      <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$id}','mywindow','menubar=1,resizable=1,width=820,height=500'); return false;" ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
 <textarea id="{$id}" name="{$id}" style="min-height:200px; width: 100%;">{$value}</textarea>
 HTML;
 
