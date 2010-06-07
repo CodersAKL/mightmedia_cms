@@ -462,28 +462,19 @@ function user($user, $id = 0, $level = 0, $extra = false) {
 		$user = $lang['system']['guest'];
 		return $lang['system']['guest'];
 	} else {
-		if (isset($conf['puslapiai']['view_user.php']['id'])) {
-			//Jeigu galiam ziuret vartotojo profili tada nickas paspaudziamas
-			if ($level > 0 && $id > 0) {
-
-				return (isset($conf['level'][$level]['pav']) ? '<img src="'.ROOT.'images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="'.url('?id,' . $conf['puslapiai']['view_user.php']['id'] . ';' . $user). '" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"".ROOT."images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
-			} elseif ($id == 0 && $level != 0) {
-				return '<div style="display:inline;" title="' . input($user) . " " . $extra . '">' . (isset($conf['level'][$level]['pav']) ? '<img src="'.ROOT.'images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . trimlink($user, 10) . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)) ). "\"><img src=\"".ROOT."images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "") . '</div>';
-			} elseif ($level == 0 && $id != 0) {
-				return '<a href="'.url('?id,' . $conf['puslapiai']['view_user.php']['id'] . ';' . $user ). '" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user)))  . "\"><img src=\"".ROOT."images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "");
-			} else {
-				return '<div style="display:inline;" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"".ROOT."images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>" : "") . '</div>';
-			}
-
-		} else {
-			//Kitu atveju nickas nepaspaudziamas
-			if ($level == 0 || $id == 0) {
-				return '<div style="display:inline;" title="' . input($user) . " " . $extra . '"><u>' . $user . '</u></div>';
-			} else {
-				return (isset($conf['level'][$level]['pav']) ? '<img src="'.ROOT.'images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ' : '') . ' <a href="#" onclick="return false" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . (isset($_SESSION['username']) && $user != $_SESSION['username'] && isset($conf['puslapiai']['pm.php']) ? "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"".ROOT."images/pm/mail.png\" alt=\"pm\" style=\"vertical-align:middle\" border=\"0\" /></a>" : "");
-			}
-
-		}
+    if(isset($conf['puslapiai']['pm.php']) && $id != 0)
+      $pm = "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"".ROOT."images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>";
+    else
+      $pm = '';
+    if(isset($conf['level'][$level]['pav']))
+      $img = '<img src="'.ROOT.'images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ';
+    else
+      $img = '';
+     if (isset($conf['puslapiai']['view_user.php']['id']) && $id != 0) {
+        return $img . '<a href="'.url('?id,' . $conf['puslapiai']['view_user.php']['id'] . ';' . $user). '" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . $pm;
+     } else {
+        return '<div style="display:inline;" title="' . input($user) . '" "'. $extra . '">' .$img . ' ' . trimlink($user, 10) .' '. $pm . '</div>';
+     }
 	}
 }
 
