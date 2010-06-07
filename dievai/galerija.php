@@ -414,13 +414,8 @@ if (isset($_GET['v'])) {
 			}
 		}
 	} elseif ($_GET['v'] == 9 && $_SESSION['level'] == 1){
-      $text = "<fieldset><legend>{$lang['system']['categories']}:</legend><select id=\"cat\">";
-      foreach($kategorijos as $id => $kategorija){
-         $text .="<option value=\"$id\">$kategorija";
-      }
-      $text .= "</select></fieldset>
-            
-<link href=\"uploadify/css/default.css\" rel=\"stylesheet\" type=\"text/css\" />
+      $text = "
+      <link href=\"uploadify/css/default.css\" rel=\"stylesheet\" type=\"text/css\" />
 <link href=\"uploadify/css/uploadify.css\" rel=\"stylesheet\" type=\"text/css\" />
 <script type=\"text/javascript\" src=\"uploadify/scripts/swfobject.js\"></script>
 <script type=\"text/javascript\" src=\"uploadify/scripts/jquery.uploadify.v2.1.0.min.js\"></script>
@@ -431,7 +426,7 @@ $(document).ready(function() {
 		'script'         : '".adresas()."/uploadify/scripts/uploadify.php',
 		'cancelImg'      : 'uploadify/cancel.png',
 		'folder'         : 'images/galerija',
-		'scriptData'     : {'PHPSESSID': '".session_id()."', 'cat': $('#cat').val()},
+		'scriptData'     : {'PHPSESSID': '".session_id()."'},
 		'queueID'        : 'fileQueue',
 		'auto'           : true,
 		'multi'          : true,
@@ -440,6 +435,13 @@ $(document).ready(function() {
 	});
 });
 </script>
+      <fieldset><legend>{$lang['system']['categories']}:</legend><select id=\"cat\" onchange=\"$('#uploadify').uploadifySettings('scriptData', {'cat':$(this).val()});\" >";
+      foreach($kategorijos as $id => $kategorija){
+         $text .="<option value=\"$id\">$kategorija";
+      }
+      $text .= "</select></fieldset>
+            
+
 
 <div id=\"fileQueue\"></div>
 <input type=\"file\" name=\"uploadify\" id=\"uploadify\" />
