@@ -462,7 +462,7 @@ function user($user, $id = 0, $level = 0, $extra = false) {
 		$user = $lang['system']['guest'];
 		return $lang['system']['guest'];
 	} else {
-    if(isset($conf['puslapiai']['pm.php']) && $id != 0)
+    if(isset($conf['puslapiai']['pm.php']) && $id != 0 && isset($_SESSION['id']) && $id != $_SESSION['id'])
       $pm = "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"".ROOT."images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>";
     else
       $pm = '';
