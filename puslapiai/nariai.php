@@ -32,7 +32,7 @@ if (sizeof($sql) > 0) {
 		$i++;
 		$info[] = array("{$lang['ulist']['username']}" => user($row['nick'], $row['id'], $row['levelis']), "{$lang['ulist']['group']}" => $grupe);
 		if (defined("LEVEL") && LEVEL == 1) {
-			$info[($i - 1)][$lang['ulist']['email']] = input(preg_replace("#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)#i", "<a href=\"javascript:mailto:mail('\\1','\\2');\">\\1_(at)_\\2</a>", $row['email']));
+			$info[($i - 1)][$lang['ulist']['email']] = preg_replace("#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)#i", "<a href=\"javascript:mailto:mail('\\1','\\2');\">\\1_(at)_\\2</a>", input($row['email']));
 		}
 	}
 	//nupiesiam adminu lentele
