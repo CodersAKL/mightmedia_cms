@@ -56,7 +56,11 @@ if ($kid == 0) {
 			$pav .= "";
 
 			if(!isset($kategorijos_pav['pav'])|| teises($kategorijos_pav['teises'], $_SESSION['level'])) {
+        if($row['sticky'] != 0)
+          echo '<div class="sticky" id="news_'.$row['id'].'">';
 				lentele($row['pavadinimas'], '<div>'.$pav . $row['naujiena'] .'<br />'.  $extra.'</div>', rating_form($page,$row['id']));
+				if($row['sticky'] != 0)
+          echo '</div>';
 			}
 		}
 	} else {
