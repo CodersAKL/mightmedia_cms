@@ -125,16 +125,22 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 				$extra = "<img src='images/forum/folder.gif' alt='{$lang['forum']['topic']}' />";
 			}
 			//subkategorijø atvaizdavimo formatas
-			$info[$kat['katid']][] = array("#" => $extra, "{$lang['forum']['forum']}" => "<div ><a href='".url("?id," . $url['id'] . ";s," . $kat['temid'] ). "'>" . $kat['pav'] . "</a> <i style='font-size:9px;width:auto;display:block;'>" . $kat['aprasymas'] . "</i></div>", "{$lang['forum']['topics']}" => $temos, "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" => (($zinutes>0)? $kat['last_nick'] . ' - ' . (($kat['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $kat['last_data']))):'-'));
+			$info[$kat['katid']][] = array("{$lang['forum']['forum']}" => "<div style=\"margin:0;padding:0;\"><div style=\"float:left; margin: 2px;\">$extra</div><a href='".url("?id," . $url['id'] . ";s," . $kat['temid'] ). "'>" . $kat['pav'] . "</a> <i style='font-size:9px;width:auto;display:block;'>" . $kat['aprasymas'] . "</i></div>", "{$lang['forum']['topics']}" => $temos, "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" => (($zinutes>0)? $kat['last_nick'] . ' <br /> ' . (($kat['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $kat['last_data']))):'-'));
 			$blai = new Table();
 			$subai[$kat['katid']] = $blai->render($info[$kat['katid']]);
 			$kateg[$kat['katid']] = $kat['kategorija'];
 		}
 		//atvaizduojam kategorijas subkategorijom
+		$cont = '';
 		foreach ($kateg as $t => $name) {
 		//$lang['forum']['nosubcat']
-			lentele($name, $subai[$t]);
+			//lentele($name, $subai[$t]);
+			$table[$t][] = array($name => '<div style="width: 96%; padding: 5px;">'.$subai[$t].'</div>');
+      $draw[$t] = new Table();
+      $cont .= $draw[$t]->render($table[$t]).'<br />';
 		}
+    lentele($lang['forum']['forum'], $cont);
+       
 
 	}else {
 		klaida($lang['system']['warning'],$lang['system']['nocategories']);
@@ -175,7 +181,7 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 				$sticky = "";
 			}
 
-			$info[] = array("#" => $extra . $sticky, "{$lang['forum']['topic']}" => "<div style='width:auto;'><a href='".url("?id," . $url['id'] . ";s," . $sid . ";t," . $temos['id'] ). "' style='display:block'>" . $temos['pav'] . "</a></div>", "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" =>(($zinutes>0)?$temos['last_nick'] . ' - ' . (($temos['last_data'] == '0000000000') ? '' : '<a href="'.url('?id,'.$_GET['id'].';s,'.$_GET['s'].';t,'.$temos['id'].';p,'.((int)($zinutes/15-0.1)*15)).'#end">'.kada(date('Y-m-d H:i:s ', $temos['last_data']))).'</a>':'-'));//' . naujas($row['last_data']) . '
+			$info[] = array("{$lang['forum']['topic']}" => "<div style=\" float:left; margin: 2px;\">{$extra}{$sticky}</div><a href='".url("?id," . $url['id'] . ";s," . $sid . ";t," . $temos['id'] ). "'>" . $temos['pav'] . "</a>", "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" =>(($zinutes>0)?$temos['last_nick'] . ' <br /> ' . (($temos['last_data'] == '0000000000') ? '' : '<a href="'.url('?id,'.$_GET['id'].';s,'.$_GET['s'].';t,'.$temos['id'].';p,'.((int)($zinutes/15-0.1)*15)).'#end">'.kada(date('Y-m-d H:i:s ', $temos['last_data']))).'</a>':'-'));//' . naujas($row['last_data']) . '
 
 		}
 

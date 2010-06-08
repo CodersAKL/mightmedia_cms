@@ -125,6 +125,7 @@ function editor($tipas = 'jquery', $dydis = 'standartinis', $id = false, $value 
 	}
 	$root = ROOT;
 	if($conf['Editor'] == 'markitup'){
+    $dir = adresas();
     $return = <<<HTML
 <script type="text/javascript" src="{$dir}htmlarea/markitup/jquery.markitup.js"></script>
 <script type="text/javascript" src="{$dir}htmlarea/markitup/sets/default/set.js"></script>

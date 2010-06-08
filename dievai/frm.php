@@ -195,7 +195,7 @@ if (isset($_POST['kurk']) && $_POST['kurk'] == $lang['admin']['forum_createsub']
 	$f_id = (int)$_POST['f_forumas'];
 	$f_tema = input($_POST['f_tema']);
 	$f_aprasymas = input($_POST['f_aprasymas']);
-	$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_temos` (`fid`, `pav`, `aprasymas`, `lang`, `teises`) VALUES (" . escape($f_id) . ", " . escape($f_tema). ", " . escape($f_aprasymas) . ", ".escape(lang()).", ".escape(serialize($_POST['Teises'])).")");
+	$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "d_temos` (`fid`, `pav`, `aprasymas`, `lang`, `teises`) VALUES (" . escape($f_id) . ", " . escape($f_tema). ", " . escape($f_aprasymas) . ", ".escape(lang()).", ".escape(serialize((isset($_POST['Teises'])?$_POST['Teises']:0)).")");
 	if ($result) {
 		msg($lang['system']['done'], $lang['admin']['forum_createdsub']);
 
