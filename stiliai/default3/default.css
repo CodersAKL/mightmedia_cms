@@ -60,6 +60,15 @@ body{
 	margin: 0;
 	text-align: left;
 }
+#cont h2{
+	background-image: url(img/content1.jpg);
+	background-repeat: no-repeat;
+	font-size: 19px;
+	padding-left:20px;
+	margin: 0;
+	text-align: left;
+}
+
 .logo{
 	background-image: url(img/logo.jpg);
 	width: 118px;
