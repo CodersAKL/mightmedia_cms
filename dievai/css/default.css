@@ -195,7 +195,7 @@ a{
 	background-image: url('../images/icons/check.png');
 	background-repeat: no-repeat;
 	background-position: 98% 48%;
-	overflow: hdden;
+	overflow: hidden;
 	z-index: 999;
 
 }
