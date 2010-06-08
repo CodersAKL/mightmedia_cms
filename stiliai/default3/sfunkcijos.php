@@ -22,12 +22,14 @@ function lentele($pavadinimas, $tekstas, $label = false) {
 
 
 function klaida($pavadinimas,$tekstas,$label=false) {
+	echo '<div style="background-color:#FFFFCC;padding:10px;border:1px solid #FFCC99">';
 	lentele($pavadinimas,"<img src=\"images/icons/emblem-important.png\" align=\"left\" hspace=\"10\" alt=\"Klaida\"/>".$tekstas);
-	
+	echo '</div>';
 }
 function msg($pavadinimas,$tekstas,$label=false) {
+	echo '<div style="background-color:#FFFFCC;padding:10px;border:1px solid #FFCC99">';
 	lentele($pavadinimas,"<img src=\"images/icons/tick.png\" align=\"left\" hspace=\"10\" alt=\"Klaida\"/>".$tekstas);
-	
+	echo '</div>';
 }
 function ofunc() {
 	echo "

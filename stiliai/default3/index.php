@@ -14,7 +14,7 @@
 <body>
   <div id="main">
     <div id="left">
-      <div class="logo"></div>
+      <div class="logo" style="cursor:pointer" onclick="window.location='<?php echo adresas(); ?>'"></div>
       <div class="left1"></div>
      </div>
     <div class="bar">
