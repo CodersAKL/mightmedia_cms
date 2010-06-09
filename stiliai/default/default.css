@@ -328,11 +328,7 @@ div.blokas img:hover {
 .th a {
 	color: white;
 }
-.tr:hover, .tr2:hover {
-	/*background-color: #FFFFCC;*/
-	background-color: #FAECAB;
-	cursor:pointer;
-}
+
 .tr2 {
 	background-color: #FBF8F4;
 	vertical-align: middle;

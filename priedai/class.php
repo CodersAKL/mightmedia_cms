@@ -102,12 +102,13 @@ class forma {
 		}
 	}
 }
-
+//LENTELĖS KLASĖ
 class Table {
 	var $th;
 	var $td;
 	var $return;
 	var $style = 1;
+	var $width;
 	function Table() {
 		$ids = uniqid();
 		/*<script> $(document).ready(function() 
@@ -155,7 +156,7 @@ class Table {
 		}
 	}
 	function th($key) {
-		return "\n\t\t<th style=\"cursor:pointer;cursor:hand\" class=\"th\" nowrap=\"nowrap\">$key</th>";
+		return "\n\t\t<th ".(isset($this->width[$key]) ? "style=\"width: ".$this->width[$key]."\"" : "")." class=\"th\" nowrap=\"nowrap\">$key</th>";
 	}
 	function td($val) {
 		return "\n\t\t<td" . ($this->style == 2 ? "  class=\"td\"" : " class=\"td2\"") . ">$val</td>";

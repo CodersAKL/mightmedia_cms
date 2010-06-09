@@ -125,17 +125,16 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 				$extra = "<img src='images/forum/folder.gif' alt='{$lang['forum']['topic']}' />";
 			}
 			//subkategorijø atvaizdavimo formatas
-			$info[$kat['katid']][] = array("{$lang['forum']['forum']}" => "<div style=\"margin:0;padding:0;\"><div style=\"float:left; margin: 2px;\">$extra</div><a href='".url("?id," . $url['id'] . ";s," . $kat['temid'] ). "'>" . $kat['pav'] . "</a> <i style='font-size:9px;width:auto;display:block;'>" . $kat['aprasymas'] . "</i></div>", "{$lang['forum']['topics']}" => $temos, "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" => (($zinutes>0)? $kat['last_nick'] . ' <br /> ' . (($kat['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $kat['last_data']))):'-'));
+			$info[$kat['katid']][] = array($lang['forum']['forum'] => "<div style=\"margin:0;padding:0;\"><div style=\"float:left; margin: 2px;\">$extra</div><a href='".url("?id," . $url['id'] . ";s," . $kat['temid'] ). "'>" . $kat['pav'] . "</a> <i style='font-size:9px;width:auto;display:block;'>" . $kat['aprasymas'] . "</i></div>", $lang['forum']['topics'] => $temos, $lang['forum']['replies'] => $zinutes, $lang['forum']['lastpost'] => (($zinutes>0)? $kat['last_nick'] . ' <br /> ' . (($kat['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $kat['last_data']))):'-'));
 			$blai = new Table();
+      $blai->width[$lang['forum']['forum']] = '45%';
 			$subai[$kat['katid']] = $blai->render($info[$kat['katid']]);
 			$kateg[$kat['katid']] = $kat['kategorija'];
 		}
 		//atvaizduojam kategorijas subkategorijom
 		$cont = '';
 		foreach ($kateg as $t => $name) {
-		//$lang['forum']['nosubcat']
-			//lentele($name, $subai[$t]);
-			$table[$t][] = array($name => '<div style="width: 96%; padding: 5px;">'.$subai[$t].'</div>');
+			$table[$t][] = array("<span style=\"float: left; font-weight: bold;\">{$name}</span>" => '<div style="width: 96%; padding: 5px;">'.$subai[$t].'</div>');
       $draw[$t] = new Table();
       $cont .= $draw[$t]->render($table[$t]).'<br />';
 		}
@@ -162,7 +161,6 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 	WHERE " . LENTELES_PRIESAGA . "d_straipsniai.tid=" . escape($sid) . " AND `" . LENTELES_PRIESAGA . "d_straipsniai`.`lang` = ".escape(lang())." ORDER by " . LENTELES_PRIESAGA . "d_straipsniai.sticky DESC, " . LENTELES_PRIESAGA . "d_straipsniai.last_data DESC LIMIT " . $pid . ", " . $limit . "",120);
 	if (sizeof($tem) > 0) {
 		foreach ($tem as $temos) {
-		//$tsql = mysql_fetch_assoc(mysql_query1("SELECT count(id) AS viso FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=" . escape($sid) . " AND `sid`=" . escape($temos['id']) . ""));
 			$zinutes = $temos['viso'];
 			$limit = 20;
 			$viso = $kur['temos'];
@@ -181,11 +179,12 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 				$sticky = "";
 			}
 
-			$info[] = array("{$lang['forum']['topic']}" => "<div style=\" float:left; margin: 2px;\">{$extra}{$sticky}</div><a href='".url("?id," . $url['id'] . ";s," . $sid . ";t," . $temos['id'] ). "'>" . $temos['pav'] . "</a>", "{$lang['forum']['replies']}" => $zinutes, "{$lang['forum']['lastpost']}" =>(($zinutes>0)?$temos['last_nick'] . ' <br /> ' . (($temos['last_data'] == '0000000000') ? '' : '<a href="'.url('?id,'.$_GET['id'].';s,'.$_GET['s'].';t,'.$temos['id'].';p,'.((int)($zinutes/15-0.1)*15)).'#end">'.kada(date('Y-m-d H:i:s ', $temos['last_data']))).'</a>':'-'));//' . naujas($row['last_data']) . '
+			$info[] = array($lang['forum']['topic'] => "<div style=\" float:left; margin: 2px;\">{$extra}{$sticky}</div><a href='".url("?id," . $url['id'] . ";s," . $sid . ";t," . $temos['id'] ). "'>" . $temos['pav'] . "</a>", $lang['forum']['replies'] => $zinutes, $lang['forum']['lastpost'] =>(($zinutes>0)?$temos['last_nick'] . ' <br /> ' . (($temos['last_data'] == '0000000000') ? '' : '<a href="'.url('?id,'.$_GET['id'].';s,'.$_GET['s'].';t,'.$temos['id'].';p,'.((int)($zinutes/15-0.1)*15)).'#end">'.kada(date('Y-m-d H:i:s ', $temos['last_data']))).'</a>':'-'));//' . naujas($row['last_data']) . '
 
 		}
-
+    
 		$bla = new Table();
+		$bla->width[$lang['forum']['topic']] = '45%';
 		$temos = $bla->render($info);
 
 	} else {
@@ -237,7 +236,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
       }
       $viso = $kur['zinute'];
       $limit = 15;
-      $gaunam = mysql_query1("SELECT " . LENTELES_PRIESAGA . "users.nick, " . LENTELES_PRIESAGA . "users.taskai, " . LENTELES_PRIESAGA . "users.levelis, " . LENTELES_PRIESAGA . "users.gim_data, " . LENTELES_PRIESAGA . "users.email, " . LENTELES_PRIESAGA . "users.id, " . LENTELES_PRIESAGA . "users.miestas, " . LENTELES_PRIESAGA . "users.icq, " . LENTELES_PRIESAGA . "users.msn, " . LENTELES_PRIESAGA . "users.skype, " . LENTELES_PRIESAGA . "users.aim, " . LENTELES_PRIESAGA . "users.url, " . LENTELES_PRIESAGA . "users.yahoo, " . LENTELES_PRIESAGA . "users.forum_atsakyta, " . LENTELES_PRIESAGA . "d_zinute.id AS `zid`, " . LENTELES_PRIESAGA . "d_zinute.nick AS `nikas`, `tid`, `sid`,`zinute`,`laikas` FROM " . LENTELES_PRIESAGA . "users INNER JOIN `" . LENTELES_PRIESAGA . "d_zinute` ON " .
+      $gaunam = mysql_query1("SELECT " . LENTELES_PRIESAGA . "users.nick, " . LENTELES_PRIESAGA . "users.taskai, " . LENTELES_PRIESAGA . "users.levelis, " . LENTELES_PRIESAGA . "users.gim_data, " . LENTELES_PRIESAGA . "users.email, " . LENTELES_PRIESAGA . "users.id, " . LENTELES_PRIESAGA . "users.miestas, " . LENTELES_PRIESAGA . "users.icq, " . LENTELES_PRIESAGA . "users.msn, " . LENTELES_PRIESAGA . "users.skype, " . LENTELES_PRIESAGA . "users.aim, " . LENTELES_PRIESAGA . "users.url, " . LENTELES_PRIESAGA . "users.parasas, " . LENTELES_PRIESAGA . "users.forum_atsakyta, " . LENTELES_PRIESAGA . "d_zinute.id AS `zid`, " . LENTELES_PRIESAGA . "d_zinute.nick AS `nikas`, `tid`, `sid`,`zinute`,`laikas` FROM " . LENTELES_PRIESAGA . "users INNER JOIN `" . LENTELES_PRIESAGA . "d_zinute` ON " .
          LENTELES_PRIESAGA . "d_zinute.nick=" . LENTELES_PRIESAGA . "users.id WHERE `sid`='" . $tid . "' ORDER BY laikas ASC LIMIT $pid,$limit");
 
       $a = 0;
@@ -258,7 +257,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
         $extra = "";
         $tool = "";
 
-        if (!empty($row['msn'])) {
+        /*if (!empty($row['msn'])) {
           $extra .= "<a href='http://members.msn.com/" . urlencode($row['msn']) . "' target='_blank'><img src='images/forum/icon_msnm.gif' border=0 alt='msn' /></a>  ";
         }
 
@@ -267,19 +266,22 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
         }
         if (!empty($row['url'])) {
           $extra .= "<a href='" . $row['url'] . "' target='_blank'><img src='images/forum/icon_www.gif' border=0 alt='www' /></a>  ";
-        }
+        }*/
 
         if (isset($_SESSION['id']) && $row['nikas'] == $_SESSION['id'] || isset($_SESSION['level']) && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
-          $tool .= "<a href='" . url("e," . $row['zid'] . "") . "#end'><img src='images/forum/icon_edit.gif' border='0' alt='edit'/></a>";
+          $tool .='<span style="float: right;">';
+          $tool .= "<a href='" . url("e," . $row['zid'] . "") . "#end'><img src='images/icons/pencil.png' border='0' alt='[r]'/></a>";
           if ($a != 1) {
             if (isset($_SESSION['level']) && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
-              $tool .= "<a href='".url("?id," . $url['id'] . ";t," . $tid . ";s," . $sid . ";d," . $row['zid'] ). "'><img src='images/forum/icon_trinti.gif' border='0' alt='trinti'/></a>";
+              $tool .= "<a href='".url("?id," . $url['id'] . ";t," . $tid . ";s," . $sid . ";d," . $row['zid'] ). "'><img src='images/icons/cross.png' border='0' alt='[t]'/></a>";
             }
           }
+          $tool .= '</span>';
         }
+        $reply = ($_SESSION['level']>0?'<a style="float: right;" href="' . url("q," . $row['zid'] . "") . '" title="'.$lang['admin']['pm_reply'] .'"><img src="images/icons/arrow_225.png" border="0" alt="re"></a>':'');
 
 
-        $turinys .= ' <fieldset><table width="100%" class="table" id="' . $row['zid'] . '" border="0" cellpadding="0" cellspacing="0">
+       /* $turinys .= ' <fieldset><table width="100%" class="table" id="' . $row['zid'] . '" border="0" cellpadding="0" cellspacing="0">
     <tr>
       <th width="20%" class="th" nowrap="nowrap" align="center">' . user($row['nick'], $row['id'], $row['levelis'], $grupe . '<br />' . $lang['forum']['points'] . ': ' . $row['taskai'] . '<br/>' . $lang['forum']['messages'] . ': ' . $row['forum_atsakyta']) . '</th>
       <th width="80%" class="th" nowrap="nowrap" align="right">' . $lang['forum']['date'] . ': ' . (($row['laikas'] == '0000000000') ? '---' : date('Y-m-d H:i:s ', $row['laikas'])) . '</th>
@@ -292,7 +294,10 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
       <td class="td2" ><a href="javascript:window.scroll(0,0)"><font size="1">▲</font></a></td>
       <td class="td2">' . $extra . '<small style="float:right;">' . $tool . ' '.($_SESSION['level']>0?'<a href="' . url("q," . $row['zid'] . "") . '"><img src="images/forum/atsakyti.gif" border="0" alt="re"></a>':'').'</small></td>
     </tr>
-  </table> </fieldset>';
+  </table> </fieldset>';*/
+				$turinys .= "<div class=\"tr\">{$reply}{$tool}<em> ".user($row['nick'], $row['id'], $row['levelis'])." (" .  (($row['laikas'] == '0000000000') ? '---' : date('Y-m-d H:i:s ', $row['laikas'])) . ") " . naujas($row['laikas'], $row['nick']) . "</em><br />
+			  <div class=\"avatar\" align=\"left\">" . avatar($row['email'], 40) . "</div><div class=\"tr2\" style=\"\">" . bbcode($row['zinute']) . "<br />".(!empty($row['parasas'])? "<hr />".input($row['parasas']):"")."</div></div>";
+				
 
         unset($extra);
       }
