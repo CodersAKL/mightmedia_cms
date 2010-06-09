@@ -1,32 +1,40 @@
 <?php
 
 /**
- * @Projektas: MightMedia TVS
- * @Puslapis: www.coders.lt
- * @$Author$
- * @copyright CodeRS ©2008
- * @license GNU General Public License v2
- * @$Revision$
- * @$Date$
- * */
+ * @author Paulius
+ * @copyright 2009
+ */
 
 require_once ("priedai/class.php");
 $bla = new forma();
 $dienos = array();
 for ($i = 0; $i < 101; $i++)
 	$dienos[$i] = $i;
-$forma = array("Form" => array("action" => "", "method" => "post", "name" => "naujienos"), "Kelių dienų naujienas norėtumėte peržvelgti?:" => array("type" => "select", "value" => $dienos, "name" => "dienos", "class" => "input", "selected" => (isset($_POST['dienos']) ? (int) $_POST['dienos'] : 0)), " " => array("type" => "submit", "name" => "ziureti", "value" => "Žiūrėti"));
+$forma = array(
+	"Form" => array("action" => "", "method" => "post", "name" => "naujienos"), 
+	"Kelių dienų naujienas norėtumėte peržvelgti?:" => array("type" => "select", "value" => $dienos, "name" => "dienos", "class" => "input", "selected" => (isset($_POST['dienos']) ? (int)$_POST['dienos'] : 7)), 
+	" " => array("type" => "submit", "name" => "ziureti", "value" => "Žiūrėti")
+);
 lentele('Kas naujo?', $bla->form($forma));
+/*if (isset($_POST['dienos'])) {*/
 if (isset($_POST['dienos'])) {
-	$time = time() - 24 * 3600 * (int) $_POST['dienos'];
-
-	//forume
+	$nuo = time() - 24 * 3600 * (int)$_POST['dienos'];
+	$iki = time();
+}
+elseif(!empty($url['d']) && isnum($url['d'])) {
+	$nuo = mktime(0, 0, 0, date('m',$url['d']), date('d',$url['d']), date('Y',$url['d']));	//verciam timestamp iki nurodytos dienos pradzios
+	$iki = (int)$url['d'];
+} else {
+	$nuo = time() - 24 * 3600 * 7;
+	$iki = time();
+}
 	if (isset($conf['puslapiai']['frm.php']['id'])) {
-		$q = mysql_query1("SELECT `id`,`id` AS strid,`tid`,`tid` as `temosid`,`pav`,`autorius`,`last_data`,`last_nick`, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=`temosid` AND`sid`=strid ) AS viso	 FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `last_data` >= " . escape($time) . " ORDER BY `last_data` DESC", 3600);
+		$q = mysql_query1("SELECT `id`,`tid`,`pav`,`autorius`,`last_data`,`last_nick` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `last_data` BETWEEN " . escape($nuo) . " AND " . escape($iki) . " ORDER BY `last_data` DESC");
 		if (sizeof($q) > 0) {
+			//date('Y-m-d H:i:s', $row['data'])
 			$text = '';
 			foreach ($q as $row) {
-				$text .= "\t <a href='" . url("?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row['id'] . ";s," . $row['tid'] . ";p," . ((int) ($row['viso'] / 15 - 0.1) * 15)) . "#end'>" . trimlink($row['pav'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['last_data']) . " - " . $row['last_nick'] . ")<br />\n";
+				$text .= "\t <a href='?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row['id'] . ";s," . $row['tid'] . "#end'>" . trimlink($row['pav'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['last_data']) . " - " . $row['last_nick'] . ")<br />\n";
 			}
 			lentele($lang['new']['forum'], $text);
 			unset($text, $row, $q);
@@ -34,11 +42,11 @@ if (isset($_POST['dienos'])) {
 	}
 	//naujienose
 	if (isset($conf['puslapiai']['naujienos.php']['id'])) {
-		$q = mysql_query1("SELECT `id`, `pavadinimas`,`data`,`autorius` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `data` >= " . escape($time) . " AND `rodoma`='TAIP' ORDER BY `data` DESC", 3600);
+		$q = mysql_query1("SELECT `id`, `pavadinimas`,`data`,`autorius` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `data` BETWEEN " . escape($nuo) . " AND " . escape($iki) . " AND `rodoma`='TAIP' ORDER BY `data` DESC");
 		if (sizeof($q) > 0) {
 			$text = '';
 			foreach ($q as $row) {
-				$text .= "<a href='" . url("?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id']) . "'>" . trimlink($row['pavadinimas'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . " - " . $row['autorius'] . ")<br />\n";
+				$text .= "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>" . trimlink($row['pavadinimas'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . " - " . $row['autorius'] . ")<br />\n";
 			}
 			lentele($lang['new']['news'], $text);
 			unset($text, $row, $q);
@@ -46,11 +54,12 @@ if (isset($_POST['dienos'])) {
 	}
 	//galerijoj
 	if (isset($conf['puslapiai']['galerija.php']['id'])) {
-		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas`,`data`,`autorius` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `data`>=" . escape($time) . " AND `rodoma`='TAIP' ORDER BY `data` DESC", 3600);
+		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas`,`data`,`autorius` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `data` BETWEEN " . escape($nuo) . " AND " . escape($iki) . " AND `rodoma`='TAIP' ORDER BY `data` DESC");
 		if (sizeof($q) > 0) {
+			//$text .= "<b>{$lang['new']['gallery']}:</b><br/>";
 			$text = '';
 			foreach ($q as $row) {
-				$text .= "<a href='" . url("?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['ID']) . ";'>" . trimlink($row['pavadinimas'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . ")<br />\n";
+				$text .= "<a href='?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['ID'] . ";'>" . trimlink($row['pavadinimas'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . ")<br />\n";
 			}
 			lentele($lang['new']['gallery'], $text);
 			unset($text, $row, $q);
@@ -58,11 +67,12 @@ if (isset($_POST['dienos'])) {
 	}
 	//siuntiniuose
 	if (isset($conf['puslapiai']['siustis.php']['id'])) {
-		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas`, `categorija`,`autorius`,`data` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `data`>=" . escape($time) . " AND `rodoma`='TAIP' ORDER BY `data` DESC", 3600);
+		$q = mysql_query1("SELECT `ID`, `apie`, `pavadinimas`, `categorija`,`autorius`,`data` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `data` BETWEEN " . escape($nuo) . " AND " . escape($iki) . " AND `rodoma`='TAIP' ORDER BY `data` DESC");
 		if (sizeof($q) > 0) {
+			//$text .= "<b>{$lang['new']['downloads']}:</b><br/>";
 			$text = '';
 			foreach ($q as $row) {
-				$text .= "<a href='" . url("?id," . $conf['puslapiai']['siustis.php']['id'] . ";k," . $row['categorija'] . ";v," . $row['ID']) . "'>" . trimlink($row['pavadinimas'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . ")<br />\n";
+				$text .= "<a href='?id," . $conf['puslapiai']['siustis.php']['id'] . ";k," . $row['categorija'] . ";v," . $row['ID'] . "'>" . trimlink($row['pavadinimas'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . ")<br />\n";
 			}
 			lentele($lang['new']['downloads'], $text);
 			unset($text, $row, $q);
@@ -70,33 +80,49 @@ if (isset($_POST['dienos'])) {
 	}
 	//straipsniai
 	if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
-		$q = mysql_query1("SELECT `id`, `t_text`, `pav`, `kat` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `date`>=" . escape($time) . " AND `rodoma`='TAIP'  ORDER BY `date` DESC", 3600);
+		$q = mysql_query1("SELECT `id`, `t_text`, `pav`, `kat`, `date` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `date` BETWEEN " . escape($nuo) . " AND " . escape($iki) . " AND `rodoma`='TAIP'  ORDER BY `date` DESC");
 		if (sizeof($q) > 0) {
+			//$text .= "<b>{$lang['new']['articles']}:</b><br/>";
 			$text = '';
 			foreach ($q as $row) {
-				$text .= "<a href='" . url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id']) . "'>" . trimlink($row['pav'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . " - " . $row['autorius'] . ")<br />\n";
+				$text .= "<a href='?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] . "'>" . trimlink($row['pav'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['date']) . " - " . $row['autorius'] . ")<br />\n";
 			}
 			lentele($lang['new']['articles'], $text);
 			unset($text, $row, $q);
 		}
 	}
-	$q = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `data`>=" . escape($time) . " ORDER BY `data`", 3600);
+	$q = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `data` BETWEEN " . escape($nuo) . " AND " . escape($iki) . " ORDER BY `data` ");
 	if (sizeof($q) > 0) {
+		//$text .= "<b>{$lang['new']['comments']}:</b><br/>";
 		$text = '';
 		foreach ($q as $row) {
 			if ($row['pid'] == 'puslapiai/naujienos' && isset($conf['puslapiai']['naujienos.php']['id'])) {
+				//$extra = "Naujienos";
 				$link = "k," . $row['kid'];
 			} elseif ($row['pid'] == 'puslapiai/siustis' && isset($conf['puslapiai']['siustis.php']['id'])) {
 				$linkas = mysql_query1("SELECT categorija FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID`='" . $row['kid'] . "'LIMIT 1");
 				$link = "k," . $linkas['categorija'] . ";v," . $row['kid'] . "";
-			} elseif ($row['pid'] == 'puslapiai/straipsnis' && isset($conf['puslapiai']['straipsnis.php']['id'])) {
+				//$extra = "Siuntiniai";
+				//$link = "v," . $row['kid'];
+			} //siuntiniai ?id,50;k,25#162
+			elseif ($row['pid'] == 'puslapiai/straipsnis' && isset($conf['puslapiai']['straipsnis.php']['id'])) {
+
+				//$extra = "Straipsniai";
 				$link = "m," . $row['kid'];
-			} elseif ($row['pid'] == 'puslapiai/galerija' && isset($conf['puslapiai']['galerija.php']['id'])) {
+			} //?id,22;p,14;t,14#325
+			elseif ($row['pid'] == 'puslapiai/galerija' && isset($conf['puslapiai']['galerija.php']['id'])) {
+				//$extra = "Galerija";
 				$link = "m," . $row['kid'];
-			} elseif ($row['pid'] == 'puslapiai/view_user' && isset($conf['puslapiai']['view_user.php']['id'])) {
+			} //?id,46;a,12;v,8#7
+			elseif ($row['pid'] == 'puslapiai/view_user' && isset($conf['puslapiai']['view_user.php']['id'])) {
+				//$extra = "Vartotojai";
 				$link = "m," . $row['kid'];
-			} elseif ($row['pid'] == 'puslapiai/blsavimo_archyvas' && isset($conf['puslapiai']['blsavimo_archyvas.php']['id'])) {
-				$link = "m," . $row['kid'];
+			} elseif ($row['pid'] == 'puslapiai/todo' && isset($conf['puslapiai']['todo.php']['id'])) {
+				//$extra = "Vartotojai";
+				$link = "v," . $row['kid'];
+			} elseif ($row['pid'] == 'puslapiai/codebin' && isset($conf['puslapiai']['codebin.php']['id'])) {
+				//$extra = "Vartotojai";
+				$link = "c," . $row['kid'];
 			}
 
 			$file = str_replace('puslapiai/', '', $row['pid']);
@@ -104,14 +130,16 @@ if (isset($_POST['dienos'])) {
 				if (strlen($row['nick']) > 15) {
 					$ar = unserialize($row['nick']);
 					$author = $ar[0];
-				} else {
+				} else
 					$author = $row['nick'];
-				}
-				$text .= "<a href='" . url("?id," . $conf['puslapiai'][$file . '.php']['id'] . ";" . $link . "#" . $row['id']) . "' title=\"{$lang['new']['author']}: <b>" . $author . "</b><br/>{$lang['new']['date']}: <b>" . date('Y-m-d H:i:s ', $row['data']) . "</b><br/>\">" . trimlink($row['zinute'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . " - " . $author . ")<br />\n";
+
+
+				$text .= "<a href='?id," . $conf['puslapiai']['' . $file . '.php']['id'] . ";" . $link . "#" . $row['id'] . "' title=\"{$lang['new']['author']}: <b>" . $author . "</b><br/>{$lang['new']['date']}: <b>" . date('Y-m-d H:i:s ', $row['data']) . "</b><br/>\">" . trimlink($row['zinute'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . " - " . $author . ")<br />\n";
 			}
 		}
 		lentele($lang['new']['comments'], $text);
 		unset($text, $row, $q);
 	}
-}
+/*}*/
+
 ?>

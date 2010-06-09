@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @Projektas: MightMedia TVS
  * @Puslapis: www.coders.lt
@@ -8,18 +7,18 @@
  * @license GNU General Public License v2
  * @$Revision$
  * @$Date$
- **/
+ * */
 if (!defined("LEVEL") || !defined("OK") || !isset($_SESSION['username'])) {
-	header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
+	header("Location: " . url("?id,{$conf['puslapiai'][$conf['pirminis'] . '.php']['id']}"));
 	exit;
 }
 if (isset($url['m']) && isnum($url['m']) && $url['m'] > 0) {
-	$mid = (int)$url['m'];
+	$mid = (int) $url['m'];
 } else {
 	$mid = 0;
 }
 if (isset($url['id']) && isnum($url['id']) && $url['id'] > 0) {
-	$id = (int)$url['id'];
+	$id = (int) $url['id'];
 } else {
 	$url['id'] = 0;
 }
@@ -28,46 +27,45 @@ if (isset($url['id']) && isnum($url['id']) && $url['id'] > 0) {
 // ######### Slaptazodzio keitimas #############
 if (isset($_POST['old_pass']) && count($_POST['old_pass']) > 0 && count($_POST['new_pass']) > 0 && count($_POST['new_pass2']) > 0) {
 	$old_pass = koduoju($_POST['old_pass']);
-	$sql = count(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " AND pass=" . escape($old_pass) . ""));
+	$sql = count(mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " AND pass=" . escape($old_pass)));
 	if ($sql != 0) {
 		$new_pass = koduoju($_POST['new_pass']);
 		$new_pass2 = koduoju($_POST['new_pass2']);
 		if ($new_pass == $new_pass2) {
-			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET pass=" . escape($new_pass) . " WHERE nick=" . escape($_SESSION['username']) . "");
-			msg("{$lang['system']['done']}", "{$lang['user']['edit_updated']}.");
-
+			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET pass=" . escape($new_pass) . " WHERE nick=" . escape($_SESSION['username']));
+			msg($lang['system']['done'], $lang['user']['edit_updated']);
 		} else {
-			klaida("{$lang['system']['error']}", "{$lang['user']['edit_badconfirm']}.");
+			klaida($lang['system']['error'], $lang['user']['edit_badconfirm']);
 		}
 	} else {
-		klaida("{$lang['system']['error']}", "{$lang['user']['edit_badpass']}.");
+		klaida($lang['system']['error'], $lang['user']['edit_badpass']);
 	}
 	unset($old_pass, $sql, $new_pass, $new_pass2);
 }
 // ################# kontaktu keitimas ######################
 if (isset($_POST['action']) && $_POST['action'] == 'contacts_change') {
-	if(!empty($_POST['email']) && check_email($_POST['email'])){
+	if (!empty($_POST['email']) && check_email($_POST['email'])) {
 		$icq = $_POST['icq'];
 		$msn = $_POST['msn'];
 		$skype = $_POST['skype'];
 		$yahoo = $_POST['yahoo'];
 		$aim = $_POST['aim'];
-		$url = $_POST['url'];
+		$url = parse_url($_POST['url']); $url = (!empty($url['scheme'])?$url['scheme']:'http').'://'.(empty($url['host'])?$url['path']:$url['host'].$url['path']);	//Paruošiam ir sutvarkom įvestą adresą. Išimam visokius argumentus iš nuorodos.
 		$email = $_POST['email'];
 		$ep = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE email=" . escape($email) . " LIMIT 1");
 		$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
-		if(!isset($ep['email']) || (isset($ep['email']) && $ep['email'] == $sql['email'])){
-      if(file_exists('images/avatars/'.md5($sql['email']).'.jpeg'))
-        rename('images/avatars/'.md5($sql['email']).'.jpeg','images/avatars/'.md5($email).'.jpeg');
-		
-      mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET icq=" . escape($icq) . ", msn=" . escape($msn) . ", skype=" . escape($skype) . ", yahoo=" . escape($yahoo) . ", aim=" . escape($aim) . ", url=" . escape($url) . ", email=" . escape($email) . " WHERE nick=" . escape($_SESSION['username']) . "");
-      msg("{$lang['system']['done']}", "{$lang['user']['edit_updated']}");
+		if (!isset($ep['email']) || (isset($ep['email']) && $ep['email'] == $sql['email'])) {
+			if (file_exists('images/avatars/' . md5($sql['email']) . '.jpeg'))
+				rename('images/avatars/' . md5($sql['email']) . '.jpeg', 'images/avatars/' . md5($email) . '.jpeg');
+
+			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET icq=" . escape($icq) . ", msn=" . escape($msn) . ", skype=" . escape($skype) . ", yahoo=" . escape($yahoo) . ", aim=" . escape($aim) . ", url=" . escape($url) . ", email=" . escape($email) . " WHERE nick=" . escape($_SESSION['username']) . "");
+			msg($lang['system']['done'],$lang['user']['edit_updated']);
 		} else {
-        klaida($lang['system']['error'], $lang['reg']['emailregistered']);
-      }
+			klaida($lang['system']['error'], $lang['reg']['emailregistered']);
+		}
 		unset($icq, $msn, $skype, $yahoo, $aim, $url, $email);
-	}else{
-		klaida($lang['system']['error'],$lang['reg']['bademail']);
+	} else {
+		klaida($lang['system']['error'], $lang['reg']['bademail']);
 	}
 }
 // ################ Salies bei miesto nustatymai #############
@@ -75,7 +73,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'country_change') {
 	$miestas = $_POST['miestas'];
 	$salis = $_POST['salis'];
 	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET salis=" . escape($salis) . ", miestas=" . escape($miestas) . " WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
-	msg("{$lang['system']['done']}", "{$lang['user']['edit_updated']}");
+	msg($lang['system']['done'], $lang['user']['edit_updated']);
 }
 
 
@@ -83,24 +81,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'country_change') {
 if (isset($_POST['action']) && $_POST['action'] == 'default_change') {
 	$vardas = $_POST['vardas'];
 	$pavarde = $_POST['pavarde'];
-	$metai = (int)$_POST['metai'];
-	$menesis = (int)$_POST['menesis'];
-	$diena = (int)$_POST['diena'];
+	$gimimas = date('Y-m-d',strtotime($_POST['gimimas']));
 	$parasas = $_POST['parasas'];
-	$gimimas = $metai . "-" . $menesis . "-" . $diena;
-		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET vardas=" . escape($vardas) . ", pavarde=" . escape($pavarde). ", parasas=" . escape($parasas) . ", gim_data=" . escape($gimimas) . " WHERE nick=" . escape($_SESSION['username']) . "");
-	msg("{$lang['system']['done']}", "{$lang['user']['edit_updated']}");
+	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET vardas=" . escape($vardas) . ", pavarde=" . escape($pavarde) . ", parasas=" . escape($parasas) . ", gim_data=" . escape($gimimas) . " WHERE nick=" . escape($_SESSION['username']) . "");
+	msg($lang['system']['done'], $lang['user']['edit_updated']);
 }
 // ################ Siulomi punktai redagavimui MENIU ##########################
 $text = "
  <table width=100% border=0>
 	<tr>
 		<td>
-			<div class=\"blokas\"><center><a href='".url("?id," . $id . ";m,1")."'><img src=\"images/user/user-auth.png\" alt=\"slaptazodis\" />{$lang['user']['edit_pass']}</a></center></div>
-			<div class=\"blokas\"><center><a href='".url("?id," . $id . ";m,2")."'><img src=\"images/user/user-contact.png\" alt=\"kontaktai\" />{$lang['user']['edit_contacts']}</a></center></div>
-			<div class=\"blokas\"><center><a href='".url("?id," . $id . ";m,3")."'><img src=\"images/user/user-place.png\" alt=\"vietove\" />{$lang['user']['edit_locality']}</a></center></div>
-<div class=\"blokas\"><center><a href='".url("?id," . $id . ";m,4")."'><img src=\"images/user/user-avatar.png\" alt=\"avataras\" />{$lang['user']['edit_avatar']}</a></center></div>
-			<div class=\"blokas\"><center><a href='".url("?id," . $id . ";m,5")."'><img src=\"images/user/user-settings.png\" alt=\"nustatymai\" />{$lang['user']['edit_signature']}</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url("?id," . $id . ";m,1") . "'><img src=\"images/user/user-auth.png\" alt=\"slaptazodis\" />{$lang['user']['edit_pass']}</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url("?id," . $id . ";m,2") . "'><img src=\"images/user/user-contact.png\" alt=\"kontaktai\" />{$lang['user']['edit_contacts']}</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url("?id," . $id . ";m,3") . "'><img src=\"images/user/user-place.png\" alt=\"vietove\" />{$lang['user']['edit_locality']}</a></center></div>
+<div class=\"blokas\"><center><a href='" . url("?id," . $id . ";m,4") . "'><img src=\"images/user/user-avatar.png\" alt=\"avataras\" />{$lang['user']['edit_avatar']}</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url("?id," . $id . ";m,5") . "'><img src=\"images/user/user-settings.png\" alt=\"nustatymai\" />{$lang['user']['edit_signature']}</a></center></div>
 			
 		</td>
 	</tr>
@@ -121,21 +116,19 @@ if (isset($mid) && isnum($mid)) {
 		$info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . "LIMIT 1");
 
 		$form = array(
-			"Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id'].";m,".$_GET['m']), "method" => "post", "enctype" => "", "id" => "", "extra" => "onSubmit=\"return checkMail('change_contacts','email')\"", "name" => "change_contacts"), 
-			"ICQ:" => array("type" => "text", "value" => input($info['icq']), "name" => "icq", "class" => "input"), 
-			"MSN:" => array("type" => "text", "value" => input($info['msn']), "name" => "msn", "class" => "input"), 
-			"Skype:" => array("type" => "text", "value" => input($info['skype']), "name" => "skype", "class" => "input"), 
-			"Yahoo:" => array("type" => "text", "value" => input($info['yahoo']), "name" => "yahoo", "class" => "input"), 
-			"AIM:" => array("type" => "text", "value" => input($info['aim']), "name" => "aim", "class" => "input"), 
-			"{$lang['user']['edit_web']}:" => array("type" => "text", "value" => input($info['url']), "name" => "url", "class" => "input"), 
-			"{$lang['user']['edit_email']}:" => array("type" => "text", "value" => input($info['email']), "name" => "email", "class" => "input"), 
-			"\r\r\r" => array("type" => "hidden", "name" => "action", "value" => "contacts_change"), 
+			"Form" => array("action" => url("?id," . $conf['puslapiai'][basename(__file__)]['id'] . ";m," . $_GET['m']), "method" => "post", "enctype" => "", "id" => "", "extra" => "onSubmit=\"return checkMail('change_contacts','email')\"", "name" => "change_contacts"),
+			"ICQ:" => array("type" => "text", "value" => input($info['icq']), "name" => "icq", "class" => "input"),
+			"MSN:" => array("type" => "text", "value" => input($info['msn']), "name" => "msn", "class" => "input"),
+			"Skype:" => array("type" => "text", "value" => input($info['skype']), "name" => "skype", "class" => "input"),
+			"Yahoo:" => array("type" => "text", "value" => input($info['yahoo']), "name" => "yahoo", "class" => "input"),
+			"AIM:" => array("type" => "text", "value" => input($info['aim']), "name" => "aim", "class" => "input"),
+			"{$lang['user']['edit_web']}:" => array("type" => "text", "value" => input($info['url']), "name" => "url", "class" => "input"),
+			"{$lang['user']['edit_email']}:" => array("type" => "text", "value" => input($info['email']), "name" => "email", "class" => "input"),
+			"\r\r\r" => array("type" => "hidden", "name" => "action", "value" => "contacts_change"),
 			"" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}")
 		);
 		$bla = new forma();
 		lentele($lang['user']['edit_contacts'], $bla->form($form));
-
-
 	}
 	// Pakeisti sali, miesta
 	elseif ($mid == 3) {
@@ -144,27 +137,24 @@ if (isset($mid) && isnum($mid)) {
 		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "salis`");
 		$salis = array();
 		foreach ($sql as $row) {
-				$salis[$row['iso']] = $row['printable_name'];
+			$salis[$row['iso']] = $row['printable_name'];
 		}
 
-		$forma = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id'].";m,".$_GET['m']), "method" => "post", "name" => "change_country"), "{$lang['user']['edit_country']}:" => array("type" => "select", "value" => $salis, "name" => "salis", "selected" => $info['salis']), "{$lang['user']['edit_city']}:" => array("type" => "text", "value" => $info['miestas'], "name" => "miestas"), " \r " => array("type" => "hidden", "name" => "action", "value" => "country_change"), "" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}"));
+		$forma = array("Form" => array("action" => url("?id," . $conf['puslapiai'][basename(__file__)]['id'] . ";m," . $_GET['m']), "method" => "post", "name" => "change_country"), "{$lang['user']['edit_country']}:" => array("type" => "select", "value" => $salis, "name" => "salis", "selected" => $info['salis']), "{$lang['user']['edit_city']}:" => array("type" => "text", "value" => $info['miestas'], "name" => "miestas"), " \r " => array("type" => "hidden", "name" => "action", "value" => "country_change"), "" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}"));
 
 		$bla = new forma();
 		lentele($lang['user']['edit_locality'], $bla->form($forma));
-
-
 	}
 
 	// Avataro keitimas
 	//Žaidime mano šito nereikės
-
 	elseif ($mid == 4) {
-		$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape($_SESSION['username']). " LIMIT 1");
-		if(isset($_GET['a'])&&$_GET['a']==1)
-      @unlink('images/avatars/'.md5($sql['email']).'.jpeg');
-$avataras=avatar($sql['email']);
-$name=md5($sql['email']);
-		$avatar =<<<HTML
+		$sql = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape($_SESSION['username']) . " LIMIT 1");
+		if (isset($_GET['a']) && $_GET['a'] == 1)
+			@unlink('images/avatars/' . md5($sql['email']) . '.jpeg');
+		$avataras = avatar($sql['email']);
+		$name = md5($sql['email']);
+		$avatar = <<<HTML
 <style type="text/css">
 
 
@@ -219,8 +209,8 @@ $('#example1 .files').replaceWith('<div class="files"><img id="ikeltas_avataras"
 		</span>
 </div>
 HTML;
-if(isset($_GET['a'])&&$_GET['a']==1)
-$avatar .= "<div align='center' id='gravatar'>
+		if (isset($_GET['a']) && $_GET['a'] == 1)
+			$avatar .= "<div align='center' id='gravatar'>
 {$lang['user']['edit_avatarcontent']} <b>" . $sql['email'] . "</b> .</div>";
 
 		lentele($lang['user']['edit_avatar'], $avatar);
@@ -228,49 +218,30 @@ $avatar .= "<div align='center' id='gravatar'>
 	// Pagrindiniai nustatymai
 	elseif ($mid == 5) {
 		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
-		$data = explode("-", $sql['gim_data']);
-		for ($a = 1; $a <= 31; $a++) {
-			$day[$a] = $a;
 
-		}
-		for ($a = 1; $a <= 12; $a++) {
-			$month[$a] = $a;
-
-		}
-		$a = date("Y") - 80;
-		$viso = date("Y") - 7;
-		while ($a < $viso) {
-			$year[$a] = $a;
-			$a++;
-		}
 		$forma = array(
-			"Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id'].";m,".$_GET['m']), "method" => "post", "name" => "pagr_nustatymai"), 
-			"{$lang['user']['edit_name']}:" => array("type" => "text", "value" => input($sql['vardas']), "name" => "vardas", "class" => "input"), 
-			"{$lang['user']['edit_secondname']}:" => array("type" => "text", "value" => input($sql['pavarde']), "name" => "pavarde", "class" => "input"), 
-			"{$lang['user']['edit_dateOfbirth']}:" => array("type" => "select", "value" => $year, "selected" => (isset($data[0])?$data[0]:(date("Y") - 7)), "class" => "select", "name" => "metai"),
-			" " => array("type" => "select", "class" => "select", "value" => $month, "selected" => (isset($data[1])?$data[1]:1), "name" => "menesis"),
-			"\r " => array("type" => "select", "class" => "select", "value" => $day, "selected" => (isset($data[2])?$data[2]:1), "name" => "diena"),
-			"{$lang['user']['edit_signature']}" => array("type" => "textarea", "class" =>	"input", "value" => input($sql['parasas']), "name" => "parasas"), 
-			" \r \n" => array("type" => "hidden", "name" => "action", "value" => "default_change"), 
+			"Form" => array("action" => url("?id," . $conf['puslapiai'][basename(__file__)]['id'] . ";m," . $_GET['m']), "method" => "post", "name" => "parasas"),
+			"{$lang['user']['edit_name']}:" => array("type" => "text", "value" => input($sql['vardas']), "name" => "vardas", "class" => "input"),
+			"{$lang['user']['edit_secondname']}:" => array("type" => "text", "value" => input($sql['pavarde']), "name" => "pavarde", "class" => "input"),
+			"{$lang['user']['edit_dateOfbirth']}:" => array("type" => "text", "value" => $sql['gim_data'], "extra" => "title='0000-00-00' size='10' maxlength='10' style='width:inherit'", "class" => "input", "name" => "gimimas"),
+			//"\r " => array("type" => "select", "class" => "select", "value" => $day, "selected" => (isset($data[2]) ? $data[2] : 1), "name" => "diena"),
+			$lang['user']['edit_signature'] => array("type" => "textarea", "class" => "input", "value" => input($sql['parasas']), "name" => "parasas", "id" => "parasas"),
+			" " => array("type" => "string", "value" => bbk('parasas')),
+			" \r \n" => array("type" => "hidden", "name" => "action", "value" => "default_change"),
 			"" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}")
 		);
 
 		$bla = new forma();
 		lentele($lang['user']['edit_mainsettings'], $bla->form($forma));
-    unset($data, $viso, $day, $month, $year);
-
+		unset($data, $viso, $day, $month, $year);
 	}
 }
 ?>
-<script language="JavaScript1.2">
-function checkMail(form,email) {
-	var x = document.forms[form].email.value;
-	var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-	if (filter.test(x)) { return true; }
-	else { alert('<?php
-
-echo $lang['user']['edit_bademail'];
-
-?>'); return false; }
-}
+<script type="text/javascript">
+	function checkMail(form,email) {
+		var x = document.forms[form].email.value;
+		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if (filter.test(x)) { return true; }
+		else { alert('<?php echo $lang['user']['edit_bademail'];?>'); return false; }
+		}
 </script>
