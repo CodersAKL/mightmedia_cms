@@ -9,7 +9,7 @@ if (isset($conf['puslapiai']['rss.php'])) {
 		<channel>
 			<title><?php echo htmlspecialchars($conf['Pavadinimas']); ?></title>
 			<link><?php echo adresas(); ?></link>
-			<description><![CDATA[ <?php echo $conf['Apie']; ?> ]]></description>
+			<description><![CDATA[ <?php echo strip_tags($conf['Apie']); ?> ]]></description>
 			<language>en-lt</language>
 			<copyright><![CDATA[ <?php echo strip_tags($conf['Copyright']); ?> ]]></copyright>
 			<managingEditor><![CDATA[ <?php echo htmlspecialchars($conf['Pastas']) . ' (' . $admin_name . ')'; ?> ]]></managingEditor>
