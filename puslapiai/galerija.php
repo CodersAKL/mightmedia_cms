@@ -95,9 +95,9 @@ if ($k > 0) {
 }
 
 
-if ($visos > $limit) {
+/*if ($visos > $limit) {
 	lentele($lang['system']['pages'], puslapiai($p, $limit, $visos, 10));
-}
+}*/
 
 
 if (empty($url['m'])) {
@@ -152,7 +152,7 @@ if (empty($url['m'])) {
 			$pav = "--";
 		}
 		if (isset($foto)) {
-			lentele($pav, $text);
+			lentele($pav, ($visos > $limit ? puslapiai($p, $limit, $visos, 10) : '').$text.($visos > $limit ? puslapiai($p, $limit, $visos, 10) : ''));
 		}
 		unset($row, $text, $sql);
 	} else {
