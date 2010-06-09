@@ -553,4 +553,3 @@ elseif ($aid == 1 && $kid == 0 && $lid == 0 && $rid == 0) {
 	}
 }
 ?>
-Naujas - testing
