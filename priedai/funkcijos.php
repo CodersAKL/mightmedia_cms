@@ -44,7 +44,7 @@ function koduoju($pass) {
 }
 //meta tagai ir kita
 function header_info() {
-	global $conf, $page_pavadinimas;
+	global $conf, $page_pavadinimas, $lang;
 	echo '
 	<base href="'.adresas().'"></base>
 	<meta name="generator" content="MightMedia TVS" />
@@ -79,14 +79,7 @@ function header_info() {
   $(\'.td2\').breakly(20);
   $(\'.th\').breakly(20);
 	//Examples of how to assign the ColorBox event to elements.
-	$(".gallery a[rel=\'lightbox\']").colorbox({transition:"fade"});
-
-	//Example of preserving a JavaScript event for inline calls.
-	$("#click").click(function(){
-			 $(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-	});
-	$("#inline").colorbox({width:"50%", inline:true, href:"#inline_example1", title:"hello"});
-
+	$(".gallery a[rel=\'lightbox\']").colorbox({transition:"fade", current: "'.$lang['admin']['gallery_image'].' {current} '.$lang['user']['pm_of'].' {total}", next:"'.$lang['admin']['gallery_next'].'", previous:"'.$lang['admin']['gallery_prev'].'", close:"[x]"});
 	// find all the input elements with title attributes and make them with a hint
 	$(\'input[title!=""]\').hint(\'inactive\');
 });

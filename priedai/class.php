@@ -24,7 +24,7 @@ class forma {
 			$return .= "<table border=\"0\" style=\"width: 100%\" align=\"center\" cellpadding=\"3\" cellspacing=\"0\" class=\"form_table\">";
 			foreach ($inputs as $pav => $type) {
 				if (!empty($type) && $pav != 'Form') {
-					$return .= "\n\t<tr>\n\t\t<td align=\"right\" >" . $pav . "</td>";
+					$return .= "\n\t<tr>\n\t\t<td align=\"right\" >" . (!empty($pav)?$pav:'&nbsp;'). "</td>";
 					$return .= "\n\t\t<td align=\"left\" >\n\t\t\t" . $this->input($type) . "\n\t\t</td>\n\t</tr>";
 				}
 			}
@@ -156,13 +156,13 @@ class Table {
 		}
 	}
 	function th($key) {
-		return "\n\t\t<th ".(isset($this->width[$key]) ? "style=\"width: ".$this->width[$key]."\"" : "")." class=\"th\" nowrap=\"nowrap\">$key</th>";
+		return "\n\t\t<th ".(isset($this->width[$key]) ? "style=\"width: ".$this->width[$key]."\"" : "")." class=\"th\" nowrap=\"nowrap\">".(!empty($key)?$key:'&nbsp;')."</th>";
 	}
 	function td($val) {
-		return "\n\t\t<td" . ($this->style == 2 ? "  class=\"td\"" : " class=\"td2\"") . ">$val</td>";
+		return "\n\t\t<td" . ($this->style == 2 ? "  class=\"td\"" : " class=\"td2\"") . ">".(!empty($val)?$val:'&nbsp;')."</td>";
 	}
 	function tr($info, $type = false) {
-		return "\n\t<tr" . (($type != false) ? " style=\"margin:0;vertical-align:top;\" class=\"$type\"" : " class=\"tr" . $this->style . "\"") . ">$info\n\t</tr>";
+		return "\n\t<tr" . (($type != false) ? " style=\"margin:0;vertical-align:top;\" class=\"$type\"" : " class=\"tr" . $this->style . "\"") . ">".(!empty($info)?$info:'&nbsp;')."\n\t</tr>";
 	}
 	function finish() {
 		return "\n</table>\n";

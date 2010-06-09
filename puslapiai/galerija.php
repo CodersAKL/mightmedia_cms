@@ -221,18 +221,15 @@ if (!empty($url['m'])) {
 				$autorius = $lang['system']['guest'];
 			}
 
-			//if ((int)$conf['galbalsuot'] == 1) {
 				$balsavimas = rating_form($page,$row['nid']);
-			/*} else {
-				$balsavimas = '';
-			}*/
+			$text .= '<center>';
 			if (!empty($nuoroda2['id'])) {
-				$text .= "<a href=\"".url("?id," . $url['id'] . ";m," . $nuoroda2['id']). "\" >< {$lang['admin']['gallery_prev']}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+				$text .= "<a href=\"".url("?id," . $url['id'] . ";m," . $nuoroda2['id']). "\" >< {$lang['admin']['gallery_prev']}</a>&nbsp;";
 			}
 			if (!empty($nuoroda['id'])) {
 				$text .= "<a href=\"".url("?id," . $url['id'] . ";m," . $nuoroda['id'] ). "\" >{$lang['admin']['gallery_next']} ></a>";
 			}
-			$text .= "
+			$text .= "</center>
 			<div id=\"gallery\" >
         <center>
           <a  rel=\"lightbox\" href=\"images/galerija/originalai/" . $row['file'] . "\" title=\"" . $row['pavadinimas'] . ": " . trimlink(strip_tags($row['apie']), 50) . "\">
