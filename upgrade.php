@@ -42,9 +42,9 @@ if (!isset($_GET['step']) || empty($_GET['step'])) {
 if (isset($_POST['next_msyql'])) {
 			// Sukuriamos visos MySQL leneteles is SVN Trunk
 		if (!file_exists('sql-upgrade.sql')) {
-			$sql = file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade.sql');
+			$sql = file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade-1.3to1.4.sql');
 		} else {
-			$sql = file_get_contents('sql-upgrade.sql');
+			$sql = file_get_contents('sql-upgrade-1.3to1.4.sql');
 		}
 
 		// Paruošiam užklausas
