@@ -13,7 +13,6 @@
 ob_start();
 header("Cache-control: public");
 header("Content-type: text/html; charset=utf-8");
-header('P3P: CP="NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM"');
 if (!isset($_SESSION))
 	session_start();
 define('ROOT', '');

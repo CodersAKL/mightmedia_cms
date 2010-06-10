@@ -46,7 +46,12 @@ if ($vid == 0) {
 
 			if ($path['path'] == $k) {
 				$sqlkiek = kiek('siuntiniai', "WHERE `categorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
-				$info[] = array(" " => "<a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' /></a>", "{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id']) . "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br />", "{$lang['category']['downloads']}" => $sqlkiek);
+				//$info[] = array(" " => "<a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' /></a>", "{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id']) . "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br />", "{$lang['category']['downloads']}" => $sqlkiek);
+				 $info[] = array(
+					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . $sql['pavadinimas'] . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . $sql['aprasymas'] . "</div><div>{$lang['category']['downloads']}: $sqlkiek</div></span></div>"//,
+				);
+		}
+
 			}
 		}
 		include_once ("priedai/class.php");

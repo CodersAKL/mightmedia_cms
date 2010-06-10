@@ -286,14 +286,7 @@ HTML;
 				});
 				$('ul.sf-menu').superfish();
          //Examples of how to assign the ColorBox event to elements.
-        $(".gallery a[rel='lightbox']").colorbox({transition:"fade"});
-
-        //Example of preserving a JavaScript event for inline calls.
-        $("#click").click(function(){
-        $('#click').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-        });
-        $("#inline").colorbox({width:"50%", inline:true, href:"#inline_example1", title:"hello"});
-        // find all the input elements with title attributes and make them with a hint
+        $(".gallery a[rel='lightbox']").colorbox({transition:"fade", current: "<?php echo $lang['admin']['gallery_image']; ?> {current} <?php echo $lang['user']['pm_of']; ?> {total}", next:"<?php echo $lang['admin']['gallery_next'];?>", previous:"<?php echo $lang['admin']['gallery_prev'];?>", close:"[x]"});
 			});
 			
 		</script>

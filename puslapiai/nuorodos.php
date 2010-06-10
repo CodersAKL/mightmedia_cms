@@ -52,11 +52,16 @@ if (sizeof($sqlas) > 0) {
 
 		if ($path['path'] == $k) {
 			$sqlkiek = kiek('nuorodos', "WHERE `cat`=" . escape($sql['id']) . " AND `active`='TAIP' AND `lang` = ".escape(lang())."");
-			$info[] = array(
+			/*$info[] = array(
 				" " => "<img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' />",
 				"{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br>",
 				"{$lang['category']['links']}" => $sqlkiek
-			);
+			);*/
+        $info[] = array(
+					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . $sql['pavadinimas'] . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . $sql['aprasymas'] . "</div><div>{$lang['category']['links']}: $sqlkiek</div></span></div>"//,
+				);
+		}
+
 		}
 	}
 }
