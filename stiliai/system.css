@@ -81,3 +81,13 @@ td#code {
 #captcha {
 	background-color: white
 }
+input.chapter {
+  font-size : 20px;
+  font-weight : bold;
+  height : 30px;
+  padding-top : 5px;
+  text-align : center;
+  text-transform : uppercase;
+  vertical-align : middle;
+  width : 100px;
+}
