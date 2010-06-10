@@ -93,7 +93,7 @@ function bbs($forma) {
 		B-)
 		:-|
 		:P
-		>)
+		|)
 		o_0
 		", $forma) . "<br/>";
 }
