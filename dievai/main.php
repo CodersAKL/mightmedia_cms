@@ -398,7 +398,7 @@ HTML;
          <div class="c">©</div>
          <div class="text">
           <div class="copy">
-            <div class="links"><a href="http://mightmedia.lt">MightMedia</a> | <a href="http://mightmedia.lt/Kontaktai"><?php echo $lang['pages']['kontaktas.php'];?></a> | <a href="http://www.gnu.org/licenses/gpl.html">GNU</a></div>MightMedia TVS - tai viena pirmuju Lietuvoje atviro kodo turinio valdymo sistema, sukurta CodeRS komandos.</div>
+            <div class="links"><a href="http://mightmedia.lt">MightMedia</a> | <a href="http://mightmedia.lt/Kontaktai"><?php echo $lang['pages']['kontaktas.php'];?></a> | <a href="http://www.gnu.org/licenses/gpl.html">GNU</a></div>MightMedia TVS - tai viena pirmųjų Lietuvoje atviro kodo turinio valdymo sistema, sukurta CodeRS komandos.</div>
             <div class="images"><img src="images/mysql.png" alt="" /><img src="images/php.png" alt="" /><img src="images/gnu.png" alt="" /></div>
          </div>
           </div>
