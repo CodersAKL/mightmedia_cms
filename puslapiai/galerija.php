@@ -80,6 +80,9 @@ if ($k > 0) {
   ORDER BY
   `" . LENTELES_PRIESAGA . "galerija`.`".$conf['galorder']."` ".$conf['galorder_type']."
   LIMIT  $p,$limit", 86400);
+  		if(count($sql) == 0)
+        klaida($lang['system']['warning'], $lang['system']['no_content']);
+
 } else {
 	$sql = mysql_query1("SELECT
   `" . LENTELES_PRIESAGA . "galerija`.`pavadinimas`,
