@@ -95,7 +95,7 @@ $text = "
 			<div class=\"blokas\"><center><a href='" . url("?id," . $id . ";m,2") . "'><img src=\"images/user/user-contact.png\" alt=\"kontaktai\" />{$lang['user']['edit_contacts']}</a></center></div>
 			<div class=\"blokas\"><center><a href='" . url("?id," . $id . ";m,3") . "'><img src=\"images/user/user-place.png\" alt=\"vietove\" />{$lang['user']['edit_locality']}</a></center></div>
 <div class=\"blokas\"><center><a href='" . url("?id," . $id . ";m,4") . "'><img src=\"images/user/user-avatar.png\" alt=\"avataras\" />{$lang['user']['edit_avatar']}</a></center></div>
-			<div class=\"blokas\"><center><a href='" . url("?id," . $id . ";m,5") . "'><img src=\"images/user/user-settings.png\" alt=\"nustatymai\" />{$lang['user']['edit_signature']}</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url("?id," . $id . ";m,5") . "'><img src=\"images/user/user-settings.png\" alt=\"nustatymai\" />{$lang['user']['edit_mainsettings']}</a></center></div>
 			
 		</td>
 	</tr>
@@ -200,9 +200,9 @@ $('#example1 .files').replaceWith('<div class="files"><img id="ikeltas_avataras"
 	<span id="example1" class="example">
 		
 	
-<div class="btns"><a onclick="return false" class="btn"><span id="button1"><img src="images/icons/picture__plus.png" alt="" class="middle"/>{$lang['user']['edit_upload']}</span></a>
-<a class="btn" href="?id,{$_GET['id']};m,{$_GET['m']};a,1"><span><img src="images/icons/picture__plus.png" alt="" class="middle"/>{$lang['user']['edit_gravatar']}</span></a>
-</div> 
+<a onclick="return false"><span id="button1"><img src="images/icons/picture__plus.png" alt="" class="middle"/> {$lang['user']['edit_upload']}</span></a> <br />
+<a class="btn" href="?id,{$_GET['id']};m,{$_GET['m']};a,1"><span><img src="images/icons/picture__plus.png" alt="" class="middle"/> {$lang['user']['edit_gravatar']}</span></a>
+
 		<p>{$lang['user']['edit_avatar']}:</p>
 
 		<div class="files">{$avataras}</div>
