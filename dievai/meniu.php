@@ -188,6 +188,7 @@ lentele($page_pavadinimas,$text);
 			$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape((int)$url['r']) . " LIMIT 1";
 			$sql = mysql_query1($sql);
 			$selected = unserialize($sql['teises']);
+			unset($parents[$sql['id']]);
 			$psl = array(
 				 "Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_psl"),
 				 "{$lang['admin']['page_name']}:" => array("type" => "text", "value" => $sql['pavadinimas'], "name" => "pslp", "class" => "input"),
