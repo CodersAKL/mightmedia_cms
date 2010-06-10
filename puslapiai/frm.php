@@ -70,6 +70,7 @@ if (isset($url['q']) && isnum($url['q']) && $url['q'] > 0) {
 	$qid = 0;
 }
 include_once ("priedai/class.php");
+$imagedir = (file_exists("stiliai/{$conf['Stilius']}/forum/")?"stiliai/{$conf['Stilius']}/forum/":"images/forum/");
 //kur tu?
 $kur = mysql_query1("SELECT pav, (SELECT pav from " . LENTELES_PRIESAGA . "d_straipsniai Where id=$tid AND `lang` = " . escape(lang()) . ")AS tema,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_zinute Where sid=$tid AND tid=$sid  AND `lang` = " . escape(lang()) . ")AS zinute,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_zinute Where tid=$sid AND `lang` = " . escape(lang()) . ")AS subzinute,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_straipsniai Where tid=$sid AND `lang` = " . escape(lang()) . ")AS temos FROM " . LENTELES_PRIESAGA . "d_temos WHERE id=$sid AND `lang` = " . escape(lang()) . " limit 1", 120);
 //Sausainiai naujiems fiksuoti
@@ -120,12 +121,12 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 			$temos = (int) $kat['temos'];
 			//nustatom ar yra naujø praneðimø
 			if ((!isset($_COOKIE['sub_' . $kat['temid']]) && (int) $kat['last_data'] > 0 && $zinutes > 0) || (isset($_COOKIE['sub_' . $kat['temid']]) && (int) $_COOKIE['sub_' . $kat['temid']] < $zinutes)) {
-				$extra = "<img src='images/forum/folder_new.gif' alt='new' />";
+				$extra = "<img src='{$imagedir}folder_new.gif' alt='new' />";
 			} else {
-				$extra = "<img src='images/forum/folder.gif' alt='{$lang['forum']['topic']}' />";
+				$extra = "<img src='{$imagedir}folder.gif' alt='{$lang['forum']['topic']}' />";
 			}
 			//subkategorijø atvaizdavimo formatas
-			$info[$kat['katid']][] = array($lang['forum']['forum'] => "<div style=\"margin:0;padding:0;\"><div style=\"float:left; margin: 2px;\">$extra</div><a href='".url("?id," . $url['id'] . ";s," . $kat['temid'] ). "'>" . $kat['pav'] . "</a> <i style='font-size:9px;width:auto;display:block;'>" . $kat['aprasymas'] . "</i></div>", $lang['forum']['topics'] => $temos, $lang['forum']['replies'] => $zinutes, $lang['forum']['lastpost'] => (($zinutes>0)? $kat['last_nick'] . ' <br /> ' . (($kat['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $kat['last_data']))):'-'));
+			$info[$kat['katid']][] = array($lang['forum']['forum'] => "<div style=\"margin:0;padding:0;\"><div style=\"float:left; margin: 2px;\">$extra</div><a href='".url("?id," . $url['id'] . ";s," . $kat['temid'] ). "'>" . $kat['pav'] . "</a> <span class=\"small_about\"style='font-size:9px;width:auto;display:block;'>" . $kat['aprasymas'] . "</span></div>", $lang['forum']['topics'] => $temos, $lang['forum']['replies'] => $zinutes, $lang['forum']['lastpost'] => (($zinutes>0)? $kat['last_nick'] . ' <br /> ' . (($kat['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $kat['last_data']))):'-'));
 			$blai = new Table();
 			$blai->width[$lang['forum']['forum']] = '45%';
 			$subai[$kat['katid']] = $blai->render($info[$kat['katid']]);
@@ -148,7 +149,7 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 	$teise = mysql_query1("SELECT `teises` FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`=" . escape($_GET['s']) . " LIMIT 1");
 	if (isset($_SESSION['username']) && teises(unserialize($teise['teises']), $_SESSION['level'])) {
-		echo "<br /><a href='" . url("a,1") . "'><img src='images/forum/post.gif' border=0 alt='{$lang['forum']['newpost']}'/></a><br/><br/>";
+		echo "<br /><a href='" . url("a,1") . "'><img src='{$imagedir}post.gif' border=0 alt='{$lang['forum']['newpost']}'/></a><br/><br/>";
 	}
 	$limit = 20;
 	$tem = mysql_query1("
@@ -164,15 +165,15 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 			$viso = $kur['temos'];
 
 			if ($temos['uzrakinta'] == 'taip') {
-				$extra = "<img src='images/forum/locked.png' alt='{$lang['forum']['locked']}' />";
+				$extra = "<img src='{$imagedir}locked.png' alt='{$lang['forum']['locked']}' />";
 			} elseif ((!isset($_COOKIE['nauji_' . $temos['id']]) && (int) $temos['last_data'] != '0000000000' && $zinutes > 0) || $_COOKIE['nauji_' . $temos['id'] . ''] < $zinutes) {
-				$extra = "<img src='images/forum/theme_new.png' alt='new' />";
+				$extra = "<img src='{$imagedir}theme_new.png' alt='new' />";
 			} else {
 
-				$extra = "<img src='images/forum/theme.png' alt='{$lang['forum']['topic']}' />";
+				$extra = "<img src='{$imagedir}theme.png' alt='{$lang['forum']['topic']}' />";
 			}
 			if ($temos['sticky'] == '1') {
-				$sticky = "<img src='images/forum/sticky.gif' alt='{$lang['forum']['sticky']}' />";
+				$sticky = "<img src='{$imagedir}sticky.gif' alt='{$lang['forum']['sticky']}' />";
 			} else {
 				$sticky = "";
 			}
@@ -221,13 +222,13 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 				$f_text = '';
 
         if ($tsql['uzrakinta'] == "taip") {
-          $f_text .= "<a href='".url("?id," . $url['id'] . ";s,$sid;t," . $tid . ";l," . $tid ). "'><img src='images/forum/atrakinti.gif' border=0 class='middle' alt='{$lang['forum']['unlock']}' title='{$lang['forum']['unlock']}'/></a>";
+          $f_text .= "<a href='".url("?id," . $url['id'] . ";s,$sid;t," . $tid . ";l," . $tid ). "'><img src='{$imagedir}atrakinti.gif' border=0 class='middle' alt='{$lang['forum']['unlock']}' title='{$lang['forum']['unlock']}'/></a>";
         }
         if ($tsql['uzrakinta'] == "ne") {
-          $f_text .= "<a href='".url("?id," . $url['id'] . ";s,$sid;t," . $tid . ";l," . $tid ). "'><img src='images/forum/uzrakinti.gif' border=0 class='middle' alt='{$lang['forum']['lock']}' title='{$lang['forum']['lock']}' /></a>";
+          $f_text .= "<a href='".url("?id," . $url['id'] . ";s,$sid;t," . $tid . ";l," . $tid ). "'><img src='{$imagedir}uzrakinti.gif' border=0 class='middle' alt='{$lang['forum']['lock']}' title='{$lang['forum']['lock']}' /></a>";
         }
-        $f_text .= "<a href='".url("?id," . $url['id'] . ";s,$sid;t," . $tid . ";k," . $tid ). "' onclick=\"return confirm('" . $lang['faq']['delete'] . "?')\"><img src='images/forum/trinti.gif' border=0 class='middle' alt='{$lang['admin']['delete']}' title='{$lang['admin']['delete']}'/></a>";
-        $f_text .= "<a href='".url("?id," . $url['id'] . ";s,$sid;t," . $tid . ";r," . $tid ). "'><img src='images/forum/redaguoti.png' border=0 class='middle' alt='{$lang['admin']['edit']}'title='{$lang['admin']['edit']}'/></a>";
+        $f_text .= "<a href='".url("?id," . $url['id'] . ";s,$sid;t," . $tid . ";k," . $tid ). "' onclick=\"return confirm('" . $lang['faq']['delete'] . "?')\"><img src='{$imagedir}trinti.gif' border=0 class='middle' alt='{$lang['admin']['delete']}' title='{$lang['admin']['delete']}'/></a>";
+        $f_text .= "<a href='".url("?id," . $url['id'] . ";s,$sid;t," . $tid . ";r," . $tid ). "'><img src='{$imagedir}redaguoti.png' border=0 class='middle' alt='{$lang['admin']['edit']}'title='{$lang['admin']['edit']}'/></a>";
         lentele($lang['forum']['func'], $f_text);
       }
       $viso = $kur['zinute'];
@@ -254,14 +255,14 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 				$tool = "";
 
         /*if (!empty($row['msn'])) {
-          $extra .= "<a href='http://members.msn.com/" . urlencode($row['msn']) . "' target='_blank'><img src='images/forum/icon_msnm.gif' border=0 alt='msn' /></a>  ";
+          $extra .= "<a href='http://members.msn.com/" . urlencode($row['msn']) . "' target='_blank'><img src='{$imagedir}icon_msnm.gif' border=0 alt='msn' /></a>  ";
         }
 
         if (!empty($row['skype'])) {
           $extra .= "<a href='skype:" . urlencode($row['skype']) . "?chat' target='_blank'><img src='http://mystatus.skype.com/smallicon/" . urlencode($row['skype']) . "' width='16px' hight='16' border=0 alt='skype' /></a>  ";
         }
         if (!empty($row['url'])) {
-          $extra .= "<a href='" . $row['url'] . "' target='_blank'><img src='images/forum/icon_www.gif' border=0 alt='www' /></a>  ";
+          $extra .= "<a href='" . $row['url'] . "' target='_blank'><img src='{$imagedir}icon_www.gif' border=0 alt='www' /></a>  ";
         }*/
 
         if (isset($_SESSION['id']) && $row['nikas'] == $_SESSION['id'] || isset($_SESSION['level']) && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
@@ -275,22 +276,6 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
           $tool .= '</span>';
         }
         $reply = ($_SESSION['level']>0?'<a style="float: right;" href="' . url("q," . $row['zid'] . "") . '" title="'.$lang['admin']['pm_reply'] .'"><img src="images/icons/arrow_225.png" border="0" alt="re"></a>':'');
-
-
-       /* $turinys .= ' <fieldset><table width="100%" class="table" id="' . $row['zid'] . '" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-      <th width="20%" class="th" nowrap="nowrap" align="center">' . user($row['nick'], $row['id'], $row['levelis'], $grupe . '<br />' . $lang['forum']['points'] . ': ' . $row['taskai'] . '<br/>' . $lang['forum']['messages'] . ': ' . $row['forum_atsakyta']) . '</th>
-      <th width="80%" class="th" nowrap="nowrap" align="right">' . $lang['forum']['date'] . ': ' . (($row['laikas'] == '0000000000') ? '---' : date('Y-m-d H:i:s ', $row['laikas'])) . '</th>
-    </tr>
-    <tr class="tr">
-      <td class="td" height="93" align="center" valign="middle">' . avatar($row['email']) . '</td>
-      <td class="td" valign="top"><br />' . bbcode(wrap($row['zinute'], 60)) . '</td>
-    </tr>
-    <tr class="tr2">
-      <td class="td2" ><a href="javascript:window.scroll(0,0)"><font size="1">▲</font></a></td>
-      <td class="td2">' . $extra . '<small style="float:right;">' . $tool . ' ' . ($_SESSION['level'] > 0 ? '<a href="' . url("q," . $row['zid'] . "") . '"><img src="images/forum/atsakyti.gif" border="0" alt="re"></a>' : '') . '</small></td>
-    </tr>
-  </table> </fieldset>';*/
 				$turinys .= "<div class=\"tr\">{$reply}{$tool}<em> ".user($row['nick'], $row['id'], $row['levelis'])." (" .  (($row['laikas'] == '0000000000') ? '---' : date('Y-m-d H:i:s ', $row['laikas'])) . ") " . naujas($row['laikas'], $row['nick']) . "</em><br />
 			  <div class=\"avatar\" align=\"left\">" . avatar($row['email'], 40) . "</div><div class=\"tr2\" style=\"\">" . bbcode($row['zinute']) . "<br />".(!empty($row['parasas'])? "<hr />".bbcode(input($row['parasas'])):"")."</div></div>";
 				
@@ -395,10 +380,11 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 					" " => array("type" => "string", "value" => bbs('msg')),
 					$lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : $citata), "name" => "msg", "class" => "input", "id" => "msg"),
 					"  " => array("type" => "string", "value" => bbk('msg')),
-					"       \n" => array("type" => "button", "class" => "perveiza", "value" => "{$lang['forum']['perview']}"),
-					"   " => array("type" => "submit", "value" => ((!empty($extra)) ? "{$lang['admin']['edit']}" : "{$lang['forum']['submit']}")),
-					"     " => array("type" => "hidden", "name" => "action", "value" => ((!empty($extra)) ? "f_update" : "f_send"))
-				);
+					//"       \n" => array("type" => "button", "class" => "perveiza", "value" => "{$lang['forum']['perview']}"),
+					//"   " => array("type" => "submit", "value" => ((!empty($extra)) ? "{$lang['admin']['edit']}" : "{$lang['forum']['submit']}")),
+				"     " => array("type" => "hidden", "name" => "action", "value" => ((!empty($extra)) ? "f_update" : "f_send")),
+					"" => array("type" => "string", "value"=>"<input type=\"button\" class=\"perveiza\" value=\"{$lang['forum']['perview']}\" /> <input type=\"submit\" class=\"submit\" value=\"".((!empty($extra)) ? $lang['admin']['edit'] : $lang['forum']['submit'])."\" />"));
+
 				hide($lang['forum']['newpost'], $bla->form($forma), (!empty($extra)) ? false : true);
 			}
 		}
@@ -545,8 +531,9 @@ elseif ($aid == 1 && $kid == 0 && $lid == 0 && $rid == 0) {
 			" " => array("type" => "string", "value" => bbs('post_msg')),
 			$lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : ''), "name" => "post_msg", "class" => "input", "id" => "msg"),
 			"  " => array("type" => "string", "value" => bbk('post_msg')),
-			"       \n" => array("type" => "button", "class" => "perveiza", "value" => "{$lang['forum']['perview']}"),
-			"   " => array("type" => "submit", "value" => $lang['forum']['submit'])
+		//	"       \n" => array("type" => "button", "class" => "perveiza", "value" => "{$lang['forum']['perview']}"),
+		//	"   " => array("type" => "submit", "value" => $lang['forum']['submit'])
+		"" => array("type" => "string", "value"=>"<input type=\"button\" class=\"perveiza\" value=\"{$lang['forum']['perview']}\" /> <input type=\"submit\" class=\"submit\" value=\"{$lang['forum']['submit']}\" />")
 		);
 		addtotitle($lang['forum']['newtopic']);
 		lentele($lang['forum']['newtopic'], $bla->form($forma));
