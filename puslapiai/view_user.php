@@ -76,24 +76,24 @@ if (isset($memb[1])) {
 				</td>
 			</tr>
 			<tr class="th">
-				<th  class="th" height="14" width="140">' . $lang['forum']['forum'] . '</th>
-				<th class="th" height="14" colspan="2"  width="280">' . $lang['user']['user_signature'] . '</th>
+				'.(puslapis('frm.php')?'<th  class="th" height="14" width="140">' . $lang['forum']['forum'] . '</th>' :'').'
+				<th class="th" height="14" colspan="'.(puslapis('frm.php')?'2': '3').'"  width="280">' . $lang['user']['user_signature'] . '</th>
 			</tr>
 			<tr class="tr2">
-				<td class="td" rowspan="1" height="87" valign="top" width="140"><small>
+				'.(puslapis('frm.php')?'<td class="td" rowspan="1" height="87" valign="top" width="140"><small>
 					<b>' . $lang['user']['topics'] . ':</b> ' . $sql['forum_temos'] . '<br />
 					<b>' . $lang['forum']['messages'] . ':</b>	' . $sql['forum_atsakyta'] . '<br /></small>
-        </td>
-				<td class="td" colspan="2" height="18" width="280">' . bbcode($sql['parasas']) . '</td>
+        </td>' :'').'
+				<td class="td" colspan="'.(puslapis('frm.php')?'2': '3').'" height="18" width="280">' . bbcode($sql['parasas']) . '</td>
 			</tr>		
-				<tr class="th">
+			'.($conf['galbalsuot'] == 1 ? '<tr class="th">
 				<th class="th" height="14" colspan="3" >' . $lang['user']['user_rate'] . '</th>
 			</tr>
       <tr class="tr">
         <td class="td" colspan="3"> 
           ' . $vote . '
         </td>
-      </tr>
+      </tr>' : '').'
 		</table>
 		
 ';
