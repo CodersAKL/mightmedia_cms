@@ -42,13 +42,10 @@ if ($vid == 0) {
 	if ($sqlas && sizeof($sqlas) > 0) {
 		foreach ($sqlas as $sql) {
 			$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 86400);
-			//$path1 = explode(",", $path['path']);
-
 			if ($path['path'] == $k) {
 				$sqlkiek = kiek('siuntiniai', "WHERE `categorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
-				//$info[] = array(" " => "<a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' /></a>", "{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id']) . "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br />", "{$lang['category']['downloads']}" => $sqlkiek);
-				 $info[] = array(
-					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . $sql['pavadinimas'] . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . $sql['aprasymas'] . "</div><div>{$lang['category']['downloads']}: $sqlkiek</div></span></div>"//,
+				$info[] = array(
+					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['downloads']}: $sqlkiek</div></span></div>"//,
 				);
 		}
 
@@ -105,11 +102,11 @@ if ($vid > 0) {
 			$ble = new Table();
 			addtotitle($sql['pavadinimas']);
 			if (isset($sql['Kategorija'])) {
-				$info2[0]["{$lang['system']['category']}"] = "<b>" . $sql['Kategorija'] . "</b><br /><div class='avataras'><img src='images/naujienu_kat/" . input($sql['img']) . "' alt='" . input($sql['Kategorija']) . "' /></div>";
+				$info2[0][$lang['system']['category']] = "<b>" . input($sql['Kategorija']) . "</b><br /><div class='avataras'><img src='images/naujienu_kat/" . input($sql['img']) . "' alt='" . input($sql['Kategorija']) . "' /></div>";
 			}
-			$info2[0][$sql['pavadinimas'] . " {$lang['download']['info']}"] = "<div style='vertical-align: top'> <b>{$lang['download']['about']}:</b> " . $sql['apie'] . "<br /><b>{$lang['download']['date']}:</b> " . date('Y-m-d H:i:s ', $sql['data']) . "<br /><hr /><a href=\"siustis.php?d," . $sql['id'] . "\"><img src=\"images/icons/disk.png\" alt=\"" . $sql['file'] . "\" border=\"0\" /></a></div>";
+			$info2[0][input($sql['pavadinimas'])] = "<div style='vertical-align: top'> <b>{$lang['download']['about']}:</b> " . $sql['apie'] . "<br /><b>{$lang['download']['date']}:</b> " . date('Y-m-d H:i:s ', $sql['data']) . "<br /><hr /><a href=\"siustis.php?d," . $sql['id'] . "\"><img src=\"images/icons/disk.png\" alt=\"" . input($sql['file']) . "\" border=\"0\" /></a></div>";
 
-			lentele("{$lang['download']['downloads']} >> " . (isset($sql['Kategorija']) ? $sql['Kategorija'] . " >> " : "") . $sql['pavadinimas'] . "", $ble->render($info2) . "<a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
+			lentele("{$lang['download']['downloads']} >> " . (isset($sql['Kategorija']) ? input($sql['Kategorija']) . " >> " : "") . input($sql['pavadinimas']) . "", $ble->render($info2) . "<a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
 
 			include_once ("priedai/komentarai.php");
 			komentarai($vid);
@@ -118,7 +115,6 @@ if ($vid > 0) {
 		}
 	} else {
 		klaida($lang['system']['error'], $lang['system']['pagenotfounfd']);
-		// redirect("?id,6","meta");
 	}
 
 }
@@ -184,22 +180,20 @@ else {
 				} else {
 					$autorius = '';
 				}
-				$info[] = array("{$lang['download']['title']}:" => "<a href=\"" . url("v," . $sql['id'] . "") . "\">" . $sql['pavadinimas'] . "</a>", "{$lang['download']['date']}:" => date('Y-m-d H:i:s ', $sql['data']), "{$lang['download']['download']}:" => "<a href=\"siustis.php?d," . $sql['id'] . "\"><img src=\"images/icons/disk.png\" alt=\"" . $sql['file'] . "\" border=\"0\" /></a>");
+				$info[] = array("{$lang['download']['title']}:" => "<a href=\"" . url("v," . $sql['id'] . "") . "\">" . input($sql['pavadinimas']) . "</a>", "{$lang['download']['date']}:" => date('Y-m-d H:i:s ', $sql['data']), "{$lang['download']['download']}:" => "<a href=\"siustis.php?d," . $sql['id'] . "\"><img src=\"images/icons/disk.png\" alt=\"" . $sql['file'] . "\" border=\"0\" /></a>");
 
 			} else {
 				klaida($lang['system']['error'], $lang['download']['notallowed']);
 			}
 		}
-		$name = mysql_query1("SELECT pavadinimas FROM " . LENTELES_PRIESAGA . "grupes WHERE id= " . escape($k) . " LIMIT 1", 86400);
-		lentele("{$lang['download']['downloads']} >> " . $name['pavadinimas'] . "", $bla->render($info) . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
-
-    
-	} 
+		$name = mysql_query1("SELECT `pavadinimas` FROM " . LENTELES_PRIESAGA . "grupes WHERE id= " . escape($k) . " LIMIT 1", 86400);
+		lentele("{$lang['download']['downloads']} >> " . input($name['pavadinimas']), $bla->render($info) . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
+  } 
 
 	unset($bla, $info, $sql, $sql_d, $vid);
 }
 if (count($_GET) == 1) {
-	if (kiek("siuntiniai", "WHERE rodoma='TAIP' AND `lang` = ".escape(lang())) <= 0)
+	if (kiek("siuntiniai", "WHERE `rodoma`='TAIP' AND `lang` = ".escape(lang())) <= 0)
 		klaida($lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
 }
 

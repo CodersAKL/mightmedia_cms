@@ -29,15 +29,11 @@ $sqlas = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes`
 if ($sqlas && sizeof($sqlas) > 0) {
 	foreach ($sqlas as $sql) {
 		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 3600);
-		//$path1 = explode(",", $path['path']);
-
 		if ($path['path'] == $k) {
 			$sqlkiek = kiek('naujienos', "WHERE `kategorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
-			//$info[] = array(" " => "<img src='images/naujienu_kat/" . input($sql['pav']) . "' alt='Kategorija' border='0' />", "{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'>" . input($sql['pavadinimas']) . "</a></h2>" . $sql['aprasymas'] . "<br>", "{$lang['category']['news']}" => $sqlkiek, );
 				$info[] = array(
-					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . $sql['pavadinimas'] . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . $sql['aprasymas'] . "</div><div>{$lang['category']['news']}: $sqlkiek</div></span></div>"//,
+					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['news']}: $sqlkiek</div></span></div>"//,
 				);
-		}
 
 		}
 	}
@@ -59,17 +55,11 @@ $sql = mysql_query1("
 $viso = count($sql);
 if ($viso > 0) {
 	$sqlas = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "' AND `kieno`='naujienos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 86400);
-	//$sqlas = mysql_fetch_assoc($sqlas);
 	if ($viso > $limit) {
 		lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
 	}
 	if ($k >= 0) {
-		//if (count($sql) > 0) {
 			if (teises($sqlas['teises'], $_SESSION['level']) || LEVEL == 1) {
-
-				//$text = '<ul>';
-				//if (sizeof($sql) > 0) {
-				//echo "asd";
 					foreach ($sql as $row) {
 						if (isset($conf['puslapiai']['naujienos.php']['id'])) {
 							
@@ -78,14 +68,9 @@ if ($viso > 0) {
 							lentele($row['pavadinimas'], "<table><tr valign='top'><td>" . $row['naujiena'] . "</td></tr></table>" . $extra, false, array(menesis((int)date('m', strtotime(date('Y-m-d H:i:s', $row['data'])))), (int)date('d', strtotime(date('Y-m-d H:i:s', $row['data'])))));
 						}
 					}
-				//} 
-			
 			} else {
 				klaida($lang['system']['warning'], "{$lang['category']['cant']}.");
 			}
-		/*} else {
-			klaida($lang['system']['warning'], "{$lang['category']['no_news']}.");
-		}*/
 	}
 }elseif($k > 0) {
   klaida($lang['system']['warning'], "{$lang['category']['no_news']}.");

@@ -109,6 +109,7 @@ lentele($page_pavadinimas,$text);
 	
 	if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`= " . escape((int)$url['d']) . " LIMIT 1");
+		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "page` SET `parent`='0' WHERE `parent`=" . escape((int)$url['d']) . "");
 		delete_cache("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang` = ".escape(lang())." ORDER BY `place` ASC");
 		redirect(url("?id," . $url['id'] . ";a," . $url['a']), "header");
 	} elseif (isset($url['n']) && $url['n'] == 1) {

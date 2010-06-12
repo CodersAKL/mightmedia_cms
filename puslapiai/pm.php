@@ -38,12 +38,8 @@ if (isset($url['a']) && isnum($url['a']) && $url['a'] >= 0) {
 	$a = (int)$url['a'];
 } else {
 	$a = 0;
-} //inbox arba outbox
-$order = 'date';
-//lygiavimas
-if (isset($url['s']) && !empty($url['s']) && $url['s'] != null) {
-	$s = input($url['s']);
-}
+} 
+
 
 
 $limit = 30;
@@ -188,7 +184,7 @@ if (isset($url['n'])) {
 	}
 }
 
-lentele("{$lang['user']['pm_panel']}", $text);
+lentele($lang['user']['pm_panel'], $text);
 unset($text);
 
 // ##################### Perziureti zinute ######################
@@ -199,7 +195,7 @@ if (isset($url['v'])) {
 		if ($sql) {
       addtotitle($sql['title']);
 			$laiskas = "
-				<div class=\"pm_read\"><b>{$lang['user']['pm_from']}:</b>  " . input($sql['from']) . "<br><b>{$lang['user']['pm_to']}:</b> " . $sql['to'] . "<br> <b>{$lang['user']['pm_subject']}:</b> " . (isset($sql['title']) && !empty($sql['title']) ? input(trimlink($sql['title'], 40)) : "{$lang['user']['pm_nosubject']}") . "<br><br><b>{$lang['user']['pm_message']}:</b><br>" . input(bbcode(wrap($sql['msg'], 40))) . "<br><br></div>
+				<div class=\"pm_read\"><b>{$lang['user']['pm_from']}:</b>  " . input($sql['from']) . "<br><b>{$lang['user']['pm_to']}:</b> " . $sql['to'] . "<br /> <b>{$lang['user']['pm_subject']}:</b> " . (isset($sql['title']) && !empty($sql['title']) ? input($sql['title']) : "{$lang['user']['pm_nosubject']}") . "<br><br><b>{$lang['user']['pm_message']}:</b><br />" . bbcode($sql['msg']) . "<br /><br /></div>
 				" . (strtolower($sql['to']) == strtolower($_SESSION['username']) ? "<form name=\"replay_pm\" action='".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($sql['from'])) . ";i," . $url['v'] ). "' method=\"post\">
 					<input type=\"submit\" value=\"{$lang['user']['pm_reply']}\"/> <input type=\"button\" value=\"{$lang['user']['pm_delete']}\" onclick=\"location.href='" . url("d," . $url['v'] . ";v,0") . "'\"/>
 				</form>" : "") . "
@@ -213,7 +209,7 @@ if (isset($url['v'])) {
 }
 if (defined("LEVEL") && LEVEL > 0 && $a == 1 && !isset($s)) {
 	include_once ("priedai/class.php");
-	$sql = mysql_query1("SELECT `id`, `read`,`from`, IF(`from` = '', 'Sve�?ias',`from`) AS `Nuo`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_SESSION['username']) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`$order` DESC LIMIT $p,$limit");
+	$sql = mysql_query1("SELECT `id`, `read`,`from`, IF(`from` = '', 'Sve�?ias',`from`) AS `Nuo`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_SESSION['username']) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`date` DESC LIMIT $p,$limit");
 	if (sizeof($sql) > 0) {
 
 		$bla = new Table();
@@ -229,12 +225,12 @@ if (defined("LEVEL") && LEVEL > 0 && $a == 1 && !isset($s)) {
 		}
 		lentele("{$lang['user']['pm_inbox']}", puslapiai($p, $limit, $pm_sk, 10) . "<br/><form method=\"post\" id=\"pm\" astion=\"\">" . $bla->render($info) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form><br/>" . puslapiai($p, $limit, $pm_sk, 10));
 	} else {
-		lentele("{$lang['user']['pm_inbox']}", "{$lang['user']['pm_empty_msg']}");
+		lentele($lang['user']['pm_inbox'], "{$lang['user']['pm_empty_msg']}");
 	}
 }
 if (defined("LEVEL") && LEVEL > 0 && $a == 2 && !isset($s)) {
 	include_once ("priedai/class.php");
-	$sql = mysql_query1("SELECT `id`, `read`, IF(`to` = '', 'Sve�?ias',`to`) AS `to`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`to`) AS `to_id`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape($_SESSION['username']) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`$order` DESC LIMIT $p,$limit");
+	$sql = mysql_query1("SELECT `id`, `read`, IF(`to` = '', 'Sve�?ias',`to`) AS `to`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`to`) AS `to_id`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape($_SESSION['username']) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`date` DESC LIMIT $p,$limit");
 	if (count($sql) > 0) {
 		$bla = new Table();
 		$info = array();
@@ -245,12 +241,12 @@ if (defined("LEVEL") && LEVEL > 0 && $a == 2 && !isset($s)) {
 			} else {
 				$extra = "<img src='images/pm/pm_read.png' />";
 			}
-			$info[] = array("" => $extra, "{$lang['user']['pm_subject']}:" => "<a href='".url("?id," . $url['id'] . ";v," . $row['id'] ). "' title=\"{$lang['user']['pm_time']}: <b>" . date('Y-m-d H:i:s', $row['Data']) . "</b><br/>{$lang['user']['pm_message']}: <i>" . nl2br(strip_tags(input(str_replace(array("[", "]"), "", $row['Žinutė'])))) . "</i><br/>\" style=\"display: block\">" . input(trimlink($row['Pavadinimas'], 40)) . "</a>", "{$lang['user']['pm_to']}:" => user($row['to'], $row['to_id']), "{$lang['user']['pm_time']}:" => kada(date('Y-m-d H:i:s ', $row['Data'])));
+			$info[] = array("" => $extra, "{$lang['user']['pm_subject']}:" => "<a href='".url("?id," . $url['id'] . ";v," . $row['id'] ). "' title=\"{$lang['user']['pm_time']}: <b>" . date('Y-m-d H:i:s', $row['Data']) . "</b><br/>{$lang['user']['pm_message']}: <i>" . nl2br(input(str_replace(array("[", "]"), "", strip_tags($row['Žinutė'])))) . "</i><br/>\" style=\"display: block\">" . trimlink($row['Pavadinimas'], 40) . "</a>", "{$lang['user']['pm_to']}:" => user($row['to'], $row['to_id']), "{$lang['user']['pm_time']}:" => kada(date('Y-m-d H:i:s ', $row['Data'])));
 		}
 		asort($info);
 		lentele("{$lang['user']['pm_outbox']}", puslapiai($p, $limit, $pm_sk, 10) . "<br/>" . $bla->render($info) . "<br/>" . puslapiai($p, $limit, $pm_sk, 10), "");
 	} else {
-		lentele("{$lang['user']['pm_outbox']}", "{$lang['user']['pm_empty_msg']}");
+		lentele($lang['user']['pm_outbox'], "{$lang['user']['pm_empty_msg']}");
 	}
 }
 unset($title,$info,$text,$extra)

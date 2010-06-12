@@ -31,18 +31,10 @@ if (!isset($url['m'])) {
 	if ($sqlas && sizeof($sqlas) > 0) {
 		foreach ($sqlas as $sql) {
 			$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 86400);
-			//$path1 = explode(",", $path['path']);
-
 			if ($path['path'] == $k) {
 				$sqlkiek = kiek('galerija', "WHERE `categorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang()));
-				/*$info[] = array(
-					" " => "<a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' /></a>",
-					$lang['category']['about'] => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "",
-					$lang['category']['images'] => $sqlkiek
-				);*/	
 				$info[] = array(
-					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . $sql['pavadinimas'] . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . $sql['aprasymas'] . "</div><div>{$lang['category']['images']}: $sqlkiek</div></span></div>"//,
-					//$lang['category']['images'] => $sqlkiek
+					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['images']}: $sqlkiek</div></span></div>"//,
 				);
 				
 				
@@ -103,37 +95,25 @@ if ($k > 0) {
 
 }
 
-
-/*if ($visos > $limit) {
-	lentele($lang['system']['pages'], puslapiai($p, $limit, $visos, 10));
-}*/
-
-
 if (empty($url['m'])) {
 	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape($k) . " AND `kieno`='galerija' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1");
 
 
 	if (defined('LEVEL') && teises($sqlas['teises'], $_SESSION['level'])) {
-		$text .= "
-			
-    
-			<table border=\"0\">
-	<tr>
-		<td >
-";
+		$text .= "<table border=\"0\"><tr><td>";
 
 		foreach ($sql as $row) {
 
 			if (isset($row['Nick'])) {
-				$autorius = $row['Nick'];
+				$autorius = input($row['Nick']);
 			} else {
 				$autorius = $lang['system']['guest'];
 			}
 
 			$text .= "
 			<div class=\"gallery img_left\" >
-				<a rel=\"lightbox\" href=\"images/galerija/" . $row['file'] . "\" title=\"" . (!empty($row['pavadinimas'])?$row['pavadinimas'] . "<br>":'') . trimlink(strip_tags($row['apie']), 50) . "\">
-					<img src=\"images/galerija/mini/" . $row['file'] . "\" alt=\"\" />
+				<a rel=\"lightbox\" href=\"images/galerija/" . input($row['file']) . "\" title=\"" . (!empty($row['pavadinimas'])?input($row['pavadinimas']) . "<br>":'') . trimlink(strip_tags($row['apie']), 50) . "\">
+					<img src=\"images/galerija/mini/" . input($row['file']) . "\" alt=\"\" />
 				</a>
 				<div class='gallery_menu'>
 					<a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date('Y-m-d H:i:s ', $row['data']) . "\"><img src='images/icons/information.png' border='0' alt='info' /></a>
@@ -142,20 +122,19 @@ if (empty($url['m'])) {
 					$text .= "
 				</div>
 				<div class='gallery_title'>
-					" . trimlink((!empty($row['pavadinimas'])?$row['pavadinimas']:''),10) . "
+					" . trimlink((!empty($row['pavadinimas'])?input($row['pavadinimas']):''),10) . "
 				</div>
 			</div>
 		";
 
 			$foto = true;
-		//<b>{$lang['admin']['gallery_author']}:</b> " . $autorius . "<br />
 		}
 		$text .= '</td>
 	</tr>
 </table>';
 
 		if ($k > 0) {
-			$name = mysql_query1("SELECT pavadinimas FROM " . LENTELES_PRIESAGA . "grupes WHERE id=  " . escape($k) . " AND `lang` = ".escape(lang())." LIMIT 1", 86400);
+			$name = mysql_query1("SELECT `pavadinimas` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=  " . escape($k) . " AND `lang` = ".escape(lang())." LIMIT 1", 86400);
 			$pav = input($name['pavadinimas']);
 		} else {
 			$pav = $page_pavadinimas;
@@ -222,8 +201,8 @@ if (!empty($url['m'])) {
 	if (!empty($row['file']) && isset($row['file'])) {
 		if (defined('LEVEL') && teises($row['teises'], $_SESSION['level']) || ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('galerija.php', unserialize($_SESSION['mod']))))) {
         addtotitle($row['pavadinimas']);
-			$nuoroda2 = mysql_query1("SELECT id FROM " . LENTELES_PRIESAGA . "galerija WHERE id > " . escape($url['m']) . " AND `categorija`=" . escape($row['kid']) . " AND `lang` = ".escape(lang())." order by id ASC LIMIT 1", 86400);
-			$nuoroda = mysql_query1("SELECT id FROM " . LENTELES_PRIESAGA . "galerija WHERE id < " . escape($url['m']) . " AND categorija=" . escape($row['kid']) . " AND `lang` = ".escape(lang())." order by id DESC LIMIT 1", 86400);
+			$nuoroda2 = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `id` > " . escape($url['m']) . " AND `categorija`=" . escape($row['kid']) . " AND `lang` = ".escape(lang())." order by `id` ASC LIMIT 1", 86400);
+			$nuoroda = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `id` < " . escape($url['m']) . " AND categorija=" . escape($row['kid']) . " AND `lang` = ".escape(lang())." order by `id` DESC LIMIT 1", 86400);
 			if (isset($row['Nick'])) {
 				$autorius = user($row['Nick'], $row['nick_id'], $row['levelis']);
 			} else {
@@ -241,8 +220,8 @@ if (!empty($url['m'])) {
 			$text .= "</center>
 			<div id=\"gallery\" >
         <center>
-          <a  rel=\"lightbox\" href=\"images/galerija/originalai/" . $row['file'] . "\" title=\"" . $row['pavadinimas'] . ": " . trimlink(strip_tags($row['apie']), 50) . "\">
-            <img src=\"images/galerija/" . $row['file'] . "\" alt=\"\" />
+          <a  rel=\"lightbox\" href=\"images/galerija/originalai/" . input($row['file']) . "\" title=\"" . input($row['pavadinimas']) . ": " . trimlink(strip_tags($row['apie']), 50) . "\">
+            <img src=\"images/galerija/" . input($row['file']) . "\" alt=\"\" />
           </a>
         </center>
       </div>
@@ -250,7 +229,7 @@ if (!empty($url['m'])) {
 		" . $balsavimas . "
 		
 		<b>{$lang['admin']['gallery_date']}:</b> " . date('Y-m-d H:i:s ', $row['data']) . "<br />\n";
-			if (!empty($row['apie'])) { $text .= "<b>{$lang['admin']['gallery_about']}:</b> " . $row['apie'] . "<br />\n"; }
+			if (!empty($row['apie'])) { $text .= "<b>{$lang['admin']['gallery_about']}:</b> " . input($row['apie']) . "<br />\n"; }
 			$text .= "<b>{$lang['admin']['gallery_author']}:</b> " . $autorius . " <br />
 		<center>
 	";

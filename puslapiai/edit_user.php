@@ -113,7 +113,7 @@ if (isset($mid) && isnum($mid)) {
 	}
 	// Pakeisti kontaktinius duomenis
 	elseif ($mid == 2) {
-		$info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . "LIMIT 1");
+		$info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape($_SESSION['username']) . "LIMIT 1");
 
 		$form = array(
 			"Form" => array("action" => url("?id," . $conf['puslapiai'][basename(__file__)]['id'] . ";m," . $_GET['m']), "method" => "post", "enctype" => "", "id" => "", "extra" => "onSubmit=\"return checkMail('change_contacts','email')\"", "name" => "change_contacts"),
@@ -132,7 +132,7 @@ if (isset($mid) && isnum($mid)) {
 	}
 	// Pakeisti sali, miesta
 	elseif ($mid == 3) {
-		$info = mysql_query1("SELECT salis, miestas FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
+		$info = mysql_query1("SELECT `salis`, `miestas` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape($_SESSION['username']) . " LIMIT 1");
 
 		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "salis`");
 		$salis = array();
@@ -140,7 +140,7 @@ if (isset($mid) && isnum($mid)) {
 			$salis[$row['iso']] = $row['printable_name'];
 		}
 
-		$forma = array("Form" => array("action" => url("?id," . $conf['puslapiai'][basename(__file__)]['id'] . ";m," . $_GET['m']), "method" => "post", "name" => "change_country"), "{$lang['user']['edit_country']}:" => array("type" => "select", "value" => $salis, "name" => "salis", "selected" => $info['salis']), "{$lang['user']['edit_city']}:" => array("type" => "text", "value" => $info['miestas'], "name" => "miestas"), " \r " => array("type" => "hidden", "name" => "action", "value" => "country_change"), "" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}"));
+		$forma = array("Form" => array("action" => url("?id," . $conf['puslapiai'][basename(__file__)]['id'] . ";m," . $_GET['m']), "method" => "post", "name" => "change_country"), "{$lang['user']['edit_country']}:" => array("type" => "select", "value" => $salis, "name" => "salis", "selected" => input($info['salis'])), "{$lang['user']['edit_city']}:" => array("type" => "text", "value" => input($info['miestas']), "name" => "miestas"), " \r " => array("type" => "hidden", "name" => "action", "value" => "country_change"), "" => array("type" => "submit", "value" => "{$lang['user']['edit_update']}"));
 
 		$bla = new forma();
 		lentele($lang['user']['edit_locality'], $bla->form($forma));
@@ -211,7 +211,7 @@ $('#example1 .files').replaceWith('<div class="files"><img id="ikeltas_avataras"
 HTML;
 		if (isset($_GET['a']) && $_GET['a'] == 1)
 			$avatar .= "<div align='center' id='gravatar'>
-{$lang['user']['edit_avatarcontent']} <b>" . $sql['email'] . "</b> .</div>";
+{$lang['user']['edit_avatarcontent']} <b>" . input($sql['email']) . "</b> .</div>";
 
 		lentele($lang['user']['edit_avatar'], $avatar);
 	}
@@ -223,7 +223,7 @@ HTML;
 			"Form" => array("action" => url("?id," . $conf['puslapiai'][basename(__file__)]['id'] . ";m," . $_GET['m']), "method" => "post", "name" => "parasas"),
 			"{$lang['user']['edit_name']}:" => array("type" => "text", "value" => input($sql['vardas']), "name" => "vardas", "class" => "input"),
 			"{$lang['user']['edit_secondname']}:" => array("type" => "text", "value" => input($sql['pavarde']), "name" => "pavarde", "class" => "input"),
-			"{$lang['user']['edit_dateOfbirth']}:" => array("type" => "text", "value" => $sql['gim_data'], "extra" => "title='0000-00-00' size='10' maxlength='10' style='width:inherit'", "class" => "input", "name" => "gimimas"),
+			"{$lang['user']['edit_dateOfbirth']}:" => array("type" => "text", "value" => input($sql['gim_data']), "extra" => "title='0000-00-00' size='10' maxlength='10' style='width:inherit'", "class" => "input", "name" => "gimimas"),
 			//"\r " => array("type" => "select", "class" => "select", "value" => $day, "selected" => (isset($data[2]) ? $data[2] : 1), "name" => "diena"),
 			$lang['user']['edit_signature'] => array("type" => "textarea", "class" => "input", "value" => input($sql['parasas']), "name" => "parasas", "id" => "parasas"),
 			" " => array("type" => "string", "value" => bbk('parasas')),

@@ -49,17 +49,10 @@ $kategorijos[0] = "--";
 if (sizeof($sqlas) > 0) {
 	foreach ($sqlas as $sql) {
 		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 3600);
-		//$path1 = explode(",", $path['path']);
-
 		if ($path['path'] == $k) {
 			$sqlkiek = kiek('nuorodos', "WHERE `cat`=" . escape($sql['id']) . " AND `active`='TAIP' AND `lang` = ".escape(lang())."");
-			/*$info[] = array(
-				" " => "<img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' />",
-				"{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'>" . $sql['pavadinimas'] . "</a></h2>" . $sql['aprasymas'] . "<br>",
-				"{$lang['category']['links']}" => $sqlkiek
-			);*/
         $info[] = array(
-					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . $sql['pavadinimas'] . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . $sql['aprasymas'] . "</div><div>{$lang['category']['links']}: $sqlkiek</div></span></div>"//,
+					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['links']}: $sqlkiek</div></span></div>"//,
 				);
 		}
 	}
@@ -96,8 +89,8 @@ ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400);
 				include_once ("rating.php");
 
 				$info[] = array(
-					"{$lang['admin']['link']}:" => '' . $extra . ' <a href="'.url('?id,' . $url['id'] . ';k,' . $k . ';w,' . $sql['id'] ). '" title="<center><b>' . $sql['url'] . '</b><br /><img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br />' . $lang['admin']['links_author'] . ': <b>' . $sql['nick'] . '</b><br />' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . '</b><br />' . $lang['admin']['links_clicks'] . ': <b>' . $sql['click'] . '</b>" target="_blank" rel="nofollow">' . $sql['pavadinimas'] . '</a>',
-					"{$lang['admin']['links_about']}:" => $sql['apie'],
+					"{$lang['admin']['link']}:" => '' . $extra . ' <a href="'.url('?id,' . $url['id'] . ';k,' . $k . ';w,' . $sql['id'] ). '" title="<center><b>' . input($sql['url']) . '</b><br /><img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br />' . $lang['admin']['links_author'] . ': <b>' . $sql['nick'] . '</b><br />' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . '</b><br />' . $lang['admin']['links_clicks'] . ': <b>' . input($sql['click']) . '</b>" target="_blank" rel="nofollow">' . input($sql['pavadinimas']) . '</a>',
+					"{$lang['admin']['links_about']}:" => input($sql['apie']),
 					"{$lang['admin']['links_rate']}:" => rating_form($page,$sql['id'])				);
 
 

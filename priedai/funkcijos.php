@@ -343,7 +343,7 @@ $sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kien
 if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
 
-		$levels[(int)$row['teises']] = array('pavadinimas' => $row['pavadinimas'], 'aprasymas' => $row['aprasymas'], 'pav' => $row['pav']);
+		$levels[(int)$row['teises']] = array('pavadinimas' => $row['pavadinimas'], 'aprasymas' => $row['aprasymas'], 'pav' => input($row['pav']));
 
 	}
 }
@@ -359,7 +359,7 @@ unset($levels, $sql, $row);
  */
 $sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=".escape(lang())." ORDER BY `place` ASC", 120);
 foreach ($sql as $row) {
-	$conf['puslapiai'][$row['file']] = array('id' => $row['id'], 'pavadinimas' => $row['pavadinimas'], 'file' => $row['file'], 'place' => (int)$row['place'], 'show' => $row['show'], 'teises' => $row['teises']);
+	$conf['puslapiai'][$row['file']] = array('id' => $row['id'], 'pavadinimas' => input($row['pavadinimas']), 'file' => input($row['file']), 'place' => (int)$row['place'], 'show' => $row['show'], 'teises' => $row['teises']);
 	$conf['titles'][$row['id']] =(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file']));
 	$conf['titles_id'][strtolower(str_replace(' ', '_',(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file']))))] = $row['id'];
 }
@@ -373,13 +373,11 @@ if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
 	if(isset($_GET['id'])) {
 		$element = strtolower($_GET['id']);
 		$_GET['id'] = ((isset($conf['titles_id'][$element]) && $conf['F_urls'] != '0')?$conf['titles_id'][$element]:$_GET['id']);
-		//echo $_GET['id'];
 	}
 	$url = $_GET;
 } else {
 	$url = array();
 }
-//print_r($_GET);
 function url_arr($params) {
 	global $conf;
 	$str2 = array();

@@ -58,7 +58,7 @@ if (isset($memb[1])) {
             <b>' . $lang['user']['user_name'] . ':</b> ' . $sql['vardas'] . '<br />
             <b>' . $lang['user']['user_secondname'] . ':</b> ' . $sql['pavarde'] . '<br />
             <b>' . $lang['user']['user_age'] . ':</b> ' . (amzius($sql['gim_data']) > 0 ? amzius($sql['gim_data']) : "-") . '<br />
-            <b>' . $lang['user']['user_city'] . ':</b> ' . $sql['miestas'] . '<br />
+            <b>' . $lang['user']['user_city'] . ':</b> ' . input($sql['miestas']) . '<br />
             <b>' . $lang['user']['user_registered'] . ': </b> ' . date('Y-m-d H:i:s ', $sql['reg_data']) . '<br />
             <b>' . $lang['user']['user_lastvisit'] . ': </b> ' . kada(date('Y-m-d H:i:s ', $sql['login_data'])) . '<br />
             <b>' . $lang['user']['user_points'] . ': </b> ' . $sql['taskai'] . '<br />
@@ -66,11 +66,11 @@ if (isset($memb[1])) {
         </td>
 				<td height="58" valign="top" class="td" width="140">
           <small>
-            <b>ICQ:</b> ' . $sql['icq'] . '<br />
-            <b>MSN:</b> ' . $sql['msn'] . '<br />
-            <b>Skype:</b> ' . $sql['skype'] . '<br />
-            <b>Yahoo:</b> ' . $sql['yahoo'] . '<br />
-            <b>AIM:</b> ' . $sql['aim'] . '<br />
+            <b>ICQ:</b> ' . input($sql['icq']) . '<br />
+            <b>MSN:</b> ' . input($sql['msn']) . '<br />
+            <b>Skype:</b> ' . input($sql['skype']) . '<br />
+            <b>Yahoo:</b> ' . input($sql['yahoo']) . '<br />
+            <b>AIM:</b> ' . input($sql['aim']) . '<br />
             <b>WWW:</b> ' . linkas($sql['url']) . '
           </small>
 				</td>

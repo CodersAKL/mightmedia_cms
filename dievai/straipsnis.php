@@ -61,11 +61,8 @@ if (isset($url['t'])) {
 		klaida("{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>");
 	}
 	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/straipsnis' AND kid=" . escape($trinti) . "");
-	//redirect("?id,".$_GET['id'].";a,".$_GET['a'],"header");
 } elseif (isset($_POST['action']) && isset($_POST['str']) && $_POST['action'] == $lang['admin']['edit']) {
 	
-	/*$apr = $_POST['apr'];
-	$str = $_POST['str'];*/
 	$straipsnis = explode('===page===',$_POST['str']);
 	$apr = $straipsnis[0];
 	$str = empty($straipsnis[1])?'':$straipsnis[1];
@@ -96,8 +93,6 @@ if (isset($url['t'])) {
 
 } elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['article_create']) {
 	
-	/*$apr = $_POST['apr'];
-	$str = $_POST['str'];*/
 	$straipsnis = explode('===page===',$_POST['str']);
 	$apr = $straipsnis[0];
 	$str = empty($straipsnis[1])?'':$straipsnis[1];
@@ -146,7 +141,6 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 	}
 
 	$extra = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `id`=" . escape($redaguoti) . " LIMIT 1");
-	//$extra = mysql_fetch_assoc($extra);
 }
 if (isset($_GET['v'])) {
 	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `path`=0 AND `lang` = ".escape(lang())." ORDER BY `id` DESC");
@@ -164,7 +158,7 @@ if ($_GET['v'] == 4) {
 		$table = new Table();
 			foreach ($sql2 as $row){
         $info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"articles_delete[]\" />", 
-        $lang['admin']['article'] => $row['pav'], 
+        $lang['admin']['article'] => input($row['pav']), 
         $lang['admin']['article_date'] => date('Y-m-d', $row['date']), 
         $lang['admin']['article_preface'] => trimlink(strip_tags($row['t_text']), 55),
         $lang['admin']['edit'] => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src=\"".ROOT."images/icons//cross.png\" border=\"0\"></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>"
@@ -219,9 +213,9 @@ editor('jquery', 'standartinis', array('str' => $lang['admin']['article']), arra
 		foreach ($q as $sql) {
 			$sql2 = mysql_query1("SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE `id`=" . escape($sql['autorius'] ). " LIMIT 1");
 
-			$info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"articles_delete[]\" />",
+			$info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />" => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"articles_delete[]\" />",
 			 $lang['admin']['article'] => '<a href="#" title="<b>' . $sql['pav'] . '</b>
-			<br />' . $lang['admin']['article_author'] . ': <b>' . $sql2['nick'] . '</b>" target="_blank">' . $sql['pav'] . '</a>', 
+			<br />' . $lang['admin']['article_author'] . ': <b>' . $sql2['nick'] . '</b>" target="_blank">' . input($sql['pav']) . '</a>', 
 			$lang['admin']['article_date'] => date('Y-m-d', $sql['date']), 
 			$lang['admin']['article_preface'] => trimlink(strip_tags($sql['t_text']), 55),
 			"{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ). "' title='{$lang['admin']['delete']}'><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");

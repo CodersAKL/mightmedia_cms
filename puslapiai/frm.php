@@ -87,11 +87,11 @@ if ($tid > 0) {
 $tema = "";
 $sub = "";
 if (isset($kur['pav']) && !empty($kur['pav'])) {
-	$sub = " > <a href='" . url("?id," . $url['id'] . ";s," . $sid) . "'>" . $kur['pav'] . "</a> (" . $kur['temos'] . ")";
+	$sub = " > <a href=\"" . url("?id," . $url['id'] . ";s," . $sid) . "\">" . input($kur['pav']) . "</a> (" . $kur['temos'] . ")";
 	if (!empty($kur['tema'])) {
-		$tema = " > <a href='" . url("?id," . $url['id'] . ";s," . $sid . ";t,$tid'>" . $kur['tema']) . "</a> (" . $kur['zinute'] . ")";
+		$tema = " > <a href=\"" . url("?id," . $url['id'] . ";s," . $sid . ";t,$tid")."\">" . input($kur['tema']) . "</a> (" . $kur['zinute'] . ")";
 	}
-	lentele($lang['forum']['forum'], "<a href='" . url("?id," . $url['id']) . "'>{$lang['forum']['forum']}</a>" . $sub . $tema);
+	lentele($lang['forum']['forum'], "<a href=\"" . url("?id," . $url['id']) . "\">{$lang['forum']['forum']}</a>" . $sub . $tema);
 }
 
 //kategoriju sarasas
@@ -126,11 +126,11 @@ if ($sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 				$extra = "<img src='{$imagedir}folder.gif' alt='{$lang['forum']['topic']}' />";
 			}
 			//subkategorijø atvaizdavimo formatas
-			$info[$kat['katid']][] = array($lang['forum']['forum'] => "<div style=\"margin:0;padding:0;\"><div style=\"float:left; margin: 2px;\">$extra</div><a href='".url("?id," . $url['id'] . ";s," . $kat['temid'] ). "'>" . $kat['pav'] . "</a> <span class=\"small_about\"style='font-size:9px;width:auto;display:block;'>" . $kat['aprasymas'] . "</span></div>", $lang['forum']['topics'] => $temos, $lang['forum']['replies'] => $zinutes, $lang['forum']['lastpost'] => (($zinutes>0)? $kat['last_nick'] . ' <br /> ' . (($kat['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $kat['last_data']))):'-'));
+			$info[$kat['katid']][] = array($lang['forum']['forum'] => "<div style=\"margin:0;padding:0;\"><div style=\"float:left; margin: 2px;\">$extra</div><a href='".url("?id," . $url['id'] . ";s," . $kat['temid'] ). "'>" . input($kat['pav']) . "</a> <span class=\"small_about\"style='font-size:9px;width:auto;display:block;'>" . input($kat['aprasymas']) . "</span></div>", $lang['forum']['topics'] => $temos, $lang['forum']['replies'] => $zinutes, $lang['forum']['lastpost'] => (($zinutes>0)? $kat['last_nick'] . ' <br /> ' . (($kat['last_data'] == '0000000000') ? '' : kada(date('Y-m-d H:i:s ', $kat['last_data']))):'-'));
 			$blai = new Table();
 			$blai->width[$lang['forum']['forum']] = '45%';
 			$subai[$kat['katid']] = $blai->render($info[$kat['katid']]);
-			$kateg[$kat['katid']] = $kat['kategorija'];
+			$kateg[$kat['katid']] = input($kat['kategorija']);
 		}
 		//atvaizduojam kategorijas subkategorijom
 		$cont = '';
@@ -178,7 +178,7 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 				$sticky = "";
 			}
 
-			$info[] = array($lang['forum']['topic'] => "<div style=\" float:left; margin: 2px;\">{$extra}{$sticky}</div><a href='".url("?id," . $url['id'] . ";s," . $sid . ";t," . $temos['id'] ). "'>" . $temos['pav'] . "</a>", $lang['forum']['replies'] => $zinutes, $lang['forum']['lastpost'] =>(($zinutes>0)?$temos['last_nick'] . ' <br /> ' . (($temos['last_data'] == '0000000000') ? '' : '<a href="'.url('?id,'.$_GET['id'].';s,'.$_GET['s'].';t,'.$temos['id'].';p,'.((int)($zinutes/15-0.1)*15)).'#end">'.kada(date('Y-m-d H:i:s ', $temos['last_data']))).'</a>':'-'));//' . naujas($row['last_data']) . '
+			$info[] = array($lang['forum']['topic'] => "<div style=\" float:left; margin: 2px;\">{$extra}{$sticky}</div><a href='".url("?id," . $url['id'] . ";s," . $sid . ";t," . $temos['id'] ). "'>" . input($temos['pav']) . "</a>", $lang['forum']['replies'] => $zinutes, $lang['forum']['lastpost'] =>(($zinutes>0)?$temos['last_nick'] . ' <br /> ' . (($temos['last_data'] == '0000000000') ? '' : '<a href="'.url('?id,'.$_GET['id'].';s,'.$_GET['s'].';t,'.$temos['id'].';p,'.((int)($zinutes/15-0.1)*15)).'#end">'.kada(date('Y-m-d H:i:s ', $temos['last_data']))).'</a>':'-'));//' . naujas($row['last_data']) . '
 
 		}
     
@@ -254,16 +254,6 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 				$extra = "";
 				$tool = "";
 
-        /*if (!empty($row['msn'])) {
-          $extra .= "<a href='http://members.msn.com/" . urlencode($row['msn']) . "' target='_blank'><img src='{$imagedir}icon_msnm.gif' border=0 alt='msn' /></a>  ";
-        }
-
-        if (!empty($row['skype'])) {
-          $extra .= "<a href='skype:" . urlencode($row['skype']) . "?chat' target='_blank'><img src='http://mystatus.skype.com/smallicon/" . urlencode($row['skype']) . "' width='16px' hight='16' border=0 alt='skype' /></a>  ";
-        }
-        if (!empty($row['url'])) {
-          $extra .= "<a href='" . $row['url'] . "' target='_blank'><img src='{$imagedir}icon_www.gif' border=0 alt='www' /></a>  ";
-        }*/
 
         if (isset($_SESSION['id']) && $row['nikas'] == $_SESSION['id'] || isset($_SESSION['level']) && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
           $tool .='<span style="float: right;">';
@@ -362,7 +352,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 					$cit = mysql_query1("SELECT *,nick as nikas,(SELECT nick from " . LENTELES_PRIESAGA . "users where id=nikas)as nickas from " . LENTELES_PRIESAGA . "d_zinute where id='" . (int) $qid . "' limit 1", 30);
 
 					if (isset($cit['zinute'])) {
-						$citata = "[quote=(" . date('Y-m-d H:i:s', $cit['laikas']) . ") " . $cit['nickas'] . "]" . $cit['zinute'] . "\n[/quote]";
+						$citata = "[quote=(" . date('Y-m-d H:i:s', $cit['laikas']) . ") " . input($cit['nickas']) . "]" . input($cit['zinute']) . "\n[/quote]";
 					}
 				}
 				echo "<script type=\"text/javascript\">$(document).ready(function() {
@@ -380,8 +370,6 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 					" " => array("type" => "string", "value" => bbs('msg')),
 					$lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : $citata), "name" => "msg", "class" => "input", "id" => "msg"),
 					"  " => array("type" => "string", "value" => bbk('msg')),
-					//"       \n" => array("type" => "button", "class" => "perveiza", "value" => "{$lang['forum']['perview']}"),
-					//"   " => array("type" => "submit", "value" => ((!empty($extra)) ? "{$lang['admin']['edit']}" : "{$lang['forum']['submit']}")),
 				"     " => array("type" => "hidden", "name" => "action", "value" => ((!empty($extra)) ? "f_update" : "f_send")),
 					"" => array("type" => "string", "value"=>"<input type=\"button\" class=\"perveiza\" value=\"{$lang['forum']['perview']}\" /> <input type=\"submit\" class=\"submit\" value=\"".((!empty($extra)) ? $lang['admin']['edit'] : $lang['forum']['submit'])."\" />"));
 
@@ -470,7 +458,7 @@ elseif ($aid == 1 && $kid == 0 && $lid == 0 && $rid == 0) {
 				$uid = $_SESSION['id'];
 			}
 			$pavadinimas = input($_POST['post_pav']);
-			$zinute = $_POST['post_msg'];
+			$zinute = input($_POST['post_msg']);
 			$error = "";
 			if (empty($pavadinimas)) {
 				$error .= "{$lang['forum']['topicname?']}<br/>";
@@ -531,8 +519,6 @@ elseif ($aid == 1 && $kid == 0 && $lid == 0 && $rid == 0) {
 			" " => array("type" => "string", "value" => bbs('post_msg')),
 			$lang['forum']['message'] => array("type" => "textarea", "rows" => "8", "value" => ((!empty($extra)) ? input($extra) : ''), "name" => "post_msg", "class" => "input", "id" => "msg"),
 			"  " => array("type" => "string", "value" => bbk('post_msg')),
-		//	"       \n" => array("type" => "button", "class" => "perveiza", "value" => "{$lang['forum']['perview']}"),
-		//	"   " => array("type" => "submit", "value" => $lang['forum']['submit'])
 		"" => array("type" => "string", "value"=>"<input type=\"button\" class=\"perveiza\" value=\"{$lang['forum']['perview']}\" /> <input type=\"submit\" class=\"submit\" value=\"{$lang['forum']['submit']}\" />")
 		);
 		addtotitle($lang['forum']['newtopic']);

@@ -13,15 +13,11 @@ function cat($kieno,$cat_id = 0, $space= 1, $x ='') {
 	$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = ".escape($kieno)." and `path` = " . escape($cat_id). " AND `lang` = ".escape(lang()));
 
 	foreach($sql as $select) {
-		//echo $select['pavadinimas'];
-		$x[$select['id']]=str_repeat('-', $space).$select['pavadinimas'];  // making a list with all categories names. we add "_" to in front of category name. It adds degree of category times. For example asus deggre is 2 therefore it will be __asus, pda’s degree is one therefore it will be _pda
+		$x[$select['id']]=str_repeat('-', $space).$select['pavadinimas'];
 
-		$x =cat($kieno,$select['id'], ($space+1), $x);  // function calls itself, with this, it finds subcategory of a category.
+		$x =cat($kieno,$select['id'], ($space+1), $x); 
 	}
-//print_r($x);
 	return $x;
-
-
 }
 
 function kategorija($kieno, $leidimas = false) {
@@ -51,10 +47,7 @@ HTML;
 
 		$kategorijoss = cat($kieno);
 
-	} /*else {
-		$kategorijoss[] = "{$lang['system']['nocategories']}.";
-	}*/
-
+	} 
 	if ($kieno != "vartotojai") {
 		$dir = "images/naujienu_kat";
 	} else {
@@ -104,18 +97,8 @@ HTML;
       $teises_in = serialize(0);
 
 		if (isset($_POST['path']) && !empty($_POST['path'])) {
-		//print_r($_POST);
 			$path = mysql_query1("Select * from`" . LENTELES_PRIESAGA . "grupes` WHERE id=" . escape($_POST['path']) . " Limit 1");
-			/*if ($path) {
-				$teises = (isset($_POST['Teises'])?serialize($_POST['Teises']):serialize(0));
-			}*/
-
-
-			//if ($path['path'] == 0) {
-			//$pathas = $path['id'];
-			//} else {
 			$pathas = $path['id'];
-			//}
 		} else {
 			$pathas=0;
 		}
@@ -135,10 +118,9 @@ HTML;
 		} else {
 			$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "grupes` (`pavadinimas`,`aprasymas`, `teises`, `pav`, `path`, `kieno`, `mod`, `lang`) VALUES (" . escape($pavadinimas) . ",  " . escape($aprasymas) . ", " . escape($teises_in) . ", " . escape($pav) . "," . escape($pathas) . "," . escape($kieno) . "," . escape($moderuoti) . ",".escape(lang()).")");
 			if ($result) {
-				msg("{$lang['system']['done']}", $lang['system']['categorycreated']);
-				//print_r($path);
+				msg($lang['system']['done'], $lang['system']['categorycreated']);
 			} else {
-				klaida($lang['system']['error'], "{$lang['system']['error']}<br><b>" . mysql_error() . "</b>");
+				klaida($lang['system']['error'], "{$lang['system']['error']}<br /><b>" . mysql_error() . "</b>");
 			}
 		}
 		unset($aprasymas, $pavadinimas, $teises, $pav, $einfo, $result);
@@ -169,12 +151,8 @@ HTML;
 	}
 	if (isset($_POST['Kategorijos_id']) && isNum($_POST['Kategorijos_id']) && $_POST['Kategorijos_id'] > 0 && isset($_POST['Kategorija']) && $_POST['Kategorija'] == $lang['system']['edit']) {
 		$extra = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='$kieno' AND `id`=" . escape((int)$_POST['Kategorijos_id']) . " LIMIT 1");
-		//$extra = mysql_fetch_assoc($extra);
 	}
 	if ($_GET['v'] == 2 /*|| $_GET['v'] == 5*/ ) {
-		/*if($_GET['v'] == 5 && !isset($kategorijoss)){
-			klaida($lang['system']['warning'],$lang['system']['nocategories']);
-		}else{*/
 		if (isset($_POST['Kategorija']) && $_POST['Kategorija'] == $lang['system']['delete']) {
 			//Trinamos nuorodos esančios kategorijoje
 			if ($kieno == 'nuorodos') {
@@ -312,7 +290,6 @@ HTML;
 		} else {
 			klaida($lang['system']['warning'], $lang['system']['nomorecategories']);
 		}
-//}
 	} elseif ($_GET['v'] == 3) {
 		if(isset($kategorijoss)) {
 			$kategorijos_redagavimas = array(

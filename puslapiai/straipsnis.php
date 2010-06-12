@@ -27,13 +27,10 @@ $sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `ki
 if ($sqlas && sizeof($sqlas) > 0 && !isset($url['m'])) {
 	foreach ($sqlas as $sql) {
 		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 86400);
-		//$path1 = explode(",", $path['path']);
-
 		if ($path['path'] == $k) {
 			$sqlkiek = kiek('straipsniai', "WHERE `kat`=" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
-			/*$info[] = array(" " => "<img src='images/naujienu_kat/" . $sql['pav'] . "' alt='Kategorija' border='0' />", "{$lang['category']['about']}" => "<h2><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] ). "'>" . input($sql['pavadinimas']) . "</a></h2>" . $sql['aprasymas'] . "<br>", "{$lang['category']['articles']}" => $sqlkiek, );*/
 			$info[] = array(
-					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . $sql['pavadinimas'] . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . $sql['aprasymas'] . "</div><div>{$lang['category']['articles']}: $sqlkiek</div></span></div>"//,
+					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['articles']}: $sqlkiek</div></span></div>"//,
 				);
 		}
 	}
@@ -57,12 +54,10 @@ if ($k >= 0 && empty($url['m'])) {
         lentele((!empty($pav['pavadinimas'])?$pav['pavadinimas']:$lang['pages']['straipsnis.php']), $pav['aprasymas']."<br /><i>{$lang['category']['articles']}: {$viso}</i>");
 				foreach ($sql as $row) {
 					if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
-						//$text .= "<h1>" . $row['pav'] . "</h1>		<i>" . $row['t_text'] . "</i><br><a href=".url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] ). ">{$lang['article']['read']}</a><hr></hr>\n";
-            lentele($row['pav'], "" . $row['t_text'] . "<br /><a href=".url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] ). ">{$lang['article']['read']}</a>", rating_form($page,$row['id']));
+            lentele($row['pav'], $row['t_text'] . "<br /><a href=".url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] ). ">{$lang['article']['read']}</a>", rating_form($page,$row['id']));
 					}
 				}
 
-				//lentele($pav['pavadinimas'], $text, false, array('Viso', $viso));
 			
 		} else {
 			klaida($lang['system']['warning'], "{$lang['article']['cant']}.");
@@ -83,7 +78,7 @@ if ($k >= 0 && empty($url['m'])) {
 	if (teises($sqlas['teises'], $_SESSION['level'])&&!empty($row['date'])) {
 		$text = $row['t_text'] . "<hr />\n
 		" . $row['f_text'] . "
-		<hr />{$lang['article']['date']}: " . date('Y-m-d H:i:s', $row['date']) . ", {$lang['article']['author']}: <b>" . $row['autorius'] . "</b>";
+		<hr />{$lang['article']['date']}: " . date('Y-m-d H:i:s', $row['date']) . ", {$lang['article']['author']}: <b>" . input($row['autorius']) . "</b>";
 		lentele((!empty($pav['pavadinimas'])?'':$lang['pages']['straipsnis.php'])." > <a href=\"".url("?id,{$_GET['id']};k,{$row['kat']}\">".input($sqlas['pavadinimas'])). "</a> > " . input($row['pav']), $text, rating_form($page,$row['id']));
 		include ("priedai/komentarai.php");
 

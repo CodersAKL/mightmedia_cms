@@ -199,7 +199,7 @@ if (isset($_GET['v'])) {
 	$table = new Table();
 	foreach ($sql2 as $row){
         $info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('siuntsch');\" />" => "<input type=\"checkbox\" value=\"{$row['ID']}\" name=\"siunt_delete[]\" />", 
-        $lang['download']['title'] => $row['pavadinimas'], 
+        $lang['download']['title'] => input($row['pavadinimas']), 
         $lang['download']['date'] => date('Y-m-d', $row['data']), 
         $lang['download']['about'] => trimlink(strip_tags($row['apie']), 55),
         $lang['admin']['edit'] => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['ID'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src=\"".ROOT."images/icons//cross.png\" border=\"0\"></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['ID'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>"
@@ -266,7 +266,7 @@ if (isset($_GET['v'])) {
 					$autorius = $lang['system']['guest'];
 				}
 				$info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('siuntsch');\" />" => "<input type=\"checkbox\" value=\"{$sql['ID']}\" name=\"siunt_delete[]\" />", 
-        $lang['download']['title'] => $sql['pavadinimas'], 
+        $lang['download']['title'] => input($sql['pavadinimas']), 
         $lang['download']['date'] => date('Y-m-d', $sql['data']), 
         $lang['download']['about'] => trimlink(strip_tags($sql['apie']), 55),
          "{$lang['admin']['action'] }:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['ID'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' alt='a' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['ID'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['ID'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
