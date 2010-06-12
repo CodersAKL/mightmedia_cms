@@ -54,10 +54,10 @@ $bla = new forma();
 
 if (isset($_POST['edit']) && $_POST['edit'] == $lang['system']['edit']) {
 
-	$pavadinimas = input(strip_tags($_POST['name']));
-	$url = input(strip_tags($_POST['url']));
-	$aktyvi = input(strip_tags($_POST['ar']));
-	$aprasymas = input(strip_tags($_POST['apie']));
+	$pavadinimas = strip_tags($_POST['name']);
+	$url = strip_tags($_POST['url']);
+	$aktyvi = strip_tags($_POST['ar']);
+	$aprasymas = strip_tags($_POST['apie']);
 	$kategorija = ceil((int)$_POST['Kategorijos_id']);
 	$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET
 			`pavadinimas` = " . escape($pavadinimas) . ",
@@ -194,11 +194,11 @@ elseif ($_GET['v'] == 1) {
 	if (isset($_POST['Submit_link']) && !empty($_POST['Submit_link'])) {
 
 	// Nustatom kintamuosius
-		$url = input(strip_tags($_POST['url']));
-		$apie = input(strip_tags($_POST['apie']));
-		$pavadinimas = input(strip_tags($_POST['name']));
-		$cat = input(strip_tags($_POST['kat']));
-    $active = input(strip_tags($_POST['act']));
+		$url = strip_tags($_POST['url']);
+		$apie = strip_tags($_POST['apie']);
+		$pavadinimas = strip_tags($_POST['name']);
+		$cat = strip_tags($_POST['kat']);
+    $active = strip_tags($_POST['act']);
 		// Patikrinam
 		//$pattern = "#^(http:\/\/|https:\/\/|www\.)(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?(\/)*$#i";
 		$pattern = "#([a-z]+?)://([a-z0-9\-\.,\?!%\*_\#:;~\\&$@\/=\+]+)#si";

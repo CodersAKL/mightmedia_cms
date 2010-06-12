@@ -104,10 +104,10 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 	if (isset($_POST['Submit_link']) && !empty($_POST['Submit_link']) && $_POST['Submit_link'] == $lang['admin']['links_create']) {
 
 	// Nustatom kintamuosius
-		$url = input(strip_tags($_POST['url']));
-		$apie = input(strip_tags($_POST['apie']));
-		$pavadinimas = input(strip_tags($_POST['name']));
-		$cat = input(strip_tags($_POST['kat']));
+		$url = strip_tags($_POST['url']);
+		$apie = strip_tags($_POST['apie']);
+		$pavadinimas = strip_tags($_POST['name']);
+		$cat = strip_tags($_POST['kat']);
 
 		// Patikrinam
 		//$pattern = "#^(http:\/\/|https:\/\/|www\.)(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?(\/)*$#i";
