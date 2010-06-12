@@ -37,7 +37,7 @@ kategorija("nuorodos");
 $sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `path`=0 AND `lang` = ".escape(lang())." ORDER BY `id` DESC");
 if (sizeof($sql) > 0) {
 
-	$kategorijoss = cat('nuorodos', 0);
+	$kategorijos = cat('nuorodos', 0);
 }
 
 $kategorijos[0] = "--";
@@ -124,9 +124,9 @@ elseif ($_GET['v'] == 1) {
 	$info = array();
 	if (sizeof($q) > 0) {
 		foreach ($q as $sql) {
-			$sql2 = mysql_query1("SELECT nick FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $sql['nick'] . "' LIMIT 1");
+			$sql2 = mysql_query1("SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $sql['nick'] . "' LIMIT 1");
 
-			$info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('linksch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"links_delete[]\" />", "{$lang['admin']['link']}:" => '<a href="' . $sql['url'] . '" title="<b>' . $sql2['nick'] . '</b>			<br/><br/>' . $lang['admin']['links_about'] . ': <i>' . $sql['apie'] . '</i><br/>' . $lang['admin']['links_author'] . ': <b>' . $sql2['nick'] . '</b><br/>' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . ' - ' . kada(date('Y-m-d H:i:s ', $sql['date'])) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' alt='a' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};m," . $sql['id']). "'title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};r," . $sql['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
+			$info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('linksch');\" />" => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"links_delete[]\" />", "{$lang['admin']['link']}:" => '<a href="' . $sql['url'] . '" title="<b>' . $sql2['nick'] . '</b>			<br/><br/>' . $lang['admin']['links_about'] . ': <i>' . $sql['apie'] . '</i><br/>' . $lang['admin']['links_author'] . ': <b>' . $sql2['nick'] . '</b><br/>' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . ' - ' . kada(date('Y-m-d H:i:s ', $sql['date'])) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' alt='a' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};m," . $sql['id']). "'title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};r," . $sql['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
 
 		}
 		echo '<style type="text/css" title="currentStyle">
@@ -161,7 +161,7 @@ elseif ($_GET['v'] == 1) {
 		foreach ($q as $sql) {
 			$sql2 = mysql_query1("SELECT nick FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $sql['nick'] . "' LIMIT 1");
 
-			$info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('linksch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"links_delete[]\" />",
+			$info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('linksch');\" />" => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"links_delete[]\" />",
 			 "{$lang['admin']['link']}:" => '<a href="' . $sql['url'] . '" title="<b>' . $sql2['nick'] . '</b>
 			<br/><br/>' . $lang['admin']['links_about'] . ': <i>' . $sql['apie'] . '</i><br/>' . $lang['admin']['links_author'] . ': <b>' . $sql2['nick'] . '</b><br/>' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . ' - ' . kada(date('Y-m-d H:i:s ', $sql['date'])) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>', "{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};m," . $sql['id'] ). "'title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};r," . $sql['id'] ). "'title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
 
@@ -216,7 +216,7 @@ elseif ($_GET['v'] == 1) {
 			}
 		}
 	}
-    $nuorodos = array("Form" => array("action" => "", "method" => "post", "name" => "Submit_link"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijoss, "name" => "kat"), "{$lang['admin']['links_title']}:" => array("type" => "text", "value" => "", "name" => "name"), "Url:" => array("type" => "text", "value" => "http://", "name" => "url"),$lang['admin']['links_active'].":" => array("type" => "select", "value" => array("TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}"), "name" => "act"), "{$lang['admin']['links_about']}:" => array("type" => "textarea", "value" => "", "name" => "apie"), " " => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['admin']['links_create']}"));
+    $nuorodos = array("Form" => array("action" => "", "method" => "post", "name" => "Submit_link"), "{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kat"), "{$lang['admin']['links_title']}:" => array("type" => "text", "value" => "", "name" => "name"), "Url:" => array("type" => "text", "value" => "http://", "name" => "url"),$lang['admin']['links_active'].":" => array("type" => "select", "value" => array("TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}"), "name" => "act"), "{$lang['admin']['links_about']}:" => array("type" => "textarea", "value" => "", "name" => "apie", "class"=>"input"), " " => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['admin']['links_create']}"));
 
 		lentele($lang['admin']['links_create'], $bla->form($nuorodos));
 }

@@ -45,6 +45,7 @@ include_once(ROOT.'priedai/kategorijos.php');
 //kategorijos
 $sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`", 3600);
 $kategorijos = cat('nuorodos', 0);
+$kategorijos[0] = "--";
 if (sizeof($sqlas) > 0) {
 	foreach ($sqlas as $sql) {
 		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 3600);
@@ -60,8 +61,6 @@ if (sizeof($sqlas) > 0) {
         $info[] = array(
 					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . $sql['pav'] . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . $sql['pavadinimas'] . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . $sql['aprasymas'] . "</div><div>{$lang['category']['links']}: $sqlkiek</div></span></div>"//,
 				);
-		}
-
 		}
 	}
 }
@@ -97,7 +96,7 @@ ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400);
 				include_once ("rating.php");
 
 				$info[] = array(
-					"{$lang['admin']['link']}:" => '' . $extra . ' <a href="'.url('?id,' . $url['id'] . ';k,' . $url['k'] . ';w,' . $sql['id'] ). '" title="<center><b>' . $sql['url'] . '</b><br /><img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br />' . $lang['admin']['links_author'] . ': <b>' . $sql['nick'] . '</b><br />' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . '</b><br />' . $lang['admin']['links_clicks'] . ': <b>' . $sql['click'] . '</b>" target="_blank" rel="nofollow">' . $sql['pavadinimas'] . '</a>',
+					"{$lang['admin']['link']}:" => '' . $extra . ' <a href="'.url('?id,' . $url['id'] . ';k,' . $k . ';w,' . $sql['id'] ). '" title="<center><b>' . $sql['url'] . '</b><br /><img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br />' . $lang['admin']['links_author'] . ': <b>' . $sql['nick'] . '</b><br />' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . '</b><br />' . $lang['admin']['links_clicks'] . ': <b>' . $sql['click'] . '</b>" target="_blank" rel="nofollow">' . $sql['pavadinimas'] . '</a>',
 					"{$lang['admin']['links_about']}:" => $sql['apie'],
 					"{$lang['admin']['links_rate']}:" => rating_form($page,$sql['id'])				);
 

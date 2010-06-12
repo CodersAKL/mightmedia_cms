@@ -13,6 +13,8 @@
 session_start();
 
 include_once ("priedai/conf.php");
+include_once ("priedai/header.php");
+
 ob_start();
 header("Content-type: text/html; charset=utf-8");
 //Jei svetaine uzdaryta remontui ir jei kreipiasi ne administratorius
@@ -30,7 +32,7 @@ if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
 if (isset($d) && $d > 0) {
 	$sql = mysql_query1("SELECT `file`,`categorija` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` = " . escape($d) . " LIMIT 1");
 	if (count($sql) > 0) {
-		$row = mysql_query1("SELECT `teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = '" . $sql['categorija'] . "'");
+		$row = mysql_query1("SELECT `teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape($sql['categorija']) . " LIMIT 1");
 		if (isset($_SESSION['level']) && (!$row || teises($row['teises'], $_SESSION['level']))) {
 			download("siuntiniai/" . $sql['file'] . "", ".htaccess|.|..|remontas.php|index.php|config.php|conf.php");
 		} else {
@@ -59,7 +61,7 @@ function download($file, $filter) {
 				if (get_user_os() == "MAC") {
 					header("Content-Type: application/x-unknown\n");
 					header("Content-Disposition: attachment; filename=\"" . basename($file) . "\"\n");
-				} elseif (get_browser_info() == "MSIE") {
+				} elseif (browser(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) == "IE") {
 					$disposition = (!eregi("\.zip$", basename($file))) ? 'attachment' : 'inline';
 					header('Content-Description: File Transfer');
 					header('Content-Type: application/force-download');
@@ -67,7 +69,7 @@ function download($file, $filter) {
 					header("Content-Disposition: $disposition; filename=\"" . basename($file) . "\"\n");
 					header("Cache-Control: cache, must-revalidate");
 					header('Pragma: public');
-				} elseif (get_browser_info() == "OPERA") {
+				} elseif (browser(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) == "OPERA") {
 					header("Content-Disposition: attachment; filename=\"" . basename($file) . "\"\n");
 					header("Content-Type: application/octetstream\n");
 				} else {

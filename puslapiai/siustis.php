@@ -59,7 +59,6 @@ if ($vid == 0) {
 		if (isset($info)) {
 			lentele("{$lang['system']['categories']}", $bla->render($info), false);
 		} 
-	}
 }
 //pabaiga
 # Rodom siuntini
@@ -150,6 +149,9 @@ else {
     `" . LENTELES_PRIESAGA . "siuntiniai`.`data` DESC
     LIMIT 0, 50
   ", 86400);
+  if(count($sql_s) == 0)
+  		klaida($lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
+
 	} else {
 		$sql_s = mysql_query1(" SELECT
     `" . LENTELES_PRIESAGA . "siuntiniai`.`pavadinimas`,
