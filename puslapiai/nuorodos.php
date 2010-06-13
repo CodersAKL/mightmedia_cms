@@ -60,7 +60,7 @@ if (sizeof($sqlas) > 0) {
 include_once ("priedai/class.php");
 $bla = new Table();
 if (isset($info)) {
-	lentele("{$lang['system']['categories']}", $bla->render($info), false);
+	lentele($lang['system']['categories'], $bla->render($info), false);
 }
 //pabaiga
 
@@ -89,9 +89,9 @@ ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400);
 				include_once ("rating.php");
 
 				$info[] = array(
-					"{$lang['admin']['link']}:" => '' . $extra . ' <a href="'.url('?id,' . $url['id'] . ';k,' . $k . ';w,' . $sql['id'] ). '" title="<center><b>' . input($sql['url']) . '</b><br /><img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br />' . $lang['admin']['links_author'] . ': <b>' . $sql['nick'] . '</b><br />' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . '</b><br />' . $lang['admin']['links_clicks'] . ': <b>' . input($sql['click']) . '</b>" target="_blank" rel="nofollow">' . input($sql['pavadinimas']) . '</a>',
-					"{$lang['admin']['links_about']}:" => input($sql['apie']),
-					"{$lang['admin']['links_rate']}:" => rating_form($page,$sql['id'])				);
+					$lang['admin']['link'] => '' . $extra . ' <a href="'.url('?id,' . $url['id'] . ';k,' . $k . ';w,' . $sql['id'] ). '" title="<center><b>' . input($sql['url']) . '</b><br /><img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br />' . $lang['admin']['links_author'] . ': <b>' . $sql['nick'] . '</b><br />' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . '</b><br />' . $lang['admin']['links_clicks'] . ': <b>' . input($sql['click']) . '</b>" target="_blank" rel="nofollow">' . input($sql['pavadinimas']) . '</a>',
+					$lang['admin']['links_about'] => input($sql['apie']),
+					$lang['admin']['links_rate'] => rating_form($page,$sql['id'])				);
 
 
 			}
@@ -113,7 +113,7 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 		//$pattern = "#^(http:\/\/|https:\/\/|www\.)(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?(\/)*$#i";
 		$pattern = "#([a-z]+?)://([a-z0-9\-\.,\?!%\*_\#:;~\\&$@\/=\+]+)#si";
 		if (!preg_match($pattern, $url)) {
-			klaida($lang['system']['error'], "{$lang['admin']['links_bad']}");
+			klaida($lang['system']['error'], $lang['admin']['links_bad']);
 
 		} else {
       $exists = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `url`=".escape($url)." AND  `lang` = ".escape(lang())." LIMIT 1", 3600);
@@ -122,12 +122,17 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
        else
          $result = true;
 			if ($result) {
-				msg($lang['system']['done'], "{$lang['admin']['links_sent']}.");
+				msg($lang['system']['done'], $lang['admin']['links_sent']);
 				redirect(url("?id,{$_GET['id']};k,{$k}"), 'meta');
 			} else {
-				klaida($lang['system']['error'], "{$lang['admin']['links_allfields']}");
+				klaida($lang['system']['error'], $lang['admin']['links_allfields']);
 			}
 		}
+	}
+	//For ajax - get extra info about the page
+	elseif (!empty($_POST['tikrink'])) {
+		$info = svetaines_info(strip_tags($_POST['tikrink']));
+		exit(clean_str(!empty($info['description'])?$info['description']:$info['title']));
 	}
 
 		include_once ("priedai/class.php");
@@ -135,13 +140,13 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LE
 		$bla = new forma();
 		$nuorodos = array(
 			"Form" => array("action" => "", "method" => "post", "name" => "Submit_link"),
-			"{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kat"),
-			"{$lang['admin']['links_title']}:" => array("type" => "text", "value" => "", "name" => "name"),
-			"Url:" => array("type" => "text", "value" => "http://", "name" => "url"),
-			"{$lang['admin']['links_about']}:" => array("type" => "textarea", "value" => "", "name" => "apie"),
-			" " => array("type" => "submit", "name" => "Submit_link", "value" => "{$lang['admin']['links_create']}"));
+			$lang['system']['category'] => array("type" => "select", "value" => $kategorijos, "name" => "kat"),
+			$lang['admin']['links_title'] => array("type" => "text", "value" => "", "name" => "name"),
+			"Url" => array("type" => "text", "extra" => "title=\"http://\" onchange=\"$.post('".url("?id,{$_GET['id']};ajax,1")."',{ tikrink: $(this).val() }, function(data) { $('#temp').html(data); $('#apie').val($('#temp').html())});\"", "name" => "url"), //TODO: AJAX get extra info about the page
+			$lang['admin']['links_about'] => array("type" => "textarea", "value" => "", "name" => "apie", "id" => "apie"),
+			"<div id=\"temp\" style=\"display:none\"></div>" => array("type" => "submit", "name" => "Submit_link", "value" => $lang['admin']['links_create']));
 
-		hide("{$lang['admin']['links_create']}", $bla->form($nuorodos), true);
+		hide($lang['admin']['links_create'], $bla->form($nuorodos), true);
 }
 unset($bla, $nuorodos, $row, $sql, $cat, $url, $pavadinimas, $apie, $info, $q, $sql, $text, $link, $sqlas);
 if (count($_GET) == 1) {
@@ -190,4 +195,14 @@ function svetaines_info($url = false) {
 	return $metatagarray;
 }
 
+function clean_str($string) {
+    $entities_array = array();
+    foreach (get_html_translation_table(HTML_ENTITIES, ENT_QUOTES) as $character => $entity) {
+        $entities_array[$entity] = '&#' . ord($character) . ';';
+    }
+	$string = strip_tags($string);
+	$string = str_replace(array("\r", "\r\n", "\n"), " ", $string);	//Ištrinam naujos eilutės simbolius
+	$string = preg_replace('~\s{2,}~', ' ', $string);	//Ištrinam pasikartojančius tarpus
+    return trim(str_replace(array_keys($entities_array), $entities_array, $string));
+}
 ?>
