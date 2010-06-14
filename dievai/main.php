@@ -97,7 +97,7 @@ function build_tree($data, $id=0, $active_class='active') {
 				$re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a><span style=\"display: inline; width: 100px;margin:0; padding:0; height: 16px;\"><a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';d,' . $row['id'] ). "\"  onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"".ROOT."images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"  /></a>
 <a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';r,' . $row['id'] ). "\"><img src=\"".ROOT."images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\"/></a>
 <a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';e,' . $row['id'] ). "\"><img src=\"".ROOT."images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span><ul>";
-				$re.=build_tree($data, $row['id'],$active_class);
+				$re.= build_tree($data, $row['id'],$active_class);
 				$re.= "</ul></li>";
 			} else $re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a><span style=\"display: inline; width: 100px; margin:0; padding:0; height: 16px;\">
 <a href=\"".url('?id,999;a,' . $admin_pagesid['meniu'] . ';d,' . $row['id'] ). "\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"".ROOT."images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"/></a>
@@ -413,28 +413,34 @@ HTML;
               $('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><b>'+data.title+'</b> '+'' + data.version + ' - ' +'' + data.about + ' '+(data.log?'<span id="news" title="'+data.log+'">[info]</span>':'')+(data.url?' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':''));
            }   
            if (data.menu.<?php echo lang(); ?>) {
-              $(data.menu.<?php echo lang(); ?>).each(function(json,menu){              
-                $('#admin_hmenu ul.sf-menu').append('<li>'+ (typeof menu == 'object'?'<a href="">'+data.menu.title+'</a>'+arr2html(menu):menu)+'</li>');
+              $(data.menu.<?php echo lang(); ?>).each(function(json,menu){
+               alert(arr2html(menu)) ;             
+               // $('#admin_hmenu ul.sf-menu').append('<li>'+ (typeof menu == 'object'?'<a href="">'+data.menu.title+'</a>'+arr2html(menu):menu)+'</li>');
+               $('#admin_hmenu ul.sf-menu').append(arr2html(menu));
               }); 
            }/* else {
                $(data.menu.en).each(function(json,menu){
                  $('#admin_hmenu ul').append('<li>'+ (typeof menu == 'object'?arr2html(menu):menu)+'</li>');
                });
           }*/
+          $('ul.sf-menu').superfish();
        }
        function arr2html(arr) {
         var html='';
         if(typeof arr == 'object') {
-          html+='<ul>';
+          if(arr.length > 1)
+            html+='<ul class="sf-menu">\n';
           for(var i in arr) {
              html+='<li>';
              html+=typeof arr[i] == 'object'?(i+arr2html(arr[i])):arr[i];
-             html+='</li>';
+             html+='</li>\n';
           }
-          html+='</ul>';
+          if(arr.length > 1)
+            html+='</ul>\n';
         }
         return html;        
       }
+      
     </script>
   </body>
 </html>

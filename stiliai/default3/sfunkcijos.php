@@ -100,7 +100,7 @@ function bbs($forma) {
 
 //SYPSENOS
 function smile($data, $bb = false) {
-	$smilies = array(':)' => 'smile.gif', ':]' => 'razz.gif', ':-)' => 'smile.gif', ';-)' => 'wink.gif', ';)' => 'wink.gif', ':-]' => 'biggrin.gif', ':-D' => '003.gif', ':D' => '003.gif', ':o' => 'shock.gif', ':-o' => '103.gif', ':O' => 'confuse.gif', ':(' => 'cry.gif', 'B-)' => 'cool.gif', 'B)' => 'cool.gif', '%-)' => 'cool.gif', ':-|' => 'neutral.gif', ':|' => 'neutral.gif', ':P' => '118.gif', ':p' => '118.gif', '>)' => 'badgrin.gif', '0_o' => '119.gif', 'o_0' => '119.gif', );
+	$smilies = array(':)' => 'smile.gif', ':]' => 'razz.gif', ':-)' => 'smile.gif', ';-)' => 'wink.gif', ';)' => 'wink.gif', ':-]' => 'biggrin.gif', ':-D' => '003.gif', ':D' => '003.gif', ':o' => 'shock.gif', ':-o' => '103.gif', ':O' => 'confuse.gif', ':(' => 'cry.gif', 'B-)' => 'cool.gif', 'B)' => 'cool.gif', '%-)' => 'cool.gif', ':-|' => 'neutral.gif', ':|' => 'neutral.gif', ':P' => '118.gif', ':p' => '118.gif', '|)' => 'badgrin.gif', '0_o' => '119.gif', 'o_0' => '119.gif', );
 	foreach ($smilies as $smile => $image) {
 		//$data = str_replace($smile,"<img src='images/smiles/$image' alt='".$smile."' class='middle' ".(($bb)?"onclick=\"addText('".$bb."','".$smile."',' ');\" style='cursor: pointer;'":"")." />",$data);
 		$data = str_replace($smile, "<img src='images/smiles/$image' alt='" . $smile . "' class='middle' onclick=\"addText('" . $bb . "','" . $smile . "',' ');\" style='cursor: pointer;' />", $data);
