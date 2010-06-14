@@ -414,7 +414,7 @@ HTML;
            }   
            if (data.menu.<?php echo lang(); ?>) {
               $(data.menu.<?php echo lang(); ?>).each(function(json,menu){
-               alert(arr2html(menu)) ;             
+               //alert(arr2html(menu)) ;             
                // $('#admin_hmenu ul.sf-menu').append('<li>'+ (typeof menu == 'object'?'<a href="">'+data.menu.title+'</a>'+arr2html(menu):menu)+'</li>');
                $('#admin_hmenu ul.sf-menu').append(arr2html(menu));
               }); 
