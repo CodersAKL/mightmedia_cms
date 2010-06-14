@@ -20,6 +20,7 @@ CREATE TABLE `newsgetters` (
   `email` varchar(250) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+INSERT INTO `nustatymai` VALUES(19, 'F_urls', ';');
 INSERT INTO `nustatymai` VALUES(20, 'galorder', 'data');
 INSERT INTO `nustatymai` VALUES(21, 'galorder_type', 'DESC');
 INSERT INTO `nustatymai` VALUES(22, 'Editor', 'markitup');
