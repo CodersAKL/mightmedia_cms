@@ -1340,36 +1340,31 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 	}
 	$root = ROOT;
 	$return = <<<HTML
-<script type="text/javascript" src="{$root}javascript/htmlarea/markitup/jquery.markitup.js"></script>
-<!-- markItUp! toolbar settings -->
-<script type="text/javascript" src="{$root}javascript/htmlarea/markitup/sets/default/set.js"></script>
-<!-- markItUp! skin -->
-<link rel="stylesheet" type="text/css" href="{$root}javascript/htmlarea/markitup/skins/markitup/style.css" />
-<!--  markItUp! toolbar skin -->
-<link rel="stylesheet" type="text/css" href="{$root}javascript/htmlarea/markitup/sets/default/style.css" />
-	
+<script type="text/javascript" src="{$root}javascript/htmlarea/nicedit/nicEdit.js"></script>	
 HTML;
 
 	if (is_array($id)) {
 		foreach ($id as $key => $val) {
 
 			$return .= <<< HTML
-	<script type="text/javascript">
-	$(document).ready(function(){
-		$('#{$key}').markItUp(mySettings);
-	});
-	</script>
-<textarea id="{$key}" name="{$key}" style="min-height:320px;">{$value[$key]}</textarea>
+<script type="text/javascript">
+$(document).ready(function(){
+	new nicEditor({fullPanel : true, iconsPath : '{$root}javascript/htmlarea/nicedit/nicEditorIcons.gif'}).panelInstance('{$key}');
+	
+});
+</script>
+<textarea id="{$key}" cols="40" name="{$key}">{$value[$key]}</textarea>
 HTML;
 		}
 	} else {
 		$return .= <<< HTML
-	<script type="text/javascript">
-	$(document).ready(function()	{
-		$('#{$id}').markItUp(mySettings);
-	});
-	</script>
-<textarea id="{$id}" name="{$id}" style="min-height:320px;">{$value}</textarea>
+<script type="text/javascript">
+$(document).ready(function(){
+	new nicEditor({fullPanel : true, iconsPath : '{$root}javascript/htmlarea/nicedit/nicEditorIcons.gif', width: '100%'}).panelInstance('{$id}');
+	
+});
+</script>
+<textarea id="{$id}" cols="40" name="{$id}">{$value}</textarea>
 HTML;
 
 	}

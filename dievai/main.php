@@ -237,6 +237,38 @@ HTML;
 HTML;
 
     }
+	}elseif($conf['Editor'] == 'nicedit'){
+        $dir = adresas();
+
+    	$return = <<<HTML
+<script type="text/javascript" src="{$dir}htmlarea/nicedit/nicEdit.js"></script>	
+HTML;
+
+	if (is_array($id)) {
+		foreach ($id as $key => $val) {
+
+			$return .= <<< HTML
+<script type="text/javascript">
+$(document).ready(function(){
+	new nicEditor({fullPanel : true, iconsPath : '{$dir}htmlarea/nicedit/nicEditorIcons.gif'}).panelInstance('{$key}');
+	
+});
+</script>
+<textarea id="{$key}" cols="40" name="{$key}">{$value[$key]}</textarea>
+HTML;
+		}
+	} else {
+		$return .= <<< HTML
+<script type="text/javascript">
+$(document).ready(function(){
+	new nicEditor({fullPanel : true, iconsPath : '{$dir}htmlarea/nicedit/nicEditorIcons.gif', width: '100%'}).panelInstance('{$id}');
+	
+});
+</script>
+<textarea id="{$id}" cols="40" name="{$id}">{$value}</textarea>
+HTML;
+
+	}
 	}
 	return $return;
 }

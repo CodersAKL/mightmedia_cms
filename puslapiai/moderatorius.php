@@ -4,7 +4,7 @@
  * @Projektas: MightMedia TVS
  * @Puslapis: www.coders.lt
  * @$Author$
- * @copyright CodeRS ©2008
+ * @copyright CodeRS Â©2008
  * @license GNU General Public License v2
  * @$Revision$
  * @$Date$
@@ -12,6 +12,9 @@
 
 if (isset($_SESSION['mod']) && !empty($_SESSION['mod'])) {
 
+  function editor($tipas = 'jquery', $dydis = 'standartinis', $id = false, $value = ''){
+    return editorius($tipas, $dydis, $id, $value);
+  }
 	$failai = unserialize($_SESSION['mod']);
 	$text = "<table border=\"0\">
 	<tr>
