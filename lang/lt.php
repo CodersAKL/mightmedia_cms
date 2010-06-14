@@ -343,6 +343,7 @@ $lang['admin']['logs_delete'] = 'Žurnalo valymas';
 $lang['admin']['logs_deletebyip'] = 'Trinti pagal ip';
 $lang['admin']['page_text'] = 'Puslapio turinys';
 $lang['admin']['page_create'] = 'Kurti puslapį';
+$lang['admin']['page_tree'] = 'Svetainės medis';
 $lang['admin']['page_link'] = 'Naudoti nuorodą';
 $lang['admin']['page_select'] = 'Pasirinkti puslapį';
 $lang['admin']['page_created'] = 'Puslapis sukurtas';

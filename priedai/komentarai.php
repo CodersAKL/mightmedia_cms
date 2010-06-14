@@ -13,7 +13,7 @@ if (!defined("OK")) {
 	header("location: ?");
 }
 function komentarai($id, $hide = false) {
-	global $url, $page, $lang, $conf;
+	global $url, $page, $lang, $conf, $_GET;
 	if (isset($conf['kmomentarai_sveciams']) && $conf['kmomentarai_sveciams'] != 3) {
 		if (isset($url['id']) && isnum($url['id']) && $url['id'] > 0 && isnum($id) && $id > 0) {
 			if (isset($_SESSION['id']) || (isset($conf['kmomentarai_sveciams']) && $conf['kmomentarai_sveciams'] == 1)) {
@@ -21,11 +21,11 @@ function komentarai($id, $hide = false) {
 				$bla = new forma();
 				$form = array(
 					"Form" => array("action" => "", "method" => "post", "name" => "n_kom"), 
-					"{$lang['guestbook']['name']}:" => (!isset($_SESSION['id']) ? array("type" => "text", "value" => (isset($_COOKIE['komentatorius']) ? $_COOKIE['komentatorius'] : ""), "name" => "name") : array("type" => "string", "value" => "<b>" . $_SESSION['username'] . "</b>")), 
+					$lang['guestbook']['name'] => (!isset($_SESSION['id']) ? array("type" => "text", "value" => (isset($_COOKIE['komentatorius']) ? $_COOKIE['komentatorius'] : ""), "name" => "name") : array("type" => "string", "value" => "<b>" . $_SESSION['username'] . "</b>")), 
 					"  \r\r\r\r\r" => array("type" => "string", "value" => bbs('n_kom')),
-					"{$lang['guestbook']['message']}" => array("type" => "textarea", "value" => "", "class" => "input", "name" => "n_kom", "extra" => "rows=\"5\" cols=\"3\""), 
+					$lang['guestbook']['message'] => array("type" => "textarea", "value" => "", "class" => "input", "name" => "n_kom", "extra" => "rows=\"5\" cols=\"3\""), 
 					(!isset($_SESSION['id']) ? kodas() : "") => (!isset($_SESSION['id']) ? array("type" => "text", "value" => "", "name" => "code", "class" => "chapter") : ""), 
-					" " => array("type" => "submit", "name" => "Naujas", "value" => "{$lang['comments']['send']}"),
+					" " => array("type" => "submit", "name" => "Naujas", "value" => $lang['comments']['send']),
 					"  " => array("type" => "hidden", "value" => $id, "name" => "id")
 				);
 
@@ -44,7 +44,7 @@ function komentarai($id, $hide = false) {
 			foreach ($sql as $row) {
 				$i++;
 				$tr = $i % 2 ? '2' : '';
-				$text .= "<div class=\"tr$tr\"><em><a href=\"#k:" . $row['id'] . "\" id=\"k:" . $row['id'] . "\"> <img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /> </a> ";
+				$text .= "<div class=\"tr$tr\"><em><a href=\"".$_SERVER['REQUEST_URI']."#k:" . $row['id'] . "\" id=\"k:" . $row['id'] . "\"> <img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /> </a> ";
 				if (defined("LEVEL") && (LEVEL == 1 || (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('com', unserialize($_SESSION['mod']))))) {
 					$text .= "<a href='" . url("dk," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['admin']['delete']}?') \">[{$lang['admin']['delete']}]</a> ";
 				}

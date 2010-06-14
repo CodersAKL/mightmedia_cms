@@ -345,6 +345,7 @@ $lang['admin']['off'] = 'off';
 //PAPILDYMAS END
 //panel admin
 $lang['admin']['panel_create'] = 'Create panel';
+$lang['admin']['page_tree'] = 'Site tree';
 $lang['admin']['panel_created'] = 'Panel created';
 $lang['admin']['panel_updated'] = 'Panel updated';
 $lang['admin']['panel_name'] = 'Panel files name';

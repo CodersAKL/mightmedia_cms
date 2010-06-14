@@ -166,6 +166,7 @@ body{
 .login a, .login a:hover{
 	color: #FFF;
 	font-size: 13px;
+	white-space:nowrap;
 }
 .login ul{
 	margin:0;

@@ -34,7 +34,7 @@ elseif(!empty($url['d']) && isnum($url['d'])) {
 			//date('Y-m-d H:i:s', $row['data'])
 			$text = '';
 			foreach ($q as $row) {
-				$text .= "\t <a href='?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row['id'] . ";s," . $row['tid'] . "#end'>" . trimlink($row['pav'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['last_data']) . " - " . $row['last_nick'] . ")<br />\n";
+				$text .= "\t <a href='".url("?id," . $conf['puslapiai']['frm.php']['id'] . ";t," . $row['id'] . ";s," . $row['tid'] . "#end")."'>" . trimlink($row['pav'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['last_data']) . " - " . $row['last_nick'] . ")<br />\n";
 			}
 			lentele($lang['new']['forum'], $text);
 			unset($text, $row, $q);
@@ -46,7 +46,7 @@ elseif(!empty($url['d']) && isnum($url['d'])) {
 		if (sizeof($q) > 0) {
 			$text = '';
 			foreach ($q as $row) {
-				$text .= "<a href='?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] . "'>" . trimlink($row['pavadinimas'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . " - " . $row['autorius'] . ")<br />\n";
+				$text .= "<a href='".url("?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id']) . "'>" . trimlink($row['pavadinimas'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . " - " . $row['autorius'] . ")<br />\n";
 			}
 			lentele($lang['new']['news'], $text);
 			unset($text, $row, $q);
@@ -59,7 +59,7 @@ elseif(!empty($url['d']) && isnum($url['d'])) {
 			//$text .= "<b>{$lang['new']['gallery']}:</b><br/>";
 			$text = '';
 			foreach ($q as $row) {
-				$text .= "<a href='?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['ID'] . ";'>" . trimlink($row['pavadinimas'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . ")<br />\n";
+				$text .= "<a href='".url("?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['ID']) . "'>" . trimlink($row['pavadinimas'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . ")<br />\n";
 			}
 			lentele($lang['new']['gallery'], $text);
 			unset($text, $row, $q);
@@ -72,7 +72,7 @@ elseif(!empty($url['d']) && isnum($url['d'])) {
 			//$text .= "<b>{$lang['new']['downloads']}:</b><br/>";
 			$text = '';
 			foreach ($q as $row) {
-				$text .= "<a href='?id," . $conf['puslapiai']['siustis.php']['id'] . ";k," . $row['categorija'] . ";v," . $row['ID'] . "'>" . trimlink($row['pavadinimas'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . ")<br />\n";
+				$text .= "<a href='".url("?id," . $conf['puslapiai']['siustis.php']['id'] . ";k," . $row['categorija'] . ";v," . $row['ID']) . "'>" . trimlink($row['pavadinimas'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . ")<br />\n";
 			}
 			lentele($lang['new']['downloads'], $text);
 			unset($text, $row, $q);
@@ -85,7 +85,7 @@ elseif(!empty($url['d']) && isnum($url['d'])) {
 			//$text .= "<b>{$lang['new']['articles']}:</b><br/>";
 			$text = '';
 			foreach ($q as $row) {
-				$text .= "<a href='?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] . "'>" . trimlink($row['pav'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['date']) . " - " . $row['autorius'] . ")<br />\n";
+				$text .= "<a href='".url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id']) . "'>" . trimlink($row['pav'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['date']) . " - " . $row['autorius'] . ")<br />\n";
 			}
 			lentele($lang['new']['articles'], $text);
 			unset($text, $row, $q);
@@ -134,7 +134,7 @@ elseif(!empty($url['d']) && isnum($url['d'])) {
 					$author = $row['nick'];
 
 
-				$text .= "<a href='?id," . $conf['puslapiai']['' . $file . '.php']['id'] . ";" . $link . "#" . $row['id'] . "' title=\"{$lang['new']['author']}: <b>" . $author . "</b><br/>{$lang['new']['date']}: <b>" . date('Y-m-d H:i:s ', $row['data']) . "</b><br/>\">" . trimlink($row['zinute'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . " - " . $author . ")<br />\n";
+				$text .= "<a href='".url("?id," . $conf['puslapiai'][$file . '.php']['id'] . ";" . $link . "#" . $row['id']) . "' title=\"{$lang['new']['author']}: <b>" . $author . "</b><br/>{$lang['new']['date']}: <b>" . date('Y-m-d H:i:s ', $row['data']) . "</b><br/>\">" . trimlink($row['zinute'], 40) . "</a> (" . date('Y-m-d H:i:s', $row['data']) . " - " . $author . ")<br />\n";
 			}
 		}
 		lentele($lang['new']['comments'], $text);
