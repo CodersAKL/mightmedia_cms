@@ -339,45 +339,47 @@ function cleanurl($url) {
  * @return array
  */
 unset($sql, $row);
-$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `lang`=".escape(lang())." ORDER BY `id` DESC");
+if($_SERVER['PHP_SELF'] != 'upgrade.php') {
+  $sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `lang`=".escape(lang())." ORDER BY `id` DESC");
 
-if (sizeof($sql) > 0) {
-	foreach ($sql as $row) {
+  if (sizeof($sql) > 0) {
+    foreach ($sql as $row) {
 
-		$levels[(int)$row['teises']] = array('pavadinimas' => $row['pavadinimas'], 'aprasymas' => $row['aprasymas'], 'pav' => input($row['pav']));
+      $levels[(int)$row['teises']] = array('pavadinimas' => $row['pavadinimas'], 'aprasymas' => $row['aprasymas'], 'pav' => input($row['pav']));
 
-	}
-}
-$levels[1] = array('pavadinimas' => $lang['system']['admin'], 'aprasymas' => $lang['system']['admin'], 'pav' => 'admin.png');
-$levels[2] = array('pavadinimas' => $lang['system']['user'], 'aprasymas' => $lang['system']['user'], 'pav' => 'user.png');
+    }
+  }
+  $levels[1] = array('pavadinimas' => $lang['system']['admin'], 'aprasymas' => $lang['system']['admin'], 'pav' => 'admin.png');
+  $levels[2] = array('pavadinimas' => $lang['system']['user'], 'aprasymas' => $lang['system']['user'], 'pav' => 'user.png');
 
-$conf['level'] = $levels;
-unset($levels, $sql, $row);
+  $conf['level'] = $levels;
+  unset($levels, $sql, $row);
 
 
-/**
- * Gaunam visus puslapius ir sukisam i masyva
- */
-$sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=".escape(lang())." ORDER BY `place` ASC", 120);
-foreach ($sql as $row) {
-	$conf['puslapiai'][$row['file']] = array('id' => $row['id'], 'pavadinimas' => input($row['pavadinimas']), 'file' => input($row['file']), 'place' => (int)$row['place'], 'show' => $row['show'], 'teises' => $row['teises']);
-	$conf['titles'][$row['id']] =(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file']));
-	$conf['titles_id'][strtolower(str_replace(' ', '_',(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file']))))] = $row['id'];
-}
-//nieko geresnio nesugalvojau
-$dir = explode('/', dirname($_SERVER['PHP_SELF']));
-$conf['titles']['999'] = $dir[count($dir)-1].'/admin';
-$conf['titles_id']['admin'] = 999;
-//sutvarkom nuorodas
-if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
-	$_GET = url_arr(cleanurl($_SERVER['QUERY_STRING']));
-	if(isset($_GET['id'])) {
-		$element = strtolower($_GET['id']);
-		$_GET['id'] = ((isset($conf['titles_id'][$element]) && $conf['F_urls'] != '0')?$conf['titles_id'][$element]:$_GET['id']);
-	}
-	$url = $_GET;
-} else {
-	$url = array();
+  /**
+   * Gaunam visus puslapius ir sukisam i masyva
+   */
+  $sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=".escape(lang())." ORDER BY `place` ASC", 120);
+  foreach ($sql as $row) {
+    $conf['puslapiai'][$row['file']] = array('id' => $row['id'], 'pavadinimas' => input($row['pavadinimas']), 'file' => input($row['file']), 'place' => (int)$row['place'], 'show' => $row['show'], 'teises' => $row['teises']);
+    $conf['titles'][$row['id']] =(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file']));
+    $conf['titles_id'][strtolower(str_replace(' ', '_',(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file']))))] = $row['id'];
+  }
+  //nieko geresnio nesugalvojau
+  $dir = explode('/', dirname($_SERVER['PHP_SELF']));
+  $conf['titles']['999'] = $dir[count($dir)-1].'/admin';
+  $conf['titles_id']['admin'] = 999;
+  //sutvarkom nuorodas
+  if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
+    $_GET = url_arr(cleanurl($_SERVER['QUERY_STRING']));
+    if(isset($_GET['id'])) {
+      $element = strtolower($_GET['id']);
+      $_GET['id'] = ((isset($conf['titles_id'][$element]) && $conf['F_urls'] != '0')?$conf['titles_id'][$element]:$_GET['id']);
+    }
+    $url = $_GET;
+  } else {
+    $url = array();
+  }
 }
 function url_arr($params) {
 	global $conf;

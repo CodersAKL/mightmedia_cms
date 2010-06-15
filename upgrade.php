@@ -10,92 +10,96 @@
 
 header("Content-type: text/html; charset=utf-8");
 ini_set('error_reporting', E_ALL);
-ini_set('display_errors', 'Off');
+ini_set('display_errors', 'On');
 session_start();
 ob_start();
 include_once("priedai/conf.php");
 include_once("priedai/prisijungimas.php");
-if(isset($_SESSION['id'])&&$_SESSION['id']==1){
-// Sarašas failų kurių teisės turi suteikti svetainei įrašymo galimybę
-$chmod_files[0] = "siuntiniai/media";
-$chmod_files[] = "sandeliukas";
-$chmod_files[] = "images/avatars";
+if(isset($_SESSION['id']) && $_SESSION['id'] == 1){
+  //į kokią versiją atnaujinam
+  $versija = 1.4;
+  // Sarašas failų kurių teisės turi suteikti svetainei įrašymo galimybę
+  $chmod_files[0] = "siuntiniai/media";
+  $chmod_files[] = "sandeliukas";
+  $chmod_files[] = "images/avatars";
+  //ką trinam
+  $delete_files[] = "puslapiai/dievai/";
+  $delete_files[] = "javascript/htmlarea/Xinha0.96beta2/";
+  $delete_files[] = "javascript/forum/perview.php";
+
+  // Diegimo stadijų registravimas
+  if (!isset($_GET['step']) || empty($_GET['step'])) {
+    $_SESSION['step'] = 1;
+    $step = 1;
+  } else {
+    if ($_GET['step'] != 0 && $_GET['step'] > 1) {
+      $step = (int)$_GET['step'];
+      if ($_SESSION['step'] == ($step - 1)) {
+        $_SESSION['step'] = $step;
+      }
+    } else {
+      header("Location: upgrade.php?step=" . $_SESSION['step']);
+    }
+  }
+
+  // Duomenų bazės prisijungimo tikrinimo ir lentelių sukūrimo dalis
+  if (isset($_POST['next_msyql'])) {
+        // Sukuriamos visos MySQL leneteles is SVN Trunk
+      if (!file_exists('sql-upgrade.sql')) {
+        $sql = file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade-1.3to1.4.sql');
+      } else {
+        $sql = file_get_contents('sql-upgrade-1.3to1.4.sql');
+      }
+
+      // Paruošiam užklausas
+      $sql = str_replace("CREATE TABLE IF NOT EXISTS `", "CREATE TABLE IF NOT EXISTS `" . LENTELES_PRIESAGA, $sql);
+      $sql = str_replace("CREATE TABLE `", "CREATE TABLE IF NOT EXISTS `" . LENTELES_PRIESAGA, $sql);
+      $sql = str_replace("INSERT INTO `", "INSERT INTO `" . LENTELES_PRIESAGA, $sql);
+      $sql = str_replace("ALTER TABLE `", "ALTER TABLE `" . LENTELES_PRIESAGA, $sql);
+      $sql = str_replace("UPDATE `", "UPDATE `" . LENTELES_PRIESAGA, $sql);
+
+      // Prisijungiam prie duombazės
+      mysql_query("SET NAMES utf8");
+
+      // Atliekam SQL apvalymą
+      $match = '';
+      preg_match_all("/(?:CREATE|UPDATE|INSERT|ALTER).*?;[\r\n]/s", $sql, $match);
+
+      $mysql_info = "<ol>";
+      $mysql_error = 0;
+      foreach ($match[0] as $key => $val) {
+        if (!empty($val)) {
+          $query = mysql_query($val);
+          if (!$query) {
+            $mysql_info .= "<li><b>Klaida:" . mysql_errno() . "</b> " . mysql_error() . "<hr><b>Užklausa:</b><br/>" . $val . "</li><hr>";
+            $mysql_error++;
+          }
+        }
+      }
+      $mysql_info .= "</ol>";
+
+      if ($mysql_error == 0) {
+        $mysql_info = 'Lentelės sėkmingai atnaujintos. Galite tęsti atnaujinimą.';
+        $next_mysql = '<center><input type="reset" value="Toliau >>" onClick="Go(\'3\');" class="submit"></center>';
+      } else {
+        $next_mysql = '<center><input type="reset" value="Bandyti dar kartą" onClick="Go(\'2\');" class="submit"></center>';
+      }
+
+    }
+  if(!isset($next_mysql)){
+    $next_mysql = '<input name="next_msyql" type="submit" value="Atnaujinti lenteles" class="submit">';
+  }
+
+  // Administratoriaus sukūrimo dalis
 
 
+  // Diegimo pabaiga
+  if (!empty($_POST['finish'])) {
 
-// Diegimo stadijų registravimas
-if (!isset($_GET['step']) || empty($_GET['step'])) {
-	$_SESSION['step'] = 1;
-	$step = 1;
-} else {
-	if ($_GET['step'] != 0 && $_GET['step'] > 1) {
-		$step = (int)$_GET['step'];
-		if ($_SESSION['step'] == ($step - 1)) {
-			$_SESSION['step'] = $step;
-		}
-	} else {
-		header("Location: upgrade.php?step=" . $_SESSION['step']);
-	}
-}
-
-// Duomenų bazės prisijungimo tikrinimo ir lentelių sukūrimo dalis
-if (isset($_POST['next_msyql'])) {
-			// Sukuriamos visos MySQL leneteles is SVN Trunk
-		if (!file_exists('sql-upgrade.sql')) {
-			$sql = file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade-1.3to1.4.sql');
-		} else {
-			$sql = file_get_contents('sql-upgrade-1.3to1.4.sql');
-		}
-
-		// Paruošiam užklausas
-		$sql = str_replace("CREATE TABLE IF NOT EXISTS `", "CREATE TABLE IF NOT EXISTS `" . LENTELES_PRIESAGA, $sql);
-		$sql = str_replace("CREATE TABLE `", "CREATE TABLE IF NOT EXISTS `" . LENTELES_PRIESAGA, $sql);
-		$sql = str_replace("INSERT INTO `", "INSERT INTO `" . LENTELES_PRIESAGA, $sql);
-		$sql = str_replace("ALTER TABLE `", "ALTER TABLE `" . LENTELES_PRIESAGA, $sql);
-		$sql = str_replace("UPDATE `", "UPDATE `" . LENTELES_PRIESAGA, $sql);
-
-		// Prisijungiam prie duombazės
-		mysql_query("SET NAMES utf8");
-
-		// Atliekam SQL apvalymą
-		$match = '';
-		preg_match_all("/(?:CREATE|UPDATE|INSERT|ALTER).*?;[\r\n]/s", $sql, $match);
-
-		$mysql_info = "<ol>";
-		$mysql_error = 0;
-		foreach ($match[0] as $key => $val) {
-			if (!empty($val)) {
-				$query = mysql_query($val);
-				if (!$query) {
-					$mysql_info .= "<li><b>Klaida:" . mysql_errno() . "</b> " . mysql_error() . "<hr><b>Užklausa:</b><br/>" . $val . "</li><hr>";
-					$mysql_error++;
-				}
-			}
-		}
-		$mysql_info .= "</ol>";
-
-		if ($mysql_error == 0) {
-			$mysql_info = 'Lentelės sėkmingai atnaujintos. Galite tęsti atnaujinimą.';
-			$next_mysql = '<center><input type="reset" value="Toliau >>" onClick="Go(\'3\');" class="submit"></center>';
-		} else {
-			$next_mysql = '<center><input type="reset" value="Bandyti dar kartą" onClick="Go(\'2\');" class="submit"></center>';
-		}
-
-	}
-if(!isset($next_mysql)){
-	$next_mysql = '<input name="next_msyql" type="submit" value="Atnaujinti lenteles" class="submit">';
-}
-
-// Administratoriaus sukūrimo dalis
-
-
-// Diegimo pabaiga
-if (!empty($_POST['finish'])) {
-
-	unlink('upgrade.php');
-	//}
-	header("Location: index.php");
-}
+    unlink('upgrade.php');
+    //}
+    header("Location: index.php");
+  }
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -122,6 +126,7 @@ if (!empty($_POST['finish'])) {
 		<div id="admin_hmenu" style="font-weight:bold; font-size:25px; color: #666; padding: 10px; margin-bottom: 10px;"><?php echo input(strip_tags($conf['Pavadinimas']));?></div>
 <?php if(isset($_SESSION['id'])&&$_SESSION['id']==1) {?>
 <center>
+<?php if(versija() != $versija) echo "<div class=\"msg\" style=\"width: 80%;\"><b>Nepakeisti senosios versijos failai!</b><br /> <small>Naudodamiesi FTP naršykle, atnaujinkite senos <b>".versija()."</b> versijos failus į naująją <b>$versija</b> versiją.</div>"; ?>
 <table border="0" cellpadding="2" cellspacing="5" width="80%" id="container">
 <tbody>
 <tr>
@@ -131,7 +136,7 @@ if (!empty($_POST['finish'])) {
                 <ul>
 <?php
 
-$menu_pavad = array(1 => "Failų tikrinimas", 2 => "Duomenų bazės atnaujinimas",  3 => "Pabaiga");
+$menu_pavad = array(1 => "Failų tikrinimas", 2 => "Duomenų bazės atnaujinimas", 3 => "conf.php keitimas",  4 => "Pabaiga");
 foreach ($menu_pavad as $key => $value) {
 	if ($key <= $step)
 		echo "\t\t\t<li><img src=\"images/icons/tick_circle.png\" style=\"vertical-align: middle;\" /><font color=\"green\"><b>" . $value . "</b></font></li>";
@@ -154,11 +159,14 @@ if ($step == 1) {
 
 ?>
         <h2>Failų tikrinimas</h2>
-                        Žemiau surašyti failai kurie bus reikalingi įdiegiant šią sistemą. Jei sistema surado klaidų prašome jas ištaisyti ir spausti atnaujinti. Kitu atveju jums nebus leidžiama tęsti įdiegimo. <br /><br />
+        
+                   
+        
+                                Žemiau surašyti failai, kurių keitimas bus reikalingas atnaujinant šią sistemą. Jei sistema surado klaidų prašome jas ištaisyti ir spausti atnaujinti. Kitu atveju jums nebus leidžiama tęsti įdiegimo. <br /><br />
         <h2>Legenda</h2>
-                        <img src="images/icons/tick.png" /> Jei prie failo nustatyta ši ikonėlė vadinasi failas yra tinkamai nustatytas.<br />
-                        <img src="images/icons/cross.png" /> Jei rasite šią ikonėlę prie nurodyto failo tuomet reikia jį sutvarkyti.<br /><br />
-                        <strong>Priminimas:</strong> Sutvarkyti failus, t.y. jums reikia atlikti <strong>chmod</strong>. Visur kur matote įkonėlę <img src="images/icons/cross.png" /> būtina nurodyti <strong>chmod      777</strong> FTP serveryje. <br /><br />
+                        <img src="images/icons/tick.png" /> Jei prie failo nustatyta ši ikonėlė vadinasi failas yra paruoštas sistemai.<br />
+                        <img src="images/icons/cross.png" /> Jei rasite šią ikonėlę prie nurodyto failo tuomet reikia atlikti užduotį, aprašytą „Klaidos aprašymas“ stulpelyje.<br /><br />
+                        
                         <table border="0" class="table">
                         <tr>
                                 <th class="th" valign="top" width="10%">Failas</th>
@@ -177,9 +185,22 @@ if ($step == 1) {
                         <tr class=\"tr\">
                                 <td>" . $chmod_files[$i] . "</td>
                                 <td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "<img src=\"images/icons/tick.png\" />" : "<img src=\"images/icons/cross.png\" />") . "</td>
-                                <td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "" : "Būtina nurodyti chmod 777 failui <strong>" . $chmod_files[$i] . "</strong> kadangi esamas chmod yra <strong>" . $teises . "</strong>") . "</td>
+                                <td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "-" : "Būtina nurodyti chmod 777 failui <strong>" . $chmod_files[$i] . "</strong> kadangi esamas chmod yra <strong>" . $teises . "</strong>") . "</td>
                         </tr>";
 	}
+	foreach ($delete_files as $file) {
+		if (file_exists($file)) {
+			$file_error = 'Y';
+		}
+		echo "
+                        <tr class=\"tr\">
+                                <td>" . $file . "</td>
+                                <td>" . (!file_exists($file) ? "<img src=\"images/icons/tick.png\" />" : "<img src=\"images/icons/cross.png\" />") . "</td>
+                                <td>" . (!file_exists($file) ? "-" : "Būtina ištrinti <strong>" . $file . "</strong> ") . "</td>
+                        </tr>";
+	}
+
+	
 	echo "\t\t\t</table>\n<br /><br />\n";
 
 	if (isset($file_error) && $file_error == 'Y')
@@ -247,10 +268,23 @@ if ($step == 2) {
 
 
 // HTML DALIS - TVS administratoriaus sukūrimas
-
+if ($step == 3) {
+?>
+<h2>conf.php failo keitimas</h2>
+Atlikite žemiau nurodytus pakeitimus <i>priedai/conf.php</i> faile.
+<h2>Legenda</h2>
+                        <img src="images/icons/tick.png" /> Jei prie užduoties matote šią ikoną, ji atlikta teisingai.<br />
+                        <img src="images/icons/cross.png" /> Jei prie užduoties matote šią ikoną, ji atlikta neteisingai.<br /><hr /><br />
+                        
+         <div class="tr"><img src="<?php echo (isset($update_url) ? 'images/icons/tick.png' : 'images/icons/cross.png');  ?>" /> priedai/conf.php faile, prieš <input type="text" value='$prisijungimas_prie_mysql = mysql_connect($host, $user, $pass)' /> įklijuokite šį kodą <input type="text" value='$update_url = "http://www.assembla.com/code/mightmedia/subversion/node/blob/naujienos.json?jsoncallback=?";' /></div> <div class="tr">
+        <img src="<?php echo (!function_exists('lentele') ? 'images/icons/tick.png' : 'images/icons/cross.png');  ?>" /> Failo apačioje ištrinkite kodą <input type="text" value='require_once(realpath(dirname(__file__))."/../stiliai/".$conf[&#039;Stilius&#039;]."/sfunkcijos.php");' />
+     </div>    <div class="tr">Atlikę šias užduotis spauskite „Atnaujinti“ ir įsitikinlite, kadužduotys atliktos teisingai (žr. į ikonas šalia užduoties)</div>
+<center><input type="reset" value="Atnaujinti" onClick="JavaScript:location.reload(true);"> <input type="reset" value="Toliau >>" onClick="Go('3');"><center>
+<?php
+}
 
 // HTML DALIS - Pabaiga
-if ($step == 3) {
+if ($step == 4) {
 
 ?>
                 <h2>Pabaiga</h2>
