@@ -103,6 +103,7 @@ if ($vid > 0) {
 			addtotitle($sql['pavadinimas']);
 			if (isset($sql['Kategorija'])) {
 				$info2[0][$lang['system']['category']] = "<b>" . input($sql['Kategorija']) . "</b><br /><div class='avataras'><img src='images/naujienu_kat/" . input($sql['img']) . "' alt='" . input($sql['Kategorija']) . "' /></div>";
+				$ble->width[$lang['system']['category']] = '50px';
 			}
 			$info2[0][input($sql['pavadinimas'])] = "<div style='vertical-align: top'> <b>{$lang['download']['about']}:</b> " . $sql['apie'] . "<br /><b>{$lang['download']['date']}:</b> " . date('Y-m-d H:i:s ', $sql['data']) . "<br /><hr /><a href=\"siustis.php?d," . $sql['id'] . "\"><img src=\"images/icons/disk.png\" alt=\"" . input($sql['file']) . "\" border=\"0\" /></a></div>";
 
