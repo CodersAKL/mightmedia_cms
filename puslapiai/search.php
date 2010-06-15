@@ -165,7 +165,7 @@ if (isset($_POST['s'])) {
 		}
 
 		if (isset($_POST['kom']) || isset($_POST['vis'])) {
-			$sqlas2 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `zinute` LIKE " . escape("%" . $_POST['s'] . "%") . " AND `lang` = ".escape(lang())." LIMIT 0,100", 120);
+			$sqlas2 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `zinute` LIKE " . escape("%" . $_POST['s'] . "%") . " LIMIT 0,100", 120);
 
 			$text = "";
 			if (sizeof($sqlas2) > 0) {
