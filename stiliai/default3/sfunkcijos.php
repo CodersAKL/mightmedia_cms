@@ -87,23 +87,23 @@ function bbs($forma) {
 		;-)
 		:-]
 		:-D
-		:o
 		:-o
 		:(
 		B-)
 		:-|
 		:P
 		|)
-		o_0
+		:-/
 		", $forma) . "<br/>";
 }
 
 //SYPSENOS
 function smile($data, $bb = false) {
-	$smilies = array(':)' => 'smile.gif', ':]' => 'razz.gif', ':-)' => 'smile.gif', ';-)' => 'wink.gif', ';)' => 'wink.gif', ':-]' => 'biggrin.gif', ':-D' => '003.gif', ':D' => '003.gif', ':o' => 'shock.gif', ':-o' => '103.gif', ':O' => 'confuse.gif', ':(' => 'cry.gif', 'B-)' => 'cool.gif', 'B)' => 'cool.gif', '%-)' => 'cool.gif', ':-|' => 'neutral.gif', ':|' => 'neutral.gif', ':P' => '118.gif', ':p' => '118.gif', '|)' => 'badgrin.gif', '0_o' => '119.gif', 'o_0' => '119.gif', );
+  global $conf; 
+	$smilies = array(':)' => 'square_smile.png', ':]' => 'square_smug.png', ':-)' => 'square_smile.png', ';-)' => 'square_wink.png', ';)' => 'square_wink.png', ':-]' => 'square_smug.png', ':-D' => 'square_biggrin.png', ':D' => 'square_biggrin.png', ':o' => 'square_eek.png', ':-o' => 'square_eek.png', ':O' => 'square_eek.png', ':(' => 'square_frown.png', 'B-)' => 'square_cool.png', 'B)' => 'square_cool.png', '%-)' => 'square_cool.png', ':-|' => 'square_unsure.png', ':|' => 'square_unsure.png', ':P' => 'square_tongue.png', ':p' => 'square_tongue.png', '|)' => 'square_mad.png', '0_o' => 'square_eek.png', 'o_0' => 'square_eek.png', ':-/'=>'square_confused.png');
 	foreach ($smilies as $smile => $image) {
 		//$data = str_replace($smile,"<img src='images/smiles/$image' alt='".$smile."' class='middle' ".(($bb)?"onclick=\"addText('".$bb."','".$smile."',' ');\" style='cursor: pointer;'":"")." />",$data);
-		$data = str_replace($smile, "<img src='images/smiles/$image' alt='" . $smile . "' class='middle' onclick=\"addText('" . $bb . "','" . $smile . "',' ');\" style='cursor: pointer;' />", $data);
+		$data = str_replace($smile, "<img src='stiliai/{$conf['Stilius']}/smilies/$image' alt='" . $smile . "' class='middle' onclick=\"addText('" . $bb . "','" . $smile . "',' ');\" style='cursor: pointer;' />", $data);
 	}
 	return $data;
 }
