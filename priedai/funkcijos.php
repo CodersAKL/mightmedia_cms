@@ -47,49 +47,49 @@ function header_info() {
 	global $conf, $page_pavadinimas, $lang;
 	echo '
 	<base href="'.adresas().'"></base>
-	<meta name="generator" content="MightMedia TVS" lang="" />
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="content-language" content="'.lang().'"/>
-  <meta name="description" content="' . input(strip_tags($conf['Pavadinimas']) . ' - ' . trimlink(strip_tags($conf['Apie']), 120)) . '" />
-  <meta name="keywords" content="' . input(strip_tags($conf['Keywords'])) . '" />
-  <meta name="author" content="' . input(strip_tags($conf['Copyright'])) . '" />
-  <link rel="stylesheet" type="text/css" href="stiliai/system.css" />
-  <link rel="stylesheet" type="text/css" href="stiliai/rating.css" />
-  <link rel="stylesheet" type="text/css" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/default.css" />
-  <link rel="shortcut icon" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/favicon.ico" type="image/x-icon">
+	<meta name="generator" content="MightMedia TVS" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="'.lang().'" />
+	<meta name="description" content="' . input(strip_tags($conf['Pavadinimas']) . ' - ' . trimlink(strip_tags($conf['Apie']), 120)) . '" />
+	<meta name="keywords" content="' . input(strip_tags($conf['Keywords'])) . '" />
+	<meta name="author" content="' . input(strip_tags($conf['Copyright'])) . '" />
+	<link rel="stylesheet" type="text/css" href="stiliai/system.css" />
+	<link rel="stylesheet" type="text/css" href="stiliai/rating.css" />
+	<link rel="stylesheet" type="text/css" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/default.css" />
+	<link rel="shortcut icon" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/favicon.ico" type="image/x-icon" />
 
-  ' . (isset($conf['puslapiai']['rss.php']) ? '<link rel="alternate" type="application/rss+xml" title="' . input(strip_tags($conf['Pavadinimas'])) . '" href="rss.php" />' : '') . '
-  <link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox.css" />
-  <!--[if IE]>
-  <link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox-ie.css" title="example" />
-  <![endif]-->
-  <title>' . input(strip_tags($conf['Pavadinimas']) . ' - ' . $page_pavadinimas) . '</title>
-  <script type="text/javascript" src="javascript/jquery/jquery-1.3.2.min.js"></script> 
-  <script type="text/javascript" src="javascript/pagrindinis.js"></script>  
-  <script type="text/javascript" src="javascript/jquery/rating.js"></script>	
-  <script type="text/javascript" src="javascript/jquery/tooltip.js"></script>
-  <script type="text/javascript" src="javascript/jquery/jquery.colorbox.js"></script>
-  <script type="text/javascript" src="javascript/jquery/jquery.hint.js"></script>
-  <script type="text/javascript" src="javascript/hyphenator/hyphenator.min.js"></script>
-  <script type="text/javascript" src="javascript/jquery/jquery.hyphenator.min.js"></script>
-  
-  <script type="text/javascript">
-  $(document).ready(function(){
+	' . (isset($conf['puslapiai']['rss.php']) ? '<link rel="alternate" type="application/rss+xml" title="' . input(strip_tags($conf['Pavadinimas'])) . '" href="rss.php" />' : '') . '
+	<link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox.css" />
+	<!--[if IE]>
+	<link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox-ie.css" title="example" />
+	<![endif]-->
+	<title>' . input(strip_tags($conf['Pavadinimas']) . ' - ' . $page_pavadinimas) . '</title>
+	<script type="text/javascript" src="javascript/jquery/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="javascript/pagrindinis.js"></script>
+	<script type="text/javascript" src="javascript/jquery/rating.js"></script>
+	<script type="text/javascript" src="javascript/jquery/tooltip.js"></script>
+	<script type="text/javascript" src="javascript/jquery/jquery.colorbox.js"></script>
+	<script type="text/javascript" src="javascript/jquery/jquery.hint.js"></script>
+	<script type="text/javascript" src="javascript/hyphenator/hyphenator.min.js"></script>
+	<script type="text/javascript" src="javascript/jquery/jquery.hyphenator.min.js"></script>
 
-	$(\'body\').hyphenate({minwordlength : 8});
+	<script type="text/javascript">
+	$(document).ready(function(){
 
-	//Examples of how to assign the ColorBox event to elements.
-	$(".gallery a[rel=\'lightbox\']").colorbox({transition:"fade", current: "'.$lang['admin']['gallery_image'].' {current} '.$lang['user']['pm_of'].' {total}", next:"'.$lang['admin']['gallery_next'].'", previous:"'.$lang['admin']['gallery_prev'].'", close:"[x]"});
-	// find all the input elements with title attributes and make them with a hint
-	$(\'input[title!=""]\').hint(\'inactive\');
-});
-</script>
-<!--[if lt IE 7]>
-<script type="text/javascript" src="javascript/jquery/jquery.pngFix.pack.js"></script>
-<script type="text/javascript">$(document).ready(function(){$(document).pngFix();});</script>
-<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
-<![endif]-->
+		$(\'body\').hyphenate({minwordlength : 8});
+
+		//Examples of how to assign the ColorBox event to elements.
+		$(".gallery a[rel=\'lightbox\']").colorbox({transition:"fade", current: "'.$lang['admin']['gallery_image'].' {current} '.$lang['user']['pm_of'].' {total}", next:"'.$lang['admin']['gallery_next'].'", previous:"'.$lang['admin']['gallery_prev'].'", close:"[x]"});
+		// find all the input elements with title attributes and make them with a hint
+		$(\'input[title!=""]\').hint(\'inactive\');
+	});
+	</script>
+	<!--[if lt IE 7]>
+	<script type="text/javascript" src="javascript/jquery/jquery.pngFix.pack.js"></script>
+	<script type="text/javascript">$(document).ready(function(){$(document).pngFix();});</script>
+	<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
+	<![endif]-->
 ';
 //<script type="text/javascript" src="javascript/jquery/jquery.tablesorter.js"></script> 
 }
