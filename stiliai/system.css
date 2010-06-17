@@ -92,7 +92,6 @@ input.chapter {
   width : 100px;
 }
 .tr,.tr2,.td,.td2,.th {
-	clear:both;
 	word-wrap: break-word;
 	overflow: hidden;
 }
