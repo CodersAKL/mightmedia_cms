@@ -218,12 +218,15 @@ HTML;
 	// Pagrindiniai nustatymai
 	elseif ($mid == 5) {
 		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($_SESSION['username']) . " LIMIT 1");
-
+    echo '<script src="javascript/jquery/jquery.maskedinput-1.2.2.js" type="text/javascript"></script><script type="text/javascript">jQuery(function($){
+   $("#date").mask("9999-99-99");
+   });
+</script>';
 		$forma = array(
 			"Form" => array("action" => url("?id," . $conf['puslapiai'][basename(__file__)]['id'] . ";m," . $_GET['m']), "method" => "post", "name" => "parasas"),
 			"{$lang['user']['edit_name']}:" => array("type" => "text", "value" => input($sql['vardas']), "name" => "vardas", "class" => "input"),
 			"{$lang['user']['edit_secondname']}:" => array("type" => "text", "value" => input($sql['pavarde']), "name" => "pavarde", "class" => "input"),
-			"{$lang['user']['edit_dateOfbirth']}:" => array("type" => "text", "value" => input($sql['gim_data']), "extra" => "title='0000-00-00' size='10' maxlength='10' style='width:inherit'", "class" => "input", "name" => "gimimas"),
+			"{$lang['user']['edit_dateOfbirth']}:" => array("type" => "text", "value" => input($sql['gim_data']), "extra" => "title='0000-00-00' size='10' maxlength='10' style='width:inherit'", "class" => "input", "name" => "gimimas", "id" => "date"),
 			//"\r " => array("type" => "select", "class" => "select", "value" => $day, "selected" => (isset($data[2]) ? $data[2] : 1), "name" => "diena"),
 			$lang['user']['edit_signature'] => array("type" => "textarea", "class" => "input", "value" => input($sql['parasas']), "name" => "parasas", "id" => "parasas"),
 			" " => array("type" => "string", "value" => bbk('parasas')),
