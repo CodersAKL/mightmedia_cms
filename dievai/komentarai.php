@@ -80,7 +80,7 @@ $lang['new']['author'] => $nick, $lang['contact']['message'] => smile(bbchat(tri
 				$(document).ready(function() {
 					$(\'#com table\').dataTable( {
 			  "bInfo": false,
-			  "bProcessing": true,
+			  //"bProcessing": true,
 						"aoColumns": [
               { "sWidth": "10%", "sType": "html" },
 							{ "sWidth": "75%", "sType": "string" },

@@ -31,14 +31,17 @@
  */
 
 .dataTables_wrapper {
-	position: relative;
+	/*position: relative;*/
 	min-height: 202px;
-	_height: 302px;
+	/*_height: 302px;*/
 	zoom: 1; /* Feeling sorry for IE */
 }
-
+.dataTables_wrapper table{
+  /*clear:both;*/
+  float:left;
+}
 .dataTables_processing {
-	position: absolute;
+	/*position: absolute;*/
 	top: 50%;
 	left: 50%;
 	width: 250px;
@@ -114,7 +117,7 @@
 table.display {
 	margin: 0 auto;
 	width: 100%;
-	clear: both;
+	/*clear: both;*/
 }
 
 table.display thead th {

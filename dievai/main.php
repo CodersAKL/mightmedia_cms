@@ -29,7 +29,11 @@ if (is_file($root.'priedai/conf.php') && filesize($root.'priedai/conf.php') > 1)
 
 	include_once ($root.'priedai/conf.php');
 	include_once ($root.'priedai/header.php');
-
+  $base =  explode('/', dirname($_SERVER['PHP_SELF']));
+  $folder = $base[count($base)-1];
+  //echo $folder; 
+  if(!isset($conf['Admin_folder']) || $conf['Admin_folder'] != $folder)
+    mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape($folder) . ",'Admin_folder')  ON DUPLICATE KEY UPDATE `val`=" . escape($folder));
 	//Stiliaus funkcijos
 	require_once("sfunkcijos.php");
 	//Inkludinam tai ko mums reikia

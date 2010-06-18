@@ -138,7 +138,7 @@ elseif ($_GET['v'] == 1) {
 			$(document).ready(function() {
 				$(\'#links table\').dataTable( {
           "bInfo": false,
-          "bProcessing": true,
+          //"bProcessing": true,
 					"aoColumns": [
 						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
 						{ "sWidth": "40%", "sType": "string" },
@@ -175,7 +175,7 @@ elseif ($_GET['v'] == 1) {
 			$(document).ready(function() {
 				$(\'#links table\').dataTable( {
           "bInfo": false,
-          "bProcessing": true,
+          //"bProcessing": true,
 					"aoColumns": [
 						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
 						{ "sWidth": "40%", "sType": "string" },

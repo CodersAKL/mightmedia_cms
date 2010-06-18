@@ -55,12 +55,12 @@ HTML;
 			<li><a href=\"".url("?id,{$conf['puslapiai']['moderatorius.php']['id']}")."\"><img src=\"images/icons/book__pencil.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['system']['mod']}</a></li>";
 	}
 	//į admin pultą
-	if (isset($_SESSION['level']) && $_SESSION['level'] == 1) {
+	/*if (isset($_SESSION['level']) && $_SESSION['level'] == 1) {
 		$text .= "
 			<li><a href=\"dievai\"><img src=\"images/icons/admin_block.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['administration']}</a></li>
 			";
 			
-	}
+	}*/
 	//atsijungimo nuoroda
 	$text .= "
 			<li><a href=\"{$lang['user']['logout']}\"><img src=\"images/icons/key_go.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['logout']}</a></li>

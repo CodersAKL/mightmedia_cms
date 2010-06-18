@@ -33,13 +33,13 @@ if (isset($_SESSION['mod']) && !empty($_SESSION['mod'])) {
 
 	lentele($page_pavadinimas, $text);
 	if (isset($url['a'])) {
-    if (file_exists(ROOT . "dievai/" . $failai[((int)$url['a'] - 1)])) {
-			include_once (ROOT . "dievai/" . $failai[((int)$url['a'] - 1)]);
+    if (file_exists(ROOT .$conf['Admin_folder'] . "/" . $failai[((int)$url['a'] - 1)])) {
+			include_once (ROOT . $conf['Admin_folder'] . "/" . $failai[((int)$url['a'] - 1)]);
 		} else {
-			klaida("{$lang['system']['error']}", "{$lang['system']['nopage']}");
+			klaida($lang['system']['error'], $lang['system']['nopage']);
 		}
 	}
 } else 
-    klaida("{$lang['system']['error']}", "{$lang['system']['nopage']}");
+    klaida($lang['system']['error'], $lang['system']['nopage']);
 
 ?>

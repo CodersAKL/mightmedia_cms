@@ -825,7 +825,7 @@
 				"bSort": true,
 				"bInfo": true,
 				"bAutoWidth": true,
-				"bProcessing": true,
+				"bProcessing": false,
 				"bSortClasses": true,
 				"bStateSave": false,
 				"bServerSide": false

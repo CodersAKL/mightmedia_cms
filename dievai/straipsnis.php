@@ -173,7 +173,7 @@ if ($_GET['v'] == 4) {
 			$(document).ready(function() {
 				$(\'#news table\').dataTable( {
           "bInfo": false,
-          "bProcessing": true,
+          //"bProcessing": true,
 					"aoColumns": [
 						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
 						{ "sWidth": "10%", "sType": "string" },
@@ -230,7 +230,7 @@ editor('jquery', 'standartinis', array('str' => $lang['admin']['article']), arra
 			$(document).ready(function() {
 				$(\'#news table\').dataTable( {
           "bInfo": false,
-          "bProcessing": true,
+          //"bProcessing": true,
 					"aoColumns": [
 						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
 						{ "sWidth": "10%", "sType": "string" },

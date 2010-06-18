@@ -194,7 +194,7 @@ if (isset($_GET['v'])) {
 				$(document).ready(function() {
 					$(\'#news table\').dataTable( {
 			  "bInfo": false,
-			  "bProcessing": true,
+			  //"bProcessing": true,
 						"aoColumns": [
 							{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
 							{ "sWidth": "10%", "sType": "string" },
@@ -260,7 +260,7 @@ if (isset($_GET['v'])) {
 				$(document).ready(function() {
 					$(\'#news table\').dataTable( {
 			  "bInfo": false,
-			  "bProcessing": true,
+			  //"bProcessing": true,
 						"aoColumns": [
 							{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
 							{ "sWidth": "10%", "sType": "string" },
