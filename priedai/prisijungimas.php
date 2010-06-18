@@ -72,7 +72,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 if (isset($_POST['action']) && $_POST['action'] == 'prisijungimas') {
 
 	//Jeigu prisijungimo bandymai nevirsyjo limito
-	if (!isset($_SESSION['login_error']) /*|| $_SESSION['login_error'] <= $conf['Bandymai']*/) {
+	if (!isset($_SESSION['login_error']) || $_SESSION['login_error'] <= 4) {
 
 		$strUsername = $_POST['vartotojas']; // Vartotojo vardas
 		$strPassword = koduoju($_POST['slaptazodis']); // Slaptazodis
@@ -96,12 +96,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'prisijungimas') {
 		} else {
 			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("{$lang['user']['wrong']}: User: " . $strUsername . " Pass: " . str_repeat('*',strlen($_POST['slaptazodis']))) . ",'" . time() . "',INET_ATON(" . escape(getip()) . "));");
 			$strError = $lang['user']['wrong'];
+			// + bandymas
 			isset($_SESSION['login_error']) ? $_SESSION['login_error']++ : $_SESSION['login_error'] = 1;
+			//laukimo laikas
+			$_SESSION['timeout_idle'] = time() + ini_get('session.cache_expire');
 		}
 		unset($linfo, $strUsername, $strPassword);
 
 	} else {
-		$strError = "{$lang['user']['cantlogin']}<span id='sekundes'>" . ini_get('session.cache_expire') . "</span></b><script>startCount();</script>s. ";
+		$strError = "{$lang['user']['cantlogin']}<span id='sekundes'>" . ($_SESSION['timeout_idle'] - time()) . "</span></b><script>startCount();</script>s. ";
+		//jeigu baigesi laikas
+    if($_SESSION['timeout_idle'] - time() <= 0)
+       unset($_SESSION['timeout_idle'], $_SESSION['login_error']);
+
 	}
 }
 
@@ -118,7 +125,7 @@ if (isset($_GET['id']) && !empty($_GET['id']) && $_GET['id'] == $lang['user']['l
 function admin_login_form($strError = false) {
 	global $lang;
 	$text = "
-      <center>" . ((isset($strError)) ? $strError : 'Administratoriam') . "
+      <center>" . ((isset($strError)) ? $strError : '') . "
           <form id=\"user_reg\" name=\"user_reg\" method=\"post\" action=\"\">
           <label for=\"vartotojas\">{$lang['user']['user']}:</label>
           <br />
