@@ -35,7 +35,7 @@ if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
 } else {
 	$k = 0;
 } 
-
+$subs = 0;
 //kategorijos
 if ($vid == 0) {
 	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`", 86400);
@@ -44,6 +44,7 @@ if ($vid == 0) {
 			$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 86400);
 			if ($path['path'] == $k) {
 				$sqlkiek = kiek('siuntiniai', "WHERE `categorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
+				$subs++;
 				$info[] = array(
 					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['downloads']}: $sqlkiek</div></span></div>"//,
 				);
@@ -146,7 +147,7 @@ else {
     `" . LENTELES_PRIESAGA . "siuntiniai`.`data` DESC
     LIMIT 0, 50
   ", 86400);
-  if(count($sql_s) == 0)
+  if(count($sql_s) == 0 && $subs == 0)
   		klaida($lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
 
 	} else {
