@@ -162,7 +162,7 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 		foreach ($tem as $temos) {
 			$zinutes = $temos['viso'];
 			$limit = 20;
-			$viso = $kur['temos'];
+			$visos = $kur['temos'];
 
 			if ($temos['uzrakinta'] == 'taip') {
 				$extra = "<img src='{$imagedir}locked.png' alt='{$lang['forum']['locked']}' />";
@@ -189,8 +189,8 @@ if ($sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0) {
 		$temos = $lang['forum']['notopics'];
 	}
 	lentele($lang['forum']['topics'], $temos);
-	if (isset($viso) && $viso > 20) {
-		lentele($lang['system']['pages'], puslapiai($pid, $limit, $viso, 10));
+	if (isset($visos) && $visos > 20) {
+		lentele($lang['system']['pages'], puslapiai($pid, $limit, $visos, 10));
 	}
 }
 //RODOM tema
