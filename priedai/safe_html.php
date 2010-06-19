@@ -125,7 +125,8 @@ function safe_html ($html, $allowedtags="") {
   // also, lets get rid of some pesky attributes that may be set on the remaining tags...
   // this should be changed to keep_attributes($htmlm $goodattrs), or perhaps even better keep_attributes
   //  should be run first. then strip_attributes, if it finds any of those, should cause safe_html to strip all tags.
-  $badattrs= array("on\w+", "style", "fs\w+", "seek\w+");
+  //$badattrs= array("on\w+", "style", "fs\w+", "seek\w+");
+  $badattrs= array("on\w+", "fs\w+", "seek\w+");
   $html= strip_attributes($html, $badattrs);
 
   // close html tags if necessary -- note that this WON'T be graceful formatting-wise, it just has to fix any maliciousness
@@ -142,7 +143,8 @@ function safe_html ($html, $allowedtags="") {
   
   // check (again!) for obvious oh-noes that might have been caused by tag stipping
   if ( js_and_entity_check( $html ) ) {
-    $html= strip_tags($html)."<!--xss stripped after processing-->";
+    //$html= strip_tags($html)."<!--xss stripped after processing-->";
+    $html= strip_tags($html);
     return $html;
   }
 
