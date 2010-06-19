@@ -36,17 +36,21 @@ if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
 	$k = 0;
 } 
 $subs = 0;
+//$sqlkiek = '';
 //kategorijos
 if ($vid == 0) {
 	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`", 86400);
 	if ($sqlas && sizeof($sqlas) > 0) {
 		foreach ($sqlas as $sql) {
-			$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 86400);
-			if ($path['path'] == $k) {
-				$sqlkiek = kiek('siuntiniai', "WHERE `categorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
+      //echo $sql['id'].'->'.$sql['path'].'<br />'
+     	//TODO: skaiciavimas is neriboto gylio.. dabar tik kategorija + sub kategorija skaiciuoja
+			if ($sql['path'] == $k) {
+        //$sqlkiek = kiek('siuntiniai', "WHERE ".($k == 0 ? "`categorija` =" . escape($sql['path']) . " OR" : "")." `categorija` =" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
+        $kiek = mysql_query1("SELECT count(*) + (SELECT count(*) FROM `".LENTELES_PRIESAGA."siuntiniai` WHERE `categorija` IN (SELECT `id` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`=" . escape($sql['id']) . ")) as `kiek` FROM `".LENTELES_PRIESAGA."siuntiniai` WHERE `categorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())." LIMIT 1");
+        $sqlkiek = $kiek['kiek'];
 				$subs++;
 				$info[] = array(
-					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['downloads']}: $sqlkiek</div></span></div>"//,
+					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['downloads']}: {$sqlkiek}</div></span></div>"//,
 				);
 		}
 

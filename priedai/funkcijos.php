@@ -497,8 +497,9 @@ function mysql_query1($query, $lifetime = 0) {
 			//Irasom i kesh faila
 			$mysql_num++;
 
-			$sql = mysql_query($query, $prisijungimas_prie_mysql) or die(mysql_error());
-
+			$sql = mysql_query($query, $prisijungimas_prie_mysql);// or die(mysql_error());
+      if(mysql_error())
+        mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("MySql error:  " . mysql_error()) . ",'" . time() . "',INET_ATON(" . escape(getip()) . "));");
 			//Jeigu uzklausoje nurodyta kad reikia tik vieno iraso tai nesudarom masyvo.
 			if (substr(strtolower($query), -7) == 'limit 1') {
 				$return = mysql_fetch_assoc($sql);
@@ -524,8 +525,9 @@ function mysql_query1($query, $lifetime = 0) {
 	} else {
 		$mysql_num++;
 
-		$sql = mysql_query($query, $prisijungimas_prie_mysql) or die(mysql_error());
-
+		$sql = mysql_query($query, $prisijungimas_prie_mysql);// or die(mysql_error());
+    if(mysql_error())
+        mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("MySql error:  " . mysql_error()) . ",'" . time() . "',INET_ATON(" . escape(getip()) . "));");
 		if (in_array(strtolower(substr($query, 0, 6)), array('delete', 'insert', 'update'))) {
 			$return = true;
 		} else {

@@ -48,9 +48,11 @@ $kategorijos = cat('nuorodos', 0);
 $kategorijos[0] = "--";
 if (sizeof($sqlas) > 0) {
 	foreach ($sqlas as $sql) {
-		$path = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $sql['id'] . "' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 3600);
-		if ($path['path'] == $k) {
-			$sqlkiek = kiek('nuorodos', "WHERE `cat`=" . escape($sql['id']) . " AND `active`='TAIP' AND `lang` = ".escape(lang())."");
+	//TODO: skaiciavimas is neriboto gylio.. dabar tik kategorija + sub kategorija skaiciuoja
+			if ($sql['path'] == $k) {
+        //$sqlkiek = kiek('nuorodos', "WHERE ".($k == 0 ? "`cat` =" . escape($sql['path']) . " OR" : "")." `cat` =" . escape($sql['id']) . " AND `active`='TAIP' AND `lang` = ".escape(lang())."");
+        $kiek = mysql_query1("SELECT count(*) + (SELECT count(*) FROM `".LENTELES_PRIESAGA."nuorodos` WHERE `cat` IN (SELECT `id` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`=" . escape($sql['id']) . ")) as `kiek` FROM `".LENTELES_PRIESAGA."nuorodos` WHERE `cat`=" . escape($sql['id']) . " AND `active`='TAIP' AND `lang` = ".escape(lang())." LIMIT 1");
+        $sqlkiek = $kiek['kiek'];
         $info[] = array(
 					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['links']}: $sqlkiek</div></span></div>"//,
 				);
