@@ -154,6 +154,7 @@ if (isset($mid) && isnum($mid)) {
 			@unlink('images/avatars/' . md5($sql['email']) . '.jpeg');
 		$avataras = avatar($sql['email']);
 		$name = md5($sql['email']);
+		$gravatar = url("?id,{$_GET['id']};m,{$_GET['m']};a,1");
 		$avatar = <<<HTML
 <style type="text/css">
 
@@ -201,7 +202,7 @@ $('#example1 .files').replaceWith('<div class="files"><img id="ikeltas_avataras"
 		
 	
 <a onclick="return false"><span id="button1"><img src="images/icons/picture__plus.png" alt="" class="middle"/> {$lang['user']['edit_upload']}</span></a> <br />
-<a class="btn" href="?id,{$_GET['id']};m,{$_GET['m']};a,1"><span><img src="images/icons/picture__plus.png" alt="" class="middle"/> {$lang['user']['edit_gravatar']}</span></a>
+<a class="btn" href="{$gravatar}"><span><img src="images/icons/picture__plus.png" alt="" class="middle"/> {$lang['user']['edit_gravatar']}</span></a>
 
 		<p>{$lang['user']['edit_avatar']}:</p>
 
