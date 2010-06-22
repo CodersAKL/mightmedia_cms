@@ -103,7 +103,7 @@ if (isset($url['t'])) {
 	$rodoma = (isset($_POST['rodoma']) && $_POST['rodoma'] == 'TAIP' ? 'TAIP' : 'NE');
 	$autorius = $_SESSION['username'];
 	$autoriusid = $_SESSION['id'];
-	if (empty($str) || empty($pavadinimas)) {
+	if (empty($apr) || empty($pavadinimas)) {
 		$error = "{$lang['admin']['article_emptyfield']}.";
 	}
 	if (!isset($error)) {
