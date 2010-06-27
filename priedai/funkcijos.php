@@ -390,7 +390,7 @@ function url_arr($params) {
 	if (strrchr($params, '&'))
 		$params = explode("&", $params); //Jeigu tai paprastas GET
 	else
-		$params = explode(($conf['F_urls'] == '0'?';':$conf['F_urls']), $params);
+		$params = explode(((empty($conf['F_urls']) || $conf['F_urls'] == '0')?';':$conf['F_urls']), $params);
 
 	if (isset($params) && is_array($params) && count($params) > 0) {
 		foreach ($params as $key => $value) {
@@ -420,7 +420,7 @@ function url($str) {
 		$linkai = explode(';',$str);
 		$start = explode(',', $linkai[0]);
 		$linkai[0] = '';
-		if($conf['F_urls'] != '0') {
+		if(!empty($conf['F_urls']) && $conf['F_urls'] != '0') {
       //žodinis linkas
 			$url_title = !empty($conf['titles'][$start[1]]) ? $conf['titles'][$start[1]] : '';
 			//išmetam tarpus
@@ -428,7 +428,7 @@ function url($str) {
 			//atskiriam atskirus getus pasirinktu simboliu
 			$return = adresas().ROOT.$url_title.implode(($conf['F_urls'] != '0'?$conf['F_urls']:';'), $linkai);
 		} else {
-			$return = adresas().(substr($str,4,3) == '999' && $conf['F_urls'] == '0' ? 'main.php' : (substr($str,0,1) != '?' ? '' :ROOT)).$str;
+			$return = adresas().(substr($str,4,3) == '999' && (empty($conf['F_urls']) || $conf['F_urls'] == '0') ? 'main.php' : (substr($str,0,1) != '?' ? '' : ROOT)).$str;
 		}
 	} else {
 			//$return = ($conf['F_urls'] != '0'?'':'?').str_replace('id=', '', $_SERVER['QUERY_STRING']).($conf['F_urls'] != '0'?$conf['F_urls']:';').$str;
@@ -486,7 +486,7 @@ function mysql_query1($query, $lifetime = 0) {
 	$keshas = realpath(dirname(__file__) . '/..') . '/sandeliukas/' . md5($query) . '.php'; //kesho failas
 	$return = array();
 
-	if ($conf['keshas'] && $lifetime > 0 && !in_array(strtolower(substr($query, 0, 6)), array('delete', 'insert', 'update'))) {
+	if (!empty($conf['keshas']) && $lifetime > 0 && !in_array(strtolower(substr($query, 0, 6)), array('delete', 'insert', 'update'))) {
 
 		//Tikrinam ar keshavimas ijungtas ir ar keshas egzistuoja
 		if (is_file($keshas) && filemtime($keshas) > $_SERVER['REQUEST_TIME'] - $lifetime) {

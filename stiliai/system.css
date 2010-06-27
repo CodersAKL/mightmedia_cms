@@ -95,3 +95,14 @@ input.chapter {
 	word-wrap: break-word;
 	overflow: hidden;
 }
+.tooltip{
+	padding: 3px;
+	border: 1px solid #666;
+	display: none;
+	background: #000;
+	color: #FFF;
+	font: bold 9px Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+	position: absolute;
+	z-index: 1000;
+}
