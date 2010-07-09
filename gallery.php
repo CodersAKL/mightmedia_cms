@@ -3,7 +3,7 @@
 header('Content-type: text/xml');
 require_once('priedai/conf.php');
 
-if (isset($conf['puslapiai']['rss.php'])) {
+if (isset($conf['puslapiai']['galerija.php'])) {
 
 	$pbpathrev = strrev($PATH_INFO);
 	$pbslashpos = strpos($pbpathrev, '-');
