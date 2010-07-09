@@ -8,8 +8,7 @@
  * @license GNU General Public License v2
  * @$Revision$
  * @$Date$
- **/
-
+ * */
 ob_start();
 header("Cache-control: public");
 header("Content-type: text/html; charset=utf-8");
@@ -37,16 +36,16 @@ if (!isset($conf)) {
 }
 /* Puslapiu aprasymas */
 if (isset($url['id']) && !empty($url['id']) && isnum($url['id'])) {
-	$pslid = (int)$url['id'];
+	$pslid = (int) $url['id'];
 } else {
-	$pslid = $conf['puslapiai'][$conf['pirminis'].'.php']['id'];
-	$page = 'puslapiai/' .  $conf['pirminis'];
-	$page_pavadinimas = $conf['puslapiai'][$conf['pirminis'].'.php']['pavadinimas'];
+	$pslid = $conf['puslapiai'][$conf['pirminis'] . '.php']['id'];
+	$page = 'puslapiai/' . $conf['pirminis'];
+	$page_pavadinimas = $conf['puslapiai'][$conf['pirminis'] . '.php']['pavadinimas'];
 	$_GET['id'] = $pslid;
 	$url['id'] = $pslid;
 }
 if (isset($pslid) && isnum($pslid) && $pslid > 0) {
-	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int)$pslid) . " and `lang` = ".escape(lang())." LIMIT 1", 259200); //keshas  3dienos.
+	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int) $pslid) . " and `lang` = " . escape(lang()) . " LIMIT 1", 259200); //keshas  3dienos.
 
 	if (!empty($sql1)) {
 		if (preg_match("/http:\/\//", $sql1['file'])) {
@@ -68,10 +67,10 @@ if (isset($pslid) && isnum($pslid) && $pslid > 0) {
 		$page = "puslapiai/klaida";
 		$page_pavadinimas = '404 - ' . $lang['system']['pagenotfounfd'] . '';
 	}
-	/*if ($pslid == 999) {
-		$page = "puslapiai/dievai/index";
-		$page_pavadinimas = $lang['user']['administration'];
-	}*/
+	/* if ($pslid == 999) {
+	  $page = "puslapiai/dievai/index";
+	  $page_pavadinimas = $lang['user']['administration'];
+	  } */
 }
 //Jei svetaine uzdaryta remontui ir jei jungiasi ne administratorius
 if ($conf['Palaikymas'] == 1) {
@@ -80,11 +79,11 @@ if ($conf['Palaikymas'] == 1) {
 	}
 }
 if (!empty($_GET['lang'])) {
-	$_SESSION['lang'] = basename($_GET['lang'],'.php');
+	$_SESSION['lang'] = basename($_GET['lang'], '.php');
 	redirect(url("?id," . $_GET['id']));
 }
-if (!empty($_SESSION['lang']) && is_file(ROOT.'lang/'.basename($_SESSION['lang']).'.php')) {
-	require(ROOT.'lang/'.basename($_SESSION['lang'],'.php').'.php');
+if (!empty($_SESSION['lang']) && is_file(ROOT . 'lang/' . basename($_SESSION['lang']) . '.php')) {
+	require(ROOT . 'lang/' . basename($_SESSION['lang'], '.php') . '.php');
 }
 
 include_once ("priedai/header.php");
@@ -95,8 +94,7 @@ if (is_file('setup.php') && defined('LEVEL') && LEVEL == 1 && !@unlink('setup.ph
 include_once 'stiliai/' . $conf['Stilius'] . '/sfunkcijos.php';
 if (empty($_GET['ajax'])) {
 	include_once ('stiliai/' . $conf['Stilius'] . '/index.php');
-}
-else {
+} else {
 	include_once($page . ".php");
 }
 
@@ -105,8 +103,8 @@ $m2 = explode(" ", microtime());
 $etime = $m2[1] + $m2[0];
 $ttime = ($etime - $stime);
 $ttime = number_format($ttime, 7);
-if (defined("LEVEL") && LEVEL ==1)
-	echo '<!-- Generated '.apvalinti($ttime,2 ).'s. -->';
+if (defined("LEVEL") && LEVEL == 1)
+	echo '<!-- Generated ' . apvalinti($ttime, 2) . 's. -->';
 ob_end_flush();
 
 ?>
