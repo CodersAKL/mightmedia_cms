@@ -8,8 +8,7 @@
  * @license GNU General Public License v2
  * @$Revision$
  * @$Date$
- **/
-
+ * */
 //patikrinimui ar puslapaia atveriami taip kaip reikia
 if (basename($_SERVER['PHP_SELF']) == 'funkcijos.php') {
 	ban($lang['system']['forhacking']);
@@ -18,12 +17,12 @@ ini_set("memory_limit", "50M");
 define("OK", true);
 define('ROOTAS', dirname(realpath(__file__)) . '/../');
 //if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['QUERY_STRING']) || (isset($_GET['id']) && preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_GET['id']))) {
-/*if (isset($_GET['id'])) {
-	$ip = getip();
-	$forwarded = (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : 'N/A');
-	$remoteaddress = getip();
-	ban();
-}*/
+/* if (isset($_GET['id'])) {
+  $ip = getip();
+  $forwarded = (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : 'N/A');
+  $remoteaddress = getip();
+  ban();
+  } */
 if (!empty($_POST)) {
 	include_once (ROOTAS . 'priedai/safe_html.php');
 	foreach ($_POST as $key => $value) {
@@ -37,19 +36,19 @@ if (!empty($_POST)) {
 	$_POST = $post;
 }
 
-
 //slaptaþodþio kodavimas
 function koduoju($pass) {
 	return md5(sha1(md5($pass)));
 }
+
 //meta tagai ir kita
 function header_info() {
 	global $conf, $page_pavadinimas, $lang;
 	echo '
-	<base href="'.adresas().'"></base>
+	<base href="' . adresas() . '"></base>
 	<meta name="generator" content="MightMedia TVS" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="content-language" content="'.lang().'" />
+	<meta http-equiv="content-language" content="' . lang() . '" />
 	<meta name="description" content="' . input(strip_tags($conf['Pavadinimas']) . ' - ' . trimlink(strip_tags($conf['Apie']), 120)) . '" />
 	<meta name="keywords" content="' . input(strip_tags($conf['Keywords'])) . '" />
 	<meta name="author" content="' . input(strip_tags($conf['Copyright'])) . '" />
@@ -60,6 +59,7 @@ function header_info() {
 	<link rel="icon" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/favicon.ico" type="image/x-icon" />
 
 	' . (isset($conf['puslapiai']['rss.php']) ? '<link rel="alternate" type="application/rss+xml" title="' . input(strip_tags($conf['Pavadinimas'])) . '" href="rss.php" />' : '') . '
+	' . (isset($conf['puslapiai']['galerija.php']) ? '<link rel="alternate" href="gallery.php" type="application/rss+xml" title="" id="gallery" />' : '') . '
 	<link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox.css" />
 	<!--[if IE]>
 	<link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox-ie.css" title="example" />
@@ -80,7 +80,7 @@ function header_info() {
 		$(\'body\').hyphenate({minwordlength : 8});
 
 		//Examples of how to assign the ColorBox event to elements.
-		$(".gallery a[rel=\'lightbox\']").colorbox({transition:"fade", current: "'.$lang['admin']['gallery_image'].' {current} '.$lang['user']['pm_of'].' {total}", next:"'.$lang['admin']['gallery_next'].'", previous:"'.$lang['admin']['gallery_prev'].'", close:"[x]"});
+		$(".gallery a[rel=\'lightbox\']").colorbox({transition:"fade", current: "' . $lang['admin']['gallery_image'] . ' {current} ' . $lang['user']['pm_of'] . ' {total}", next:"' . $lang['admin']['gallery_next'] . '", previous:"' . $lang['admin']['gallery_prev'] . '", close:"[x]"});
 		// find all the input elements with title attributes and make them with a hint
 		$(\'input[title!=""]\').hint(\'inactive\');
 	});
@@ -111,10 +111,10 @@ HTML;
  * @return formated html
  */
 function avatar($mail, $size = 80) {
-	if(file_exists(ROOT.'images/avatars/'.md5($mail).'.jpeg')) {
-		$result='<img src="'.ROOT.'images/avatars/'.md5($mail).'.jpeg?'.time().'" width="' . $size . '" height="' . $size . '" alt="avataras" />';
-	}else {
-		$result = '<img src="http://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . htmlentities($size . '&r=any&default=' . urlencode(adresas() .ROOT.'images/avatars/no_image.jpg') . '&time=' . time()) . '"  width="' . $size . '" alt="avataras" />';
+	if (file_exists(ROOT . 'images/avatars/' . md5($mail) . '.jpeg')) {
+		$result = '<img src="' . ROOT . 'images/avatars/' . md5($mail) . '.jpeg?' . time() . '" width="' . $size . '" height="' . $size . '" alt="avataras" />';
+	} else {
+		$result = '<img src="http://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . htmlentities($size . '&r=any&default=' . urlencode(adresas() . ROOT . 'images/avatars/no_image.jpg') . '&time=' . time()) . '"  width="' . $size . '" alt="avataras" />';
 	}
 	return $result;
 }
@@ -126,7 +126,7 @@ function avatar($mail, $size = 80) {
  */
 function nice_name($name) {
 	$name = ucfirst_utf8($name);
-	$name = basename($name,'.php');
+	$name = basename($name, '.php');
 	$name = str_replace("_", " ", $name);
 	return $name;
 }
@@ -175,14 +175,16 @@ function utf8_substr($str, $start) {
 		return join("", array_slice($ar[0], $start));
 	}
 }
+
 /**
  * Svetainės adresui gauti
  * @return string
  */
 function adresas() {
-  //NEVEIKIA :/
-  return "http://".$_SERVER["HTTP_HOST"].preg_replace("/[^\/]*$/","",$_SERVER["PHP_SELF"]);
+	//NEVEIKIA :/
+	return "http://" . $_SERVER["HTTP_HOST"] . preg_replace("/[^\/]*$/", "", $_SERVER["PHP_SELF"]);
 }
+
 /**
  * Patikrina ar puslapis egzistuoja ir ar vartotojas turi teise ji matyti bei grazinam puslapio ID
  * @param string $puslapis
@@ -197,12 +199,11 @@ function puslapis($puslapis, $extra = false) {
 
 			if ($extra && isset($conf['puslapiai'][$puslapis][$extra]))
 				return $conf['puslapiai'][$puslapis][$extra]; //Jei reikalinga kita informacija apie puslapi - grazinam ja.
-			else
-				return (int)$conf['puslapiai'][$puslapis]['id'];
+ else
+				return (int) $conf['puslapiai'][$puslapis]['id'];
 		} else {
 			return false;
 		}
-
 	} else
 		return false;
 }
@@ -230,11 +231,11 @@ function teises($mas, $lvl) {
 function ban($ipas = '', $kodel = '') {
 	global $lang, $_SERVER, $ip, $forwarded, $remoteaddress;
 	if (empty($kodel))
-		$kodel = $lang['system']['forhacking'].' - '.input(str_replace("\n","",$_SERVER['QUERY_STRING']));
+		$kodel = $lang['system']['forhacking'] . ' - ' . input(str_replace("\n", "", $_SERVER['QUERY_STRING']));
 	if (empty($ipas))
 		$ipas = getip();
 	$atidaryti = fopen(".htaccess", "a");
-	fwrite($atidaryti, '# '.$kodel." \nSetEnvIf Remote_Addr \"^{$ipas}$\" draudziam\n");
+	fwrite($atidaryti, '# ' . $kodel . " \nSetEnvIf Remote_Addr \"^{$ipas}$\" draudziam\n");
 	fclose($atidaryti);
 	//@chmod(".htaccess", 0777);
 
@@ -255,7 +256,6 @@ HTML;
 		die("<center><h1>{$lang['system']['nohacking']}!</h1><font color='red'><b>" . $kodel . " - {$lang['system']['forbidden']}<blink>!</blink></b></font><hr/></center>");
 	}
 }
-
 
 /**
  * Nurodytai eilutei iš failo trinti
@@ -339,48 +339,48 @@ function cleanurl($url) {
  * @return array
  */
 unset($sql, $row);
-if(basename($_SERVER['PHP_SELF']) != 'upgrade.php') {
-  $sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `lang`=".escape(lang())." ORDER BY `id` DESC");
+if (basename($_SERVER['PHP_SELF']) != 'upgrade.php') {
+	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `lang`=" . escape(lang()) . " ORDER BY `id` DESC");
 
-  if (sizeof($sql) > 0) {
-    foreach ($sql as $row) {
+	if (sizeof($sql) > 0) {
+		foreach ($sql as $row) {
 
-      $levels[(int)$row['teises']] = array('pavadinimas' => $row['pavadinimas'], 'aprasymas' => $row['aprasymas'], 'pav' => input($row['pav']));
+			$levels[(int) $row['teises']] = array('pavadinimas' => $row['pavadinimas'], 'aprasymas' => $row['aprasymas'], 'pav' => input($row['pav']));
+		}
+	}
+	$levels[1] = array('pavadinimas' => $lang['system']['admin'], 'aprasymas' => $lang['system']['admin'], 'pav' => 'admin.png');
+	$levels[2] = array('pavadinimas' => $lang['system']['user'], 'aprasymas' => $lang['system']['user'], 'pav' => 'user.png');
 
-    }
-  }
-  $levels[1] = array('pavadinimas' => $lang['system']['admin'], 'aprasymas' => $lang['system']['admin'], 'pav' => 'admin.png');
-  $levels[2] = array('pavadinimas' => $lang['system']['user'], 'aprasymas' => $lang['system']['user'], 'pav' => 'user.png');
-
-  $conf['level'] = $levels;
-  unset($levels, $sql, $row);
+	$conf['level'] = $levels;
+	unset($levels, $sql, $row);
 
 
-  /**
-   * Gaunam visus puslapius ir sukisam i masyva
-   */
-  $sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=".escape(lang())." ORDER BY `place` ASC", 120);
-  foreach ($sql as $row) {
-    $conf['puslapiai'][$row['file']] = array('id' => $row['id'], 'pavadinimas' => input($row['pavadinimas']), 'file' => input($row['file']), 'place' => (int)$row['place'], 'show' => $row['show'], 'teises' => $row['teises']);
-    $conf['titles'][$row['id']] =(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file']));
-    $conf['titles_id'][strtolower(str_replace(' ', '_',(isset($lang['pages'][$row['file']])?$lang['pages'][$row['file']]:nice_name($row['file']))))] = $row['id'];
-  }
-  //nieko geresnio nesugalvojau
-  $dir = explode('/', dirname($_SERVER['PHP_SELF']));
-  $conf['titles']['999'] = $dir[count($dir)-1].'/admin';
-  $conf['titles_id']['admin'] = 999;
-  //sutvarkom nuorodas
-  if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
-    $_GET = url_arr(cleanurl($_SERVER['QUERY_STRING']));
-    if(isset($_GET['id'])) {
-      $element = strtolower($_GET['id']);
-      $_GET['id'] = ((isset($conf['titles_id'][$element]) && $conf['F_urls'] != '0')?$conf['titles_id'][$element]:$_GET['id']);
-    }
-    $url = $_GET;
-  } else {
-    $url = array();
-  }
+	/**
+	 * Gaunam visus puslapius ir sukisam i masyva
+	 */
+	$sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=" . escape(lang()) . " ORDER BY `place` ASC", 120);
+	foreach ($sql as $row) {
+		$conf['puslapiai'][$row['file']] = array('id' => $row['id'], 'pavadinimas' => input($row['pavadinimas']), 'file' => input($row['file']), 'place' => (int) $row['place'], 'show' => $row['show'], 'teises' => $row['teises']);
+		$conf['titles'][$row['id']] = (isset($lang['pages'][$row['file']]) ? $lang['pages'][$row['file']] : nice_name($row['file']));
+		$conf['titles_id'][strtolower(str_replace(' ', '_', (isset($lang['pages'][$row['file']]) ? $lang['pages'][$row['file']] : nice_name($row['file']))))] = $row['id'];
+	}
+	//nieko geresnio nesugalvojau
+	$dir = explode('/', dirname($_SERVER['PHP_SELF']));
+	$conf['titles']['999'] = $dir[count($dir) - 1] . '/admin';
+	$conf['titles_id']['admin'] = 999;
+	//sutvarkom nuorodas
+	if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
+		$_GET = url_arr(cleanurl($_SERVER['QUERY_STRING']));
+		if (isset($_GET['id'])) {
+			$element = strtolower($_GET['id']);
+			$_GET['id'] = ((isset($conf['titles_id'][$element]) && $conf['F_urls'] != '0') ? $conf['titles_id'][$element] : $_GET['id']);
+		}
+		$url = $_GET;
+	} else {
+		$url = array();
+	}
 }
+
 function url_arr($params) {
 	global $conf;
 	$str2 = array();
@@ -389,8 +389,8 @@ function url_arr($params) {
 
 	if (strrchr($params, '&'))
 		$params = explode("&", $params); //Jeigu tai paprastas GET
-	else
-		$params = explode(((empty($conf['F_urls']) || $conf['F_urls'] == '0')?';':$conf['F_urls']), $params);
+ else
+		$params = explode(((empty($conf['F_urls']) || $conf['F_urls'] == '0') ? ';' : $conf['F_urls']), $params);
 
 	if (isset($params) && is_array($params) && count($params) > 0) {
 		foreach ($params as $key => $value) {
@@ -398,10 +398,10 @@ function url_arr($params) {
 				$str1 = explode("=", $value);
 			else
 				$str1 = explode(",", $value);
-			if (isset($str1[1])){
-        if(preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $str1[1]))
-          ban();
-          $str2[$str1[0]] = $str1[1];
+			if (isset($str1[1])) {
+				if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $str1[1]))
+					ban();
+				$str2[$str1[0]] = $str1[1];
 			}
 		}
 	}
@@ -416,32 +416,33 @@ function url_arr($params) {
 function url($str) {
 	global $conf;
 
-	if(substr($str,0,1) == '?') {
-		$linkai = explode(';',$str);
+	if (substr($str, 0, 1) == '?') {
+		$linkai = explode(';', $str);
 		$start = explode(',', $linkai[0]);
 		$linkai[0] = '';
-		if(!empty($conf['F_urls']) && $conf['F_urls'] != '0') {
-      //žodinis linkas
+		if (!empty($conf['F_urls']) && $conf['F_urls'] != '0') {
+			//žodinis linkas
 			$url_title = !empty($conf['titles'][$start[1]]) ? $conf['titles'][$start[1]] : '';
 			//išmetam tarpus
 			$url_title = str_replace(' ', '_', $url_title);
 			//atskiriam atskirus getus pasirinktu simboliu
-			$return = adresas().ROOT.$url_title.implode(($conf['F_urls'] != '0'?$conf['F_urls']:';'), $linkai);
+			$return = adresas() . ROOT . $url_title . implode(($conf['F_urls'] != '0' ? $conf['F_urls'] : ';'), $linkai);
 		} else {
-			$return = adresas().(substr($str,4,3) == '999' && (empty($conf['F_urls']) || $conf['F_urls'] == '0') ? 'main.php' : (substr($str,0,1) != '?' ? '' : ROOT)).$str;
+			$return = adresas() . (substr($str, 4, 3) == '999' && (empty($conf['F_urls']) || $conf['F_urls'] == '0') ? 'main.php' : (substr($str, 0, 1) != '?' ? '' : ROOT)) . $str;
 		}
 	} else {
-			//$return = ($conf['F_urls'] != '0'?'':'?').str_replace('id=', '', $_SERVER['QUERY_STRING']).($conf['F_urls'] != '0'?$conf['F_urls']:';').$str;
-			$g = '?';
-			foreach($_GET as $k => $v)
-        $g .= "{$k},{$v};";
-			$return = url($g.$str);
+		//$return = ($conf['F_urls'] != '0'?'':'?').str_replace('id=', '', $_SERVER['QUERY_STRING']).($conf['F_urls'] != '0'?$conf['F_urls']:';').$str;
+		$g = '?';
+		foreach ($_GET as $k => $v)
+			$g .= "{$k},{$v};";
+		$return = url($g . $str);
 	}
 	//echo $str.' /// '.$conf['F_urls'];
 	//$dir = (substr($str,4,3) == '999' && $conf['F_urls'] == '0' ? 'main.php' : (substr($str,0,1) != '?' ? '' :ROOT));
 	//echo adresas().realpath($dir.$return)."<br>";
 	return $return;
 }
+
 /**
  * Vartotojui atvaizduoti
  *
@@ -456,22 +457,21 @@ function user($user, $id = 0, $level = 0, $extra = false) {
 		$user = $lang['system']['guest'];
 		return $lang['system']['guest'];
 	} else {
-    if(isset($conf['puslapiai']['pm.php']) && $id != 0 && isset($_SESSION['id']) && $id != $_SESSION['id'])
-      $pm = "<a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"".ROOT."images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>";
-    else
-      $pm = '';
-    if(isset($conf['level'][$level]['pav']))
-      $img = '<img src="'.ROOT.'images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ';
-    else
-      $img = '';
-     if (isset($conf['puslapiai']['view_user.php']['id']) && $id != 0) {
-        return $img . '<a href="'.url('?id,' . $conf['puslapiai']['view_user.php']['id'] . ';' . $user). '" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . $pm;
-     } else {
-        return '<div style="display:inline;" title="' . input($user) . '" "'. $extra . '">' .$img . ' ' . trimlink($user, 10) .' '. $pm . '</div>';
-     }
+		if (isset($conf['puslapiai']['pm.php']) && $id != 0 && isset($_SESSION['id']) && $id != $_SESSION['id'])
+			$pm = "<a href=\"" . url("?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace("=", "", base64_encode($user))) . "\"><img src=\"" . ROOT . "images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>";
+		else
+			$pm = '';
+		if (isset($conf['level'][$level]['pav']))
+			$img = '<img src="' . ROOT . 'images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ';
+		else
+			$img = '';
+		if (isset($conf['puslapiai']['view_user.php']['id']) && $id != 0) {
+			return $img . '<a href="' . url('?id,' . $conf['puslapiai']['view_user.php']['id'] . ';' . $user) . '" title="' . input($user) . " " . $extra . '">' . trimlink($user, 10) . '</a> ' . $pm;
+		} else {
+			return '<div style="display:inline;" title="' . input($user) . '" "' . $extra . '">' . $img . ' ' . trimlink($user, 10) . ' ' . $pm . '</div>';
+		}
 	}
 }
-
 
 /**
  * MySQL užklausoms
@@ -492,14 +492,13 @@ function mysql_query1($query, $lifetime = 0) {
 		if (is_file($keshas) && filemtime($keshas) > $_SERVER['REQUEST_TIME'] - $lifetime) {
 			//uzkraunam kesha
 			include ($keshas);
-
 		} else {
 			//Irasom i kesh faila
 			$mysql_num++;
 
-			$sql = mysql_query($query, $prisijungimas_prie_mysql);// or die(mysql_error());
-      if(mysql_error())
-        mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("MySql error:  " . mysql_error()) . ",'" . time() . "',INET_ATON(" . escape(getip()) . "));");
+			$sql = mysql_query($query, $prisijungimas_prie_mysql); // or die(mysql_error());
+			if (mysql_error ())
+				mysql_query("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("MySql error:  " . mysql_error()) . ",'" . time() . "',INET_ATON(" . escape(getip()) . "));");
 			//Jeigu uzklausoje nurodyta kad reikia tik vieno iraso tai nesudarom masyvo.
 			if (substr(strtolower($query), -7) == 'limit 1') {
 				$return = mysql_fetch_assoc($sql);
@@ -525,9 +524,9 @@ function mysql_query1($query, $lifetime = 0) {
 	} else {
 		$mysql_num++;
 
-		$sql = mysql_query($query, $prisijungimas_prie_mysql);// or die(mysql_error());
-    if(mysql_error())
-        mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("MySql error:  " . mysql_error()) . ",'" . time() . "',INET_ATON(" . escape(getip()) . "));");
+		$sql = mysql_query($query, $prisijungimas_prie_mysql); // or die(mysql_error());
+		if (mysql_error ())
+			mysql_query("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("MySql error:  " . mysql_error()) . ",'" . time() . "',INET_ATON(" . escape(getip()) . "));");
 		if (in_array(strtolower(substr($query, 0, 6)), array('delete', 'insert', 'update'))) {
 			$return = true;
 		} else {
@@ -552,7 +551,6 @@ function delete_cache($query) {
 	if (is_file($filename)) {
 		unlink($filename);
 	}
-
 }
 
 /**
@@ -609,10 +607,10 @@ function kiek($table, $where = '', $as = "viso") {
 	//return (isset($viso[$as]) && $viso[$as] > 0 ? (int)$viso[$as] : (int)0);
 	$i = 0;
 	$sql = mysql_query1("SELECT *  FROM `" . LENTELES_PRIESAGA . $table . "` " . $where . "", 60);
-	if(sizeof($sql > 0)) {
-		foreach($sql as $row) {
-			if(isset($sql['teises'])) {
-				if(teises($sql['teises'],$_SESSION['level']))
+	if (sizeof($sql > 0)) {
+		foreach ($sql as $row) {
+			if (isset($sql['teises'])) {
+				if (teises($sql['teises'], $_SESSION['level']))
 					$i++;
 			} else {
 				$i++;
@@ -713,7 +711,7 @@ function getip() {
  */
 function random_name($i = 10) {
 	$chars = "abcdefghijkmnopqrstuvwxyz023456789";
-	srand((double)microtime() * 1000000);
+	srand((double) microtime() * 1000000);
 	$name = '';
 	while ($i >= 0) {
 		$num = rand() % 33;
@@ -732,8 +730,8 @@ function random_name($i = 10) {
  */
 function escape($sql) {
 // Stripslashes
-	if (get_magic_quotes_gpc()) {
-   		$sql = stripslashes($sql);
+	if (get_magic_quotes_gpc ()) {
+		$sql = stripslashes($sql);
 	}
 	//Jei ne skaičius
 	if (!isnum($sql) || $sql[0] == '0') {
@@ -757,11 +755,10 @@ function input($s) {
 	return $s;
 }
 
-
 /**
  * Seo url TODO
  */
-function seo_url($url,$id) {
+function seo_url($url, $id) {
 	//sušveplinam
 	$url = iconv('UTF-8', 'US-ASCII//TRANSLIT', $url);
 	//neaiškius simbolius pakeičiam brūkšniukais
@@ -770,8 +767,9 @@ function seo_url($url,$id) {
 	$url = preg_replace('/-+/', "-", $url);
 	//verčiam viską į mažasias raides
 	$url = strtolower($url);
-	return $url.'_'.$id.'.html';
-} 
+	return $url . '_' . $id . '.html';
+}
+
 /////////////////////////////////////////////////////////////
 ///////// URL PABAIGA
 /////////////////////////////////////////////////////////////
@@ -784,12 +782,12 @@ function seo_url($url,$id) {
  */
 function redirect($location, $type = "header") {
 	if ($type == "header") {
-		header("Location: " .$location);
+		header("Location: " . $location);
 		exit;
 	} elseif ($type == "meta") {
 		echo "<meta http-equiv='Refresh' content='1;url=$location'>";
 	} else {
-		echo "<script type='text/javascript'>document.location.href='" .$location . "'</script>\n";
+		echo "<script type='text/javascript'>document.location.href='" . $location . "'</script>\n";
 	}
 }
 
@@ -901,7 +899,7 @@ function tikrinam($txt) {
 //echo "Galioja iki: ".galioja('12', '19', '2007');
 //grazina: Galioja iki: 2008-01-17
 function galioja($menuo, $diena, $metai, $kiek_galioja = 30) {
-	$nuo = (int)(mktime(0, 0, 0, $menuo, $diena, $metai) - time(void) / 86400);
+	$nuo = (int) (mktime(0, 0, 0, $menuo, $diena, $metai) - time(void) / 86400);
 	$liko = $nuo + ($kiek_galioja * 24 * 60 * 60);
 	return date('Y-m-d', $liko);
 }
@@ -917,7 +915,7 @@ function liko($diena, $menuo, $metai) {
 	$minutes = floor($difference / 60);
 	$difference = $difference - ($minutes * 60);
 	$seconds = $difference;
-	return (int)$days + 1;
+	return (int) $days + 1;
 }
 
 //sutvarko url iki linko
@@ -951,7 +949,7 @@ function apvalinti($sk, $kiek = 2) {
  */
 function naujas($data, $nick = null) {
 	if (isset($_SESSION['lankesi'])) {
-		return (($data > $_SESSION['lankesi']) ? '<img src="'.ROOT.'images/icons/new.png" onload="$(this).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+		return (($data > $_SESSION['lankesi']) ? '<img src="' . ROOT . 'images/icons/new.png" onload="$(this).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
 " alt="New" border="0" style="vertical-align: middle;" />' : '');
 	} else {
 		return '';
@@ -981,19 +979,19 @@ function kada($ts) {
 	$year = floor($month / 12);
 	$days -= $year * 12;
 	if ($year)
-		return ($year > 1 ? sprintf($lang['system']['years'],$year) : sprintf($lang['system']['year'],$year));
+		return ($year > 1 ? sprintf($lang['system']['years'], $year) : sprintf($lang['system']['year'], $year));
 	if ($month)
-		return ($month > 1 ? sprintf($lang['system']['months'],$month) : sprintf($lang['system']['month'],$month));
+		return ($month > 1 ? sprintf($lang['system']['months'], $month) : sprintf($lang['system']['month'], $month));
 	if ($weeks)
-		return ($weeks > 1 ? sprintf($lang['system']['weeks'],$weeks) : sprintf($lang['system']['week'],$weeks));
+		return ($weeks > 1 ? sprintf($lang['system']['weeks'], $weeks) : sprintf($lang['system']['week'], $weeks));
 	if ($days)
-		return ($days > 1 ? sprintf($lang['system']['days'],$days) : sprintf($lang['system']['day'],$days));
+		return ($days > 1 ? sprintf($lang['system']['days'], $days) : sprintf($lang['system']['day'], $days));
 	if ($hours)
-		return ($hours > 1 ? sprintf($lang['system']['hours'],$hours) : sprintf($lang['system']['hour'],$hours));
+		return ($hours > 1 ? sprintf($lang['system']['hours'], $hours) : sprintf($lang['system']['hour'], $hours));
 	if ($mins)
-		return ($mins > 1 ? sprintf($lang['system']['minutes'],$mins) : sprintf($lang['system']['minute'],$mins));
+		return ($mins > 1 ? sprintf($lang['system']['minutes'], $mins) : sprintf($lang['system']['minute'], $mins));
 	//return "&lt; 1 {$lang['system']['minute']} {$lang['system']['ago']}";
-	return sprintf($lang['system']['minute'],'&lt; 1');
+	return sprintf($lang['system']['minute'], '&lt; 1');
 }
 
 /**
@@ -1035,11 +1033,11 @@ function trimlink($text, $length) {
 
 //Paskaiciuojam procentus
 function procentai($reikia, $yra, $zenklas = false) {
-	$return = (int)round((100 * $yra) / $reikia);
+	$return = (int) round((100 * $yra) / $reikia);
 	if ($return > 100 && $zenklas) {
-		$return = "<img src='".ROOT."images/icons/accept.png' class='middle' alt='100%' title='100%' borders='0' />";
+		$return = "<img src='" . ROOT . "images/icons/accept.png' class='middle' alt='100%' title='100%' borders='0' />";
 	} elseif ($return > 0 && $zenklas) {
-		$return = "<img src='".ROOT."images/icons/cross.png' class='middle' alt='" . $return . "%' title='" . $reikia . "/" . $yra . " - " . $return . "%' borders='0' />";
+		$return = "<img src='" . ROOT . "images/icons/cross.png' class='middle' alt='" . $return . "%' title='" . $reikia . "/" . $yra . " - " . $return . "%' borders='0' />";
 	}
 	return $return;
 }
@@ -1109,12 +1107,13 @@ function pic1($off_site, $size = false, $url = 'images/nuorodu/', $sub = 'url') 
 
 		// determine image type and send it to the browser
 		imagesavealpha($src, true);
-		@imagepng((!$img?$src:$img), $file);
+		@imagepng((!$img ? $src : $img), $file);
 		@imagedestroy($img);
 		unset($buf);
 		sleep(2);
 	}
 }
+
 /**
  * Sulietuvinimas mėnesio
  * echo menesis(12); //Gruodis
@@ -1160,7 +1159,7 @@ function getFiles($path, $denny = '.htaccess|index.php|index.html|index.htm|inde
 					else
 					if ($a['size'] > 1024 && $a['size'] <= 1024 * 1024)
 						$files[$fkey]['sizetext'] = (ceil($a['size'] / 1024 * 100) / 100) . " K"; //patvarkom failo dydziu atvaizdavima
-					else
+ else
 					if ($a['size'] > 1024 * 1024)
 						$files[$fkey]['sizetext'] = (ceil($a['size'] / (1024 * 1024) * 100) / 100) . " Mb";
 					else
@@ -1192,7 +1191,7 @@ function getFiles($path, $denny = '.htaccess|index.php|index.html|index.htm|inde
 function getDirs($dir, $skip = '') {
 	if ($handle = opendir($dir)) {
 		while (false !== ($file = readdir($handle))) {
-			if ($file != "." && $file != ".." && $file != ".svn" && is_dir($dir . $file) && (is_array($skip)?!in_array($file, $skip):true) && $skip  != $file) {
+			if ($file != "." && $file != ".." && $file != ".svn" && is_dir($dir . $file) && (is_array($skip) ? !in_array($file, $skip) : true) && $skip != $file) {
 				$return[$file] = $file;
 			}
 		}
@@ -1209,9 +1208,10 @@ function strip_ext($name, $ext = '') {
 	}
 	return $ext; // jei tai failas grazinam jo pletini
 }
+
 //emailo validumas
 function check_email($email) {
-	return preg_match("/^([_a-zA-Z0-9-+]+)(\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+)(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,6})$/" , $email) ? true : false;
+	return preg_match("/^([_a-zA-Z0-9-+]+)(\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+)(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,6})$/", $email) ? true : false;
 }
 
 function admin_login() {
@@ -1251,35 +1251,37 @@ function get_user_os() {
 	}
 	return $global_info['user_os'];
 }
+
 /*
-function get_browser_info() {
-	global $global_info, $HTTP_USER_AGENT, $HTTP_SERVER_VARS;
-	if (!empty($global_info['browser_agent'])) {
-		return $global_info['browser_agent'];
-	}
-	if (!empty($HTTP_SERVER_VARS['HTTP_USER_AGENT'])) {
-		$HTTP_USER_AGENT = $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
-	} elseif (getenv("HTTP_USER_AGENT")) {
-		$HTTP_USER_AGENT = getenv("HTTP_USER_AGENT");
-	} elseif (empty($HTTP_USER_AGENT)) {
-		$HTTP_USER_AGENT = "";
-	}
-	if (preg_match("MSIE ([0-9].[0-9]{1,2})", $HTTP_USER_AGENT, $regs)) {
-		$global_info['browser_agent'] = "MSIE";
-		$global_info['browser_version'] = $regs[1];
-	} elseif (eregi("Mozilla/([0-9].[0-9]{1,2})", $HTTP_USER_AGENT, $regs)) {
-		$global_info['browser_agent'] = "MOZILLA";
-		$global_info['browser_version'] = $regs[1];
-	} elseif (eregi("Opera(/| )([0-9].[0-9]{1,2})", $HTTP_USER_AGENT, $regs)) {
-		$global_info['browser_agent'] = "OPERA";
-		$global_info['browser_version'] = $regs[2];
-	} else {
-		$global_info['browser_agent'] = "OTHER";
-		$global_info['browser_version'] = 0;
-	}
-	return $global_info['browser_agent'];
-}
-*/
+  function get_browser_info() {
+  global $global_info, $HTTP_USER_AGENT, $HTTP_SERVER_VARS;
+  if (!empty($global_info['browser_agent'])) {
+  return $global_info['browser_agent'];
+  }
+  if (!empty($HTTP_SERVER_VARS['HTTP_USER_AGENT'])) {
+  $HTTP_USER_AGENT = $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
+  } elseif (getenv("HTTP_USER_AGENT")) {
+  $HTTP_USER_AGENT = getenv("HTTP_USER_AGENT");
+  } elseif (empty($HTTP_USER_AGENT)) {
+  $HTTP_USER_AGENT = "";
+  }
+  if (preg_match("MSIE ([0-9].[0-9]{1,2})", $HTTP_USER_AGENT, $regs)) {
+  $global_info['browser_agent'] = "MSIE";
+  $global_info['browser_version'] = $regs[1];
+  } elseif (eregi("Mozilla/([0-9].[0-9]{1,2})", $HTTP_USER_AGENT, $regs)) {
+  $global_info['browser_agent'] = "MOZILLA";
+  $global_info['browser_version'] = $regs[1];
+  } elseif (eregi("Opera(/| )([0-9].[0-9]{1,2})", $HTTP_USER_AGENT, $regs)) {
+  $global_info['browser_agent'] = "OPERA";
+  $global_info['browser_version'] = $regs[2];
+  } else {
+  $global_info['browser_agent'] = "OTHER";
+  $global_info['browser_version'] = 0;
+  }
+  return $global_info['browser_agent'];
+  }
+ */
+
 /**
  * Gražina patvirtinimo kodą
  *
@@ -1315,9 +1317,9 @@ function versija($failas = false) {
 	}
 }
 
-
 // compress HTML BLOGAS DUOMENŲ SUSPAUDIMO BŪDAS
 //ob_start('sendcompressedcontent');
+
 /**
  * Editorius skirtas vaizdžiai redaguoti html
  *
@@ -1371,13 +1373,14 @@ $(document).ready(function(){
 </script>
 <textarea id="{$id}" cols="40" name="{$id}">{$value}</textarea>
 HTML;
-
 	}
 
 
 	return $return;
 }
+
 if (!function_exists('scandir')) {
+
 	function scandir($directory, $sorting_order = 0) {
 		$dh = opendir($directory);
 		while (false !== ($filename = readdir($dh))) {
@@ -1390,20 +1393,24 @@ if (!function_exists('scandir')) {
 		}
 		return ($files);
 	}
+
 }
+
 function build_menu($data, $id=0, $active_class='active') {
-  if(!empty($data)){
-    $re="";
-    foreach ($data[$id] as $row) {
-      if (isset($data[$row['id']])) {
-        $re.= "\n\t\t<li ".((isset($_GET['id']) && $_GET['id'] == $row['id'])?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."</a>\n<ul>\n\t";
-        $re.=build_menu($data, $row['id'],$active_class);
-        $re.= "\t</ul>\n\t</li>";
-      } else $re.= "\n\t\t<li ".((isset($_GET['id']) && $_GET['id'] == $row['id'])?'class="'.$active_class.'"':'')."><a href=\"".url("?id,{$row['id']}")."\">".$row['pavadinimas']."".(isset($row['extra'])?$row['extra']:'')."</a></li>";
-    }
-    return $re;
-  }
+	if (!empty($data)) {
+		$re = "";
+		foreach ($data[$id] as $row) {
+			if (isset($data[$row['id']])) {
+				$re.= "\n\t\t<li " . ((isset($_GET['id']) && $_GET['id'] == $row['id']) ? 'class="' . $active_class . '"' : '') . "><a href=\"" . url("?id,{$row['id']}") . "\">" . $row['pavadinimas'] . "</a>\n<ul>\n\t";
+				$re.=build_menu($data, $row['id'], $active_class);
+				$re.= "\t</ul>\n\t</li>";
+			} else
+				$re.= "\n\t\t<li " . ((isset($_GET['id']) && $_GET['id'] == $row['id']) ? 'class="' . $active_class . '"' : '') . "><a href=\"" . url("?id,{$row['id']}") . "\">" . $row['pavadinimas'] . "" . (isset($row['extra']) ? $row['extra'] : '') . "</a></li>";
+		}
+		return $re;
+	}
 }
+
 /**
  * Nuorodų tikrinimas
  *
@@ -1413,7 +1420,7 @@ function build_menu($data, $id=0, $active_class='active') {
  */
 function checkUrl($url) {
 	if ($data = @get_headers($url)) {
-		preg_match('/^HTTP\/1\.[01] (\d\d\d)/', implode('',$data), $matches);
+		preg_match('/^HTTP\/1\.[01] (\d\d\d)/', implode('', $data), $matches);
 		if ($matches[1] == 200) {
 			return true;
 		} else {
@@ -1432,124 +1439,126 @@ function checkUrl($url) {
 function lang() {
 	if (empty($_SESSION['lang'])) {
 		global $conf;
-		$_SESSION['lang'] = basename(empty($conf['kalba'])?'lt':$conf['kalba'],'.php');
+		$_SESSION['lang'] = basename(empty($conf['kalba']) ? 'lt' : $conf['kalba'], '.php');
 	}
 	return $_SESSION['lang'];
 }
+
 /**
-	 * Funkcija dirbanti su BMP paveiksliukais
-	 * @author - nežinomas
-	 *
-	 * @param resource $filename
-	 * @return resource
-	 */
-	function ImageCreateFromBMP($filename) {
-		if (!$f1 = fopen($filename, "rb"))
-			return false;
-		$FILE = unpack("vfile_type/Vfile_size/Vreserved/Vbitmap_offset", fread($f1, 14));
-		if ($FILE['file_type'] != 19778)
-			return false;
+ * Funkcija dirbanti su BMP paveiksliukais
+ * @author - nežinomas
+ *
+ * @param resource $filename
+ * @return resource
+ */
+function ImageCreateFromBMP($filename) {
+	if (!$f1 = fopen($filename, "rb"))
+		return false;
+	$FILE = unpack("vfile_type/Vfile_size/Vreserved/Vbitmap_offset", fread($f1, 14));
+	if ($FILE['file_type'] != 19778)
+		return false;
 
-		$BMP = unpack('Vheader_size/Vwidth/Vheight/vplanes/vbits_per_pixel' . '/Vcompression/Vsize_bitmap/Vhoriz_resolution' . '/Vvert_resolution/Vcolors_used/Vcolors_important', fread($f1, 40));
-		$BMP['colors'] = pow(2, $BMP['bits_per_pixel']);
-		if ($BMP['size_bitmap'] == 0)
-			$BMP['size_bitmap'] = $FILE['file_size'] - $FILE['bitmap_offset'];
-		$BMP['bytes_per_pixel'] = $BMP['bits_per_pixel'] / 8;
-		$BMP['bytes_per_pixel2'] = ceil($BMP['bytes_per_pixel']);
-		$BMP['decal'] = ($BMP['width'] * $BMP['bytes_per_pixel'] / 4);
-		$BMP['decal'] -= floor($BMP['width'] * $BMP['bytes_per_pixel'] / 4);
-		$BMP['decal'] = 4 - (4 * $BMP['decal']);
-		if ($BMP['decal'] == 4)
-			$BMP['decal'] = 0;
+	$BMP = unpack('Vheader_size/Vwidth/Vheight/vplanes/vbits_per_pixel' . '/Vcompression/Vsize_bitmap/Vhoriz_resolution' . '/Vvert_resolution/Vcolors_used/Vcolors_important', fread($f1, 40));
+	$BMP['colors'] = pow(2, $BMP['bits_per_pixel']);
+	if ($BMP['size_bitmap'] == 0)
+		$BMP['size_bitmap'] = $FILE['file_size'] - $FILE['bitmap_offset'];
+	$BMP['bytes_per_pixel'] = $BMP['bits_per_pixel'] / 8;
+	$BMP['bytes_per_pixel2'] = ceil($BMP['bytes_per_pixel']);
+	$BMP['decal'] = ($BMP['width'] * $BMP['bytes_per_pixel'] / 4);
+	$BMP['decal'] -= floor($BMP['width'] * $BMP['bytes_per_pixel'] / 4);
+	$BMP['decal'] = 4 - (4 * $BMP['decal']);
+	if ($BMP['decal'] == 4)
+		$BMP['decal'] = 0;
 
-		$PALETTE = array();
-		if ($BMP['colors'] < 16777216) {
-			$PALETTE = unpack('V' . $BMP['colors'], fread($f1, $BMP['colors'] * 4));
-		}
-
-		$IMG = fread($f1, $BMP['size_bitmap']);
-		$VIDE = chr(0);
-
-		$res = imagecreatetruecolor($BMP['width'], $BMP['height']);
-		$P = 0;
-		$Y = $BMP['height'] - 1;
-		while ($Y >= 0) {
-			$X = 0;
-			while ($X < $BMP['width']) {
-				if ($BMP['bits_per_pixel'] == 24)
-					$COLOR = unpack("V", substr($IMG, $P, 3) . $VIDE);
-				elseif ($BMP['bits_per_pixel'] == 16) {
-					$COLOR = unpack("n", substr($IMG, $P, 2));
-					$COLOR[1] = $PALETTE[$COLOR[1] + 1];
-				} elseif ($BMP['bits_per_pixel'] == 8) {
-					$COLOR = unpack("n", $VIDE . substr($IMG, $P, 1));
-					$COLOR[1] = $PALETTE[$COLOR[1] + 1];
-				} elseif ($BMP['bits_per_pixel'] == 4) {
-					$COLOR = unpack("n", $VIDE . substr($IMG, floor($P), 1));
-					if (($P * 2) % 2 == 0)
-						$COLOR[1] = ($COLOR[1] >> 4);
-					else
-						$COLOR[1] = ($COLOR[1] & 0x0F);
-					$COLOR[1] = $PALETTE[$COLOR[1] + 1];
-				} elseif ($BMP['bits_per_pixel'] == 1) {
-					$COLOR = unpack("n", $VIDE . substr($IMG, floor($P), 1));
-					if (($P * 8) % 8 == 0)
-						$COLOR[1] = $COLOR[1] >> 7;
-					elseif (($P * 8) % 8 == 1)
-						$COLOR[1] = ($COLOR[1] & 0x40) >> 6;
-					elseif (($P * 8) % 8 == 2)
-						$COLOR[1] = ($COLOR[1] & 0x20) >> 5;
-					elseif (($P * 8) % 8 == 3)
-						$COLOR[1] = ($COLOR[1] & 0x10) >> 4;
-					elseif (($P * 8) % 8 == 4)
-						$COLOR[1] = ($COLOR[1] & 0x8) >> 3;
-					elseif (($P * 8) % 8 == 5)
-						$COLOR[1] = ($COLOR[1] & 0x4) >> 2;
-					elseif (($P * 8) % 8 == 6)
-						$COLOR[1] = ($COLOR[1] & 0x2) >> 1;
-					elseif (($P * 8) % 8 == 7)
-						$COLOR[1] = ($COLOR[1] & 0x1);
-					$COLOR[1] = $PALETTE[$COLOR[1] + 1];
-				} else
-					return false;
-				imagesetpixel($res, $X, $Y, $COLOR[1]);
-				$X++;
-				$P += $BMP['bytes_per_pixel'];
-			}
-			$Y--;
-			$P += $BMP['decal'];
-		}
-
-
-		fclose($f1);
-
-		return $res;
+	$PALETTE = array();
+	if ($BMP['colors'] < 16777216) {
+		$PALETTE = unpack('V' . $BMP['colors'], fread($f1, $BMP['colors'] * 4));
 	}
-	function random($return = '') {
-		$simboliai = "abcdefghijkmnopqrstuvwxyz0123456789";
-		for ($i = 1; $i < 3; ++$i) {
-			$num = rand() % 33;
-			$return .= substr($simboliai, $num, 1);
+
+	$IMG = fread($f1, $BMP['size_bitmap']);
+	$VIDE = chr(0);
+
+	$res = imagecreatetruecolor($BMP['width'], $BMP['height']);
+	$P = 0;
+	$Y = $BMP['height'] - 1;
+	while ($Y >= 0) {
+		$X = 0;
+		while ($X < $BMP['width']) {
+			if ($BMP['bits_per_pixel'] == 24)
+				$COLOR = unpack("V", substr($IMG, $P, 3) . $VIDE);
+			elseif ($BMP['bits_per_pixel'] == 16) {
+				$COLOR = unpack("n", substr($IMG, $P, 2));
+				$COLOR[1] = $PALETTE[$COLOR[1] + 1];
+			} elseif ($BMP['bits_per_pixel'] == 8) {
+				$COLOR = unpack("n", $VIDE . substr($IMG, $P, 1));
+				$COLOR[1] = $PALETTE[$COLOR[1] + 1];
+			} elseif ($BMP['bits_per_pixel'] == 4) {
+				$COLOR = unpack("n", $VIDE . substr($IMG, floor($P), 1));
+				if (($P * 2) % 2 == 0)
+					$COLOR[1] = ($COLOR[1] >> 4);
+				else
+					$COLOR[1] = ($COLOR[1] & 0x0F);
+				$COLOR[1] = $PALETTE[$COLOR[1] + 1];
+			} elseif ($BMP['bits_per_pixel'] == 1) {
+				$COLOR = unpack("n", $VIDE . substr($IMG, floor($P), 1));
+				if (($P * 8) % 8 == 0)
+					$COLOR[1] = $COLOR[1] >> 7;
+				elseif (($P * 8) % 8 == 1)
+					$COLOR[1] = ($COLOR[1] & 0x40) >> 6;
+				elseif (($P * 8) % 8 == 2)
+					$COLOR[1] = ($COLOR[1] & 0x20) >> 5;
+				elseif (($P * 8) % 8 == 3)
+					$COLOR[1] = ($COLOR[1] & 0x10) >> 4;
+				elseif (($P * 8) % 8 == 4)
+					$COLOR[1] = ($COLOR[1] & 0x8) >> 3;
+				elseif (($P * 8) % 8 == 5)
+					$COLOR[1] = ($COLOR[1] & 0x4) >> 2;
+				elseif (($P * 8) % 8 == 6)
+					$COLOR[1] = ($COLOR[1] & 0x2) >> 1;
+				elseif (($P * 8) % 8 == 7)
+					$COLOR[1] = ($COLOR[1] & 0x1);
+				$COLOR[1] = $PALETTE[$COLOR[1] + 1];
+			} else
+				return false;
+			imagesetpixel($res, $X, $Y, $COLOR[1]);
+			$X++;
+			$P += $BMP['bytes_per_pixel'];
 		}
-		return $return . '_';
+		$Y--;
+		$P += $BMP['decal'];
 	}
-	function site_tree($data, $id=0, $active_class='active') {
+
+
+	fclose($f1);
+
+	return $res;
+}
+
+function random($return = '') {
+	$simboliai = "abcdefghijkmnopqrstuvwxyz0123456789";
+	for ($i = 1; $i < 3; ++$i) {
+		$num = rand() % 33;
+		$return .= substr($simboliai, $num, 1);
+	}
+	return $return . '_';
+}
+
+function site_tree($data, $id=0, $active_class='active') {
 	global $admin_pagesid, $lang;
-	if(!empty($data)) {
-		$re="";
+	if (!empty($data)) {
+		$re = "";
 		foreach ($data[$id] as $row) {
 			if (isset($data[$row['id']])) {
-        if(teises($row['teises'], $_SESSION['level'])){
-          $re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a><ul>";
-          $re.= site_tree($data, $row['id'],$active_class);
-          $re.= "</ul></li>";
+				if (teises($row['teises'], $_SESSION['level'])) {
+					$re.= "<li><a href=\"" . url('?id,' . $row['id']) . "\" >" . $row['pavadinimas'] . "</a><ul>";
+					$re.= site_tree($data, $row['id'], $active_class);
+					$re.= "</ul></li>";
 				}
-			} else 
-          if(teises($row['teises'], $_SESSION['level']))
-            $re.= "<li><a href=\"".url('?id,'.$row['id'])."\" >".$row['pavadinimas']."</a></li>";
+			} else
+			if (teises($row['teises'], $_SESSION['level']))
+				$re.= "<li><a href=\"" . url('?id,' . $row['id']) . "\" >" . $row['pavadinimas'] . "</a></li>";
 		}
 		return $re;
 	}
 }
-
 ?>
