@@ -400,7 +400,7 @@ HTML;
         <div id="right">
           		
           <div id="container"> 
-            <div class="where"><img src="images/bullet.png" alt="" /> <a href="<?php echo url('?id,999');?>">Admin</a> > <a href="<?php echo url('?id,999'.(isset($_GET['a'])?';a,'.$_GET['a']:''));?>"><?php echo (isset($_GET['a'])?$lang['admin'][$admin_pages[$_GET['a']]]:$lang['admin']['homepage']); ?></a> </div>
+            <div class="where"><img src="images/bullet.png" alt="" /> <a href="<?php echo url('?id,999');?>">Admin</a> > <a href="<?php echo url('?id,999'.(isset($_GET['a'])?';a,'.$_GET['a']:''));?>"><?php echo (isset($_GET['a'])?(isset($lang['admin'][$admin_pages[$_GET['a']]])?$lang['admin'][$admin_pages[$_GET['a']]]:''):$lang['admin']['homepage']); ?></a> </div>
             
 
 	<?php if (isset($url['a']) && file_exists(dirname(__file__) . "/" . $admin_pages[(int)$url['a']].'.php') && isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
