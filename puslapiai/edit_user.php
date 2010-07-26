@@ -240,6 +240,7 @@ HTML;
 		unset($data, $viso, $day, $month, $year);
 	}
 }
+unset($text);
 ?>
 <script type="text/javascript">
 	function checkMail(form,email) {
