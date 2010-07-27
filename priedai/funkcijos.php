@@ -49,7 +49,7 @@ function header_info() {
 	<meta name="generator" content="MightMedia TVS" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="content-language" content="' . lang() . '" />
-	<meta name="description" content="' . input(strip_tags($conf['Pavadinimas']) . ' - ' . trimlink(strip_tags($conf['Apie']), 120)) . '" />
+	<meta name="description" content="' . input(strip_tags($conf['Pavadinimas']) . ' - ' . trimlink(trim(str_replace("\n\r","",strip_tags($conf['Apie']))), 120)) . '" />
 	<meta name="keywords" content="' . input(strip_tags($conf['Keywords'])) . '" />
 	<meta name="author" content="' . input(strip_tags($conf['Copyright'])) . '" />
 	<link rel="stylesheet" type="text/css" href="stiliai/system.css" />
