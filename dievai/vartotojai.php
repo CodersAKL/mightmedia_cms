@@ -56,7 +56,7 @@ if (isset($_POST['action']) && $_POST['action'] == $lang['admin']['save'] && $_P
 		$mail = $info['email'];
 	}
 
-	$resut = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `taskai`='$tsk' , `levelis`='$lvl' , `pass`='$slapt' , `email`='$mail' WHERE id=" . escape((int) $_POST['id']) . "" . ($_SESSION['id'] == 1 ? '' : 'AND `levelis` > 1'));
+	$resut = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `taskai`=".escape($tsk)." , `levelis`=".escape($lvl)." , `pass`=".escape($slapt)." , `email`=".escape($mail)." WHERE `id`=" . escape((int) $_POST['id']) . " " . ($_SESSION['id'] == 1 ? '' : 'AND `levelis` > 1'));
 	if ($resut) {
 		msg($lang['system']['done'], $lang['admin']['user_updated']);
 		unset($_POST);
