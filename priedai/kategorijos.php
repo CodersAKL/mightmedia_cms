@@ -283,7 +283,6 @@ HTML;
             $kategorijos[$textas]['selected'] = unserialize($extra['teises']);
             
 				
-echo $extra['teises'].'fdsf';
 			} else {
 				$kategorijos[""] = array("type" => "hidden", "name" => "Teises", "value" => (isset($extra['teises']) ? ($kieno == 'vartotojai' ? $extra['teises'] : unserialize($extra['teises'])) : ''));
 			}
