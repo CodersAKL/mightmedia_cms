@@ -67,6 +67,10 @@ $lang['system']['nomorecategories'] = 'You can\'t create more categories.';
 $lang['system']['category'] = 'Category';
 $lang['system']['categories'] = 'Categories';
 $lang['system']['dashboard'] = 'Dashboard';
+$lang['system']['about_allow_panel'] = 'Leave this field empty, if you want to show this block for everybody.';
+$lang['system']['about_allow_pg'] = 'Leave this field empty, if you want to show this page for everybody.';
+$lang['system']['about_allow_cat'] = 'Leave this field empty, if you want to show this cayegory for everybody.';
+
 //user
 $lang['user']['for_members'] = 'Members';
 $lang['user']['hello'] = 'Hello, %s';

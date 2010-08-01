@@ -37,6 +37,7 @@
  * @$Date: 2010-02-07 16:15:41 +0200 (Sun, 07 Feb 2010) $
  * */
 unset($text);
+
 if (!defined("LEVEL") || LEVEL > 1 || !defined("OK")) {
 	redirect('location: http://' . $_SERVER["HTTP_HOST"] . '');
 }
@@ -143,13 +144,13 @@ lentele($page_pavadinimas,$text);
 		if (!isset($puslapiai) || count($puslapiai) < 1) {
 			klaida($lang['system']['warning'], "<h3>{$lang['admin']['page_nounused']}</h3>");
 		} else {
-
+      $info = " <a href=\"#\" title=\"{$lang['system']['about_allow_pg']}\">[?]</a>";
 			$psl = array(
 				"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel"),
 				$lang['admin']['page_name'] => array("type" => "text", "value" => "{$lang['admin']['page_name']}", "name" => "Page", "class" => "input"),
 				$lang['admin']['page_file'] . " <a id=\"linkas\" onclick=\"$('#failas').replaceWith('<input name=\'File\' value=\'http://\' class=\'input\' />'); $('#linkas').empty();return fale;\">[{$lang['admin']['page_link']}]</a>" => array("type" => "select", "value" => $puslapiai, "name" => "File", "id" => "failas"), "Sub" => array("type" => "select", "value" => $parents, "name" => "parent"),
 				$lang['admin']['page_show'] => array("type" => "select", "value" => array("Y" => $lang['admin']['yes'], "N" => "{$lang['admin']['no']}"), "name" => "Show"),
-				$lang['admin']['page_showfor'] => array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai"),
+				$lang['admin']['page_showfor'].$info => array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai"),
 				"" => array("type" => "submit", "name" => "Naujas_puslapis", "value" => $lang['admin']['page_create'])
 			);
 			include_once (ROOT . "priedai/class.php");
@@ -199,15 +200,17 @@ lentele($page_pavadinimas,$text);
 			$sql = mysql_query1($sql);
 			$selected = unserialize($sql['teises']);
 			unset($parents[$sql['id']]);
+      $info = " <a href=\"#\" title=\"{$lang['system']['about_allow_pg']}\">[?]</a>";
 			$psl = array(
 				"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_psl"),
 				$lang['admin']['page_name'] => array("type" => "text", "value" => $sql['pavadinimas'], "name" => "pslp", "class" => "input"),
 				$lang['admin']['page_showfor'] => array("type" => "select", "value" => $teises, "name" => "Teises", "class" => "input", "class" => "input", "selected" => (isset($sql['teises']) ? input($sql['teises']) : '')),
 				$lang['admin']['page_show'] => array("type" => "select", "value" => array("Y" => $lang['admin']['yes'], "N" => $lang['admin']['no']), "selected" => input($sql['show']), "name" => "Show"), "Sub" => array("type" => "select", "value" => $parents, "selected" => input($sql['parent']), "name" => "parent"),
-				$lang['admin']['page_showfor'] => array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai", "selected" => $selected),
+				$lang['admin']['page_showfor'].$info => array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai"),
 				"" => array("type" => "submit", "name" => "Redaguoti_psl", "value" => $lang['admin']['edit'])
 			);
-
+      if(!empty($selected))
+        $psl[$lang['admin']['page_showfor'].$info]['selected'] = $selected;
 			include_once (ROOT . "priedai/class.php");
 			$bla = new forma();
 			lentele($sql['pavadinimas'], $bla->form($psl, $lang['admin']['edit']));

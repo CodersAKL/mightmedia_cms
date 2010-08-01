@@ -93,8 +93,9 @@ HTML;
 				$teises_in = $_POST['Teises'];
 			else
 				$teises_in = serialize($_POST['Teises']);
-		} else
-      $teises_in = serialize(0);
+		} else{      
+        $teises_in = 'N;';
+    }
 
 		if (isset($_POST['path']) && !empty($_POST['path'])) {
 			$path = mysql_query1("Select * from`" . LENTELES_PRIESAGA . "grupes` WHERE id=" . escape($_POST['path']) . " Limit 1");
@@ -133,7 +134,7 @@ HTML;
 		if ($kieno == 'vartotojai')
 			$teises_in = $_POST['Teises'];
 		else
-			$teises_in = (isset($_POST['Teises'])?serialize($_POST['Teises']):serialize(0));
+			$teises_in = (isset($_POST['Teises'])?serialize($_POST['Teises']):'N;');
 		$moderuoti = ((isset($_POST['punktai'])) ? serialize($_POST['punktai']) : '');
 		$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "grupes` SET
 			`pavadinimas` = " . escape($pavadinimas) . ",
@@ -243,12 +244,12 @@ HTML;
 			$puslapiai['frm'] = "<b>" . $lang['admin']['frm'] . "(mod)</b>";
 
 
-			$vartotojai = false;
+			/*$vartotojai = false;
 			if (isset($extra)) {
 				$vartotojai = true;
-			}
+			}*/
 		} else {
-			$textas = "{$lang['system']['showfor']}:";
+			$textas = "{$lang['system']['showfor']} <a href=\"#\" title=\"{$lang['system']['about_allow_cat']}\">[?]</a>:";
 			$vartotojai = false;
 		}
 
@@ -273,15 +274,16 @@ HTML;
 				//	echo $mod;
 				$kategorijos[$lang['admin']['what_moderate']] = array("type" => "select", "extra" => "multiple=multiple", "value" => $puslapiai, "class" => "asmSelect", "class"=>"input", "name" => "punktai[]", "id" => "punktai", "selected" => (isset($extra['mod'])) ? $ser : "");
 			}
-			if ($leidimas == true && $vartotojai == false && $_GET['v'] == 2) {
-				if ($kieno == 'vartotojai') {
-
-					$kategorijos[$textas] = array("type" => "select", "value" => $teises, "name" => "Teises", "selected" => (isset($extra['teises']) ? input($extra['teises']) : ""));
-				} else {
+			if (/*$leidimas == true &&*/ $vartotojai == false && $_GET['v'] == 2) {
+				
 					
-					$kategorijos[$textas] = array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "class"=>"input", "name" => "Teises[]", "id" => "punktai", "selected" => (isset($extra['teises']) ? unserialize($extra['teises']) : "-1"));
-				}
-
+					$kategorijos[$textas] = array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "class"=>"input", "name" => "Teises[]", "id" => "punktai");
+					
+					if(!empty($extra['teises']) && $extra['teises'] != 'N;')
+            $kategorijos[$textas]['selected'] = unserialize($extra['teises']);
+            
+				
+echo $extra['teises'].'fdsf';
 			} else {
 				$kategorijos[""] = array("type" => "hidden", "name" => "Teises", "value" => (isset($extra['teises']) ? ($kieno == 'vartotojai' ? $extra['teises'] : unserialize($extra['teises'])) : ''));
 			}

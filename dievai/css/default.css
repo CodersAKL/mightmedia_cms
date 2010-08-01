@@ -449,7 +449,7 @@ ul#tree li{
 	margin : 1em 0 0.25em 0;
 }
 .asmSelect {
-	display : inline;
+	display : block;
 }
 .asmOptionDisabled {
 	color : #ccc;
@@ -473,7 +473,7 @@ ul#tree li{
 	list-style : none;
 	background : #ddd;
 	border : 1px solid #bbb;
-	/*width : 100%;*/
+	width : 200px;
 	margin : 0 0 -1px 0;
 	line-height : 1em;
 }
