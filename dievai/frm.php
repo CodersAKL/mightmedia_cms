@@ -38,6 +38,7 @@
 if (!defined("OK") || !ar_admin(basename(__file__))) {
 	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
+$root = ROOT;
 echo <<< HTML
 <script type="text/javascript" src="{$root}javascript/jquery/jquery.asmselect.js"></script>
 <script type="text/javascript">
