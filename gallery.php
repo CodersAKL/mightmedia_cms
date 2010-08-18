@@ -10,7 +10,7 @@ if (isset($conf['puslapiai']['galerija.php'])) {
 	$rss = new RssGallery;
 	//$rss->display(adresas());
 } else {
-	echo 'no gallery...';
+	echo $lang['admin']['gallery_noimages'];
 }
 
 class RssGallery {
@@ -27,9 +27,9 @@ class RssGallery {
              xmlns:media="http://search.yahoo.com/mrss/"
              xmlns:atom="http://www.w3.org/2005/Atom">
             <channel>
-    <title>My Website</title>
+    <title>' . $conf['Pavadinimas'] . '</title>
     <link>' . adresas() . '</link>
-    <description>My Website is a great collection of my things.</description>
+    <description>' . strip_tags($conf['Apie']) . '</description>
     <language>en-us</language>
     <lastBuildDate>' . date("D, d M Y h:i:s") . ' EST</lastBuildDate>
     <atom:link href="' . adresas() . 'gallery.php" rel="self" type="application/rss+xml" />
