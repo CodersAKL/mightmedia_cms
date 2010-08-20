@@ -56,7 +56,7 @@ if ($k >= 0 && empty($url['m'])) {
         lentele((!empty($pav['pavadinimas'])?$pav['pavadinimas']:$lang['pages']['straipsnis.php']), $pav['aprasymas']."<br /><i>{$lang['category']['articles']}: {$viso}</i>");
 				foreach ($sql as $row) {
 					if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
-            lentele($row['pav'], $row['t_text'] . "<br /><a href=".url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] ). ">{$lang['article']['read']}</a>", rating_form($page,$row['id']));
+            lentele($row['pav'], $row['t_text'] . "<br /><a href=".url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] . ";".seo_url($row['pav'],$row['id']) ). ">{$lang['article']['read']}</a>", rating_form($page,$row['id']));
 					}
 				}
 

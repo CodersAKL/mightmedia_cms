@@ -267,7 +267,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
         }
         $reply = ($_SESSION['level']>0?'<a style="float: right;" href="' . url("q," . $row['zid'] . "") . '" title="'.$lang['admin']['pm_reply'] .'"><img src="images/icons/arrow_225.png" border="0" alt="re"></a>':'');
 				$turinys .= "<div class=\"tr\">{$reply}{$tool}<em> ".user($row['nick'], $row['id'], $row['levelis'])." (" .  (($row['laikas'] == '0000000000') ? '---' : date('Y-m-d H:i:s ', $row['laikas'])) . ") " . naujas($row['laikas'], $row['nick']) . "</em><br />
-			  <div class=\"avatar\" align=\"left\">" . avatar($row['email'], 40) . "</div><div class=\"tr2\" style=\"\">" . bbcode($row['zinute']) . "<br />".(!empty($row['parasas'])? "<hr />".bbcode(input($row['parasas'])):"")."</div></div>";
+			  <div class=\"avatar\" align=\"left\">" . avatar($row['email'], 40) . "</div><div class=\"tr2\" style=\"\">" . bbcode($row['zinute']) . "<br />".(!empty($row['parasas'])? "<div class=\"signature\">".bbcode(input($row['parasas']))."</div>":"")."</div></div>";
 				
 
 				unset($extra);

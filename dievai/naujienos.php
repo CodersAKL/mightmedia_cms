@@ -178,10 +178,11 @@ if (isset($_GET['v'])) {
 		if (count($sql_news) > 0) {
 			$table = new Table();
 			foreach ($sql_news as $row) {
-				$info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('newsch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"news_delete[]\" />",
+				$info[] = array(
+					"<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('newsch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"news_delete[]\" />",
 					$lang['admin']['news_name'] => $row['pavadinimas'],
-					$lang['admin']['news_date'] => date('Y-m-d', $row['data']),
 					$lang['admin']['news_more'] => trimlink(strip_tags($row['naujiena']), 55),
+					$lang['admin']['news_date'] => date('Y-m-d', $row['data']),
 					$lang['admin']['edit'] => "<a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id']) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id']) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src=\"" . ROOT . "images/icons/cross.png\" border=\"0\"></a>"
 				);
 			}
@@ -197,9 +198,9 @@ if (isset($_GET['v'])) {
 			  //"bProcessing": true,
 						"aoColumns": [
 							{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
-							{ "sWidth": "10%", "sType": "string" },
-							{ "sWidth": "10%", "sType": "date" },
-							{ "sWidth": "30%", "sType": "html" },
+							{ "sType": "string" },
+							{ "sType": "html" },
+							{ "sType": "date" },
 							{ "sWidth": "20px", "sType": "html", "bSortable": false}
 						]
 					} );
@@ -213,15 +214,15 @@ if (isset($_GET['v'])) {
 		$kom = array('taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no']);
 		$naujiena = array(
 			"Form" => array("action" => url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ""), "method" => "post", "name" => "reg"),
-			"{$lang['admin']['news_name']}:" => array("type" => "text", "value" => input((isset($extra)) ? $extra['pavadinimas'] : ''), "name" => "pav", "class" => "input"),
+			$lang['admin']['news_name'] => array("type" => "text", "value" => input((isset($extra)) ? $extra['pavadinimas'] : ''), "name" => "pav", "class" => "input"),
 			$lang['admin']['komentarai'] => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input", "class" => "input"),
-			"{$lang['admin']['news_category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')),
+			$lang['admin']['news_category'] => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')),
 			//more
 			"<a href=\"javascript:rodyk('more')\">{$lang['admin']['news_moreoptions']}</a>" => array("type" => "string", "value" => "<div id=\"more\" style=\"display: none;\">" . ((!isset($extra) && isset($conf['puslapiai']['naujienlaiskiai.php']['id'])) ? $lang['news']['newsletter?'] . " <input type=\"checkbox\" name=\"letter\" /><br />" : '') . " " . $lang['admin']['news_sticky'] . " <input type=\"checkbox\" name=\"sticky\" " . ((isset($extra) && $extra['sticky'] == 1) ? 'checked' : '') . " /></div>"),
 			//(isset($conf['puslapiai']['naujienlaiskiai.php']['id'])?$lang['news']['newsletter?']:'') => isset($conf['puslapiai']['naujienlaiskiai.php']['id'])?array("type" => "checkbox", "name" => "letter"):'',
 			//$lang['admin']['news_sticky'] => array("type" => "checkbox", "name" => "sticky"),
 			//more end;
-			"{$lang['admin']['news_text']}:" => array("type" => "string", "value" => editor('jquery', 'standartinis', array('naujiena' => $lang['admin']['news_preface']), array('naujiena' => (isset($extra) ? $extra['naujiena'] . (empty($extra['daugiau']) ? '' : "\n===page===\n" . $extra['daugiau']) : $lang['admin']['news_preface'])))),
+			$lang['admin']['news_text'] => array("type" => "string", "value" => editor('jquery', 'standartinis', array('naujiena' => $lang['admin']['news_preface']), array('naujiena' => (isset($extra) ? $extra['naujiena'] . (empty($extra['daugiau']) ? '' : "\n===page===\n" . $extra['daugiau']) : $lang['admin']['news_preface'])))),
 			(isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create'])
 		);
 

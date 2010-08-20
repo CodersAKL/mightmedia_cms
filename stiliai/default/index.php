@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<?php header_info(); ?>
@@ -33,9 +33,10 @@
 					<div class="aplink">
 
 						<?php
+						$cur_page = explode('/',$page);
 						$desinespaneles = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' AND `lang` = ".escape(lang())." ORDER BY `place` ASC", 120);
 						$kairespaneles = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' AND `lang` = ".escape(lang())." ORDER BY `place` ASC", 120);
-						if (sizeof($kairespaneles)): ?>
+						if (sizeof($kairespaneles) && $cur_page[1] != 'frm'): ?>
 
 						<div class="kaire">
 							<div class="shadow">
@@ -45,7 +46,7 @@
 						</div>
 						<?php endif; ?>
 
-						<div class="center" style="width:<?php echo (490 + (!sizeof($kairespaneles)?200:0) + (!sizeof($desinespaneles)?200:0)); ?>px">
+						<div class="center" style="width:<?php echo (490 + (!sizeof($kairespaneles) || $cur_page[1] == 'frm'?200:0) + (!sizeof($desinespaneles) || $cur_page[1] == 'frm'?200:0)); ?>px">
 
 							<?php
 
@@ -57,7 +58,7 @@
 							?>
 
 						</div>
-						<?php if (sizeof($desinespaneles)): ?>
+						<?php if (sizeof($desinespaneles) && $cur_page[1] != 'frm'): ?>
 						<div class="desine">
 							<div class="shadow">
 									<?php include ("priedai/desinespaneles.php"); ?>

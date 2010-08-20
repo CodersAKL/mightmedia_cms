@@ -9,7 +9,7 @@ class rating {
 	function __construct($page, $id) {
 		$this->page = $page;
 		$this->id = $id;
-		$sel = mysql_query1("SELECT `rating_num` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `rating_id` = ".escape($this->id)." AND `psl` = ".escape($this->page));
+		$sel = mysql_query1("SELECT `rating_num` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `rating_id` = ".escape($this->id)." AND `psl` = ".escape($this->page),360);
 		if (count(mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `IP` = " . escape(getip()) . " AND `rating_id` = ".escape($id)." AND `psl` = ".escape($page))) == 0)
 			$this->status = true;
 		else
@@ -39,7 +39,7 @@ class rating {
 		else {
 			$this->status = '<img src="images/icons/cross_circle.png" alt="no" />';
 		}
-		$sel = mysql_query1("SELECT `rating_num` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `rating_id` = ".escape($id)." AND `psl` = ".escape($page));
+		$sel = mysql_query1("SELECT `rating_num` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `rating_id` = ".escape($id)." AND `psl` = ".escape($page),360);
 		if (sizeof($sel) > 0) {
 			$total = 0;
 			$rows = 0;

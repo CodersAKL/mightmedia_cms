@@ -1,3 +1,4 @@
+http://sucuri.net/?page=tools&title=blacklist&seeall=1
 Crazy Toolbar IE Exploit	crazy-toolbar.com
 JS.Scob.Trojan	217.107.218.147
 Liber Inc. Exploit	advadmin.biz
@@ -194,9 +195,13 @@ Known Spyware Host	bittorrentsoftwaredownload.com
 Known Spyware Host	360share.com
 Bloodhound.Exploit.292	blackhulu.com
 WEB Trojan	Fx29ID
+WEB Trojan	ZFxID
 WEB Trojan	inb0x hotmail
 WEB Trojan	VirtuaCards
 Probably bad script	0wnW4y
 Malware/script	"0wnW4y<br>"
 Trojan horse PHP/BackDoor.AG	gzinflate(str_rot13(base64_decode(
 v0pCr3w is a hacker probably trojan	v0pCr3w
+TROJAN dropper	OSTYPE:$OS
+TROJAN dropper	$os = @PHP_OS;
+Probably bad script	eval(gzinflate(

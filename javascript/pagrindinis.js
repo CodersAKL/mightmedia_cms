@@ -1,5 +1,7 @@
 /* BBCODE */
-function mail(user, domain){window.location = 'mailto:'+user+'@'+domain;}
+function mail(user, domain){
+	window.location = 'mailto:'+user+'@'+domain;
+}
 function flip( rid ) {
 	document.getElementById(rid).style.display = document.getElementById(rid).style.display == 'none' ? 'block' : 'none'
 }
@@ -34,57 +36,59 @@ function addText(elname, wrap1, wrap2) {
 }
 
 function MM_openBrWindow(theURL,winName,features) { //v2.0
-  window.open(theURL,winName,features);
+	window.open(theURL,winName,features);
 }
 
 function rodyk(id){
 	if (document.getElementById){
 		obj = document.getElementById(id);
 		if (obj.style.display == "none"){
-			obj.style.display = ""; createCookie(id,0,1);
+			obj.style.display = "";
+			createCookie(id,0,1);
 		} else {
-			obj.style.display = "none"; createCookie(id,1,1);
+			obj.style.display = "none";
+			createCookie(id,1,1);
 		}
 	}
 } 
 
 function checkSearch() {
-  if (document.getElementById && document.getElementById('search').value=="") {
-    alert("Įrašyk paieškos frazę.");
-    document.getElementById('search').focus();
-    return false;
-  } else {
-    return true;
-  }
+	if (document.getElementById && document.getElementById('search').value=="") {
+		alert("Įrašyk paieškos frazę.");
+		document.getElementById('search').focus();
+		return false;
+	} else {
+		return true;
+	}
 }
 
 function favorit() {
-  if (document.all && navigator.userAgent.indexOf("Opera")==-1) {
-	  document.write("<a href=\"javascript:window.external.addfavorite('http://'+document.domain,'HTMLSource: HTML Tutorials');\" class=\"nav\">Įtraukti į adresyną!</a><br />");
-  } else {
-	  document.write("Spausk Ctrl+D!");
-  }
+	if (document.all && navigator.userAgent.indexOf("Opera")==-1) {
+		document.write("<a href=\"javascript:window.external.addfavorite('http://'+document.domain,'HTMLSource: HTML Tutorials');\" class=\"nav\">Įtraukti į adresyną!</a><br />");
+	} else {
+		document.write("Spausk Ctrl+D!");
+	}
 }
 
 function createCookie(name,value,days) {
-  if (days) {
-    var date = new Date();
-    date.setTime(date.getTime()+(days*24*60*60*1000));
-    var expires = "; expires="+date.toGMTString();
-  }
-  else expires = "";
-  document.cookie = name+"="+value+expires+"; path=/";
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
 }
 
 function readCookie(name) {
-  var nameEQ = name + "=";
-  var ca = document.cookie.split(';');
-  for(var i=0;i < ca.length;i++) {
-    var c = ca[i];
-    while (c.charAt(0)==' ') c = c.substring(1,c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-  }
-  return null;
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
 }
 
 function startCount() {
@@ -106,19 +110,16 @@ function countAction(countnow) {
 checked=false;
 function checkedAll (frm1) {
 	var aa= document.getElementById(frm1);
-	 if (checked == false)
-          {
-           checked = true
-          }
-        else
-          {
-          checked = false
-          }
-	for (var i =0; i < aa.elements.length; i++) 
-	{
-	 aa.elements[i].checked = checked;
+	if (checked == false) {
+		checked = true
 	}
-      }
+	else {
+		checked = false
+	}
+	for (var i =0; i < aa.elements.length; i++)  {
+		aa.elements[i].checked = checked;
+	}
+}
 
 $(document).ready(function(){
 	$('form').submit(function(){
