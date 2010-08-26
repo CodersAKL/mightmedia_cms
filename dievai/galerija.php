@@ -297,7 +297,7 @@ if (isset($_GET['v'])) {
 				}
 				$text .= "
 			<div class=\"gallery img_left\" >
-				<a rel=\"lightbox\" href=\"".ROOT."images/galerija/" . $row2['file'] . "\" title=\"" . (!empty($row2['pavadinimas'])?$row2['pavadinimas'] . "<br>":'') . trimlink(strip_tags($row2['apie']), 50) . "\">
+				<a rel=\"lightbox\" href=\"".ROOT."images/galerija/" . $row2['file'] . "\" title=\"" . (!empty($row2['pavadinimas'])?input($row2['pavadinimas']) . "<br>":'') . trimlink(strip_tags($row2['apie']), 50) . "\">
 					<img src=\"".ROOT."images/galerija/mini/" . $row2['file'] . "\" alt=\"\" />
 				</a>
 				<div class='gallery_menu'>

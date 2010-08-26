@@ -20,7 +20,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'Pateikti') {
     $komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'taip' ? 'taip' : 'ne');
     $kategorija = (int)$_POST['kategorija'];
     $pavadinimas = strip_tags($_POST['pav']);
-    $autorius = (isset($_SESSION['username']) ? $_SESSION['username'] : 0);
+    $autorius = (isset($_SESSION['username']) ? $_SESSION['username'] : '-');
     $autoriusid = (isset($_SESSION['id']) ? $_SESSION['id'] : 0);
     if (empty($apr) || empty($pavadinimas)) {
       $error = "{$lang['admin']['article_emptyfield']}.";

@@ -65,7 +65,7 @@ if (isset($_POST['select']) || isset($_GET['s'])) {
 				$nick = user($row['nick'], $row['nick_id']);
 			}
 			$info[] = array(
-				$lang['new']['author'] => $nick, $lang['contact']['message'] => smile(bbchat(trimlink(input($row['zinute']), 150))), $lang['admin']['action'] => "<a href=\"" . url("s," . str_replace('=', '', base64_encode($pg)) . ";d," . $row['id'] . "") . "\" onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a><a href=\"" . url("s," . str_replace('=', '', base64_encode($pg)) . ";e," . $row['id'] . "") . "\" title='{$lang['admin']['edit']}'><img src=\"" . ROOT . "images/icons/pencil.png\" alt=\"[{$lang['admin']['edit']}]\" border=\"0\" class=\"middle\" /></a>");
+				$lang['new']['author'] => $nick, $lang['contact']['message'] => smile(bbchat(trimlink(input($row['zinute']), 150))), $lang['admin']['action'] => "<a href=\"" . url("s," . str_replace('=', '', base64_encode($pg)) . ";d," . $row['id'] . "") . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a><a href=\"" . url("s," . str_replace('=', '', base64_encode($pg)) . ";e," . $row['id'] . "") . "\" title='{$lang['admin']['edit']}'><img src=\"" . ROOT . "images/icons/pencil.png\" alt=\"[{$lang['admin']['edit']}]\" border=\"0\" class=\"middle\" /></a>");
 			//$pgs[$row['kid']] = $row['kid'];
 		}
 		echo '<style type="text/css" title="currentStyle">

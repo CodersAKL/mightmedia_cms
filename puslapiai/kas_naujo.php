@@ -80,7 +80,7 @@ elseif(!empty($url['d']) && isnum($url['d'])) {
 	}
 	//straipsniai
 	if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
-		$q = mysql_query1("SELECT `id`, `t_text`, `pav`, `kat`, `date` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `date` BETWEEN " . escape($nuo) . " AND " . escape($iki) . " AND `rodoma`='TAIP'  ORDER BY `date` DESC");
+		$q = mysql_query1("SELECT `id`, `t_text`, `pav`, `kat`, `date`, `autorius` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `date` BETWEEN " . escape($nuo) . " AND " . escape($iki) . " AND `rodoma`='TAIP'  ORDER BY `date` DESC");
 		if (sizeof($q) > 0) {
 			//$text .= "<b>{$lang['new']['articles']}:</b><br/>";
 			$text = '';

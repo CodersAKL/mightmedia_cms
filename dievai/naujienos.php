@@ -183,7 +183,7 @@ if (isset($_GET['v'])) {
 					$lang['admin']['news_name'] => $row['pavadinimas'],
 					$lang['admin']['news_more'] => trimlink(strip_tags($row['naujiena']), 55),
 					$lang['admin']['news_date'] => date('Y-m-d', $row['data']),
-					$lang['admin']['edit'] => "<a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id']) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id']) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src=\"" . ROOT . "images/icons/cross.png\" border=\"0\"></a>"
+					$lang['admin']['edit'] => "<a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id']) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id']) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "images/icons/cross.png\" border=\"0\"></a>"
 				);
 			}
 			echo '<style type="text/css" title="currentStyle">
@@ -250,7 +250,7 @@ if (isset($_GET['v'])) {
 						" target="_blank">' . $sql['pavadinimas'] . '</a>',
 					$lang['admin']['news_date'] => date('Y-m-d', $sql['data']),
 					$lang['admin']['news_more'] => trimlink(strip_tags($sql['naujiena']), 55),
-					"{$lang['admin']['action']}:" => "<a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id']) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' border='0'></a> <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id']) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id']) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='" . ROOT . "images/icons/cross.png' border='0'></a>");
+					"{$lang['admin']['action']}:" => "<a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id']) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' border='0'></a> <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id']) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id']) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "images/icons/cross.png' border='0'></a>");
 			}
 			echo '<style type="text/css" title="currentStyle">
 			@import "' . ROOT . 'javascript/table/css/demo_page.css";

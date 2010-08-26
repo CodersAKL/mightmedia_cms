@@ -211,11 +211,11 @@ editor('jquery', 'standartinis', array('str' => $lang['admin']['article']), arra
 		$info = array();
 
 		foreach ($q as $sql) {
-			$sql2 = mysql_query1("SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE `id`=" . escape($sql['autorius'] ). " LIMIT 1");
+			//$sql2 = mysql_query1("SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE `id`=" . escape($sql['autorius'] ). " LIMIT 1");
 
 			$info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />" => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"articles_delete[]\" />",
 			 $lang['admin']['article'] => '<a href="#" title="<b>' . $sql['pav'] . '</b>
-			<br />' . $lang['admin']['article_author'] . ': <b>' . $sql2['nick'] . '</b>" target="_blank">' . input($sql['pav']) . '</a>', 
+			<br />' . $lang['admin']['article_author'] . ': <b>' . $sql['autorius'] . '</b>" target="_blank">' . input($sql['pav']) . '</a>', 
 			$lang['admin']['article_date'] => date('Y-m-d', $sql['date']), 
 			$lang['admin']['article_preface'] => trimlink(strip_tags($sql['t_text']), 55),
 			"{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ). "' title='{$lang['admin']['delete']}'><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
