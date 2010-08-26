@@ -681,7 +681,7 @@ $lang['download']['notallowed'] = 'Jums neleidžiama matyti šių failų.';
 //tree
 $lang['tree']['hidden'] = 'Paslėpti puslapiai';
 //setupo kalba
-$lang['setup']['liceanse'] = 'Licensija';
+$lang['setup']['liceanse'] = 'Licencija';
 $lang['setup']['crete_db'] = 'Bandyti sukurti duombazę';
 $lang['setup']['mysql_connected'] = 'Prisijungimas prie MySQL serverio pavyko.';
 $lang['setup']['query'] = 'Užklausa';
