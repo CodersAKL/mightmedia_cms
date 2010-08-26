@@ -156,6 +156,7 @@ var bkLib = {
 	noSelect : function(element) {
 		if(element.setAttribute && element.nodeName.toLowerCase() != 'input' && element.nodeName.toLowerCase() != 'textarea') {
 			element.setAttribute('unselectable','on');
+			
 		}
 		for(var i=0;i<element.childNodes.length;i++) {
 			bkLib.noSelect(element.childNodes[i]);
@@ -322,7 +323,9 @@ var nicEditor = bkClass.extend({
 	
 	panelInstance : function(e,o) {
 		e = this.checkReplace($BK(e));
-		var panelElm = new bkElement('DIV').setStyle({width : (parseInt(e.getStyle('width')) || e.clientWidth)+'px'}).appendBefore(e);
+		//var panelElm = new bkElement('DIV').setStyle({width : (parseInt(e.getStyle('width')) || e.clientWidth)+'px'}).appendBefore(e);
+				var panelElm = new bkElement('DIV').setStyle({width : '90%'}).appendBefore(e);
+
 		this.setPanel(panelElm);
 		return this.addInstance(e,o);	
 	},
@@ -1377,7 +1380,7 @@ var nicUploadButton = nicEditorAdvancedButton.extend({
 
 		this.myForm = $BK(this.myBody.getElementsByTagName('form')[0]);
 		this.myInput = $BK(this.myBody.getElementsByTagName('input')[1]).addEvent('change', this.startUpload.closure(this));
-		this.myStatus = new bkElement('div',this.myDoc).setStyle({textAlign : 'center', fontSize : '14px'}).appendTo(this.myBody);
+		this.myStatus = new bkElement('',this.myDoc).setStyle({textAlign : 'center', fontSize : '14px'}).appendTo(this.myBody);
 	},
 
 	startUpload : function() {

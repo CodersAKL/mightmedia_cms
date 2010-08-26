@@ -46,7 +46,7 @@ function komentarai($id, $hide = false) {
 				$tr = $i % 2 ? '2' : '';
 				$text .= "<div class=\"tr$tr\"><em><a href=\"".$_SERVER['REQUEST_URI']."#k:" . $row['id'] . "\" id=\"k:" . $row['id'] . "\"> <img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /> </a> ";
 				if (defined("LEVEL") && (LEVEL == 1 || (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('com', unserialize($_SESSION['mod']))))) {
-					$text .= "<a href='" . url("dk," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['admin']['delete']}?') \">[{$lang['admin']['delete']}]</a> ";
+					$text .= "<a style=\"float: right;\" href='" . url("dk," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['system']['delete_confirm']}') \"><img src='images/icons/cross_small.png' class='middle' alt='" . $lang['faq']['delete'] . "' border='0' title='" . $lang['admin']['delete'] . "' /></a> ";
 				}
 				if ($row['nick_id'] == 0) {
 					$duom = @unserialize($row['nick']);
@@ -55,7 +55,7 @@ function komentarai($id, $hide = false) {
 					$nick = user($row['nick'], $row['nick_id'], $row['levelis']);
 				}
 				$text .= $nick;
-				$text .= " (" . date('Y-m-d H:i:s ', $row['data']) . ") " . naujas($row['data'], $row['nick']) . "</em><br />
+				$text .= " (" . date('Y-m-d H:i:s', $row['data']) . ") " . naujas($row['data'], $row['nick']) . "</em><br />
 			  <div class=\"avatar\" align=\"left\">" . avatar($row['email'], 40) . "</div>" . smile(bbchat(wrap(input($row['zinute']), 80))) . "</div>";
 			}
 			if (!empty($text)) {

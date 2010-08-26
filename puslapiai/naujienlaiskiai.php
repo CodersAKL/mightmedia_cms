@@ -47,7 +47,7 @@ if(isset($_POST['email'])){
   }
 }
 $form = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "name" => "get"), 
-"{$lang['reg']['email']}:" => array("type" => "text", "value" => (isset($email) ? input($email) : ""), "name" => "email"),
+"{$lang['reg']['email']}:" => array("type" => "text", "value" => (isset($email) ? input($email) : ""), "name" => "email", "class" => "input"),
 kodas()=>array("type"=>"text","name"=>"kode", "class"=>"chapter"),
 " " => array("type" => "submit", "name" => "submit", "value" => $lang['news']['Order/Unorder']));
 lentele($page_pavadinimas, $forma->form($form));

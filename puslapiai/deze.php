@@ -69,7 +69,7 @@ if (sizeof($sql2) > 0) {
 		$extra = '';
 		$i++;
 		if ($_SESSION['level'] == 1 || (isset($_SESSION['mod']) && strlen($_SESSION['mod']) > 1)) {
-			$extra .= "<a href='" . url("d," . $row['id'] . "") . "'><img src='images/icons/control_delete_small.png' alt='[{$lang['admin']['delete'] }]' title='{$lang['admin']['delete'] }' class='middle' border='0' /></a> <a href='" . url("r," . $row['id'] . "") . "'><img src='images/icons/brightness_small_low.png' alt='[{$lang['admin']['edit'] }]' title='{$lang['admin']['edit'] }' class='middle' border='0' /></a> ";
+			$extra .= "<span style=\"float: right;\"><a href='" . url("d," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['system']['delete_confirm']}') \"><img src='images/icons/cross_small.png' alt='[{$lang['admin']['delete'] }]' title='{$lang['admin']['delete'] }' class='middle' border='0' /></a> <a href='" . url("r," . $row['id'] . "") . "'><img src='images/icons/pencil_small.png' alt='[{$lang['admin']['edit'] }]' title='{$lang['admin']['edit'] }' class='middle' border='0' /></a> </span>";
 		} else {
 			$extra = '';
 		}
@@ -77,7 +77,7 @@ if (sizeof($sql2) > 0) {
 			$tr = "2";
 		else
 			$tr = "";
-		$text .= "<div class=\"tr$tr\"><em><a href=\"".url("?id," . $url['id'] . ";p,$p#" . $row['id'] ). "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " . user($row['nikas'], $row['niko_id']) . " $extra (" . $row['time'] . ")</em><br />" . smile(bbchat($row['msg'])) . "</div>";
+		$text .= "<div class=\"tr$tr\"><em>$extra<a href=\"".url("?id," . $url['id'] . ";p,$p#" . $row['id'] ). "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " . user($row['nikas'], $row['niko_id']) . " (" . $row['time'] . ")</em><br />" . smile(bbchat($row['msg'])) . "</div>";
 
 	}
 } else {

@@ -88,7 +88,7 @@ if (sizeof($sql) > 0) {
 
 		$info[] = array("#" => $extra, "{$lang['admin']['pm_sender']}" => user($row['from_nick'], $row['from_id']), "{$lang['admin']['pm_reciever']}" => user($row['to_nick'], $row['to_id']), "{$lang['admin']['pm_subject'] }" => "<a href=\"".url("?id,{$_GET['id']};a," . $_GET['a'] . ";v," . $row['id'] ). "\" title=\"<b>Laiško ištrauka:</b> " . input(trim(strip_tags(str_replace(array('[', ']'), '', $row['msg'])))) . "...\" style=\"display:block\">" . (isset($row['title']) && !empty($row['title']) ? trimlink(input($row['title']), 10) : 'Be temos') . "</a>", //"Pavadinimas"=>"<a 
 			"{$lang['admin']['pm_date']}" => date('Y-m-d H:i:s ', $row['date']), "{$lang['admin']['action']}" => "
-			<a href=\"" . url("d," . $row['id'] . "") . "\" onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src=\"".ROOT."images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a>");
+			<a href=\"" . url("d," . $row['id'] . "") . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"".ROOT."images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a>");
 	}
 }
 //nupiesiam laisku lentele

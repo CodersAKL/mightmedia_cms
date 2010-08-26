@@ -219,7 +219,7 @@ if (isset($_POST['subedit']) && $_POST['subedit'] == $lang['admin']['forum_selec
 		$li = '';
 		foreach ($sql as $record1) {
 			$li .= '<li id="listItem_' . $record1['id'] . '" class="drag_block"> 
-<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';t,' . $record1['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
+<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';t,' . $record1['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
 <a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] . ';f,' . $tema['id'] ). '" style="align:right" ><img src="'.ROOT.'images/icons/pencil.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>  
 <img src="'.ROOT.'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
 ' . $record1['pav'] . '
@@ -279,7 +279,7 @@ if (isset($url['f'])) {
 				//$tekst .= "<option value=" . $record1['id'] . ">" . $record1['pav'] . "</option>\n";
 				$cats[$record1['id']] = $record1['pav'];
 				$li .= '<li id="listItem_' . $record1['id'] . '" class="drag_block"> 
-<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
+<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
 <img src="'.ROOT.'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
 ' . $record1['pav'] . '
 </li> ';

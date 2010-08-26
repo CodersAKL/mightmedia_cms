@@ -131,7 +131,7 @@ $text .= $pm_img . "
 				<div class=\"blokas\"><center><a href='".url("?id," . $url['id'] . ";n,1")."'><img src=\"images/pm/new.png\" alt=\"{$lang['user']['pm_new']}\" />{$lang['user']['pm_new']}</a></center></div>
 				<div class=\"blokas\"><center><a href='".url("?id," . $url['id'] . ";a,1")."'><img src=\"images/pm/inbox.png\" alt=\"{$lang['user']['pm_inbox']}\" />{$lang['user']['pm_inbox']}</a></center></div>
 				<div class=\"blokas\"><center><a href='".url("?id," . $url['id'] . ";a,2")."'><img src=\"images/pm/outbox.png\" alt=\"{$lang['user']['pm_outbox']}\" />{$lang['user']['pm_outbox']}</a></center></div>
-				<div class=\"blokas\"><center><a href='".url("?id," . $url['id'] . ";d,0")."' ><img src=\"images/pm/delete_all.png\" alt=\"{$lang['user']['pm_delete_all']}\" />{$lang['user']['pm_delete_all']}</a></center></div>
+				<div class=\"blokas\"><center><a onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" href='".url("?id," . $url['id'] . ";d,0")."' ><img src=\"images/pm/delete_all.png\" alt=\"{$lang['user']['pm_delete_all']}\" />{$lang['user']['pm_delete_all']}</a></center></div>
 			</td>
 		</tr>
 	</table>
@@ -221,9 +221,9 @@ if (defined("LEVEL") && LEVEL > 0 && $a == 1 && !isset($s)) {
 			} else {
 				$extra = "<img src='images/pm/pm_read.png' />";
 			}
-			$info[] = array("<input type=\"checkbox\" name='visi' onclick='checkedAll(\"pm\");'/>"=>"<input type=\"checkbox\" name=\"pm_s[]\" value=\"{$row['id']}\" />","" => $extra, "{$lang['user']['pm_subject']}:" => "<a href='".url("?id," . $url['id'] . ";v," . $row['id'] ). "' style=\"display: block\">" . (isset($row['Pavadinimas']) && !empty($row['Pavadinimas']) ? input(trimlink($row['Pavadinimas'], 40)) : "{$lang['user']['pm_nosubject']}") . "</a></div>", "{$lang['user']['pm_from']}:" => user($row['Nuo'], $row['from_id']), "{$lang['user']['pm_time']}:" => kada(date('Y-m-d H:i:s ', $row['Data'])), " " => "<a href='".url("?id," . $url['id'] . ";n,1;u," . str_replace("=", "", input(base64_encode($row['from']))) . ";i," . $row['id'] ). "'><img src='images/pm/replay.png' border=0 alt=\"{$lang['user']['pm_reply']}\" title=\"{$lang['user']['pm_reply']}\"/></a><a href='" . url('d,' . $row['id'] . '') . "'><img src='images/pm/delete.png' border=0 alt=\"{$lang['user']['pm_delete']}\" title=\"{$lang['user']['pm_delete']}\"/></a>");
+			$info[] = array("<input type=\"checkbox\" name='visi' onclick='checkedAll(\"pm\");'/>"=>"<input type=\"checkbox\" name=\"pm_s[]\" value=\"{$row['id']}\" />","" => $extra, "{$lang['user']['pm_subject']}:" => "<a href='".url("?id," . $url['id'] . ";v," . $row['id'] ). "' style=\"display: block\">" . (isset($row['Pavadinimas']) && !empty($row['Pavadinimas']) ? input(trimlink($row['Pavadinimas'], 40)) : "{$lang['user']['pm_nosubject']}") . "</a></div>", "{$lang['user']['pm_from']}:" => user($row['Nuo'], $row['from_id']), "{$lang['user']['pm_time']}:" => kada(date('Y-m-d H:i:s ', $row['Data'])), " " => "<a href='".url("?id," . $url['id'] . ";n,1;u," . str_replace("=", "", input(base64_encode($row['from']))) . ";i," . $row['id'] ). "'><img src='images/pm/replay.png' border=0 alt=\"{$lang['user']['pm_reply']}\" title=\"{$lang['user']['pm_reply']}\"/></a><a href='" . url('d,' . $row['id'] . '') . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='images/pm/delete.png' border=0 alt=\"{$lang['user']['pm_delete']}\" title=\"{$lang['user']['pm_delete']}\"/></a>");
 		}
-		lentele("{$lang['user']['pm_inbox']}", puslapiai($p, $limit, $pm_sk, 10) . "<br/><form method=\"post\" id=\"pm\" astion=\"\">" . $bla->render($info) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form><br/>" . puslapiai($p, $limit, $pm_sk, 10));
+		lentele("{$lang['user']['pm_inbox']}", puslapiai($p, $limit, $pm_sk, 10) . "<br/><form method=\"post\" id=\"pm\" astion=\"\">" . $bla->render($info) . "<input type=\"submit\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" value=\"{$lang['system']['delete']}\" /></form><br/>" . puslapiai($p, $limit, $pm_sk, 10));
 	} else {
 		lentele($lang['user']['pm_inbox'], "{$lang['user']['pm_empty_msg']}");
 	}

@@ -25,7 +25,7 @@ if (sizeof($q) > 0) {
 		} else {
 			$img = "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
 		}
-		$text .= "<div class=\"sarasas\"><br/><b>" . $i . "</b> $img " . user($row['nick'], $row['id'], $row['levelis']) . "</div>";
+		$text .= "<div class=\"sarasas\"><br/><b>" . $i . "</b> $img " . user($row['nick'], $row['id']) . "</div>";
 	}
 } else {
 	$text = ' ';

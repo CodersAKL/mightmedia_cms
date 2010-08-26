@@ -47,7 +47,7 @@ if ($_SESSION['level'] == 1) {
 			$value = $lang['faq']['submit'];
 		}
 
-		$duk = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "duk"), "{$lang['faq']['question']}:" => array("type" => "text", "value" => input($klausimas), "name" => "Klausimas", "class" => "input"), "{$lang['faq']['answer']}:" => array("type" => "string", "value" => editorius('tiny_mce', 'mini', 'Atsakymas', (isset($atsakymas) ? $atsakymas : ''))), "{$lang['faq']['order']}:" => array("type" => "text", "value" => input((int)$order), "name" => "Order", "class" => "input"), "" => array("type" => "hidden", "value" => input($id), "name" => "id", "id" => "id"), "" => array("type" => "submit", "name" => "dukas", "value" => $value));
+		$duk = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "duk"), "{$lang['faq']['question']}:" => array("type" => "text", "value" => input($klausimas), "name" => "Klausimas", "class" => "input"), "{$lang['faq']['answer']}:" => array("type" => "string", "value" => editorius('tiny_mce', 'mini', 'Atsakymas', (isset($atsakymas) ? $atsakymas : ''))), "{$lang['faq']['order']}:" => array("type" => "text", "value" => input((int)$order), "name" => "Order", "class" => "input"), " " => array("type" => "hidden", "value" => input($id), "name" => "eid", "id" => "id"), "" => array("type" => "submit", "name" => "dukas", "value" => $value));
 
 		include_once ("priedai/class.php");
 		$bla = new forma();
@@ -61,7 +61,7 @@ if (isset($_POST['dukas'])) {
 	$klausimas = $_POST['Klausimas'];
 	$atsakymas = str_replace(array('<br>'), array('<br />'), $_POST['Atsakymas']);
 	$order = ceil((int)$_POST['Order']);
-	$id = ceil((int)$url['e']);
+	$id = ceil((int)$_POST['eid']);
 
 	//jeigu rasom nauja
 	if ($_POST['dukas'] == $lang['faq']['submit']) {
@@ -75,7 +75,7 @@ if (isset($_POST['dukas'])) {
 	}
 
 	//jeigu redaguojam
-	elseif ($_POST['dukas'] == $lang['faq']['edit']) {
+	if ($_POST['dukas'] == $lang['faq']['edit']) {
 		$q = "UPDATE `" . LENTELES_PRIESAGA . "duk` SET
 		`atsakymas` = " . escape($atsakymas) . ",
 		`klausimas` = " . escape($klausimas) . ",
@@ -85,7 +85,8 @@ if (isset($_POST['dukas'])) {
 	}
 
 
-}}
+}
+}
 $text = '';
 $extra = "<ol>";
 
@@ -94,7 +95,7 @@ if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
 		$nr++;
 		$extra .= "<li><a href='".url('?id,'.$_GET['id'])."#" . $row['id']."'>" . $row['klausimas'] . "</a></li>\n";
-		$text .= "<h3>" . $nr . ". " . (defined("LEVEL") && LEVEL == 1 ? "<a href='" . url("d," . (int)$row['id'] . "") . "' onclick=\"return confirm('" . $lang['faq']['delete'] . "?')\"><img src='images/icons/control_delete_small.png' class='middle' alt='" . $lang['faq']['delete'] . "' border='0' title='" . $lang['faq']['delete'] . "?' /></a><a href='" . url("e," . (int)$row['id'] . "") . "'><img src='images/icons/brightness_small_low.png' class='middle' alt='" . $lang['faq']['edit'] . "' border='0' title='" . $lang['faq']['edit'] . "?' /></a>" : "") . "<a name='" . $row['id'] . "'>" . $row['klausimas'] . "</a></h3>\n<blockquote>" . $row['atsakymas'] . "</blockquote>\n";
+		$text .= "<h3>" . $nr . ". <a name='" . $row['id'] . "'>" . $row['klausimas'] . "</a>" . (defined("LEVEL") && LEVEL == 1 ? " <a href='" . url("d," . (int)$row['id'] . "") . "' onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='images/icons/cross_small.png' class='middle' alt='" . $lang['faq']['delete'] . "' border='0' title='" . $lang['faq']['delete'] . "' /></a> <a href='" . url("e," . (int)$row['id'] . "") . "'><img src='images/icons/pencil_small.png' class='middle' alt='" . $lang['faq']['edit'] . "' border='0' title='" . $lang['faq']['edit'] . "' /></a>" : "") . "</h3>\n" . $row['atsakymas'] . "\n";
 	}
 
 }

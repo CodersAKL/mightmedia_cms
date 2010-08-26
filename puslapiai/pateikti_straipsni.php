@@ -12,27 +12,21 @@
 
 
 if (isset($_POST['action']) && $_POST['action'] == 'Pateikti') {
-	if (isset($_POST['pav']) && isset($_POST['apr'])) {
-		$apr = $_POST['apr'];
-		$str = $_POST['str'];
-		$komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'taip' ? 'taip' : 'ne');
-		$kategorija = (int)$_POST['kategorija'];
-		$pavadinimas = strip_tags($_POST['pav']);
-		//$rodoma = (isset($_POST['rodoma']) && $_POST['rodoma'] == 'TAIP'?'TAIP':'NE');
-
-		if (isset($_SESSION['username'])) {
-			$autorius = $_SESSION['username'];
-			$autoriusid = $_SESSION['id'];
-		} else {
-			$autorius = 'Svečias';
-			$autoriusid = '0';
-		}
-
-		if (empty($str) || empty($pavadinimas)) {
-			$error = "Nepilnai užpildyti laukeliai.";
-		}
-		if (!isset($error)) {
-			$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "straipsniai` SET
+    if (isset($_POST['pav']) && isset($_POST['str'])) {
+    $straipsnis = explode('===page===',$_POST['str']);
+    $apr = $straipsnis[0];
+    $str = empty($straipsnis[1])?'':$straipsnis[1];
+    
+    $komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'taip' ? 'taip' : 'ne');
+    $kategorija = (int)$_POST['kategorija'];
+    $pavadinimas = strip_tags($_POST['pav']);
+    $autorius = (isset($_SESSION['username']) ? $_SESSION['username'] : 0);
+    $autoriusid = (isset($_SESSION['id']) ? $_SESSION['id'] : 0);
+    if (empty($apr) || empty($pavadinimas)) {
+      $error = "{$lang['admin']['article_emptyfield']}.";
+    }
+    if (!isset($error)) {
+      $result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "straipsniai` SET
 	    `kat` = " . escape($kategorija) . ",
 			`pav` = " . escape($pavadinimas) . ",
 			`t_text` = " . escape($apr) . ",
@@ -41,11 +35,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'Pateikti') {
 			`autorius` = " . escape($autorius) . ",
 			`autorius_id` = " . escape($autoriusid) . ",
 			`kom` = " . escape($komentaras) . ",
-			`rodoma` = 'NE'");
+			`rodoma` = 'NE',
+			`lang` = ".escape(lang())."");
 			if ($result) {
 				msg("Informacija", "Straipsnis pateiktas administracijos peržiūrai.");
 			} else {
-				klaida("Klaida", "Straipsnis nepatalpintas. Klaida:<br><b>" . mysql_error() . "</b>");
+				klaida("Klaida", "Straipsnis nepatalpintas.");
 			}
 		} else {
 			klaida("Klaida", $error);
@@ -68,7 +63,7 @@ if (sizeof($sql) > 0) {
 	include_once ("priedai/class.php");
 	$bla = new forma();
 
-	$straipsnis = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "name" => "reg"), "Pavadinimas:" => array("type" => "text", "value" => "", "name" => "pav", "class"=>"input"), "Komentarai:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"), "Kategorija:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class"=>"input"), "Straipsnis:" => array("type" => "string", "value" => editorius('spaw', 'standartinis', array('apr' => 'Straipsnio įžanga', 'str' => 'straipsnis'), array('apr' => 'Straipsnio įžanga', 'str' => 'Straipsnis'))), 'Pateikti' => array("type" => "submit", "name" => "action", "value" => 'Pateikti'), );
+	$straipsnis = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "name" => "reg"), "Pavadinimas:" => array("type" => "text", "value" => "", "name" => "pav", "class"=>"input"), "Komentarai:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"), "Kategorija:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class"=>"input"), "Straipsnis:" => array("type" => "string", "value" => editorius('jquery', 'standartinis', 'str')), 'Pateikti' => array("type" => "submit", "name" => "action", "value" => 'Pateikti'), );
 
 
 	lentele('Straipsnio rašymas', $bla->form($straipsnis));

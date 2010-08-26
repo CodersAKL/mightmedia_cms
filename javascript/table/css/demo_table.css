@@ -34,6 +34,7 @@
 	/*position: relative;*/
 	min-height: 202px;
 	/*_height: 302px;*/
+	margin-top: 20px;
 	zoom: 1; /* Feeling sorry for IE */
 }
 .dataTables_wrapper table{

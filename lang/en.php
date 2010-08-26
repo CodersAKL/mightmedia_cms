@@ -9,6 +9,7 @@ $lang['system']['sorry'] = 'Sorry';
 $lang['system']['updated'] = 'Updated';
 $lang['system']['done'] = 'Done!';
 $lang['system']['no_items'] = 'Empty!';
+$lang['system']['new'] = 'New';
 $lang['system']['cache_info'] = 'Cache is turned on, If you want to see your updates right now, click <img src="images/icons/publish.png" alt="" /> on your left.';
 $lang['system']['contactadmin'] = 'Contact admin';
 $lang['system']['notadmin'] = 'You are not admin!';

@@ -161,7 +161,7 @@ if ($_GET['v'] == 4) {
         $lang['admin']['article'] => input($row['pav']), 
         $lang['admin']['article_date'] => date('Y-m-d', $row['date']), 
         $lang['admin']['article_preface'] => trimlink(strip_tags($row['t_text']), 55),
-        $lang['admin']['edit'] => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src=\"".ROOT."images/icons//cross.png\" border=\"0\"></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>"
+        $lang['admin']['edit'] => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"".ROOT."images/icons/cross.png\" border=\"0\"></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>"
         );
 			}
 			echo '<style type="text/css" title="currentStyle">

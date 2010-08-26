@@ -90,7 +90,7 @@ HTML;
     $quest = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "poll_questions` ORDER BY `id` DESC",3600);
     foreach ($quest as $row) {
         $info[] = array("#" => ($row['shown'] == 1 ? '<img src="' . ROOT . '/images/icons/status_online.png" alt="" />' : '<img src="' . ROOT . '/images/icons/status_offline.png" alt="" />'), "{$lang['admin']['poll']}:" => input($row['question']),
-            "{$lang['admin']['action']}:" => " <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};v,{$_GET['v']};e," . $row['id']) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id']) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='" . ROOT . "images/icons/cross.png' border='0'></a>");
+            "{$lang['admin']['action']}:" => " <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};v,{$_GET['v']};e," . $row['id']) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id']) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "images/icons/cross.png' border='0'></a>");
     }
     if (isset($info)) {
         echo '<style type="text/css" title="currentStyle">

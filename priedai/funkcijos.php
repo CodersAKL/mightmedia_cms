@@ -234,7 +234,7 @@ function ban($ipas = '', $kodel = '') {
 		$kodel = $lang['system']['forhacking'] . ' - ' . input(str_replace("\n", "", $_SERVER['QUERY_STRING']));
 	if (empty($ipas))
 		$ipas = getip();
-	$atidaryti = fopen(".htaccess", "a");
+	$atidaryti = fopen(ROOT.".htaccess", "a");
 	fwrite($atidaryti, '# ' . $kodel . " \nSetEnvIf Remote_Addr \"^{$ipas}$\" draudziam\n");
 	fclose($atidaryti);
 	//@chmod(".htaccess", 0777);
@@ -951,9 +951,10 @@ function apvalinti($sk, $kiek = 2) {
  * @return formated string
  */
 function naujas($data, $nick = null) {
+  global $lang;
 	if (isset($_SESSION['lankesi'])) {
 		return (($data > $_SESSION['lankesi']) ? '<img src="' . ROOT . 'images/icons/new.png" onload="$(this).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
-" alt="New" border="0" style="vertical-align: middle;" />' : '');
+" alt="New" border="0" style="vertical-align: middle;" title="'.$lang['system']['new'].'" />' : '');
 	} else {
 		return '';
 	}
@@ -1359,22 +1360,22 @@ HTML;
 			$return .= <<< HTML
 <script type="text/javascript">
 $(document).ready(function(){
-	new nicEditor({fullPanel : true, iconsPath : '{$root}javascript/htmlarea/nicedit/nicEditorIcons.gif'}).panelInstance('{$key}');
+	new nicEditor({fullPanel : true, iconsPath : '{$root}javascript/htmlarea/nicedit/nicEditorIcons.gif', width: '90%'}).panelInstance('{$key}');
 	
 });
 </script>
-<textarea id="{$key}" cols="40" name="{$key}">{$value[$key]}</textarea>
+<textarea id="{$key}" style="width: 90%" name="{$key}">{$value[$key]}</textarea>
 HTML;
 		}
 	} else {
 		$return .= <<< HTML
 <script type="text/javascript">
 $(document).ready(function(){
-	new nicEditor({fullPanel : true, iconsPath : '{$root}javascript/htmlarea/nicedit/nicEditorIcons.gif', width: '100%'}).panelInstance('{$id}');
+	new nicEditor({fullPanel : true, iconsPath : '{$root}javascript/htmlarea/nicedit/nicEditorIcons.gif', width: '90%'}).panelInstance('{$id}');
 	
 });
 </script>
-<textarea id="{$id}" cols="40" name="{$id}">{$value}</textarea>
+<textarea id="{$id}" style="width: 90%" name="{$id}">{$value}</textarea>
 HTML;
 	}
 

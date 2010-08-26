@@ -46,17 +46,13 @@ if (isset($_SESSION['id']) && $_SESSION['id']) {
 								} else {
 									$autorius = '0';
 								}
-								$result = mysql_query1("
-                    INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`)
-                    VALUES (" . escape($_POST['Pavadinimas']) . "," . escape($filename) . ",
-                    " . escape($_POST['Aprasymas']) . "," . escape($autorius) . ", '" . time() . "', " . escape($_POST['cat']) . ")");
+								$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`) VALUES (" . escape($_POST['Pavadinimas']) . "," . escape($filename) . ", " . escape($_POST['Aprasymas']) . "," . escape($autorius) . ", '" . time() . "', " . escape($_POST['cat']) . ")");
 
 								if ($result) {
 									msg("Informacija", "Failas sėkmingai pateiktas administracijos peržiūrai");
 
-
 								} else {
-									klaida('Įkėlimo klaida', 'Dokumentas: <font color="#FF0000">' . $filename . '</font> nebuvo įkeltas. Klaida:<br><b>' . mysql_error() . '</b>');
+									klaida('Įkėlimo klaida', 'Dokumentas: <font color="#FF0000">' . $filename . '</font> nebuvo įkeltas.');
 
 								}
 							} else {

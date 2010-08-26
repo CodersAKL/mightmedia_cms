@@ -285,7 +285,7 @@ HTML;
 	if (sizeof($recordSet) > 0) {
 		foreach ($recordSet as $record) {
 			$li .= '<li id="listItem_' . $record['id'] . '" class="drag_block"> 
-<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
+<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
 <a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record['id'] ). '" style="align:right"><img src="'.ROOT.'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
 <a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record['id'] ). '" style="align:right"><img src="'.ROOT.'images/icons/pencil.png" title="' . $lang['admin']['panel_text'] . '" align="right" /></a> 
 <img src="'.ROOT.'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 
@@ -299,7 +299,7 @@ HTML;
 		foreach ($recordSet1 as $record1) {
 			
 			$li1 .= '<li id="listItem_' . $record1['id'] . '" class="drag_block"> 
-<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
+<a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
 <a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] ). '" style="align:right"><img src="'.ROOT.'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
 <a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record1['id'] ). '" style="align:right"><img src="'.ROOT.'images/icons/pencil.png" title="' . $lang['admin']['panel_text'] . '" align="right" /></a> 
 <img src="'.ROOT.'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" /> 

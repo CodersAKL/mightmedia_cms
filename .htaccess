@@ -14,12 +14,10 @@ Options -Indexes
   php_value mbstring.http_output            pass
   php_flag mbstring.encoding_translation    off
 </IfModule>
-# Various rewrite rules.
 <IfModule mod_rewrite.c>
 	RewriteEngine on
 	#kai kuriuose netikusiuose hostinguose reikia
 	#RewriteBase /
-
 	#Blokuojam blogus robotus
 	RewriteCond %{HTTP_REFERER} q=Guestbook [NC,OR]
 	RewriteCond %{HTTP_USER_AGENT} ^BlackWidow [NC,OR]
@@ -79,8 +77,6 @@ Options -Indexes
 	RewriteCond %{HTTP_USER_AGENT} ^pavuk [NC,OR]
 	RewriteCond %{HTTP_USER_AGENT} ^pcBrowser [NC,OR]
 	RewriteCond %{HTTP_USER_AGENT} dloader(NaverRobot) [NC,OR]
-	#RewriteCond %{HTTP_USER_AGENT} ^puf [NC,OR]
-	#RewriteCond %{HTTP_USER_AGENT} ^RealDownload [NC,OR]
 	RewriteCond %{HTTP_USER_AGENT} ^ReGet [NC,OR]
 	RewriteCond %{HTTP_USER_AGENT} ^SearchExpress [NC,OR]
 	RewriteCond %{HTTP_USER_AGENT} ^SiteSnagger [NC,OR]
@@ -107,13 +103,11 @@ Options -Indexes
 	RewriteCond %{HTTP_USER_AGENT} ^WebStripper [NC,OR]
 	RewriteCond %{HTTP_USER_AGENT} ^WebWhacker [NC,OR]
 	RewriteCond %{HTTP_USER_AGENT} ^WebZIP [NC,OR]
-	#RewriteCond %{HTTP_USER_AGENT} ^Wget [NC,OR]
 	RewriteCond %{HTTP_USER_AGENT} ^Widow [NC,OR]
 	RewriteCond %{HTTP_USER_AGENT} ^WWWOFFLE [NC,OR]
 	RewriteCond %{HTTP_USER_AGENT} ^Xaldon\ WebSpider [NC,OR]
 	RewriteCond %{HTTP_USER_AGENT} ^Zeus [NC,OR]
 	RewriteCond %{HTTP_USER_AGENT} ^ZyBorg [NC]
-	#RewriteRule ^.* - [F,L]
 	RewriteRule . gpl-2.0.txt [L]
 
 	RewriteCond %{REQUEST_FILENAME} !-f
@@ -135,4 +129,3 @@ ErrorDocument 500 /klaida.php
 Order Allow,Deny
 Deny from env=draudziam
 Allow from all 
-

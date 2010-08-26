@@ -96,7 +96,7 @@ if ($kid != 0) {
 			if (!empty($sql['daugiau'])) {
 				$text = '<div class="naujiena">' . $sql['daugiau'];
 			}
-			$text .= "</div><div class='line'></div>" . date('Y-m-d H:i:s ', $sql['data']) . ",  <b>" . $sql['autorius'] . "</b>";
+			$text .= "</div><div class='line'></div>" . date('Y-m-d H:i:s', $sql['data']) . ",  <b>" . $sql['autorius'] . "</b>";
 
 			//Atvaizduojam naujieną
 			lentele($title, $text, rating_form($page, $sql['id']));
