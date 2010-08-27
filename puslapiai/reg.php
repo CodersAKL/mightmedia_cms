@@ -50,7 +50,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'registracija') {
 	if (strlen($vardas) > 15) {
 		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['usrtoolong']}<br />";
 	}
-	if (preg_match('/^[\p{L}0-9]+$/u', $vardas) == 0) {
+	//šitaip neveikia kai kuriuose hostinguose
+	//if (preg_match('/^[\p{L}0-9]+$/u', $vardas) == 0) {
+	if (preg_match('/^[\p{L}0-9a-zA-Z]+$/u', $vardas) == 0) {
 		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['only_letters_numbers']}<br />";
 	}
 	if ($pass != $pass2) {
