@@ -52,11 +52,11 @@ if (defined("LEVEL") && LEVEL == 1) {
 			}
 			redirect(url("?id,{$_GET['id']};p,$p#" . escape($url['r'])), "meta");
 		}
-	} elseif (isset($url['a']) && $url['a'] > 0) {
+	} /*kam sitas cia elseif (isset($url['a']) && $url['a'] > 0) {
 		$id = (int) $url['a'];
 		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "knyga` SET `aproved` = IF(aproved=1, 0, 1) WHERE `id` =" . escape($id) . " LIMIT 1");
 		redirect(url("?id,{$_GET['id']};p,{$p}"));
-	}
+	}*/
 }
 //Atvaizduojam pranesimus su puslapiavimu - LIMITAS nurodytas virsuje
 $sql2 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "knyga` ORDER BY `time` DESC LIMIT $p, $limit");
@@ -69,9 +69,8 @@ $i = 0;
 if (sizeof($sql2) > 0) {
 	foreach ($sql2 as $row) {
 		$i++;
-		$extra = '';
 		if (defined("LEVEL") && LEVEL == 1) {
-			$extra .= "<a href='" . url("d," . $row['id'] . "") . "'><img src='images/icons/control_delete_small.png' alt='[d]' title='{$lang['admin']['delete']}' class='middle' border='0' /></a> <a href='" . url("r," . $row['id'] . "") . "'><img src='images/icons/brightness_small_low.png' alt='[{$lang['admin']['edit']}]' title='{$lang['admin']['edit']}' class='middle' border='0' /></a>  ";
+			$extra = "<span style=\"float: right;\"><a href='" . url("d," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['system']['delete_confirm']}')\"><img src='images/icons/cross_small.png' alt='[d]' title='{$lang['admin']['delete']}' class='middle' border='0' /></a> <a href='" . url("r," . $row['id'] . "") . "'><img src='images/icons/pencil_small.png' alt='[{$lang['admin']['edit']}]' title='{$lang['admin']['edit']}' class='middle' border='0' /></a></span>  ";
 		} else {
 			$extra = '';
 		}
@@ -82,13 +81,14 @@ if (sizeof($sql2) > 0) {
 		$text .= "
 		<div class=\"tr$tr\">
 			<em>
-				<a href=\"" . url("?id," . $_GET['id'] . ";a," . $row['id'] . ";p," . $p) . "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\">
-					<img src=\"images/icons/" . ($row['aproved'] == 1 ? "tick_circle.png" : "status_offline.png") . "\" alt=\"#\" class=\"middle\" border=\"0\" />
-				</a>
-				" . input($row['nikas']) . " $extra (" . date('Y-m-d H:i:s', $row['time']) . ") - " . kada(date('Y-m-d H:i:s', $row['time'])) . "
+				" . $extra
+				 . input($row['nikas']) . " (" . date('Y-m-d H:i:s', $row['time']) . ") - " . kada(date('Y-m-d H:i:s', $row['time'])) . "
 			</em><br />
 			" . smile(bbchat(wrap($row['msg'], 80))) . "
 		</div>";
+		/*<a href=\"" . url("?id," . $_GET['id'] . ";a," . $row['id'] . ";p," . $p) . "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\">
+					<img src=\"images/icons/" . ($row['aproved'] == 1 ? "tick_circle.png" : "status_offline.png") . "\" alt=\"#\" class=\"middle\" border=\"0\" />
+				</a>*/
 	}
 }
 
