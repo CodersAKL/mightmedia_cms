@@ -387,6 +387,7 @@ a{
 	padding-right: 10px;
 	padding-bottom: 10px;
 }
+.right li {list-style:none outside none;}
 #footer{
 	font-family: "Verdana";
 	color: #CCCCCC;
