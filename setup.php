@@ -719,7 +719,7 @@ HTML;
 						<?php } ?>
 
 						<td valign="top" class="right">
-							<h1>MightMedia TVS įdiegimas / MightMedia CMS setup</h1>
+							<h1>MightMedia CMS setup / MightMedia TVS įdiegimas</h1>
 							<div class="vidus">
 								<?php if ($step == 0) { ?>
 								
@@ -737,7 +737,7 @@ HTML;
 								
 									<form name="setup" action="">
 										<h2><?php echo $lang['setup']['liceanse'];?></h2>
-										<textarea name="copy" rows=15 cols=80 wrap="on" readonly="readonly"><?php include ('Skaityk.txt'); ?></textarea><br />
+										<textarea name="copy" rows=15 cols=80 wrap="on" readonly="readonly"><?php include ('license.txt'); ?></textarea><br />
 										<label><input name="agree_check" type="checkbox" value="ON" /> <?php echo $lang['setup']['agree']; ?></label><br /><br />
 										<input class="submit" name="agree" type="reset" value="<?php echo $lang['setup']['next'];?> >>" onClick="Check();" />
 									</form>

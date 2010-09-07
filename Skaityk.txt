@@ -3,7 +3,7 @@
 	1. Reikalavimai
 	2. Idiegimas
 	3. Konfiguravimas
-	4. Licenzija
+	4. Licensija
 
 ------------------------
 
