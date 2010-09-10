@@ -204,7 +204,7 @@ lentele($page_pavadinimas,$text);
 			$psl = array(
 				"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_psl"),
 				$lang['admin']['page_name'] => array("type" => "text", "value" => $sql['pavadinimas'], "name" => "pslp", "class" => "input"),
-				$lang['admin']['page_showfor'] => array("type" => "select", "value" => $teises, "name" => "Teises", "class" => "input", "class" => "input", "selected" => (isset($sql['teises']) ? input($sql['teises']) : '')),
+			//$lang['admin']['page_showfor'] => array("type" => "select", "value" => $teises, "name" => "Teises", "class" => "input", "class" => "input", "selected" => (isset($sql['teises']) ? input($sql['teises']) : '')),
 				$lang['admin']['page_show'] => array("type" => "select", "value" => array("Y" => $lang['admin']['yes'], "N" => $lang['admin']['no']), "selected" => input($sql['show']), "name" => "Show"), "Sub" => array("type" => "select", "value" => $parents, "selected" => input($sql['parent']), "name" => "parent"),
 				$lang['admin']['page_showfor'].$info => array("type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai"),
 				"" => array("type" => "submit", "name" => "Redaguoti_psl", "value" => $lang['admin']['edit'])
