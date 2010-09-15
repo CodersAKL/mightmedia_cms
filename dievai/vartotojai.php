@@ -40,7 +40,7 @@ if (isset($_POST['action']) && $_POST['action'] == $lang['admin']['save'] && $_P
 	} else {
 		$tsk = $info['taskai'];
 	}
-	if (!empty($_POST['lvl']) && $_POST['lvl'] < 31) {
+	if (!empty($_POST['lvl'])/* && $_POST['lvl'] < 31*/) {
 		$lvl = (int) $_POST['lvl'];
 	} else {
 		$lvl = $info['levelis'];

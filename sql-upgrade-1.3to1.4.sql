@@ -54,3 +54,4 @@ CREATE TABLE IF NOT EXISTS `poll_answers` (
   PRIMARY KEY (`id`),
   KEY `lang` (`lang`)
 ) ENGINE=MyISAM;
+UPDATE `users` SET `levelis`=2 WHERE `levelis`!=1;

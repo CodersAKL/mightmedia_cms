@@ -345,7 +345,7 @@ if (basename($_SERVER['PHP_SELF']) != 'upgrade.php') {
 	if (sizeof($sql) > 0) {
 		foreach ($sql as $row) {
 
-			$levels[(int) $row['teises']] = array('pavadinimas' => $row['pavadinimas'], 'aprasymas' => $row['aprasymas'], 'pav' => input($row['pav']));
+			$levels[(int) $row['id']] = array('pavadinimas' => $row['pavadinimas'], 'aprasymas' => $row['aprasymas'], 'pav' => input($row['pav']));
 		}
 	}
 	$levels[1] = array('pavadinimas' => $lang['system']['admin'], 'aprasymas' => $lang['system']['admin'], 'pav' => 'admin.png');

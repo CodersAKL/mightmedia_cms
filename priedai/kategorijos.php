@@ -68,14 +68,14 @@ HTML;
 			$teises[$key] = $conf['level'][$key]['pavadinimas'];
 		}
 		$teises[0] = $lang['admin']['for_guests'];
-	} else {
+	}/* else {
 
 		for ($i = 1; $i <= 20; $i++) {
 			if (!isset($conf['level'][$i])) {
 				$teises[$i] = $i;
 			}
 		}
-	}
+	}*/
 
 
 	if (isset($_POST['action']) && $_POST['action'] == $lang['system']['createcategory']) {
@@ -87,7 +87,8 @@ HTML;
 
 		if (isset($_POST['Teises'])) {
 			if ($kieno == 'vartotojai')
-				$teises_in = $_POST['Teises'];
+				//$teises_in = $_POST['Teises'];
+				$teises_in = 'N;';
 			else
 				$teises_in = serialize($_POST['Teises']);
 		} else {
@@ -102,17 +103,17 @@ HTML;
 		}
 
 		if ($kieno == 'vartotojai') {
-			$einfo = mysql_query('SELECT `teises` FROM `' . LENTELES_PRIESAGA . 'grupes` WHERE `teises` = ' . escape($teises_in) . ' AND `kieno` = \'vartotojai\'');
+			//$einfo = mysql_query('SELECT `teises` FROM `' . LENTELES_PRIESAGA . 'grupes` WHERE `teises` = ' . escape($teises_in) . ' AND `kieno` = \'vartotojai\'');
 
-			if (sizeof($einfo) > 0) {
+			//if (sizeof($einfo) > 0) {
 				$result = mysql_query1('INSERT INTO `' . LENTELES_PRIESAGA . 'grupes` (`pavadinimas`, `aprasymas`, `teises`, `pav`, `path`, `kieno`, `mod`) VALUES (' . escape($pavadinimas) . ',  ' . escape($aprasymas) . ', ' . escape($teises_in) . ', ' . escape($pav) . ', ' . escape($pathas) . ', ' . escape($kieno) . ', ' . escape($moderuoti) . ')');
 
 				if ($result) {
 					msg($lang['system']['done'], $lang['system']['categorycreated']);
 				}
-			} else {
+			/*} else {
 				klaida($lang['system']['warning'], $lang['system']['badlevel']);
-			}
+			}*/
 		} else {
 			$result = mysql_query1('INSERT INTO `' . LENTELES_PRIESAGA . 'grupes` (`pavadinimas`,`aprasymas`, `teises`, `pav`, `path`, `kieno`, `mod`, `lang`) VALUES (' . escape($pavadinimas) . ',  ' . escape($aprasymas) . ', ' . escape($teises_in) . ', ' . escape($pav) . ', ' . escape($pathas) . ', ' . escape($kieno) . ', ' . escape($moderuoti) . ', ' . escape(lang()) . ')');
 			if ($result) {
@@ -129,7 +130,8 @@ HTML;
 		$pav = strip_tags($_POST['Pav']);
 		$id = ceil((int) $_POST['Kategorijos_id']);
 		if ($kieno == 'vartotojai')
-			$teises_in = $_POST['Teises'];
+			//$teises_in = $_POST['Teises'];
+			$teises_in = 'N;';
 		else
 			$teises_in = (isset($_POST['Teises']) ? serialize($_POST['Teises']) : 'N;');
 		$moderuoti = ((isset($_POST['punktai'])) ? serialize($_POST['punktai']) : '');
@@ -246,7 +248,7 @@ HTML;
 			$vartotojai = false;
 		}
 
-		if (count($teises) > 0) {
+		//if (count($teises) > 0) {
 			if (!empty($extra['mod'])) {
 				$ser = unserialize($extra['mod']);
 			} else {
@@ -271,7 +273,7 @@ HTML;
 			if (/* $leidimas == true && */ $vartotojai == false && $_GET['v'] == 2) {
 
 
-				$kategorijos[$textas] = array('type' => 'select', 'extra' => 'multiple="multiple"', 'value' => $teises, 'class' => 'input asmSelect', 'name' => 'Teises[]', 'id' => 'punktai');
+				//$kategorijos[$textas] = array('type' => 'select', 'extra' => 'multiple="multiple"', 'value' => $teises, 'class' => 'input asmSelect', 'name' => 'Teises[]', 'id' => 'punktai');
 
 				if (!empty($extra['teises']) && $extra['teises'] != 'N;')
 					$kategorijos[$textas]['selected'] = unserialize($extra['teises']);
@@ -280,9 +282,9 @@ HTML;
 			}
 			$kategorijos[' '] = array('type' => 'hidden', 'name' => 'Kategorijos_id', 'value' => (isset($extra['id']) ? input($extra['id']) : ''));
 			lentele($lang['system']['categories'], $bla->form($kategorijos));
-		} else {
+		/*} else {
 			klaida($lang['system']['warning'], $lang['system']['nomorecategories']);
-		}
+		}*/
 	} elseif ($_GET['v'] == 3) {
 		if (isset($kategorijoss)) {
 			$kategorijos_redagavimas = array(
