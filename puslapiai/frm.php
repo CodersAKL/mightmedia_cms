@@ -437,8 +437,9 @@ elseif (((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && 
 
 		if (isset($_POST['name'])) {
 
-			$new = input($_POST['name']);
-			$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_straipsniai` SET `pav`='" . $new . "', `sticky`='" . (int) $_POST['sticky'] . "' WHERE `id`='" . escape((int) $rid) . "'");
+			//$new = input($_POST['name']);
+			$new = $_POST['name'];
+			$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_straipsniai` SET `pav`=" . escape($new) . ", `sticky`=" . escape((int) $_POST['sticky']) . " WHERE `id`=" . escape((int) $rid) . "");
 			redirect(url("?id,{$url['id']};s,$sid;t,$rid"));
 		}
 	}
@@ -457,8 +458,8 @@ elseif ($aid == 1 && $kid == 0 && $lid == 0 && $rid == 0) {
 			} else {
 				$uid = $_SESSION['id'];
 			}
-			$pavadinimas = input($_POST['post_pav']);
-			$zinute = input($_POST['post_msg']);
+			$pavadinimas = /*input(*/$_POST['post_pav']/*)*/;
+			$zinute = /*input(*/$_POST['post_msg']/*)*/;
 			$error = "";
 			if (empty($pavadinimas)) {
 				$error .= "{$lang['forum']['topicname?']}<br/>";
