@@ -244,7 +244,7 @@ HTML;
 
 
 		} else {
-			$textas = $lang['system']['showfor'] .' <img src="images/icons/help.png" title="' . $lang['system']['about_allow_cat'] . '" />:';
+			$textas = $lang['system']['showfor'] .' <img src="'.ROOT.'images/icons/help.png" title="' . $lang['system']['about_allow_cat'] . '" />:';
 			$vartotojai = false;
 		}
 
@@ -261,8 +261,8 @@ HTML;
 				$lang['system']['name'] => array('type' => 'text', 'value' => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', 'name' => 'Pavadinimas', 'class' => 'input'),
 				($kieno != 'vartotojai' ? $lang['system']['subcat/cat'] : '') => ($kieno != 'vartotojai' ? array('type' => 'select', 'value' => @$kategorijoss, 'name' => 'path', 'selected' => (isset($extra['path']) ? input($extra['path']) : ''), 'disabled' => @$kategorijoss) : ''),
 				 $lang['system']['about'] . ':' => array('type' => 'textarea', 'value' => (isset($extra['aprasymas'])) ? input($extra['aprasymas']) : '', 'name' => 'Aprasymas', 'rows' => '3', 'class' => 'input', 'class' => 'input', 'id' => 'Aprasymas'),
-				 '  ' => array('type' => 'string', 'value' => '<div class="avataras" style="float:inherit;"><img src="../' . $dir . '/' . (isset($extra['pav']) ? $extra['pav'] : 'no_picture.png') . '" id="kategorijos_img" /></div>'),
-				 $lang['system']['picture'] . ':' => array('type' => 'select', 'value' => $kategoriju_pav, 'name' => 'Pav', 'class' => 'input', 'class' => 'input', 'selected' => (isset($extra['pav']) ? input($extra['pav']) : 'no_picture.png'), 'extra' => 'onchange="$(\'#kategorijos_img\').attr({ src: \'../' . $dir . '/\'+this.value });"'),
+				 '  ' => array('type' => 'string', 'value' => '<div class="avataras" style="float:inherit;"><img src="'.ROOT.'/' . $dir . '/' . (isset($extra['pav']) ? $extra['pav'] : 'no_picture.png') . '" id="kategorijos_img" /></div>'),
+				 $lang['system']['picture'] . ':' => array('type' => 'select', 'value' => $kategoriju_pav, 'name' => 'Pav', 'class' => 'input', 'class' => 'input', 'selected' => (isset($extra['pav']) ? input($extra['pav']) : 'no_picture.png'), 'extra' => 'onchange="$(\'#kategorijos_img\').attr({ src: \''.ROOT.'/' . $dir . '/\'+this.value });"'),
 				 $lang['admin']['what_moderate'] => '', $textas => '', '' => array('type' => 'hidden', 'name' => 'Kategorijos_id', 'value' => (isset($extra['id']) ? input($extra['id']) : '')),
 				 (isset($extra)) ? $lang['system']['editcategory'] : $lang['system']['createcategory'] => array('type' => 'submit', 'name' => 'action', 'value' => (isset($extra)) ? $lang['system']['editcategory'] : $lang['system']['createcategory'])
 			);
@@ -273,7 +273,7 @@ HTML;
 			if (/* $leidimas == true && */ $vartotojai == false && $_GET['v'] == 2) {
 
 
-				//$kategorijos[$textas] = array('type' => 'select', 'extra' => 'multiple="multiple"', 'value' => $teises, 'class' => 'input asmSelect', 'name' => 'Teises[]', 'id' => 'punktai');
+				$kategorijos[$textas] = array('type' => 'select', 'extra' => 'multiple="multiple"', 'value' => $teises, 'class' => 'input asmSelect', 'name' => 'Teises[]', 'id' => 'punktai');
 
 				if (!empty($extra['teises']) && $extra['teises'] != 'N;')
 					$kategorijos[$textas]['selected'] = unserialize($extra['teises']);
