@@ -257,7 +257,7 @@ HTML;
 			//print_r($puslapiai);
 			$kategorijoss[0] = '';
 			$kategorijos = array(
-				'Form' => array('action' => url('?id,999;a,'.$_GET['a']), 'method' => 'post', 'name' => 'reg'),
+				'Form' => array('action' => url("?id,{$_GET['id']};a,{$_GET['a']}"), 'method' => 'post', 'name' => 'reg'),
 				$lang['system']['name'] => array('type' => 'text', 'value' => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', 'name' => 'Pavadinimas', 'class' => 'input'),
 				($kieno != 'vartotojai' ? $lang['system']['subcat/cat'] : '') => ($kieno != 'vartotojai' ? array('type' => 'select', 'value' => @$kategorijoss, 'name' => 'path', 'selected' => (isset($extra['path']) ? input($extra['path']) : ''), 'disabled' => @$kategorijoss) : ''),
 				 $lang['system']['about'] . ':' => array('type' => 'textarea', 'value' => (isset($extra['aprasymas'])) ? input($extra['aprasymas']) : '', 'name' => 'Aprasymas', 'rows' => '3', 'class' => 'input', 'class' => 'input', 'id' => 'Aprasymas'),
