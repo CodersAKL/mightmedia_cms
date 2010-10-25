@@ -73,15 +73,17 @@ if (/*((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete'] 
 // trinam siuntinius
 if(isset($_POST['siunt_delete'])){
   foreach($_POST['siunt_delete'] as $a=>$b){
-    $trinti[]="`ID`=".escape($b);
+    $trinti[]=escape($b);
   }
-  $sql = mysql_query1("SELECT `file` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE ".implode($trinti, " OR "));
+  $sql = mysql_query1("SELECT `file` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` IN (".implode(",", $trinti).")");
   foreach($sql as $row){
     if (isset($row['file']) && !empty($row['file'])) {
       @unlink(ROOT."siuntiniai/" . $row['file']);
+      //echo $row['file'];
     }
 	}
-  mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE ".implode($trinti, " OR ")."");
+  mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` IN (".implode(",", $trinti).")");
+  //echo "DELETE FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE id IN (".implode(",", $trinti).")";
   header("Location:".$_SERVER['HTTP_REFERER']);
   exit;
 }

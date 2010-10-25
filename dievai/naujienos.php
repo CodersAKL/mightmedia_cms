@@ -59,9 +59,9 @@ if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete'] &&
 //Naujienu trinimas
 if (isset($_POST['news_delete'])) {
 	foreach ($_POST['news_delete'] as $a => $b) {
-		$trinti[] = "`id`=" . escape($b);
+		$trinti[] = escape($b);
 	}
-	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE " . implode($trinti, " OR ") . "");
+	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `id` IN(" . implode(", ", $trinti) . ")");
 	header("Location:" . $_SERVER['HTTP_REFERER']);
 	exit;
 	//echo implode($trinti, " OR ");

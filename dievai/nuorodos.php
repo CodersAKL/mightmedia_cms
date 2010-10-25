@@ -97,9 +97,9 @@ if (isset($_GET['m'])) {
 }
 if(isset($_POST['links_delete'])){
   foreach($_POST['links_delete'] as $a=>$b){
-    $trinti[]="`id`=".escape($b);
+    $trinti[]=escape($b);
   }
-  mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE ".implode($trinti, " OR ")."");
+  mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `id` IN(".implode(", ", $trinti).")");
   header("Location:".$_SERVER['HTTP_REFERER']);
   exit;
 }
