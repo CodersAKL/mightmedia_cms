@@ -195,7 +195,7 @@ function puslapis($puslapis, $extra = false) {
 
 	if (isset($conf['puslapiai'][$puslapis]['id']) && !empty($conf['puslapiai'][$puslapis]['id']) && is_file(dirname(__file__) . '/../puslapiai/' . $puslapis)) {
 
-		if (LEVEL == 1 || (is_array($teises) && in_array(LEVEL, $teises)) || empty($teises)) {
+		if ($_SESSION['level'] == 1 || (is_array($teises) && in_array($_SESSION['level'], $teises)) || empty($teises)) {
 
 			if ($extra && isset($conf['puslapiai'][$puslapis][$extra]))
 				return $conf['puslapiai'][$puslapis][$extra]; //Jei reikalinga kita informacija apie puslapi - grazinam ja.
