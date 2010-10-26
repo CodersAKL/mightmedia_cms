@@ -925,7 +925,7 @@ function liko($diena, $menuo, $metai) {
 function linkas($str) {
 	$str = strtolower(strip_tags($str));
 	//return preg_replace_callback("#([\n ])([a-z]+?)://([a-z0-9\-\.,\?!%\*_\#:;~\\&$@\/=\+]+)#si", "linkai", $str);
-	return preg_replace("`((http)+(s)?:(//)|(www\.))((\w|\.|\-|_)+)(/)?(\S+)?`i", "<a href=\"http://\\0\" title=\"\\0\" target=\"_blank\" class=\"link\" >\\5\\6</a>", $str);
+	return preg_replace("`((http)+(s)?:(//)|(www\.))((\w|\.|\-|_)+)(/)?(\S+)?`i", "<a href=\"\\0\" title=\"\\0\" target=\"_blank\" class=\"link\" >\\5\\6</a>", $str);
 }
 
 // apvalinti:
