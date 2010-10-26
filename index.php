@@ -48,7 +48,7 @@ if (isset($pslid) && isnum($pslid) && $pslid > 0) {
 	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int) $pslid) . " and `lang` = " . escape(lang()) . " LIMIT 1", 259200); //keshas  3dienos.
 
 	if (!empty($sql1)) {
-		if (preg_match("/http:\/\//", $sql1['file'])) {
+		if (!preg_match("/\.php$/i", $sql1['file'])) {
 			header("Location:{$sql1['file']}");
 			exit;
 		}
