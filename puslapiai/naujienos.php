@@ -97,7 +97,17 @@ if ($kid != 0) {
 				$text = '<div class="naujiena">' . $sql['daugiau'];
 			}
 			$text .= "</div><div class='line'></div>" . date('Y-m-d H:i:s', $sql['data']) . ",  <b>" . $sql['autorius'] . "</b>";
-
+		$kalba = lang();
+			$text .= <<<HTML
+<div class="a2a_kit a2a_default_style">
+<a class="a2a_dd" href="http://www.addtoany.com/share_save">{$lang['news']['share']}</a>
+/div>
+<script type="text/javascript">
+var a2a_config = a2a_config || {};
+a2a_config.locale = "{$kalba}";
+</script>
+<script type="text/javascript" src="http://static.addtoany.com/menu/page.js"></script>
+HTML;
 			//Atvaizduojam naujieną
 			lentele($title, $text, rating_form($page, $sql['id']));
 			//Susijusios naujienos
@@ -115,7 +125,7 @@ if ($kid != 0) {
 				include ("priedai/komentarai.php");
 				komentarai($kid, true);
 			}
-			unset($text, $title, $data);
+			unset($text, $title, $data, $kalba);
 		} else {
 			(!defined('LEVEL') ? klaida($lang['system']['forbidden'], $lang['news']['notallowed']) : klaida("{$lang['system']['error']}", $lang['news']['notallowed']));
 

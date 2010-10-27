@@ -540,6 +540,7 @@ $lang['news']['read'] = 'Skaityti...';
 $lang['news']['comments'] = 'Komentarai';
 $lang['news']['notexists'] = 'Blogas id.';
 $lang['news']['notallowed'] = 'Tau negalima matyti šios naujienos.';
+$lang['news']['share'] = 'Dalintis';
 //naujienlaiškiai
 $lang['news']['ordered'] = 'Naujienlaiškiai užsakyti.';
 $lang['news']['unordered'] = 'Naujienlaiškų atsisakyta.';

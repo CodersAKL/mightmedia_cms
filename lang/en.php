@@ -573,6 +573,7 @@ $lang['news']['newsletter?'] = 'Send as newsletter?';
 $lang['news']['unorder'] = 'Delete my email';
 $lang['news']['Order/Unorder'] = 'Order/Delete my email';
 $lang['news']['footer'] = '<small>This is newsletter.</small>';
+$lang['news']['share'] = 'Share';
 //about
 $lang['about']['about'] = 'About';
 $lang['about']['admins'] = 'Administrators';
