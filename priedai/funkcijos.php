@@ -339,7 +339,7 @@ function cleanurl($url) {
  * @return array
  */
 unset($sql, $row);
-if (basename($_SERVER['PHP_SELF']) != 'upgrade.php') {
+if (basename($_SERVER['PHP_SELF']) != 'upgrade.php' && basename($_SERVER['PHP_SELF']) != 'setup.php') {
 	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `lang`=" . escape(lang()) . " ORDER BY `id` DESC");
 
 	if (sizeof($sql) > 0) {

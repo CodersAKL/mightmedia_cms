@@ -10,16 +10,13 @@
  * @$Date$
  * @Apie: setup.php - TVS diegimo įrankis
  **/
-
-header("Content-type: text/html; charset=utf-8");
-
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', 'Off');
-
-
-if (!isset($_SESSION))
-	session_start();
 ob_start();
+header("Content-type: text/html; charset=utf-8");
+session_start();
+@ini_set('error_reporting', E_ALL);
+@ini_set('display_errors', 'Off');
+
+
 if(isset($_SESSION['language'])){
   include_once('lang/'.$_SESSION['language']);
   //echo $lang['system']['warning'];
@@ -942,3 +939,4 @@ HTML;
 		<span style="text-align: right;position:absolute;bottom:0;right:0; padding: 5px;">&copy; <a href="http://mightmedia.lt" style="color: #666;" target="_blank">MightMedia TVS</a></span>
 	</body>
 </html>
+<?php ob_end_flush();?>
