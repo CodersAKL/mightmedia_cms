@@ -134,7 +134,7 @@ a.btn:active,  a.btn:hover {
 a.btn img { margin-right:3px; border:0; filter:alpha(opacity=60); }
 a.btn img:hover { border:0; filter:alpha(opacity=100); }
 .btns {
-	clear: both;
+	/*clear: both;*/
 	overflow-x: hidden;
 	overflow-y: hidden;
 }

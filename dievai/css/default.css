@@ -545,11 +545,14 @@ form td{
 	border-right: 1px solid #d9d9d9;
 }
 .table th{
-	background: #ebebeb;
+	background-color: #ebebeb;
+	font-weight: bold;
+	padding: 3px;
 	border-bottom: 2px solid #d9d9d9;
+	color: #333;
 }
 
-.table tr.odd{
+.table tr.odd, .tr{
 	background: #ebebeb;
 }
 blockquote{

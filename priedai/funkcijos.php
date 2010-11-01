@@ -71,14 +71,15 @@ function header_info() {
 	<script type="text/javascript" src="javascript/jquery/tooltip.js"></script>
 	<script type="text/javascript" src="javascript/jquery/jquery.colorbox.js"></script>
 	<script type="text/javascript" src="javascript/jquery/jquery.hint.js"></script>
+	'.((isset($conf['hyphenator']) && $conf['hyphenator'] == 1) ?'
 	<script type="text/javascript" src="javascript/hyphenator/hyphenator.min.js"></script>
 	<script type="text/javascript" src="javascript/jquery/jquery.hyphenator.min.js"></script>
-
 	<script type="text/javascript">
 	$(document).ready(function(){
 
 		$(\'body\').hyphenate({minwordlength : 8});
-
+     ':'<script type="text/javascript">
+	$(document).ready(function(){').'
 		//Examples of how to assign the ColorBox event to elements.
 		$(".gallery a[rel=\'lightbox\']").colorbox({transition:"fade", current: "' . $lang['admin']['gallery_image'] . ' {current} ' . $lang['user']['pm_of'] . ' {total}", next:"' . $lang['admin']['gallery_next'] . '", previous:"' . $lang['admin']['gallery_prev'] . '", close:"[x]"});
 		// find all the input elements with title attributes and make them with a hint
@@ -511,7 +512,7 @@ function mysql_query1($query, $lifetime = 0) {
 				}
 			}
 
-			$fh = fopen($keshas, 'wb') or die("negaliu nuskaityti kesho");
+			$fh = fopen($keshas, 'wb') or die("Išvalyk <b>/sandeliukas</b> bylą");
 
 			//Reikia uzrakinti faila kad du kartus neirasytu
 			if (flock($fh, LOCK_EX)) { // urakinam

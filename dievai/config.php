@@ -32,6 +32,7 @@ if (isset($_POST) && !empty($_POST) && isset($_POST['Konfiguracija'])) {
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape($_POST['F_urls']) . ",'F_urls')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['F_urls']);
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape($_POST['Editor']) . ",'Editor')  ON DUPLICATE KEY UPDATE `val`=" . escape($_POST['Editor']);
 	$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape((int)$_POST['galbalsuot']) . ",'galbalsuot')  ON DUPLICATE KEY UPDATE `val`=" . escape((int)$_POST['galbalsuot']);
+  $q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape((int)$_POST['hyphenator']) . ",'hyphenator')  ON DUPLICATE KEY UPDATE `val`=" . escape((int)$_POST['hyphenator']);
 
 	foreach ($q as $sql) {
 		mysql_query1($sql);
@@ -74,6 +75,7 @@ $nustatymai = array("Form" => array("action" => "", "method" => "post", "enctype
 	"{$lang['admin']['theme']}:" => array("type" => "select", "value" => $stiliai, "selected" => input($conf['Stilius']), "name" => "Stilius", "class" => "select"), 
 	"{$lang['admin']['lang']}:" => array("type" => "select", "value" => $kalba, "selected" => input($conf['kalba']), "name" => "kalba", "class" => "select"), 
 	"{$lang['admin']['editor']}:" => array("type" => "select", "value" => $editors, "selected" => input($conf['Editor']), "name" => "Editor", "class" => "select"), 
+	"{$lang['admin']['use_hyphenator']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['hyphenator']), "name" => "hyphenator", "class" => "select"), 
 	"" => array("type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}", "class" => "submit")
 );
 

@@ -25,6 +25,7 @@ INSERT INTO `nustatymai` VALUES(null, 'F_urls', ';') ON DUPLICATE KEY UPDATE val
 INSERT INTO `nustatymai` VALUES(null, 'galordergalorder', 'data') ON DUPLICATE KEY UPDATE val='data';
 INSERT INTO `nustatymai` VALUES(null, 'galorder_type', 'DESC') ON DUPLICATE KEY UPDATE val='DESC';
 INSERT INTO `nustatymai` VALUES(null, 'Editor', 'markitup') ON DUPLICATE KEY UPDATE val='markitup';
+INSERT INTO `nustatymai` VALUES(null, 'hyphenator', '1') ON DUPLICATE KEY UPDATE val='1';
 CREATE TABLE IF NOT EXISTS `poll_questions` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `question` text CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,

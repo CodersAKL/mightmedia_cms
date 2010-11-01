@@ -217,6 +217,7 @@ $lang['admin']['del_comments'] = 'Trinti komentarus';
 $lang['admin']['comments_kid'] = 'id';
 $lang['admin']['config'] = 'Konfigūracija';
 $lang['admin']['cache'] = 'Kešavimas';
+$lang['admin']['use_hyphenator'] = 'Naudoti „hyphenator“ teksto lygiuoklį?';
 $lang['admin']['nuorodos'] = 'Nuorodos';
 $lang['admin']['komentarai'] = 'Komentarai';
 $lang['admin']['straipsnis'] = 'Straipsniai';

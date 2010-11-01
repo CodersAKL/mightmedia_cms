@@ -230,6 +230,7 @@ $lang['admin']['del_comments'] = 'Delete comments';
 $lang['admin']['comments_kid'] = 'id';
 $lang['admin']['for_guests'] = 'Guests';
 $lang['admin']['cache'] = 'Cache';
+$lang['admin']['use_hyphenator'] = 'Use „hyphenator“ tool?';
 $lang['admin']['lang'] = 'Language';
 $lang['admin']['config'] = 'Configuration';
 $lang['admin']['nuorodos'] = 'Links';
