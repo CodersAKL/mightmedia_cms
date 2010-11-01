@@ -101,7 +101,7 @@ if ($kid != 0) {
 			$text .= <<<HTML
 <div class="a2a_kit a2a_default_style">
 <a class="a2a_dd" href="http://www.addtoany.com/share_save">{$lang['news']['share']}</a>
-/div>
+</div>
 <script type="text/javascript">
 var a2a_config = a2a_config || {};
 a2a_config.locale = "{$kalba}";
