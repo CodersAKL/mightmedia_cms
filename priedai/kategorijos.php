@@ -270,7 +270,7 @@ HTML;
 				//	echo $mod;
 				$kategorijos[$lang['admin']['what_moderate']] = array('type' => 'select', 'extra' => 'multiple="multiple"', 'value' => $puslapiai, 'class' => 'asmSelect', 'name' => 'punktai[]', 'id' => 'punktai', 'selected' => (isset($extra['mod'])) ? $ser : '');
 			}
-			if (/* $leidimas == true && */ $vartotojai == false && $_GET['v'] == 2) {
+			if (/* $leidimas == true && */ $kieno != 'vartotojai' && $_GET['v'] == 2) {
 
 
 				$kategorijos[$textas] = array('type' => 'select', 'extra' => 'multiple="multiple"', 'value' => $teises, 'class' => 'input asmSelect', 'name' => 'Teises[]', 'id' => 'punktai');

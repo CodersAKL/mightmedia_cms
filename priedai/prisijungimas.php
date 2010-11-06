@@ -22,7 +22,7 @@ if (!isset($_SESSION['level'])) {
 	define("LEVEL", $_SESSION['level']);
 }
 if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
-	$linformacija = mysql_query1("SELECT `id`, `levelis`,`pass`,`nick`,`login_data`,`login_before`,(SELECT `mod` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `teises`=levelis)as `mod` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape($_SESSION['username']) . " AND `pass`=" . escape($_SESSION['password']) . " LIMIT 1");
+	$linformacija = mysql_query1("SELECT `id`, `levelis`,`pass`,`nick`,`login_data`,`login_before`,(SELECT `mod` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=levelis)as `mod` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape($_SESSION['username']) . " AND `pass`=" . escape($_SESSION['password']) . " LIMIT 1");
 	if (!empty($linformacija['levelis'])) {
 		$_SESSION['username'] = $linformacija['nick'];
 		$_SESSION['password'] = $linformacija['pass'];
@@ -45,7 +45,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
 		$user_id = $user_id['0'];
 
 	}
-	$linformacija2 = mysql_query1("SELECT `levelis`,`pass`,`nick`,`login_data`,`login_before`,(SELECT `mod` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `teises`=levelis)as `mod` FROM `" . LENTELES_PRIESAGA . "users` WHERE `id`=" . escape((int)$user_id) . " LIMIT 1");
+	$linformacija2 = mysql_query1("SELECT `levelis`,`pass`,`nick`,`login_data`,`login_before`,(SELECT `mod` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=levelis)as `mod` FROM `" . LENTELES_PRIESAGA . "users` WHERE `id`=" . escape((int)$user_id) . " LIMIT 1");
 	if (!empty($linformacija2['levelis']) && $linformacija2['levelis'] > 0 && isset($user_pass) && koduoju($slaptas . getip() . $linformacija2['pass']) === $user_pass) {
 
 		$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `login_before`=login_data, `login_data` = '" . time() . "', `ip` = INET_ATON(" . escape(getip()) . ") WHERE `id` ='" . escape($user_id) . "' LIMIT 1");
@@ -76,7 +76,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'prisijungimas') {
 
 		$strUsername = $_POST['vartotojas']; // Vartotojo vardas
 		$strPassword = koduoju($_POST['slaptazodis']); // Slaptazodis
-	$linformacija3 = mysql_query1("SELECT `id`,`levelis`,`pass`,`nick`,`login_data`,`login_before`,(SELECT `mod` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `teises`=`levelis`)as `mod` FROM `" . LENTELES_PRIESAGA . "users` WHERE hex(nick)=hex(" . escape($strUsername) . ") AND password(pass)=password('" . $strPassword . "') LIMIT 1");
+	$linformacija3 = mysql_query1("SELECT `id`,`levelis`,`pass`,`nick`,`login_data`,`login_before`,(SELECT `mod` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=`levelis`)as `mod` FROM `" . LENTELES_PRIESAGA . "users` WHERE hex(nick)=hex(" . escape($strUsername) . ") AND password(pass)=password('" . $strPassword . "') LIMIT 1");
 		//$linformacija3 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape($strUsername) . " AND pass='" . $strPassword . "' limit 1");
 
 		if (!empty($linformacija3) && $strPassword === $linformacija3['pass']) {
