@@ -16,7 +16,9 @@ if (isset($_SESSION['mod']) && !empty($_SESSION['mod'])) {
     return editorius($tipas, $dydis, $id, $value);
   }
 	$failai = unserialize($_SESSION['mod']);
-	$text = "<table border=\"0\">
+	$text = "
+	<script type=\"text/javascript\" src=\"javascript/jquery/jquery-ui-1.7.2.custom.min.js\"></script>
+	<table border=\"0\">
 	<tr>
 		<td >
 <div>";
@@ -32,6 +34,7 @@ if (isset($_SESSION['mod']) && !empty($_SESSION['mod'])) {
 ";
 
 	lentele($page_pavadinimas, $text);
+	unset($text);
 	if (isset($url['a'])) {
     if (file_exists(ROOT .$conf['Admin_folder'] . "/" . $failai[((int)$url['a'] - 1)])) {
 			include_once (ROOT . $conf['Admin_folder'] . "/" . $failai[((int)$url['a'] - 1)]);
