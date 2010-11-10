@@ -67,7 +67,7 @@ $text = <<<HTM
                 <div id="placeholder" ></div><!-- CHART --><br />
                   </div>
             </div>
-          </div>
+          </div><div style="clear:both;"></div>
 HTM;
 lentele($lang['system']['control'], $text);
 ?>

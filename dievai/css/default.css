@@ -1,9 +1,10 @@
 /* RESET */
+body{background: #E6E6E6;}
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,/*fieldset,*/input,textarea,p,blockquote,th,td {
 	margin:0;
 	padding:0;
 	font:13px/1.231 arial,helvetica,clean,sans-serif;
-	line-height: 15px;
+	line-height: 15px;	
 }
 table{
 	/*width: auto;*/
@@ -14,27 +15,20 @@ table{
 }
 fieldset {
 	margin: 15px;
-	border:medium none;
+	border: 1px dotted #BDBCBD;
 }
-address,caption,cite,code,dfn,em,strong,th,var {
-	font-style:normal;
-	font-weight:normal;
-}
+td{text-align: left;}
+
 .nav ol,.nav ul {
 	list-style:none;
 }
-caption,th {
-	text-align:left;
-}
+
 h1,h2,h3,h4,h5,h6 {
 	font-size:100%;
 	font-weight:normal;
 }
-q:before,q:after {
-	content:'';
-}
-abbr,acronym { border:0;
-}
+
+
 input, textarea, select{
 	background: url('../images/input.png') repeat-x;
 	border: 1px solid #D7D7D7;
@@ -42,38 +36,25 @@ input, textarea, select{
 	color: #666666;
 	margin-bottom: 3px;
 }
-input[type="submit"], .submit{
-	background: #F0EEDF;
-	border: 1px solid #C2C0B1;
-	border-left: 8px solid #C2C0B1;
-	color: #666666;
-	font-weight: bold;
-	text-decoration:none;
-	padding: 2px;
+input[type="submit"], .submit, button{
+	background: #CCCCCC;
+	border-bottom:1px solid #323232;
+	border-right:1px solid #323232;
+	border-left:1px solid #D0D0D0;
+	border-top:1px solid #D0D0D0;
+	color:#555555;
+	padding-left:6px;
+	padding-right:6px;
+
 }
-button, .btns a{
-	background: url('../images/button.png') repeat-x;
-	border: 1px solid #FF7910;
-	color: #FF7910;
-	padding: 2px;
-	text-decoration: none;
-	cursor: pointer;
-	margin: 2px;
-}
+
 a{
 	color: #FF7910;
 }
 /* RESET END */
 
-/*#admin_root {
-	margin:0 auto;
-	position:relative;
-	width:1024px;
-}*/
-#admin_main {
-}
 #admin_header {
-	background: #85866D url('../images/header_bg.png') repeat-x;
+	background: url('../images/header_bg.png') repeat-x;
 	height: 135px;
 	padding:3px 40px 7px;
 }
@@ -87,12 +68,12 @@ a{
 
 #controls {
 	position: absolute;
-	top: 22px;
+	top: 24px;
 	right: 40px;
 }
 #admin_lang,#admin_user {
 	border-width: 0px 1px 1px 1px;
-	border-color: #8A8F61;
+	border-color: #BDBCBD;
 	border-style: solid;
 	float: right;
 	cursor: pointer;
@@ -106,10 +87,10 @@ a{
 	margin-right: 5px;
 }
 #admin_lang.down,#admin_user.down {
-	background:#B3B593/* url('../images/down.png') right center no-repeat*/;
+	background:#FFF/* url('../images/down.png') right center no-repeat*/;
 }
 #admin_lang.up,#admin_user.up {
-	background:#B3B593 url('../images/up.png') 99% 50% no-repeat;
+	background:#FFF url('../images/up.png') 99% 50% no-repeat;
 }
 #admin_lang ul{
 	margin: -7px;
@@ -120,13 +101,13 @@ a{
 	border: none;
 }
 #admin_lang ul li ul{
-	background: #B3B593;
+	background: #FFF;
 	width: 50px;
 	margin-left: 1px;
 	margin-top: -4px;
-	border-left: 1px solid #8A8F61;
-	border-right: 1px solid #8A8F61;
-	border-bottom: 1px solid #8A8F61;
+	border-left: 1px solid #BDBCBD;
+	border-right: 1px solid #BDBCBD;
+	border-bottom: 1px solid #BDBCBD;
 }
 #admin_user img {
 	border: none;
@@ -135,40 +116,10 @@ a{
 	right: 40px;
 }
 
-/* SELECT COLOR */
-#select_color {
-	float: left;
-}
-#select_color div {
-	float: left;
-	margin: 2px;
-}
-#select_color .color {
-	border: 1px solid white;
-	width: 18px;
-	height: 12px;
-	cursor: pointer;
-	line-height: 12px;
-}
-.color.c1 {
-	background-color: #85866D;
-}
-.color.c2 {
-	background-color: #FE760C;
-}
-.color.c3 {
-	background-color: #FFFFFF;
-}
-.color.c4 {
-	background-color: #333333;
-}
-#top{
-	height:30px;
-	width: 100%;
-}
+
 /* search box */
 .search{
-	background: #FFF;
+	
 	text-align: center;
 	width: 168px;
 	float: left;
@@ -225,58 +176,27 @@ a{
 	line-height:43px;
 	padding: 0 10px;
 	text-decoration: none;
-	color: #666666;
+	color: #FFF;
 	font-size: 14px;
 	font-weight: bold;
 	font-family: "Tahoma";
 }
 #admin_hmenu ul li a:hover {
-	background-color: #85866D;
-	color: #FFFFFF;
-}
-#admin_hmenu ul li ul{
-	margin-top: 10px;
+	background-color: #FFF;
+	color: #666;
 }
 
-#admin_hmenu ul li ul a {
-	/*background: url('../images/hmenu_bg.png') repeat-x;*/
-	width: auto;
-	/*padding:auto;*/
-	font-size: 11px;
-	line-height:15px;
-	padding: 5px;
-	color: #666666;
-	height: 15px;
-	min-width: 100px;
-}
-#admin_hmenu ul li li {
-	background: url('../images/hmenu_bg.png') repeat-x;
-}
-#admin_hmenu ul li li a:hover {
-	background:none;
-	cursor: pointer;
-	color: black;
-	/*display: block;*/
-}
 
-/* Main content */
-#content{
-	background: url('../images/left.png') repeat-y;
-}
 /* Left side */
 #left{
 	float: left;
 	width: 168px;
-}
-/*Button bar*/
-#left .buttons{
-	text-align: center;
-	/*margin-bottom: 10px;*/
-}
-/* Left navigation */
-#left .nav{
+	z-index:2;
+	margin-top: 10px;
 
 }
+
+/* Left navigation */
 #left .nav ul li a{
 	color: #666666;
 	font-size: 14px;
@@ -289,15 +209,15 @@ a{
 	display: block;
 }
 #left .nav ul li a:hover{
-	border: 1px solid #B3B593;
+	border: 1px solid #F06B09;
 	padding: 3px 3px 3px 29px;
-
+  background: #FFFFFF;
 }
 
 #left .nav ul li.active{
 	background: #FFFFFF;
-	border-top: 1px solid #B3B593;
-	border-bottom: 1px solid #B3B593;
+	border-top: 1px solid #F06B09;
+	border-bottom: 1px solid #F06B09;
 	padding: 5px;
 }
 
@@ -331,6 +251,8 @@ a{
 #right{
 	padding-left: 162px;
 	padding-right: 20px;
+	background: url('../images/left.png') repeat-y #FFF;
+	
 }
 #right .where{
 	color: #999999;
@@ -345,9 +267,10 @@ a{
 	text-decoration: none;
 }
 #container{
-	border-top: 1px solid #B3B593;
+	border-top: 1px solid #F06B09;
 	padding-left: 10px;
 	width: 100%;
+	margin-left: 5px;
 }
 #container h2, #container h1{
 	color: #666666;
@@ -358,13 +281,12 @@ a{
 	display: block
 }
 #container h1{
-	border-bottom: 1px solid #7F7F7F;
-	margin-bottom: 10px;
+	border-bottom: 1px dotted #BDBCBD;
+	/*margin-bottom: 10px;*/
 	margin-top: 10px;
 	display: block
 }
 #container h2{
-	border-left: 10px solid #C2C0B1;
 	margin-bottom: 10px;
 	margin-top: 10px;
 	display: block
@@ -374,7 +296,7 @@ a{
 }
 .left{
 	width: 45%;
-	border-right: 2px dashed #C2C0B1;
+	border-right: 2px dashed #CCC;
 	float: left;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -404,9 +326,9 @@ a{
 
 }
 #footer .text{
-	border-top:1px solid #B3B593;
+	border-top:1px solid #F06B09;
 	font-size:10px;
-	margin-left:158px;
+	margin-left:167px;
 }
 #footer .links{
 	padding-top: 25px;
@@ -554,6 +476,10 @@ form td{
 
 .table tr.odd, .tr{
 	background: #ebebeb;
+}
+.form_table tr td{
+ border-bottom: 1px dotted #d9d9d9;
+ padding : 3px;
 }
 blockquote{
 	background: transparent url('../images/blockquote.png') no-repeat left top;

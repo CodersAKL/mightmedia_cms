@@ -350,21 +350,13 @@ HTML;
 
 			  <div id="admin_hmenu">
 				  <ul class="sf-menu">
-					  <li><a href="<?php echo adresas().'../';?>"><?php echo $lang['system']['tree']; ?></a>
-							<ul>
-									<?php
-									$data1 = '';
-									$res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`='Y' AND `lang`=".escape(lang())." ORDER BY `place` ASC");
-									foreach ($res as $row) {
-										if(teises($row['teises'],$_SESSION['level'])) {
-											$data1[$row['parent']][] = $row;
-										}
-									}
-									echo build_menu($data1);
-
-									?>
-							</ul>
-						</li>
+            <li><a href="<?php echo url('?id,999');?>"><img src="images/icons/home.png" alt="" /> <?php echo $lang['admin']['homepage']; ?></a></li>
+					  <li><a href="<?php echo url('?id,999;a,10;n,3');?>"><img src="images/icons/sitemap.png" alt="" /> <?php echo $lang['system']['tree']; ?></a></li>
+					  <li><a href="<?php echo url('?id,999;m,3');?>"><img src="images/icons/product-1.png" alt="" /> <?php echo $lang['admin']['antivirus']; ?></a></li>
+					  <li><a href="<?php echo url('?id,999;m,2');?>"><img src="images/icons/finished-work.png" alt="" /> <?php echo $lang['admin']['admin_chat']; ?></a></li>
+					  <?php if(!empty($conf['keshas'])):?>
+            <li><a href="<?php echo url('?id,999;m,1');?>"><img src="images/icons/publish.png" alt="" />           <?php echo $lang['admin']['uncache']; ?></a></li>
+            <?php endif?>
 				  </ul>
 			  </div>
 		  </div>
@@ -375,20 +367,26 @@ HTML;
 						<input name="vis" value="vis" type="hidden" />
 						<input type="text" name="s"  value="" />
 					</form>
-          </div>  <div id="version_check">
+          </div>  
+          <div id="version_check">
             
           </div>
+          	   <script type="text/javascript">
+         $.getJSON('<?php echo $update_url; ?>');
+         function versija(data) {
+           if(<?php echo versija();?> < data.version){
+              $('#version_check').attr('class', 'msg');
+              $('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><b>'+data.title+'</b> '+'' + data.version + ' - ' +'' + data.about + ' '+(data.log?'<span id="news" title="'+data.log+'">[info]</span>':'')+(data.url?' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':''));
+           }   
+ 
+         }
+       
+      
+    </script>
        </div>
 <div style="clear: both;"></div>
         <div id="left">          
-          <div class="buttons">
-            <button onclick="window.location='<?php echo url('?id,999');?>'"><img src="images/icons/home.png" alt="" /></button>
-            <button title="<?php echo $lang['admin']['antivirus']; ?>" onclick="window.location='<?php echo url('?id,999;m,3');?>'"><img src="images/icons/product-1.png" alt="" /></button>
-            <?php if(!empty($conf['keshas'])):?>
-				<button title="<?php echo $lang['admin']['uncache']; ?>" onclick="window.location='<?php echo url('?id,999;m,1');?>'"><img src="images/icons/publish.png" alt="" /></button>
-			<?php endif?>
-            <button title="<?php echo $lang['admin']['admin_chat']; ?>" onclick="window.location='<?php echo url('?id,999;m,2');?>'"><img src="images/icons/finished-work.png" alt="" /></button>
-          </div>
+   
           <div class="nav">
             <ul>
               <?php echo $admin_tools;?>
@@ -442,43 +440,6 @@ HTML;
           </div>
       </div>
 	  </div>
-	   <script type="text/javascript">
-         $.getJSON('<?php echo $update_url; ?>');
-         function versija(data) {
-              if(<?php echo versija();?> < data.version){
-              //class="msg"
-              $('#version_check').attr('class', 'msg');
-              $('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><b>'+data.title+'</b> '+'' + data.version + ' - ' +'' + data.about + ' '+(data.log?'<span id="news" title="'+data.log+'">[info]</span>':'')+(data.url?' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':''));
-           }   
-           if (data.menu.<?php echo lang(); ?>) {
-              $(data.menu.<?php echo lang(); ?>).each(function(json,menu){
-               //alert(arr2html(menu)) ;             
-               // $('#admin_hmenu ul.sf-menu').append('<li>'+ (typeof menu == 'object'?'<a href="">'+data.menu.title+'</a>'+arr2html(menu):menu)+'</li>');
-               $('#admin_hmenu ul.sf-menu').append(arr2html(menu));
-              }); 
-           }/* else {
-               $(data.menu.en).each(function(json,menu){
-                 $('#admin_hmenu ul').append('<li>'+ (typeof menu == 'object'?arr2html(menu):menu)+'</li>');
-               });
-          }*/
-          $('ul.sf-menu').superfish();
-       }
-       function arr2html(arr) {
-        var html='';
-        if(typeof arr == 'object') {
-          if(arr.length > 1)
-            html+='<ul class="sf-menu">\n';
-          for(var i in arr) {
-             html+='<li>';
-             html+=typeof arr[i] == 'object'?(i+arr2html(arr[i])):arr[i];
-             html+='</li>\n';
-          }
-          if(arr.length > 1)
-            html+='</ul>\n';
-        }
-        return html;        
-      }
-      
-    </script>
+	 
   </body>
 </html>
