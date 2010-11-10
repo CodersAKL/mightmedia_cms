@@ -37,7 +37,7 @@ if ($conf['Palaikymas'] == 0) {
 <div style="text-align: right;color: #666;"><b><?php echo date('H:i:s'); ?></b></div>
 			  </div>
 
-		<div id="admin_hmenu" style="font-weight:bold; font-size:25px; color: #666; padding: 10px; margin-bottom: 100px;"><?php echo input(strip_tags($conf['Pavadinimas']));?></div>
+		<div id="admin_hmenu" style="font-weight:bold; font-size:25px; color: #FFF; padding: 10px; margin-bottom: 100px;"><?php echo input(strip_tags($conf['Pavadinimas']));?></div>
 		<div id="container" style="border: 0;width:50%; margin:auto;">
 			<h2>
 			<?php echo $lang['admin']['maintenance']; ?>
