@@ -103,6 +103,7 @@ if (isset($_POST['order2'])) {
 	$result = mysql_query1($sqlas);
 
 }
+//teisiu sarasas
 $lygiai = array_keys($conf['level']);
 foreach ($lygiai as $key) {
 	$teises[$key] = $conf['level'][$key]['pavadinimas'];
@@ -276,7 +277,6 @@ if (isset($url['f'])) {
 		if (sizeof($sql) > 0) {
 			$li = "";
 			foreach ($sql as $record1) {
-				//$tekst .= "<option value=" . $record1['id'] . ">" . $record1['pav'] . "</option>\n";
 				$cats[$record1['id']] = $record1['pav'];
 				$li .= '<li id="listItem_' . $record1['id'] . '" class="drag_block"> 
 <a href="'.url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] ). '" style="align:right" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="'.ROOT.'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>  
@@ -300,7 +300,7 @@ if (isset($url['f'])) {
 		unset($f_text, $sql, $row);
 	}
 	//subkat. kūrimo forma
-	if ((int)$url['f'] == 3) {
+	if ((int)$url['f'] == 3 && !isset($_GET['r'])) {
 		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `lang` = ".escape(lang())." ORDER BY `place` ASC");
 		if (sizeof($sql) > 0) {
 		  $bla = new forma();

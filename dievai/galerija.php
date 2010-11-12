@@ -44,12 +44,10 @@ lentele($lang['admin']['galerija'], $buttons);
 unset($buttons, $extra, $text);
 include_once (ROOT."priedai/kategorijos.php");
 kategorija("galerija", true);
-/*$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `path`=0 AND `lang` = ".escape(lang())." ORDER BY `id` DESC");
-if (sizeof($sql) > 0) {*/
-	
-	$kategorijos = cat('galerija', 0);
-//}
+//kategorijos
+$kategorijos = cat('galerija', 0);
 $kategorijos[0] = "--";
+//foto aktyvavimas
 if (isset($_GET['p'])) {
 	$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "galerija` SET rodoma='TAIP' 
 			WHERE `id`=" . escape($_GET['p']) . ";
@@ -60,6 +58,7 @@ if (isset($_GET['p'])) {
 		klaida("{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>");
 	}
 }
+//foto salinimas
 if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete']  && isset($_POST['edit_new']) && $_POST['edit_new'] > 0)) || isset($url['t'])) {
 	if (isset($url['t'])) {
 		$trinti = (int)$url['t'];
@@ -86,7 +85,7 @@ if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete']  &
 	//redirect("?id,".$_GET['id'].";a,".$_GET['a'],"header");
 }
 
-//Naujienos redagavimas
+//foto redagavimas
 elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit_new'] > 0)) || isset($url['h'])) {
 	if (isset($url['h'])) {
 		$redaguoti = (int)$url['h'];
@@ -95,7 +94,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 	}
 
 	$extra = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `id`=" . escape($redaguoti) . " LIMIT 1");
-	//$extra = mysql_fetch_assoc($extra);
+
 } elseif (isset($_POST['action']) && $_POST['action'] == $lang['admin']['edit']) {
 	
 	$apie = strip_tags($_POST['Aprasymas']);
@@ -268,12 +267,11 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 
 }
 
-
+//foto kategoriju saraso rodymas
 if (isset($_GET['v'])) {
 	include_once (ROOT."priedai/class.php");
 	$bla = new forma();
 	if ($_GET['v'] == 8) {
-	// print_r($kategorijos);
       $text = "<fieldset><legend>{$lang['system']['categories']}:</legend><ul>";
       foreach($kategorijos as $id => $kategorija){
          $text .= "<li class=\"drag_block\"><a href=\"".url('?id,999;a,'.$_GET['a'].';v,8;k,'.$id)."\">".str_replace('-', '&nbsp;&nbsp;', $kategorija)."</a></li>";
@@ -281,7 +279,7 @@ if (isset($_GET['v'])) {
       $text .= "</ul></fieldset>";
 		$limit = 10;		
 		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "galerija` WHERE `lang` = ".escape(lang())." AND `categorija`=".escape((isset($_GET['k'])? $_GET['k'] : 0))." ORDER BY `".$conf['galorder']."` ".$conf['galorder_type']);
-
+//foto pagal kategorijas rodymas
 		if (sizeof($sql2) > 0) {
 
 			$text .= "<table width=\"80%\" border=\"0\">
