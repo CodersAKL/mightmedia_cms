@@ -200,7 +200,7 @@ CREATE TABLE `grupes` (
   `mod` text COLLATE utf8_lithuanian_ci,
   PRIMARY KEY (`id`),
   KEY `lang` (`lang`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
