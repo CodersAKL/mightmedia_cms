@@ -76,7 +76,7 @@ if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete']  &
 
 
 	if (mysql_affected_rows() > 0) {
-		msg("{$lang['system']['done']}", "{$lang['admin']['gallery_deleted']}");
+		msg($lang['system']['done'], $lang['admin']['gallery_deleted']);
 	} else {
 		klaida("{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>");
 	}
@@ -136,7 +136,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 		
 		//Patikrinam ar failas įkeltas sėkmingai
 		if (!is_uploaded_file($file_tmp)) {
-			klaida("{$lang['system']['warning']}", "{$lang['admin']['gallery_nofile']}.");
+			klaida($lang['system']['warning'], $lang['admin']['gallery_nofile']);
 		} else {
 			//gaunamm failo galunę
 			$ext = strrchr($file_name, '.');
@@ -144,7 +144,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 
 			//Tikrinam ar tinkamas failas
 			if (!in_array($ext, $limitedext)) {
-				klaida("{$lang['system']['warning']}", "{$lang['admin']['gallery_notimg']}");
+				klaida($lang['system']['warning'], $lang['admin']['gallery_notimg']);
 			}
 
 			//create a random file name
@@ -274,7 +274,7 @@ if (isset($_GET['v'])) {
 	if ($_GET['v'] == 8) {
       $text = "<fieldset><legend>{$lang['system']['categories']}:</legend><ul>";
       foreach($kategorijos as $id => $kategorija){
-         $text .= "<li class=\"drag_block\"><a href=\"".url('?id,999;a,'.$_GET['a'].';v,8;k,'.$id)."\">".str_replace('-', '&nbsp;&nbsp;', $kategorija)."</a></li>";
+         $text .= "<li class=\"drag_block\"><a href=\"".url('?id,'.$_GET['id'].';a,'.$_GET['a'].';v,8;k,'.$id)."\">".str_replace('-', '&nbsp;&nbsp;', $kategorija)."</a></li>";
       }
       $text .= "</ul></fieldset>";
 		$limit = 10;		
@@ -295,7 +295,7 @@ if (isset($_GET['v'])) {
 				}
 				$text .= "
 			<div class=\"gallery img_left\" >
-				<a rel=\"lightbox\" href=\"".ROOT."images/galerija/" . $row2['file'] . "\" title=\"" . (!empty($row2['pavadinimas'])?input($row2['pavadinimas']) . "<br>":'') . trimlink(strip_tags($row2['apie']), 50) . "\">
+				<a rel=\"lightbox\" href=\"".ROOT."images/galerija/" . $row2['file'] . "\" title=\"" . (!empty($row2['pavadinimas'])?$row2['pavadinimas'] . "<br>":'') . trimlink(strip_tags($row2['apie']), 50) . "\">
 					<img src=\"".ROOT."images/galerija/mini/" . $row2['file'] . "\" alt=\"\" />
 				</a>
 				<div class='gallery_menu'>
@@ -350,7 +350,7 @@ if (isset($_GET['v'])) {
 			foreach ($q as $sql) {
 				mysql_query1($sql);
 			}
-			redirect(url('?id,999;a,' . $url['a'] . ';v,6'));
+			redirect(url('?id,'.$_GET['id'].';a,' . $url['a'] . ';v,6'));
 		}
 		$nustatymai = array(
 			"Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"),
