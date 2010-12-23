@@ -10,20 +10,16 @@
  * @$Date$
  **/
 
-if (!defined("LEVEL") || !defined("OK")) {
+if (!defined("OK")) {
 	header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
 }
-if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
-	$p = escape(ceil((int)$url['p']));
-} else {
-	$p = 0;
-}
+$p = isset($url['p']) ? $url['p'] : 0;
 $limit = 50;
 $viso = kiek("chat_box");
 include_once ("priedai/class.php");
 $bla = new forma();
 //jei tai moderatorius
-if ($_SESSION['level'] == 1 || (isset($_SESSION['mod']) && strlen($_SESSION['mod']) > 1)) {
+if (ar_admin('com')) {
 	//jei paspaude trinti
 	if (isset($url['d']) && !empty($url['d']) && isnum($url['d'])) {
 		$id = (int)$url['d'];
@@ -68,7 +64,7 @@ if (sizeof($sql2) > 0) {
 	foreach ($sql2 as $row) {
 		$extra = '';
 		$i++;
-		if ($_SESSION['level'] == 1 || (isset($_SESSION['mod']) && strlen($_SESSION['mod']) > 1)) {
+		if (ar_admin('com')) {
 			$extra .= "<span style=\"float: right;\"><a href='" . url("d," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['system']['delete_confirm']}') \"><img src='images/icons/cross_small.png' alt='[{$lang['admin']['delete'] }]' title='{$lang['admin']['delete'] }' class='middle' border='0' /></a> <a href='" . url("r," . $row['id'] . "") . "'><img src='images/icons/pencil_small.png' alt='[{$lang['admin']['edit'] }]' title='{$lang['admin']['edit'] }' class='middle' border='0' /></a> </span>";
 		} else {
 			$extra = '';

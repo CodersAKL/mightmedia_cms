@@ -63,7 +63,7 @@ function chatbox() {
 	if(sizeof($chat) > 0) {
 		foreach($chat as $row) {
 			$i++;
-			if(isset($_SESSION['level']) && ($_SESSION['level'] == 1 || (isset($_SESSION['mod']) && strlen($_SESSION['mod']) > 1)) && isset($conf['puslapiai']['deze.php']['id'])) {
+			if(ar_admin('com')) {
 				$extras = "
         <a title='{$lang['admin']['delete']}' href='".url("?id,".$conf['puslapiai']['deze.php']['id'].";d,".$row['id'])."' onclick=\"return confirm('{$lang['system']['delete_confirm']}')\"><img src='images/icons/cross_small.png' alt='[d]' class='middle' border='0' /></a>
         <a title='{$lang['admin']['edit']}' href='".url("?id,".$conf['puslapiai']['deze.php']['id'].";r,".$row['id'])."'><img src='images/icons/pencil_small.png' alt='[r]' class='middle' border='0' /></a>

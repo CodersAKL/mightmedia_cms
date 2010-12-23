@@ -1566,4 +1566,47 @@ function site_tree($data, $id=0, $active_class='active') {
 		return $re;
 	}
 }
+//Siunciam nurodyta faila i narsykle. Pratestavau ant visu operaciniu ir narsykliu.
+function download($file, $filter = ".htaccess|.|..|remontas.php|index.php|config.php|conf.php") {
+	global $sql;
+	$filter = explode("|", $filter);
+	if (!in_array($file, $filter) && is_file($file)) {
+		if (strstr($_SERVER['HTTP_USER_AGENT'], "MSIE")) {
+			$file = preg_replace('/\./', '%2e', $file, substr_count($file, '.') - 1);
+		}
+		if (is_file($file)) {
+			if (connection_status() == 0) {
+				if (get_user_os() == "MAC") {
+					header("Content-Type: application/x-unknown\n");
+					header("Content-Disposition: attachment; filename=\"" . basename($file) . "\"\n");
+				} elseif (browser(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) == "IE") {
+					$disposition = (!eregi("\.zip$", basename($file))) ? 'attachment' : 'inline';
+					header('Content-Description: File Transfer');
+					header('Content-Type: application/force-download');
+					header('Content-Length: ' . (string )(filesize($file)));
+					header("Content-Disposition: $disposition; filename=\"" . basename($file) . "\"\n");
+					header("Cache-Control: cache, must-revalidate");
+					header('Pragma: public');
+				} elseif (browser(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) == "OPERA") {
+					header("Content-Disposition: attachment; filename=\"" . basename($file) . "\"\n");
+					header("Content-Type: application/octetstream\n");
+				} else {
+					header("Content-Disposition: attachment; filename=\"" . basename($file) . "\"\n");
+					header("Content-Type: application/octet-stream\n");
+				}
+				header("Content-Length: " . (string )(filesize($file)) . "\n\n");
+				readfile('' . $file . '');
+				exit;
+			} else {
+				header("location: ".$_SERVER['PHP_SELF']);
+				exit;
+			}
+		} else {
+			klaida($lang['system']['error'], $lang['download']['notfound']);
+			header("HTTP/1.0 404 Not Found");
+		}
+	} else {
+		header("location: " . $sql['file']);
+	}
+}
 ?>

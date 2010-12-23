@@ -67,10 +67,6 @@ if (isset($pslid) && isnum($pslid) && $pslid > 0) {
 		$page = "puslapiai/klaida";
 		$page_pavadinimas = '404 - ' . $lang['system']['pagenotfounfd'] . '';
 	}
-	/* if ($pslid == 999) {
-	  $page = "puslapiai/dievai/index";
-	  $page_pavadinimas = $lang['user']['administration'];
-	  } */
 }
 //Jei svetaine uzdaryta remontui ir jei jungiasi ne administratorius
 if ($conf['Palaikymas'] == 1) {
@@ -103,7 +99,7 @@ $m2 = explode(" ", microtime());
 $etime = $m2[1] + $m2[0];
 $ttime = ($etime - $stime);
 $ttime = number_format($ttime, 7);
-if (defined("LEVEL") && LEVEL == 1)
+if ($_SESSION['level'] == 1)
 	echo '<!-- Generated ' . apvalinti($ttime, 2) . 's. -->';
 ob_end_flush();
 

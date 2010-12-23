@@ -207,7 +207,7 @@ if (isset($url['v'])) {
 		}
 	}
 }
-if (defined("LEVEL") && LEVEL > 0 && $a == 1 && !isset($s)) {
+if ($_SESSION['level'] > 0 && $a == 1 && !isset($s)) {
 	include_once ("priedai/class.php");
 	$sql = mysql_query1("SELECT `id`, `read`,`from`, IF(`from` = '', 'Sve�?ias',`from`) AS `Nuo`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_SESSION['username']) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`date` DESC LIMIT $p,$limit");
 	if (sizeof($sql) > 0) {
@@ -228,7 +228,7 @@ if (defined("LEVEL") && LEVEL > 0 && $a == 1 && !isset($s)) {
 		lentele($lang['user']['pm_inbox'], "{$lang['user']['pm_empty_msg']}");
 	}
 }
-if (defined("LEVEL") && LEVEL > 0 && $a == 2 && !isset($s)) {
+if ($_SESSION['level'] > 0 && $a == 2 && !isset($s)) {
 	include_once ("priedai/class.php");
 	$sql = mysql_query1("SELECT `id`, `read`, IF(`to` = '', 'Sve�?ias',`to`) AS `to`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`to`) AS `to_id`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape($_SESSION['username']) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`date` DESC LIMIT $p,$limit");
 	if (count($sql) > 0) {

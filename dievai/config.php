@@ -10,7 +10,7 @@
  * @$Date: 2009-11-20 17:27:27 +0200 (Fri, 20 Nov 2009) $
  **/
 
-if (!defined("LEVEL") || !defined("OK")) {
+if (!defined("OK")) {
 	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 

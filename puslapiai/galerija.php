@@ -103,7 +103,7 @@ if (empty($url['m'])) {
 	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape($k) . " AND `kieno`='galerija' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1");
 
 
-	if (defined('LEVEL') && teises($sqlas['teises'], $_SESSION['level'])) {
+	if (teises($sqlas['teises'], $_SESSION['level'])) {
 		$text .= "<table border=\"0\"><tr><td>";
 
 		foreach ($sql as $row) {
@@ -203,7 +203,7 @@ if (!empty($url['m'])) {
 	}
 
 	if (!empty($row['file']) && isset($row['file'])) {
-		if (defined('LEVEL') && teises($row['teises'], $_SESSION['level']) || ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('galerija.php', unserialize($_SESSION['mod']))))) {
+		if (teises($row['teises'], $_SESSION['level']) || ar_admin('galerija.php')) {
         addtotitle($row['pavadinimas']);
 			$nuoroda2 = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `id` > " . escape($url['m']) . " AND `categorija`=" . escape($row['kid']) . " AND `lang` = ".escape(lang())." order by `id` ASC LIMIT 1", 86400);
 			$nuoroda = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `id` < " . escape($url['m']) . " AND categorija=" . escape($row['kid']) . " AND `lang` = ".escape(lang())." order by `id` DESC LIMIT 1", 86400);

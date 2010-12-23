@@ -67,7 +67,7 @@ HTML;
         "{$lang['admin']['poll_votecan']}:" => array("type" => "select", "name" => "only_guests", "value" => array(0 => $lang['admin']['poll_all'], 1 => $lang['admin']['poll_membs']), "class" => "input"),
         "{$lang['admin']['poll_type']}:" => array("type" => "select", "name" => "type", "value" => array(0 => 'checkbox', 1 => 'radio'), "class" => "input"),
         "{$lang['admin']['poll_active']}:" => array("type" => "select", "name" => "shown", "value" => array(0 => $lang['admin']['no'], 1 => $lang['admin']['yes']), "class" => "input"),
-        "{$lang['admin']['poll_answers']}:" => array("type" => "string", "value" => "<a href=\"#\" onclick=\"return false;\" id=\"add\"><img src=\"" . ROOT . "/images/icons/plus.png\" alt=\"[+]\" /></a> <a href=\"#\" onclick=\"return false;\" id=\"remove\"><img src=\"" . ROOT . "/images/icons/minus.png\" alt=\"[-]\" /></a><div id=\"inputs\"><p><input type=\"text\" name=\"answers[]\" class=\"input\" /></p></div>", "class" => "input"),
+        "{$lang['admin']['poll_answers']}:" => array("type" => "string", "value" => "<a href=\"#\" onclick=\"return false;\" id=\"add\"><img src=\"" . ROOT . "images/icons/plus.png\" alt=\"[+]\" /></a> <a href=\"#\" onclick=\"return false;\" id=\"remove\"><img src=\"" . ROOT . "images/icons/minus.png\" alt=\"[-]\" /></a><div id=\"inputs\"><p><input type=\"text\" name=\"answers[]\" class=\"input\" /></p></div>", "class" => "input"),
         " " => array("type" => "submit", "value" => $lang['admin']['poll_create'])
     );
     lentele($lang['admin']['poll_create'], $form->form($inputs));

@@ -14,8 +14,9 @@ if (!defined("OK")) {
 }
 function komentarai($id, $hide = false) {
 	global $url, $page, $lang, $conf, $_GET;
-	if (isset($conf['kmomentarai_sveciams']) && $conf['kmomentarai_sveciams'] != 3) {
-		if (isset($url['id']) && isnum($url['id']) && $url['id'] > 0 && isnum($id) && $id > 0) {
+	//tikrinam ar komentarai neišjungti
+	if ($conf['kmomentarai_sveciams'] != 3) {
+		if (isset($url['id']) && $id > 0) {
 			if (isset($_SESSION['id']) || (isset($conf['kmomentarai_sveciams']) && $conf['kmomentarai_sveciams'] == 1)) {
 				include_once ("priedai/class.php");
 				$bla = new forma();
@@ -30,14 +31,12 @@ function komentarai($id, $hide = false) {
 				);
 
 
-				hide("{$lang['comments']['write']}", $bla->form($form), $hide);
+				hide($lang['comments']['write'], $bla->form($form), $hide);
 			} else {
-				hide("{$lang['comments']['write']}", $lang['system']['pleaselogin']);
+				hide($lang['comments']['write'], $lang['system']['pleaselogin']);
 			}
 			
-			$sql = mysql_query1("SELECT *, (SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `" . LENTELES_PRIESAGA . "kom`.`nick_id`=`id`) AS email,
-                (SELECT `levelis` FROM `" . LENTELES_PRIESAGA . "users` WHERE `" . LENTELES_PRIESAGA . "kom`.`nick_id`=`id`) AS levelis FROM `" . LENTELES_PRIESAGA . "kom` WHERE kid = " . escape($id) .
-				" AND pid = " . escape($page) . " ORDER BY `data` DESC LIMIT 50");
+			$sql = mysql_query1("SELECT *, (SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `" . LENTELES_PRIESAGA . "kom`.`nick_id`=`id`) AS email FROM `" . LENTELES_PRIESAGA . "kom` WHERE kid = " . escape($id) ." AND pid = " . escape($page) . " ORDER BY `data` DESC LIMIT 50");
 			$text = '';
 			$tr = '';
 			$i = 0;
@@ -45,14 +44,14 @@ function komentarai($id, $hide = false) {
 				$i++;
 				$tr = $i % 2 ? '2' : '';
 				$text .= "<div class=\"tr$tr\"><em><a href=\"".$_SERVER['REQUEST_URI']."#k:" . $row['id'] . "\" id=\"k:" . $row['id'] . "\"> <img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /> </a> ";
-				if (defined("LEVEL") && (LEVEL == 1 || (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('com', unserialize($_SESSION['mod']))))) {
+				if (ar_admin('com')) {
 					$text .= "<a style=\"float: right;\" href='" . url("dk," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['system']['delete_confirm']}') \"><img src='images/icons/cross_small.png' class='middle' alt='" . $lang['faq']['delete'] . "' border='0' title='" . $lang['admin']['delete'] . "' /></a> ";
 				}
 				if ($row['nick_id'] == 0) {
 					$duom = @unserialize($row['nick']);
-					$nick = user($duom[0], $row['nick_id'], $row['levelis']) . ($_SESSION['level'] == 1 ? " (" . $duom[1] . ")" : "");
+					$nick = user($duom[0], $row['nick_id']) . ($_SESSION['level'] == 1 ? " (" . $duom[1] . ")" : "");
 				} else {
-					$nick = user($row['nick'], $row['nick_id'], $row['levelis']);
+					$nick = user($row['nick'], $row['nick_id']);
 				}
 				$text .= $nick;
 				$text .= " (" . date('Y-m-d H:i:s', $row['data']) . ") " . naujas($row['data'], $row['nick']) . "</em><br />
@@ -65,21 +64,19 @@ function komentarai($id, $hide = false) {
 
 
 		//Irasom nauja komentara jei nurodytas puslapis, gal perdidele salyga bet saugumo sumetimais :)
-		if (isset($_POST['n_kom']) && !empty($_POST['n_kom']) && !empty($_POST['Naujas']) && $_POST['Naujas'] == $lang['comments']['send'] && isset($_POST['id']) && !empty($_POST['id']) && isnum($_POST['id']) &&
-			(isset($_SESSION['id']) || $conf['kmomentarai_sveciams'] == 1)) {
+		if (isset($_POST['n_kom']) && !empty($_POST['n_kom']) && !empty($_POST['Naujas']) && $_POST['Naujas'] == $lang['comments']['send'] && isset($_POST['id']) && !empty($_POST['id']) && (isset($_SESSION['id']) || $conf['kmomentarai_sveciams'] == 1)) {
 			if ((isset($_POST['code']) && strtoupper($_POST['code']) == $_SESSION['code']) || isset($_SESSION['id'])) {
 				if (isset($_SESSION['id'])) {
 					mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai+1 WHERE nick=" . escape($_SESSION['username']) . " AND `id` = " . escape($_SESSION['id']) . "");
-				} else {
+				} else 
 					if (!isset($_COOKIE['komentatorius']) || $_POST['name'] != $_COOKIE['komentatorius']) {
 						setcookie("komentatorius", $_POST['name'], time() + 60 * 60 * 24 * 30);
 					}
-				}
+				
 				$nick_id = (isset($_SESSION['id']) ? $_SESSION['id'] : 0);
 				$nick = (isset($_SESSION['username']) ? $_SESSION['username'] : (!empty($_POST['name']) ? serialize(array(trimlink(strip_tags($_POST['name']), 9), getip())) : serialize(array($lang['system']['guest'], getip()))));
-				mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "kom` (`kid`, `pid`, `zinute`, `nick`, `nick_id`, `data`) VALUES (" . escape($_POST['id']) . ", " . escape($page) . ", " . escape($_POST['n_kom']) . ", " .
-					escape($nick) . ", " . escape($nick_id) . ", '" . time() . "')");
-				unset($_POST['Naujas']);
+				mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "kom` (`kid`, `pid`, `zinute`, `nick`, `nick_id`, `data`) VALUES (" . escape($_POST['id']) . ", " . escape($page) . ", " . escape($_POST['n_kom']) . ", " .escape($nick) . ", " . escape($nick_id) . ", '" . time() . "')");
+				//unset($_POST['Naujas']);
 				header("location: " . $_SERVER['HTTP_REFERER']);
 			} else {
 				klaida($lang['system']['error'], $lang['reg']['wrongcode']);
@@ -87,8 +84,7 @@ function komentarai($id, $hide = false) {
 		}
 
 		// Trinam komentara
-		if (isset($url['dk']) && isnum($url['dk']) && $url['dk'] > 0 && isset($url['id']) && !empty($url['id']) && isnum($url['id']) && defined("LEVEL") && (LEVEL == 1 || (isset($_SESSION['mod']) && is_array(unserialize
-			($_SESSION['mod'])) && in_array('com', unserialize($_SESSION['mod']))))) {
+		if (isset($url['dk']) && isset($url['id'])  &&  ar_admin('com')) {
 			$id = (int)$url['dk'];
 			$sql = mysql_query1("SELECT nick, nick_id FROM `" . LENTELES_PRIESAGA . "kom` WHERE id=" . escape($id) . " LIMIT 1");
 			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai-1 WHERE nick=" . escape($sql['nick']) . " AND `id` = " . escape($sql['nick_id']) . "");

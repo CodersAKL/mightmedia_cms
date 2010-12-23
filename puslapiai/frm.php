@@ -10,67 +10,28 @@
  * @$Date$
  * */
 //subkategorijos
-if (isset($url['s']) && isnum($url['s']) && $url['s'] > 0) {
-	$sid = (int) $url['s'];
-} else {
-	$sid = 0;
-}
+$sid = isset($url['s']) ? $url['s'] : 0;
 //temos
-if (isset($url['t']) && isnum($url['t']) && $url['t'] > 0) {
-	$tid = (int) $url['t'];
-} else {
-	$tid = 0;
-}
+$tid = isset($url['t']) ? $url['t'] : 0;
 //veiksmai
-if (isset($url['a']) && isnum($url['a']) && $url['a'] > 0) {
-	$aid = (int) $url['a'];
-} else {
-	$aid = 0;
-}
+$aid = isset($url['a']) ? $url['a'] : 0;
 //edit
-if (isset($url['e']) && isnum($url['e']) && $url['e'] > 0) {
-	$eid = (int) $url['e'];
-} else {
-	$eid = 0;
-}
+$eid = isset($url['e']) ? $url['e'] : 0;
 //puslapiai
-if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
-	$pid = (int) $url['p'];
-} else {
-	$pid = 0;
-}
+$pid = isset($url['p']) ? $url['p'] : 0;
 //trinti msg
-if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
-	$did = (int) $url['d'];
-} else {
-	$did = 0;
-}
+$did = isset($url['d']) ? $url['d'] : 0;
 //trint tema
-if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
-	$kid = (int) $url['k'];
-} else {
-	$kid = 0;
-}
-// Uzrakinamos temos ID
-if (isset($url['l']) && isnum($url['l']) && $url['l'] > 0) {
-	$lid = (int) $url['l'];
-} else {
-	$lid = 0;
-}
+$kid = isset($url['k']) ? $url['k'] : 0;
+//Uzrakinamos temos ID
+$lid = isset($url['l']) ? $url['l'] : 0;
 //redagavimo
-if (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
-	$rid = (int) $url['r'];
-} else {
-	$rid = 0;
-}
+$rid = isset($url['r']) ? $url['r'] : 0;
 //citatos
-if (isset($url['q']) && isnum($url['q']) && $url['q'] > 0) {
-	$qid = (int) $url['q'];
-} else {
-	$qid = 0;
-}
+$qid = isset($url['q']) ? $url['q'] : 0;
+
 include_once ("priedai/class.php");
-$imagedir = (file_exists("stiliai/{$conf['Stilius']}/forum/")?"stiliai/{$conf['Stilius']}/forum/":"images/forum/");
+$imagedir = (file_exists("stiliai/{$conf['Stilius']}/forum/") ? "stiliai/{$conf['Stilius']}/forum/":"images/forum/");
 //kur tu?
 $kur = mysql_query1("SELECT pav, (SELECT pav from " . LENTELES_PRIESAGA . "d_straipsniai Where id=$tid AND `lang` = " . escape(lang()) . ")AS tema,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_zinute Where sid=$tid AND tid=$sid  AND `lang` = " . escape(lang()) . ")AS zinute,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_zinute Where tid=$sid AND `lang` = " . escape(lang()) . ")AS subzinute,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_straipsniai Where tid=$sid AND `lang` = " . escape(lang()) . ")AS temos FROM " . LENTELES_PRIESAGA . "d_temos WHERE id=$sid AND `lang` = " . escape(lang()) . " limit 1", 120);
 //Sausainiai naujiems fiksuoti
@@ -198,7 +159,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 	$teises = mysql_query1("SELECT `teises` FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`=" . escape($sid) . " LIMIT 1");
 	if (isset($teises['teises']) && teises(unserialize($teises['teises']), $_SESSION['level'])) {
 		//trinam posta
-		if (isset($tid) && isset($sid) && isset($did) && $did > 0 && isset($_SESSION['level']) && ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1)) {
+		if ($did > 0 && ar_admin('frm')) {
 
 
 			//Cia nesugalvojau kaip visas 3 sujungt :(
@@ -218,7 +179,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 		$tsql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`=" . escape((int) $sid) . " AND `id`=" . escape((int) $tid) . " AND `lang` = " . escape(lang()) . " limit 1");
 		$straipsnis = $tsql['pav'];
 		if (!empty($straipsnis)) {
-			if (isset($_SESSION['level']) && ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1)) {
+			if (ar_admin('frm')) {
 				$f_text = '';
 
         if ($tsql['uzrakinta'] == "taip") {
@@ -255,13 +216,13 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 				$tool = "";
 
 
-        if (isset($_SESSION['id']) && $row['nikas'] == $_SESSION['id'] || isset($_SESSION['level']) && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
+        if (isset($_SESSION['id']) && $row['nikas'] == $_SESSION['id'] ||  ar_admin('frm')) {
           $tool .='<span style="float: right;">';
           $tool .= "<a href='" . url("e," . $row['zid'] . "") . "#end' title='" . $lang['system']['edit'] . "'><img src='images/icons/pencil.png' border='0' alt='[r]'/></a>";
           if ($a != 1) {
-            if (isset($_SESSION['level']) && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
+          
               $tool .= "<a href='".url("?id," . $url['id'] . ";t," . $tid . ";s," . $sid . ";d," . $row['zid'] ). "' title='" . $lang['system']['delete'] . "'  onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='images/icons/cross.png' border='0' alt='[t]'/></a>";
-            }
+            
           }
           $tool .= '</span>';
         }
@@ -282,7 +243,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 
 				$extra = '';
 				if (!empty($_POST['msg']) && $_POST['action'] == 'f_update') {
-					if ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
+					if (ar_admin('frm')) {
 						mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]{$lang['forum']['edited_by']}: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid));
 					} else {
 						mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape($_POST['msg'] . "\n[sm][i]{$lang['forum']['edited_by']}: " . $_SESSION['username'] . " " . date('Y-m-d H:i:s', time()) . "[/i][/sm]") . " WHERE `id`=" . escape($eid) . " AND `nick`=" . escape($_SESSION['id']));
@@ -290,7 +251,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 					redirect(url("?id," . $url['id'] . ";s,$sid;t,$tid;p,{$_GET['p']}"));
 					//redirect($_SERVER['HTTP_REFERAL']);
 				} else {
-					if ((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
+					if (ar_admin('frm')) {
 						$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($eid) . "  LIMIT 1";
 					} else {
 						$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape($eid) . " AND `nick`='" . escape($_SESSION['id']) . "' LIMIT 1";
@@ -381,7 +342,7 @@ if ($tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0) {
 }
 // Uzrakinam/Atrakinam tema
 elseif ((int) $lid != 0 && $kid == 0 && $rid == 0) {
-	if (isset($_SESSION['level']) && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
+	if (ar_admin('frm')) {
 
 		$sql = mysql_query1("SELECT `uzrakinta` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`=" . escape($sid) . " AND `id`=" . escape($lid) . " limit 1");
 		if (isset($sql['uzrakinta'])) {
@@ -401,7 +362,7 @@ elseif ((int) $lid != 0 && $kid == 0 && $rid == 0) {
 
 // Trinti tema
 elseif ((int) $kid && (int) $kid && (int) $kid > 0) {
-	if (isset($_SESSION['level']) && (isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) {
+	if (ar_admin('frm')) {
 
 		//atimam autoriui tema
 		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `forum_temos`=`forum_temos`-1 WHERE id=(SELECT `nick` FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `sid`=" . escape($kid) . " ORDER BY laikas ASC LIMIT 1) LIMIT 1");
@@ -421,7 +382,7 @@ elseif ((int) $kid && (int) $kid && (int) $kid > 0) {
 	}
 }
 //redaguojam tema
-elseif (((isset($_SESSION['mod']) && is_array(unserialize($_SESSION['mod'])) && in_array('frm', unserialize($_SESSION['mod']))) || $_SESSION['level'] == 1) && (int) $rid != 0) {
+elseif (ar_admin('frm') && (int) $rid != 0) {
 	unset($tsql);
 	$tsql = mysql_query1("SELECT pav,sticky FROM " . LENTELES_PRIESAGA . "d_straipsniai WHERE `id`=" . escape((int) $rid) . " limit 1", 15);
 	if (isset($tsql['pav'])) {

@@ -64,5 +64,4 @@ if(isset($quest['question'])){
   }
 } else 
   $text = '<b>' . $lang['poll']['no'] . '.</b><br />';
-
 ?>

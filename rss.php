@@ -24,37 +24,25 @@ if (isset($conf['puslapiai']['rss.php'])) {
 
 
 		<?php
-		/*
-		  <image>
-		  <url>http://www.virtuosimedia.com/images/logo_fancy.png</url>
-		  <title>Virtuosi Media</title>
-		  <link>http://www.virtuosimedia.com</link>
-		  <height>95</height>
-		  <width>133</width>
-		  <description>A web development resource center</description>
-		  </image> */
+      $result = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "naujienos`	WHERE `rodoma`= 'TAIP' AND `lang` = " . escape(basename($_GET['lang'], '.php')) . " ORDER BY `data` DESC LIMIT 50", 360);
 
-		$result = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "naujienos`	WHERE `rodoma`= 'TAIP' AND `lang` = " . escape(basename($_GET['lang'], '.php')) . " ORDER BY `data` DESC LIMIT 50", 360);
-
-		//Iterate over the rows to create each item
-		//<image>'.adresas()."images/naujienu_kat/".$kategorija['pav'].'</image>
-		foreach ($result as $row) {
-			$kategorija = mysql_query1("SELECT  SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` where `id`=" . escape($row['kategorija']) . " AND `lang` = " . escape(basename($_GET['lang'], '.php')) . " LIMIT 1", 360);
-			$nickas = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick` = " . escape($row['autorius']) . " LIMIT 1", 360);
-			if ((isset($kategorija['teises']) && teises($kategorija['teises'], 0)) || !isset($kategorija['teises'])) {
-				echo '	 <item>
-			<title><![CDATA[' . $row['pavadinimas'] . ']]></title>
-			<link>' . adresas() . '?id,' . $conf['puslapiai']['naujienos.php']['id'] . ';k,' . $row['id'] . '</link>
-			<description><![CDATA[ ' . $row['naujiena'] . ' <br />' . $row['daugiau'] . ' ]]></description>
-			<author><![CDATA[' . $nickas['email'] . ' (' . $row['autorius'] . ')]]></author>
-			' . (isset($kategorija['pavadinimas']) ? '<category>' . $kategorija['pavadinimas'] . '</category>' : '') . '
-			<pubDate>' . date('D, d M Y H:i:s O', $row['data']) . '</pubDate>
-			<source url="' . adresas() . '">' . $conf['Pavadinimas'] . ' RSS</source>
-			<guid>' . adresas() . '?id,' . $conf['puslapiai']['naujienos.php']['id'] . ';k,' . $row['id'] . '</guid>
-	</item>
-';
-			}
-		}
+      //naujienu sarasas
+      foreach ($result as $row) {
+        $kategorija = mysql_query1("SELECT  SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` where `id`=" . escape($row['kategorija']) . " AND `lang` = " . escape(basename($_GET['lang'], '.php')) . " LIMIT 1", 360);
+        $nickas = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick` = " . escape($row['autorius']) . " LIMIT 1", 360);
+        if ((isset($kategorija['teises']) && teises($kategorija['teises'], 0)) || !isset($kategorija['teises'])) {
+          echo '<item>
+                  <title><![CDATA[' . $row['pavadinimas'] . ']]></title>
+                  <link>' . adresas() . '?id,' . $conf['puslapiai']['naujienos.php']['id'] . ';k,' . $row['id'] . '</link>
+                  <description><![CDATA[ ' . $row['naujiena'] . ' <br />' . $row['daugiau'] . ' ]]></description>
+                  <author><![CDATA[' . $nickas['email'] . ' (' . $row['autorius'] . ')]]></author>
+                  ' . (isset($kategorija['pavadinimas']) ? '<category>' . $kategorija['pavadinimas'] . '</category>' : '') . '
+                  <pubDate>' . date('D, d M Y H:i:s O', $row['data']) . '</pubDate>
+                  <source url="' . adresas() . '">' . $conf['Pavadinimas'] . ' RSS</source>
+                  <guid>' . adresas() . '?id,' . $conf['puslapiai']['naujienos.php']['id'] . ';k,' . $row['id'] . '</guid>
+              </item>';
+        }
+      }
 		?>
 
 	</channel>

@@ -56,36 +56,36 @@ if ($_SESSION['level'] == 1) {
 	}
 
 
-if (isset($_POST['dukas'])) {
-	//echo "asd";
-	$klausimas = $_POST['Klausimas'];
-	$atsakymas = str_replace(array('<br>'), array('<br />'), $_POST['Atsakymas']);
-	$order = ceil((int)$_POST['Order']);
-	$id = ceil((int)$_POST['eid']);
+  if (isset($_POST['dukas'])) {
+    //echo "asd";
+    $klausimas = $_POST['Klausimas'];
+    $atsakymas = str_replace(array('<br>'), array('<br />'), $_POST['Atsakymas']);
+    $order = ceil((int)$_POST['Order']);
+    $id = ceil((int)$_POST['eid']);
 
-	//jeigu rasom nauja
-	if ($_POST['dukas'] == $lang['faq']['submit']) {
-		$q = "INSERT INTO `" . LENTELES_PRIESAGA . "duk` (`klausimas`,`atsakymas`,`order`,`lang`) VALUES (
-		" . escape($klausimas) . ",
-		" . escape($atsakymas) . ",
-		" . escape($order) . ",
-		" . escape(lang()) . ");";
-		mysql_query1($q);
-		redirect(url("?id," . $url['id']), "header");
-	}
+    //jeigu rasom nauja
+    if ($_POST['dukas'] == $lang['faq']['submit']) {
+      $q = "INSERT INTO `" . LENTELES_PRIESAGA . "duk` (`klausimas`,`atsakymas`,`order`,`lang`) VALUES (
+      " . escape($klausimas) . ",
+      " . escape($atsakymas) . ",
+      " . escape($order) . ",
+      " . escape(lang()) . ");";
+      mysql_query1($q);
+      redirect(url("?id," . $url['id']), "header");
+    }
 
-	//jeigu redaguojam
-	if ($_POST['dukas'] == $lang['faq']['edit']) {
-		$q = "UPDATE `" . LENTELES_PRIESAGA . "duk` SET
-		`atsakymas` = " . escape($atsakymas) . ",
-		`klausimas` = " . escape($klausimas) . ",
-		`order` = " . escape((int)$_POST['Order']) . " WHERE `id`=" . $id . " LIMIT 1 ;";
-		mysql_query1($q);
-		redirect(url("?id," . $url['id']), "header");
-	}
+    //jeigu redaguojam
+    if ($_POST['dukas'] == $lang['faq']['edit']) {
+      $q = "UPDATE `" . LENTELES_PRIESAGA . "duk` SET
+      `atsakymas` = " . escape($atsakymas) . ",
+      `klausimas` = " . escape($klausimas) . ",
+      `order` = " . escape((int)$_POST['Order']) . " WHERE `id`=" . $id . " LIMIT 1 ;";
+      mysql_query1($q);
+      redirect(url("?id," . $url['id']), "header");
+    }
 
 
-}
+  }
 }
 $text = '';
 $extra = "<ol>";
@@ -95,12 +95,12 @@ if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
 		$nr++;
 		$extra .= "<li><a href='".url('?id,'.$_GET['id'])."#" . $row['id']."'>" . $row['klausimas'] . "</a></li>\n";
-		$text .= "<h3>" . $nr . ". <a name='" . $row['id'] . "'>" . $row['klausimas'] . "</a>" . (defined("LEVEL") && LEVEL == 1 ? " <a href='" . url("d," . (int)$row['id'] . "") . "' onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='images/icons/cross_small.png' class='middle' alt='" . $lang['faq']['delete'] . "' border='0' title='" . $lang['faq']['delete'] . "' /></a> <a href='" . url("e," . (int)$row['id'] . "") . "'><img src='images/icons/pencil_small.png' class='middle' alt='" . $lang['faq']['edit'] . "' border='0' title='" . $lang['faq']['edit'] . "' /></a>" : "") . "</h3>\n" . $row['atsakymas'] . "\n";
+		$text .= "<h3>" . $nr . ". <a name='" . $row['id'] . "'>" . $row['klausimas'] . "</a>" . ($_SESSION['level'] == 1 ? " <a href='" . url("d," . (int)$row['id'] . "") . "' onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='images/icons/cross_small.png' class='middle' alt='" . $lang['faq']['delete'] . "' border='0' title='" . $lang['faq']['delete'] . "' /></a> <a href='" . url("e," . (int)$row['id'] . "") . "'><img src='images/icons/pencil_small.png' class='middle' alt='" . $lang['faq']['edit'] . "' border='0' title='" . $lang['faq']['edit'] . "' /></a>" : "") . "</h3>\n" . $row['atsakymas'] . "\n";
 	}
 
 }
 
-lentele($lang['faq']['questions'], $extra . "</ol>" . (defined("LEVEL") && LEVEL == 1 ? "<button onclick=\"location.href='".url("?id," . $_GET['id'] . ";n,1")."'\">{$lang['faq']['new']}</button>" : "") . "<div style='padding-bottom:20px'></div>");
+lentele($lang['faq']['questions'], $extra . "</ol>" . ($_SESSION['level'] == 1 ? "<button onclick=\"location.href='".url("?id," . $_GET['id'] . ";n,1")."'\">{$lang['faq']['new']}</button>" : "") . "<div style='padding-bottom:20px'></div>");
 lentele($lang['faq']['answers'], $text);
 unset($extra, $text);
 /*

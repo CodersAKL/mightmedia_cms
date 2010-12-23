@@ -10,7 +10,7 @@
  * @$Date$
  **/
 
-if (isset($_SESSION['mod']) && !empty($_SESSION['mod'])) {
+if (!empty($_SESSION['mod'])) {
 
   function editor($tipas = 'jquery', $dydis = 'standartinis', $id = false, $value = ''){
     return editorius($tipas, $dydis, $id, $value);

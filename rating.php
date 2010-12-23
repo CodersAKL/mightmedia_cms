@@ -76,7 +76,7 @@ function rating_form($page, $id, $allow=true) {
         $rating->set_score($score, $ip, $page, $id);
         $status = $rating->status;
       }
-    }//else
+    }
     if ($allow == false || !$rating->status) {
       $status = '<img src="images/icons/cross_circle.png" alt="no" />';
     }

@@ -9,16 +9,9 @@
  * @$Revision$
  * @$Date$
  **/
-if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
-	$p = escape(ceil((int)$url['p']));
-} else {
-	$p = 0;
-}
-if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
-	$k = escape(ceil((int)$url['k']));
-} else {
-	$k = 0;
-}
+
+$p = isset($url['p']) ? $url['p'] :0;
+$k = isset($url['k']) ? $url['k'] :0;
 $limit = 50;
 $text = '';
 include_once ("rating.php");

@@ -11,7 +11,7 @@
  **/
 
 ####################### Atvaizduojam panele ###########################
-if (!defined("LEVEL") || !isset($_SESSION['username']) || empty($_SESSION['username'])) {
+if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
 	$text = <<< HTML
 	<center>
 		<form id="user_reg" name="user_reg" method="post" action="">
@@ -24,22 +24,22 @@ if (!defined("LEVEL") || !isset($_SESSION['username']) || empty($_SESSION['usern
 		</form>
 	</center>
 HTML;
-		if (isset($conf['puslapiai']['reg.php']['id'])) {
+		if (puslapis('reg.php')) {
 			$text .= "<a href=\"".url("?id," . $conf['puslapiai']['reg.php']['id'] ). "\">{$lang['user']['registration']}</a> ";
 		}
-	if (isset($conf['puslapiai']['slaptazodzio_priminimas.php']['id'])) {
+	if (puslapis('slaptazodzio_priminimas.php')) {
 		$text .= "<a href=\"".url("?id," . $conf['puslapiai']['slaptazodzio_priminimas.php']['id'] ). "\">{$lang['user']['pass_forget']}</a>";
 		$title = $lang['user']['for_members'];
 	}
 } else {
-	$user = $_SESSION['username'];
+	//$user = $_SESSION['username'];
 	$text = "<ul>";
 	//profilio redagavimo nuoroda
 	if (isset($conf['puslapiai']['edit_user.php']['id'])) {
 		$text .= "<li><a href=\"".url("?id," . $conf['puslapiai']['edit_user.php']['id']) . "\"><img src=\"images/icons/user_edit.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['edit_profile']}</a></li>";
 	}
 	//Pm nuoroda
-	if (isset($conf['puslapiai']['pm.php']['id'])) {
+	if (puslapis('pm.php')) {
 		$pm = kiek('private_msg', "WHERE `to`=" . escape($_SESSION['username']) . " AND `read`='NO'", 'total');
 
 		if ($pm != 0) {
@@ -50,17 +50,11 @@ HTML;
 		$text .= "<li><a href=\"".url("?id," . $conf['puslapiai']['pm.php']['id'] . ";a,1")."\">$img {$lang['user']['messages']} ({$pm})</a></li>";
 	}
   //moderatoriaus puslapio nuoroda
-	if (isset($conf['puslapiai']['moderatorius.php']['id']) && isset($_SESSION['mod']) && !empty($_SESSION['mod'])) {
+	if (puslapis('moderatorius.php') && !empty($_SESSION['mod'])) {
 		$text .= "
 			<li><a href=\"".url("?id,{$conf['puslapiai']['moderatorius.php']['id']}")."\"><img src=\"images/icons/book__pencil.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['system']['mod']}</a></li>";
 	}
-	//į admin pultą
-	/*if (isset($_SESSION['level']) && $_SESSION['level'] == 1) {
-		$text .= "
-			<li><a href=\"dievai\"><img src=\"images/icons/admin_block.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['administration']}</a></li>
-			";
-			
-	}*/
+
 	//atsijungimo nuoroda
 	$text .= "
 			<li><a href=\"{$lang['user']['logout']}\"><img src=\"images/icons/key_go.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['logout']}</a></li>

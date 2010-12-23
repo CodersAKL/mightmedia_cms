@@ -19,7 +19,7 @@ $viso = kiek("knyga");
 include_once ("priedai/class.php");
 $bla = new forma();
 //jei tai moderatorius
-if (defined("LEVEL") && LEVEL == 1) {
+if ($_SESSION['level'] == 1) {
 	//jei adminas paspaude trinti
 	if (isset($url['d']) && !empty($url['d']) && isnum($url['d'])) {
 		$id = (int) $url['d'];

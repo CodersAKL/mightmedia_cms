@@ -8,21 +8,13 @@
  * @$Revision$
  * @$Date$
  * */
-if (!defined("LEVEL") || !defined("OK") || !isset($_SESSION['username'])) {
+if (!defined("OK") || !isset($_SESSION['username'])) {
 	header("Location: " . url("?id,{$conf['puslapiai'][$conf['pirminis'] . '.php']['id']}"));
 	exit;
 }
-if (isset($url['m']) && isnum($url['m']) && $url['m'] > 0) {
-	$mid = (int) $url['m'];
-} else {
-	$mid = 0;
-}
-if (isset($url['id']) && isnum($url['id']) && $url['id'] > 0) {
-	$id = (int) $url['id'];
-} else {
-	$url['id'] = 0;
-}
 
+$mid = isset($url['m']) ? $url['m'] : 0;
+$id = $url['id'];
 // ############ Apdorojomi duomenys kurie buvo pateikti is tam tikros redagavimo lenteles #####################
 // ######### Slaptazodzio keitimas #############
 if (isset($_POST['old_pass']) && count($_POST['old_pass']) > 0 && count($_POST['new_pass']) > 0 && count($_POST['new_pass2']) > 0) {

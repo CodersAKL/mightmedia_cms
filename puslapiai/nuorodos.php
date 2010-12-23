@@ -102,7 +102,7 @@ ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400);
 	}
 }
 
-if (isset($_SESSION['username']) && !empty($_SESSION['username']) && defined("LEVEL") && LEVEL > 0) {
+if (isset($_SESSION['username']) && !empty($_SESSION['username']) && $_SESSION['level'] > 0) {
 	if (isset($_POST['Submit_link']) && !empty($_POST['Submit_link']) && $_POST['Submit_link'] == $lang['admin']['links_create']) {
 
 	// Nustatom kintamuosius

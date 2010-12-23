@@ -18,23 +18,22 @@ include_once ("priedai/header.php");
 ob_start();
 header("Content-type: text/html; charset=utf-8");
 //Jei svetaine uzdaryta remontui ir jei kreipiasi ne administratorius
-if ($conf['Palaikymas'] == 1 && (!defined("LEVEL") || LEVEL > 1)) {
+if ($conf['Palaikymas'] == 1 && $_SESSION['level'] > 1) {
 	redirect("remontas.php");
 	exit;
 }
 //Nustatome atsisiuntimo ID
-if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
-	$d = (int)$url['d'];
-} else {
-	$d = 0;
-}
+$d = isset($url['d']) ? (int)$url['d'] : 0;
+
 //FUNKCIJOS
 if (isset($d) && $d > 0) {
+  //duomenys apie faila
 	$sql = mysql_query1("SELECT `file`,`categorija` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` = " . escape($d) . " LIMIT 1");
-	if (count($sql) > 0) {
+	if (isset($sql['file'])) {
+    //teisiu tikrinimas
 		$row = mysql_query1("SELECT `teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape($sql['categorija']) . " LIMIT 1");
-		if (isset($_SESSION['level']) && (!$row || teises($row['teises'], $_SESSION['level']))) {
-			download("siuntiniai/" . $sql['file'] . "", ".htaccess|.|..|remontas.php|index.php|config.php|conf.php");
+		if (!$row || teises($row['teises'], $_SESSION['level'])) {
+			download("siuntiniai/" . $sql['file']);
 		} else {
 			die(klaida($lang['system']['sorry'], $lang['download']['cant']));
 		}
@@ -48,48 +47,6 @@ if (isset($d) && $d > 0) {
 	header("HTTP/1.0 404 Not Found");
 	die(klaida($lang['system']['error'], $lang['download']['notfound']));
 }
-//Siunciam nurodyta faila i narsykle. Pratestavau ant visu operaciniu ir narsykliu.
-function download($file, $filter) {
-	global $sql;
-	$filter = explode("|", $filter);
-	if (!in_array($file, $filter) && is_file($file)) {
-		if (strstr($_SERVER['HTTP_USER_AGENT'], "MSIE")) {
-			$file = preg_replace('/\./', '%2e', $file, substr_count($file, '.') - 1);
-		}
-		if (is_file($file)) {
-			if (connection_status() == 0) {
-				if (get_user_os() == "MAC") {
-					header("Content-Type: application/x-unknown\n");
-					header("Content-Disposition: attachment; filename=\"" . basename($file) . "\"\n");
-				} elseif (browser(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) == "IE") {
-					$disposition = (!eregi("\.zip$", basename($file))) ? 'attachment' : 'inline';
-					header('Content-Description: File Transfer');
-					header('Content-Type: application/force-download');
-					header('Content-Length: ' . (string )(filesize($file)));
-					header("Content-Disposition: $disposition; filename=\"" . basename($file) . "\"\n");
-					header("Cache-Control: cache, must-revalidate");
-					header('Pragma: public');
-				} elseif (browser(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) == "OPERA") {
-					header("Content-Disposition: attachment; filename=\"" . basename($file) . "\"\n");
-					header("Content-Type: application/octetstream\n");
-				} else {
-					header("Content-Disposition: attachment; filename=\"" . basename($file) . "\"\n");
-					header("Content-Type: application/octet-stream\n");
-				}
-				header("Content-Length: " . (string )(filesize($file)) . "\n\n");
-				readfile('' . $file . '');
-				exit;
-			} else {
-				header("location: ".$_SERVER['PHP_SELF']);
-				exit;
-			}
-		} else {
-			klaida($lang['system']['error'], $lang['download']['notfound']);
-			header("HTTP/1.0 404 Not Found");
-		}
-	} else {
-		header("location: " . $sql['file']);
-	}
-}
+
 
 ?>
