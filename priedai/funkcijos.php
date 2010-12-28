@@ -1444,11 +1444,11 @@ function checkUrl($url) {
 function lang() {
 	if (empty($_SESSION['lang'])) {
 		global $conf;
-		$_SESSION['lang'] = basename(empty($conf['kalba']) ? 'lt' : $conf['kalba'], '.php');
+		$_SESSION['lang'] = basename($conf['kalba'], '.php');
 	}
 	return $_SESSION['lang'];
 }
-
+//unset($_SESSION['lang']);
 /**
  * Funkcija dirbanti su BMP paveiksliukais
  * @author - nežinomas

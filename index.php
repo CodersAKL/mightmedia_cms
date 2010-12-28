@@ -78,13 +78,13 @@ if (!empty($_GET['lang'])) {
 	$_SESSION['lang'] = basename($_GET['lang'], '.php');
 	redirect(url("?id," . $_GET['id']));
 }
-if (!empty($_SESSION['lang']) && is_file(ROOT . 'lang/' . basename($_SESSION['lang']) . '.php')) {
+/*if (!empty($_SESSION['lang']) && is_file(ROOT . 'lang/' . basename($_SESSION['lang']) . '.php')) {
 	require(ROOT . 'lang/' . basename($_SESSION['lang'], '.php') . '.php');
-}
+}*/
 
 include_once ("priedai/header.php");
 //Tikrinam ar setup.php failas paљalintas. Saugumo sumetimais
-if (is_file('setup.php') && defined('LEVEL') && LEVEL == 1 && !@unlink('setup.php')) {
+if (is_file('setup.php') && $_SESSION['level'] == 1 && !@unlink('setup.php')) {
 	die('<h1>Demesio / Warning</h1><h3>Neištrintas setup.php failas.</h3> Tai saugumo spraga. Prašome pašalinkite šį failą iš serverio arba pakeiskite jo pavadinimą. /Please, remove setup.php file from server.</h3>');
 }
 include_once 'stiliai/' . $conf['Stilius'] . '/sfunkcijos.php';
