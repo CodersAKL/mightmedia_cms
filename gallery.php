@@ -44,8 +44,8 @@ class RssGallery {
 	function GetGallery() {
 		global $conf;
 		$rssItems = '';
-		$query = "SELECT * FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `rodoma` = 'TAIP'";
-		$query = mysql_query1($query);
+		$query = "SELECT * FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `rodoma` = 'TAIP' ORDER BY id DESC";
+		$query = mysql_query1($query,3600);
 
 		foreach ($query as $row) {
 			$id = $row['ID'];
