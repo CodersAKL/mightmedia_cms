@@ -10,9 +10,9 @@
  * @$Date$
  **/
 
-$p = isset($url['p']) ? $url['p'] :0;
-$k = isset($url['k']) ? $url['k'] :0;
-$limit = 50;
+$p = isset($url['p']) ? (int)$url['p'] :0;
+$k = isset($url['k']) ? (int)$url['k'] :0;
+$limit = $conf['News_limit'];
 $text = '';
 include_once ("rating.php");
 //Kategorijų sąrašas
@@ -40,10 +40,10 @@ if ($sqlas && sizeof($sqlas) > 0 && !isset($url['m'])) {
 //Jei pasirinkta kategoriją
 if ($k >= 0 && empty($url['m'])) {
 
-	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' AND `kat`='" . $k . "' AND `lang` = ".escape(lang())." ORDER BY `date` DESC LIMIT $p, $limit", 86400);
 	$pav = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='$k' AND `lang` = ".escape(lang())." LIMIT 1", 86400);
-	$viso = count($sql);
+	$viso = kiek("straipsniai", "WHERE `rodoma`='TAIP' AND `kat`='" . $k . "' AND `lang` = ".escape(lang())."");
 	if ($viso > 0) {
+		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' AND `kat`='" . $k . "' AND `lang` = ".escape(lang())." ORDER BY `date` DESC LIMIT $p, $limit", 86400);
 		if (teises($pav['teises'], $_SESSION['level'])) {
 			
         lentele((!empty($pav['pavadinimas'])?$pav['pavadinimas']:$lang['pages']['straipsnis.php']), $pav['aprasymas']."<br /><i>{$lang['category']['articles']}: {$viso}</i>");
