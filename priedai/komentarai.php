@@ -36,8 +36,12 @@ function komentarai($id, $hide = false) {
 				hide($lang['comments']['write'], $lang['system']['pleaselogin']);
 			}
 			
-			$sql = mysql_query1("SELECT *, (SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `" . LENTELES_PRIESAGA . "kom`.`nick_id`=`id`) AS email FROM `" . LENTELES_PRIESAGA . "kom` WHERE kid = " . escape($id) ." AND pid = " . escape($page) . " ORDER BY `data` DESC LIMIT 50");
-			$text = '';
+                        $sql = mysql_query1("
+				SELECT k.*, u.`email` AS email, u.`levelis` AS levelis
+				FROM `" . LENTELES_PRIESAGA . "kom` AS k
+				LEFT JOIN `" . LENTELES_PRIESAGA . "users` AS u ON k.`nick_id` = u.`id`
+				WHERE k.`kid` = " . escape($id) . " AND k.`pid` = " . escape($page) . " ORDER BY k.`data` DESC LIMIT 50",3600);
+                        $text = '';
 			$tr = '';
 			$i = 0;
 			foreach ($sql as $row) {
