@@ -36,11 +36,8 @@ function komentarai($id, $hide = false) {
 				hide($lang['comments']['write'], $lang['system']['pleaselogin']);
 			}
 			
-                        $sql = mysql_query1("
-				SELECT k.*, u.`email` AS email, u.`levelis` AS levelis
-				FROM `" . LENTELES_PRIESAGA . "kom` AS k
-				LEFT JOIN `" . LENTELES_PRIESAGA . "users` AS u ON k.`nick_id` = u.`id`
-				WHERE k.`kid` = " . escape($id) . " AND k.`pid` = " . escape($page) . " ORDER BY k.`data` DESC LIMIT 50",3600);
+                        $sql = mysql_query1("SELECT k.*, u.email AS email, u.levelis AS levelis	FROM " . LENTELES_PRIESAGA . "kom AS k LEFT JOIN " . LENTELES_PRIESAGA . "users AS u ON k.nick_id = u.id WHERE k.kid = " . escape((int)$id) . " AND k.pid = " . escape($page) . " ORDER BY k.data DESC LIMIT 50",3600);
+
                         $text = '';
 			$tr = '';
 			$i = 0;
@@ -80,6 +77,9 @@ function komentarai($id, $hide = false) {
 				$nick_id = (isset($_SESSION['id']) ? $_SESSION['id'] : 0);
 				$nick = (isset($_SESSION['username']) ? $_SESSION['username'] : (!empty($_POST['name']) ? serialize(array(trimlink(strip_tags($_POST['name']), 9), getip())) : serialize(array($lang['system']['guest'], getip()))));
 				mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "kom` (`kid`, `pid`, `zinute`, `nick`, `nick_id`, `data`) VALUES (" . escape($_POST['id']) . ", " . escape($page) . ", " . escape($_POST['n_kom']) . ", " .escape($nick) . ", " . escape($nick_id) . ", '" . time() . "')");
+                                
+                                delete_cache("SELECT k.*, u.email AS email, u.levelis AS levelis	FROM " . LENTELES_PRIESAGA . "kom AS k LEFT JOIN " . LENTELES_PRIESAGA . "users AS u ON k.nick_id = u.id WHERE k.kid = " . escape((int)$_POST['id']) . " AND k.pid = " . escape($page) . " ORDER BY k.data DESC LIMIT 50");
+
 				//unset($_POST['Naujas']);
 				header("location: " . $_SERVER['HTTP_REFERER']);
 			} else {
@@ -93,6 +93,9 @@ function komentarai($id, $hide = false) {
 			$sql = mysql_query1("SELECT nick, nick_id FROM `" . LENTELES_PRIESAGA . "kom` WHERE id=" . escape($id) . " LIMIT 1");
 			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai-1 WHERE nick=" . escape($sql['nick']) . " AND `id` = " . escape($sql['nick_id']) . "");
 			mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE id=" . escape($id) . " LIMIT 1");
+
+                        delete_cache("SELECT k.*, u.email AS email, u.levelis AS levelis	FROM " . LENTELES_PRIESAGA . "kom AS k LEFT JOIN " . LENTELES_PRIESAGA . "users AS u ON k.nick_id = u.id WHERE k.kid = " . escape((int)$url['k']) . " AND k.pid = " . escape($page) . " ORDER BY k.data DESC LIMIT 50");
+
 			unset($id);
 			header("location: " . $_SERVER['HTTP_REFERER'] . "");
 		}
