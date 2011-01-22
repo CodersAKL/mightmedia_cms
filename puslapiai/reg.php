@@ -42,40 +42,40 @@ if (isset($_POST['action']) && $_POST['action'] == 'registracija') {
 	$error = "";
 	$einfo = count(mysql_query1("SELECT * FROM " . LENTELES_PRIESAGA . "users WHERE nick=" . escape($vardas) . ""));
 	if ($einfo != 0) {
-		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['takenusername']}<br />";
+		$error .= "{$lang['reg']['takenusername']}<br />";
 	}
 	if (strlen($vardas) < 4) {
-		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['usrtooshort']}<br />";
+		$error .= " {$lang['reg']['usrtooshort']}<br />";
 	}
 	if (strlen($vardas) > 15) {
-		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['usrtoolong']}<br />";
+		$error .= " {$lang['reg']['usrtoolong']}<br />";
 	}
 	//šitaip neveikia kai kuriuose hostinguose
 	//if (preg_match('/^[\p{L}0-9]+$/u', $vardas) == 0) {
 	if (preg_match('/^[\p{L}0-9a-zA-Z]+$/u', $vardas) == 0) {
-		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['only_letters_numbers']}<br />";
+		$error .= " {$lang['reg']['only_letters_numbers']}<br />";
 	}
 	if ($pass != $pass2) {
-		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['badpass']}<br />";
+		$error .= " {$lang['reg']['badpass']}<br />";
 	}
 	if (strlen($pass) < 6) {
-		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['passtooshort']}<br />";
+		$error .= " {$lang['reg']['passtooshort']}<br />";
 	}
 	if (strlen($pass) > 15) {
-		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['passtoolong']}<br />";
+		$error .= " {$lang['reg']['passtoolong']}<br />";
 	}
 	if (!check_email($email)) {
-		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['bademail']}<br />";
+		$error .= " {$lang['reg']['bademail']}<br />";
 	}
 
 	if (check_email($email)) {
 		$minfo = count(mysql_query1("SELECT * FROM " . LENTELES_PRIESAGA . "users WHERE email=" . escape($email) . ""));
 		if ($minfo != 0) {
-			$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['emailregistered']}<br />";
+			$error .= " {$lang['reg']['emailregistered']}<br />";
 		}
 	}
 	if ($_SESSION['code'] != $kode) {
-		$error .= "<img src='images/icons/cross.png' alt='x' align='absmiddle' /> {$lang['reg']['wrongcode']}<br>";
+		$error .= " {$lang['reg']['wrongcode']}<br>";
 	}
 	if (strlen($error) == 0) {
 		if (mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "users` ( `id` , `nick` , `levelis` , `pass` , `email` , `reg_data` , `login_data` )
