@@ -757,6 +757,7 @@ $lang['pages']['blsavimo_archyvas.php'] = 'Apklausų archyvas';
 $lang['pages']['apie.php'] = 'Apie';
 $lang['pages']['tree.php'] = 'Medis';
 $lang['pages']['naujienlaiskiai.php'] = 'Naujienlaiskiai';
+$lang['pages']['kas_naujo.php'] = 'Kas naujo?';
 //blokai
 $lang['blocks']['vartotojas.php'] = 'Narys';
 $lang['blocks']['user_top.php'] = 'Narių TOP 10';
@@ -769,4 +770,7 @@ $lang['blocks']['info.php'] = 'Informacija';
 $lang['blocks']['apklausa.php'] = 'Apklausa';
 $lang['blocks']['admin.php'] = 'Administracijos info';
 $lang['blocks']['kalbos.php'] = 'Kalbos pasirinkimas';
+//Kas naujo puslapis
+$lang['whatsnew']['title'] = 'Kas naujo?';
+$lang['whatsnew']['label'] = 'Kelių dienų naujienas norėtumėte peržvelgti?';
 ?>
