@@ -71,7 +71,7 @@ if (!check_name($uid)) {
 if (isset($uid)) {
 
 //Jei tai ne botas atnaujinam
-	if (!botas($_SERVER['HTTP_USER_AGENT'])) {
+	if (!botas(isset($_SERVER['HTTP_USER_AGENT'])?$_SERVER['HTTP_USER_AGENT']:'')) {
 
 		//paskutinio prisijungimo atnaujinimas
 		$q = "INSERT INTO `" . LENTELES_PRIESAGA . "kas_prisijunges` (`id`,`uid`,`timestamp`,`ip`,`file`,`user`,`agent`,`ref`,`clicks`) VALUES (
@@ -90,7 +90,7 @@ if (isset($uid)) {
 			clicks = clicks+1,
 			ref=" . escape($ref) . ",
 			file=" . escape(htmlspecialchars(str_replace('id=', '', $_SERVER['QUERY_STRING']))) . ",
-			agent=" . escape(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) . ",
+			agent=" . "User-Agent: ".(isset($_SERVER['HTTP_USER_AGENT'])?escape(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])):'Undefined') . ",
 			user=" . escape($username) . ",
 			timestamp=" . escape($timestamp) . ";";
 
