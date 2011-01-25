@@ -10,6 +10,7 @@
  * @$Date$
  * @Apie: setup.php - TVS diegimo įrankis
  **/
+
 ob_start();
 header("Content-type: text/html; charset=utf-8");
 session_start();
@@ -622,7 +623,6 @@ define("LENTELES_PRIESAGA", "{$_SESSION['mysql']['prefix']}");	//Lenteliu pavadi
 
 //Admin paneles vartotojas ir slaptazodis
 \$admin_name="Admin";	//useris
-\$admin_pass="admin";	//slaptazodis
 \$admin_email="{$_SESSION['admin']['email']}";	//e-pastas
 
 //Versiju tikrinimas
@@ -633,9 +633,11 @@ define("LENTELES_PRIESAGA", "{$_SESSION['mysql']['prefix']}");	//Lenteliu pavadi
 mysql_select_db(\$db,\$prisijungimas_prie_mysql) or die("<center><h1>Klaida 2</h1><br/>Svetainė neidiegta. <h4>Prašome užsukti vėliau</h4></center>");
 mysql_query("SET NAMES 'utf8'",\$prisijungimas_prie_mysql);
 \$sql = mysql_query("SELECT * FROM `".LENTELES_PRIESAGA."nustatymai`",\$prisijungimas_prie_mysql);
+\$conf = array();
 if(mysql_num_rows(\$sql) > 1) while(\$row = mysql_fetch_assoc(\$sql)) \$conf[\$row['key']] = \$row['val'];
 unset(\$row,\$sql,\$user,\$host,\$pass,\$db);
 //kalba
+\$lang = array();
 if (isset(\$conf['kalba'])) {
     require_once (realpath(dirname(__file__)) . '/../lang/' . (empty(\$_SESSION['lang'])?basename(\$conf['kalba'],'.php'):\$_SESSION['lang']). '.php');
 } else {
