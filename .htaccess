@@ -1,10 +1,4 @@
-<Files ~ (\.pl)>
-Options ExecCGI FollowSymLinks
-</Files>
-
-Options +FollowSymLinks +SymLinksIfOwnerMatch
-
-Options -Indexes
+Options ExecCGI
 <IfModule mod_php5.c>
   php_flag magic_quotes_gpc                 off
   php_flag magic_quotes_sybase              off
@@ -13,9 +7,10 @@ Options -Indexes
   php_value mbstring.http_input             pass
   php_value mbstring.http_output            pass
   php_flag mbstring.encoding_translation    off
-  php_value allow_call_time_pass_reference  on
+  #php_value allow_call_time_pass_reference  on
 </IfModule>
 <IfModule mod_rewrite.c>
+  Options +FollowSymLinks
 	RewriteEngine on
 	#kai kuriuose netikusiuose hostinguose reikia
 	#RewriteBase /
@@ -127,4 +122,5 @@ Options -Indexes
 
 Order Allow,Deny
 Deny from env=draudziam
+
 Allow from all 
