@@ -13,6 +13,7 @@ Options -Indexes
   php_value mbstring.http_input             pass
   php_value mbstring.http_output            pass
   php_flag mbstring.encoding_translation    off
+  php_value allow_call_time_pass_reference  on
 </IfModule>
 <IfModule mod_rewrite.c>
 	RewriteEngine on
@@ -111,8 +112,10 @@ Options -Indexes
 	RewriteRule . gpl-2.0.txt [L]
 
 	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !^(.*).(js|jpg|css|gif|ico|jpeg)$
 	RewriteRule ^(.*)$ index.php?id=$1 [L,QSA]
+
+
 </IfModule>
 <IfModule mod_headers.c>
 	<FilesMatch "\.(xml|png|jpg|gif|css|js|txt|mp3)$">
@@ -120,11 +123,6 @@ Options -Indexes
 	</FilesMatch>
 </IfModule>
 
-ErrorDocument 400 /klaida.php
-ErrorDocument 401 /klaida.php
-ErrorDocument 403 /klaida.php
-ErrorDocument 404 /klaida.php
-ErrorDocument 500 /klaida.php
 
 Order Allow,Deny
 Deny from env=draudziam
