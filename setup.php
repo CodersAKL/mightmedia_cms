@@ -467,7 +467,11 @@ function random($return = '') {
 	}
 	return $return . '_';
 }
-
+//adresas
+function adresas() {
+	//NEVEIKIA :/
+	return "http://" . $_SERVER["HTTP_HOST"] . preg_replace("/[^\/]*$/", "", $_SERVER["PHP_SELF"]);
+}
 // Diegimo stadijų registravimas
 if (!isset($_GET['step']) || empty($_GET['step'])) {
 	$_SESSION['step'] = 0;
@@ -656,6 +660,28 @@ HTML;
 	}
 	if (fwrite($handle, $content) === false) {
 		die("{$lang['setup']['cant_write']} (" . $chmod_files[0] . ")");
+	}
+	fclose($handle);
+	unset($handle);
+	//htaccess
+	$htaccess = "
+ErrorDocument 404 ".adresas()."/klaida.php
+ErrorDocument 400 ".adresas()."/klaida.php
+ErrorDocument 401 ".adresas()."/klaida.php
+ErrorDocument 403 ".adresas()."/klaida.php
+ErrorDocument 405 ".adresas()."/klaida.php
+ErrorDocument 406 ".adresas()."/klaida.php
+ErrorDocument 409 ".adresas()."/klaida.php
+ErrorDocument 413 ".adresas()."/klaida.php
+ErrorDocument 414 ".adresas()."/klaida.php
+ErrorDocument 500 ".adresas()."/klaida.php
+ErrorDocument 501 ".adresas()."/klaida.php
+";
+	if (!$handle = fopen($chmod_files[2], 'a')) {
+		die("{$lang['setup']['cant_open']} (" . $chmod_files[2] . ")");
+	}
+	if (fwrite($handle, $htaccess) === false) {
+		die("{$lang['setup']['cant_write']} (" . $chmod_files[2] . ")");
 	}
 	fclose($handle);
 	@chmod('setup.php', 0777 );

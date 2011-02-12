@@ -112,6 +112,7 @@ Options -Indexes
 	RewriteRule . gpl-2.0.txt [L]
 
 	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_FILENAME} !^(.*).(js|jpg|css|gif|ico|jpeg)$
 	RewriteRule ^(.*)$ index.php?id=$1 [L,QSA]
 
