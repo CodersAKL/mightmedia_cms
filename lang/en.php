@@ -2,6 +2,7 @@
 
 //system
 $lang['system']['error'] = 'Error!';
+$lang['system']['contact_admin'] = 'Contact web administration: ';
 $lang['system']['delete_confirm'] = 'Are you sure you want to delete this?';
 $lang['system']['systemerror'] = 'System error!';
 $lang['system']['warning'] = 'Warning!';

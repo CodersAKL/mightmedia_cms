@@ -1,5 +1,6 @@
 <?php
 $lang['system']['error'] = 'Klaida!';
+$lang['system']['contact_admin'] = 'Įvyko nesusipratimas? Susisiekite su puslapio administracija: ';
 $lang['system']['delete_confirm'] = 'Ar tikrai norite ištrinti?';
 $lang['system']['systemerror'] = 'Sistemos klaida!';
 $lang['system']['updated'] = 'Atnaujinta';

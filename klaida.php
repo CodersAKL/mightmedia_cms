@@ -9,26 +9,29 @@
  * @$Revision$
  * @$Date$
  **/
-
-$status = $_SERVER['REDIRECT_STATUS'];
+ob_start();
+header("Cache-control: public");
+header("Content-type: text/html; charset=utf-8");
+include_once("priedai/conf.php");
+$status = isset($_SERVER['REDIRECT_STATUS']) ? $_SERVER['REDIRECT_STATUS'] : 500;
 switch ($status) {
 	case 403:
 		{
-			$tipas = 'Programišiams - NE!';
+			$tipas = $lang['system']['nohacking'];
 			break;
 		}
 	case 404:
 		{
-			$tipas = 'Puslapis nerastas.';
+			$tipas = $lang['system']['nopage'];
 			break;
 		}
 	default:
 		{
-			$tipas = 'Klaida.';
+			$tipas = $lang['system']['error'];
 			break;
 		}
 }
-header("Content-type: text/html; charset=utf-8");
+
 header(' ', true, $status);
 
 ?>
@@ -37,16 +40,15 @@ header(' ', true, $status);
 <HEAD>
 <TITLE><?php
 
-echo $status . ' - ' . $tipas
+echo $status . ' - ' . $tipas;
 
 ?></TITLE>
 </HEAD>
 <BODY>
-<H1 style="color:red"><?php
-
-echo $tipas;
-
-?></H1><hr>
-Įvyko nesusipratimas? Susisiekite su puslapio administracija.
+<H1 style="color:red"><?php echo $tipas; ?></H1><hr />
+<?php echo $lang['system']['contact_admin'].$conf['Pastas'];?>.
 </BODY>
 </HTML>
+<?php
+ob_end_flush();
+?>
