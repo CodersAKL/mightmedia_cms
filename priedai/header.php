@@ -85,14 +85,14 @@ if (isset($uid)) {
 				" . escape($ref) . ",
 				'1')
             ON DUPLICATE KEY UPDATE
-			id=" . $uzerid . ",
-			ip=" . escape($ip) . ",
-			clicks = clicks+1,
-			ref=" . escape($ref) . ",
-			file=" . escape(htmlspecialchars(str_replace('id=', '', $_SERVER['QUERY_STRING']))) . ",
-			agent=" . "User-Agent: ".(isset($_SERVER['HTTP_USER_AGENT'])?escape(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])):'Undefined') . ",
-			user=" . escape($username) . ",
-			timestamp=" . escape($timestamp) . ";";
+			`id`=" . $uzerid . ",
+			`ip`=" . escape($ip) . ",
+			`clicks` = clicks+1,
+			`ref`=" . escape($ref) . ",
+			`file`=" . escape(htmlspecialchars(str_replace('id=', '', $_SERVER['QUERY_STRING']))) . ",
+			`agent`=" . escape("User-Agent: ".(isset($_SERVER['HTTP_USER_AGENT'])?escape(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])):'Undefined')). ",
+			`user`=" . escape($username) . ",
+			`timestamp`=" . escape($timestamp) . ";";
 
 		mysql_query1($q);
 	}
