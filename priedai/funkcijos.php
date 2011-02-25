@@ -49,7 +49,7 @@ function header_info() {
 	<meta name="generator" content="MightMedia TVS" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="content-language" content="' . lang() . '" />
-	<meta name="description" content="' . input(strip_tags($conf['Pavadinimas']) . ' - ' . trimlink(trim(str_replace("\n\r","",strip_tags($conf['Apie']))), 120)) . '" />
+	<meta name="description" content="' . input(strip_tags($conf['Pavadinimas']) . ' - ' . trimlink(trim(str_replace("\n\r", "", strip_tags($conf['Apie']))), 120)) . '" />
 	<meta name="keywords" content="' . input(strip_tags($conf['Keywords'])) . '" />
 	<meta name="author" content="' . input(strip_tags($conf['Copyright'])) . '" />
 	<link rel="stylesheet" type="text/css" href="stiliai/system.css" />
@@ -71,15 +71,8 @@ function header_info() {
 	<script type="text/javascript" src="javascript/jquery/tooltip.js"></script>
 	<script type="text/javascript" src="javascript/jquery/jquery.colorbox.js"></script>
 	<script type="text/javascript" src="javascript/jquery/jquery.hint.js"></script>
-	'.((isset($conf['hyphenator']) && $conf['hyphenator'] == 1) ?'
-	<script type="text/javascript" src="javascript/hyphenator/hyphenator.min.js"></script>
-	<script type="text/javascript" src="javascript/jquery/jquery.hyphenator.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-
-		$(\'body\').hyphenate({minwordlength : 8});
-     ':'<script type="text/javascript">
-	$(document).ready(function(){').'
 		//Examples of how to assign the ColorBox event to elements.
 		$(".gallery a[rel=\'lightbox\']").colorbox({transition:"fade", current: "' . $lang['admin']['gallery_image'] . ' {current} ' . $lang['user']['pm_of'] . ' {total}", next:"' . $lang['admin']['gallery_next'] . '", previous:"' . $lang['admin']['gallery_prev'] . '", close:"[x]"});
 		// find all the input elements with title attributes and make them with a hint
@@ -92,7 +85,7 @@ function header_info() {
 	<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
 	<![endif]-->
 ';
-//<script type="text/javascript" src="javascript/jquery/jquery.tablesorter.js"></script> 
+//<script type="text/javascript" src="javascript/jquery/jquery.tablesorter.js"></script>
 }
 
 function addtotitle($add) {
@@ -216,7 +209,7 @@ function puslapis($puslapis, $extra = false) {
  * @return true/false
  */
 function teises($mas, $lvl) {
-	if (!is_array($mas))
+	if (!empty($mas) && !is_array($mas))
 		$mas = @unserialize($mas);
 	if ($lvl == 1 || (is_array($mas) && in_array($lvl, $mas)) || empty($mas))
 		return true;
@@ -235,7 +228,7 @@ function ban($ipas = '', $kodel = '') {
 		$kodel = $lang['system']['forhacking'] . ' - ' . input(str_replace("\n", "", $_SERVER['QUERY_STRING']));
 	if (empty($ipas))
 		$ipas = getip();
-	$atidaryti = fopen(ROOT.".htaccess", "a");
+	$atidaryti = fopen(ROOT . ".htaccess", "a");
 	fwrite($atidaryti, '# ' . $kodel . " \nSetEnvIf Remote_Addr \"^{$ipas}$\" draudziam\n");
 	fclose($atidaryti);
 	//@chmod(".htaccess", 0777);
@@ -400,10 +393,9 @@ function url_arr($params) {
 			else
 				$str1 = explode(",", $value);
 			if (isset($str1[1])) {
-				if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $str1[1])){
+				if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $str1[1])) {
 					echo "BAN";
 					ban();
-					
 				}
 				$str2[$str1[0]] = $str1[1];
 			}
@@ -502,7 +494,7 @@ function mysql_query1($query, $lifetime = 0) {
 
 			$sql = mysql_query($query, $prisijungimas_prie_mysql); // or die(mysql_error());
 			if (mysql_error ())
-				mysql_query("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("MySql error:  " . mysql_error() . " query: ". $query) . ",'" . time() . "',INET_ATON(" . escape(getip()) . "));");
+				mysql_query("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("MySql error:  " . mysql_error() . " query: " . $query) . ",'" . time() . "',INET_ATON(" . escape(getip()) . "));");
 			//Jeigu uzklausoje nurodyta kad reikia tik vieno iraso tai nesudarom masyvo.
 			if (substr(strtolower($query), -7) == 'limit 1') {
 				$return = mysql_fetch_assoc($sql);
@@ -532,7 +524,11 @@ function mysql_query1($query, $lifetime = 0) {
 		if (mysql_error ())
 			mysql_query("INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape("MySql error:  " . mysql_error()." query: ". $query) . ",'" . time() . "',INET_ATON(" . escape(getip()) . "));");
 		if (in_array(strtolower(substr($query, 0, 6)), array('delete', 'insert', 'update'))) {
-			$return = true;
+			if (in_array(strtolower(substr($query, 0, 6)), array('insert'))) {
+				$return = mysql_insert_id($prisijungimas_prie_mysql);
+			} else {
+				$return = mysql_affected_rows($prisijungimas_prie_mysql);
+			}
 		} else {
 			if (substr(strtolower($query), -7) == 'limit 1') {
 				$return = mysql_fetch_assoc($sql);
@@ -607,9 +603,9 @@ function get_tag_contents($xml, $tag) {
  * @return int
  */
 function kiek($table, $where = '', $as = "viso") {
-	//$viso = mysql_query1("SELECT count(*) AS `$as` FROM `" . LENTELES_PRIESAGA . $table . "` " . $where . " limit 1", 60);
-	//return (isset($viso[$as]) && $viso[$as] > 0 ? (int)$viso[$as] : (int)0);
-	$i = 0;
+	$viso = mysql_query1("SELECT count(*) AS `$as` FROM `" . LENTELES_PRIESAGA . $table . "` " . $where . " limit 1", 60);
+	return (isset($viso[$as]) && $viso[$as] > 0 ? (int)$viso[$as] : (int)0);
+	/*$i = 0;
 	$sql = mysql_query1("SELECT *  FROM `" . LENTELES_PRIESAGA . $table . "` " . $where . "", 60);
 	if (sizeof($sql > 0)) {
 		foreach ($sql as $row) {
@@ -621,7 +617,7 @@ function kiek($table, $where = '', $as = "viso") {
 			}
 		}
 	}
-	return $i;
+	return $i;*/
 }
 
 /**
@@ -952,10 +948,9 @@ function apvalinti($sk, $kiek = 2) {
  * @return formated string
  */
 function naujas($data, $nick = null) {
-  global $lang;
+	global $lang;
 	if (isset($_SESSION['lankesi'])) {
-		return (($data > $_SESSION['lankesi']) ? '<img src="' . ROOT . 'images/icons/new.png" onload="$(this).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
-" alt="New" border="0" style="vertical-align: middle;" title="'.$lang['system']['new'].'" />' : '');
+		return (($data > $_SESSION['lankesi']) ? '<img src="' . ROOT . 'images/icons/new.png" onload="$(this).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);" alt="New" border="0" style="vertical-align: middle;" title="' . $lang['system']['new'] . '" />' : '');
 	} else {
 		return '';
 	}
@@ -1352,7 +1347,7 @@ function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value 
 	}
 	$root = ROOT;
 	$return = <<<HTML
-<script type="text/javascript" src="{$root}javascript/htmlarea/nicedit/nicEdit.js"></script>	
+<script type="text/javascript" src="{$root}javascript/htmlarea/nicedit/nicEdit.js"></script>
 HTML;
 
 	if (is_array($id)) {
@@ -1414,6 +1409,9 @@ function build_menu($data, $id=0, $active_class='active') {
 		}
 		return $re;
 	}
+	else {
+	 return false;
+	}
 }
 
 /**
@@ -1448,7 +1446,9 @@ function lang() {
 	}
 	return $_SESSION['lang'];
 }
+
 //unset($_SESSION['lang']);
+
 /**
  * Funkcija dirbanti su BMP paveiksliukais
  * @author - nežinomas
@@ -1566,6 +1566,7 @@ function site_tree($data, $id=0, $active_class='active') {
 		return $re;
 	}
 }
+
 //Siunciam nurodyta faila i narsykle. Pratestavau ant visu operaciniu ir narsykliu.
 function download($file, $filter = ".htaccess|.|..|remontas.php|index.php|config.php|conf.php") {
 	global $sql;
@@ -1583,7 +1584,7 @@ function download($file, $filter = ".htaccess|.|..|remontas.php|index.php|config
 					$disposition = (!eregi("\.zip$", basename($file))) ? 'attachment' : 'inline';
 					header('Content-Description: File Transfer');
 					header('Content-Type: application/force-download');
-					header('Content-Length: ' . (string )(filesize($file)));
+					header('Content-Length: ' . (string) (filesize($file)));
 					header("Content-Disposition: $disposition; filename=\"" . basename($file) . "\"\n");
 					header("Cache-Control: cache, must-revalidate");
 					header('Pragma: public');
@@ -1594,11 +1595,11 @@ function download($file, $filter = ".htaccess|.|..|remontas.php|index.php|config
 					header("Content-Disposition: attachment; filename=\"" . basename($file) . "\"\n");
 					header("Content-Type: application/octet-stream\n");
 				}
-				header("Content-Length: " . (string )(filesize($file)) . "\n\n");
+				header("Content-Length: " . (string) (filesize($file)) . "\n\n");
 				readfile('' . $file . '');
 				exit;
 			} else {
-				header("location: ".$_SERVER['PHP_SELF']);
+				header("location: " . $_SERVER['PHP_SELF']);
 				exit;
 			}
 		} else {
