@@ -34,7 +34,7 @@ if(!isset($_GET['m'])){
         foreach ($answers as $row) {
           $voted[$row['id']] = (isset($voted[$row['id']]) ? $voted[$row['id']] : 0);
           $text .= input($row['answer'])." (".$voted[$row['id']].")<br />   
-        <div style=\"width:".round((int)(100 / $viso * $voted[$row['id']]))."%;background:url(images/balsavimas/center.png) top left repeat-x; height:10px\">
+        <div style=\"width:".round((int)(100 / $viso * $voted[$row['id']]))."%;background:url(".adresas()."images/balsavimas/center.png) top left repeat-x; height:10px\">
              
           <div style=\"float:right;height:8px; width:1px; border-right:1px solid black;margin:1px -1px\"></div>
           <div style=\"float:left;height:8px; width:1px; border-right:1px solid black;margin:1px -2px\"></div>
