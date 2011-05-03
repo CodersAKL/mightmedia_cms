@@ -122,7 +122,6 @@ if ($vid > 0) {
 	} else {
 		klaida($lang['system']['error'], $lang['system']['pagenotfounfd']);
 	}
-
 }
 # rodom visus siuntinius
 else {
