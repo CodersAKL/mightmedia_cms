@@ -4,7 +4,7 @@
  * @Projektas: MightMedia TVS
  * @Puslapis: www.coders.lt
  * @$Author$
- * @copyright CodeRS �2008
+ * @copyright CodeRS
  * @license GNU General Public License v2
  * @$Revision$
  * @$Date$
@@ -17,9 +17,9 @@ if (sizeof($res) > 0) {
 		if(teises($row['teises'], $_SESSION['level']))
 			$data[$row['parent']][] = $row;
 	}
-	$text = '<div id="navigation"><ul>'.build_menu($data).'</ul></div>';
+	$text = "<div id=\"navigation\"><ul>" . build_menu($data) . "</ul></div>";
 } else {
-	$text = '';
+	$text = "";
 }
 unset($data, $res);
 

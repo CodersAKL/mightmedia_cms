@@ -9,7 +9,7 @@
  * @$Revision$
  * @$Date$
  **/
-
+//TODO : Nu ir monstras...
 $sqli = mysql_query1("SELECT count(id) as svec, 
 (SELECT count(id) FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE `timestamp`>'" . $timeout . "' AND user!='Svečias') as users, 
 (SELECT count(id) FROM " . LENTELES_PRIESAGA . "users) as useriai, 
