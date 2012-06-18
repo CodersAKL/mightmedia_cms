@@ -10,31 +10,24 @@
  * @$Date$
  **/
 
-
-$nr = 0;
-
-if ($_SESSION['level'] == 1) {
+if (ar_admin('com')) {  //jei ledzia moderuot komentarus, leidzia ir duk'a
 	//Jei adminas bando trinti. $_GET['d'] == ID
-	if (isset($_GET['d']) && isnum($_GET['d']) && $_GET['d'] > 0) {
-		$q = "DELETE FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` = " . escape((int)$_GET['d']);
-		mysql_query1($q);
+	if (isset($_GET['d'])) {
+		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` = " . escape((int)$_GET['d']));
 		redirect(url("?id," . $_GET['id']), "header");
 
 	} elseif (isset($_GET['n']) || isset($_GET['e'])) {
 
 		$klausimas = '';
 		$atsakymas = '';
-		$order = $nr;
+		$order = 0;
 		$id = '';
 
 		//Jeigu adminas nori redaguoti
 		// url['e'] pasakome koki ID redaguosime
-		if (isset($_GET['e']) && isnum($_GET['e']) && $_GET['e'] > 0) {
+		if (isset($_GET['e'])) {
 			$value = $lang['faq']['edit'];
-			$id = ceil((int)$_GET['e']);
-			if ($id < 0) {
-				$id = 0;
-			}
+			$id = (int)$_GET['e'];
 			$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` = " . escape($id) . " LIMIT 1");
 			$klausimas = $sql['klausimas'];
 			$atsakymas = $sql['atsakymas'];
@@ -47,11 +40,11 @@ if ($_SESSION['level'] == 1) {
 			$value = $lang['faq']['submit'];
 		}
 
-		$duk = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "duk"), "{$lang['faq']['question']}:" => array("type" => "text", "value" => input($klausimas), "name" => "Klausimas", "class" => "input"), "{$lang['faq']['answer']}:" => array("type" => "string", "value" => editorius('tiny_mce', 'mini', 'Atsakymas', (isset($atsakymas) ? $atsakymas : ''))), "{$lang['faq']['order']}:" => array("type" => "text", "value" => input((int)$order), "name" => "Order", "class" => "input"), " " => array("type" => "hidden", "value" => input($id), "name" => "eid", "id" => "id"), "" => array("type" => "submit", "name" => "dukas", "value" => $value));
-
+		$duk = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "duk"), "{$lang['faq']['question']}:" => array("type" => "text", "value" => input($klausimas), "name" => "Klausimas", "class" => "input"), "{$lang['faq']['answer']}:" => array("type" => "string", "value" => editorius('standartinis', 'mini', 'Atsakymas', (isset($atsakymas) ? $atsakymas : ''))), "{$lang['faq']['order']}:" => array("type" => "text", "value" => input((int)$order), "name" => "Order", "class" => "input"), " " => array("type" => "hidden", "value" => input($id), "name" => "eid", "id" => "id"), "" => array("type" => "submit", "name" => "dukas", "value" => $value));
+        //verciam msayva i forma
 		include_once ("priedai/class.php");
-		$bla = new forma();
-		lentele("{$lang['faq']['new']}", $bla->form($duk));
+		$form = new forma();
+		lentele("{$lang['faq']['new']}", $form->form($duk));
 
 	}
 
@@ -59,9 +52,9 @@ if ($_SESSION['level'] == 1) {
   if (isset($_POST['dukas'])) {
     //echo "asd";
     $klausimas = $_POST['Klausimas'];
-    $atsakymas = str_replace(array('<br>'), array('<br />'), $_POST['Atsakymas']);
-    $order = ceil((int)$_POST['Order']);
-    $id = ceil((int)$_POST['eid']);
+    $atsakymas =  $_POST['Atsakymas'];
+    $order = (int)$_POST['Order'];
+    $id = (int)$_POST['eid'];
 
     //jeigu rasom nauja
     if ($_POST['dukas'] == $lang['faq']['submit']) {
@@ -89,7 +82,7 @@ if ($_SESSION['level'] == 1) {
 }
 $text = '';
 $extra = "<ol>";
-
+$nr = 0;
 $sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "duk` WHERE `lang` = ".escape(lang())." ORDER by `order` ASC", 3600);
 if (sizeof($sql) > 0) {
 	foreach ($sql as $row) {
@@ -100,7 +93,7 @@ if (sizeof($sql) > 0) {
 
 }
 
-lentele($lang['faq']['questions'], $extra . "</ol>" . ($_SESSION['level'] == 1 ? "<button onclick=\"location.href='".url("?id," . $_GET['id'] . ";n,1")."'\">{$lang['faq']['new']}</button>" : "") . "<div style='padding-bottom:20px'></div>");
+lentele($lang['faq']['questions'], $extra . "</ol>" . (ar_admin('com') ? "<button onclick=\"location.href='".url("?id," . $_GET['id'] . ";n,1")."'\">{$lang['faq']['new']}</button>" : "") . "<div style='padding-bottom:20px'></div>");
 lentele($lang['faq']['answers'], $text);
 unset($extra, $text);
 /*

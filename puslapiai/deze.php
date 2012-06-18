@@ -10,18 +10,14 @@
  * @$Date$
  **/
 
-if (!defined("OK")) {
-	header("Location: ".url("?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}"));
-}
-$p = isset($url['p']) ? $url['p'] : 0;
-$limit = 50;
+$p = isset($url['p']) ? $url['p'] : 0; //esamo puslapio nr
+$limit = 50;                           //Kiek irasu puslapyje
 $viso = kiek("chat_box");
-include_once ("priedai/class.php");
-$bla = new forma();
+
 //jei tai moderatorius
 if (ar_admin('com')) {
 	//jei paspaude trinti
-	if (isset($url['d']) && !empty($url['d']) && isnum($url['d'])) {
+	if (isset($url['d']) && !empty($url['d'])) {
 		$id = (int)$url['d'];
 		mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "chat_box` WHERE `id` = " . escape($id) . " LIMIT 1");
 		if (mysql_affected_rows() > 0) {
@@ -32,21 +28,26 @@ if (ar_admin('com')) {
 		redirect(url("?id," . $url['id'] . ";p,$p"), $_SERVER['HTTP_REFERER']);
 	}
 	//Jei adminas paspaude redaguoti
-	if (isset($url['r']) && !empty($url['r']) && $url['r'] > 0 && isnum($url['r'])) {
+	if (isset($url['r']) && !empty($url['r'])) {
 		$nick = $_SESSION['username'];
 		$nick_id = $_SESSION['id'];
-		if (empty($_POST)) {
+        //Jei redaguotas pranesimas nesiunciamas
+		if (!isset($_POST['chat_box'])) {
 			$msg = mysql_query1("SELECT `msg` FROM `" . LENTELES_PRIESAGA . "chat_box` WHERE `id`=" . escape(ceil((int)$url['r'])) . " LIMIT 1");
 			
-			$form = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id'].";r,".$_GET['r']), "method" => "post", "name" => "chat_box_edit"), $lang['guestbook']['message'] => array("type" => "textarea", "value" => input($msg['msg']), "name" => "msg","extra" => "rows=5", "class"=>"input"),
+			$form_array = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id'].";r,".$_GET['r']), "method" => "post", "name" => "chat_box_edit"), $lang['guestbook']['message'] => array("type" => "textarea", "value" => input($msg['msg']), "name" => "msg","extra" => "rows=5", "class"=>"input"),
 		" " => array("type" => "submit", "name" => "chat_box", "value" =>  $lang['admin']['edit']));
-			lentele($lang['sb']['edit'], $bla->form($form));
-		} elseif (isset($_POST['chat_box']) && $_POST['chat_box'] == $lang['admin']['edit'] && !empty($_POST['msg'])) {
+
+            include_once ("priedai/class.php");    //formu is masyvo generavimas
+            $form = new forma();                   //sukuriam formos objekta
+			lentele($lang['sb']['edit'], $form->form($form_array));
+            
+		} else {
 			$msg = trim($_POST['msg']) . "\n[sm] [i] {$lang['sb']['editedby']}: " . $_SESSION['username'] . " [/i] [/sm]";
 			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "chat_box` SET `msg` = " . escape(strip_tags($msg)) . " WHERE `id` =" . escape($url['r']) . " LIMIT 1");
-			if (mysql_affected_rows() > 0) {
-				msg($lang['system']['done'], $lang['sb']['updated']);
-			} redirect(url("?id,{$_GET['id']};p,$p#".escape($url['r'])),"meta");
+            //pranesimas ir nukreipimas
+			msg($lang['system']['done'], $lang['sb']['updated']);
+		    redirect(url("?id,{$_GET['id']};p,$p#".escape($url['r'])),"meta");
 
 		}
 	}
@@ -62,18 +63,13 @@ if (sizeof($sql2) > 0) {
 	$i = 0;
 
 	foreach ($sql2 as $row) {
-		$extra = '';
+		$admin_tools = "";
 		$i++;
 		if (ar_admin('com')) {
-			$extra .= "<span style=\"float: right;\"><a href='" . url("d," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['system']['delete_confirm']}') \"><img src='images/icons/cross_small.png' alt='[{$lang['admin']['delete'] }]' title='{$lang['admin']['delete'] }' class='middle' border='0' /></a> <a href='" . url("r," . $row['id'] . "") . "'><img src='images/icons/pencil_small.png' alt='[{$lang['admin']['edit'] }]' title='{$lang['admin']['edit'] }' class='middle' border='0' /></a> </span>";
-		} else {
-			$extra = '';
+			$admin_tools = "<span style=\"float: right;\"><a href='" . url("d," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['system']['delete_confirm']}') \"><img src='images/icons/cross_small.png' alt='[{$lang['admin']['delete'] }]' title='{$lang['admin']['delete'] }' class='middle' border='0' /></a> <a href='" . url("r," . $row['id'] . "") . "'><img src='images/icons/pencil_small.png' alt='[{$lang['admin']['edit'] }]' title='{$lang['admin']['edit'] }' class='middle' border='0' /></a> </span>";
 		}
-		if (is_int($i / 2))
-			$tr = "2";
-		else
-			$tr = "";
-		$text .= "<div class=\"tr$tr\"><em>$extra<a href=\"".url("?id," . $url['id'] . ";p,$p#" . $row['id'] ). "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " . user($row['nikas'], $row['niko_id']) . " (" . $row['time'] . ")</em><br />" . smile(bbchat($row['msg'])) . "</div>";
+
+		$text .= "<div class=\"tr".($i%2)."\"><em>$admin_tools<a href=\"".url("?id," . $url['id'] . ";p,$p#" . $row['id'] ). "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " . user($row['nikas'], $row['niko_id']) . " (" . $row['time'] . ")</em><br />" . smile(bbchat($row['msg'])) . "</div>";
 
 	}
 } else {
@@ -83,7 +79,7 @@ lentele($lang['sb']['archive'], $text);
 if ($viso > $limit) {
 	lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
 }
-unset($extra, $text);
+unset($admin_tools, $text, $viso, $limit);
 
 //PABAIGA - atvaizdavimo
 
