@@ -6,6 +6,9 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,/*fieldset,*/input,textare
 	font:13px/1.231 arial,helvetica,clean,sans-serif;
 	line-height: 15px;	
 }
+ul {
+    list-style: none;
+}
 table{
 	/*width: auto;*/
 	float: left;
@@ -30,7 +33,7 @@ h1,h2,h3,h4,h5,h6 {
 
 
 input, textarea, select{
-	background: url('../images/input.png') repeat-x;
+	background: url('../images/input.png') repeat-x #FFF;
 	border: 1px solid #D7D7D7;
 	padding: 3px;
 	color: #666666;
