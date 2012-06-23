@@ -257,10 +257,9 @@ if (!empty($url['m'])) {
 		}
 	}
 }
-if (count($_GET) == 1) {
-	if (kiek("galerija", "WHERE rodoma='TAIP' AND `lang` = ".escape(lang())."") == 0)
-		klaida($lang['system']['warning'], $lang['system']['no_content']);
-}
+if (kiek("galerija", "WHERE rodoma='TAIP' AND `lang` = ".escape(lang())."") == 0)
+	klaida($lang['system']['warning'], $lang['system']['no_content']);
+
 unset($text, $row, $sql);
 
 ?>

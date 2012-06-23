@@ -10,9 +10,8 @@
  * @$Date$
  **/
 
-if ($url['id'] != '999') {
 	klaida($lang['system']['warning'], $lang['system']['nopage']);
-}
+
 
 
 ?>

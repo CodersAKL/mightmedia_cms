@@ -25,7 +25,7 @@ if (ar_admin('com')) {
 		} else {
 			klaida($lang['system']['error'], mysql_error());
 		}
-		redirect(url("?id," . $url['id'] . ";p,$p"), $_SERVER['HTTP_REFERER']);
+		redirect(url("?id," . $url['id'] . ";p,$p"), "meta");
 	}
 	//Jei adminas paspaude redaguoti
 	if (isset($url['r']) && !empty($url['r'])) {
