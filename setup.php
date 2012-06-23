@@ -706,7 +706,7 @@ ErrorDocument 501 ".adresas()."/klaida.php
 
 		<script src="javascript/jquery/tooltip.js" type="text/javascript" ></script>
 		<title>MightMedia TVS/CMS</title>
-    <link rel="stylesheet" type="text/css" media="all" href="stiliai/remontas/css/default.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="stiliai/remontas/css/default.css" />
 	</head>
 	<body>
 	<div id="admin_main">
@@ -778,9 +778,9 @@ ErrorDocument 501 ".adresas()."/klaida.php
 								<?php echo $lang['setup']['file_check_info3'];?>
 								<table border="0" class="table">
 									<tr>
-										<th class="th" valign="top" width="10%"><?php echo $lang['setup']['file'];?></td>
-										<th class="th" valign="top" width="5%"><?php echo $lang['setup']['point'];?></td>
-										<th class="th" valign="top" width="35%"><?php echo $lang['setup']['about_error'];?></td>
+										<th class="th" valign="top" width="10%"><?php echo $lang['setup']['file'];?></th>
+										<th class="th" valign="top" width="5%"><?php echo $lang['setup']['point'];?></th>
+										<th class="th" valign="top" width="35%"><?php echo $lang['setup']['about_error'];?></th>
 									</tr>
 										<?php
 
@@ -964,7 +964,7 @@ ErrorDocument 501 ".adresas()."/klaida.php
 			}
 
 		</script>
-		<span style="text-align: right;position:absolute;bottom:0;right:0; padding: 5px;">&copy; <a href="http://mightmedia.lt" style="color: #666;" target="_blank">MightMedia TVS</a></span>
+	
 	</body>
 </html>
 <?php ob_end_flush();?>
