@@ -30,7 +30,7 @@ $data = '';
 if ($kid == 0) {
 
 	$sql = mysql_query1("
-			SELECT SQL_CACHE *, (SELECT SQL_CACHE COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
+			SELECT *, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
 			FROM `" . LENTELES_PRIESAGA . "naujienos`
 			WHERE `rodoma`= 'TAIP'
 			AND `lang` = ".escape(lang())."
@@ -73,12 +73,12 @@ if ($kid == 0) {
 	unset($sql, $row, $extra, $pav);
 }
 if ($kid != 0) {
-	$sql = "SELECT SQL_CACHE `" . LENTELES_PRIESAGA . "naujienos`.*, `" . LENTELES_PRIESAGA . "grupes`.`teises` AS `teises` FROM `" . LENTELES_PRIESAGA . "naujienos` Inner Join `" . LENTELES_PRIESAGA . "grupes` ON `" . LENTELES_PRIESAGA . "naujienos`.`kategorija` = `" . LENTELES_PRIESAGA . "grupes`.`id` WHERE `" . LENTELES_PRIESAGA . "naujienos`.`rodoma`='TAIP'  AND `" . LENTELES_PRIESAGA . "naujienos`.`id` = " . escape($kid) . " limit 1";
+	$sql = "SELECT `" . LENTELES_PRIESAGA . "naujienos`.*, `" . LENTELES_PRIESAGA . "grupes`.`teises` AS `teises` FROM `" . LENTELES_PRIESAGA . "naujienos` Inner Join `" . LENTELES_PRIESAGA . "grupes` ON `" . LENTELES_PRIESAGA . "naujienos`.`kategorija` = `" . LENTELES_PRIESAGA . "grupes`.`id` WHERE `" . LENTELES_PRIESAGA . "naujienos`.`rodoma`='TAIP'  AND `" . LENTELES_PRIESAGA . "naujienos`.`id` = " . escape($kid) . " limit 1";
 	$sql = mysql_query1($sql, 3600);
 
 	if(empty($sql['naujiena'])) {
 		$sql = mysql_query1("
-			SELECT SQL_CACHE *, (SELECT SQL_CACHE COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom`
+			SELECT *, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom`
 				WHERE `pid`='puslapiai/naujienos'
 				AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
 			FROM `" . LENTELES_PRIESAGA . "naujienos`
@@ -97,17 +97,10 @@ if ($kid != 0) {
 				$text = '<div class="naujiena">' . $sql['daugiau'];
 			}
 			$text .= "</div><div class='line'></div>" . date('Y-m-d H:i:s', $sql['data']) . ",  <b>" . $sql['autorius'] . "</b>";
-		$kalba = lang();
-			$text .= <<<HTML
-<div class="a2a_kit a2a_default_style">
-<a class="a2a_dd" href="http://www.addtoany.com/share_save">{$lang['news']['share']}</a>
-</div>
-<script type="text/javascript">
-var a2a_config = a2a_config || {};
-a2a_config.locale = "{$kalba}";
-</script>
-<script type="text/javascript" src="http://static.addtoany.com/menu/page.js"></script>
-HTML;
+			
+			//Dalintis
+            $text .= "<!-- AddThis Button BEGIN --><div class='addthis_toolbox addthis_default_style '><a href='http://www.addthis.com/bookmark.php?v=250&amp;pubid=xa-4e7a05051d3cf281' class='addthis_button_compact'>".$lang['news']['share']."</a><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a05051d3cf281'></script><a class='addthis_button_facebook_like' fb:like:layout='button_count'></a><a class='addthis_button_tweet'></a><a class='addthis_button_google_plusone' g:plusone:size='medium'></a></div><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a03fc44b95268'></script><!-- AddThis Button END -->";
+
 			//Atvaizduojam naujieną
 			lentele($title, $text, rating_form($page, $sql['id']));
 			//Susijusios naujienos
