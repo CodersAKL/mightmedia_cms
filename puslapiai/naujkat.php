@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @Projektas: MightMedia TVS
  * @Puslapis: www.coders.lt
@@ -25,7 +24,7 @@ if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
 $limit = 50;
 $text = '';
 //Paulius svaigsta su kategoriju sarasu
-$sqlas = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`",  86400);
+$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`",  86400);
 if ($sqlas && sizeof($sqlas) > 0) {
 	foreach ($sqlas as $sql) {
     //TODO: skaiciavimas is neriboto gylio.. dabar tik kategorija + sub kategorija skaiciuoja
@@ -48,7 +47,7 @@ if (isset($info)) {
 //Rodom naujienas esancias kategorijoj
 
 $sql = mysql_query1("
-			SELECT SQL_CACHE *, (SELECT SQL_CACHE COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
+			SELECT *, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
 			FROM `" . LENTELES_PRIESAGA . "naujienos`
 			WHERE `rodoma`= 'TAIP' AND `kategorija`=$k 
 			AND `lang` = ".escape(lang())."
@@ -56,7 +55,7 @@ $sql = mysql_query1("
 			LIMIT {$p},{$limit}", 86400);
 $viso = count($sql);
 if ($viso > 0) {
-	$sqlas = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "' AND `kieno`='naujienos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 86400);
+	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "' AND `kieno`='naujienos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 86400);
 	if ($viso > $limit) {
 		lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
 	}
@@ -74,7 +73,7 @@ if ($viso > 0) {
 				klaida($lang['system']['warning'], "{$lang['category']['cant']}.");
 			}
 	}
-}elseif($k > 0) {
+} elseif($k > 0) {
   klaida($lang['system']['warning'], "{$lang['category']['no_news']}.");
 }
 
