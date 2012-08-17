@@ -45,7 +45,7 @@ $extras = "";
 if(isset($conf['kmomentarai_sveciams']) && $conf['kmomentarai_sveciams'] == 1) {
 	$chat = mysql_query1("SELECT * FROM `".LENTELES_PRIESAGA."chat_box` ORDER BY `time` DESC LIMIT ".escape((int) $conf['Chat_limit']));
 } else {
-	$chat = mysql_query1("SELECT SQL_CACHE
+	$chat = mysql_query1("SELECT 
 		`".LENTELES_PRIESAGA."chat_box`.*,
 		`".LENTELES_PRIESAGA."users`.`nick`,
 		`".LENTELES_PRIESAGA."users`.`levelis`
