@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @Projektas: MightMedia TVS
  * @Puslapis: www.coders.lt
@@ -35,7 +34,7 @@ if (sizeof($duomenys) > 0) {
             }
         }
 
-		$text .= "<li><b>$i</b> $img " . user($row['nick'], $row['id']) . "</li>";
+		$text .= "<li><b>{$i}</b> {$img} " . user($row['nick'], $row['id']) . "</li>";
 	}
     $text .= "</ul>";
 } else {
