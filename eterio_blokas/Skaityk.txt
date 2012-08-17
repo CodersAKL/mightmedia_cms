@@ -1,0 +1,14 @@
+﻿Modulio idiegimo instrukcija
+############################
+1. Sukelkite bylas, esančias šiame pakete i bylą, kurioje laikote MightMedia turinio valdymo sistemą
+2. Atsidarykite failą 'priedai/dj_function.php' ir pakeiskite 8-14 eilutes:
+
+$scip='local';// serveris
+$scport='000000';//serverio portas
+$scpass='pass';//serverio slaptažodis
+$klausytojai=true;//Rodyti klausytojus? true/false
+$kokybe=true;//Rodyti transliavimo kokybe? true/false
+$daina=true;//Rodyti dainos pavadinimą? true/false
+$djus=true;//Rodyti kas eteryje? true/false
+
+3. Nueikite į turinio valdymo sistemos administravimą ir blokų punkte pasirinkite bloką 'irdjsc_menu.php' ir įjunkite jį.

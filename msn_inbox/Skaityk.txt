@@ -1,0 +1,36 @@
+---- [ MSN_inbox modifikacija ] ----
+Autorius: FDisk
+Data: 2009 05 12
+
+Sveiki, tai pirmoji modifikacija skirta MightMedia TVS
+
+----- [ ĮDIEGIMAS ] -------
+1. Šiuos failus sukelkit į ftp ten kur yra pagrindinis index.html
+Kelkit failus išlaikant šią struktūrą.
+
+2. Atsidarykit failą [priedai/funkcijos.php] įteprkite naują css ir javascript failą į funkciją header_info():
+~40 eilutėje rašykit:
+  <link rel="stylesheet" type="text/css" href="stiliai/msn_inbox.css" />
+  <script src="javascript/jquery/ui.toaster.js" type="text/javascript"></script>
+  
+3. Atsidarykite savo dizaino failą ir pačioje apačioje prieš pat </body> įrašykit šitą kodą:
+
+<script type="text/javascript" language="JavaScript">
+<!--
+var timerId = 1;
+
+function refresh_inbox() {
+     
+     if(timerId != 0) {
+          clearInterval(timerId);
+          $.getScript("msn_inbox.php?pm=1");
+     }
+     
+     timerId = setInterval('refresh_inbox()', 60*1000);
+}
+
+$(document).ready(function(){
+    refresh_inbox();
+});
+//-->
+</script>
