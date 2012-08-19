@@ -525,7 +525,7 @@ $lang['forum']['perview'] = 'Peržiūra';
 $lang['forum']['sticky'] = 'Svarbu';
 $lang['forum']['newtopic'] = 'Nauja tema';
 $lang['forum']['topicname'] = 'Temos pavadinimas';
-$lang['forum']['message'] = 'Žinutė <br /><img src="images/forum/e-propoganda30px.png" border="0" title="ė - propaganda. Nešvepluok! - Rašyk lietuviškai" alt="" />';
+$lang['forum']['message'] = 'Žinutė <br /><a target="_blank" href="http://dooo.domenas.net/cloo/e-propaganda/"><img src="images/forum/e-propoganda30px.png" border="0" title="ė - propaganda. Nešvepluok! - Rašyk lietuviškai" alt="" /></a>';
 $lang['forum']['submit'] = 'Siųsti';
 $lang['forum']['newpost'] = 'Naujas pranešimas';
 $lang['forum']['topic'] = 'Tema';
