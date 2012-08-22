@@ -4,7 +4,7 @@ require_once('priedai/conf.php');
 if (isset($conf['puslapiai']['rss.php'])) {
 	if (empty($_GET['lang']))
 		$_GET['lang'] = 'lt';
-	echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
+echo "<?xml encoding='UTF-8'?>\n";
 ?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
 		<channel>
 			<title><?php echo htmlspecialchars($conf['Pavadinimas']); ?></title>
