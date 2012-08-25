@@ -26,8 +26,7 @@ if (isset($_SESSION['id']) && $_SESSION['id']) {
 		$img_thumb_width = $conf['minidyd']; //Mini paveiksliukų dydis
 
 		//Sarašas leidžiamų failų
-		$limitedext = array(".gif", ".jpg", ".png", ".jpeg", ".bmp");
-		
+        $limitedext = array(".jpg", ".JPG", ".jpeg", ".JPEG", ".png", ".PNG", ".gif", ".GIF", ".bmp", ".BMP");
 		$file_type = $_FILES['failas']['type'];
 		$file_name = $_FILES['failas']['name'];
 		$file_size = $_FILES['failas']['size'];

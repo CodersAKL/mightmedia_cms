@@ -44,6 +44,7 @@ if (!empty($_FILES)) {
 		$img_thumb_width = $conf['minidyd']; //Mini paveiksliuku dydis
 
 		//Sarašas leidžiamu failu
+		$limitedext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", "gif", "GIF", "bmp", "BMP");
 		$limitedext = array("gif", "jpg", "png", "jpeg", "bmp");
 		$fileParts  = pathinfo($_FILES['Filedata']['name']);
 		//$file_type = $_FILES['Filedata']['type'];
@@ -71,13 +72,13 @@ if (!empty($_FILES)) {
 			//the new width variable
 			$ThumbWidth = $img_thumb_width;
 			if ($file_size) {
-				if ($fileParts['extension'] == "jpeg" || $fileParts['extension'] == "jpg") {
+				if ($fileParts['extension'] == "jpeg" || $fileParts['extension'] == "jpg" || $fileParts['extension'] == "JPG") {
 					$img = imagecreatefromjpeg($file_tmp);
-				} elseif ($fileParts['extension'] == "png") {
+				} elseif ($fileParts['extension'] == "png" || $fileParts['extension'] == "PNG") {
 					$img = imagecreatefrompng($file_tmp);
-				} elseif ($fileParts['extension'] == "gif") {
+				} elseif ($fileParts['extension'] == "gif" || $fileParts['extension'] == "GIF") {
 					$img = imagecreatefromgif($file_tmp);
-				} elseif ($fileParts['extension'] == "bmp") {
+				} elseif ($fileParts['extension'] == "bmp" || $fileParts['extension'] == "BMP") {
 					$img = imagecreatefrombmp($file_tmp);
 				}
 				//list the width and height and keep the height ratio.
@@ -130,13 +131,13 @@ if (!empty($_FILES)) {
 			}
 
 			if ($file_size) {
-				if ($fileParts['extension'] == "jpeg" || $fileParts['extension'] == "jpg") {
+				if ($fileParts['extension'] == "jpeg" || $fileParts['extension'] == "jpg" || $fileParts['extension'] == "JPG") {
 					$new_img = imagecreatefromjpeg($file_tmp);
-				} elseif ($fileParts['extension'] == "png") {
+				} elseif ($fileParts['extension'] == "png" || $fileParts['extension'] == "PNG") {
 					$new_img = imagecreatefrompng($file_tmp);
-				} elseif ($fileParts['extension'] == "gif") {
+				} elseif ($fileParts['extension'] == "gif" || $fileParts['extension'] == "GIF") {
 					$new_img = imagecreatefromgif($file_tmp);
-				} elseif ($fileParts['extension'] == "bmp") {
+				} elseif ($fileParts['extension'] == "bmp" || $fileParts['extension'] == "BMP") {
 					$new_img = imagecreatefrombmp($file_tmp);
 				}
 

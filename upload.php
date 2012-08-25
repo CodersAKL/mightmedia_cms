@@ -22,7 +22,7 @@ include_once("priedai/prisijungimas.php");
         $img_thumb_width = 250; //Mini paveiksliuku dydis
 
         //Sarašas leidžiamu failu
-        $limitedext = array(".jpg", ".jpeg",".png",".gif");
+        $limitedext = array(".jpg", ".JPG", ".jpeg", ".JPEG", ".png", ".PNG", ".gif", ".GIF");
 
         $file_type = $files['type'];
         $file_name = $files['name'];
