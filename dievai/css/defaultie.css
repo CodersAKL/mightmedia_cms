@@ -1,4 +1,4 @@
-body { background: #E6E6E6;}
+/* RESET */
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,/*fieldset,*/input,textarea,p,blockquote,th,td {
 	margin:0;
 	padding:0;
@@ -33,7 +33,7 @@ input, select{
 	color: #666666;
 	margin-bottom: 3px;
 }
-textarea {
+ textarea {
     width: 750px;
 	background: url('../images/input.png') repeat-x;
 	border: 1px solid #D7D7D7;
@@ -84,55 +84,43 @@ a {
 	width: 178px;
 	z-index:2;
 	margin-top: 10px;
-	padding-top: 130px;
+	padding-top: 0px;
 }
-.fixed {
-    position:fixed;
-    top: 0;
-    left: 0;
-}
-.sonas {
-    margin-left: 5px;
+
+.sonas{
+	width: 12px;
     float: left;
-	width: 10px;
-    height: 20px;
+    height: 24px;
 }
 .pirmas {
-    margin: 2px;
-    float: left;
-    height: 10px;
-	width: 10px;
+    float: none;
+    height: 12px;
+	width: 12px;
     background: #E6E6E6;
 	border: 1px solid #F06B09;
+	padding: 0px;
 }
 .antras {
-    margin: 2px;
-    float: left;
-    height: 10px;
-	width: 10px;
+    float: none;
+    height: 12px;
+	width: 12px;
     background: #2c2c2c;
 	border: 1px solid #F06B09;
-}
-#virslogo {
-    background: #E6E6E6;
-	width: 176px;
-    height: 10px;
+    padding: 0px;
 }
 #admin_logo {
-    background: #E6E6E6 url(../images/mm_logo.png) no-repeat;
-	width: 142px;
-	height: 80px;
-	border-right: 1px solid #F06B09;
+	border: 0;
+	width: 177px;
+	height: 90px;
     margin-top: 0px;
     padding-top: 0px;
-    padding-bottom: 10px;
-	padding-left: 35px;
+    padding-left: 0px;
+    margin-bottom: 0px;
 }
 /* search box */
 .search {
 	border-top: 1px solid #F06B09;
 	border-bottom: 1px solid #F06B09;
-    background: #FFFFFF url(../images/hover.png) repeat-x;
 	text-align: center;
 	padding-top: 5px;
 	padding-bottom:5px;
@@ -140,7 +128,6 @@ a {
 }
 .search input{
     float: left;
-	background: url('../images/search.png') no-repeat;
 	width: 124px;
 	padding: 4px;
 	border: 0;
@@ -153,28 +140,22 @@ a {
 }
 /* Left navigation */
 #left .nav ul li a{
-	border-right: 1px solid #F06B09;
-	border-bottom: 1px solid #fff;
-	color: #666;
+    border: 0;
 	font-size: 15px;
 	font-weight: bold;
 	font-family: Arial;
 	text-decoration: none;
 	padding: 8px 1px 8px 19px;
-	min-width: 141px;
-	display: block;
+	    margin-bottom: 0;
 }
 #left .nav ul li a:hover {
-	color:  #F06B09;
-	margin-top: -1px;
+	margin-top: 0px;
 	border-top: 1px solid #F06B09;
 	border-right: 1px solid #F06B09;
 	border-bottom: 1px solid #F06B09;
 	padding: 8px 3px 8px 19px;
-    background: #FFFFFF url(../images/hover.png) repeat-x;
 }
 #left .nav ul li.active{
-	background: #FFFFFF;
 	border-top: 1px solid #F06B09;
 	border-bottom: 1px solid #F06B09;
 	padding: 5px;
@@ -187,7 +168,6 @@ a {
 	margin: 3px;
 }
 #left .nav ul li.active {
-    background: #FFFFFF url(../images/hover.png) repeat-x;
     margin-top: -1px;
 	padding-left: 20px;
 }
@@ -204,7 +184,6 @@ a {
 }
 #left .nav ul li.active a:hover {
     margin-top: 0px;
-	color: #666;
 	border: 0;
 	background: none; 
 }
@@ -215,11 +194,11 @@ a {
 /*Right side */
 #right{
     border: 1px solid #F06B09;
+    margin-bottom: 0px;
     margin-top: 10px;
     margin-right: 20px;
     margin-left: 177px;
 	padding-right: 10px;
-	background: #FFFFFF url(../images/hover.png) repeat-x;
 }
 #controls {
     margin-top:-1px;
@@ -245,10 +224,10 @@ a {
 	margin-right: 5px;
 }
 #admin_lang.down,#admin_user.down {
-    background:#E6E6E6;
+
 }
 #admin_lang.up,#admin_user.up {
-    background:#E6E6E6 url('../images/up.png') 99% 50% no-repeat;
+
 }
 #admin_lang ul{
 	margin: -7px;
@@ -259,7 +238,6 @@ a {
 	border: none;
 }
 #admin_lang ul li ul{
-    background:#E6E6E6;
 	margin-left: -4px;
 	width: 80px;
 	border-left: 1px solid #F06B09;
@@ -272,10 +250,11 @@ a {
 #admin_user {
 	right: 20px;
 }
-#right .where {
-    margin-top: 5px;
+
+#right .where{
 	color: #999999;
-	padding: 5px;
+	padding: 3px;
+
 }
 #right .where img{
 	vertical-align: middle;
@@ -311,7 +290,7 @@ a {
 	/*float: left;*/
 }
 .left{
-	width: 40%;
+	width: 45%;
 	border-right: 2px dashed #CCC;
 	float: left;
 	padding-left: 10px;
@@ -321,33 +300,20 @@ a {
 .right{
 	width: 45%;
 	float: left;
-	padding-left: 20px;
+	padding-left: 10px;
 	padding-right: 10px;
 	padding-bottom: 10px;
-}
-.ItemTitle{
-
-}
-.ItemDate {
-
-}
-.leftui{
-    margin-left: 20px;
-	width: 200px;
-	height: 180px;
-	border-bottom: 2px dashed #CCC;
-	float: left;
 }
 .right li {list-style:none outside none;}
 #footer {
 	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-bottom: 0px;
     margin-left: 20px;
 	font-size: 12px;
 	font-family: "Verdana";
 }
 #footer .c {
-    height: 50px;
+    height: 60px;
     width: 50px;
 	font-size: 50px;
 	color: #999;
@@ -356,36 +322,34 @@ a {
 	padding-top: 35px;
 	padding-right: 10px;
 }
-#footer .links {
+#footer .links{
 	padding-top: 25px;
 	padding-left: 10px;
 	padding-bottom: 5px;
 	color: #999;
 	font-size: 12px;
 }
-#footer .links a {
+#footer .links a{
 	color: #5F676C;
 	font-weight: bold;
 	text-decoration: none;
 }
-#footer .copy {
-    background: #E6E6E6;
+#footer .copy{
 	margin-bottom: -1px;
 	float: left;
-	border-bottom: 0;
+	border-bottom: 0px solid #E6E6E6;
 	border-top: 1px solid #F06B09;
 	border-left: 1px solid #F06B09;
 	border-right: 1px solid #F06B09;
-	height: 80px;
+	height: 100px;
 	padding: 3px 10px 3px 10px;
 	font-size: 10px;
 }
-#footer .images {
-    background:#E6E6E6;
+#footer .images{
 	border-top: 1px solid #F06B09;
 	border-left: 1px solid #F06B09;
 	border-right: 1px solid #F06B09;
-	height: 80px;
+	height: 100px;
 	padding: 3px 10px 3px 10px;
 	float: left;
 	margin-bottom: -1px;
@@ -488,12 +452,10 @@ form td{
 	position: absolute;
 	z-index: 1000;
 }
-#placeholder{width:220px;height:105px;padding-bottom:14px;}
+#placeholder{width:180px;height:105px;padding-bottom:14px;}
 
 .table{
-    width: 400px;
-	margin-bottom: 5px;
-	margin-top: 5px;
+	margin: .5em 0 1em;
 	border-bottom: 3px solid #d9d9d9;
 	border-left: 1px solid #d9d9d9;
 	border-right: 1px solid #d9d9d9;
@@ -545,4 +507,4 @@ blockquote{
 .success {background: #E6EFC2; color: #264409; border-color: #C6D880;}
 .success a {color: #264409;}
 
-.btns { visibility: hidden; }
+.btns { visibility: hidden }

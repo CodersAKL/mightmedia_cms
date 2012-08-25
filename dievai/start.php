@@ -36,7 +36,7 @@ $memberis = user($sql['useris'], $sql['userid'], $sql['lvl']);
 				mode: "time"
 			},
 			grid: {
-				color: "#000",
+				color: "#666",
 				borderWidth: 1
 			}
 		});
@@ -46,28 +46,57 @@ $memberis = user($sql['useris'], $sql['userid'], $sql['lvl']);
 <?php
 //table
 $text = <<<HTM
-            <div class="left">
-              <h2>{$lang['system']['tree']}</h2>
-              <ul id="treemenu">
-                $tree
-               </ul>
-            </div>
-            <div class="right">
-              <h2>{$lang['system']['some_data']}</h2>
-              					<ul>
-					<li>{$lang['online']['users']} {$lang['online']['usrs']}: <span class="number">{$sql['users']}</span></li>
-					<li>{$lang['online']['users']} {$lang['online']['guests']}: <span class="number">{$sql['svec']}</span></li>
-					<li>{$lang['online']['traffic_in']}: <span class="number">{$progresas}%</span></li>
-					<li>{$lang['online']['today']}: <span class="number">{$stats['siandien']}</span></li>
-					<li>{$lang['online']['registeredmembers']}: <span class="number">{$sql['useriai']}</span></li>
-					<li>{$lang['online']['lastregistered']}: <span class="number">{$memberis}</span></li>
-					</ul><br />
-                <h2>{$lang['system']['visits']}</h2>
-                <div id="chart">
-                <div id="placeholder" ></div><!-- CHART --><br />
-                  </div>
-            </div>
-          </div><div style="clear:both;"></div>
+<div class="left">
+<h2>{$lang['system']['tree']}</h2>
+<ul id="treemenu">{$tree}</ul>
+</div>
+
+<div class="right">
+
+<div class="leftui">
+<h2>{$lang['system']['some_data']}</h2>
+<ul>
+<li>{$lang['online']['users']} {$lang['online']['usrs']}: <span class="number">{$sql['users']}</span></li>
+<li>{$lang['online']['users']} {$lang['online']['guests']}: <span class="number">{$sql['svec']}</span></li>
+<li>{$lang['online']['traffic_in']}: <span class="number">{$progresas}%</span></li>
+<li>{$lang['online']['today']}: <span class="number">{$stats['siandien']}</span></li>
+<li>{$lang['online']['registeredmembers']}: <span class="number">{$sql['useriai']}</span></li>
+<li>{$lang['online']['lastregistered']}: <span class="number">{$memberis}</span></li>
+</ul>
+</div>
+
+<div class="leftui">
+<h2>{$lang['system']['visits']}</h2>
+<div id="chart">
+<div id="placeholder" ></div>
+<!-- CHART -->
+<br />
+</div>
+</div>
+
+<div class="leftui" style="height: 400px;width:420px">
+<h2>Mightmedia {$lang['news']['news']}</h2>
+<script type="text/javascript" src="js/FeedEk.js"></script>
+<script type="text/javascript" >
+$(document).ready(function(){
+  $('#txtUrl').val('http://mightmedia.lt/RSS');
+  $('#txtCount').val('5');
+  $('#chkDate').attr('checked','checked');
+  $('#chkDesc').attr('checked','checked');
+   $('#divRss').FeedEk({
+   FeedUrl : 'http://mightmedia.lt/RSS',
+   MaxCount : 10,
+   ShowDesc : false,
+   ShowPubDate: true
+  });
+});
+</script>
+<div id="divRss"></div>
+<br/><br/>
+</div>
+
+</div>
+<div style="clear:both;"></div>
 HTM;
 lentele($lang['system']['control'], $text);
 ?>

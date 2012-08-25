@@ -31,6 +31,7 @@
  */
 
 .dataTables_wrapper {
+    width: 98%;
 	/*position: relative;*/
 	min-height: 202px;
 	/*_height: 302px;*/

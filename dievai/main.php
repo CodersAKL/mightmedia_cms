@@ -82,16 +82,13 @@ foreach ($glob as $id => $file) {
 	if ((isset($conf['puslapiai'][$file.'.php']['id']) || in_array($file, array('config', 'meniu', 'logai', 'paneles', 'vartotojai', 'komentarai', 'banai', 'balsavimas'))) && !in_array($file, array('index', 'pokalbiai', 'main', 'search', 'antivirus'))) {
 
 		$admin_tools .= "<li ".(isset($_GET['a']) && $_GET['a'] == $id ? 'class="active"' : '')."><a href=\"".url("?id,999;a,$id")."\"><img src=\"{$image}\" alt=\"\" />".(isset($lang['admin'][$file]) ? $lang['admin'][$file] : nice_name($file))."</a>".(isset($_GET['a']) && $_GET['a'] == $id ? '<ul><div id="veiksmai"></div><script type="text/javascript">
-		//sub punktai
+//sub punktai
 $(document).ready(function() {
 $(\'.btns a\').each(function(id,obj){
 $("div#veiksmai").append(\'<li><a href="\'+obj.href+\'">\'+$(this).text()+\'</a></li>\');
-
 });
-
 });</script></ul>' : "")."</li>";
-
-	}
+}
 }
 
 //medzio darymo f-ja
@@ -295,33 +292,35 @@ HTML;
 	return $return;
 }
 ?>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<?php echo adresas(); ?>" />
+        <base href="<?php echo adresas(); ?>" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title><?php echo input(strip_tags($conf['Pavadinimas']).' - Admin'); ?></title>
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<meta name="robots" content="index,follow" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link type='text/css' rel='stylesheet' href='css/default.css' />
-    <link rel="stylesheet" type="text/css" href="css/superfish.css" media="screen" />
-		<link rel="stylesheet" href="css/jquery.treeview.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" href="../stiliai/system.css" />
+		<link rel="stylesheet" href="css/default.css" />
+		<?php if(!empty($_COOKIE['style'])){ $style = $_COOKIE['style']; } else { $style = 'diena'; } ?>
+		<link id="stylesheet" type="text/css" href="css/<?php echo $style ?>.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/styleswitcher.jquery.js"></script>
+		<link rel="stylesheet" href="css/superfish.css" />
+		<link rel="stylesheet" href="css/jquery.treeview.css" />
 		<link type="text/css" media="screen" rel="stylesheet" href="../stiliai/colorbox.css" />
-    <!--[if IE]>
-    <link type="text/css" media="screen" rel="stylesheet" href="../stiliai/colorbox-ie.css" title="example" />
-    <![endif]-->
-
-    <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
-    <script type="text/javascript" src="js/jquery-ui-1.7.1.custom.min.js"></script>
-    <script type="text/javascript" src="js/superfish.js"></script>
-    <script type="text/javascript" src="../javascript/jquery/jquery.colorbox.js"></script>
+        <!--[if IE]>
+        <link type="text/css" media="screen" rel="stylesheet" href="../stiliai/colorbox-ie.css" title="example" />
+		<link type='text/css' rel='stylesheet' href='css/defaultie.css' media="screen" />
+        <![endif]-->
+        <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.7.1.custom.min.js"></script>
+        <script type="text/javascript" src="js/superfish.js"></script>
+        <script type="text/javascript" src="../javascript/jquery/jquery.colorbox.js"></script>
 		<script type="text/javascript" src="js/excanvas.pack.js"></script>
 		<script type="text/javascript" src="js/jquery.flot.pack.js"></script>
-		<!--script type="text/javascript" src="js/custom.js"></script-->
 		<script src="js/jquery.cookie.js" type="text/javascript"></script>
 		<script src="js/jquery.treeview.js" type="text/javascript"></script>
 		<!--script src="js/jquery.scrollTo.js" type="text/javascript"></script-->
@@ -331,7 +330,6 @@ HTML;
 		
 		<script type="text/javascript">
 			$(document).ready(function(){
-
 				// first example
 				$("#treemenu").treeview({
 					persist: "location",
@@ -342,120 +340,135 @@ HTML;
          //Examples of how to assign the ColorBox event to elements.
         $(".gallery a[rel='lightbox']").colorbox({transition:"fade", current: "<?php echo $lang['admin']['gallery_image']; ?> {current} <?php echo $lang['user']['pm_of']; ?> {total}", next:"<?php echo $lang['admin']['gallery_next'];?>", previous:"<?php echo $lang['admin']['gallery_prev'];?>", close:"[x]"});
 			});
-			
 		</script>
-  </head>
-  <body>
-	  <div id="admin_root">
-		  <div id="admin_main">
+</head>
+<body>
+<div id="admin_root">
+<div id="content">
 
-			  <div id="admin_header">
+<div id="left">
 
-				  <!--div id="select_color">
-					  <div class="color c1">&nbsp;</div>
-					  <div class="color c2">&nbsp;</div>
-					  <div class="color c3">&nbsp;</div>
-					  <div class="color c4">&nbsp;</div>
-				  </div--><div style="text-align: right;color: #666;"><?php echo $lang['admin']['user_lastvisit']; ?>: <b><?php echo date('H:i:s'); ?></b></div>
-				  <a href="#" id="admin_logo"><img src="images/mm_logo.png" alt="MightMedia TVS" /></a>
+<div class="fixed">
 
-				  <div id="controls">
-					  <div id="admin_user" class="down"><a href="<?php echo url('?id,999;do,logout');?>" title="<?php echo $lang['user']['logout']; ?>"><img src="images/icons/logout.png" alt="off" /></a><?php echo $_SESSION['username']; ?></div>
-					<div id="admin_lang" class="down"><?php echo $language; ?></div>
-				  </div>
-				  
-			  </div>
+<div id="virslogo"></div>
+<a href="#"><div id="admin_logo" ></div></a>	
 
-			  <div id="admin_hmenu">
-				  <ul class="sf-menu">
-            <li><a href="<?php echo url('?id,999');?>"><img src="images/icons/home.png" alt="" /> <?php echo $lang['admin']['homepage']; ?></a></li>
-					  <li><a href="<?php echo url('?id,999;a,10;n,3');?>"><img src="images/icons/sitemap.png" alt="" /> <?php echo $lang['system']['tree']; ?></a></li>
-					  <li><a href="<?php echo url('?id,999;m,3');?>"><img src="images/icons/product-1.png" alt="" /> <?php echo $lang['admin']['antivirus']; ?></a></li>
-					  <li><a href="<?php echo url('?id,999;m,2');?>"><img src="images/icons/finished-work.png" alt="" /> <?php echo $lang['admin']['admin_chat']; ?></a></li>
-					  <?php if (!empty($conf['keshas'])) : ?>
-            <li><a href="<?php echo url('?id,999;m,1');?>"><img src="images/icons/publish.png" alt="" />           <?php echo $lang['admin']['uncache']; ?></a></li>
-            <?php endif ?>
-				  </ul>
-			  </div>
-		  </div>
-      <div id="content">
-      <div id="top">
-		<div class="search">
-			<form method="post" action="<?php echo url('?id,999;m,4');?>">
-				<input name="vis" value="vis" type="hidden" />
-				<input type="text" name="s"  value="" />
-			</form>
-		</div>
-          <div id="version_check"></div>
-          	   <script type="text/javascript">
-         $.getJSON('<?php echo $update_url; ?>');
-         function versija(data) {
-           if(<?php echo versija();?> < data.version){
-              $('#version_check').attr('class', 'msg');
-              $('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><b>'+data.title+'</b> '+'' + data.version + ' - ' +'' + data.about + ' '+(data.log?'<span id="news" title="'+data.log+'">[info]</span>':'')+(data.url?' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':''));
-           }   
- 
-         }
-       
-      
-    </script>
-       </div>
-		<div style="clear: both;"></div>
-        <div id="left">          
-          <div class="nav">
-            <ul>
-              <?php echo $admin_tools; ?>
-            </ul>
-          </div>
-        </div>
-                
+<div class="search">
+<div class="sonas">
+<a href="style-switcher.php?style=diena"><div class="pirmas"></div></a>
+<a href="style-switcher.php?style=naktis"><div class="antras"></div></a>
+</div>
+<form method="post" action="<?php echo url('?id,999;m,4');?>">
+<input name="vis" value="vis" type="hidden" />
+<input type="text" name="s"  value="" />
+</form>
+<div style="clear: both;"></div>
+</div>
+	
+</div>
 
-        <div id="right">
-          		
-          <div id="container"> 
-            <div class="where"><img src="images/bullet.png" alt="" /> <a href="<?php echo url('?id,999');?>">Admin</a> &raquo; <a href="<?php echo url('?id,999'.(isset($_GET['a'])?';a,'.$_GET['a']:''));?>"><?php echo(isset($_GET['a']) ? (isset($admin_pages[$_GET['a']]) && isset($lang['admin'][$admin_pages[$_GET['a']]]) ? $lang['admin'][$admin_pages[$_GET['a']]] : $lang['admin']['homepage']) : $lang['admin']['homepage']); ?></a> </div>
-            
+<div class="nav">
+<ul>
+<li><a href="<?php echo url('?id,999');?>"><img src="images/icons/home.png" alt="" /> <?php echo $lang['admin']['homepage']; ?></a></li>
+<li><a href="<?php echo url('?id,999;m,3');?>"><img src="images/icons/product-1.png" alt="" /> <?php echo $lang['admin']['antivirus']; ?></a></li>
+<li><a href="<?php echo url('?id,999;m,2');?>"><img src="images/icons/finished-work.png" alt="" /> <?php echo $lang['admin']['admin_chat']; ?></a></li>
+<?php if (!empty($conf['keshas'])) : ?>
+<li><a href="<?php echo url('?id,999;m,1');?>"><img src="images/icons/publish.png" alt="" /><?php echo $lang['admin']['uncache']; ?></a></li>
+<?php endif ?>
+<?php echo $admin_tools; ?>
+</ul>
+</div>
 
-	<?php if (isset($url['a']) && file_exists(dirname(__file__)."/".(isset($admin_pages[(int) $url['a']]) ? $admin_pages[(int) $url['a']] : 'n/a').'.php') && isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
-			if (count($_POST) > 0 && $conf['keshas'] == 1)
-				msg($lang['system']['warning'], $lang['system']['cache_info']);
-			include_once(dirname(__file__)."/".$admin_pages[(int) $url['a']].'.php');
+</div>
+
+<div id="right">
+<div id="controls">
+<div id="admin_user" class="down">
+<?php echo $lang['admin']['user_lastvisit']; ?>: <b><?php echo date('H:i:s'); ?></b>
+</div>
+<div id="admin_user" class="down">
+<a href="<?php echo url('?id,999;do,logout');?>" title="<?php echo $lang['user']['logout']; ?>"><img src="images/icons/logout.png" alt="off" /></a>
+<?php echo $_SESSION['username']; ?>
+</div>
+<div id="admin_lang" class="down"><?php echo $language; ?></div>
+</div>			  
+
+<div id="container"> 
+<div class="where">
+<img src="images/bullet.png" alt="" /> 
+<a href="<?php echo url('?id,999');?>">Admin</a> &raquo; 
+<a href="<?php echo url('?id,999'.(isset($_GET['a'])?';a,'.$_GET['a']:''));?>">
+<?php echo(isset($_GET['a']) ? (isset($admin_pages[$_GET['a']]) && isset($lang['admin'][$admin_pages[$_GET['a']]]) ? $lang['admin'][$admin_pages[$_GET['a']]] : $lang['admin']['homepage']) : $lang['admin']['homepage']); ?>
+</a> 
+</div>
+<!--[if IE]>
+<?php klaida('','Internet Explorer nėra gera naršyklė bei yra nepatogi, ji iškraipo dauguma dizaino funkcijų, siūlome naudoti: <a targer="_blank" href="https://www.google.com/chrome">Google Chrome</a>, <a targer="_blank" href="http://apple.com/safari">Safari</a>, <a targer="_blank" href="http://www.mozilla.org/firefox/">Mozilla Firefox</a>, <a targer="_blank" href="http://opera.com">Opera</a>');?>
+<![endif]-->
+
+<div id="version_check"></div>
+<script type="text/javascript">
+$.getJSON('<?php echo $update_url; ?>');
+function versija(data) {
+if(<?php echo versija();?> < data.version){
+$('#version_check').attr('class', 'msg');
+$('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><b>'+data.title+'</b> '+'' + data.version + ' - ' +'' + data.about + ' '+(data.log?'<span id="news" title="'+data.log+'">[info]</span>':'')+(data.url?' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':''));
+}   
+}
+</script>          
+
+<?php 
+if (isset($url['a']) && file_exists(dirname(__file__)."/".(isset($admin_pages[(int) $url['a']]) ? $admin_pages[(int) $url['a']] : 'n/a').'.php') && isset($_SESSION['username']) && $_SESSION['level'] == 1 && defined("OK")) {
+	if (count($_POST) > 0 && $conf['keshas'] == 1)
+	msg($lang['system']['warning'], $lang['system']['cache_info']);
+	include_once(dirname(__file__)."/".$admin_pages[(int) $url['a']].'.php');
+	
+} elseif (isset($_GET['m'])) {
+
+	switch ($_GET['m']) {
+		case 1:
+			$page = 'uncache.php';
+		break;
+		case 2:
+			$page = 'pokalbiai.php';
+		break;
+		case 3:
+			$page = 'antivirus.php';
+		break;
+		case 4:
+		$page = 'search.php';
+		break;
 		}
-		elseif (isset($_GET['m'])) {
-			switch ($_GET['m']) {
-			case 1:
-				$page = 'uncache.php';
-				break;
-			case 2:
-				$page = 'pokalbiai.php';
-				break;
-			case 3:
-				$page = 'antivirus.php';
-				break;
-			case 4:
-				$page = 'search.php';
-				break;
-			}
-			include_once(dirname(__file__)."/".$page);
+		include_once(dirname(__file__)."/".$page);
+		} else {
+		include_once(dirname(__file__)."/start.php");
 		}
-		else
-			include_once(dirname(__file__)."/start.php");
 ?>
-        </div>
-        <div style="clear: both;"></div>
-      </div>
-      <div id="footer">
-         <div class="c">©</div>
-         <div class="text">
-          <div class="copy">
-            <div class="links"><a href="http://mightmedia.lt">MightMedia</a> | <a href="http://mightmedia.lt/Kontaktai"><?php echo $lang['pages']['kontaktas.php']; ?></a> | <a href="http://www.gnu.org/licenses/gpl.html">GNU</a></div>MightMedia TVS - atviro kodo turinio valdymo sistema, sukurta CodeRS komandos.</div>
-             <div class="images">
-                 <a href="http://www.mysql.com" target="_blank"><img src="images/mysql.png" alt="" /></a><a href="http://php.net" target="_blank"><img src="images/php.png" alt="" /></a><a href="http://www.gnu.org" target="_blank"><img src="images/gnu.png" alt="" /></a>
-             </div>
-         </div>
-          </div>
-      </div>
-	  </div>
-	 
-  </body>
+</div>
+<div style="clear: both;"></div>  
+<div id="footer">
+         
+<div class="copy">
+<div class="c">&copy;</div>
+<div class="links"><a href="http://mightmedia.lt">MightMedia</a> | 
+<a href="http://mightmedia.lt/Kontaktai"><?php echo $lang['pages']['kontaktas.php']; ?></a> | 
+<a href="http://www.gnu.org/licenses/gpl.html">GNU</a></div>MightMedia TVS - atviro kodo turinio valdymo sistema, sukurta CodeRS komandos.
+</div> 
+		 
+<div class="images">
+<a href="http://www.mysql.com" target="_blank"><img src="images/mysql.png" alt="" /></a>
+<a href="http://php.net" target="_blank"><img src="images/php.png" alt="" /></a>
+<a href="http://www.gnu.org" target="_blank"><img src="images/gnu.png" alt="" /></a>
+</div>
+</div>
+     
+<div style="clear: both;"></div>
+</div>
+<div style="height:20px;"></div>
+</div>
+</div>
+	  
+<script type="text/javascript">
+$('#style-switcher a').styleSwitcher();
+</script>
+</body>
 </html>
