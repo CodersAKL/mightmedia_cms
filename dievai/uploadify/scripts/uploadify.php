@@ -45,7 +45,6 @@ if (!empty($_FILES)) {
 
 		//Sarašas leidžiamu failu
 		$limitedext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", "gif", "GIF", "bmp", "BMP");
-		$limitedext = array("gif", "jpg", "png", "jpeg", "bmp");
 		$fileParts  = pathinfo($_FILES['Filedata']['name']);
 		//$file_type = $_FILES['Filedata']['type'];
 		$file_name = $_FILES['Filedata']['name'];
