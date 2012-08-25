@@ -16,6 +16,9 @@ fieldset {
 	margin: 15px;
 	border: 1px dotted #BDBCBD;
 }
+hr {
+	
+}
 td{text-align: left;}
 
 .nav ol,.nav ul {
@@ -218,7 +221,7 @@ a {
     margin-top: 10px;
     margin-right: 20px;
     margin-left: 177px;
-	padding-right: 10px;
+	padding-right: 30px;
 	background: #FFFFFF url(../images/hover.png) repeat-x;
 }
 #controls {
@@ -519,7 +522,7 @@ form td{
 .table tr.odd, .tr{
 	background: #ebebeb;
 }
-.form_table tr td{
+.form_table tr td {
  border-bottom: 1px dotted #d9d9d9;
  padding : 3px;
 }
