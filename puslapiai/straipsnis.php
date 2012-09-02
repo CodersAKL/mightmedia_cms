@@ -25,7 +25,7 @@ if ($sqlas && sizeof($sqlas) > 0 && !isset($url['m'])) {
         $kiek = mysql_query1("SELECT count(*) + (SELECT count(*) FROM `".LENTELES_PRIESAGA."straipsniai` WHERE `kat` IN (SELECT `id` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`=" . escape($sql['id']) . ")) as `kiek` FROM `".LENTELES_PRIESAGA."straipsniai` WHERE `kat`=" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())." LIMIT 1");
         $sqlkiek = $kiek['kiek'];
 			$info[] = array(
-					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['articles']}: $sqlkiek</div></span></div>"//,
+					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"kat\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['articles']}: $sqlkiek</div></span></div>"//,
 				);
 		}
 	}
@@ -43,17 +43,31 @@ if ($k >= 0 && empty($url['m'])) {
 	$pav = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='$k' AND `lang` = ".escape(lang())." LIMIT 1", 86400);
 	$viso = kiek("straipsniai", "WHERE `rodoma`='TAIP' AND `kat`='" . $k . "' AND `lang` = ".escape(lang())."");
 	if ($viso > 0) {
-		$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' AND `kat`='" . $k . "' AND `lang` = ".escape(lang())." ORDER BY `date` DESC LIMIT $p, $limit", 86400);
+		//$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' AND `kat`='" . $k . "' AND `lang` = ".escape(lang())." ORDER BY `date` DESC LIMIT $p, $limit", 86400);
+	$sql = mysql_query1("
+			SELECT *, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/straipsnis' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "straipsniai`.`id`) AS `viso`
+			FROM `" . LENTELES_PRIESAGA . "straipsniai`
+			WHERE `rodoma`= 'TAIP'
+			AND `kat`='" . $k . "'
+			AND `lang` = ".escape(lang())."
+			ORDER BY `date` DESC
+			LIMIT {$p},{$limit}", 100);
 		if (teises($pav['teises'], $_SESSION['level'])) {
 			
         lentele((!empty($pav['pavadinimas'])?$pav['pavadinimas']:$lang['pages']['straipsnis.php']), $pav['aprasymas']."<br /><i>{$lang['category']['articles']}: {$viso}</i>");
 				foreach ($sql as $row) {
-					if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
-            lentele($row['pav'], $row['t_text'] . "<br /><a href=".url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] . ";".seo_url($row['pav'],$row['id']) ). ">{$lang['article']['read']}</a>", rating_form($page,$row['id']));
-					}
-				}
+$sql_autr = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= '" . $row['autorius'] . "' LIMIT 1");
+$data = $row['date'];
+$autorius = user($row['autorius'], $sql_autr['id'], $sql_autr['levelis']);
 
-			
+		if (isset($conf['puslapiai']['straipsnis.php']['id'])) {
+			if ($row['kom'] == 'taip' && isset($conf['kmomentarai_sveciams'])&&$conf['kmomentarai_sveciams'] != 3) {
+			$kiekis =  $row['viso'];
+			}
+			$nuoroda = "".url("?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] . ";".seo_url($row['pav'],$row['id']) ). "";
+            lentele_c($row['pav'], $row['t_text'] ,$nuoroda, $kiekis, $data, $autorius, rating_form($page,$row['id']));
+		}
+				}
 		} else {
 			klaida($lang['system']['warning'], "{$lang['article']['cant']}.");
 		}
@@ -71,10 +85,22 @@ if ($k >= 0 && empty($url['m'])) {
 	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape($row['kat']) . " AND `kieno`='straipsniai' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 86400);
 	addtotitle($row['pav']);
 	if (teises($sqlas['teises'], $_SESSION['level'])&&!empty($row['date'])) {
-		$text = $row['t_text'] . "<hr />\n
-		" . $row['f_text'] . "
-		<hr />{$lang['article']['date']}: " . date('Y-m-d H:i:s', $row['date']) . ", {$lang['article']['author']}: <b>" . input($row['autorius']) . "</b>";
-		lentele((!empty($pav['pavadinimas'])?'':$lang['pages']['straipsnis.php'])." > <a href=\"".url("?id,{$_GET['id']};k,{$row['kat']}\">".input($sqlas['pavadinimas'])). "</a> > " . input($row['pav']), $text, rating_form($page,$row['id']));
+
+$text = $row['t_text'] . "<div class='line'></div>";
+	if (!empty($row['f_text'])) {
+		$text = $row['f_text']."<div class='line'></div>";
+	}
+$sql_aut = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= '" . $row['autorius'] . "' LIMIT 1");
+	$text .= "{$lang['article']['date']}: " . date('Y-m-d H:i:s', $row['date']) . ",
+	{$lang['article']['author']}: " .user($row['autorius'], $sql_aut['id'], $sql_aut['levelis']) . "";
+			//Dalintis
+            $text .= "
+			<div class='line'></div>
+			<!-- AddThis Button BEGIN -->
+			<div class='addthis_toolbox addthis_default_style '><a href='http://www.addthis.com/bookmark.php?v=250&amp;pubid=xa-4e7a05051d3cf281' class='addthis_button_compact'>".$lang['news']['share']."</a><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a05051d3cf281'></script><a class='addthis_button_facebook_like' fb:like:layout='button_count'></a><a class='addthis_button_tweet'></a><a class='addthis_button_google_plusone' g:plusone:size='medium'></a></div><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a03fc44b95268'></script>
+			<!-- AddThis Button END -->
+			";
+		lentele(input($row['pav']), $text, rating_form($page,$row['id']));
 		include ("priedai/komentarai.php");
 
 		komentarai($url['m'], true);

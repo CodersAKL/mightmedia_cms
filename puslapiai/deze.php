@@ -65,11 +65,13 @@ if (sizeof($sql2) > 0) {
 	foreach ($sql2 as $row) {
 		$admin_tools = "";
 		$i++;
+		$tr = $i % 2 ? '2' : '';
 		if (ar_admin('com')) {
-			$admin_tools = "<span style=\"float: right;\"><a href='" . url("d," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['system']['delete_confirm']}') \"><img src='images/icons/cross_small.png' alt='[{$lang['admin']['delete'] }]' title='{$lang['admin']['delete'] }' class='middle' border='0' /></a> <a href='" . url("r," . $row['id'] . "") . "'><img src='images/icons/pencil_small.png' alt='[{$lang['admin']['edit'] }]' title='{$lang['admin']['edit'] }' class='middle' border='0' /></a> </span>";
+			$admin_tools = "<span style=\"float: right;\"><a href='" . url("d," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['system']['delete_confirm']}') \"><img height=\"15\" src='images/icons/cross.png' alt='[{$lang['admin']['delete'] }]' title='{$lang['admin']['delete'] }' class='middle' border='0' /></a> 
+			<a href='" . url("r," . $row['id'] . "") . "'><img height=\"15\" src='images/icons/pencil.png' alt='[{$lang['admin']['edit'] }]' title='{$lang['admin']['edit'] }' class='middle' border='0' /></a> </span>";
 		}
 
-		$text .= "<div class=\"tr".($i%2)."\"><em>$admin_tools<a href=\"".url("?id," . $url['id'] . ";p,$p#" . $row['id'] ). "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " . user($row['nikas'], $row['niko_id']) . " (" . $row['time'] . ")</em><br />" . smile(bbchat($row['msg'])) . "</div>";
+		$text .= "<div class=\"tr{$tr}\"><em>{$admin_tools}<a href=\"".url("?id," . $url['id'] . ";p,$p#" . $row['id'] ). "\" name=\"" . $row['id'] . "\" id=\"" . $row['id'] . "\"><img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /></a> " . user($row['nikas'], $row['niko_id']) . " (" . $row['time'] . ")</em><br />" . smile(bbchat($row['msg'])) . "</div>";
 
 	}
 } else {

@@ -50,7 +50,7 @@ if ($vid == 0) {
         $sqlkiek = $kiek['kiek'];
 				$subs++;
 				$info[] = array(
-					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['downloads']}: {$sqlkiek}</div></span></div>"//,
+					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"kat\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['downloads']}: {$sqlkiek}</div></span></div>"//,
 				);
 		}
 
@@ -110,7 +110,15 @@ if ($vid > 0) {
 				$info2[0][$lang['system']['category']] = "<b>" . input($sql['Kategorija']) . "</b><br /><div class='avataras'><img src='images/naujienu_kat/" . input($sql['img']) . "' alt='" . input($sql['Kategorija']) . "' /></div>";
 				$ble->width[$lang['system']['category']] = '50px';
 			}
-			$info2[0][input($sql['pavadinimas'])] = "<div style='vertical-align: top'> <b>{$lang['download']['about']}:</b> " . $sql['apie'] . "<br /><b>{$lang['admin']['download_author']} :</b> {$autorius}<br /><b>{$lang['download']['date']}:</b> " . date('Y-m-d H:i:s ', $sql['data']) . "<br /><hr /><a href=\"siustis.php?d," . $sql['id'] . "\"><img src=\"images/icons/disk.png\" alt=\"" . input($sql['file']) . "\" border=\"0\" /></a></div>";
+			$info2[0][input($sql['pavadinimas'])] = "
+			<div style='vertical-align: top'> <b>{$lang['download']['about']}:</b> " . $sql['apie'] . "<br />
+			<b>{$lang['admin']['download_author']} :</b> {$autorius}<br /><b>{$lang['download']['date']}:</b> " . date('Y-m-d H:i:s ', $sql['data']) . "<br />
+			<div class='line'></div>
+			<!-- AddThis Button BEGIN -->
+			<div class='addthis_toolbox addthis_default_style '><a href='http://www.addthis.com/bookmark.php?v=250&amp;pubid=xa-4e7a05051d3cf281' class='addthis_button_compact'>".$lang['news']['share']."</a><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a05051d3cf281'></script><a class='addthis_button_facebook_like' fb:like:layout='button_count'></a><a class='addthis_button_tweet'></a><a class='addthis_button_google_plusone' g:plusone:size='medium'></a></div><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a03fc44b95268'></script>
+			<!-- AddThis Button END -->
+			<div class='line'></div>
+			<a class='siust' href=\"siustis.php?d," . $sql['id'] . "\"><img src=\"images/icons/disk.png\" alt=\"" . input($sql['file']) . "\" border=\"0\" />{$lang['download']['download']}</a></div>";
 
 			lentele("{$lang['download']['downloads']} >> " . (isset($sql['Kategorija']) ? input($sql['Kategorija']) . " >> " : "") . input($sql['pavadinimas']) . "", $ble->render($info2) . "<a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
 

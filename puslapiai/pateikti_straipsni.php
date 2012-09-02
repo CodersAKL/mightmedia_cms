@@ -9,15 +9,16 @@
  * @$Revision$
  * @$Date$
  **/
-
-
 if (isset($_POST['action']) && $_POST['action'] == 'Pateikti') {
     if (isset($_POST['pav']) && isset($_POST['str'])) {
+    //Tasku pridejimas uz siuntini nutrinkite // noredami kad veiktu    
+    //mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai+2 WHERE nick=" . escape($_SESSION['username']) . " AND `id` = " . escape($_SESSION['id']) . "");
+	/
     $straipsnis = explode('===page===',$_POST['str']);
     $apr = $straipsnis[0];
     $str = empty($straipsnis[1])?'':$straipsnis[1];
-    
-    $komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'taip' ? 'taip' : 'ne');
+   // $komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'taip' ? 'taip' : 'ne');
+    $komentaras = 'taip';
     $kategorija = (int)$_POST['kategorija'];
     $pavadinimas = strip_tags($_POST['pav']);
     $autorius = (isset($_SESSION['username']) ? $_SESSION['username'] : '-');
@@ -38,37 +39,32 @@ if (isset($_POST['action']) && $_POST['action'] == 'Pateikti') {
 			`rodoma` = 'NE',
 			`lang` = ".escape(lang())."");
 			if ($result) {
-				msg("Informacija", "Straipsnis pateiktas administracijos peržiūrai.");
+				msg("{$lang['system']['info']}", "{$lang['article']['sumbit_scc']}.");
 			} else {
-				klaida("Klaida", "Straipsnis nepatalpintas.");
+				klaida("{$lang['system']['error']}", "{$lang['article']['sumbit_no']}.");
 			}
 		} else {
-			klaida("Klaida", $error);
+			klaida("{$lang['system']['error']}", $error);
 		}
 		redirect(url("?id," . $_GET['id']), "meta");
 	} else {
-		klaida("Dėmesio", "Užpildykite visus laukelius.");
+		klaida("{$lang['system']['warning']}", "{$lang['admin']['news_required']}.");
 	}
-
 }
-
-$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' ORDER BY `pavadinimas` DESC");
+$sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `lang` = ".escape(lang())." AND `path`=0 ORDER BY `id` DESC");
+include_once ("priedai/kategorijos.php");
+kategorija("straipsniai", true);
 if (sizeof($sql) > 0) {
-	foreach ($sql as $row) {
-		$kategorijos[$row['id']] = $row['pavadinimas'];
-
-	}
-
-
+$kategorijos=cat('straipsniai', 0);
+}
+$kategorijos[0] = "--";
 	include_once ("priedai/class.php");
 	$bla = new forma();
-
-	$straipsnis = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "name" => "reg"), "Pavadinimas:" => array("type" => "text", "value" => "", "name" => "pav", "class"=>"input"), "Komentarai:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"), "Kategorija:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class"=>"input"), "Straipsnis:" => array("type" => "string", "value" => editorius('jquery', 'standartinis', 'str')), 'Pateikti' => array("type" => "submit", "name" => "action", "value" => 'Pateikti'), );
-
-
-	lentele('Straipsnio rašymas', $bla->form($straipsnis));
-} else {
-	klaida("Dėmesio", "Nėra kategorijų.");
-}
-
+	$straipsnis = array("Form" => array("action" => url("?id,".$conf['puslapiai'][basename(__file__)]['id']), "method" => "post", "name" => "reg"), 
+	"{$lang['system']['name']}:" => array("type" => "text", "value" => "", "name" => "pav", "class"=>"input"), 
+	//"{$lang['comments']['comments']}:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"), 
+	"{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class"=>"input"), 
+	"{$lang['admin']['article']}:" => array("type" => "string", "value" => editorius('jquery', 'standartinis', 'str')), 
+	"" => array("type" => "submit", "name" => "action", "value" => "{$lang['article']['submit']}"), );
+	lentele("{$lang['article']['submiting']}", $bla->form($straipsnis));
 ?>
