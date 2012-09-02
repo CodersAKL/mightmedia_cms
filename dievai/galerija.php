@@ -293,16 +293,48 @@ if (isset($_GET['v'])) {
 				} else {
 					$autorius = $lang['system']['guest'];
 				}
+//Jog veiktų normaliai tenka čia talpinti :)
+				$text.='
+	<!-- Add jQuery library -->
+	<script type="text/javascript" src="../javascript/jquery/fancybox/jquery-1.7.2.min.js"></script>
+	<!-- Add mousewheel plugin (this is optional) -->
+	<script type="text/javascript" src="../javascript/jquery/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
+	<!-- Add fancyBox main JS and CSS files -->
+	<script type="text/javascript" src="../javascript/jquery/fancybox/jquery.fancybox.js?v=2.0.6"></script>
+	<link rel="stylesheet" type="text/css" href="../stiliai/jquery.fancybox.css?v=2.0.6" media="screen" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".fancybox").fancybox();
+			// Remove padding, set opening and closing animations, close if clicked and disable overlay
+			$(".fancybox-effects-d").fancybox({
+				padding: 0,
+				openEffect : "elastic",
+				openSpeed  : 150,
+				closeEffect : "elastic",
+				closeSpeed  : 150,
+				closeClick : true,
+				helpers : {
+					overlay : {
+						css : {
+							"background" : "#fff"
+						}
+					}
+				}
+			});
+		});
+	</script>
+        <script type="text/javascript" src="js/superfish.js"></script>
+		<script src="js/jquery.treeview.js" type="text/javascript"></script>
+	';
 				$text .= "
 			<div class=\"gallery img_left\" >
-				<a rel=\"lightbox\" href=\"".ROOT."images/galerija/" . $row2['file'] . "\" title=\"" . (!empty($row2['pavadinimas'])?$row2['pavadinimas'] . "<br>":'') . trimlink(strip_tags($row2['apie']), 50) . "\">
+				<a class=\"fancybox-effects-d\" href=\"".ROOT."images/galerija/" . $row2['file'] . "\" title=\"" . (!empty($row2['pavadinimas'])?$row2['pavadinimas'] . "<br>":'') . trimlink(strip_tags($row2['apie']), 50) . "\">
 					<img src=\"".ROOT."images/galerija/mini/" . $row2['file'] . "\" alt=\"\" />
 				</a>
 				<div class='gallery_menu'>
 					<a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date('Y-m-d H:i:s ', $row2['data']) . "\"><img src='".ROOT."images/icons/information.png' border='0' alt='info' /></a>
-					<a href=\"".url("?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row2['ID'])."\" title=\"{$lang['admin']['gallery_comments']}\"><img src='".ROOT."images/icons/comment.png' alt='C' border='0' /></a>
-					<a href=\"".ROOT."images/galerija/originalai/" . $row2['file'] . "\" title=\"{$lang['download']['download']}\"><img src='".ROOT."images/icons/disk.png' border='0' alt='save' /></a> | <a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row2['ID'] ). "\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('".url("?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row2['ID']). "'); $(this).parent().parent().remove(); return false } else { return false }\" title=\"{$lang['admin']['delete']}\"><img src='".ROOT."images/icons/cross.png'  border='0'></a>
-						<a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";h," . $row2['ID'] ). "\" title=\"{$lang['admin']['edit']}\"><img src='".ROOT."images/icons/picture_edit.png'  border='0'></a>";
+					<a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row2['ID'] ). "\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('".url("?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row2['ID']). "'); $(this).parent().parent().remove(); return false } else { return false }\" title=\"{$lang['admin']['delete']}\"><img src='".ROOT."images/icons/cross.png'  border='0'></a>
+				    <a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";h," . $row2['ID'] ). "\" title=\"{$lang['admin']['edit']}\"><img src='".ROOT."images/icons/picture_edit.png'  border='0'></a>";
 					$text .= "
 				</div>
 				<div class='gallery_title'>
