@@ -34,11 +34,13 @@ class rating {
 		if ($this->status) {
 			mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "ratings` (`rating_id`,`rating_num`,`IP`,`psl`) VALUES (".escape($id).",".escape($rating).",".escape(getip()) . ",".escape($page).")") or die(mysql_error());
 			delete_cache("SELECT `rating_num` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `rating_id` = ".escape($id)." AND `psl` = ".escape($page));
-			$this->votes++;
-			$this->status = '<img src="images/icons/tick_circle.png" alt="yes" />';
+			//$this->votes++;
+			//$this->status = '<img src="images/icons/tick_circle.png" alt="yes" />';
+			$this->status = '';
 		}
 		else {
-			$this->status = '<img src="images/icons/cross_circle.png" alt="no" />';
+			//$this->status = '<img src="images/icons/cross_circle.png" alt="no" />';
+			$this->status = '';
 		}
 		$sel = mysql_query1("SELECT `rating_num` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `rating_id` = ".escape($id)." AND `psl` = ".escape($page),360);
 		if (sizeof($sel) > 0) {
@@ -62,13 +64,13 @@ function rating_form($page, $id, $allow=true) {
     }
     $return = '';
     $rating = new rating($page, $id);
-    $status = "<div class='score' id='score_{$id}'>
-          <a class='score1' href='?score=1&amp;page={$page}&amp;user={$ip}&amp;id={$id}'>1</a>
-          <a class='score2' href='?score=2&amp;page={$page}&amp;user={$ip}&amp;id={$id}'>2</a>
-          <a class='score3' href='?score=3&amp;page={$page}&amp;user={$ip}&amp;id={$id}'>3</a>
-          <a class='score4' href='?score=4&amp;page={$page}&amp;user={$ip}&amp;id={$id}'>4</a>
-          <a class='score5' href='?score=5&amp;page={$page}&amp;user={$ip}&amp;id={$id}'>5</a>
-        </div>
+    $status = "
+          <a title='1' class='score1' href='?score=1&amp;page={$page}&amp;user={$ip}&amp;id={$id}'>1</a>
+          <a title='2' class='score2' href='?score=2&amp;page={$page}&amp;user={$ip}&amp;id={$id}'>2</a>
+          <a title='3' class='score3' href='?score=3&amp;page={$page}&amp;user={$ip}&amp;id={$id}'>3</a>
+          <a title='4' class='score4' href='?score=4&amp;page={$page}&amp;user={$ip}&amp;id={$id}'>4</a>
+          <a title='5' class='score5' href='?score=5&amp;page={$page}&amp;user={$ip}&amp;id={$id}'>5</a>
+        
        ";
     if (isset($_GET['score']) && $allow==true) {
       $score = $_GET['score'];
@@ -79,19 +81,23 @@ function rating_form($page, $id, $allow=true) {
       }
     }
     if ($allow == false || !$rating->status) {
-      $status = '<img src="images/icons/cross_circle.png" alt="no" />';
+      $status = '';
     }
     if (!isset($_GET['update'])) {
       $return .= '<div class="rating_wrapper">';
     }
+
     $return .='<div class="sp_rating" id="sp_rating_'.$id.'">
       <div class="rating"></div>
-      <div class="base"><div class="average" style="width:'.$rating->average.'%">'.$rating->average.'</div></div>
-      <div class="votes">'.$rating->votes.' '.$lang['poll']['votes'].'</div>
+      <div class="base">
       <div class="status">
-      <div class="score_this" id="score_this_'.$id.'" onclick="$(this).slideUp(); return false">(<a href="#">'.$lang['poll']['vote'].'</a>)</div>
-       '.$status.'
+      <div class="score" id="score_'.$id.'">
+	  '.$status.'
+	  <div class="average" title="'.$rating->votes.' '.$lang['poll']['votes'].'" style="width:'.$rating->average.'%">'.$rating->average.'</div>
       </div>
+	  </div>
+	  </div>
+
     </div><script type="text/javascript">init_rating(\''.$id.'\')</script>';
     if (!isset($_GET['update'])) {
       $return .= '</div>';

@@ -25,8 +25,8 @@ clearstatcache();
 
 if (is_file('priedai/conf.php') && filesize('priedai/conf.php') > 10) {
 	include_once ("priedai/conf.php");
-} elseif (is_file('setup.php') && !isset($conf['Palaikymas'])) {
-	header('location: setup.php');
+} elseif (is_file('install/index.php') && !isset($conf['Palaikymas'])) {
+	header('location: install/index.php');
 	exit();
 } else {
 	die('<h1>Sistemos klaida / System error</h1>Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.');
@@ -46,7 +46,7 @@ if (isset($url['id']) && !empty($url['id']) && isnum($url['id'])) {
 	$url['id'] = $pslid;
 }
 if (isset($pslid) && isnum($pslid) && $pslid > 0) {
-	$sql1 = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int) $pslid) . " and `lang` = " . escape(lang()) . " LIMIT 1", 259200); //keshas  3dienos.
+	$sql1 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int) $pslid) . " and `lang` = " . escape(lang()) . " LIMIT 1", 259200); //keshas  3dienos.
 
 	if (!empty($sql1)) {
 		if (!preg_match("/\.php$/i", $sql1['file'])) {

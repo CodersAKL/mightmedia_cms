@@ -33,6 +33,7 @@ if (isset($d) && $d > 0) {
     //teisiu tikrinimas
 		$row = mysql_query1("SELECT `teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape($sql['categorija']) . " LIMIT 1");
 		if (!$row || teises($row['teises'], $_SESSION['level'])) {
+		mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "siuntiniai` SET paspaudimai = paspaudimai + 1 WHERE `ID`=" . escape($d) . "");
 			download("siuntiniai/" . $sql['file']);
 		} else {
 			die(klaida($lang['system']['sorry'], $lang['download']['cant']));

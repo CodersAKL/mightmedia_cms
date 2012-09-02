@@ -24,11 +24,11 @@ echo "<?xml encoding='UTF-8'?>\n";
 
 
 		<?php
-      $result = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "naujienos`	WHERE `rodoma`= 'TAIP' AND `lang` = " . escape(basename($_GET['lang'], '.php')) . " ORDER BY `data` DESC LIMIT 50", 360);
+      $result = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos`	WHERE `rodoma`= 'TAIP' AND `lang` = " . escape(basename($_GET['lang'], '.php')) . " ORDER BY `data` DESC LIMIT 50", 360);
 
       //naujienu sarasas
       foreach ($result as $row) {
-        $kategorija = mysql_query1("SELECT  SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` where `id`=" . escape($row['kategorija']) . " AND `lang` = " . escape(basename($_GET['lang'], '.php')) . " LIMIT 1", 360);
+        $kategorija = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` where `id`=" . escape($row['kategorija']) . " AND `lang` = " . escape(basename($_GET['lang'], '.php')) . " LIMIT 1", 360);
         $nickas = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick` = " . escape($row['autorius']) . " LIMIT 1", 360);
         if ((isset($kategorija['teises']) && teises($kategorija['teises'], 0)) || !isset($kategorija['teises'])) {
           echo '<item>
