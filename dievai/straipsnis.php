@@ -151,9 +151,17 @@ if (isset($_GET['v'])) {
 	
 	$kategorijos[0] = "--";
 }
-$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "straipsniai` WHERE `lang` = ".escape(lang())." ORDER BY ID DESC");
+///FILTRAVIMAS
+$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "straipsniai` WHERE `lang` = ".escape(lang())." ".(isset($_POST['pav'])? "AND (`pav` LIKE " . escape("%" . $_POST['pav'] . "%") . " ".(!empty($_POST['date'])? "OR `date` <= " .time($_POST['date']) . "":"")." ".(!empty($_POST['t_text'])? " AND `t_text` LIKE " . escape("%" . $_POST['t_text'] . "%") . "":"").")"  : "")." ORDER BY ID DESC");
 include_once (ROOT."priedai/class.php");
 $bla = new forma();
+if(isset($_POST['pav'])) $val = array($_POST['pav'], $_POST['date'], $_POST['t_text']);
+$info[] = array("<form method=\"post\">",
+ $lang['admin']['article'] => "<input type=\"text\" value=\"{$val[0]}\" name=\"pav\" />",
+ $lang['admin']['article_date'] => "<input type=\"text\" value=\"{$val[1]}\" name=\"date\" />",
+ $lang['admin']['article_preface'] => "<input type=\"text\" value=\"{$val[2]}\" name=\"t_text\" />",
+ " " => "<input type=\"submit\" value=\"Filtravoti\" name=\"\" /></form>");
+//FILTRAVIMAS
 if ($_GET['v'] == 4) {
 		$table = new Table();
 			foreach ($sql2 as $row){
@@ -161,10 +169,10 @@ if ($_GET['v'] == 4) {
         $lang['admin']['article'] => input($row['pav']), 
         $lang['admin']['article_date'] => date('Y-m-d', $row['date']), 
         $lang['admin']['article_preface'] => trimlink(strip_tags($row['t_text']), 55),
-        $lang['admin']['edit'] => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"".ROOT."images/icons/cross.png\" border=\"0\"></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>"
+        /*$lang['admin']['edit']*/" " => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"".ROOT."images/icons/cross.png\" border=\"0\"></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>"
         );
 			}
-			echo '<style type="text/css" title="currentStyle">
+		/*	echo '<style type="text/css" title="currentStyle">
 			@import "'.ROOT.'javascript/table/css/demo_page.css";
 			@import "'.ROOT.'javascript/table/css/demo_table.css";
 		</style>
@@ -183,7 +191,7 @@ if ($_GET['v'] == 4) {
 					]
 				} );
 			} );
-		</script>';
+		</script>';*/
 			if(!empty($info) && count($info))
         lentele($lang['admin']['article_edit'], "<form id=\"arch\" method=\"post\"><div id=\"news\">".$table->render($info)."</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
 	
@@ -221,7 +229,7 @@ editor('jquery', 'standartinis', array('str' => $lang['admin']['article']), arra
 			"{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ). "' title='{$lang['admin']['delete']}'><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
 
 		}
-		echo '<style type="text/css" title="currentStyle">
+		/*echo '<style type="text/css" title="currentStyle">
 			@import "'.ROOT.'javascript/table/css/demo_page.css";
 			@import "'.ROOT.'javascript/table/css/demo_table.css";
 		</style>
@@ -240,7 +248,7 @@ editor('jquery', 'standartinis', array('str' => $lang['admin']['article']), arra
 					]
 				} );
 			} );
-		</script>';
+		</script>';*/
 		lentele($lang['admin']['article_unpublished'], "<form id=\"arch\" method=\"post\"><div id=\"news\">".$bla->render($info)."</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
 
 	} else {
