@@ -127,6 +127,7 @@ HTML;
 			`teises` = ' . escape($teises_in) . ',
 			`pav` = ' . escape($pav) . ',
 			`mod` = ' . escape($moderuoti) . '
+			'.((isset($_POST['path']) && $_POST['path'] != $id)?', `path`='.escape($_POST['path']):'').'
 			WHERE `id`= ' . escape($id) . ';
 			');
 		if ($result) {
@@ -138,7 +139,7 @@ HTML;
 	if (isset($_POST['Kategorijos_id']) && isNum($_POST['Kategorijos_id']) && $_POST['Kategorijos_id'] > 0 && isset($_POST['Kategorija']) && $_POST['Kategorija'] == $lang['system']['edit']) {
 		$extra = mysql_query1('SELECT * FROM `' . LENTELES_PRIESAGA . 'grupes` WHERE `kieno`= \'' . $kieno . '\' AND `id` = ' . escape((int) $_POST['Kategorijos_id']) . ' LIMIT 1');
 	}
-	if ($_GET['v'] == 2) {
+	//if ($_GET['v'] == 2) {
 		if (isset($_POST['Kategorija']) && $_POST['Kategorija'] == $lang['system']['delete']) {
 			//Trinamos nuorodos esančios kategorijoje
 			if ($kieno == 'nuorodos') {
@@ -213,7 +214,7 @@ HTML;
 				klaida($lang['system']['error'], $lang['system']['error']);
 			}
 		}
-
+if ($_GET['v'] == 2) {
 		//Jei kuriama vartotoju kategorija
 		if ($kieno == 'vartotojai') {
 			$textas = $lang['system']['grouplevel'];
@@ -243,9 +244,9 @@ HTML;
 			//print_r($puslapiai);
 			$kategorijoss[0] = '';
 			$kategorijos = array(
-				'Form' => array('action' => url("?id,{$_GET['id']};a,{$_GET['a']}"), 'method' => 'post', 'name' => 'reg'),
+				'Form' => array('action' => url("?id,{$_GET['id']};a,{$_GET['a']};v,{$_GET['v']}"), 'method' => 'post', 'name' => 'reg'),
 				$lang['system']['name'] => array('type' => 'text', 'value' => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', 'name' => 'Pavadinimas', 'class' => 'input'),
-				($kieno != 'vartotojai' ? $lang['system']['subcat/cat'] : '') => ($kieno != 'vartotojai' ? array('type' => 'select', 'value' => @$kategorijoss, 'name' => 'path', 'selected' => (isset($extra['path']) ? input($extra['path']) : ''), 'disabled' => @$kategorijoss) : ''),
+				($kieno != 'vartotojai' ? $lang['system']['subcat/cat'] : '') => ($kieno != 'vartotojai' ? array('type' => 'select', 'value' => @$kategorijoss, 'name' => 'path', 'selected' => (isset($extra['path']) ? input($extra['path']) : '0'), 'disabled' => @$kategorijoss) : ''),
 				 $lang['system']['about'] . ':' => array('type' => 'textarea', 'value' => (isset($extra['aprasymas'])) ? input($extra['aprasymas']) : '', 'name' => 'Aprasymas', 'rows' => '3', 'class' => 'input', 'class' => 'input', 'id' => 'Aprasymas'),
 				 '  ' => array('type' => 'string', 'value' => '<div class="avataras" style="float:inherit;"><img src="'.ROOT.'/' . $dir . '/' . (isset($extra['pav']) ? $extra['pav'] : 'no_picture.png') . '" id="kategorijos_img" /></div>'),
 				 $lang['system']['picture'] . ':' => array('type' => 'select', 'value' => $kategoriju_pav, 'name' => 'Pav', 'class' => 'input', 'class' => 'input', 'selected' => (isset($extra['pav']) ? input($extra['pav']) : 'no_picture.png'), 'extra' => 'onchange="$(\'#kategorijos_img\').attr({ src: \''.ROOT.'/' . $dir . '/\'+this.value });"'),
