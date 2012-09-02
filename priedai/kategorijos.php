@@ -109,7 +109,7 @@ HTML;
 				klaida($lang['system']['error'], $lang['system']['error']);
 			}
 		}
-		unset($aprasymas, $pavadinimas, $teises, $pav, $einfo, $result, $pathas);
+		unset($aprasymas, $pavadinimas,/* $teises,*/ $pav, $einfo, $result, $pathas);
 	} elseif (isset($_POST['action']) && $_POST['action'] == $lang['system']['editcategory']) {
 
 		$pavadinimas = $_POST['Pavadinimas'];
