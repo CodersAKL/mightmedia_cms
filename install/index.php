@@ -777,7 +777,7 @@ $file_error = 'Y';
 echo "
 <tr class=\"tr\">
 <td>" . $chmod_files[$i] . "</td>
-<td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "<img src=\"../images/icons/tick.png\" />" : "<img src=\"images/icons/cross.png\" />") . "</td>
+<td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "<img src=\"../images/icons/tick.png\" />" : "<img src=\"../images/icons/cross.png\" />") . "</td>
 <td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "" : "{$lang['setup']['chmod_777']} <strong>" . $chmod_files[$i] . "</strong> {$lang['setup']['chmod_777_2']} <strong>" . $teises . "</strong>") . "</td>
 </tr>";
 }
