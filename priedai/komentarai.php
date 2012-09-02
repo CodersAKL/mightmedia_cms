@@ -44,9 +44,9 @@ function komentarai($id, $hide = false) {
 			foreach ($sql as $row) {
 				$i++;
 				$tr = $i % 2 ? '2' : '';
-				$text .= "<div class=\"tr$tr\"><em><a href=\"".$_SERVER['REQUEST_URI']."#k:" . $row['id'] . "\" id=\"k:" . $row['id'] . "\"> <img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /> </a> ";
+				$text .= "<div class=\"tr{$tr}\"><em><a href=\"".$_SERVER['REQUEST_URI']."#k:" . $row['id'] . "\" id=\"k:" . $row['id'] . "\"> <img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /> </a> ";
 				if (ar_admin('com')) {
-					$text .= "<a style=\"float: right;\" href='" . url("dk," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['system']['delete_confirm']}') \"><img src='images/icons/cross_small.png' class='middle' alt='" . $lang['faq']['delete'] . "' border='0' title='" . $lang['admin']['delete'] . "' /></a> ";
+					$text .= "<a style=\"float: right;\" href='" . url("dk," . $row['id'] . "") . "' onclick=\"return confirm('{$lang['system']['delete_confirm']}') \"><img height=\"15\" src='images/icons/cross.png' class='middle' alt='" . $lang['faq']['delete'] . "' border='0' title='" . $lang['admin']['delete'] . "' /></a> ";
 				}
 				if ($row['nick_id'] == 0) {
 					$duom = @unserialize($row['nick']);
@@ -56,7 +56,7 @@ function komentarai($id, $hide = false) {
 				}
 				$text .= $nick;
 				$text .= " (" . date('Y-m-d H:i:s', $row['data']) . ") " . naujas($row['data'], $row['nick']) . "</em><br />
-			  <div class=\"avatar\" align=\"left\">" . avatar($row['email'], 40) . "</div>" . smile(bbchat(wrap(input($row['zinute']), 80))) . "</div>";
+			    <div class=\"avataras\" align=\"left\">" . avatar($row['email'], 40) . "</div>" . smile(bbchat(wrap(input($row['zinute']), 80))) . "</div>";
 			}
 			if (!empty($text)) {
 				lentele($lang['comments']['comments'], $text);
@@ -77,9 +77,7 @@ function komentarai($id, $hide = false) {
 				$nick_id = (isset($_SESSION['id']) ? $_SESSION['id'] : 0);
 				$nick = (isset($_SESSION['username']) ? $_SESSION['username'] : (!empty($_POST['name']) ? serialize(array(trimlink(strip_tags($_POST['name']), 9), getip())) : serialize(array($lang['system']['guest'], getip()))));
 				mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "kom` (`kid`, `pid`, `zinute`, `nick`, `nick_id`, `data`) VALUES (" . escape($_POST['id']) . ", " . escape($page) . ", " . escape($_POST['n_kom']) . ", " .escape($nick) . ", " . escape($nick_id) . ", '" . time() . "')");
-                                
-                                delete_cache("SELECT k.*, u.email AS email, u.levelis AS levelis	FROM " . LENTELES_PRIESAGA . "kom AS k LEFT JOIN " . LENTELES_PRIESAGA . "users AS u ON k.nick_id = u.id WHERE k.kid = " . escape((int)$_POST['id']) . " AND k.pid = " . escape($page) . " ORDER BY k.data DESC LIMIT 50");
-
+                delete_cache("SELECT k.*, u.email AS email, u.levelis AS levelis	FROM " . LENTELES_PRIESAGA . "kom AS k LEFT JOIN " . LENTELES_PRIESAGA . "users AS u ON k.nick_id = u.id WHERE k.kid = " . escape((int)$_POST['id']) . " AND k.pid = " . escape($page) . " ORDER BY k.data DESC LIMIT 50");
 				//unset($_POST['Naujas']);
 				header("location: " . $_SERVER['HTTP_REFERER']);
 			} else {
@@ -93,9 +91,7 @@ function komentarai($id, $hide = false) {
 			$sql = mysql_query1("SELECT nick, nick_id FROM `" . LENTELES_PRIESAGA . "kom` WHERE id=" . escape($id) . " LIMIT 1");
 			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai-1 WHERE nick=" . escape($sql['nick']) . " AND `id` = " . escape($sql['nick_id']) . "");
 			mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE id=" . escape($id) . " LIMIT 1");
-
-                        delete_cache("SELECT k.*, u.email AS email, u.levelis AS levelis	FROM " . LENTELES_PRIESAGA . "kom AS k LEFT JOIN " . LENTELES_PRIESAGA . "users AS u ON k.nick_id = u.id WHERE k.kid = " . escape((int)$url['k']) . " AND k.pid = " . escape($page) . " ORDER BY k.data DESC LIMIT 50");
-
+            delete_cache("SELECT k.*, u.email AS email, u.levelis AS levelis	FROM " . LENTELES_PRIESAGA . "kom AS k LEFT JOIN " . LENTELES_PRIESAGA . "users AS u ON k.nick_id = u.id WHERE k.kid = " . escape((int)$url['k']) . " AND k.pid = " . escape($page) . " ORDER BY k.data DESC LIMIT 50");
 			unset($id);
 			header("location: " . $_SERVER['HTTP_REFERER'] . "");
 		}

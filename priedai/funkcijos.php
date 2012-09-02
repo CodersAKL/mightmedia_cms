@@ -55,35 +55,65 @@ function header_info() {
 	<link rel="stylesheet" type="text/css" href="stiliai/system.css" />
 	<link rel="stylesheet" type="text/css" href="stiliai/rating.css" />
 	<link rel="stylesheet" type="text/css" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/default.css" />
-	<link rel="shortcut icon" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/favicon.ico" type="image/x-icon" />	
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="stiliai/' . input(strip_tags($conf['Stilius'])) . '/favicon.ico" type="image/x-icon" />
 
 	' . (isset($conf['puslapiai']['rss.php']) ? '<link rel="alternate" type="application/rss+xml" title="' . input(strip_tags($conf['Pavadinimas'])) . '" href="rss.php" />' : '') . '
 	' . (isset($conf['puslapiai']['galerija.php']) ? '<link rel="alternate" href="gallery.php" type="application/rss+xml" title="" id="gallery" />' : '') . '
-	<link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox.css" />
-	<!--[if IE]>
-	<link type="text/css" media="screen" rel="stylesheet" href="stiliai/colorbox-ie.css" title="example" />
-	<![endif]-->
+	
 	<title>' . input(strip_tags($conf['Pavadinimas']) . ' - ' . $page_pavadinimas) . '</title>
 	<script type="text/javascript" src="javascript/jquery/jquery-1.3.2.min.js"></script>
 	<script type="text/javascript" src="javascript/pagrindinis.js"></script>
+	<!-- Add jQuery library -->
+	<script type="text/javascript" src="javascript/jquery/fancybox/jquery-1.7.2.min.js"></script>
+	<!-- Add mousewheel plugin (this is optional) -->
+	<script type="text/javascript" src="javascript/jquery/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
+	<!-- Add fancyBox main JS and CSS files -->
+	<script type="text/javascript" src="javascript/jquery/fancybox/jquery.fancybox.js?v=2.0.6"></script>
+	<link rel="stylesheet" type="text/css" href="stiliai/jquery.fancybox.css?v=2.0.6" media="screen" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".fancybox").fancybox();
+			// Remove padding, set opening and closing animations, close if clicked and disable overlay
+			$(".fancybox-effects-d").fancybox({
+				padding: 0,
+				openEffect : "elastic",
+				openSpeed  : 150,
+				closeEffect : "elastic",
+				closeSpeed  : 150,
+				closeClick : true,
+				helpers : {
+					overlay : {
+						css : {
+							"background" : "#fff"
+						}
+					}
+				}
+			});
+		});
+	</script>
 	<script type="text/javascript" src="javascript/jquery/rating.js"></script>
 	<script type="text/javascript" src="javascript/jquery/tooltip.js"></script>
-	<script type="text/javascript" src="javascript/jquery/jquery.colorbox.js"></script>
 	<script type="text/javascript" src="javascript/jquery/jquery.hint.js"></script>
-	<script type="text/javascript">
-	$(document).ready(function(){
-		//Examples of how to assign the ColorBox event to elements.
-		$(".gallery a[rel=\'lightbox\']").colorbox({transition:"fade", current: "' . $lang['admin']['gallery_image'] . ' {current} ' . $lang['user']['pm_of'] . ' {total}", next:"' . $lang['admin']['gallery_next'] . '", previous:"' . $lang['admin']['gallery_prev'] . '", close:"[x]"});
-		// find all the input elements with title attributes and make them with a hint
-		$(\'input[title!=""]\').hint(\'inactive\');
-	});
-	</script>
+
+
 	<!--[if lt IE 7]>
 	<script type="text/javascript" src="javascript/jquery/jquery.pngFix.pack.js"></script>
 	<script type="text/javascript">$(document).ready(function(){$(document).pngFix();});</script>
 	<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
 	<![endif]-->
+	
+<script type="text/javascript">
+//Active mygtukas
+ $(function(){
+   var path = location.pathname.substring(1);
+   if ( path )
+     $(\'ul li a[href$="\' + path + \'"]\').attr(\'class\', \'active\');
+ });
+
+</script>
 ';
 //<script type="text/javascript" src="javascript/jquery/jquery.tablesorter.js"></script>
 }
@@ -105,10 +135,12 @@ HTML;
  * @return formated html
  */
 function avatar($mail, $size = 80) {
+	global $conf;
 	if (file_exists(ROOT . 'images/avatars/' . md5($mail) . '.jpeg')) {
 		$result = '<img src="' . ROOT . 'images/avatars/' . md5($mail) . '.jpeg?' . time() . '" width="' . $size . '" height="' . $size . '" alt="avataras" />';
 	} else {
-		$result = '<img src="http://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . htmlentities($size . '&r=any&default=' . urlencode(adresas() . ROOT . 'images/avatars/no_image.jpg') . '&time=' . time()) . '"  width="' . $size . '" alt="avataras" />';
+		$avatardir = (file_exists('stiliai/'.$conf['Stilius'].'/no_avatar.png') ? 'stiliai/'.$conf['Stilius'].'/no_avatar.png':'images/avatars/no_avatar.png');
+		$result = '<img src="http://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . htmlentities($size . '&r=any&default=' . urlencode(adresas() . ROOT . $avatardir) . '&time=' . time()) . '"  width="' . $size . '" alt="avataras" />';
 	}
 	return $result;
 }
@@ -352,7 +384,7 @@ if (basename($_SERVER['PHP_SELF']) != 'upgrade.php' && basename($_SERVER['PHP_SE
 	/**
 	 * Gaunam visus puslapius ir sukisam i masyva
 	 */
-	$sql = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=" . escape(lang()) . " ORDER BY `place` ASC", 120);
+	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=" . escape(lang()) . " ORDER BY `place` ASC", 120);
 	foreach ($sql as $row) {
 		$conf['puslapiai'][$row['file']] = array('id' => $row['id'], 'pavadinimas' => input($row['pavadinimas']), 'file' => input($row['file']), 'place' => (int) $row['place'], 'show' => $row['show'], 'teises' => $row['teises']);
 		$conf['titles'][$row['id']] = (isset($lang['pages'][$row['file']]) ? $lang['pages'][$row['file']] : nice_name($row['file']));
@@ -637,11 +669,11 @@ function puslapiai($start, $count, $total, $range = 0) {
 		$idx_next = $start + $count;
 		$cur_page = ceil(($start + 1) / $count);
 		$res .= "";
-		$res .= "<div class=\"pg_links\"><center>\n";
+		$res .= "<div class=\"puslapiavimas\">\n";
 		if ($idx_back >= 0) {
 			if ($cur_page > ($range + 1))
-				$res .= "<a href='" . url("p,0") . "'>[<u>««</u>]</a>\n";
-			$res .= "<a href='" . url("p,$idx_back") . "'>[<u>«</u>]</a>\n";
+				$res .= "<a href='" . url("p,0") . "'><span class=\"nuoroda\">««</span></a>\n";
+			$res .= "<a href='" . url("p,{$idx_back}") . "'><span class=\"nuoroda\">«</span></a>\n";
 		}
 		$idx_fst = max($cur_page - $range, 1);
 		$idx_lst = min($cur_page + $range, $pg_cnt);
@@ -652,18 +684,18 @@ function puslapiai($start, $count, $total, $range = 0) {
 		for ($i = $idx_fst; $i <= $idx_lst; $i++) {
 			$offset_page = ($i - 1) * $count;
 			if ($i == $cur_page) {
-				$res .= "<b>[<u><b>$i</b></u>]</b>\n";
+				$res .= "<span class=\"paspaustas\">{$i}</span>\n";
 			} else {
-				$res .= "<a href='" . url("p,$offset_page") . "'>[<u>$i</u>]</a>\n";
+				$res .= "<a href='" . url("p,{$offset_page}") . "'><span class=\"nuoroda\">{$i}</span></a>\n";
 			}
 		}
 		if ($idx_next < $total) {
-			$res .= "<a href='" . url("p,$idx_next") . "'>[<u>»</u>]</a>\n";
+			$res .= "<a href='" . url("p,{$idx_next}") . "'><span class=\"nuoroda\">»</span></a>\n";
 			if ($cur_page < ($pg_cnt - $range)) {
-				$res .= "<a href='" . url("p," . ($pg_cnt - 1) * $count . "") . "'>[<u>»»</u>]</a>\n";
+				$res .= "<a href='" . url("p," . ($pg_cnt - 1) * $count . "") . "'><span class=\"nuoroda\">»»</span></a>\n";
 			}
 		}
-		$res .= "</center></div>\n";
+		$res .= "</div>\n";
 	}
 	return $res;
 }
@@ -1656,8 +1688,8 @@ function showCalendar($year = 0, $month = 0) {
 	$sventes = array();
 
 	//Ieskom kieno gimtadieniai
-	//$sql = "SELECT SQL_CACHE `id`,`nick`,`gim_data`,DATE_FORMAT(`gim_data`,'%e') AS `diena` FROM `" . LENTELES_PRIESAGA . "users` WHERE DATE_FORMAT(`gim_data`,'%c')=DATE_FORMAT(NOW(),'%c')";
-	$sql = "SELECT SQL_CACHE `id`, `nick`, `gim_data`, DATE_FORMAT(`gim_data`,'%e') as `diena` FROM `" . LENTELES_PRIESAGA . "users` WHERE DATE_FORMAT(`gim_data`,'%c')=MONTH(NOW())";
+	//$sql = "SELECT `id`,`nick`,`gim_data`,DATE_FORMAT(`gim_data`,'%e') AS `diena` FROM `" . LENTELES_PRIESAGA . "users` WHERE DATE_FORMAT(`gim_data`,'%c')=DATE_FORMAT(NOW(),'%c')";
+	$sql = "SELECT `id`, `nick`, `gim_data`, DATE_FORMAT(`gim_data`,'%e') as `diena` FROM `" . LENTELES_PRIESAGA . "users` WHERE DATE_FORMAT(`gim_data`,'%c')=MONTH(NOW())";
 
 	$sql = mysql_query1($sql, 86400);
 	foreach ($sql as $row) {
@@ -1685,7 +1717,7 @@ function showCalendar($year = 0, $month = 0) {
 	// Create a table with the necessary header informations
 	$return = '<div class="kalendorius"><table width="100%" >
 	<tr><th colspan="7">' . $referenceDay['month'] . ' - ' . $referenceDay['year'] . '</th></tr>
-	<tr class="days"><td>' . $lang['calendar']['Mon'] . '</td><td>' . $lang['calendar']['Tue'] . '</td><td>' . $lang['calendar']['Wed'] . '</td><td>' . $lang['calendar']['Thu'] . '</td><td>' . $lang['calendar']['Fri'] . '</td><td>' . $lang['calendar']['Sat'] . '</td><td>' . $lang['calendar']['Sun'] . '</td></tr>';
+	<tr class="dienos"><td>' . $lang['calendar']['Mon'] . '</td><td>' . $lang['calendar']['Tue'] . '</td><td>' . $lang['calendar']['Wed'] . '</td><td>' . $lang['calendar']['Thu'] . '</td><td>' . $lang['calendar']['Fri'] . '</td><td>' . $lang['calendar']['Sat'] . '</td><td>' . $lang['calendar']['Sun'] . '</td></tr>';
 
 
 	// Display the first calendar row with correct positioning
