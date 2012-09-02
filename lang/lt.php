@@ -735,7 +735,7 @@ $lang['setup']['file_check_legend'] = 'Legenda';
 $lang['setup']['file_check_info2'] = 'Jei prie failo nustatyta ši ikonėlė vadinasi failas yra tinkamai nustatytas.';
 $lang['setup']['file_check_info3'] = 'Jei rasite šią ikonėlę prie nurodyto failo tuomet reikia jį sutvarkyti.';
 $lang['setup']['note'] = 'Priminimas';
-$lang['setup']['file_check_info3'] = 'Sutvarkyti failus, t.y. jums reikia atlikti <strong>chmod</strong>. Visur kur matote įkonėlę <img src="images/icons/cross.png" /> būtina nurodyti <strong>chmod      777</strong> FTP serveryje. <br /><br />';
+$lang['setup']['file_check_info3'] = 'Sutvarkyti failus, t.y. jums reikia atlikti <strong>chmod</strong>. Visur kur matote įkonėlę <img src="../images/icons/cross.png" /> būtina nurodyti <strong>chmod      777</strong> FTP serveryje. <br /><br />';
 $lang['setup']['file'] = 'Failas';
 $lang['setup']['point'] = 'Būsena';
 $lang['setup']['about_error'] = 'Apie klaidą';

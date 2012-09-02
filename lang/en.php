@@ -776,7 +776,7 @@ $lang['setup']['file_check_legend'] = 'Legend';
 $lang['setup']['file_check_info2'] = 'means OK';
 $lang['setup']['file_check_info3'] = 'means bad premission.';
 $lang['setup']['note'] = 'Note';
-$lang['setup']['file_check_info3'] = 'Please <strong>chmod</strong> files with <img src="images/icons/cross.png" /> icon <strong>chmod  to    777</strong> in FTP server. <br /><br />';
+$lang['setup']['file_check_info3'] = 'Please <strong>chmod</strong> files with <img src="../images/icons/cross.png" /> icon <strong>chmod  to    777</strong> in FTP server. <br /><br />';
 $lang['setup']['file'] = 'File';
 $lang['setup']['point'] = 'State';
 $lang['setup']['about_error'] = 'About error';
