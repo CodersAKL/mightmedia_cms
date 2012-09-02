@@ -1,4 +1,33 @@
 <?php
+//Papildymas - antras
+$lang['user']['profile'] = 'Mano profilis';
+$lang['admin']['panel_center'] = 'Centras';
+$lang['admin']['panel_do_show'] = 'Rodymas';
+$lang['admin']['panel_do_all'] = 'Visuose puslapiuose';
+$lang['admin']['panel_do_one'] = 'Tik pagrindiniame';
+$lang['system']['rate'] = 'Įvertinimas';
+$lang['system']['info'] = 'Informacija';
+//Siuntinio pateikimas
+$lang['download']['sumbit_scc'] = 'Failas sėkmingai pateiktas administracijos peržiūrai';
+$lang['download']['not_uploaded'] = 'nebuvo įkeltas';
+$lang['download']['not_good'] = 'dokumentas netinkamo plėtinio';
+$lang['download']['doc'] = 'Dokumentas';
+//Nuotraukos pateikimas
+$lang['gallery']['sumbit_scc'] = 'Nuotrauka pateikta administracijos peržiūrai';
+$lang['gallery']['submiting'] = 'Nuotraukos pateikimas';
+$lang['gallery']['submit'] = 'Pateikti Nuotrauką';
+$lang['gallery']['sumbit_no'] = 'Naujienos pateikti nepavyko';
+//Naujienos pateikimas
+$lang['news']['sumbit_scc'] = 'Naujiena pateikta administracijos peržiūrai';
+$lang['news']['submiting'] = 'Naujienos pateikimas';
+$lang['news']['submit'] = 'Pateikti';
+$lang['news']['sumbit_no'] = 'Naujienos pateikti nepavyko';
+//Straipsnio pateikimas
+$lang['article']['sumbit_scc'] = 'Straipsnis pateiktas administracijos peržiūrai';
+$lang['article']['sumbit_no'] = 'Straipsnio pateikti nepavyko';
+$lang['article']['submiting'] = 'Straipsnio pateikimas';
+$lang['article']['submit'] = 'Pateikti';
+//
 $lang['system']['error'] = 'Klaida!';
 $lang['system']['contact_admin'] = 'Įvyko nesusipratimas? Susisiekite su puslapio administracija: ';
 $lang['system']['delete_confirm'] = 'Ar tikrai norite ištrinti?';
@@ -317,7 +346,7 @@ $lang['admin']['panel_text'] = 'Bloko tekstas';
 $lang['admin']['panel_new'] = 'Naujas blokas';
 $lang['admin']['panel_no'] = 'Nebėra blokų';
 $lang['admin']['panel_title'] = 'Bloko pavadinimas';
-$lang['admin']['panel_side'] = 'Pusė';
+$lang['admin']['panel_side'] = 'Lygiavimas';
 $lang['admin']['panel_left'] = 'Kairė';
 $lang['admin']['panel_right'] = 'Dešinė';
 $lang['admin']['panel_showtitle'] = 'Rodyti pavadinimą?';

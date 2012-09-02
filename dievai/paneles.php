@@ -207,7 +207,7 @@ HTML;
 			"{$lang['admin']['panel_title']}:" => array("type" => "text", "value" => "{$lang['admin']['panel_new']}", "name" => "Panel", "class" => "input"), 
 			"{$lang['admin']['panel_name']}:" => array("type" => "select", "value" => $blokai, "name" => "File"), 
 			"{$lang['admin']['panel_side']}:" => array("id" => "lygiuojam", "type" => "select", "value" => array("L" => "{$lang['admin']['panel_left']}", "R" => "{$lang['admin']['panel_right']}", "C" => "Centras"), "name" => "Align"), 
-			"<div id='pasirinkimas2'>Rinkis:</div>" => array("id" => "pasirinkimas", "type" => "select", "value" => array("Taip" => "Visuose puslapiuose", "Ne" => "Tik pirminiame"), "name" => "rodyti"), 
+			"<div id='pasirinkimas2'>{$lang['admin']['panel_do_show']}:</div>" => array("id" => "pasirinkimas", "type" => "select", "value" => array("Taip" => "{$lang['admin']['panel_do_all']}", "Ne" => "{$lang['admin']['panel_do_all']}"), "name" => "rodyti"), 
 			"{$lang['admin']['panel_showtitle']}?" => array("type" => "select", "value" => array("Y" => "{$lang['admin']['yes']}", "N" => "{$lang['admin']['no']}"), "name" => "Show"), 
 			"{$lang['admin']['panel_showfor']}:" => array("type" =>
 				"select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai"), "" => array("type" => "submit", "name" => "Nauja_panele", "value" => "{$lang['admin']['panel_create']}"));

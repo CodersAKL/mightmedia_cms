@@ -1,5 +1,33 @@
 <?php
-
+//Papildymas - antras
+$lang['user']['profile'] = 'My profile';
+$lang['admin']['panel_center'] = 'Centre';
+$lang['admin']['panel_do_show'] = 'Showing';
+$lang['admin']['panel_do_all'] = 'In all pages';
+$lang['admin']['panel_do_one'] = 'Just in first page';
+$lang['system']['rate'] = 'Rate';
+$lang['system']['info'] = 'Information';
+//Siuntinio pateikimas
+$lang['download']['sumbit_scc'] = 'File successful submited for admins views';
+$lang['download']['not_uploaded'] = 'not uploaded';
+$lang['download']['not_good'] = 'document warnning extension';
+$lang['download']['doc'] = 'Document';
+//Nuotraukos pateikimas
+$lang['gallery']['sumbit_scc'] = 'Foto successful submited for admins views';
+$lang['gallery']['submiting'] = 'Foto submiting';
+$lang['gallery']['submit'] = 'Submit Foto';
+$lang['gallery']['sumbit_no'] = 'Foto submiting failed';
+//Naujienos pateikimas
+$lang['news']['sumbit_scc'] = 'News successful submited for admins views';
+$lang['news']['submiting'] = 'News submiting';
+$lang['news']['submit'] = 'Submit';
+$lang['news']['sumbit_no'] = 'News submiting failed';
+//Straipsnio pateikimas
+$lang['article']['sumbit_scc'] = 'Article successful submited for admins views';
+$lang['article']['sumbit_no'] = 'Article submiting failed';
+$lang['article']['submiting'] = 'Article submiting';
+$lang['article']['submit'] = 'Submit';
+//
 //system
 $lang['system']['error'] = 'Error!';
 $lang['system']['contact_admin'] = 'Contact web administration: ';
