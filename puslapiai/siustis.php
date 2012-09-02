@@ -34,8 +34,14 @@ if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
 	$k = (int)$url['k'];
 } else {
 	$k = 0;
-} 
+}
+if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
+	$p = (int)$url['p'];
+} else {
+	$p = 0;
+}
 $subs = 0;
+$limit = $conf['News_limit'];
 //$sqlkiek = '';
 //kategorijos
 if ($vid == 0) {
@@ -133,6 +139,7 @@ if ($vid > 0) {
 }
 # rodom visus siuntinius
 else {
+    $viso = kiek("siuntiniai", "WHERE `rodoma`='TAIP' AND `categorija` =  '$k' AND `lang` = ".escape(lang())."");
 	if ($k > 0) {
 		$sql_s = mysql_query1("
    SELECT
@@ -156,12 +163,14 @@ else {
    AND `" . LENTELES_PRIESAGA . "siuntiniai`.`lang` = ".escape(lang())."
     ORDER BY
     `" . LENTELES_PRIESAGA . "siuntiniai`.`data` DESC
-    LIMIT 0, 50
+    LIMIT {$p},{$limit}
   ", 86400);
   if(count($sql_s) == 0 && $subs == 0)
   		klaida($lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
 
 	} else {
+
+
 		$sql_s = mysql_query1(" SELECT
     `" . LENTELES_PRIESAGA . "siuntiniai`.`pavadinimas`,
     `" . LENTELES_PRIESAGA . "siuntiniai`.`data`,
@@ -180,7 +189,7 @@ else {
 	AND `" . LENTELES_PRIESAGA . "siuntiniai`.`lang` = ".escape(lang())."
     ORDER BY
     `" . LENTELES_PRIESAGA . "siuntiniai`.`data` DESC
-    LIMIT 0, 50", 86400);
+    LIMIT {$p},{$limit}", 86400);
 	}
 	if (sizeof($sql_s) > 0) {
 		include_once ("priedai/class.php");
@@ -201,7 +210,9 @@ else {
 		}
 		$name = mysql_query1("SELECT `pavadinimas` FROM " . LENTELES_PRIESAGA . "grupes WHERE id= " . escape($k) . " LIMIT 1", 86400);
 		lentele("{$lang['download']['downloads']} >> " . input($name['pavadinimas']), $bla->render($info) . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>");
-  } 
+        if ($viso > $limit)
+           lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
+  }
 
 	unset($bla, $info, $sql, $sql_d, $vid);
 }
