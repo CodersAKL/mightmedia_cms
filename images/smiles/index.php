@@ -48,6 +48,6 @@ if (isset($failai)) {
 }
 else { $content = "Tusècia"; }
 echo $content;
-//echo blokas("Naujausi failai",$content);
+/echo blokas("Naujausi failai",$content);
 
 ?>
