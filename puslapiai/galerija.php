@@ -38,7 +38,7 @@ if (!isset($url['m'])) {
         $sqlkiek = $kiek['kiek'];
 				$subs++;
 				$info[] = array(
-					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"avatar\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['images']}: $sqlkiek</div></span></div>"//,
+					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"kat\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['images']}: $sqlkiek</div></span></div>"//,
 				);
 				
 				
@@ -116,15 +116,9 @@ if (empty($url['m'])) {
 
 			$text .= "
 			<div class=\"gallery img_left\" >
-				<a rel=\"lightbox\" href=\"images/galerija/" . input($row['file']) . "\" title=\"" . (!empty($row['pavadinimas'])?input($row['pavadinimas']) . "<br>":'') . trimlink(strip_tags($row['apie']), 50) . "\">
+				<a href=\"".url("?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['id'])."\" title=\"" . (!empty($row['pavadinimas'])?input($row['pavadinimas']) . "<br />":'') . trimlink(strip_tags($row['apie']), 50) . "\">
 					<img src=\"images/galerija/mini/" . input($row['file']) . "\" alt=\"\" />
 				</a>
-				<div class='gallery_menu'>
-					<a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date('Y-m-d H:i:s ', $row['data']) . "\"><img src='images/icons/information.png' border='0' alt='info' /></a>
-					<a href=\"".url("?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['id'])."\" title=\"{$lang['admin']['gallery_comments']}\"><img src='images/icons/comment.png' alt='C' border='0' /></a>
-					<a href=\"images/galerija/originalai/" . $row['file'] . "\" title=\"{$lang['download']['download']}\"><img src='images/icons/disk.png' border='0' alt='save' /></a>";
-					$text .= "
-				</div>
 				<div class='gallery_title'>
 					" . trimlink((!empty($row['pavadinimas'])?input($row['pavadinimas']):''),10) . "
 				</div>
@@ -224,19 +218,19 @@ if (!empty($url['m'])) {
 			$text .= "</center>
 			<div id=\"gallery\" >
         <center>
-          <a  rel=\"lightbox\" href=\"images/galerija/originalai/" . input($row['file']) . "\" title=\"" . input($row['pavadinimas']) . ": " . trimlink(strip_tags($row['apie']), 50) . "\">
+          <a class='fancybox-effects-d' href=\"images/galerija/originalai/" . input($row['file']) . "\" title=\"sss" . input($row['pavadinimas']) . ": " . trimlink(strip_tags($row['apie']), 50) . "\">
             <img src=\"images/galerija/" . input($row['file']) . "\" alt=\"\" />
           </a>
         </center>
       </div>
 		<br />
-		" . $balsavimas . "
-		
+		<div style='float:left;'><b>{$lang['system']['rate']}: </b></div>
+		<div style='float:left;'>" . $balsavimas . "</div>
+		<div style='clear:left;'></div>
+		<b>{$lang['admin']['gallery_author']}:</b> " . $autorius . "<br />
 		<b>{$lang['admin']['gallery_date']}:</b> " . date('Y-m-d H:i:s ', $row['data']) . "<br />\n";
 			if (!empty($row['apie'])) { $text .= "<b>{$lang['admin']['gallery_about']}:</b> " . input($row['apie']) . "<br />\n"; }
-			$text .= "<b>{$lang['admin']['gallery_author']}:</b> " . $autorius . " <br />
-		<center>
-	";
+			$text .= "<center>";
 
 			if (!empty($nuoroda2['id'])) {
 				$text .= "<a href=\"".url("?id," . $url['id'] . ";m," . $nuoroda2['id']). "\" >< {$lang['admin']['gallery_prev']}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
