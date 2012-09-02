@@ -15,13 +15,25 @@ ob_start();
 header("Content-type: text/html; charset=utf-8");
 session_start();
 @ini_set('error_reporting', E_ALL);
-@ini_set('display_errors', 'Off');
-
+@ini_set('display_errors', 'On');
+$root = '';
+$out_page = true;
+$inc = "priedai/conf.php";
+while (!file_exists($root.$inc) && strlen($root) < 70) {
+	$root = "../".$root;
+}
+	if (!defined('ROOT')) {
+		//_ROOT = $root;
+		define('ROOT', '../');
+	}
+	else {
+		define('ROOT', $root);
+	}
 if(isset($_SESSION['language'])){
-  include_once('../lang/'.$_SESSION['language']);
+  include_once(ROOT."lang/".$_SESSION['language']);
   //echo $lang['system']['warning'];
 } else {
-  include_once('../lang/lt.php');
+  include_once(ROOT."lang/lt.php");
 }
 //slaptaþodþio kodavimas
 function koduoju($pass) {
@@ -29,20 +41,20 @@ function koduoju($pass) {
 }
 
 // Sarašas failų kurių teisės turi suteikti svetainei įrašymo galimybę
-$chmod_files[0] = "../priedai/conf.php";
-$chmod_files[] = "../install/index.php";
-$chmod_files[] = "../.htaccess";
-$chmod_files[] = "../siuntiniai/failai";
-$chmod_files[] = "../siuntiniai/images";
-$chmod_files[] = "../siuntiniai/media";
-$chmod_files[] = "../sandeliukas";
-$chmod_files[] = "../puslapiai";
-$chmod_files[] = "../paneles";
-$chmod_files[] = "../images/avatars";
-$chmod_files[] = "../images/nuorodu";
-$chmod_files[] = "../images/galerija";
-$chmod_files[] = "../images/galerija/originalai";
-$chmod_files[] = "../images/galerija/mini";
+$chmod_files[0] = "".ROOT."priedai/conf.php";
+$chmod_files[] = "".ROOT."install/index.php";
+$chmod_files[] = "".ROOT.".htaccess";
+$chmod_files[] = "".ROOT."siuntiniai/failai";
+$chmod_files[] = "".ROOT."siuntiniai/images";
+$chmod_files[] = "".ROOT."siuntiniai/media";
+$chmod_files[] = "".ROOT."sandeliukas";
+$chmod_files[] = "".ROOT."puslapiai";
+$chmod_files[] = "".ROOT."paneles";
+$chmod_files[] = "".ROOT."images/avatars";
+$chmod_files[] = "".ROOT."images/nuorodu";
+$chmod_files[] = "".ROOT."images/galerija";
+$chmod_files[] = "".ROOT."images/galerija/originalai";
+$chmod_files[] = "".ROOT."images/galerija/mini";
 // Unikalus kodas, naudojamas svetainės identifikacijai.
 $slaptas = md5(uniqid(rand(), true));
 //Laiko zonos
@@ -601,7 +613,7 @@ if (!empty($_POST['acc_create'])) {
 
 //Administravimo direktorijos keitimas
 if (!empty($_POST['admin_dir'])) {
-	if (is_dir('../dievai'))	//Pervadink "dievai" direktoriją į sunkiau nuspėjamą
+	if (is_dir('".ROOT."dievai'))	//Pervadink "dievai" direktoriją į sunkiau nuspėjamą
 		header("Location: index.php?step=5");
 	else
 		header("Location: index.php?step=6");
@@ -683,8 +695,8 @@ ErrorDocument 501 ".adresas()."/klaida.php
 		die("{$lang['setup']['cant_write']} (" . $chmod_files[2] . ")");
 	}
 	fclose($handle);
-	@chmod('../install', 0777 );
-	unlink('../install');
+	@chmod(ROOT."install", 0777 );
+	unlink(ROOT."install");
 	//}
 	header("Location: index.php");
 }
@@ -694,16 +706,17 @@ ErrorDocument 501 ".adresas()."/klaida.php
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="shortcut icon" href="<?php echo ROOT; ?>images/favicon.ico" />
 		<meta name="resource-type" content="document" />
 		<meta name="distribution" content="global" />
 		<meta name="author" content="CodeRS - MightMedia TVS" />
 		<meta name="copyright" content="copyright (c) by CodeRS www.coders.lt" />
 		<meta name="rating" content="general" />
 		<meta name="generator" content="notepad" />
-	    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />	
-	    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
-		<script src="../javascript/jquery/jquery-1.3.2.min.js" type="text/javascript" ></script>
-		<script src="../javascript/jquery/tooltip.js" type="text/javascript" ></script>
+	    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />	
+	    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+		<script src="<?php echo ROOT; ?>javascript/jquery/jquery-1.3.2.min.js" type="text/javascript" ></script>
+		<script src="<?php echo ROOT; ?>javascript/jquery/tooltip.js" type="text/javascript" ></script>
 		<title>MightMedia TVS/CMS</title>
         <link rel="stylesheet" type="text/css" media="all" href="default.css" />
 	</head>
@@ -714,9 +727,9 @@ $menu_pavad = array(1 => $lang['setup']['liceanse'], 2 => $lang['setup']['file_c
 $text = '';
 foreach ($menu_pavad as $key => $value) {
 if ($key <= $step)
-$text .= "\t\t\t<li><img src=\"../images/icons/tick_circle.png\" style=\"vertical-align: middle;\" /><font color=\"green\"><b>" . $value . "</b></font></li>";
+$text .= "\t\t\t<li><img src=\"".ROOT."images/icons/tick_circle.png\" style=\"vertical-align: middle;\" /><font color=\"green\"><b>" . $value . "</b></font></li>";
 else
-$text .= "\t\t\t<li><img src=\"../images/icons/cross_circle.png\" style=\"vertical-align: middle;\" /><b>" . $value . "</b></li>";
+$text .= "\t\t\t<li><img src=\"".ROOT."images/icons/cross_circle.png\" style=\"vertical-align: middle;\" /><b>" . $value . "</b></li>";
 }
 ?>
 <div id="kaire">
@@ -756,8 +769,8 @@ Select language / Pasirinkite kalbą:<br />
 <div class='text'>
 <?php echo $lang['setup']['file_check_info1'];?><br /><br />
 <h2><?php echo $lang['setup']['file_check_legend'];?></h2>
-<img src="../images/icons/tick.png" alt="" /> <?php echo $lang['setup']['file_check_info2'];?><br />
-<img src="../images/icons/cross.png" alt="" /> <?php echo $lang['setup']['file_check_info3'];?><br /><br />
+<img src="<?php echo ROOT; ?>images/icons/tick.png" alt="" /> <?php echo $lang['setup']['file_check_info2'];?><br />
+<img src="<?php echo ROOT; ?>images/icons/cross.png" alt="" /> <?php echo $lang['setup']['file_check_info3'];?><br /><br />
 <strong><?php echo $lang['setup']['note'];?>:</strong>
 <?php echo $lang['setup']['file_check_info3'];?>
 <table border="0" class="table">
@@ -776,7 +789,7 @@ $file_error = 'Y';
 echo "
 <tr class=\"tr\">
 <td>" . $chmod_files[$i] . "</td>
-<td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "<img src=\"../images/icons/tick.png\" />" : "<img src=\"../images/icons/cross.png\" />") . "</td>
+<td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "<img src=\"".ROOT."images/icons/tick.png\" />" : "<img src=\"".ROOT."images/icons/cross.png\" />") . "</td>
 <td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "" : "{$lang['setup']['chmod_777']} <strong>" . $chmod_files[$i] . "</strong> {$lang['setup']['chmod_777_2']} <strong>" . $teises . "</strong>") . "</td>
 </tr>";
 }
