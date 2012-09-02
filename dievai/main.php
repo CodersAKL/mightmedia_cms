@@ -41,8 +41,8 @@ if (is_file($root.'priedai/conf.php') && filesize($root.'priedai/conf.php') > 1)
 	require_once($root.'priedai/funkcijos.php');
 
 }
-elseif (is_file($root.'setup.php')) {
-	header('location: '.$root.'setup.php');
+elseif (is_file($root.'install/index.php')) {
+	header('location: '.$root.'install/index.php');
 	exit();
 }
 else {
