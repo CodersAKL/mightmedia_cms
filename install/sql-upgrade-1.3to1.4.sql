@@ -2,6 +2,7 @@ ALTER TABLE `page` ADD `lang` VARCHAR( 3 ) CHARACTER SET utf8 COLLATE utf8_lithu
 
 ALTER TABLE `panel` ADD `lang` VARCHAR( 3 ) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language' AFTER `panel` , ADD INDEX ( `lang` );
 ALTER TABLE `panel` CHANGE `align` `align` enum('R', 'L', 'C') COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'C';
+ALTER TABLE `panel` ADD `rodyti` varchar(4) COLLATE utf8_lithuanian_ci DEFAULT NULL DEFAULT 'Taip' AFTER `align`, ADD INDEX ( `rodyti` );
 ALTER TABLE `siuntiniai` ADD `lang` VARCHAR( 3 ) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language' AFTER `apie` , ADD INDEX ( `lang` );
 ALTER TABLE `siuntiniai` ADD `paspaudimai` decimal(11,0) NOT NULL DEFAULT '0' AFTER `ID` , ADD INDEX ( `paspaudimai` );
 ALTER TABLE `straipsniai` ADD `lang` VARCHAR( 3 ) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language' AFTER `f_text` , ADD INDEX ( `lang` );

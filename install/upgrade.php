@@ -11,19 +11,31 @@ header("Content-type: text/html; charset=utf-8");
 @ini_set('display_errors', 'Off');
 session_start();
 ob_start();
-include_once("../priedai/conf.php");
-include_once("../priedai/prisijungimas.php");
+$root = '';
+$out_page = true;
+$inc = "priedai/conf.php";
+while (!file_exists($root.$inc) && strlen($root) < 70) {
+	$root = "../".$root;
+}
+	if (!defined('ROOT')) {
+		//_ROOT = $root;
+		define('ROOT', '../');
+	} else {
+		define('ROOT', $root);
+	}
+include_once("".ROOT."priedai/conf.php");
+include_once("".ROOT."priedai/prisijungimas.php");
 if (isset($_SESSION['id']) && $_SESSION['id'] == 1) {
 	//į kokią versiją atnaujinam
 	$versija = versija();
 	// Sarašas failų kurių teisės turi suteikti svetainei įrašymo galimybę
-	$chmod_files[0] = "../siuntiniai/media";
-	$chmod_files[] = "../sandeliukas";
-	$chmod_files[] = "../images/avatars";
+	$chmod_files[0] = "".ROOT."siuntiniai/media";
+	$chmod_files[] = "".ROOT."sandeliukas";
+	$chmod_files[] = "".ROOT."images/avatars";
 	//ką trinam
-	$delete_files[] = "../puslapiai/dievai/";
-	$delete_files[] = "../javascript/htmlarea/Xinha0.96beta2/";
-	$delete_files[] = "../javascript/forum/perview.php";
+	$delete_files[] = "".ROOT."puslapiai/dievai/";
+	$delete_files[] = "".ROOT."javascript/htmlarea/Xinha0.96beta2/";
+	$delete_files[] = "".ROOT."javascript/forum/perview.php";
 
 	// Diegimo stadijų registravimas
 	if (!isset($_GET['step']) || empty($_GET['step'])) {
@@ -46,28 +58,28 @@ if (isset($_SESSION['id']) && $_SESSION['id'] == 1) {
 		if (!empty($_POST['sql'])) {
 			switch ($_POST['sql']) {
 				case '1.28-1.3': {
-					$sql = (file_exists('../sql-upgrade.sql') ? file_get_contents('../sql-upgrade.sql') : file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade.sql'));
+					$sql = (file_exists("".ROOT."sql-upgrade.sql") ? file_get_contents("".ROOT."sql-upgrade.sql") : file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade.sql'));
 					break;
 				}
 				case '1.3-1.4': {
-					$sql = (file_exists('../sql-upgrade-1.3to1.4.sql') ? file_get_contents('../sql-upgrade-1.3to1.4.sql') : file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade-1.3to1.4.sql'));
+					$sql = (file_exists("".ROOT."sql-upgrade-1.3to1.4.sql") ? file_get_contents("".ROOT."sql-upgrade-1.3to1.4.sql") : file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade-1.3to1.4.sql'));
 					break;
 				}
 
 				default: {
 					if (versija() >= '1.4') {
-						$sql = (file_exists('../sql-upgrade-1.3to1.4.sql') ? file_get_contents('../sql-upgrade-1.3to1.4.sql') : file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade-1.3to1.4.sql'));
+						$sql = (file_exists("".ROOT."sql-upgrade-1.3to1.4.sql") ? file_get_contents("".ROOT."sql-upgrade-1.3to1.4.sql") : file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade-1.3to1.4.sql'));
 					} elseif (versija() >= '1.3') {
-						$sql = (file_exists('../sql-upgrade.sql') ? file_get_contents('../sql-upgrade.sql') : file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade.sql'));
+						$sql = (file_exists("".ROOT."sql-upgrade.sql") ? file_get_contents("".ROOT."sql-upgrade.sql") : file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade.sql'));
 					}
 					break;
 				}
 			}
 		} else {
-			if (!file_exists('../sql-upgrade-1.3to1.4.sql')) {
+			if (!file_exists("".ROOT."sql-upgrade-1.3to1.4.sql")) {
 				$sql = file_get_contents('http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade-1.3to1.4.sql');
 			} else {
-				$sql = file_get_contents('../sql-upgrade-1.3to1.4.sql');
+				$sql = file_get_contents("".ROOT."sql-upgrade-1.3to1.4.sql");
 			}
 		}
 
@@ -118,9 +130,9 @@ if (isset($_SESSION['id']) && $_SESSION['id'] == 1) {
 	// Diegimo pabaiga
 	if (!empty($_POST['finish'])) {
 
-		unlink('upgrade.php');
+		unlink(ROOT."instal/");
 		//}
-		header("Location: ../index.php");
+		header("Location: ".ROOT."index.php");
 	}
 }
 ?>
@@ -128,17 +140,16 @@ if (isset($_SESSION['id']) && $_SESSION['id'] == 1) {
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="shortcut icon" href="../images/favicon.ico" />
 		<meta name="resource-type" content="document" />
 		<meta name="distribution" content="global" />
 		<meta name="author" content="CodeRS - MightMedia TVS" />
 		<meta name="copyright" content="copyright (c) by CodeRS www.coders.lt" />
 		<meta name="rating" content="general" />
 		<meta name="generator" content="notepad" />
-	    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />	
-	    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-		<script src="../javascript/jquery/jquery-1.3.2.min.js" type="text/javascript" ></script>
-		<script src="../javascript/jquery/tooltip.js" type="text/javascript" ></script>
+	    <link rel="shortcut icon" href="<?php echo ROOT; ?>images/favicon.ico" type="image/x-icon" />	
+	    <link rel="icon" href="<?php echo ROOT; ?>images/favicon.ico" type="image/x-icon" />
+		<script src="<?php echo ROOT; ?>javascript/jquery/jquery-1.3.2.min.js" type="text/javascript" ></script>
+		<script src="<?php echo ROOT; ?>javascript/jquery/tooltip.js" type="text/javascript" ></script>
 		<title>MightMedia TVS/CMS</title>
         <link rel="stylesheet" type="text/css" media="all" href="default.css" />
 	</head>
@@ -156,9 +167,9 @@ if (isset($_SESSION['id']) && $_SESSION['id'] == 1) {
 $menu_pavad = array(1 => "Failų tikrinimas", 2 => "Duomenų bazės atnaujinimas", 3 => "conf.php keitimas", 4 => "Pabaiga");
 foreach ($menu_pavad as $key => $value) {
  if ($key <= $step)
-  echo "\t\t\t<li><img src=\"../images/icons/tick_circle.png\" style=\"vertical-align: middle;\" /><font color=\"green\"><b>" . $value . "</b></font></li>";
+  echo "\t\t\t<li><img src=\"".ROOT."images/icons/tick_circle.png\" style=\"vertical-align: middle;\" /><font color=\"green\"><b>" . $value . "</b></font></li>";
  else
-  echo "\t\t\t<li><img src=\"../images/icons/cross_circle.png\" style=\"vertical-align: middle;\" /><b>" . $value . "</b></li>";
+  echo "\t\t\t<li><img src=\"".ROOT."images/icons/cross_circle.png\" style=\"vertical-align: middle;\" /><b>" . $value . "</b></li>";
 }
 ?>
 </ul>
@@ -186,9 +197,9 @@ spausti atnaujinti. Kitu atveju jums nebus leidžiama tęsti įdiegimo.
 <br />
 <br />
 <h2>Legenda</h2>
-<img src="../images/icons/tick.png" /> Jei prie failo nustatyta ši
+<img src="<?php echo ROOT; ?>images/icons/tick.png" /> Jei prie failo nustatyta ši
 ikonėlė vadinasi failas yra paruoštas sistemai.<br />
-<img src="../images/icons/cross.png" /> Jei rasite šią ikonėlę prie
+<img src="<?php echo ROOT; ?>images/icons/cross.png" /> Jei rasite šią ikonėlę prie
 nurodyto failo tuomet reikia atlikti užduotį, aprašytą „Klaidos
 aprašymas“ stulpelyje.
 <br />
@@ -209,7 +220,7 @@ $file_error = 'Y';
 echo "
 <tr class=\"tr\">
 <td>" . $chmod_files[$i] . "</td>
-<td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "<img src=\"../images/icons/tick.png\" />" : "<img src=\"../images/icons/cross.png\" />") . "</td>
+<td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "<img src=\"".ROOT."images/icons/tick.png\" />" : "<img src=\"".ROOT."images/icons/cross.png\" />") . "</td>
 <td>" . (($teises == 777) || ($teises == 666) || is_writable($chmod_files[$i]) ? "-" : "Būtina nurodyti chmod 777 failui <strong>" . $chmod_files[$i] . "</strong> kadangi esamas chmod yra <strong>" . $teises . "</strong>") . "</td>
 </tr>";
 }
@@ -220,7 +231,7 @@ $file_error = 'Y';
 echo "
 <tr class=\"tr\">
 <td>" . $file . "</td>
-<td>" . (!file_exists($file) ? "<img src=\"../images/icons/tick.png\" />" : "<img src=\"../images/icons/cross.png\" />") . "</td>
+<td>" . (!file_exists($file) ? "<img src=\"".ROOT."images/icons/tick.png\" />" : "<img src=\"".ROOT."images/icons/cross.png\" />") . "</td>
 <td>" . (!file_exists($file) ? "-" : "Būtina ištrinti <strong>" . $file . "</strong> ") . "</td>
 </tr>";
 }
@@ -267,21 +278,21 @@ if ($step == 3) {
 <div class='text'>
 Atlikite žemiau nurodytus pakeitimus <i>priedai/conf.php</i> faile.
 <h2>Legenda</h2>
-<img src="../images/icons/tick.png" /> Jei prie užduoties matote šią
+<img src="<?php echo ROOT; ?>images/icons/tick.png" /> Jei prie užduoties matote šią
 ikoną, ji atlikta teisingai. <br />
-<img src="../images/icons/cross.png" /> Jei prie užduoties matote šią
+<img src="<?php echo ROOT; ?>images/icons/cross.png" /> Jei prie užduoties matote šią
 ikoną, ji atlikta neteisingai. <br />
 <hr />
 <br />
 <div class="tr">
-<img src="<?php echo (isset($update_url) ? '../images/icons/tick.png' : '../images/icons/cross.png'); ?>" />
+<img src="<?php echo (isset($update_url) ? "".ROOT."images/icons/tick.png" : "".ROOT."images/icons/cross.png"); ?>" />
 priedai/conf.php faile, prieš 
 <input type="text" value='$prisijungimas_prie_mysql = mysql_connect($host, $user, $pass)' />
 įklijuokite šį kodą 
 <input type="text" value='$update_url = "http://www.assembla.com/code/mightmedia/subversion/node/blob/naujienos.json?jsoncallback=?";' />
 </div>
 <div class="tr">
-<img src="<?php echo (!function_exists('lentele') ? '../images/icons/tick.png' : '../images/icons/cross.png'); ?>" />
+<img src="<?php echo (!function_exists('lentele') ? "".ROOT."images/icons/tick.png" : "".ROOT."images/icons/cross.png"); ?>" />
 Failo apačioje ištrinkite kodą 
 <input type="text" value='require_once(realpath(dirname(__file__))."/../stiliai/".$conf[&#039;Stilius&#039;]."/sfunkcijos.php");' />
 </div>

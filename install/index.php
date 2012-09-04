@@ -25,8 +25,7 @@ while (!file_exists($root.$inc) && strlen($root) < 70) {
 	if (!defined('ROOT')) {
 		//_ROOT = $root;
 		define('ROOT', '../');
-	}
-	else {
+	} else {
 		define('ROOT', $root);
 	}
 if(isset($_SESSION['language'])){
@@ -759,7 +758,7 @@ Select language / Pasirinkite kalbą:<br />
 <div class='pavadinimas'><?php echo $lang['setup']['liceanse'];?></div>
 <div class='vidus'>
 <div class='text'>
-<textarea name="copy" rows=15 cols=80 wrap="on" readonly="readonly"><?php include ('license.txt'); ?></textarea><br />
+<textarea name="copy" rows=15 cols=90 wrap="on" readonly="readonly"><?php include ('license.txt'); ?></textarea><br />
 <label><input name="agree_check" type="checkbox" value="ON" /> <?php echo $lang['setup']['agree']; ?></label><br /><br />
 <input class="submit" name="agree" type="reset" value="<?php echo $lang['setup']['next'];?> >>" onClick="Check();" />
 </form>							
