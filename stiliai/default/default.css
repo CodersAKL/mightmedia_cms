@@ -233,6 +233,11 @@ hr, fieldset{
 	margin: 2px;
 	border: 1px dotted #CCC;
 }
+/* Editoriaus Laukui redaguoti*/
+.editorius{
+    width: 370px;
+}
+/**/
 input, textarea, button, select {
     outline: none;
 	font-family : Verdana, Arial, Helvetica, sans-serif;
