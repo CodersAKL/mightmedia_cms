@@ -1363,7 +1363,7 @@ function versija($failas = false) {
  * @param string $value
  * @return string
  */
-function editorius($tipas = 'jquery', $dydis = 'standartinis', $id = false, $value = '') {
+function editorius($tipas = 'rte', $dydis = 'standartinis', $id = false, $value = '') {
 	global $conf;
 	if (!$id) {
 		$id = md5(uniqid());
@@ -1386,23 +1386,24 @@ HTML;
 		foreach ($id as $key => $val) {
 
 			$return .= <<< HTML
+			
 <script type="text/javascript">
 bkLib.onDomLoaded(function() {
-	new nicEditor({fullPanel : true, iconsPath : '{$root}htmlarea/nicedit/nicEditorIcons.gif', width: '100%'}).panelInstance('{$key}');
+	new nicEditor({fullPanel : true, iconsPath : '{$root}javascript/htmlarea/nicedit/nicEditorIcons.gif', width: '100%'}).panelInstance('{$key}');
 });
 </script>
-<textarea id="{$key}" name="{$key}">{$value[$key]}</textarea>
+<textarea class="editorius" id="{$key}" name="{$key}">{$value[$key]}</textarea>
 HTML;
 		}
 	} else {
 		$return .= <<< HTML
 <script type="text/javascript">
 bkLib.onDomLoaded(function() {
-	new nicEditor({fullPanel : true, iconsPath : '{$root}htmlarea/nicedit/nicEditorIcons.gif', width: '100%'}).panelInstance('{$id}');
+	new nicEditor({fullPanel : true, iconsPath : '{$root}javascript/htmlarea/nicedit/nicEditorIcons.gif', width: '100%'}).panelInstance('{$id}');
 });
 </script>
 
-<textarea id="{$id}" name="{$id}">{$value}</textarea>
+<textarea class="editorius" id="{$id}" name="{$id}">{$value}</textarea>
 HTML;
 	}
 
