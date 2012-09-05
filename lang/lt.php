@@ -1,6 +1,11 @@
 <?php
 //Papildymas - antras
 $lang['user']['profile'] = 'Mano profilis';
+$lang['admin']['poll_active_q'] = 'Aktyvumas';
+$lang['admin']['gallery_photoalbum_cr'] = 'Sukurti fotoalbumą';
+$lang['admin']['gallery_photoalbum_ed'] = 'Redaguoti fotoalbumą';
+$lang['admin']['filtering'] = 'Filtruoti';
+$lang['admin']['user_ip_filter'] = 'Filtruoti pagal IP galima tik įrašius tikslų IP adresą.';
 $lang['admin']['panel_center'] = 'Centras';
 $lang['admin']['panel_do_show'] = 'Rodymas';
 $lang['admin']['panel_do_all'] = 'Visuose puslapiuose';
@@ -325,7 +330,7 @@ $lang['admin']['news_sticky'] = 'Visada viršuje?';
 $lang['admin']['news_moreoptions'] = 'Daugiau pasirinkčių...';
 $lang['admin']['user_list'] = 'Narių sąrašas';
 $lang['admin']['user_find'] = 'Rasti narį';
-$lang['admin']['user_name'] = 'Nario vardas';
+$lang['admin']['user_name'] = 'Nario slapyvardis';
 $lang['admin']['user_email'] = 'El. paštas';
 $lang['admin']['user_points'] = 'Taškai';
 $lang['admin']['user_level'] = 'Lygis';
@@ -403,7 +408,6 @@ $lang['admin']['forum_cangeto'] = 'Keisti į';
 $lang['admin']['forum_subabout'] = 'Apie';
 $lang['admin']['forum_subwhere'] = 'Kur?';
 $lang['admin']['forum_order'] = 'Išsidėstymas';
-$lang['admin']['poll_active'] = 'Aktyvi apklausa';
 $lang['admin']['poll_no'] = 'Nėra apklausų';
 $lang['admin']['poll_question'] = 'Klausimas';
 $lang['admin']['poll_votecan'] = 'Balsuoti gali';

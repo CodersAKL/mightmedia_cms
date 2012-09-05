@@ -1,6 +1,11 @@
 <?php
 //Papildymas - antras
 $lang['user']['profile'] = 'My profile';
+$lang['admin']['poll_active_q'] = 'Active';
+$lang['admin']['gallery_photoalbum_cr'] = 'Create photoalbum';
+$lang['admin']['gallery_photoalbum_ed'] = 'Edit photoalbum';
+$lang['admin']['filtering'] = 'Filter';
+$lang['admin']['user_ip_filter'] = 'Filtering with IP , you need  exact IP address.';
 $lang['admin']['panel_center'] = 'Centre';
 $lang['admin']['panel_do_show'] = 'Showing';
 $lang['admin']['panel_do_all'] = 'In all pages';
