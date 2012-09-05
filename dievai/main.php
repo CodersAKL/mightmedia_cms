@@ -304,7 +304,6 @@ HTML;
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
 	    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-		<link rel="stylesheet" href="../stiliai/system.css" />
 		<link rel="stylesheet" href="css/default.css" />
 		<?php if(!empty($_COOKIE['style'])){ $style = $_COOKIE['style']; } else { $style = 'diena'; } ?>
 		<link id="stylesheet" type="text/css" href="css/<?php echo $style ?>.css" rel="stylesheet" />
@@ -314,8 +313,6 @@ HTML;
 		<link type='text/css' rel='stylesheet' href='css/defaultie.css' media="screen" />
         <![endif]-->
         <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
-		
-
 		<script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.7.1.custom.min.js"></script>
         <script type="text/javascript" src="js/superfish.js"></script>
