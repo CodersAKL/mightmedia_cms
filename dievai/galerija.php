@@ -440,7 +440,7 @@ $(document).ready(function() {
 </script>
       <fieldset><legend>{$lang['system']['categories']}:</legend><select id=\"cat\" onchange=\"$('#uploadify').uploadifySettings('scriptData', {'cat':$(this).val()});\" >";
       foreach($kategorijos as $id => $kategorija){
-         $text .="<option value=\"$id\">$kategorija";
+         $text .="<option value=\"$id\" ".($id == 0 ? "selected" : "").">$kategorija";
       }
       $text .= "</select></fieldset>
             
