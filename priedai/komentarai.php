@@ -31,9 +31,9 @@ function komentarai($id, $hide = false) {
 				);
 
 
-				hide($lang['comments']['write'], $bla->form($form), $hide);
+				lentele($lang['comments']['write'], $bla->form($form));
 			} else {
-				hide($lang['comments']['write'], $lang['system']['pleaselogin']);
+				lentele($lang['comments']['write'], $lang['system']['pleaselogin']);
 			}
 			
                         $sql = mysql_query1("SELECT k.*, u.email AS email, u.levelis AS levelis	FROM " . LENTELES_PRIESAGA . "kom AS k LEFT JOIN " . LENTELES_PRIESAGA . "users AS u ON k.nick_id = u.id WHERE k.kid = " . escape((int)$id) . " AND k.pid = " . escape($page) . " ORDER BY k.data DESC LIMIT 50",3600);

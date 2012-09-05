@@ -330,7 +330,7 @@ $(\"#perveiza\").empty().append($(data));
 				"     " => array("type" => "hidden", "name" => "action", "value" => ((!empty($extra)) ? "f_update" : "f_send")),
 					"" => array("type" => "string", "value"=>"<input type=\"button\" class=\"perveiza\" value=\"{$lang['forum']['perview']}\" /> <input type=\"submit\" class=\"submit\" value=\"".((!empty($extra)) ? $lang['admin']['edit'] : $lang['forum']['submit'])."\" />"));
 
-				hide($lang['forum']['newpost'], $bla->form($forma), (!empty($extra)) ? false : true);
+				lentele($lang['forum']['newpost'], $bla->form($forma));
 			}
 		}
 	} else
