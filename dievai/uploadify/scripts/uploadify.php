@@ -43,14 +43,14 @@ if (!empty($_FILES)) {
 		
 		$img_thumb_width = $conf['minidyd']; //Mini paveiksliuku dydis
 
-		//Sarašas leidžiamu failu
+		//Saraï¿½as leidï¿½iamu failu
 		$limitedext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", "gif", "GIF", "bmp", "BMP");
 		$fileParts  = pathinfo($_FILES['Filedata']['name']);
 		//$file_type = $_FILES['Filedata']['type'];
 		$file_name = $_FILES['Filedata']['name'];
 		$file_size = $_FILES['Filedata']['size'];
 		$file_tmp = $_FILES['Filedata']['tmp_name'];
-		
+		if ($file_size <= MFDYDIS){
 		//Patikrinam ar failas ikeltas sekmingai
 		if (!is_uploaded_file($file_tmp)) {
 			//klaida("{$lang['system']['warning']}", "{$lang['admin']['gallery_nofile']}.");
@@ -183,6 +183,8 @@ if (!empty($_FILES)) {
 		}
 	
 		echo "1";
-	}
+	} else
+             klaida($lang['system']['error'], $lang['admin']['download_toobig']);
+}
 
 ?>

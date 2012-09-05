@@ -159,140 +159,145 @@ if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete']  &
 		$file_name = $_FILES['failas']['name'];
 		$file_size = $_FILES['failas']['size'];
 		$file_tmp = $_FILES['failas']['tmp_name'];
-		
-		//Patikrinam ar failas įkeltas sėkmingai
-		if (!is_uploaded_file($file_tmp)) {
-			klaida($lang['system']['warning'], $lang['admin']['gallery_nofile']);
-		} else {
-			//gaunamm failo galunę
-			$ext = strrchr($file_name, '.');
-			$ext = strtolower($ext);
+		if ($file_size <= MFDYDIS){
+	    	//Patikrinam ar failas įkeltas sėkmingai
+		    if (!is_uploaded_file($file_tmp)) {
+			   klaida($lang['system']['warning'], $lang['admin']['gallery_nofile']);
+		    } else {
+			    //gaunamm failo galunę
+			    $ext = strrchr($file_name, '.');
+			    $ext = strtolower($ext);
 
-			//Tikrinam ar tinkamas failas
-			if (!in_array($ext, $limitedext)) {
-				klaida($lang['system']['warning'], $lang['admin']['gallery_notimg']);
-			}
+    			//Tikrinam ar tinkamas failas
+	    		if (!in_array($ext, $limitedext)) {
+		    		klaida($lang['system']['warning'], $lang['admin']['gallery_notimg']);
+			    }
 
-			//create a random file name
-			$rand_pre = random();
-			$rand_name = $rand_pre . time();
+		    	//create a random file name
+			    $rand_pre = random();
+			    $rand_name = $rand_pre . time();
 
-			//the new width variable
-			$ThumbWidth = $img_thumb_width;
-			if ($file_size) {
-				if ($file_type == "image/pjpeg" || $file_type == "image/jpeg") {
-					$img = imagecreatefromjpeg($file_tmp);
-				} elseif ($file_type == "image/x-png" || $file_type == "image/png") {
-					$img = imagecreatefrompng($file_tmp);
-				} elseif ($file_type == "image/gif") {
-					$img = imagecreatefromgif($file_tmp);
-				} elseif ($file_type == "image/bmp") {
-					$img = imagecreatefrombmp($file_tmp);
-				}
-				//list the width and height and keep the height ratio.
-				$width = imageSX($img);
-				$height = imageSY($img);
+    			//the new width variable
+	    		$ThumbWidth = $img_thumb_width;
+		    	if ($file_size) {
+			    	if ($file_type == "image/pjpeg" || $file_type == "image/jpeg") {
+				    	$img = imagecreatefromjpeg($file_tmp);
+				    } elseif ($file_type == "image/x-png" || $file_type == "image/png") {
+					    $img = imagecreatefrompng($file_tmp);
+			    	} elseif ($file_type == "image/gif") {
+				    	$img = imagecreatefromgif($file_tmp);
+				    } elseif ($file_type == "image/bmp") {
+					    $img = imagecreatefrombmp($file_tmp);
+				    }
+				    //list the width and height and keep the height ratio.
+				    $width = imageSX($img);
+				    $height = imageSY($img);
 				
-				// Build the thumbnail
-				$target_width = $conf['minidyd'];
-				$target_height = $conf['minidyd'];
-				$target_ratio = $target_width / $target_height;
+				    // Build the thumbnail
+				    $target_width = $conf['minidyd'];
+				    $target_height = $conf['minidyd'];
+				    $target_ratio = $target_width / $target_height;
 
-				$img_ratio = $width / $height;
+    				$img_ratio = $width / $height;
 
-				//calculate the image ratio
-				$imgratio = $width / $height;
+	    			//calculate the image ratio
+		    		$imgratio = $width / $height;
 				
-				if ($target_ratio > $img_ratio) {
-					$new_height = $target_height;
-					$new_width = $img_ratio * $target_height;
-				} else {
-					$new_height = $target_width / $img_ratio;
-					$new_width = $target_width;
-				}
+			    	if ($target_ratio > $img_ratio) {
+				    	$new_height = $target_height;
+					    $new_width = $img_ratio * $target_height;
+				    } else {
+					    $new_height = $target_width / $img_ratio;
+					    $new_width = $target_width;
+				    }
 
-				if ($new_height > $target_height) {
-					$new_height = $target_height;
-				}
-				if ($new_width > $target_width) {
-					$new_height = $target_width;
-				}
+				    if ($new_height > $target_height) {
+					    $new_height = $target_height;
+				    }
+				    if ($new_width > $target_width) {
+				    	$new_height = $target_width;
+				    }
 				
 				
-				$new_img = ImageCreateTrueColor($conf['minidyd'], $conf['minidyd']);
-				if (!@imagefilledrectangle($new_img, 0, 0, $target_width-1, $target_height-1, 0)) {	// Fill the image black
-					klaida($lang['system']['error'], 'GD v2+' . $lang['system']['error']);
-					exit(0);
-				}
+				    $new_img = ImageCreateTrueColor($conf['minidyd'], $conf['minidyd']);
+				    if (!@imagefilledrectangle($new_img, 0, 0, $target_width-1, $target_height-1, 0)) {	// Fill the image black
+					    klaida($lang['system']['error'], 'GD v2+' . $lang['system']['error']);
+					    exit(0);
+			    	}
 
-				if (!@imagecopyresampled($new_img, $img, ($target_width-$new_width)/2, ($target_height-$new_height)/2, 0, 0, $new_width, $new_height, $width, $height)) {
-					klaida($lang['system']['error'], 'GD v2+' . $lang['system']['error']);
-					exit(0);
-				}
+				    if (!@imagecopyresampled($new_img, $img, ($target_width-$new_width)/2, ($target_height-$new_height)/2, 0, 0, $new_width, $new_height, $width, $height)) {
+					    klaida($lang['system']['error'], 'GD v2+' . $lang['system']['error']);
+					    exit(0);
+				    }
 
-			 imagejpeg($new_img, $mini_img."/".$rand_name.$ext, 95);
+			        imagejpeg($new_img, $mini_img."/".$rand_name.$ext, 95);
 
-				chmod($mini_img."/".$rand_name.$ext,0777);
-				ImageDestroy($img);
-				ImageDestroy($new_img);
+    			    chmod($mini_img."/".$rand_name.$ext,0777);
+				    ImageDestroy($img);
+				    ImageDestroy($new_img);
 
-			}
+	   		    }
 
-			if ($file_size) {
-				if ($file_type == "image/pjpeg" || $file_type == "image/jpeg") {
-					$new_img = imagecreatefromjpeg($file_tmp);
-				} elseif ($file_type == "image/x-png" || $file_type == "image/png") {
-					$new_img = imagecreatefrompng($file_tmp);
-				} elseif ($file_type == "image/gif") {
-					$new_img = imagecreatefromgif($file_tmp);
-				} elseif ($file_type == "image/bmp") {
-					$new_img = imagecreatefrombmp($file_tmp);
-				}
-				$bigsize = $conf['fotodyd'];
-				list($width, $height) = getimagesize($file_tmp);
-				//calculate the image ratio
-				$imgratio = $width / $height;
-				if ($width > $bigsize) {
-					if ($imgratio > 1) {
-						$newwidth = $bigsize;
-						$newheight = $bigsize / $imgratio;
-					} else {
-						$newheight = $bigsize;
-						$newwidth = $bigsize * $imgratio;
-					}
-				} else {
-					$newwidth = $width;
-					$newheight = $height;
-				}
-				$resized_imgbig = imagecreatetruecolor($newwidth, $newheight);
-				imagecopyresampled($resized_imgbig, $new_img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+			    if ($file_size) {
+				    if ($file_type == "image/pjpeg" || $file_type == "image/jpeg") {
+				    	$new_img = imagecreatefromjpeg($file_tmp);
+				    } elseif ($file_type == "image/x-png" || $file_type == "image/png") {
+				    	$new_img = imagecreatefrompng($file_tmp);
+				    } elseif ($file_type == "image/gif") {
+			    		$new_img = imagecreatefromgif($file_tmp);
+			    	} elseif ($file_type == "image/bmp") {
+				    	$new_img = imagecreatefrombmp($file_tmp);
+			    	}
+			    	$bigsize = $conf['fotodyd'];
+			    	list($width, $height) = getimagesize($file_tmp);
+				    //calculate the image ratio
+				    $imgratio = $width / $height;
+				    if ($width > $bigsize) {
+				    	if ($imgratio > 1) {
+					    	$newwidth = $bigsize;
+				    		$newheight = $bigsize / $imgratio;
+				    	} else {
+					    	$newheight = $bigsize;
+					    	$newwidth = $bigsize * $imgratio;
+				    	}
+				    } else {
+				    	$newwidth = $width;
+				    	$newheight = $height;
+				    }
+				    $resized_imgbig = imagecreatetruecolor($newwidth, $newheight);
+				    imagecopyresampled($resized_imgbig, $new_img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
-				//finally, save the image
+				    //finally, save the image
 
-				ImageJpeg($resized_imgbig, $big_img."/".$rand_name.$ext, 95);
-				chmod($big_img."/".$rand_name.$ext,0777);
-				ImageDestroy($resized_imgbig);
-				ImageDestroy($new_img);
+				    ImageJpeg($resized_imgbig, $big_img."/".$rand_name.$ext, 95);
+				    chmod($big_img."/".$rand_name.$ext,0777);
+				    ImageDestroy($resized_imgbig);
+				    ImageDestroy($new_img);
 
-				move_uploaded_file($file_tmp, $big_img."/originalai/".$rand_name.$ext);
-            chmod($big_img."/originalai/".$rand_name.$ext,0777);
-	            $komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
-	            $rodymas = (isset($_POST['rodoma']) ? $_POST['rodoma'] : 'TAIP');
-				$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`,`kom`, `lang`) VALUES (" . escape($_POST['Pavadinimas']) . "," . escape($rand_name . $ext) . "," . escape(strip_tags($_POST['Aprasymas'])) . "," . escape($_SESSION['id']) . ",'" . time() . "'," . escape($_POST['cat']) . "," . escape($rodymas) . "," . escape($komentaras) . ", ".escape(lang()).")");
+				    move_uploaded_file($file_tmp, $big_img."/originalai/".$rand_name.$ext);
+                    chmod($big_img."/originalai/".$rand_name.$ext,0777);
+	                $komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
+	                $rodymas = (isset($_POST['rodoma']) ? $_POST['rodoma'] : 'TAIP');
+				    $result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`,`kom`, `lang`) VALUES (" . escape($_POST['Pavadinimas']) . "," . escape($rand_name . $ext) . "," . escape(strip_tags($_POST['Aprasymas'])) . "," . escape($_SESSION['id']) . ",'" . time() . "'," . escape($_POST['cat']) . "," . escape($rodymas) . "," . escape($komentaras) . ", ".escape(lang()).")");
 
-				if ($result) {
-					msg($lang['system']['done'], "{$lang['admin']['gallery_added']}");
-				} else {
-					klaida("{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>");
-				}
-				unset($_FILES['failas'], $filename, $_POST['action']);
-				redirect(url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ";v,1"), "meta");
+				    if ($result) {
+				    	msg($lang['system']['done'], "{$lang['admin']['gallery_added']}");
+				    } else {
+				    	klaida("{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>");
+				    }
 
-			}
-		}
-	}
+				    unset($_FILES['failas'], $filename, $_POST['action']);
+				    redirect(url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ";v,1"), "meta");
 
+			    }
+		    }
+	} else
+           klaida($lang['system']['error'], $lang['admin']['download_toobig']);
+
+    }
 }
+
+
 
 //foto kategoriju saraso rodymas
 if (isset($_GET['v'])) {

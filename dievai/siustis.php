@@ -139,7 +139,7 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 				}
 			} // for
 			if ($file_ext_allow) {
-				//if ($_FILES["$file"]["size"] < $max_file_size) {
+				if ($_FILES["$file"]["size"] < MFDYDIS) {
 					$ieskom = array("?", "&", "=", " ", "+", "-", "#");
 					$keiciam = array("", "", "", "_", "", "", "");
 					$filename = str_replace($ieskom, $keiciam, $filename);
@@ -159,9 +159,9 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 					} else {
 						klaida($lang['system']['error'], '<font color="#FF0000">' . $filename . '</font>');
 					}
-			/*	} else {
+				} else {
 					klaida($lang['system']['error'], '<font color="#FF0000">' . $filename . '</font> ' . $lang['admin']['download_toobig'] . '');
-				}*/
+				}
 			} // if
 			else {
 				klaida($lang['system']['error'], '<font color="#FF0000">' . $filename . '</font> ' . $lang['admin']['download_badfile'] . '');

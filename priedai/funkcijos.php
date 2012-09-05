@@ -13,16 +13,16 @@
 if (basename($_SERVER['PHP_SELF']) == 'funkcijos.php') {
 	ban($lang['system']['forhacking']);
 }
-ini_set("memory_limit", "50M");
+// Nustatom maksimalu leidziama keliamu failu dydi
+$max_upload = (int)(ini_get('upload_max_filesize'));
+$max_post = (int)(ini_get('post_max_size'));
+$memory_limit = (int)(ini_get('memory_limit'));
+$upload_mb = min($max_upload, $max_post, $memory_limit);
+define("MFDYDIS", $upload_mb);
+//ini_set("memory_limit", MFDYDIS);
 define("OK", true);
-define('ROOTAS', dirname(realpath(__file__)) . '/../');
-//if (preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_SERVER['QUERY_STRING']) || (isset($_GET['id']) && preg_match('%/\*\*/|SERVER|SELECT|UNION|DELETE|UPDATE|INSERT%i', $_GET['id']))) {
-/* if (isset($_GET['id'])) {
-  $ip = getip();
-  $forwarded = (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : 'N/A');
-  $remoteaddress = getip();
-  ban();
-  } */
+define('ROOTAS', dirname(realpath(__FILE__)) . '/../');
+//Isvalom POST'us nuo xss
 if (!empty($_POST)) {
 	include_once (ROOTAS . 'priedai/safe_html.php');
 	foreach ($_POST as $key => $value) {
@@ -36,7 +36,7 @@ if (!empty($_POST)) {
 	$_POST = $post;
 }
 
-//slaptaþodþio kodavimas
+//slaptaþodzio kodavimas
 function koduoju($pass) {
 	return md5(sha1(md5($pass)));
 }
@@ -1155,7 +1155,7 @@ function pic1($off_site, $size = false, $url = 'images/nuorodu/', $sub = 'url') 
  */
 function menesis($men) {
 	if (is_int($men)) {
-		$ieskom = array(12, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11);
+		$ieskom = array("12", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11");
 	} else {
 		$ieskom = array("December", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November");
 	}
@@ -1613,7 +1613,7 @@ function download($file, $filter = ".htaccess|.|..|remontas.php|index.php|config
 					header("Content-Type: application/x-unknown\n");
 					header("Content-Disposition: attachment; filename=\"" . basename($file) . "\"\n");
 				} elseif (browser(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) == "IE") {
-					$disposition = (!eregi("\.zip$", basename($file))) ? 'attachment' : 'inline';
+					$disposition = 'attachment';//(!eregi("\.zip$", basename($file))) ? 'attachment' : 'inline';
 					header('Content-Description: File Transfer');
 					header('Content-Type: application/force-download');
 					header('Content-Length: ' . (string) (filesize($file)));
