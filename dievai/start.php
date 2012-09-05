@@ -95,12 +95,12 @@ $text = <<<HTM
 <script type="text/javascript" src="js/FeedEk.js"></script>
 <script type="text/javascript" >
 $(document).ready(function(){
-  $('#txtUrl').val('http://mightmedia.lt/RSS');
+  $('#txtUrl').val('http://mightmedia.lt/rss.php');
   $('#txtCount').val('5');
   $('#chkDate').attr('checked','checked');
   $('#chkDesc').attr('checked','checked');
    $('#divRss').FeedEk({
-   FeedUrl : 'http://mightmedia.lt/RSS',
+   FeedUrl : 'http://mightmedia.lt/rss.php',
    MaxCount : 10,
    ShowDesc : false,
    ShowPubDate: true
