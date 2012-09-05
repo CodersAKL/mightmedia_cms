@@ -2,7 +2,7 @@ body { background: #E6E6E6;}
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,/*fieldset,*/input,textarea,p,blockquote,th,td {
 	margin:0;
 	padding:0;
-	font: 13px/1.231 arial,helvetica,clean,sans-serif;
+	font: 12px Arial,helvetica,clean,sans-serif;
 	line-height: 15px;	
 }
 table{
@@ -29,12 +29,20 @@ h1,h2,h3,h4,h5,h6 {
 	font-size:100%;
 	font-weight:normal;
 }
-input, select{
+input, select {
+    outline: none;
 	background: url('../images/input.png') repeat-x;
 	border: 1px solid #D7D7D7;
 	padding: 3px;
 	color: #666666;
 	margin-bottom: 3px;
+}
+
+.input, select{
+    width: 750px;
+}
+.filtrui {
+    width: 100%;
 }
 textarea {
     width: 750px;
@@ -45,11 +53,12 @@ textarea {
 	margin-bottom: 3px;
 }
 input[type="submit"], .submit, button{
-	background: #CCCCCC;
-	border-bottom:1px solid #323232;
-	border-right:1px solid #323232;
-	border-left:1px solid #D0D0D0;
-	border-top:1px solid #D0D0D0;
+    width: auto;
+	background: #E6E6E6;
+	border-bottom:1px solid #666;
+	border-right:1px solid #666;
+	border-left:1px solid #ccc;
+	border-top:1px solid #ccc;
 	color:#555555;
 	padding-left:6px;
 	padding-right:6px;
@@ -59,6 +68,72 @@ a {
 	color: #FF7910;
 }
 /* RESET END */
+/* Puslapiavimui */
+.puslapiavimas {
+    text-align: center;
+}
+.puslapiavimas a{
+    color: #999;
+	text-decoration: none;
+}
+.puslapiavimas a:hover{
+    color: #999;
+	text-decoration: none;
+}
+.puslapiavimas .nuoroda {
+	vertical-align: middle;
+    border: 1px solid #999;
+	background: #FFFFFF url(../images/hover.png) repeat-x;
+	padding: 2px;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+.puslapiavimas .nuoroda:hover {
+	background: #d9d9d9;
+	border: 1px solid #999;
+}
+.puslapiavimas .paspaustas {
+    border: 1px solid #999;
+    color: #999;
+	vertical-align: middle;
+    font-weight: bold;
+	background: #d9d9d9;
+	padding: 2px;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+/* Galerijai */
+#gallery { 
+	position: relative;
+}
+.img_left {
+    border: 1px solid #999;
+	background: #d9d9d9;
+	float : left;
+	margin-right : 5px;
+	position: relative;
+}
+
+.gallery_title, .gallery_menu {
+	background: #fff;
+	color: #fff;
+	font-weight: bold;
+	opacity: 0.7;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+}
+.gallery_title {
+	top: 0;
+}
+.gallery_menu {
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+	bottom: 5px;
+}
+.gallery_menu img {
+	vertical-align: middle;
+}
 
 #krauna{
    background:#fff url(../images/loading.gif) no-repeat center center;
@@ -150,7 +225,8 @@ a {
 	padding-bottom:5px;
 	width: 178px;
 }
-.search input{
+.search input {
+    outline: none;
     float: left;
 	background: url('../images/search.png') no-repeat;
 	width: 124px;
@@ -337,12 +413,6 @@ a {
 	padding-right: 10px;
 	padding-bottom: 10px;
 }
-.ItemTitle{
-
-}
-.ItemDate {
-
-}
 .leftui{
     margin-left: 20px;
 	width: 200px;
@@ -356,7 +426,7 @@ a {
 	margin-bottom: 20px;
     margin-left: 20px;
 	font-size: 12px;
-	font-family: "Verdana";
+	font-family: "Arial";
 }
 #footer .c {
     height: 50px;
@@ -490,12 +560,13 @@ form td{
 	padding-right: 10px;
 }
 .tooltip{
+    max-width: 300px;
 	padding: 3px;
 	border: 1px solid #FF7910;
 	display: none;
 	background: #FFFFCC;
 	color: #FF7910;
-	font: 9px Verdana, Arial, Helvetica, sans-serif;
+	font: 11px Arial, Helvetica, sans-serif;
 	text-align: left;
 	position: absolute;
 	z-index: 1000;
@@ -519,6 +590,9 @@ form td{
 }
 .table td, .td{
 	border-right: 1px solid #d9d9d9;
+}
+.td2{
+	background: #FAFAFA;
 }
 .table th{
 	background-color: #ebebeb;
