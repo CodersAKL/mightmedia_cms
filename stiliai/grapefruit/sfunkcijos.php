@@ -26,11 +26,9 @@ echo "<div id='plotis'>
     <a href='http://mightmedia.lt' target='_blank' title='Mightmedia'><div class='logo'></div></a>
     </div>
     </div>
-    </div>";
-}
-//Paslėpimas
-function hide($pavadinimas, $tekstas, $hide = false, $label = false, $id = false) {
-	lentele($pavadinimas, $tekstas);
+    </div>
+    <div id='another' class='clear'><div class='lygiuojam'><div class='taisom'></div></div></div>
+	";
 }
 //Dešinės pozicijos blokai
 //Jeigu neprireikia paliekame taip.
@@ -91,24 +89,12 @@ function msg($pavadinimas, $tekstas, $label = false) {
     <div class='info_tekstas'>{$tekstas}</div>
     </div>";
 }
-function ofunc() {
-	echo "
-		<table width=\"100%\" border=\"0\">
-			<tr>
-				<td><div class=\"title\">Masyvas</div></td>
-				<td><div class=\"title\">Paaiškinimas</div></td>
-			</tr>
-			<tr>
-		 ";
-}
-function cfunc() {
-	echo "</table>";
-}
 //Atvaizduojame Copyright
 function copyright($tekstas) {
 	global $mysql_num;
 	echo $tekstas.' '. (defined('LEVEL') && LEVEL == 1 ? 'MySQL: ' . $mysql_num : '');
 }
+//Meniu bloko SUB MENIU funkcija
 function th_meniu($array, $start = '', $end = '') {
 	$return = $start . "\n";
 	foreach ($array as $key => $val) {
