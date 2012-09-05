@@ -14,17 +14,6 @@ $stats = mysql_query1("SELECT
 	(SELECT COUNT(*) as total FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE timestamp BETWEEN UNIX_TIMESTAMP(NOW() - INTERVAL 2 DAY) AND UNIX_TIMESTAMP(NOW() - INTERVAL 1 DAY)) as vakar,
 	(SELECT COUNT(*) as total FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE timestamp BETWEEN UNIX_TIMESTAMP(NOW() - INTERVAL 3 DAY) AND UNIX_TIMESTAMP(NOW() - INTERVAL 2 DAY)) as uzvakar
 	LIMIT 1");
-$sql = mysql_query1("SELECT count(id) as svec,
-	(SELECT count(id) FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE `timestamp`>'" . $timeout . "' AND user!='Svecias') as users,
-	(SELECT count(id) FROM " . LENTELES_PRIESAGA . "users) as useriai,
-	(SELECT `nick` FROM " . LENTELES_PRIESAGA . "users order by id DESC LIMIT 1 ) as useris,
-	(SELECT `id` FROM " . LENTELES_PRIESAGA . "users order by id DESC  LIMIT 1 ) as userid,
-	(SELECT `levelis` FROM " . LENTELES_PRIESAGA . "users order by id DESC  LIMIT 1 ) as lvl
-	FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE `timestamp`>'" . $timeout . "' AND user='Svecias'
-	LIMIT 1");
-
-$progresas = procentai((!empty($stats['uzvakar']) ? $stats['uzvakar'] : 1), (!empty($stats['vakar']) ? $stats['vakar'] : 1));
-$memberis = user($sql['useris'], $sql['userid'], $sql['lvl']);
 //chart
 $uzvakar = ((time() - 86400 * 2) * 1000);
 $vakar = ((time() - 86400) * 1000);
@@ -61,23 +50,36 @@ $siandien  = mktime(0, 0, 0, date("m")  , date("d"), date("Y")); */
     </script>
 <?php
 //table
-$text = <<<HTM
-<div class="left">
+$text = "
+<div class='left'>
 <h2>{$lang['system']['tree']}</h2>
-<ul id="treemenu">{$tree}</ul>
+<ul id='treemenu'>{$tree}</ul>
 </div>
-
-<div class="right">
-
-<div class="leftui" >
-<h2 style="height:30px;">{$lang['system']['some_data']}</h2>
-<ul>
-<li>{$lang['online']['users']} {$lang['online']['usrs']}: <span class="number">{$sql['users']}</span></li>
-<li>{$lang['online']['users']} {$lang['online']['guests']}: <span class="number">{$sql['svec']}</span></li>
-<li>{$lang['online']['traffic_in']}: <span class="number">{$progresas}%</span></li>
-<li>{$lang['online']['today']}: <span class="number">{$stats['siandien']}</span></li>
-<li>{$lang['online']['registeredmembers']}: <span class="number">{$sql['useriai']}</span></li>
-<li>{$lang['online']['lastregistered']}: <span class="number">{$memberis}</span></li>
+<div class='right'>
+<div class='leftui'>
+<h2 style='height:30px;'>{$lang['system']['some_data']}</h2>
+<ul> 
+";
+$sqli = mysql_query1("SELECT count(id) as svec, 
+(SELECT count(id) FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE `timestamp`>'" . $timeout . "' AND user!='Svečias') as users, 
+(SELECT count(id) FROM " . LENTELES_PRIESAGA . "users) as useriai, 
+(SELECT `nick` FROM " . LENTELES_PRIESAGA . "users order by id DESC LIMIT 1 ) as useris,
+(SELECT `id` FROM " . LENTELES_PRIESAGA . "users order by id DESC  LIMIT 1 ) as userid,
+(SELECT `levelis` FROM " . LENTELES_PRIESAGA . "users order by id DESC  LIMIT 1 ) as lvl
+ FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE `timestamp`>'" . $timeout . "' AND user='Svečias'");
+foreach ($sqli as $sql) {
+$progresas = procentai((!empty($stats['uzvakar']) ? $stats['uzvakar'] : 1), (!empty($stats['vakar']) ? $stats['vakar'] : 1));
+$memberis = user($sql['useris'], $sql['userid'], $sql['lvl']);
+$text .= "
+<li>{$lang['online']['users']} {$lang['online']['usrs']}: <span class='number'>".(int)$sql['users']."</span></li>
+<li>{$lang['online']['users']} {$lang['online']['guests']}: <span class='number'>".(int)$sql['svec']."</span></li>
+<li>{$lang['online']['traffic_in']}: <span class='number'>{$progresas}%</span></li>
+<li>{$lang['online']['today']}: <span class='number'>{$stats['siandien']}</span></li>
+<li>{$lang['online']['registeredmembers']}: <span class='number'>".(int)$sql['useriai']."</span></li>
+<li>{$lang['online']['lastregistered']}: <span class='number'>{$memberis}</span></li>
+";
+}
+$text .= <<<HTM
 </ul>
 </div>
 
