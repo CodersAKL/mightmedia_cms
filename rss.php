@@ -1,10 +1,10 @@
 <?php
-echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
 header("content-type: application/xml; charset=UTF-8");
+echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
 require_once('priedai/conf.php');
 define( 'ROOT', '/../' );
 if (isset($conf['puslapiai']['rss.php'])) {
-if (empty($_GET['lang'])) $_GET['lang'] = 'lt';
+	if (empty($_GET['lang'])) $_GET['lang'] = 'lt';
 ?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
 		<channel>
