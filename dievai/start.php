@@ -46,10 +46,12 @@ $siandien  = mktime(0, 0, 0, date("m")  , date("d"), date("Y")); */
         ]);
 
         var options = {
+		  chartArea: { width: '80%', height: '80%'},
           title: '',
 		  isStacked: true,
 		  colors: ['#FF7910'],
-          vAxis: {title: " "},
+		  legend: {position: 'none'},
+          vAxis: {gridlines:{count: 2}, textPosition: 'in',title: " "},
           hAxis: {title: " "}
         };
 
@@ -67,8 +69,8 @@ $text = <<<HTM
 
 <div class="right">
 
-<div class="leftui">
-<h2>{$lang['system']['some_data']}</h2>
+<div class="leftui" >
+<h2 style="height:30px;">{$lang['system']['some_data']}</h2>
 <ul>
 <li>{$lang['online']['users']} {$lang['online']['usrs']}: <span class="number">{$sql['users']}</span></li>
 <li>{$lang['online']['users']} {$lang['online']['guests']}: <span class="number">{$sql['svec']}</span></li>
