@@ -1,10 +1,12 @@
 <?php
+echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
 header("content-type: application/xml; charset=UTF-8");
-include_once('priedai/conf.php');
+require_once('priedai/conf.php');
+define( 'ROOT', '/../' );
 if (isset($conf['puslapiai']['rss.php'])) {
 if (empty($_GET['lang'])) $_GET['lang'] = 'lt';
-echo "<?xml encoding='UTF-8'?>\n";
-?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
+?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
 		<channel>
 			<title><?php echo htmlspecialchars($conf['Pavadinimas']); ?></title>
 			<link><?php echo adresas(); ?></link>
@@ -23,21 +25,22 @@ echo "<?xml encoding='UTF-8'?>\n";
 
 
 		<?php
-      $result = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos`	WHERE `rodoma`= 'TAIP' AND `lang` = " . escape(basename($_GET['lang'], '.php')) . " ORDER BY `data` DESC LIMIT 50", 360);
+      $result = mysql_query1("SELECT SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "naujienos`	WHERE `rodoma`= 'TAIP' AND `lang` = " . escape(basename($_GET['lang'], '.php')) . " ORDER BY `data` DESC LIMIT 50", 360);
+
       //naujienu sarasas
       foreach ($result as $row) {
-        $kategorija = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` where `id`=" . escape($row['kategorija']) . " AND `lang` = " . escape(basename($_GET['lang'], '.php')) . " LIMIT 1", 360);
+        $kategorija = mysql_query1("SELECT  SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` where `id`=" . escape($row['kategorija']) . " AND `lang` = " . escape(basename($_GET['lang'], '.php')) . " LIMIT 1", 360);
         $nickas = mysql_query1("SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick` = " . escape($row['autorius']) . " LIMIT 1", 360);
         if ((isset($kategorija['teises']) && teises($kategorija['teises'], 0)) || !isset($kategorija['teises'])) {
           echo '<item>
-                  <title><![CDATA[' . $row['pavadinimas'] . ']]></title>
-                  <link>' . adresas() . ' ' . url('?id,'.$conf['puslapiai']['naujienos.php']['id'].';k,'.$row['id'].'') . '</link>
+                   <title><![CDATA[' . $row['pavadinimas'] . ']]></title>
+                  <link>' . url('?id,'.$conf['puslapiai']['naujienos.php']['id'].';k,'.$row['id'].'') . '</link>
                   <description><![CDATA[ ' . $row['naujiena'] . ' <br />' . $row['daugiau'] . ' ]]></description>
                   <author><![CDATA[' . $nickas['email'] . ' (' . $row['autorius'] . ')]]></author>
                   ' . (isset($kategorija['pavadinimas']) ? '<category>' . $kategorija['pavadinimas'] . '</category>' : '') . '
                   <pubDate>' . date('D, d M Y H:i:s O', $row['data']) . '</pubDate>
                   <source url="' . adresas() . '">' . $conf['Pavadinimas'] . ' RSS</source>
-                  <guid>' . adresas() . ' ' . url('?id,'.$conf['puslapiai']['naujienos.php']['id'].';k,'.$row['id'].'') . '</guid>
+                  <guid>' . url('?id,'.$conf['puslapiai']['naujienos.php']['id'].';k,'.$row['id'].'') . '</guid>
               </item>';
         }
       }
