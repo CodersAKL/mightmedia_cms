@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Projektas: MightMedia TVS
  * @Puslapis: www.coders.lt
@@ -8,6 +9,7 @@
  * @$Revision$
  * @$Date$
  * */
+
 if (!defined("OK") || !isset($_SESSION['username'])) {
 	header("Location: " . url("?id,{$conf['puslapiai'][$conf['pirminis'] . '.php']['id']}"));
 	exit;
