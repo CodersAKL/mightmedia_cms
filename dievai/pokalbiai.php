@@ -13,13 +13,11 @@
 if (!defined("OK") || !ar_admin(basename(__file__))) {
 	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
-if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
-	$p = escape(ceil((int)$url['p']));
-} else {
-	$p = 0;
-}
-$limit = 30;
+//Puslapiavimui
+if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) $p = (int)$url['p']; else $p = 0;
+$limit = 5;
 $viso = kiek('admin_chat');
+//
 
 unset($extra);
 if (isset($_POST['admin_chat_send']) && $_POST['admin_chat_send'] == $lang['admin']['send'] && !empty($_POST['admin_chat'])) {
@@ -90,10 +88,7 @@ $text = "
         <input name=\"admin_chat_send\" type=\"submit\" value=\"" . ((isset($url['r']) && isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['send']) . "\">
 		</form>
 		</center><br/>";
-//puslapiavimas
-if ($viso > $limit) {
-	lentele("{$lang['system']['pages']}:", puslapiai($p, $limit, $viso, 10));
-}
+
 $sql = mysql_query1("SELECT `" . LENTELES_PRIESAGA . "admin_chat`.*, `" . LENTELES_PRIESAGA . "users`.`email` AS `email` FROM `" . LENTELES_PRIESAGA . "admin_chat` Inner Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "admin_chat`.`admin` = `" . LENTELES_PRIESAGA . "users`.`nick` ORDER BY date DESC LIMIT " . escape($p) . "," . $limit);
 if (sizeof($sql) > 0) {
   $i = 0;
@@ -106,8 +101,7 @@ if (sizeof($sql) > 0) {
 	}
 }
 lentele("{$lang['admin']['admin_chat']}", $text);
-if ($viso > $limit) {
-	lentele("{$lang['system']['pages']}:", puslapiai($p, $limit, $viso, 10));
-}
 
+if ($viso > $limit) 
+	lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
 ?>

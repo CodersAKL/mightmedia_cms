@@ -17,11 +17,10 @@ if (isset($_POST['del'])) {
 	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`=" . escape($_POST['pg']) . "");
 	header("location: " . $_SERVER['HTTP_REFERER'] . "");
 }
-/*
-  if (isset($_POST['del2'])) {
-  mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`=" . escape($_POST['page']) . " AND `kid`=" . escape($_POST['pg']) . "");
-  header("location: " . $_SERVER['HTTP_REFERER'] . "");
-  } */
+//Puslapiavimui
+if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) $p = (int)$url['p']; else $p = 0;
+$limit = 15;
+//
 if (!isset($_POST['pg']) && !isset($_GET['s'])) {
 	$sql = mysql_query1("SELECT `pid` FROM `" . LENTELES_PRIESAGA . "kom` GROUP BY `pid` ORDER BY `pid` DESC");
 	if (!empty($sql)) {
@@ -54,7 +53,8 @@ if (isset($_POST['select']) || isset($_GET['s'])) {
 		}
 	}
 	$pg = (isset($_POST['pg']) ? $_POST['pg'] : base64_decode($_GET['s']));
-	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` where `pid`=" . escape($pg) . "");
+	$viso = kiek("kom", "WHERE `pid`=" . escape($pg) . "");
+	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`=" . escape($pg) . " ORDER BY `id` DESC LIMIT {$p}, {$limit}");
 	if (!empty($sql)) {
 		$tbl = new Table();
 		foreach ($sql as $row) {
@@ -65,28 +65,15 @@ if (isset($_POST['select']) || isset($_GET['s'])) {
 				$nick = user($row['nick'], $row['nick_id']);
 			}
 			$info[] = array(
-				$lang['new']['author'] => $nick, $lang['contact']['message'] => smile(bbchat(trimlink(input($row['zinute']), 150))), $lang['admin']['action'] => "<a href=\"" . url("s," . str_replace('=', '', base64_encode($pg)) . ";d," . $row['id'] . "") . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a><a href=\"" . url("s," . str_replace('=', '', base64_encode($pg)) . ";e," . $row['id'] . "") . "\" title='{$lang['admin']['edit']}'><img src=\"" . ROOT . "images/icons/pencil.png\" alt=\"[{$lang['admin']['edit']}]\" border=\"0\" class=\"middle\" /></a>");
-			//$pgs[$row['kid']] = $row['kid'];
+				$lang['new']['author'] => $nick,
+				$lang['contact']['message'] => smile(bbchat(trimlink(input($row['zinute']), 150))), 
+				" " => "<a href=\"" . url("s," . str_replace('=', '', base64_encode($pg)) . ";d," . $row['id'] . "") . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a><a href=\"" . url("s," . str_replace('=', '', base64_encode($pg)) . ";e," . $row['id'] . "") . "\" title='{$lang['admin']['edit']}'><img src=\"" . ROOT . "images/icons/pencil.png\" alt=\"[{$lang['admin']['edit']}]\" border=\"0\" class=\"middle\" /></a>");
 		}
-		echo '<style type="text/css" title="currentStyle">
-		@import "' . ROOT . 'javascript/table/css/demo_page.css";
-		@import "' . ROOT . 'javascript/table/css/demo_table.css";
-		</style>
-		<script type="text/javascript" language="javascript" src="' . ROOT . 'javascript/table/js/jquery.dataTables.js"></script>
-		<script type="text/javascript" charset="utf-8">
-		$(document).ready(function() {
-			$(\'#com table\').dataTable( {
-				"bInfo": false,
-				//"bProcessing": true,
-				"aoColumns": [
-				{ "sWidth": "10%", "sType": "html" },
-				{ "sWidth": "75%", "sType": "string" },
-			{ "sWidth": "20px", "sType": "html", "bSortable": false}
-				]
-				} );
-			} );
-		</script>';
-		lentele("{$lang['admin']['adm_comments']}", '<div id="com">' . $tbl->render($info) . '</div>');
+
+		lentele("{$lang['admin']['adm_comments']}", '' . $tbl->render($info) . '');
+if ($viso > $limit)
+		lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
+		
 	} else
 		klaida($lang['system']['warning'], $lang['system']['no_items']);
 }

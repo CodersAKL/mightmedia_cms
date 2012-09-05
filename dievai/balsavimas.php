@@ -14,7 +14,14 @@ if (!defined("OK") || ! ar_admin(basename(__file__))) {
     redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 if (!isset($_GET['v'])) { $_GET['v'] = 1; $url['v'] = 1;}
-$buttons = "<div id=\"admin_menu\" class=\"btns\"><a href=\"" . url("?id,{$_GET['id']};a,{$_GET['a']};v,1") . "\"class=\"btn\"><span><img src=\"" . ROOT . "images/icons/heart__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['poll_create']}</span></a>  <a href=\"" . url("?id,{$_GET['id']};a,{$_GET['a']};v,2") . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/heart__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['poll_edit']}</span></a></div>";
+//Puslapiavimui
+if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) $p = (int)$url['p']; else $p = 0;
+$limit = 15;
+//
+$buttons = "<div id=\"admin_menu\" class=\"btns\">
+<a href=\"" . url("?id,{$_GET['id']};a,{$_GET['a']};v,1") . "\"class=\"btn\"><span><img src=\"" . ROOT . "images/icons/heart__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['poll_create']}</span></a> 
+<a href=\"" . url("?id,{$_GET['id']};a,{$_GET['a']};v,2") . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/heart__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['poll_edit']}</span></a>
+</div>";
 lentele($lang['admin']['poll'], $buttons);
 include_once(ROOT . 'priedai/class.php');
 //delete poll
@@ -32,7 +39,7 @@ if ($_GET['v'] == 1) {
         $qid = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "poll_questions` WHERE `lang` = " . escape(lang()) . " ORDER BY `id` DESC LIMIT 1",3600);
         foreach ($_POST['answers'] as $ans) {
             //echo $ans.'</br>';
-            mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "poll_answers` (`question_id`, `answer`, `lang`) VALUES (" . escape($qid['id']) . ", " . escape($ans) . ", `lang` = " . escape(lang()) . ")");
+            mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "poll_answers` (`question_id`, `answer`, `lang`) VALUES (" . escape($qid['id']) . ", " . escape($ans) . "," . escape(lang()) . ")");
         }
         msg($lang['system']['done'], $lang['admin']['poll_created']);
         redirect(url("?id," . $_GET['id'] . ";a," . $_GET['a']), "meta");
@@ -66,7 +73,7 @@ HTML;
         "{$lang['admin']['poll_question']}:" => array("type" => "text", "name" => "question", "class" => "input"),
         "{$lang['admin']['poll_votecan']}:" => array("type" => "select", "name" => "only_guests", "value" => array(0 => $lang['admin']['poll_all'], 1 => $lang['admin']['poll_membs']), "class" => "input"),
         "{$lang['admin']['poll_type']}:" => array("type" => "select", "name" => "type", "value" => array(0 => 'checkbox', 1 => 'radio'), "class" => "input"),
-        "{$lang['admin']['poll_active']}:" => array("type" => "select", "name" => "shown", "value" => array(0 => $lang['admin']['no'], 1 => $lang['admin']['yes']), "class" => "input"),
+        "{$lang['admin']['poll_active']}:" => array("type" => "select", "name" => "shown", "value" => array(1 => $lang['admin']['yes'], 0 => $lang['admin']['no']), "class" => "input"),
         "{$lang['admin']['poll_answers']}:" => array("type" => "string", "value" => "<a href=\"#\" onclick=\"return false;\" id=\"add\"><img src=\"" . ROOT . "images/icons/plus.png\" alt=\"[+]\" /></a> <a href=\"#\" onclick=\"return false;\" id=\"remove\"><img src=\"" . ROOT . "images/icons/minus.png\" alt=\"[-]\" /></a><div id=\"inputs\"><p><input type=\"text\" name=\"answers[]\" class=\"input\" /></p></div>", "class" => "input"),
         " " => array("type" => "submit", "value" => $lang['admin']['poll_create'])
     );
@@ -81,38 +88,26 @@ HTML;
             "{$lang['admin']['poll_question']}:" => array("type" => "text", "name" => "question", "value" => input($quest['question']), "class" => "input"),
             "{$lang['admin']['poll_votecan']}:" => array("type" => "select", "selected" => input($quest['only_guests']), "name" => "only_guests", "value" => array(0 => $lang['admin']['poll_all'], 1 => $lang['admin']['poll_membs']), "class" => "input"),
             "{$lang['admin']['poll_type']}:" => array("type" => "select", "name" => "type", "value" => array(0 => 'checkbox', 1 => 'radio'), "class" => "input", "selected" => input($quest['radio'])),
-            "{$lang['admin']['poll_active']}:" => array("type" => "select", "name" => "shown", "value" => array(0 => $lang['admin']['no'], 1 => $lang['admin']['yes']), "class" => "input", "selected" => input($quest['shown'])),
+            "{$lang['admin']['poll_active']}:" => array("type" => "select", "name" => "shown", "value" => array(1 => $lang['admin']['yes'], 0 => $lang['admin']['no']), "class" => "input", "selected" => input($quest['shown'])),
             " " => array("type" => "submit", "name" => "update", "value" => $lang['admin']['edit'])
         );
         lentele($lang['admin']['poll_edit'], $form->form($inputs));
     }
     $tbl = new Table();
-    $quest = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "poll_questions` ORDER BY `id` DESC",3600);
+    $viso = kiek("poll_questions","WHERE `lang` = ".escape(lang())."");
+    $quest = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "poll_questions` WHERE `lang` = ".escape(lang())." ORDER BY `id` DESC LIMIT {$p},{$limit}",3600);
     foreach ($quest as $row) {
-        $info[] = array("#" => ($row['shown'] == 1 ? '<img src="' . ROOT . '/images/icons/status_online.png" alt="" />' : '<img src="' . ROOT . '/images/icons/status_offline.png" alt="" />'), "{$lang['admin']['poll']}:" => input($row['question']),
-            "{$lang['admin']['action']}:" => " <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};v,{$_GET['v']};e," . $row['id']) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id']) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "images/icons/cross.png' border='0'></a>");
+        $info[] = array(
+		$lang['admin']['poll_active_q'] => ($row['shown'] == 1 ? '<img src="' . ROOT . '/images/icons/status_online.png" alt="" />' : '<img src="' . ROOT . '/images/icons/status_offline.png" alt="" />'), 
+		$lang['admin']['poll'] => input($row['question']),
+        $lang['system']['edit'] => " <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};v,{$_GET['v']};e," . $row['id']) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id']) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "images/icons/cross.png' border='0'></a>");
     }
     if (isset($info)) {
-        echo '<style type="text/css" title="currentStyle">
-			@import "' . ROOT . 'javascript/table/css/demo_page.css";
-			@import "' . ROOT . 'javascript/table/css/demo_table.css";
-			</style>
-			<script type="text/javascript" language="javascript" src="' . ROOT . 'javascript/table/js/jquery.dataTables.js"></script>
-			<script type="text/javascript" charset="utf-8">
-				$(document).ready(function() {
-					$(\'#polls table\').dataTable( {
-			  "bInfo": false,
-			  "bProcessing": true,
-						"aoColumns": [
-              { "sWidth": "10px", "sType": "html" },
-							{ "sWidth": "80%", "sType": "string" },
-							{ "sWidth": "20px", "sType": "html", "bSortable": false}
-						]
-					} );
-				} );
-			</script>';
 
-        lentele($lang['admin']['poll_edit'], '<div id="polls">' . $tbl->render($info) . '</div>');
+        lentele($lang['admin']['poll_edit'], '' . $tbl->render($info) . '');
+if ($viso > $limit)
+	lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
+		
     } else
         lentele($lang['admin']['poll_edit'], $lang['admin']['poll_no']);
 }

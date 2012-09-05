@@ -14,6 +14,10 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 if(count($_GET) < 3) $_GET['v'] = 1;
+//Puslapiavimui
+if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) $p = (int)$url['p']; else $p = 0;
+$limit = 15;
+//
 $buttons = "
 <div class=\"btns\">
 	<a href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,6")."\" class=\"btn\"><span><img src=\"".ROOT."images/icons/disk__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['download_unpublished']}</span></a>
@@ -185,10 +189,6 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 	redirect(url("?id," . $_GET['id'] . ";a," . $_GET['a']), "meta");
 
 }
-
-
-
-
 unset($naujiena, $placiau, $komentaras, $pavadinimas, $result, $error, $pav);
 
 
@@ -196,38 +196,33 @@ if (isset($_GET['v'])) {
 	include_once (ROOT."priedai/class.php");
 	$bla = new forma();
 	if ($_GET['v'] == 7) {
-		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "siuntiniai` ORDER BY ID DESC");
-
-	$table = new Table();
+$table = new Table();
+///FILTRAVIMAS
+$viso = kiek("siuntiniai", "WHERE `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
+$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `lang` = ".escape(lang())." ".(isset($_POST['pavadinimas'])? "AND (`pavadinimas` LIKE " . escape("%" . $_POST['pavadinimas'] . "%") . " ".(!empty($_POST['data'])? "AND `data` <= " .strtotime($_POST['data']) . "":"")." ".(!empty($_POST['apie'])? " AND `apie` LIKE " . escape("%" . $_POST['apie'] . "%") . "":"").")"  : "")." AND rodoma='TAIP' ORDER BY ID LIMIT {$p},{$limit}");
+if(isset($_POST['pavadinimas']) && $_POST['data'] && $_POST['apie']) {
+$val = array($_POST['pavadinimas'], $_POST['data'], $_POST['apie']);
+} else {
+$val = array("","","");
+}
+$info[] = array("<form method=\"post\">",
+$lang['download']['title'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pavadinimas\" />",
+$lang['download']['date'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"data\" />",
+$lang['download']['about'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"apie\" />",
+ " " => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" /></form>");
+//FILTRAVIMAS
 	foreach ($sql2 as $row){
         $info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('siuntsch');\" />" => "<input type=\"checkbox\" value=\"{$row['ID']}\" name=\"siunt_delete[]\" />", 
         $lang['download']['title'] => input($row['pavadinimas']), 
         $lang['download']['date'] => date('Y-m-d', $row['data']), 
         $lang['download']['about'] => trimlink(strip_tags($row['apie']), 55),
-        $lang['admin']['edit'] => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['ID'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"".ROOT."images/icons/cross.png\" border=\"0\"></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['ID'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>"
+        " " => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['ID'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"".ROOT."images/icons/cross.png\" border=\"0\"></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['ID'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>"
         );
 			}
-			echo '<style type="text/css" title="currentStyle">
-			@import "'.ROOT.'javascript/table/css/demo_page.css";
-			@import "'.ROOT.'javascript/table/css/demo_table.css";
-		</style>
-		<script type="text/javascript" language="javascript" src="'.ROOT.'javascript/table/js/jquery.dataTables.js"></script>
-		<script type="text/javascript" charset="utf-8">
-			$(document).ready(function() {
-				$(\'#news table\').dataTable( {
-          "bInfo": false,
-          //"bProcessing": true,
-					"aoColumns": [
-						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
-						{ "sWidth": "10%", "sType": "string" },
-						{ "sWidth": "10%", "sType": "date" },
-						{ "sWidth": "30%", "sType": "html" },
-						{ "sWidth": "20px", "sType": "html", "bSortable": false}
-					]
-				} );
-			} );
-		</script>';
-			lentele($lang['admin']['edit'], "<form id=\"siuntssch\" method=\"post\"><div id=\"news\">".$table->render($info)."</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
+
+	lentele($lang['admin']['edit'], "<form id=\"siuntssch\" method=\"post\"><div id=\"news\">".$table->render($info)."</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
+if ($viso > $limit)
+	lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
 	
 	} elseif ($_GET['v'] == 1 || isset($_GET['h'])) {
 		if (!isset($nocat)) {
@@ -242,7 +237,9 @@ if (isset($_GET['v'])) {
 				//if(!isset($_post['tipas'])){$_POST['tipas']=3;}
 				$forma = array("Form" => array("enctype" => "multipart/form-data", "action" => url("?id," . $_GET['id'] . ";a," . $_GET['a']), "method" => "post", "name" => "action"), (!isset($extra) && @$_POST['tipas'] != 2) ? "{$lang['admin']['download_file']}:" : "" => array("name" => "failas", "type" => (isset($extra) || $_POST['tipas'] != 2) ? "file" : "hidden", "value" => "", "class" => "input"), (isset($extra) || $_POST['tipas'] == 2) ? "{$lang['admin']['download_fileurl']}:" : "" => array("name" => "failas2", "type" => (isset($extra) || $_POST['tipas'] == 2) ? "text" : "hidden", "value" => (isset($extra['pavadinimas'])) ? input($extra['file']) : '', "class" => "input"), "{$lang['admin']['download_download']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) :
 					'', "name" => "Pavadinimas", "class" => "input"), 
-					"{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "class" => "input", "selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '')), "{$lang['admin']['download_about']}:" => array("type" => "string", "value" => editor('jquery', 'mini', 'Aprasymas', (isset($extra['apie'])) ? $extra['apie'] : '')), //"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","class"=>"input"),
+					"{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "class" => "input", "selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '')), 
+					"{$lang['admin']['download_about']}:" => array("type" => "string", "value" => editor('jquery', 'mini', 'Aprasymas', (isset($extra['apie'])) ? $extra['apie'] : '')), 
+					//"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","class"=>"input"),
 					(isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['download_create'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['download_create']), );
 				if (isset($extra)) {
 					$forma[''] = array("type" => "hidden", "name" => "news_id", "value" => (isset($extra) ? input($extra['ID']) : ''));
@@ -253,50 +250,40 @@ if (isset($_GET['v'])) {
 			klaida($lang['system']['warning'], $lang['system']['nocategories']);
 		}
 	} elseif ($_GET['v'] == 6) {
-
-		$q = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE rodoma='NE'");
-		if ($q) {
-
-			include_once (ROOT."priedai/class.php");
-			$bla = new Table();
-			$info = array();
-
+///FILTRAVIMAS
+$viso = kiek("siuntiniai", "WHERE `rodoma`='NE' AND `lang` = ".escape(lang())."");
+$q = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `lang` = ".escape(lang())." ".(isset($_POST['pavadinimas'])? "AND (`pavadinimas` LIKE " . escape("%" . $_POST['pavadinimas'] . "%") . " ".(!empty($_POST['data'])? " AND `date` <= " .strtotime($_POST['data']) . "":"")." ".(!empty($_POST['apie'])? " AND `apie` LIKE " . escape("%" . $_POST['apie'] . "%") . "":"").")"  : "")." AND rodoma='NE' ORDER BY ID LIMIT {$p},{$limit}");
+//
+if ($q) {
+include_once (ROOT."priedai/class.php");
+$bla = new Table();
+$info = array();
+//
+if(isset($_POST['pavadinimas']) && $_POST['data'] && $_POST['apie']) {
+$val = array($_POST['pavadinimas'], $_POST['data'], $_POST['apie']);
+} else {
+$val = array("","","");
+}
+$info[] = array("<form method=\"post\">",
+$lang['download']['title'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pavadinimas\" />",
+$lang['download']['date'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"data\" />",
+$lang['download']['about'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"apie\" />",
+ " " => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" /></form>");
+//FILTRAVIMAS
 			foreach ($q as $sql) {
-				$sql2 = mysql_query1("SELECT nick FROM `" . LENTELES_PRIESAGA . "users` WHERE id=" . escape($sql['autorius']) . " LIMIT 1");
-				if (isset($sql2['nick'])) {
-					$autorius = $sql2['nick'];
-				} else {
-					$autorius = $lang['system']['guest'];
-				}
+
 				$info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('siuntsch');\" />" => "<input type=\"checkbox\" value=\"{$sql['ID']}\" name=\"siunt_delete[]\" />", 
         $lang['download']['title'] => input($sql['pavadinimas']), 
         $lang['download']['date'] => date('Y-m-d', $sql['data']), 
         $lang['download']['about'] => trimlink(strip_tags($sql['apie']), 55),
-         "{$lang['admin']['action'] }:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['ID'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' alt='a' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['ID'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['ID'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
+         " " => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['ID'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' alt='a' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['ID'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['ID'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
 
 			}
-			echo '<style type="text/css" title="currentStyle">
-			@import "'.ROOT.'javascript/table/css/demo_page.css";
-			@import "'.ROOT.'javascript/table/css/demo_table.css";
-		</style>
-		<script type="text/javascript" language="javascript" src="'.ROOT.'javascript/table/js/jquery.dataTables.js"></script>
-		<script type="text/javascript" charset="utf-8">
-			$(document).ready(function() {
-				$(\'#news table\').dataTable( {
-          "bInfo": false,
-         // "bProcessing": true,
-					"aoColumns": [
-						{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
-						{ "sWidth": "10%", "sType": "string" },
-						{ "sWidth": "10%", "sType": "date" },
-						{ "sWidth": "30%", "sType": "html" },
-						{ "sWidth": "20px", "sType": "html", "bSortable": false}
-					]
-				} );
-			} );
-		</script>';
-			lentele($lang['admin']['download_unpublished'], "<form id=\"siuntssch\" method=\"post\"><div id=\"news\">".$bla->render($info)."</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
 
+			lentele($lang['admin']['download_unpublished'], "<form id=\"siuntssch\" method=\"post\"><div id=\"news\">".$bla->render($info)."</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
+if ($viso > $limit)
+	lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
+	
 		} else {
 			klaida($lang['system']['warning'], $lang['system']['no_items']);
 		}

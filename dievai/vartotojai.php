@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @Projektas: MightMedia TVS
  * @Puslapis: www.coders.lt
- * @$Author: FDisk $
+ * @$Author: FDisk & ire - zlotas - Aivaras Čenkus $
  * @copyright CodeRS ©2008
  * @license GNU General Public License v2
  * @$Revision: 362 $
@@ -13,10 +12,11 @@ if (!defined("LEVEL") || LEVEL > 1 || !defined("OK")) {
 	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 include_once (ROOT . "priedai/class.php");
-if (!isset($_GET['v']))
-	$_GET['v'] = 1;
-
-
+if (!isset($_GET['v']))	$_GET['v'] = 1;
+//Puslapiavimui
+if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) $p = (int)$url['p']; else $p = 0;
+$limit = 15;
+//
 $buttons = "<div class=\"btns\">
 	<a href=\"" . url("?id,{$_GET['id']};a,{$_GET['a']};v,1") . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/users.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['user_list']}</span></a>
 	<a href=\"" . url("?id,{$_GET['id']};a,{$_GET['a']};v,4") . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/users__arrow.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['user_find']}</span></a>
@@ -68,6 +68,7 @@ if (isset($_POST['action']) && $_POST['action'] == $lang['admin']['save'] && $_P
 
 //Jei redaguojam
 if (isset($url['r']) && $url['r'] != "" && $url['r'] != 0) {
+
 	$info = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $url['r'] . "'" . ($_SESSION['id'] == 1 ? '' : ' AND `levelis` > 1') . " LIMIT 1");
 	if ($info) {
 		$lygiai2 = array_keys($conf['level']);
@@ -103,69 +104,55 @@ if (isset($_GET['v']) && $_GET['v'] == 1) {
 	lentele($lang['admin']['user_groups'], $grupe);
 
 	if (isset($_GET['k'])) {
-
-		if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
-			$p = escape(ceil((int) $url['p']));
-		} else {
-			$p = 0;
-		}
-		$limit = 50;
-		//vartotoju sarasas pagal esamą levelį
-		//$sql = mysql_query1("SELECT id, INET_NTOA(ip) AS ip, reg_data, login_data, gim_data, nick, vardas, pavarde, email,levelis FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=" . escape((int) $_GET['k']) . " LIMIT $p, $limit");
-		$sql = mysql_query1("SELECT id, INET_NTOA(ip) AS ip, reg_data, login_data, gim_data, nick, vardas, pavarde, email,levelis FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=" . escape((int) $_GET['k']));
+//vartotoju sarasas pagal esamą levelį
+///FILTRAVIMAS
+$sql = mysql_query1("SELECT *, INET_NTOA(ip) AS ip FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=" . escape((int) $_GET['k'])." ".(isset($_POST['nick'])? "AND (`nick` LIKE " . escape("%" . $_POST['nick'] . "%") . " ".(!empty($_POST['ip'])? " AND `ip` LIKE " . escape(sprintf("%u", ip2long($_POST['ip']))) . "":"")."".(!empty($_POST['email'])? " AND `email` LIKE " . escape("%" . $_POST['email'] . "%") . "":"").")"  : "")." ORDER BY id DESC LIMIT {$p},{$limit}");
+if(isset($_POST['nick']) && $_POST['ip'] && $_POST['email']) {
+$val = array($_POST['nick'], $_POST['ip'], $_POST['email']);
+} else {
+$val = array("","","",);
+}
+$info2[] = array("<form method=\"post\">",
+$lang['admin']['user_name'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"nick\" />",
+ "IP <img src='../images/icons/help.png' title='<b>{$lang['system']['warning']}</b><br/>{$lang['admin']['user_ip_filter']}'>" => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"ip\" />",
+ $lang['admin']['user_email'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"email\" />",
+ " " => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" /></form>");
+//FILTRAVIMAS
 		$i = 0;
-		$viso = kiek("users", "WHERE levelis=" . escape($_GET['k']));
+$viso = kiek("users", "WHERE levelis=" . escape($_GET['k']));
 
 		if (sizeof($sql) > 0) {
 			foreach ($sql as $row2) {
 				$i++;
-				$info2[] = array(
-					//"<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('usersch');\" />" => "<input type=\"checkbox\" value=\"{$row2['id']}\" name=\"news_delete[]\" />",
+				$info2[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />" => "<input type=\"checkbox\" value=\"{$row2['id']}\" name=\"articles_delete[]\" />", 
 					$lang['admin']['user_name'] => user($row2['nick'], $row2['id'], $row2['levelis']),
 					"IP" => $row2['ip'],
-					$lang['admin']['user_email'] => preg_replace("#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)#i", "<a href=\"javascript:mailto:mail('\\1','\\2');\">\\1_(at)_\\2</a>", $row2['email']),
-					$lang['admin']['action'] => "<a href='" . url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id']) . "'title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url("d," . $row2['id']) . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url("?id," . $_GET['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row2['ip']) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
+					$lang['admin']['user_email'] => "".$row2['email']."",
+					" " => "<a href='" . url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id']) . "'title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url("d," . $row2['id']) . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url("?id," . $_GET['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row2['ip']) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
 				);
 			}
 			$bla = new Table();
 
-			echo '<style type="text/css" title="currentStyle">
-			@import "' . ROOT . 'javascript/table/css/demo_page.css";
-			@import "' . ROOT . 'javascript/table/css/demo_table.css";
-			</style>
-			<script type="text/javascript" language="javascript" src="' . ROOT . 'javascript/table/js/jquery.dataTables.js"></script>
-			<script type="text/javascript" charset="utf-8">
-				$(document).ready(function() {
-					$(\'#comments table\').dataTable( {
-			  "bInfo": false,
-			  //"bProcessing": true,
-						"aoColumns": [
-							//{ "bSearchable": false, "sWidth": "10px", "sType": "html", "bSortable": false},
-							{ "sType": "string" },
-							{ "sType": "numeric" },
-							{ "sType": "html" },
-							{ "sWidth": "20px", "sType": "html", "bSortable": false}
-						]
-					} );
-				} );
-			</script>';
 
-			lentele($conf['level'][$_GET['k']]['pavadinimas'] . " ($viso)", "<form id=\"usersch\" method=\"post\"><div id=\"comments\">" . $bla->render($info2) . "</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
-			/*if ($viso > $limit) {
-				lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
-			}*/
+			lentele($conf['level'][$_GET['k']]['pavadinimas'] . " ({$viso})", "<form id=\"usersch\" method=\"post\">" . $bla->render($info2) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>");
+if ($viso > $limit) 
+	lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
+			
 			unset($info2, $i, $bla);
 		}
 	}
 }
 if (isset($_GET['v']) && $_GET['v'] == 4) {
-	$text = "<form name='rasti' method='post' id='rasti' action=''>{$lang['admin']['user_name']}: <input type='text' name='vardas'><input name='rasti' type='submit' value='{$lang['admin']['user_find']}'></form>";
+	$text = "<form name='rasti' method='post' id='rasti' action=''>{$lang['admin']['user_name']}: <input type='text' name='vardas'> <input name='rasti' type='submit' value='{$lang['admin']['user_find']}'></form>";
 	lentele("{$lang['admin']['user_find']}", $text);
 	if (isset($_POST['rasti']) && isset($_POST['vardas'])) {
 		$resultas = mysql_query1("SELECT *, INET_NTOA(ip) AS ip FROM `" . LENTELES_PRIESAGA . "users` WHERE nick LIKE " . escape("%" . $_POST['vardas'] . "%") . "LIMIT 0,100");
 		if (sizeof($resultas) > 0) {
 			foreach ($resultas as $row2) {
-				$info3[] = array($lang['admin']['user_name'] => user($row2['nick'], $row2['id'], $row2['levelis']), "IP" => $row2['ip'], "{$lang['admin']['user_email']}" => preg_replace("#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)#i", "<a href=\"javascript:mailto:mail('\\1','\\2');\">\\1_(at)_\\2</a>", $row2['email']), "{$lang['admin']['action']}" => "<a href='" . url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id']) . "'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url("d," . $row2['id']) . "' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url("?id," . $_GET['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row2['ip']) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>");
+				$info3[] = array($lang['admin']['user_name'] => user($row2['nick'], $row2['id'], $row2['levelis']), 
+				"IP" => $row2['ip'], 
+				"{$lang['admin']['user_email']}" => "".$row2['email']."", 
+				" " => "<a href='" . url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id']) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url("d," . $row2['id']) . "' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url("?id," . $_GET['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row2['ip']) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>");
 			}
 			$bla = new Table();
 			lentele($lang['admin']['user_list'], $bla->render($info3));

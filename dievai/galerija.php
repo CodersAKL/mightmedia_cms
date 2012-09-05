@@ -13,22 +13,54 @@
 if (!defined("OK") || !ar_admin(basename(__file__))) {
 	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
+//Jog veiktų normaliai tenka čia talpinti :) - FANCYBOX
+echo'
+	<!-- Add jQuery library -->
+	<script type="text/javascript" src="../javascript/jquery/fancybox/jquery-1.7.2.min.js"></script>
+	<!-- Add mousewheel plugin (this is optional) -->
+	<script type="text/javascript" src="../javascript/jquery/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
+	<!-- Add fancyBox main JS and CSS files -->
+	<script type="text/javascript" src="../javascript/jquery/fancybox/jquery.fancybox.js?v=2.0.6"></script>
+	<link rel="stylesheet" type="text/css" href="../stiliai/jquery.fancybox.css?v=2.0.6" media="screen" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".fancybox").fancybox();
+			// Remove padding, set opening and closing animations, close if clicked and disable overlay
+			$(".fancybox-effects-d").fancybox({
+				padding: 0,
+				openEffect : "elastic",
+				openSpeed  : 150,
+				closeEffect : "elastic",
+				closeSpeed  : 150,
+				closeClick : true,
+				helpers : {
+					overlay : {
+						css : {
+							"background" : "#fff"
+						}
+					}
+				}
+			});
+		});
+	</script>
+        <script type="text/javascript" src="js/superfish.js"></script>
+		<script src="js/jquery.treeview.js" type="text/javascript"></script>
+	';
 //ini_set("memory_limit", "50M");
-if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
-	$p = escape(ceil((int)$url['p']));
-} else {
-	$p = 0;
-}
+//Puslapiavimui
+if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) $p = (int)$url['p']; else $p = 0;
+$limit = 15;
+//
 if(count($_GET) < 3) $_GET['v'] = 1;
 $buttons="
 <div id=\"admin_menu\" class=\"btns\">
 	<a class=\"btn\" href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,6")."\"><span><img src=\"".ROOT."images/icons/photo_album__arrow.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_conf']}</span></a>
 	<a class=\"btn\" href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,7")."\"><span><img src=\"".ROOT."images/icons/picture__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_unpublished']}</span></a>
 	<a class=\"btn\" href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,1")."\"><span><img src=\"".ROOT."images/icons/picture__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_add']}</span></a>
-		".($_SESSION['level'] == 1 ? "<a class=\"btn\" href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,9")."\"><span><img src=\"".ROOT."images/icons/pictures__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_group_add']}</span></a>":"")."
+	".($_SESSION['level'] == 1 ? "<a class=\"btn\" href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,9")."\"><span><img src=\"".ROOT."images/icons/pictures__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_group_add']}</span></a>":"")."
 	<a class=\"btn\" href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,8")."\"><span><img src=\"".ROOT."images/icons/picture__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_edit']}</span></a>
-	<a class=\"btn\" href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,2")."\"><span><img src=\"".ROOT."images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
-	<a class=\"btn\" href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,3")."\"><span><img src=\"".ROOT."images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>
+	<a class=\"btn\" href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,2")."\"><span><img src=\"".ROOT."images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_photoalbum_cr']}</span></a>
+	<a class=\"btn\" href=\"".url("?id,{$_GET['id']};a,{$_GET['a']};v,3")."\"><span><img src=\"".ROOT."images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_photoalbum_ed']}</span></a>
 	
 </div>";
 
@@ -48,10 +80,8 @@ kategorija("galerija", true);
 $kategorijos = cat('galerija', 0);
 $kategorijos[0] = "--";
 //foto aktyvavimas
-if (isset($_GET['p'])) {
-	$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "galerija` SET rodoma='TAIP' 
-			WHERE `id`=" . escape($_GET['p']) . ";
-			");
+if (isset($_GET['priimti'])) {
+	$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "galerija` SET rodoma='TAIP' WHERE `id`=" . escape($_GET['priimti']) . ";");
 	if ($result) {
 		msg($lang['system']['done'], "{$lang['admin']['gallery_activated']}.");
 	} else {
@@ -73,20 +103,15 @@ if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete']  &
 		@unlink(ROOT."images/galerija/originalai/" . $row['file']);
 	}
 	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "galerija` WHERE id=" . escape($trinti) . " LIMIT 1");
-
-
 	if (mysql_affected_rows() > 0) {
 		msg($lang['system']['done'], $lang['admin']['gallery_deleted']);
 	} else {
 		klaida("{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>");
 	}
-
 	mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/galerija' AND kid=" . escape($trinti) . "");
 	//redirect("?id,".$_GET['id'].";a,".$_GET['a'],"header");
-}
-
 //foto redagavimas
-elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit_new'] > 0)) || isset($url['h'])) {
+} elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit_new'] > 0)) || isset($url['h'])) {
 	if (isset($url['h'])) {
 		$redaguoti = (int)$url['h'];
 	} elseif (isset($_POST['edit_new'])) {
@@ -101,11 +126,12 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 	$pavadinimas = strip_tags($_POST['Pavadinimas']);
 	$kategorija = (int)$_POST['cat'];
 	$id = ceil((int)$_POST['news_id']);
-	$komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'TAIP' ? 'TAIP' : 'NE');
-
-
+	$komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
+	$rodymas = (isset($_POST['rodoma']) ? $_POST['rodoma'] : 'TAIP');
 	$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "galerija` SET
 			`pavadinimas` = " . escape($pavadinimas) . ",
+			`kom` = " . escape($komentaras) . ",
+			`rodoma` = " . escape($rodymas) . ",
 			`categorija` = " . escape($kategorija) . ",
 			`apie` = " . escape($apie) . "
 			WHERE `id`=" . escape($id) . ";
@@ -250,8 +276,9 @@ elseif (((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit
 
 				move_uploaded_file($file_tmp, $big_img."/originalai/".$rand_name.$ext);
             chmod($big_img."/originalai/".$rand_name.$ext,0777);
-
-				$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`, `lang`) VALUES (" . escape($_POST['Pavadinimas']) . "," . escape($rand_name . $ext) . "," . escape(strip_tags($_POST['Aprasymas'])) . "," . escape($_SESSION['id']) . ",'" . time() . "'," . escape($_POST['cat']) . ",'TAIP', ".escape(lang()).")");
+	            $komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
+	            $rodymas = (isset($_POST['rodoma']) ? $_POST['rodoma'] : 'TAIP');
+				$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`,`kom`, `lang`) VALUES (" . escape($_POST['Pavadinimas']) . "," . escape($rand_name . $ext) . "," . escape(strip_tags($_POST['Aprasymas'])) . "," . escape($_SESSION['id']) . ",'" . time() . "'," . escape($_POST['cat']) . "," . escape($rodymas) . "," . escape($komentaras) . ", ".escape(lang()).")");
 
 				if ($result) {
 					msg($lang['system']['done'], "{$lang['admin']['gallery_added']}");
@@ -277,87 +304,43 @@ if (isset($_GET['v'])) {
          $text .= "<li class=\"drag_block\"><a href=\"".url('?id,'.$_GET['id'].';a,'.$_GET['a'].';v,8;k,'.$id)."\">".str_replace('-', '&nbsp;&nbsp;', $kategorija)."</a></li>";
       }
       $text .= "</ul></fieldset>";
-		$limit = 10;		
-		$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "galerija` WHERE `lang` = ".escape(lang())." AND `categorija`=".escape((isset($_GET['k'])? $_GET['k'] : 0))." ORDER BY `".$conf['galorder']."` ".$conf['galorder_type']);
+$viso = kiek('galerija', "WHERE `rodoma` = 'TAIP' AND `lang` = ".escape(lang())." AND `categorija`=".escape((isset($_GET['k'])? $_GET['k'] : 0))."");
+$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "galerija` WHERE `rodoma` = 'TAIP' AND `lang` = ".escape(lang())." AND `categorija`=".escape((isset($_GET['k'])? $_GET['k'] : 0))." ORDER BY `".$conf['galorder']."` ".$conf['galorder_type']." LIMIT {$p},{$limit}");
 //foto pagal kategorijas rodymas
 		if (sizeof($sql2) > 0) {
-
-			$text .= "<table width=\"80%\" border=\"0\">
-	<tr>
-		<td >
-";
-
+			$text .= "<table width=\"80%\" border=\"0\"><tr><td>";
 			foreach ($sql2 as $row2) {
-				if (isset($row['Nick'])) {
-					$autorius = $row2['Nick'];
-				} else {
-					$autorius = $lang['system']['guest'];
-				}
-//Jog veiktų normaliai tenka čia talpinti :)
-				$text.='
-	<!-- Add jQuery library -->
-	<script type="text/javascript" src="../javascript/jquery/fancybox/jquery-1.7.2.min.js"></script>
-	<!-- Add mousewheel plugin (this is optional) -->
-	<script type="text/javascript" src="../javascript/jquery/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
-	<!-- Add fancyBox main JS and CSS files -->
-	<script type="text/javascript" src="../javascript/jquery/fancybox/jquery.fancybox.js?v=2.0.6"></script>
-	<link rel="stylesheet" type="text/css" href="../stiliai/jquery.fancybox.css?v=2.0.6" media="screen" />
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$(".fancybox").fancybox();
-			// Remove padding, set opening and closing animations, close if clicked and disable overlay
-			$(".fancybox-effects-d").fancybox({
-				padding: 0,
-				openEffect : "elastic",
-				openSpeed  : 150,
-				closeEffect : "elastic",
-				closeSpeed  : 150,
-				closeClick : true,
-				helpers : {
-					overlay : {
-						css : {
-							"background" : "#fff"
-						}
-					}
-				}
-			});
-		});
-	</script>
-        <script type="text/javascript" src="js/superfish.js"></script>
-		<script src="js/jquery.treeview.js" type="text/javascript"></script>
-	';
-				$text .= "
-			<div class=\"gallery img_left\" >
-				<a class=\"fancybox-effects-d\" href=\"".ROOT."images/galerija/" . $row2['file'] . "\" title=\"" . (!empty($row2['pavadinimas'])?$row2['pavadinimas'] . "<br>":'') . trimlink(strip_tags($row2['apie']), 50) . "\">
-					<img src=\"".ROOT."images/galerija/mini/" . $row2['file'] . "\" alt=\"\" />
-				</a>
-				<div class='gallery_menu'>
-					<a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date('Y-m-d H:i:s ', $row2['data']) . "\"><img src='".ROOT."images/icons/information.png' border='0' alt='info' /></a>
-					<a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row2['ID'] ). "\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('".url("?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row2['ID']). "'); $(this).parent().parent().remove(); return false } else { return false }\" title=\"{$lang['admin']['delete']}\"><img src='".ROOT."images/icons/cross.png'  border='0'></a>
-				    <a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";h," . $row2['ID'] ). "\" title=\"{$lang['admin']['edit']}\"><img src='".ROOT."images/icons/picture_edit.png'  border='0'></a>";
-					$text .= "
-				</div>
-				<div class='gallery_title'>
-					" . trimlink((!empty($row2['pavadinimas'])?$row2['pavadinimas']:''),10) . "
-				</div>
-			</div>
-		";
+$text .= "<div class=\"gallery img_left\" >
+<a class=\"fancybox-effects-d\" href=\"".ROOT."images/galerija/" . $row2['file'] . "\" title=\"" . (!empty($row2['pavadinimas'])?$row2['pavadinimas'] . "<br>":'') . trimlink(strip_tags($row2['apie']), 50) . "\">
+<img src=\"".ROOT."images/galerija/mini/" . $row2['file'] . "\" alt=\"\" />
+</a>
+<div class='gallery_menu'>
+<a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date('Y-m-d H:i:s ', $row2['data']) . "\"><img src='".ROOT."images/icons/information.png' border='0' alt='info' /></a>
+<a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row2['ID'] ). "\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('".url("?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row2['ID']). "'); $(this).parent().parent().remove(); return false } else { return false }\" title=\"{$lang['admin']['delete']}\"><img src='".ROOT."images/icons/cross.png'  border='0'></a>
+<a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";h," . $row2['ID'] ). "\" title=\"{$lang['admin']['edit']}\"><img src='".ROOT."images/icons/picture_edit.png'  border='0'></a>";
+$text .= "</div><div class='gallery_title'>
+" . trimlink((!empty($row2['pavadinimas'])?$row2['pavadinimas']:''),10) . "
+</div></div>";
 			}
-			$text .= '</td>
-	</tr>
-</table>';
-      }
-			lentele($lang['admin']['gallery_edit'], $text);
-			$visos = kiek('galerija', "WHERE `lang` = ".escape(lang())." AND `categorija`=".escape((isset($_GET['k'])? $_GET['k'] : 0))."");
+			$text .= '</td></tr></table>';
+     } else {
+			klaida($lang['system']['warning'], $lang['system']['no_items']);
+		}
+	lentele($lang['admin']['gallery_edit'], $text);
+if ($viso > $limit)
+		lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
 		
 	} elseif ($_GET['v'] == 1 || isset($url['h'])) {
 
 		if (sizeof($sql) > 0) {
-
+        $kom = array('taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no']);
+        $rodoma = array('TAIP' => $lang['admin']['yes'], 'NE' => $lang['admin']['no']);
 			$forma = array(
 				"Form" => array("enctype" => "multipart/form-data", "action" => url("?id," . $_GET['id'] . ";a," . $_GET['a']), "method" => "post", "name" => "action"),
 				(!isset($extra)) ? "{$lang['admin']['gallery_file']}:" : "" => array("name" => "failas", "type" => (!isset($extra)) ? "file" : "hidden", "value" => ""),
 				"{$lang['admin']['gallery_title']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', "name" => "Pavadinimas"), 
+			    "{$lang['admin']['komentarai']}:" => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input"),
+			    "{$lang['admin']['article_shown']}:" => array("type" => "select", "selected" => input((isset($extra)) ? $extra['rodoma'] : ''), "value" => $rodoma, "name" => "rodoma", "class" => "input"),
 				"{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '')), 
 				"{$lang['admin']['gallery_about']}:" =>	array("type" => "textarea", "name" => "Aprasymas",  "rows" => "3", "class" => "input", "value" => (isset($extra['apie'])) ? input($extra['apie']) : ''), 
 				(isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add'])
@@ -391,9 +374,7 @@ if (isset($_GET['v'])) {
 			//"{$lang['admin']['gallery_rate']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galbalsuot']), "name" => "galbalsuot"),
 			"{$lang['admin']['gallery_comments']}:" => array("type" => "select", "value" => array("1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}"), "selected" => input($conf['galkom']), "name" => "galkom"),
 			"{$lang['admin']['gallery_images_per_page']}:" => array("type" => "text", "value" => input((int)$conf['fotoperpsl']), "name" => "fotoperpsl"),
-			
 			"{$lang['admin']['gallery_order']}:" => array("type" => "select", "selected" =>(isset($conf['galorder'])?$conf['galorder']:''), "value" => array('data' => $lang['admin']['gallery_date'], 'pavadinimas' => $lang['admin']['gallery_title'], 'autorius' => $lang['admin']['gallery_author']), "name" => "order"),
-			
 			"{$lang['admin']['gallery_order_type']}:" => array("type" => "select", "selected" =>(isset($conf['galorder_type'])?$conf['galorder_type']:''), "value" => array('DESC' => $lang['admin']['gallery_from_biggest'], 'ASC' => $lang['admin']['gallery_from_smallest']), "name" => "order_type"),
 			"" => array("type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}")
 		);
@@ -404,44 +385,36 @@ if (isset($_GET['v'])) {
 
 	} elseif ($_GET['v'] == 7) {
 
-		$q = mysql_query1("SELECT
-  `" . LENTELES_PRIESAGA . "galerija`.`pavadinimas`,
-  `" . LENTELES_PRIESAGA . "galerija`.`id` ,
-  `" . LENTELES_PRIESAGA . "galerija`.`apie`,
-  `" . LENTELES_PRIESAGA . "galerija`.`data`,
-  `" . LENTELES_PRIESAGA . "users`.`nick` AS `Nick`,
-  `" . LENTELES_PRIESAGA . "galerija`.`file`
-  FROM
-  `" . LENTELES_PRIESAGA . "galerija`
-  
-  Inner Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "galerija`.`autorius` = `" . LENTELES_PRIESAGA . "users`.`id`
-  WHERE  
-   `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'NE' 
-    ORDER BY
-  `" . LENTELES_PRIESAGA . "galerija`.`".$conf['galorder']."` ".$conf['galorder_type']."
-  ");
+$viso = kiek('galerija', "WHERE `rodoma` = 'NE' AND `lang` = ".escape(lang())." AND `categorija`=".escape((isset($_GET['k'])? $_GET['k'] : 0))."");
+$q = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "galerija` WHERE `rodoma` = 'NE' AND `lang` = ".escape(lang())." AND `categorija`=".escape((isset($_GET['k'])? $_GET['k'] : 0))." ORDER BY `".$conf['galorder']."` ".$conf['galorder_type']." LIMIT {$p},{$limit}");
 		if ($q) {
-
 			include_once (ROOT."priedai/class.php");
 			$bla = new Table();
 			$info = array();
 			if (sizeof($q) > 0) {
-				foreach ($q as $row) {
-					if (isset($row['Nick'])) {
-						$autorius = $row['Nick'];
-					} else {
-						$autorius = $lang['system']['guest'];
-					}
-
-					$info[] = array( //"ID"=> $row['ID'],
-						"{$lang['admin']['gallery_image']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']}")."' title='<img src=".ROOT."images/galerija/" . $row['file'] . "><br><b>{$lang['admin']['gallery_author']}:</b> " . $autorius . "<br>
-		<b>{$lang['admin']['gallery_date']}:</b> " . date('Y-m-d H:i:s ', $row['data']) . "<br>
-		<b>{$lang['admin']['gallery_about']}:</b> " . $row['apie'] . "'>" . $row['pavadinimas'] . " ...</a>", "{$lang['admin']['action']}:" => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $row['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/picture_edit.png' border='0'></a>");
-
-				}
-				lentele($lang['admin']['gallery_unpublished'], $bla->render($info));
-
+$text = "<table width=\"80%\" border=\"0\"><tr><td>";
+		foreach ($q as $row) {
+$text .= "<div class=\"gallery img_left\" >
+<a class=\"fancybox-effects-d\" href=\"".ROOT."images/galerija/" . $row['file'] . "\" title=\"" . (!empty($row['pavadinimas'])?$row['pavadinimas'] . "<br>":'') . trimlink(strip_tags($row['apie']), 50) . "\">
+<img src=\"".ROOT."images/galerija/mini/" . $row['file'] . "\" alt=\"\" />
+</a>
+<div class='gallery_menu'>
+<a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date('Y-m-d H:i:s ', $row['data']) . "\"><img src='".ROOT."images/icons/information.png' border='0' alt='info' /></a>
+<a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row['ID'] ). "\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('".url("?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row['ID']). "'); $(this).parent().parent().remove(); return false } else { return false }\" title=\"{$lang['admin']['delete']}\"><img src='".ROOT."images/icons/cross.png'  border='0'></a>
+<a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";h," . $row['ID'] ). "\" title=\"{$lang['admin']['edit']}\"><img src='".ROOT."images/icons/picture_edit.png'  border='0'></a>";
+$text .= "</div><div class='gallery_title'>
+" . trimlink((!empty($ro2['pavadinimas'])?$row['pavadinimas']:''),10) . "
+</div></div>";
 			}
+			$text .= '</td></tr></table>';
+
+lentele($lang['admin']['gallery_unpublished'], $text);
+
+if ($viso > $limit)
+		lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
+			}
+		} else {
+			klaida($lang['system']['warning'], $lang['system']['no_items']);
 		}
 	} elseif ($_GET['v'] == 9 && $_SESSION['level'] == 1){
       $text = "

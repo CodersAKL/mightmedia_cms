@@ -13,6 +13,10 @@
 if (!defined("LEVEL") || LEVEL > 1 || ! defined("OK")) {
     redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
+//Puslapiavimui
+if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) $p = (int)$url['p']; else $p = 0;
+$limit = 15;
+//
 include_once (ROOT . "priedai/class.php");
 //trinam irasa
 if (isset($url['d']) && isnum($url['d']) && $_SESSION['level'] == 1) {
@@ -36,18 +40,9 @@ if (!empty($url['t'])) {
     header("location: " . url("?id," . $url['id'] . ";a,{$_GET['a']}"));
 //rodom zurnala
 } else {
-    if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
-        $p = escape(ceil((int) $url['p']));
-    } else {
-        $p = 0;
-    }
-    
-    $limit = 35;
     $viso = kiek("logai");
-    
-    $sql = mysql_query1("SELECT `" . LENTELES_PRIESAGA . "logai`.`id`, INET_NTOA(`" . LENTELES_PRIESAGA . "logai`.`ip`) as ip, `" . LENTELES_PRIESAGA . "logai`.`action`, INET_NTOA(`" . LENTELES_PRIESAGA . "logai`.`ip`) AS ip1, `" . LENTELES_PRIESAGA . "logai`.`time`,	IF(`" . LENTELES_PRIESAGA . "users`.`nick` <> '', `" . LENTELES_PRIESAGA . "users`.`nick`, 'Svečias') AS nick, IF(`" . LENTELES_PRIESAGA . "users`.`id` <> '', `" . LENTELES_PRIESAGA . "users`.`id`, '0') AS nick_id, IF(`" . LENTELES_PRIESAGA . "users`.`levelis` <> '', `" . LENTELES_PRIESAGA . "users`.`levelis`, '0') AS levelis	FROM `" . LENTELES_PRIESAGA . "logai` Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "logai`.`ip` = `" . LENTELES_PRIESAGA . "users`.`ip`	ORDER BY `id` DESC LIMIT $p, $limit");
-    
-    $viso = kiek('logai');
+    $sql = mysql_query1("SELECT `" . LENTELES_PRIESAGA . "logai`.`id`, INET_NTOA(`" . LENTELES_PRIESAGA . "logai`.`ip`) as ip, `" . LENTELES_PRIESAGA . "logai`.`action`, INET_NTOA(`" . LENTELES_PRIESAGA . "logai`.`ip`) AS ip1, `" . LENTELES_PRIESAGA . "logai`.`time`,	IF(`" . LENTELES_PRIESAGA . "users`.`nick` <> '', `" . LENTELES_PRIESAGA . "users`.`nick`, 'Svečias') AS nick, IF(`" . LENTELES_PRIESAGA . "users`.`id` <> '', `" . LENTELES_PRIESAGA . "users`.`id`, '0') AS nick_id, IF(`" . LENTELES_PRIESAGA . "users`.`levelis` <> '', `" . LENTELES_PRIESAGA . "users`.`levelis`, '0') AS levelis	FROM `" . LENTELES_PRIESAGA . "logai` Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "logai`.`ip` = `" . LENTELES_PRIESAGA . "users`.`ip`	ORDER BY `id` DESC LIMIT {$p}, {$limit}");
+
     $info = array();
 
     if (sizeof($sql) > 0) {
@@ -66,9 +61,11 @@ if (!empty($url['t'])) {
     } else {
         msg($lang['system']['warning'], $lang['admin']['logs_nologs']);
     }
-    if ($viso > $limit) {
+	
+    if ($viso > $limit) 
         lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
-    }
+   
+   
     $sql = mysql_query1("SELECT count(*) as viso, ip, INET_NTOA(ip) AS ip1 FROM `" . LENTELES_PRIESAGA . "logai` GROUP BY ip ORDER BY time DESC");
     if (sizeof($sql) > 0) {
         foreach ($sql as $row) {
