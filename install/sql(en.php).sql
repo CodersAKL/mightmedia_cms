@@ -472,9 +472,11 @@ CREATE TABLE `panel` (
 -- Dumping data for table `panel`
 --
 
-INSERT INTO `panel` VALUES(1, 'User', 'lt', 'vartotojas.php', 1, 'L', 'Taip', 'Y', 'N;');
-INSERT INTO `panel` VALUES(2, 'Menu', 'lt', 'meniu.php', 2, 'L', 'Taip', 'Y', 'N;');
-INSERT INTO `panel` VALUES(4, 'Shout Box', 'lt', 'shoutbox.php', 3, 'R', 'Taip', 'Y', 'N;');
+INSERT INTO `panel` VALUES(1, 'Whats new?', 'lt', 'kas_naujo.php', 1, 'R', 'Taip', 'Y', 'N;');
+INSERT INTO `panel` VALUES(2, 'User', 'lt', 'vartotojas.php', 2, 'R', 'Taip', 'Y', 'N;');
+INSERT INTO `panel` VALUES(3, 'Shout Box', 'lt', 'reksniu_deze.php', 3, 'R', 'Taip', 'Y', 'N;');
+INSERT INTO `panel` VALUES(4, 'Calendar', 'lt', 'kalendorius.php', 4, 'L', 'Taip', 'Y', 'N;');
+INSERT INTO `panel` VALUES(5, 'Menu', 'lt', 'meniu.php', 5, 'L', 'Taip', 'Y', 'N;');
 
 -- --------------------------------------------------------
 

@@ -441,11 +441,11 @@ CREATE TABLE `panel` (
 -- Dumping data for table `panel`
 --
 
-INSERT INTO `panel` VALUES(1, 'Narys', 'lt', 'vartotojas.php', 1, 'L', 'Taip', 'Y', 'N;');
-INSERT INTO `panel` VALUES(2, 'Meniu', 'lt', 'meniu.php', 2, 'L', 'Taip', 'Y', 'N;');
-INSERT INTO `panel` VALUES(3, 'Kalendorius', 'lt', 'kalendorius.php', 3, 'R', 'Taip', 'Y', 'N;');
-INSERT INTO `panel` VALUES(4, 'Rėksnių dėžė', 'lt', 'shoutbox.php', 4, 'R', 'Taip', 'Y', 'N;');
-
+INSERT INTO `panel` VALUES(1, 'Kas naujo?', 'lt', 'kas_naujo.php', 1, 'R', 'Taip', 'Y', 'N;');
+INSERT INTO `panel` VALUES(2, 'Narys', 'lt', 'vartotojas.php', 2, 'R', 'Taip', 'Y', 'N;');
+INSERT INTO `panel` VALUES(3, 'Rėksnių dėžė', 'lt', 'reksniu_deze.php', 3, 'R', 'Taip', 'Y', 'N;');
+INSERT INTO `panel` VALUES(4, 'Kalendorius', 'lt', 'kalendorius.php', 4, 'L', 'Taip', 'Y', 'N;');
+INSERT INTO `panel` VALUES(5, 'Meniu', 'lt', 'meniu.php', 5, 'L', 'Taip', 'Y', 'N;');
 -- --------------------------------------------------------
 
 --
