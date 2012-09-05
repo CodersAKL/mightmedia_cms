@@ -259,12 +259,13 @@ table tr td {
 	margin: 5px
 }
 /* Title lentelë iðokanti pelæ uþvedus ant nuorodos su pavadinimu (title="") */
-.tooltip{
+.tooltip {
+    max-width: 300px;
 	padding: 3px;
 	border: 1px solid #666;
 	display: none;
 	background: #d6d6d6;
-	color: #666;
+	color: #fff;
 	font: 11px Arial, Helvetica, sans-serif;
 	text-align: left;
 	position: absolute;
