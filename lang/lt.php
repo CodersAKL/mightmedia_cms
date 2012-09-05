@@ -2,6 +2,11 @@
 //Papildymas - antras
 $lang['user']['profile'] = 'Mano profilis';
 $lang['admin']['poll_active_q'] = 'Aktyvumas';
+$lang['gallery']['subphotoalbum/photoalbum'] = 'Fotoalbumas/ Subfotoalbumas';
+$lang['gallery']['nophotoalbums'] = 'Nėra fotoalbumų';
+$lang['gallery']['photoalbum'] = 'Fotoalbumas';
+$lang['admin']['gallery_photoalbum_up'] = 'Fotoalbumas atnaujintas';
+$lang['admin']['gallery_photoalbum_del'] = 'Fotoalbumas pašalintas';
 $lang['admin']['gallery_photoalbum_cr'] = 'Sukurti fotoalbumą';
 $lang['admin']['gallery_photoalbum_ed'] = 'Redaguoti fotoalbumą';
 $lang['admin']['filtering'] = 'Filtruoti';
