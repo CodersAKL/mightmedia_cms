@@ -223,7 +223,7 @@ if ($viso > $limit)
 			$lang['admin']['news_name'] => array("type" => "text", "value" => input((isset($extra)) ? $extra['pavadinimas'] : ''), "name" => "pav", "class" => "input"),
 			$lang['admin']['komentarai'] => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input"),
 			$lang['admin']['article_shown'] => array("type" => "select", "selected" => input((isset($extra)) ? $extra['rodoma'] : ''), "value" => $rodoma, "name" => "rodoma", "class" => "input"),
-			$lang['admin']['news_category'] => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '')),
+			$lang['admin']['news_category'] => array("type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "selected" => (isset($extra['kategorija']) ? input($extra['kategorija']) : '0')),
 			//more
 			"<a href=\"javascript:rodyk('more')\">{$lang['admin']['news_moreoptions']}</a>" => array("type" => "string", "value" => "<div id=\"more\" style=\"display: none;\">
 			" . ((!isset($extra) && isset($conf['puslapiai']['naujienlaiskiai.php']['id'])) ? $lang['news']['newsletter?'] . " <input type=\"checkbox\" name=\"letter\" /><br />" : '') . " 
