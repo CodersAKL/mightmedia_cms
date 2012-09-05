@@ -17,7 +17,7 @@ if (isset($_SESSION['id']) && $_SESSION['id']) {
 		if (isset($_FILES) && isset($_POST['Pavadinimas']) && isset($_POST['Aprasymas'])) {
     //Tasku pridejimas uz siuntini nutrinkite // noredami kad veiktu    
     //mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai+2 WHERE nick=" . escape($_SESSION['username']) . " AND `id` = " . escape($_SESSION['id']) . "");
-	/
+	//
 			function upload($file, $file_types_array = array("BMP", "JPG", "PNG", "PSD", "ZIP"), $upload_dir = "siuntiniai") {
 				if ($_FILES["$file"]["name"] != "") {
 					$origfilename = $_FILES["$file"]["name"];

@@ -13,7 +13,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'Pateikti') {
     if (isset($_POST['pav']) && isset($_POST['str'])) {
     //Tasku pridejimas uz siuntini nutrinkite // noredami kad veiktu    
     //mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai+2 WHERE nick=" . escape($_SESSION['username']) . " AND `id` = " . escape($_SESSION['id']) . "");
-	/
+	//
     $straipsnis = explode('===page===',$_POST['str']);
     $apr = $straipsnis[0];
     $str = empty($straipsnis[1])?'':$straipsnis[1];

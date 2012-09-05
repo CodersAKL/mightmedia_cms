@@ -15,7 +15,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'Pateikti') {
 	if (isset($_POST['naujiena']) && isset($_POST['pav'])) {
     //Tasku pridejimas uz siuntini nutrinkite // noredami kad veiktu    
     //mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai+2 WHERE nick=" . escape($_SESSION['username']) . " AND `id` = " . escape($_SESSION['id']) . "");
-	/
+	//
 	$naujiena = explode('===page===', $_POST['naujiena']);
 	$izanga = $naujiena[0];
 	$placiau = empty($naujiena[1]) ? '' : $naujiena[1];

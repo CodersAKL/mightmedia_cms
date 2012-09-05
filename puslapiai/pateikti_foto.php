@@ -18,7 +18,7 @@ if (isset($_SESSION['id']) && $_SESSION['id']) {
 		if (isset($_POST['Aprasymas']) && isset($_POST['Pavadinimas'])) {
     //Tasku pridejimas uz siuntini nutrinkite // noredami kad veiktu    
     //mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai+2 WHERE nick=" . escape($_SESSION['username']) . " AND `id` = " . escape($_SESSION['id']) . "");
-	/
+	//
 			if (isset($_FILES['failas']['name'])) {
 
 		$big_img = ROOT."images/galerija/";			//Kur bus saugomi didesni paveiksliukai
