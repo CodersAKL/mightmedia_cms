@@ -242,8 +242,15 @@ function utf8_substr( $str, $start ) {
  */
 function adresas() {
 
-	//NEVEIKIA :/
-	return "http://" . $_SERVER["HTTP_HOST"] . preg_replace( "/[^\/]*$/", "", $_SERVER["PHP_SELF"] );
+	if (isset($_SERVER['HTTP_HOST'])) {
+		$adresas = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off' ? 'https' : 'http';
+		$adresas .= '://'. $_SERVER['HTTP_HOST'];
+		$adresas .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+	} else {
+		$adresas = 'http://localhost/';
+	}
+
+	return $adresas;
 }
 
 /**
@@ -613,7 +620,7 @@ function user( $user, $id = 0, $level = 0, $extra = FALSE ) {
  *
  * @param string $query
  * @param int $lifetime
- * @return resource
+ * @return array
  */
 function mysql_query1( $query, $lifetime = 0 ) {
 
@@ -663,7 +670,6 @@ function mysql_query1( $query, $lifetime = 0 ) {
 			}
 			// Baigiam failo įrašymą
 			fclose( $fh );
-			$return = $return;
 		}
 
 		return $return;
