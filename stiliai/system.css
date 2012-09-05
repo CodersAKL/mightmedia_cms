@@ -50,10 +50,6 @@ hr, fieldset{
 	margin: 2px;
 	border: 1px dotted #CCC;
 }
-/* Editoriaus Laukui redaguoti*/
-.editorius{
-    width: 370px;
-}
 input, textarea, button, select {
     outline: none;
 	font-family : Verdana, Arial, Helvetica, sans-serif;
@@ -69,7 +65,7 @@ input, button, select {
 input[type="submit"], .submit, .perveiza {
     cursor: pointer;
     padding: 2px;
-	background: #e6e6e6 url(images/hover.png) repeat-x;
+	background: #e6e6e6;
 	border: 1px solid #6b655c;
 	color: #6b655c;
 }
@@ -118,7 +114,7 @@ input.input {
 /*Sub Meniu*/
 #navigation ul ul {
 	border: 0px;
-	background: #f8f8f8 url(images/bloko_fonas.png) repeat-x;
+	background: #f8f8f8;
 	display: none; 
 	position: absolute; 
 	left: 188px; 
@@ -221,7 +217,7 @@ a.btn:active,  a.btn:hover {
 }
 .tr2 {
 	padding: 5px;
-	background: #e5e5e5 url(images/hover.png) repeat-x;
+	background: #e5e5e5;
 	vertical-align: middle;
 	overflow: hidden
 }
@@ -259,13 +255,12 @@ table tr td {
 	margin: 5px
 }
 /* Title lentelë iðokanti pelæ uþvedus ant nuorodos su pavadinimu (title="") */
-.tooltip {
-    max-width: 300px;
+.tooltip{
 	padding: 3px;
 	border: 1px solid #666;
 	display: none;
 	background: #d6d6d6;
-	color: #fff;
+	color: #666;
 	font: 11px Arial, Helvetica, sans-serif;
 	text-align: left;
 	position: absolute;
@@ -415,60 +410,8 @@ a.siust {
 #captcha {
 	background: #f8f8f8;
 }
-
-
 /* Mightmedia pagrindinës stiliaus funkcijos */
 /* Moderavimui ir t.t. */
-.asmHighlight {
-	color : #777;
-}
-.asmSelect {
-	margin : 1em 0 0.25em 0;
-}
-.asmSelect {
-	display : inline;
-}
-.asmOptionDisabled {
-	color : #999;
-}
-.asmHighlight {
-	padding : 0;
-	margin : 0 0 0 1em;
-}
-.asmList {
-	margin : 0.25em 0 1em 0;
-	position : relative;
-	display : block;
-	padding-left : 0;
-	list-style : none;
-}
-.asmListItem {
-	position : relative;
-	margin-left : 0;
-	padding-left : 0;
-	list-style : none;
-	background : #ddd;
-	border : 1px solid #bbb;
-	/*width : 100%;*/
-	margin : 0 0 -1px 0;
-	line-height : 1em;
-}
-.asmListItem:hover {
-	background-color : #e5e5e5;
-}
-.asmListItemLabel {
-	padding : 5px;
-	display : block;
-}
-.asmListSortable .asmListItemLabel {
-	cursor : move;
-}
-.asmListItemRemove {
-	position : absolute;
-	right : 0;
-	top : 0;
-	padding : 5px;
-}
 .drag_block {
 	display : block;
 	width : 95%;
