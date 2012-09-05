@@ -1,9 +1,8 @@
 <?php
 header("content-type: application/xml; charset=UTF-8");
-require_once('priedai/conf.php');
+include_once('priedai/conf.php');
 if (isset($conf['puslapiai']['rss.php'])) {
-	if (empty($_GET['lang']))
-		$_GET['lang'] = 'lt';
+if (empty($_GET['lang'])) $_GET['lang'] = 'lt';
 echo "<?xml encoding='UTF-8'?>\n";
 ?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
 		<channel>
@@ -25,7 +24,6 @@ echo "<?xml encoding='UTF-8'?>\n";
 
 		<?php
       $result = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos`	WHERE `rodoma`= 'TAIP' AND `lang` = " . escape(basename($_GET['lang'], '.php')) . " ORDER BY `data` DESC LIMIT 50", 360);
-
       //naujienu sarasas
       foreach ($result as $row) {
         $kategorija = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` where `id`=" . escape($row['kategorija']) . " AND `lang` = " . escape(basename($_GET['lang'], '.php')) . " LIMIT 1", 360);
@@ -33,13 +31,13 @@ echo "<?xml encoding='UTF-8'?>\n";
         if ((isset($kategorija['teises']) && teises($kategorija['teises'], 0)) || !isset($kategorija['teises'])) {
           echo '<item>
                   <title><![CDATA[' . $row['pavadinimas'] . ']]></title>
-                  <link>' . adresas() . '?id,' . $conf['puslapiai']['naujienos.php']['id'] . ';k,' . $row['id'] . '</link>
+                  <link>' . adresas() . ' ' . url('?id,'.$conf['puslapiai']['naujienos.php']['id'].';k,'.$row['id'].'') . '</link>
                   <description><![CDATA[ ' . $row['naujiena'] . ' <br />' . $row['daugiau'] . ' ]]></description>
                   <author><![CDATA[' . $nickas['email'] . ' (' . $row['autorius'] . ')]]></author>
                   ' . (isset($kategorija['pavadinimas']) ? '<category>' . $kategorija['pavadinimas'] . '</category>' : '') . '
                   <pubDate>' . date('D, d M Y H:i:s O', $row['data']) . '</pubDate>
                   <source url="' . adresas() . '">' . $conf['Pavadinimas'] . ' RSS</source>
-                  <guid>' . adresas() . '?id,' . $conf['puslapiai']['naujienos.php']['id'] . ';k,' . $row['id'] . '</guid>
+                  <guid>' . adresas() . ' ' . url('?id,'.$conf['puslapiai']['naujienos.php']['id'].';k,'.$row['id'].'') . '</guid>
               </item>';
         }
       }
