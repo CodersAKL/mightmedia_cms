@@ -211,7 +211,7 @@ HTML;
 		template_external_list_url : "{$dir}htmlarea/tiny_mce/template_list.js",
 		external_link_list_url : "{$dir}htmlarea/tiny_mce/link_list.js",
 		external_image_list_url : "{$dir}htmlarea/tiny_mce/image_list.js",
-		media_external_list_url : "{$dir}htmlarea/tiny_mce/media_list.js",
+		media_external_list_url : "{$dir}htmlarea/tiny_mce/media_list.js"
 
 
 	});
@@ -403,9 +403,9 @@ HTML;
 <script type="text/javascript">
 $.getJSON('<?php echo $update_url; ?>');
 function versija(data) {
-if(<?php echo versija();?> < data.version){
+if(<?php echo versija();?> < (data.version)){
 $('#version_check').attr('class', 'msg');
-$('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><b>'+data.title+'</b> '+'' + data.version + ' - ' +'' + data.about + ' '+(data.log?'<span id="news" title="'+data.log+'">[info]</span>':'')+(data.url?' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':''));
+$('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><strong>'+data.title+'</strong> '+'' + data.version + ' - ' +'' + data.about + ' '+(data.log?'<span id="news" title="'+data.log+'">[info]</span>':'')+(data.url?' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>':''));
 }   
 }
 </script>          

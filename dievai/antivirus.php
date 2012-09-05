@@ -120,7 +120,7 @@ function virus_check($file, $defs, $debug) {
 		$data = implode("\r\n", $data);
 		$clean = 1;
 		foreach ($defs as $virus) {
-			if (stripos($data, trim($virus[1]))) {
+			if (@stripos($data, trim($virus[1]))) { //ne=inau kas 2ia blogai, pridejau eta
 				// file matches virus defs
 				$report .= '<p style="color:red;">'.$lang['admin']['antivirus_infected'].': ' . $file . ' (' . $virus[0] . ')</p>';
 				$infected++;
