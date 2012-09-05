@@ -571,7 +571,7 @@ form td{
 	position: absolute;
 	z-index: 1000;
 }
-#placeholder{width:220px;height:105px;padding-bottom:14px;}
+#placeholder{width:225px;height:125px;padding-bottom:0px;}
 
 .table{
     width: 400px;

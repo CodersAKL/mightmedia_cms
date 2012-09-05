@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 //tree
 $data2 = '';
 $res = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=" . escape(lang()) . " ORDER BY `place` ASC");
@@ -26,23 +26,37 @@ $sql = mysql_query1("SELECT count(id) as svec,
 $progresas = procentai((!empty($stats['uzvakar']) ? $stats['uzvakar'] : 1), (!empty($stats['vakar']) ? $stats['vakar'] : 1));
 $memberis = user($sql['useris'], $sql['userid'], $sql['lvl']);
 //chart
+$uzvakar = ((time() - 86400 * 2) * 1000);
+$vakar = ((time() - 86400) * 1000);
+$siandien = time() * 1000;
+/*$uzvakar = mktime(0, 0, 0, date("m"), date("d")-2, date("y"));
+$vakar = mktime(0, 0, 0, date("m"), date("d")-1, date("y"));
+$siandien  = mktime(0, 0, 0, date("m")  , date("d"), date("Y")); */
 ?>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#test').append((new Date()).getTime());
-		var d = [[<?php echo ((time() - 86400 * 2) * 1000); ?>,<?php echo $stats['uzvakar']; ?>],[<?php echo ((time() - 86400) * 1000); ?>,<?php echo $stats['vakar']; ?>],[<?php echo (time() * 1000); ?>,<?php echo $stats['siandien']; ?>]];
-		$.plot($("#placeholder"), [d], {
-			xaxis: {
-				mode: "time"
-			},
-			grid: {
-				color: "#666",
-				borderWidth: 1
-			}
-		});
-	});
-</script>
+ <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['', '<?php echo "{$lang['system']['visits']}";  ?>'],
+          [<?php echo $uzvakar;  ?>, <?php echo $stats['uzvakar']; ?>],
+          [<?php echo $vakar;  ?>,  <?php echo $stats['vakar']; ?>],
+          [<?php echo$siandien;  ?>, <?php echo $stats['siandien']; ?>]
+        ]);
 
+        var options = {
+          title: '',
+		  isStacked: true,
+		  colors: ['#FF7910'],
+          vAxis: {title: " "},
+          hAxis: {title: " "}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('placeholder'));
+        chart.draw(data, options);
+      }
+    </script>
 <?php
 //table
 $text = <<<HTM
