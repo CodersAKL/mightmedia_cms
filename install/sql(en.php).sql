@@ -397,7 +397,7 @@ INSERT INTO `nustatymai` VALUES(5, 'Palaikymas', '1');
 INSERT INTO `nustatymai` VALUES(6, 'Maintenance', 'Came back later.');
 INSERT INTO `nustatymai` VALUES(7, 'Chat_limit', '5');
 INSERT INTO `nustatymai` VALUES(8, 'News_limit', '5');
-INSERT INTO `nustatymai` VALUES(9, 'Stilius', 'default');
+INSERT INTO `nustatymai` VALUES(9, 'Stilius', 'apelsinas');
 INSERT INTO `nustatymai` VALUES(10, 'Bandymai', '3');
 INSERT INTO `nustatymai` VALUES(11, 'fotodyd', '450');
 INSERT INTO `nustatymai` VALUES(12, 'minidyd', '150');
