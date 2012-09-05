@@ -175,6 +175,7 @@ CREATE TABLE `galerija` (
   `data` int(10) DEFAULT NULL,
   `categorija` int(3) DEFAULT '1',
   `teises` varchar(2) COLLATE utf8_lithuanian_ci DEFAULT 'N;',
+  `kom` set('taip','ne') COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'taip',
   `rodoma` varchar(4) COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'NE',
   PRIMARY KEY (`ID`),
   KEY `lang` (`lang`)
