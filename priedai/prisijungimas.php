@@ -12,6 +12,11 @@
 //FDISK, nenaudok session_destroy(); ir session_unset(); šiam faile, nes jie tuo pačiu ir forumo sausainius išvalo
 //Auto Atjungimas nuo sistemos (neveikė)
 //svecio lygis = 0
+$kelias = explode('/', adresas());
+//print_r($kelias);
+define("PATH", (!empty($kelias[sizeof($kelias)-2]) ? "/{$kelias[sizeof($kelias)-2]}/" : "/"));
+define("DOM", $kelias[2]);
+//echo PATH;
 if (!isset($_SESSION['level'])) {
 	$_SESSION['level'] = 0;
 	$_SESSION['mod'] = serialize(array());
@@ -30,7 +35,7 @@ function logout() {
 	unset($_SESSION['username'], $_SESSION['password'], $_SESSION['id'], $_SESSION['level'], $_SESSION['mod']); // Isvalom sesija
 	$_SESSION['level'] = 0;
 	$_SESSION['mod'] = serialize(array());
-	setcookie("user", "", time() - 3600); // Sunaikinam sesija
+	setcookie("user", "", time() - 3600, PATH, DOM); // Sunaikinam sesija
 }
 
 //tikrinam sesija
@@ -70,7 +75,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'prisijungimas') {
 			login($linformacija3);
 			mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET `login_before`=login_data, `login_data` = '" . time() . "', `ip` = INET_ATON(" . escape(getip()) . ") WHERE `id` ='" . $linformacija3['id'] . "' LIMIT 1");
 			if (isset($_POST['Prisiminti']) && $_POST['Prisiminti'] == 'on') {
-				setcookie("user", $_SESSION['id'] . "." . koduoju($slaptas . getip() . $_SESSION['password']), time() + 60 * 60 * 24 * 30);
+				setcookie("user", $_SESSION['id'] . "." . koduoju($slaptas . getip() . $_SESSION['password']), time() + 60 * 60 * 24 * 30, PATH, DOM);
 			}
 			header("Location: " . (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : adresas()));
 		} else {
@@ -92,7 +97,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'prisijungimas') {
 //jei paspaude atsijungti
 if (isset($_GET['id']) && !empty($_GET['id']) && $_GET['id'] == $lang['user']['logout']) {
 	logout();
-	setcookie("PHPSESSID", "", time() - 3600);
+	setcookie("PHPSESSID", "", time() - 3600, PATH, DOM);
 	header("HTTP/1.0 401 Unauthorized");
 	header("Location: " . (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : adresas()));
 }
