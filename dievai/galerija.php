@@ -292,7 +292,7 @@ if (((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete']  &
 			    }
 		    }
 	} else
-           klaida($lang['system']['error'], $lang['admin']['download_toobig']);
+           klaida($lang['system']['error'], $file_name.' '.$lang['admin']['download_toobig']);
 
     }
 }
