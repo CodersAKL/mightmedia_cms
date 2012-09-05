@@ -19,21 +19,12 @@ if (isset($url['w']) && isnum($url['w']) && $url['w'] > 0) {
 } else {
 	$link = 0;
 }
-if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
-	$p = escape(ceil((int)$url['p']));
-} else {
-	$p = 0;
-}
-if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
-	$k = escape(ceil((int)$url['k']));
-} else {
-	$k = 0;
-}
+if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) $kid = (int)$url['k']; else	$kid = 0;
+if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) $p = (int)$url['p']; else $p = 0;
 //Kintamieji
 $text = '';
 $extra = '';
-$p = 0;
-
+$limit = 15;
 //Jei lankytojas paspaudžia ant nuorodos
 if (isset($link) && strlen($link) > 0 && $link > 0) {
 	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET click=click+1 WHERE `id`=" . escape($link) . " AND  `lang` = ".escape(lang())." LIMIT 1", 86400);
@@ -69,6 +60,7 @@ if (isset($info)) {
 if ($k >= 0) {
 	$teis = mysql_query1("SELECT teises FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "' AND `lang` = ".escape(lang())." LIMIT 1", 86400);
 	if (teises($teis['teises'], $_SESSION['level'])) {
+$viso = kiek("nuorodos","WHERE `active`= 'TAIP' AND `cat`=" . escape($k) . " AND `lang` = ".escape(lang())."");
 		$q = mysql_query1("SELECT `" . LENTELES_PRIESAGA . "nuorodos`.`id`,
 		`" . LENTELES_PRIESAGA . "nuorodos`.`url`,
 		`" . LENTELES_PRIESAGA . "nuorodos`.`pavadinimas`,
@@ -78,7 +70,7 @@ if ($k >= 0) {
 		`" . LENTELES_PRIESAGA . "users`.`nick`
 FROM `" . LENTELES_PRIESAGA . "nuorodos` 
 Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "nuorodos`.`nick` = `" . LENTELES_PRIESAGA . "users`.`id` WHERE `" . LENTELES_PRIESAGA . "nuorodos`.`cat`='" . $k . "' AND `" . LENTELES_PRIESAGA . "nuorodos`.`active`='TAIP' AND `" . LENTELES_PRIESAGA . "nuorodos`.`lang` = ".escape(lang())."  
-ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400);
+ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC LIMIT {$p},{$limit}", 86400);
 		if (count($q) > 0) {
 			include_once ("priedai/class.php");
 
@@ -98,6 +90,9 @@ ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400);
 
 			}
 			lentele($lang['admin']['links_links'], $bla->render($info));
+	if ($viso > $limit) {
+		lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
+	}
 		}
 	}
 }

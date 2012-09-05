@@ -10,18 +10,10 @@
  **/
 
 //nustatom pid ir kid
-if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
-	$p = escape(ceil((int)$url['p']));
-} else {
-	$p = 0;
-}
-if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
-	$k = escape(ceil((int)$url['k']));
-} else {
-	$k = 0;
-}
+if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) $kid = (int)$url['k']; else	$kid = 0;
+if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) $p = (int)$url['p']; else $p = 0;
 //kiek irasu per psl
-$limit = 50;
+$limit = $conf['News_limit'];
 $text = '';
 //Paulius svaigsta su kategoriju sarasu
 $sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`",  86400);
@@ -49,11 +41,12 @@ if (isset($info)) {
 $sql = mysql_query1("
 			SELECT *, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
 			FROM `" . LENTELES_PRIESAGA . "naujienos`
-			WHERE `rodoma`= 'TAIP' AND `kategorija`=$k 
+			WHERE `rodoma`= 'TAIP' AND `kategorija`=" . escape(=$k) . "
 			AND `lang` = ".escape(lang())."
 			ORDER BY `sticky` DESC, `data` DESC
 			LIMIT {$p},{$limit}", 86400);
-$viso = count($sql);
+//$viso = count($sql);
+$viso = kiek("naujienos","WHERE `rodoma`= 'TAIP' AND `kategorija`=" . escape($k) . " AND `lang` = ".escape(lang())."");
 if ($viso > 0) {
 	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "' AND `kieno`='naujienos' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1", 86400);
 	if ($viso > $limit) {
