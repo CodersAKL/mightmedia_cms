@@ -304,7 +304,7 @@ if (isset($_GET['v'])) {
 	include_once (ROOT."priedai/class.php");
 	$bla = new forma();
 	if ($_GET['v'] == 8) {
-      $text = "<fieldset><legend>{$lang['system']['categories']}:</legend><ul>";
+      $text = "<fieldset><legend>{$lang['admin']['gallery_photoalbums']}:</legend><ul>";
       foreach($kategorijos as $id => $kategorija){
          $text .= "<li class=\"drag_block\"><a href=\"".url('?id,'.$_GET['id'].';a,'.$_GET['a'].';v,8;k,'.$id)."\">".str_replace('-', '&nbsp;&nbsp;', $kategorija)."</a></li>";
       }
@@ -346,7 +346,7 @@ if ($viso > $limit)
 				"{$lang['admin']['gallery_title']}:" => array("type" => "text", "value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', "name" => "Pavadinimas"), 
 			    "{$lang['admin']['komentarai']}:" => array("type" => "select", "selected" => input((isset($extra)) ? $extra['kom'] : ''), "value" => $kom, "name" => "kom", "class" => "input"),
 			    "{$lang['admin']['article_shown']}:" => array("type" => "select", "selected" => input((isset($extra)) ? $extra['rodoma'] : ''), "value" => $rodoma, "name" => "rodoma", "class" => "input"),
-				"{$lang['system']['category']}:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '0')),
+				"{$lang['admin']['gallery_photoalbum']}:" => array("type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '0')),
 				"{$lang['admin']['gallery_about']}:" =>	array("type" => "textarea", "name" => "Aprasymas",  "rows" => "3", "class" => "input", "value" => (isset($extra['apie'])) ? input($extra['apie']) : ''), 
 				(isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add'] => array("type" => "submit", "name" => "action", "value" => (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add'])
 			);
@@ -443,7 +443,7 @@ $(document).ready(function() {
 	});
 });
 </script>
-      <fieldset><legend>{$lang['system']['categories']}:</legend><select id=\"cat\" onchange=\"$('#uploadify').uploadifySettings('scriptData', {'cat':$(this).val()});\" >";
+      <fieldset><legend>{$lang['admin']['gallery_photoalbums']}:</legend><select id=\"cat\" onchange=\"$('#uploadify').uploadifySettings('scriptData', {'cat':$(this).val()});\" >";
       foreach($kategorijos as $id => $kategorija){
          $text .="<option value=\"$id\" ".($id == 0 ? "selected" : "").">$kategorija";
       }
