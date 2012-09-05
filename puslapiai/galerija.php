@@ -159,7 +159,8 @@ if (!empty($url['m'])) {
   `" . LENTELES_PRIESAGA . "users`.`nick` AS `Nick`,
   `" . LENTELES_PRIESAGA . "users`.`id` AS `nick_id`,
   `" . LENTELES_PRIESAGA . "users`.`levelis` AS `levelis`,
-  `" . LENTELES_PRIESAGA . "galerija`.`file`
+  `" . LENTELES_PRIESAGA . "galerija`.`file`,
+  `" . LENTELES_PRIESAGA . "galerija`.`kom`
   FROM
   `" . LENTELES_PRIESAGA . "grupes`
   Inner Join `" . LENTELES_PRIESAGA . "galerija` ON `" . LENTELES_PRIESAGA . "grupes`.`id` = `" . LENTELES_PRIESAGA . "galerija`.`categorija`
@@ -175,6 +176,7 @@ if (!empty($url['m'])) {
 	if(empty($row['file'])) {
 		$row = mysql_query1("SELECT
   `" . LENTELES_PRIESAGA . "galerija`.`pavadinimas`,
+  `" . LENTELES_PRIESAGA . "galerija`.`kom`,
   `" . LENTELES_PRIESAGA . "galerija`.`id` AS `nid`,
   `" . LENTELES_PRIESAGA . "galerija`.`apie`,
   `" . LENTELES_PRIESAGA . "galerija`.`data`,
@@ -242,7 +244,7 @@ if (!empty($url['m'])) {
 
 			lentele($row['pavadinimas'], $text);
 
-			if ((int)$conf['galkom'] == 1) {
+			if ((int)$conf['galkom'] == 1 && $row['kom'] == 'taip') {
 				include_once ("priedai/komentarai.php");
 				komentarai($url['m']);
 			}
