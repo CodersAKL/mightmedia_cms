@@ -19,12 +19,21 @@ if (isset($url['w']) && isnum($url['w']) && $url['w'] > 0) {
 } else {
 	$link = 0;
 }
-if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) $kid = (int)$url['k']; else	$kid = 0;
-if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) $p = (int)$url['p']; else $p = 0;
+if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
+	$p = escape(ceil((int)$url['p']));
+} else {
+	$p = 0;
+}
+if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
+	$k = escape(ceil((int)$url['k']));
+} else {
+	$k = 0;
+}
 //Kintamieji
 $text = '';
 $extra = '';
-$limit = 15;
+$p = 0;
+
 //Jei lankytojas paspaudžia ant nuorodos
 if (isset($link) && strlen($link) > 0 && $link > 0) {
 	mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET click=click+1 WHERE `id`=" . escape($link) . " AND  `lang` = ".escape(lang())." LIMIT 1", 86400);
@@ -60,7 +69,6 @@ if (isset($info)) {
 if ($k >= 0) {
 	$teis = mysql_query1("SELECT teises FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "' AND `lang` = ".escape(lang())." LIMIT 1", 86400);
 	if (teises($teis['teises'], $_SESSION['level'])) {
-$viso = kiek("nuorodos","WHERE `active`= 'TAIP' AND `cat`=" . escape($k) . " AND `lang` = ".escape(lang())."");
 		$q = mysql_query1("SELECT `" . LENTELES_PRIESAGA . "nuorodos`.`id`,
 		`" . LENTELES_PRIESAGA . "nuorodos`.`url`,
 		`" . LENTELES_PRIESAGA . "nuorodos`.`pavadinimas`,
@@ -70,7 +78,7 @@ $viso = kiek("nuorodos","WHERE `active`= 'TAIP' AND `cat`=" . escape($k) . " AND
 		`" . LENTELES_PRIESAGA . "users`.`nick`
 FROM `" . LENTELES_PRIESAGA . "nuorodos` 
 Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "nuorodos`.`nick` = `" . LENTELES_PRIESAGA . "users`.`id` WHERE `" . LENTELES_PRIESAGA . "nuorodos`.`cat`='" . $k . "' AND `" . LENTELES_PRIESAGA . "nuorodos`.`active`='TAIP' AND `" . LENTELES_PRIESAGA . "nuorodos`.`lang` = ".escape(lang())."  
-ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC LIMIT {$p},{$limit}", 86400);
+ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400);
 		if (count($q) > 0) {
 			include_once ("priedai/class.php");
 
@@ -83,69 +91,26 @@ ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC LIMIT {$p},{$limit}", 
 				include_once ("rating.php");
 
 				$info[] = array(
-					$lang['admin']['link'] => '' . $extra . ' <a href="'.url('?id,' . $url['id'] . ';k,' . $k . ';w,' . $sql['id'] ). '" title="<center><b>' . input($sql['url']) . '</b><br /><img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br />' . $lang['admin']['links_author'] . ': <b>' . $sql['nick'] . '</b><br />' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . '</b><br />' . $lang['admin']['links_clicks'] . ': <b>' . input($sql['click']) . '</b>" target="_blank" rel="nofollow">' . input($sql['pavadinimas']) . '</a>',
-					$lang['admin']['links_about'] => input($sql['apie']),
-					$lang['admin']['links_rate'] => rating_form($page,$sql['id'])				);
+					$lang['admin']['link'] => '' . $extra . ' <a href="'.url('?id,' . $url['id'] . ';k,' . $k . ';w,' . $sql['id'] ). '" 
+					title="<center><b>' . input($sql['url']) . '</b><br />
+					<img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br />
+					' . $lang['admin']['links_author'] . ': <b>' . $sql['nick'] . '</b><br />
+					' . $lang['admin']['links_date'] . ': <b>' . date('Y-m-d H:i:s ', $sql['date']) . '</b><br />
+					' . $lang['admin']['links_clicks'] . ': <b>' . input($sql['click']) . '</b>" target="_blank" rel="nofollow">
+					<center><img width="50" src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /><br />' . input($sql['pavadinimas']) . '</a></center>',
+					$lang['system']['info'] => '<b>'.$lang['admin']['links_about'].': </b><br />'.$sql['apie'].'<br />
+					<div style="float:left;"><b>' . $lang['admin']['links_clicks'] . ': </b><br />' . input($sql['click']) . '</div>
+					<div style="float:right;"><b>'.$lang['admin']['links_rate'].':</b>'.rating_form($page,$sql['id']).'</div>'				);
+
 
 
 			}
 			lentele($lang['admin']['links_links'], $bla->render($info));
-	if ($viso > $limit) {
-		lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
-	}
 		}
 	}
 }
 
-if (isset($_SESSION['username']) && !empty($_SESSION['username']) && $_SESSION['level'] > 0) {
-	if (isset($_POST['Submit_link']) && !empty($_POST['Submit_link']) && $_POST['Submit_link'] == $lang['admin']['links_create']) {
 
-	// Nustatom kintamuosius
-		$url = strip_tags($_POST['url']);
-		$apie = strip_tags($_POST['apie']);
-		$pavadinimas = strip_tags($_POST['name']);
-		$cat = strip_tags($_POST['kat']);
-
-		// Patikrinam
-		//$pattern = "#^(http:\/\/|https:\/\/|www\.)(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?(\/)*$#i";
-		$pattern = "#([a-z]+?)://([a-z0-9\-\.,\?!%\*_\#:;~\\&$@\/=\+]+)#si";
-		if (!preg_match($pattern, $url)) {
-			klaida($lang['system']['error'], $lang['admin']['links_bad']);
-
-		} else {
-      $exists = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `url`=".escape($url)." AND  `lang` = ".escape(lang())." LIMIT 1", 3600);
-      if(!isset($exists['id']))
-        $result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie`, `lang` ) VALUES (" . escape($cat) . ", " . escape($url) . ", " . escape($pavadinimas) . ", " . escape($_SESSION['id']) . ", '" . time() . "', " . escape($apie) . ", ".escape(lang()).");");
-       else
-         $result = true;
-			if ($result) {
-				msg($lang['system']['done'], $lang['admin']['links_sent']);
-				redirect(url("?id,{$_GET['id']};k,{$k}"), 'meta');
-			} else {
-				klaida($lang['system']['error'], $lang['admin']['links_allfields']);
-			}
-		}
-	}
-	//For ajax - get extra info about the page
-	elseif (!empty($_POST['tikrink'])) {
-		$info = svetaines_info(strip_tags($_POST['tikrink']));
-		exit(clean_str(!empty($info['description'])?$info['description']:$info['title']));
-	}
-
-		include_once ("priedai/class.php");
-
-		$bla = new forma();
-		$nuorodos = array(
-			"Form" => array("action" => "", "method" => "post", "name" => "Submit_link"),
-			$lang['system']['category'] => array("type" => "select", "value" => $kategorijos, "name" => "kat"),
-			$lang['admin']['links_title'] => array("type" => "text", "value" => "", "name" => "name"),
-			"Url" => array("type" => "text", "extra" => "title=\"http://\" onchange=\"$.post('".url("?id,{$_GET['id']};ajax,1")."',{ tikrink: $(this).val() }, function(data) { $('#temp').html(data); $('#apie').val($('#temp').html())});\"", "name" => "url"), //TODO: AJAX get extra info about the page
-			$lang['admin']['links_about'] => array("type" => "textarea", "value" => "", "name" => "apie", "id" => "apie"),
-			"<div id=\"temp\" style=\"display:none\"></div>" => array("type" => "submit", "name" => "Submit_link", "value" => $lang['admin']['links_create']));
-
-		hide($lang['admin']['links_create'], $bla->form($nuorodos), true);
-}
-unset($bla, $nuorodos, $row, $sql, $cat, $url, $pavadinimas, $apie, $info, $q, $sql, $text, $link, $sqlas);
 if (count($_GET) == 1) {
 	if (kiek("nuorodos", "WHERE active='TAIP' AND `lang` = ".escape(lang())) == 0)
 		klaida($lang['system']['warning'], $lang['system']['no_content']);
