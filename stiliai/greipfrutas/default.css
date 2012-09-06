@@ -28,34 +28,43 @@ a:hover {
 }
 
 #plotis {
-    width: 902px;
+    width: 912px;
     margin: 0 auto;
 }
 
 .logo {
+    float: left;
     background: url(paveiksleliai/mm_logo.png) no-repeat;
     height: 82px;
     width: 106px;
-    margin: 0 auto;
+    margin-left: 45px;
 }
 
 .skalpas {
+    width: 200px;
     padding-top: 15px;
-    border-right: 2px solid #e69e17;
     height: 94px;
 }
 
 .sonas {
     float: right;
     background: #e69e17;
-    height: 71px;
+    height: 51px;
+    width: 2px;
+}
+
+.sonas2 {
+    margin-top: 5px;
+    float: right;
+    background: #e69e17;
+    height: 89px;
     width: 2px;
 }
 
 /* Meniu juosta*/
 #meniu_juosta {
     border-right: 2px solid #e69e17;
-    width: 698px;
+    width: 708px;
     background: #493313 url(paveiksleliai/meniu.png) repeat-x;
     float: left;
     font-family: Arial, Verdana, Tahoma, sans-serif;
@@ -88,7 +97,6 @@ a:hover {
 
 #meniu_juosta ul li a:hover, #meniu_juosta ul li .active {
     text-shadow: #493313 1px 0px 0px;
-    border: 1px solid #4933138;
     padding-top: 2px;
     padding-bottom: 7px;
     background: #8e7046 url(paveiksleliai/hover.png) repeat-x;
@@ -97,9 +105,10 @@ a:hover {
 
 #kunas {
     height: 100%;
+    margin-top: 20px;
     background: #68563d;
     float: left;
-    width: 700px;
+    width: 710px;
 }
 
 #kaire {
@@ -247,11 +256,11 @@ a:hover {
 
 #another .lygiuojam {
     margin: 0 auto;
-    width: 700px;
+    width: 710px;
 }
 
 #another .taisom {
-    width: 696px;
+    width: 706px;
     background: #68563d;
     margin-left: 101px;
     height: 2px;
@@ -658,7 +667,7 @@ table tr td {
 a.siust {
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
-    float: left;
+    /*float: left;*/
     cursor: pointer;
     background: #d2ccc3;
     border: 1px solid #CCCCCC;

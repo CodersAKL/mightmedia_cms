@@ -14,7 +14,13 @@ function remontas( $pavadinimas, $tekstas ) {
 
 	global $conf, $lang;
 	echo "<div id='plotis'>
-    <div id='kaire'><div class='skalpas'><a href='?' title='" . adresas() . "'><div class='logo'></div></a></div></div>
+    <div id='kaire'><div class='skalpas'>
+    <a href='" . adresas() . "' title='" . adresas() . "'>
+    <div class='logo'></div>
+    </a>
+    <div class='sonas2'></div>
+    </div>
+	</div>
     <div id='kunas'>
     <div id='meniu_juosta'></div>
     <div id='centras' style='width: 675px;min-height:300px;'>
