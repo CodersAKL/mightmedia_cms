@@ -14,7 +14,7 @@ if (!defined("OK") || !ar_admin(basename(__file__))) {
 	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
 }
 //Jog veiktų normaliai tenka čia talpinti :) - FANCYBOX
-echo'
+$fancybox ='
 	<!-- Add jQuery library -->
 	<script type="text/javascript" src="../javascript/jquery/fancybox/jquery-1.7.2.min.js"></script>
 	<!-- Add mousewheel plugin (this is optional) -->
@@ -313,7 +313,7 @@ $viso = kiek('galerija', "WHERE `rodoma` = 'TAIP' AND `lang` = ".escape(lang()).
 $sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "galerija` WHERE `rodoma` = 'TAIP' AND `lang` = ".escape(lang())." AND `categorija`=".escape((isset($_GET['k'])? $_GET['k'] : 0))." ORDER BY `".$conf['galorder']."` ".$conf['galorder_type']." LIMIT {$p},{$limit}");
 //foto pagal kategorijas rodymas
 		if (sizeof($sql2) > 0) {
-			$text .= "<table width=\"80%\" border=\"0\"><tr><td>";
+			$text .= $fancybox."<table width=\"80%\" border=\"0\"><tr><td>";
 			foreach ($sql2 as $row2) {
 $text .= "<div class=\"gallery img_left\" >
 <a class=\"fancybox-effects-d\" href=\"".ROOT."images/galerija/" . $row2['file'] . "\" title=\"" . (!empty($row2['pavadinimas'])?$row2['pavadinimas'] . "<br>":'') . trimlink(strip_tags($row2['apie']), 50) . "\">
@@ -397,7 +397,7 @@ $q = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "galerija` WHERE `rod
 			$bla = new Table();
 			$info = array();
 			if (sizeof($q) > 0) {
-$text = "<table width=\"80%\" border=\"0\"><tr><td>";
+$text = $fancybox."<table width=\"80%\" border=\"0\"><tr><td>";
 		foreach ($q as $row) {
 $text .= "<div class=\"gallery img_left\" >
 <a class=\"fancybox-effects-d\" href=\"".ROOT."images/galerija/" . $row['file'] . "\" title=\"" . (!empty($row['pavadinimas'])?$row['pavadinimas'] . "<br>":'') . trimlink(strip_tags($row['apie']), 50) . "\">

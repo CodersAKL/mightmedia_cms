@@ -9,6 +9,25 @@
  * @$Revision$
  * @$Date$
  * */
+ ?>
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="<?php echo ROOT;?>javascript/jquery/jquery.asmselect.js"></script>	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("select[multiple]").asmSelect({
+				addItemTarget: 'bottom',
+				animate: true,
+				highlight: true,
+				removeLabel: '<?php echo $lang['system']['delete']; ?>',					
+			   highlightAddedLabel: '<?php echo $lang['admin']['added']; ?>: ',
+			   highlightRemovedLabel: '<?php echo $lang['sb']['deleted']; ?>: ',	
+				//sortable: true
+			});
+		}); 
+	</script>
+	        <script type="text/javascript" src="js/superfish.js"></script>
+		<script src="js/jquery.treeview.js" type="text/javascript"></script>
+<?php
 //kategoriju medis
 function cat($kieno, $cat_id = 0, $space= 1, $x ='') {
 	$sql = mysql_query1('SELECT * FROM  `' . LENTELES_PRIESAGA . 'grupes` WHERE `kieno` = ' . escape($kieno) . ' and `path` = ' . escape($cat_id) . ' AND `lang` = ' . escape(lang()));
@@ -23,23 +42,6 @@ function cat($kieno, $cat_id = 0, $space= 1, $x ='') {
 //kitas š..das (neišgėręs nesuprasi), supratau ;)
 function kategorija($kieno, $leidimas = false) {
 	global $conf, $url, $lang;
-	$root = ROOT;
-	echo <<< HTML
-<script type="text/javascript" src="{$root}javascript/jquery/jquery.asmselect.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("select[multiple]").asmSelect({
-			addItemTarget: 'bottom',
-			animate: true,
-			highlight: true,
-			removeLabel: '{$lang['system']['delete']}',
-			highlightAddedLabel: '{$lang['admin']['added']}: ',
-			highlightRemovedLabel: '{$lang['sb']['deleted']}: ',
-			sortable: true
-		});
-	});
-</script>
-HTML;
 	if (empty($_GET['v'])) {
 		$_GET['v'] = 0;
 	}
@@ -237,7 +239,7 @@ if ($_GET['v'] == 2) {
 		if ($kieno == 'vartotojai') {
 			$textas = $lang['system']['grouplevel'];
 			//$puslapiai[""]="";
-			$failai = getFiles(ROOT . $conf['Admin_folder'], '.htaccess|index.php|index.html|index.htm|index.php3|conf.php|config.php|vartotojai.php|logai.php|upload.php|todo.php|paneles.php|meniu.php|komentarai.php|narsykle.php|main.php|sfunkcijos.php|pokalbiai.php|start.php|uncache.php|search.php|antivirus.php|sfunkcijos.php|style-switcher.php');
+			$failai = getFiles(ROOT . $conf['Admin_folder'], '.htaccess|index.php|index.html|index.htm|index.php3|conf.php|config.php|vartotojai.php|logai.php|upload.php|todo.php|paneles.php|meniu.php|komentarai.php|narsykle.php|main.php|sfunkcijos.php|pokalbiai.php|start.php|uncache.php|search.php|antivirus.php|sfunkcijos.php');
 			foreach ($failai as $file) {
 				if ($file['type'] == 'file') {
 
