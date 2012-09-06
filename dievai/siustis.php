@@ -44,9 +44,9 @@ $sql = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kie
     $kategorijos=cat('siuntiniai', 0);
 	}
 $kategorijos[0] = "--";
-if (isset($_GET['p'])) {
+if (isset($_GET['priimti'])) {
 	$result = mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "siuntiniai` SET rodoma='TAIP' 
-			WHERE `id`=" . escape($_GET['p']) . ";
+			WHERE `id`=" . escape($_GET['priimti']) . ";
 			");
 	if ($result) {
 		msg($lang['system']['done'], "{$lang['admin']['download_activated']}.");
@@ -276,7 +276,7 @@ $lang['download']['about'] => "<input class=\"filtrui\" type=\"text\" value=\"{$
         $lang['download']['title'] => input($sql['pavadinimas']), 
         $lang['download']['date'] => date('Y-m-d', $sql['data']), 
         $lang['download']['about'] => trimlink(strip_tags($sql['apie']), 55),
-         " " => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['ID'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' alt='a' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['ID'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['ID'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
+         " " => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};priimti," . $sql['ID'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' alt='a' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['ID'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['ID'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
 
 			}
 

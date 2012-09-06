@@ -154,7 +154,7 @@ if ($_GET['v'] == 4) {
 $table = new Table();
 ///FILTRAVIMAS
 $viso = kiek("straipsniai", "WHERE `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
-$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "straipsniai` WHERE `lang` = ".escape(lang())." ".(isset($_POST['pav'])? "AND (`pav` LIKE " . escape("%" . $_POST['pav'] . "%") . " ".(!empty($_POST['date'])? " AND `date` <= " .strtotime($_POST['date']) . "":"")." ".(!empty($_POST['t_text'])? " AND `t_text` LIKE " . escape("%" . $_POST['t_text'] . "%") . "":"").")"  : "")." AND rodoma='TAIP' ORDER BY id LIMIT {$p},{$limit}");
+$sql2 = mysql_query1("SELECT * FROM  `" . LENTELES_PRIESAGA . "straipsniai` WHERE `lang` = ".escape(lang())." ".(isset($_POST['pav'])? "AND (`pav` LIKE " . escape("%" . $_POST['pav'] . "%") . " ".(!empty($_POST['date'])? " AND `date` <= " .strtotime($_POST['date']) . "":"")." ".(!empty($_POST['t_text'])? " AND `t_text` LIKE " . escape("%" . $_POST['t_text'] . "%") . "":"").")": "")." AND rodoma='TAIP' ORDER BY id LIMIT {$p},{$limit}");
 if(isset($_POST['pav']) && $_POST['date'] && $_POST['t_text']) {
 $val = array($_POST['pav'], $_POST['date'], $_POST['t_text']);
 } else {
