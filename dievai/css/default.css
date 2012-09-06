@@ -29,7 +29,7 @@ h1,h2,h3,h4,h5,h6 {
 	font-size:100%;
 	font-weight:normal;
 }
-input, select {
+.input, select {
     outline: none;
 	background: url('../images/input.png') repeat-x;
 	border: 1px solid #D7D7D7;
