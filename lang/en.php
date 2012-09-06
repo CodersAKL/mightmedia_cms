@@ -2,6 +2,12 @@
 //Papildymas - antras
 $lang['user']['profile'] = 'My profile';
 $lang['admin']['poll_active_q'] = 'Active';
+$lang['gallery']['subphotoalbum/photoalbum'] = 'Photoalbum/ Subphotoalbum';
+$lang['gallery']['nophotoalbums'] = 'No photoalbums yet';
+$lang['gallery']['photoalbums'] = 'Photoalbums';
+$lang['gallery']['photoalbum'] = 'Photoalbum';
+$lang['admin']['gallery_photoalbum_up'] = 'Photoalbum updated';
+$lang['admin']['gallery_photoalbum_del'] = 'Photoalbum deleted';
 $lang['admin']['gallery_photoalbum_cr'] = 'Create photoalbum';
 $lang['admin']['gallery_photoalbum_ed'] = 'Edit photoalbum';
 $lang['admin']['filtering'] = 'Filter';

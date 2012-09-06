@@ -304,7 +304,7 @@ if (isset($_GET['v'])) {
 	include_once (ROOT."priedai/class.php");
 	$bla = new forma();
 	if ($_GET['v'] == 8) {
-      $text = "<fieldset><legend>{$lang['admin']['gallery_photoalbums']}:</legend><ul>";
+      $text = "<fieldset><legend>{$lang['gallery']['photoalbums']}:</legend><ul>";
       foreach($kategorijos as $id => $kategorija){
          $text .= "<li class=\"drag_block\"><a href=\"".url('?id,'.$_GET['id'].';a,'.$_GET['a'].';v,8;k,'.$id)."\">".str_replace('-', '&nbsp;&nbsp;', $kategorija)."</a></li>";
       }
@@ -406,6 +406,7 @@ $text .= "<div class=\"gallery img_left\" >
 <div class='gallery_menu'>
 <a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date('Y-m-d H:i:s ', $row['data']) . "\"><img src='".ROOT."images/icons/information.png' border='0' alt='info' /></a>
 <a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row['ID'] ). "\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('".url("?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row['ID']). "'); $(this).parent().parent().remove(); return false } else { return false }\" title=\"{$lang['admin']['delete']}\"><img src='".ROOT."images/icons/cross.png'  border='0'></a>
+<a href='".url("?id," . $url['id'] . ";a," . $url['a'] . ";priimti," . $row['ID'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' border='0'></a>
 <a href=\"".url("?id," . $url['id'] . ";a," . $url['a'] . ";h," . $row['ID'] ). "\" title=\"{$lang['admin']['edit']}\"><img src='".ROOT."images/icons/picture_edit.png'  border='0'></a>";
 $text .= "</div><div class='gallery_title'>
 " . trimlink((!empty($ro2['pavadinimas'])?$row['pavadinimas']:''),10) . "
@@ -443,7 +444,7 @@ $(document).ready(function() {
 	});
 });
 </script>
-      <fieldset><legend>{$lang['admin']['gallery_photoalbums']}:</legend><select id=\"cat\" onchange=\"$('#uploadify').uploadifySettings('scriptData', {'cat':$(this).val()});\" >";
+      <fieldset><legend>{$lang['gallery']['photoalbums']}:</legend><select id=\"cat\" onchange=\"$('#uploadify').uploadifySettings('scriptData', {'cat':$(this).val()});\" >";
       foreach($kategorijos as $id => $kategorija){
          $text .="<option value=\"$id\" ".($id == 0 ? "selected" : "").">$kategorija";
       }

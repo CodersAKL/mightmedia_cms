@@ -4,6 +4,7 @@ $lang['user']['profile'] = 'Mano profilis';
 $lang['admin']['poll_active_q'] = 'Aktyvumas';
 $lang['gallery']['subphotoalbum/photoalbum'] = 'Fotoalbumas/ Subfotoalbumas';
 $lang['gallery']['nophotoalbums'] = 'Nėra fotoalbumų';
+$lang['gallery']['photoalbums'] = 'Fotoalbumai';
 $lang['gallery']['photoalbum'] = 'Fotoalbumas';
 $lang['admin']['gallery_photoalbum_up'] = 'Fotoalbumas atnaujintas';
 $lang['admin']['gallery_photoalbum_del'] = 'Fotoalbumas pašalintas';
