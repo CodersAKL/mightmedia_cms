@@ -7,7 +7,7 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,/*fieldset,*/input,textare
 }
 table{
 	/*width: auto;*/
-	float: left;
+	/*float: left;*/
 }
 /*fieldset,*/img {
 	border:0;
@@ -36,16 +36,15 @@ input, select {
 	padding: 3px;
 	color: #666666;
 	margin-bottom: 3px;
+    width: 50%;
 }
 
-.input, select{
-    width: 750px;
-}
+
 .filtrui {
     width: 100%;
 }
 textarea {
-    width: 750px;
+    width: 80%;
 	background: url('../images/input.png') repeat-x;
 	border: 1px solid #D7D7D7;
 	padding: 3px;

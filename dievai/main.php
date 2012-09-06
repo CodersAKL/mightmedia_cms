@@ -187,12 +187,12 @@ HTML;
 <script type="text/javascript">
 		tinyMCE.init({
 		// General options
-		plugins : "paste",
+		/*plugins : "paste",*/
 		mode : "textareas",
 		theme : "advanced",
-		skin : "o2k7",
+		/*skin : "o2k7",*/
 		skin_variant : "silver",
-		plugins : "lists,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,inlinepopups,autosave",
+		plugins : "paste,lists,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,inlinepopups,autosave",
 
 		// Theme options
 		theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
@@ -207,7 +207,6 @@ HTML;
 		// Example content CSS (should be your site CSS)
 		content_css : "{$dir}htmlarea/tiny_mce/css/content.css",
 
-		// Drop lists for link/image/media/template dialogs
 		template_external_list_url : "{$dir}htmlarea/tiny_mce/template_list.js",
 		external_link_list_url : "{$dir}htmlarea/tiny_mce/link_list.js",
 		external_image_list_url : "{$dir}htmlarea/tiny_mce/image_list.js",
