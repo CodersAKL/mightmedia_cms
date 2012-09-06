@@ -10,53 +10,53 @@
  * @$Date$
  **/
 
-include_once ("rating.php");
+include_once ( "rating.php" );
 
-$text = "";
+$text  = "";
 $limit = $conf['fotoperpsl'];
 
-if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) {
-	$p = escape(ceil((int)$url['p']));
+if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
+	$p = escape( ceil( (int)$url['p'] ) );
 } else {
 	$p = 0;
 }
-if (isset($url['k']) && isnum($url['k']) && $url['k'] > 0) {
-	$k = escape(ceil((int)$url['k']));
+if ( isset( $url['k'] ) && isnum( $url['k'] ) && $url['k'] > 0 ) {
+	$k = escape( ceil( (int)$url['k'] ) );
 } else {
 	$k = 0;
 }
 $subs = 0;
 //kategorijos
-if (!isset($url['m'])) {
-	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas`", 86400);
-	if ($sqlas && sizeof($sqlas) > 0) {
-		foreach ($sqlas as $sql) {
-      //TODO: skaiciavimas is neriboto gylio.. dabar tik kategorija + sub kategorija skaiciuoja
-			if ($sql['path'] == $k) {
-       // $sqlkiek = kiek('galerija', "WHERE ".($k != 0 ? "`categorija` =" . escape($sql['path']) . " OR" : "")." `categorija` =" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
-       $kiek = mysql_query1("SELECT count(*) + (SELECT count(*) FROM `".LENTELES_PRIESAGA."galerija` WHERE `categorija` IN (SELECT `id` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`=" . escape($sql['id']) . ")) as `kiek` FROM `".LENTELES_PRIESAGA."galerija` WHERE `categorija`=" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())." LIMIT 1");
-        $sqlkiek = $kiek['kiek'];
+if ( !isset( $url['m'] ) ) {
+	$sqlas = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `lang` = " . escape( lang() ) . " ORDER BY `pavadinimas`", 86400 );
+	if ( $sqlas && sizeof( $sqlas ) > 0 ) {
+		foreach ( $sqlas as $sql ) {
+			//TODO: skaiciavimas is neriboto gylio.. dabar tik kategorija + sub kategorija skaiciuoja
+			if ( $sql['path'] == $k ) {
+				// $sqlkiek = kiek('galerija', "WHERE ".($k != 0 ? "`categorija` =" . escape($sql['path']) . " OR" : "")." `categorija` =" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
+				$kiek    = mysql_query1( "SELECT count(*) + (SELECT count(*) FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `categorija` IN (SELECT `id` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`=" . escape( $sql['id'] ) . ")) as `kiek` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `categorija`=" . escape( $sql['id'] ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " LIMIT 1" );
+				$sqlkiek = $kiek['kiek'];
 				$subs++;
 				$info[] = array(
-					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"kat\" href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><img src='images/naujienu_kat/" . input($sql['pav']) . "' alt=\"\"  border=\"0\" /></a><div><a href='".url("?id," . $url['id'] . ";k," . $sql['id'] . "")."'><b>" . input($sql['pavadinimas']) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input($sql['aprasymas']) . "</div><div>{$lang['category']['images']}: $sqlkiek</div></span></div>"//,
+					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"kat\" href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><img src='images/naujienu_kat/" . input( $sql['pav'] ) . "' alt=\"\"  border=\"0\" /></a><div><a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><b>" . input( $sql['pavadinimas'] ) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input( $sql['aprasymas'] ) . "</div><div>{$lang['category']['images']}: $sqlkiek</div></span></div>" //,
 				);
-				
-				
+
+
 			}
 		}
-		include_once ("priedai/class.php");
+		include_once ( "priedai/class.php" );
 		$bla = new Table();
-		if (isset($info)) {
-			lentele($page_pavadinimas, $bla->render($info), false);
+		if ( isset( $info ) ) {
+			lentele( $page_pavadinimas, $bla->render( $info ), FALSE );
 		}
 	}
 }
 
 //pabaiga
-$visos = kiek('galerija', "WHERE `categorija`=" . escape($k) . " AND `rodoma` =  'TAIP' AND `lang` = ".escape(lang())."");
-if ($k > 0) {
+$visos = kiek( 'galerija', "WHERE `categorija`=" . escape( $k ) . " AND `rodoma` =  'TAIP' AND `lang` = " . escape( lang() ) . "" );
+if ( $k > 0 ) {
 
-	$sql = mysql_query1("SELECT
+	$sql = mysql_query1( "SELECT
   `" . LENTELES_PRIESAGA . "grupes`.`pavadinimas` AS `Kategorija`,
     `" . LENTELES_PRIESAGA . "grupes`.`pav` AS `img`,
         `" . LENTELES_PRIESAGA . "grupes`.`teises` AS `teises`,
@@ -70,17 +70,18 @@ if ($k > 0) {
   `" . LENTELES_PRIESAGA . "grupes`
   Inner Join `" . LENTELES_PRIESAGA . "galerija` ON `" . LENTELES_PRIESAGA . "grupes`.`id` = `" . LENTELES_PRIESAGA . "galerija`.`categorija`
   Inner Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "galerija`.`autorius` = `" . LENTELES_PRIESAGA . "users`.`id`
-  WHERE  
-   `" . LENTELES_PRIESAGA . "galerija`.`categorija` = " . escape($k) . " AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
-	AND `" . LENTELES_PRIESAGA . "galerija`.`lang` = ".escape(lang())."
+  WHERE
+   `" . LENTELES_PRIESAGA . "galerija`.`categorija` = " . escape( $k ) . " AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
+	AND `" . LENTELES_PRIESAGA . "galerija`.`lang` = " . escape( lang() ) . "
   ORDER BY
-  `" . LENTELES_PRIESAGA . "galerija`.`".$conf['galorder']."` ".$conf['galorder_type']."
-  LIMIT  $p,$limit", 86400);
-  		if(count($sql) == 0 && $subs == 0)
-        klaida($lang['system']['warning'], $lang['system']['no_content']);
+  `" . LENTELES_PRIESAGA . "galerija`.`" . $conf['galorder'] . "` " . $conf['galorder_type'] . "
+  LIMIT  $p,$limit", 86400 );
+	if ( count( $sql ) == 0 && $subs == 0 ) {
+		klaida( $lang['system']['warning'], $lang['system']['no_content'] );
+	}
 
 } else {
-	$sql = mysql_query1("SELECT
+	$sql = mysql_query1( "SELECT
   `" . LENTELES_PRIESAGA . "galerija`.`pavadinimas`,
   `" . LENTELES_PRIESAGA . "galerija`.`id`,
   `" . LENTELES_PRIESAGA . "galerija`.`apie`,
@@ -89,64 +90,64 @@ if ($k > 0) {
   `" . LENTELES_PRIESAGA . "galerija`.`file`
   FROM
   `" . LENTELES_PRIESAGA . "galerija`
-  
+
   Inner Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "galerija`.`autorius` = `" . LENTELES_PRIESAGA . "users`.`id`
-  WHERE  
-   `" . LENTELES_PRIESAGA . "galerija`.`categorija` =  " . escape($k) . " AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
+  WHERE
+   `" . LENTELES_PRIESAGA . "galerija`.`categorija` =  " . escape( $k ) . " AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
   ORDER BY
-  `" . LENTELES_PRIESAGA . "galerija`.`".$conf['galorder']."` ".$conf['galorder_type']."
-  LIMIT  $p,$limit", 86400);
+  `" . LENTELES_PRIESAGA . "galerija`.`" . $conf['galorder'] . "` " . $conf['galorder_type'] . "
+  LIMIT  $p,$limit", 86400 );
 
 }
 
-if (empty($url['m'])) {
-	$sqlas = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape($k) . " AND `kieno`='galerija' AND `lang` = ".escape(lang())." ORDER BY `pavadinimas` LIMIT 1");
+if ( empty( $url['m'] ) ) {
+	$sqlas = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape( $k ) . " AND `kieno`='galerija' AND `lang` = " . escape( lang() ) . " ORDER BY `pavadinimas` LIMIT 1" );
 
 
-	if (teises($sqlas['teises'], $_SESSION['level'])) {
+	if ( teises( $sqlas['teises'], $_SESSION['level'] ) ) {
 		$text .= "<table border=\"0\"><tr><td>";
 
-		foreach ($sql as $row) {
+		foreach ( $sql as $row ) {
 
-			if (isset($row['Nick'])) {
-				$autorius = input($row['Nick']);
+			if ( isset( $row['Nick'] ) ) {
+				$autorius = input( $row['Nick'] );
 			} else {
 				$autorius = $lang['system']['guest'];
 			}
 
 			$text .= "
 			<div class=\"gallery img_left\" >
-				<a href=\"".url("?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['id'])."\" title=\"" . (!empty($row['pavadinimas'])?input($row['pavadinimas']) . "<br />":'') . trimlink(strip_tags($row['apie']), 50) . "\">
-					<img src=\"images/galerija/mini/" . input($row['file']) . "\" alt=\"\" />
+				<a href=\"" . url( "?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['id'] ) . "\" title=\"" . ( !empty( $row['pavadinimas'] ) ? input( $row['pavadinimas'] ) . "<br />" : '' ) . trimlink( strip_tags( $row['apie'] ), 50 ) . "\">
+					<img src=\"images/galerija/mini/" . input( $row['file'] ) . "\" alt=\"\" />
 				</a>
 				<div class='gallery_title'>
-					" . trimlink((!empty($row['pavadinimas'])?input($row['pavadinimas']):''),10) . "
+					" . trimlink( ( !empty( $row['pavadinimas'] ) ? input( $row['pavadinimas'] ) : '' ), 10 ) . "
 				</div>
 			</div>
 		";
 
-			$foto = true;
+			$foto = TRUE;
 		}
 		$text .= '</td>
 	</tr>
 </table>';
 
-		if ($k > 0) {
-			$name = mysql_query1("SELECT `pavadinimas` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=  " . escape($k) . " AND `lang` = ".escape(lang())." LIMIT 1", 86400);
-			$pav = input($name['pavadinimas']);
+		if ( $k > 0 ) {
+			$name = mysql_query1( "SELECT `pavadinimas` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=  " . escape( $k ) . " AND `lang` = " . escape( lang() ) . " LIMIT 1", 86400 );
+			$pav  = input( $name['pavadinimas'] );
 		} else {
 			$pav = $page_pavadinimas;
 		}
-		if (isset($foto)) {
-			lentele($pav, ($visos > $limit ? puslapiai($p, $limit, $visos, 10) : '').$text.($visos > $limit ? puslapiai($p, $limit, $visos, 10) : ''));
+		if ( isset( $foto ) ) {
+			lentele( $pav, ( $visos > $limit ? puslapiai( $p, $limit, $visos, 10 ) : '' ) . $text . ( $visos > $limit ? puslapiai( $p, $limit, $visos, 10 ) : '' ) );
 		}
-		unset($row, $text, $sql);
+		unset( $row, $text, $sql );
 	} else {
-		klaida($lang['system']['warning'], $lang['category']['cant']);
+		klaida( $lang['system']['warning'], $lang['category']['cant'] );
 	}
 }
 //}else{ klaida("Dėmesio","Jums nesuteiktos teisės Matyti šią kategoriją."); }
-if (!empty($url['m'])) {
+if ( !empty( $url['m'] ) ) {
 	$sql = "SELECT
   `" . LENTELES_PRIESAGA . "grupes`.`pavadinimas` AS `Kategorija`,
   `" . LENTELES_PRIESAGA . "grupes`.`pav` AS `img`,
@@ -165,16 +166,16 @@ if (!empty($url['m'])) {
   `" . LENTELES_PRIESAGA . "grupes`
   Inner Join `" . LENTELES_PRIESAGA . "galerija` ON `" . LENTELES_PRIESAGA . "grupes`.`id` = `" . LENTELES_PRIESAGA . "galerija`.`categorija`
   Inner Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "galerija`.`autorius` = `" . LENTELES_PRIESAGA . "users`.`id`
-  WHERE  
-   `" . LENTELES_PRIESAGA . "galerija`.`id` =  " . escape($url['m']) . " AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
-	AND `" . LENTELES_PRIESAGA . "galerija`.`lang` = ".escape(lang())."
+  WHERE
+   `" . LENTELES_PRIESAGA . "galerija`.`id` =  " . escape( $url['m'] ) . " AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
+	AND `" . LENTELES_PRIESAGA . "galerija`.`lang` = " . escape( lang() ) . "
   ORDER BY
   `" . LENTELES_PRIESAGA . "galerija`.`data` DESC
   LIMIT 1";
 
-	$row = mysql_query1($sql, 86400);
-	if(empty($row['file'])) {
-		$row = mysql_query1("SELECT
+	$row = mysql_query1( $sql, 86400 );
+	if ( empty( $row['file'] ) ) {
+		$row           = mysql_query1( "SELECT
   `" . LENTELES_PRIESAGA . "galerija`.`pavadinimas`,
   `" . LENTELES_PRIESAGA . "galerija`.`kom`,
   `" . LENTELES_PRIESAGA . "galerija`.`id` AS `nid`,
@@ -188,40 +189,40 @@ if (!empty($url['m'])) {
   `" . LENTELES_PRIESAGA . "galerija`
 
   Inner Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "galerija`.`autorius` = `" . LENTELES_PRIESAGA . "users`.`id`
-  WHERE  
-   `" . LENTELES_PRIESAGA . "galerija`.`id` =  " . escape($url['m']) . " AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
-    AND `" . LENTELES_PRIESAGA . "galerija`.`lang` = ".escape(lang())."
+  WHERE
+   `" . LENTELES_PRIESAGA . "galerija`.`id` =  " . escape( $url['m'] ) . " AND `" . LENTELES_PRIESAGA . "galerija`.`rodoma` =  'TAIP'
+    AND `" . LENTELES_PRIESAGA . "galerija`.`lang` = " . escape( lang() ) . "
   ORDER BY
   `" . LENTELES_PRIESAGA . "galerija`.`data` DESC
-  LIMIT 1", 86400);
-		$row['teises']=0;
-		$row['kid']=0;
+  LIMIT 1", 86400 );
+		$row['teises'] = 0;
+		$row['kid']    = 0;
 	}
 
-	if (!empty($row['file']) && isset($row['file'])) {
-		if (teises($row['teises'], $_SESSION['level']) || ar_admin('galerija.php')) {
-        addtotitle($row['pavadinimas']);
-			$nuoroda2 = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `id` > " . escape($url['m']) . " AND `categorija`=" . escape($row['kid']) . " AND `lang` = ".escape(lang())." order by `id` ASC LIMIT 1", 86400);
-			$nuoroda = mysql_query1("SELECT `id` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `id` < " . escape($url['m']) . " AND categorija=" . escape($row['kid']) . " AND `lang` = ".escape(lang())." order by `id` DESC LIMIT 1", 86400);
-			if (isset($row['Nick'])) {
-				$autorius = user($row['Nick'], $row['nick_id'], $row['levelis']);
+	if ( !empty( $row['file'] ) && isset( $row['file'] ) ) {
+		if ( teises( $row['teises'], $_SESSION['level'] ) || ar_admin( 'galerija.php' ) ) {
+			addtotitle( $row['pavadinimas'] );
+			$nuoroda2 = mysql_query1( "SELECT `id` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `id` > " . escape( $url['m'] ) . " AND `categorija`=" . escape( $row['kid'] ) . " AND `lang` = " . escape( lang() ) . " order by `id` ASC LIMIT 1", 86400 );
+			$nuoroda  = mysql_query1( "SELECT `id` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `id` < " . escape( $url['m'] ) . " AND categorija=" . escape( $row['kid'] ) . " AND `lang` = " . escape( lang() ) . " order by `id` DESC LIMIT 1", 86400 );
+			if ( isset( $row['Nick'] ) ) {
+				$autorius = user( $row['Nick'], $row['nick_id'], $row['levelis'] );
 			} else {
 				$autorius = $lang['system']['guest'];
 			}
 
-				$balsavimas = rating_form($page,$row['nid']);
+			$balsavimas = rating_form( $page, $row['nid'] );
 			$text .= '<center>';
-			if (!empty($nuoroda2['id'])) {
-				$text .= "<a href=\"".url("?id," . $url['id'] . ";m," . $nuoroda2['id']). "\" >< {$lang['admin']['gallery_prev']}</a>&nbsp;";
+			if ( !empty( $nuoroda2['id'] ) ) {
+				$text .= "<a href=\"" . url( "?id," . $url['id'] . ";m," . $nuoroda2['id'] ) . "\" >< {$lang['admin']['gallery_prev']}</a>&nbsp;";
 			}
-			if (!empty($nuoroda['id'])) {
-				$text .= "<a href=\"".url("?id," . $url['id'] . ";m," . $nuoroda['id'] ). "\" >{$lang['admin']['gallery_next']} ></a>";
+			if ( !empty( $nuoroda['id'] ) ) {
+				$text .= "<a href=\"" . url( "?id," . $url['id'] . ";m," . $nuoroda['id'] ) . "\" >{$lang['admin']['gallery_next']} ></a>";
 			}
 			$text .= "</center>
 			<div id=\"gallery\" >
         <center>
-          <a class='fancybox-effects-d' href=\"images/galerija/originalai/" . input($row['file']) . "\" title=\"sss" . input($row['pavadinimas']) . ": " . trimlink(strip_tags($row['apie']), 50) . "\">
-            <img src=\"images/galerija/" . input($row['file']) . "\" alt=\"\" />
+          <a class='fancybox-effects-d' href=\"images/galerija/originalai/" . input( $row['file'] ) . "\" title=\"sss" . input( $row['pavadinimas'] ) . ": " . trimlink( strip_tags( $row['apie'] ), 50 ) . "\">
+            <img src=\"images/galerija/" . input( $row['file'] ) . "\" alt=\"\" />
           </a>
         </center>
       </div>
@@ -230,32 +231,35 @@ if (!empty($url['m'])) {
 		<div style='float:left;'>" . $balsavimas . "</div>
 		<div style='clear:left;'></div>
 		<b>{$lang['admin']['gallery_author']}:</b> " . $autorius . "<br />
-		<b>{$lang['admin']['gallery_date']}:</b> " . date('Y-m-d H:i:s ', $row['data']) . "<br />\n";
-			if (!empty($row['apie'])) { $text .= "<b>{$lang['admin']['gallery_about']}:</b> " . input($row['apie']) . "<br />\n"; }
+		<b>{$lang['admin']['gallery_date']}:</b> " . date( 'Y-m-d H:i:s ', $row['data'] ) . "<br />\n";
+			if ( !empty( $row['apie'] ) ) {
+				$text .= "<b>{$lang['admin']['gallery_about']}:</b> " . input( $row['apie'] ) . "<br />\n";
+			}
 			$text .= "<center>";
 
-			if (!empty($nuoroda2['id'])) {
-				$text .= "<a href=\"".url("?id," . $url['id'] . ";m," . $nuoroda2['id']). "\" >< {$lang['admin']['gallery_prev']}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+			if ( !empty( $nuoroda2['id'] ) ) {
+				$text .= "<a href=\"" . url( "?id," . $url['id'] . ";m," . $nuoroda2['id'] ) . "\" >< {$lang['admin']['gallery_prev']}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 			}
-			if (!empty($nuoroda['id'])) {
-				$text .= "<a href=\"".url("?id," . $url['id'] . ";m," . $nuoroda['id'] ). "\" >{$lang['admin']['gallery_next']} ></a>";
+			if ( !empty( $nuoroda['id'] ) ) {
+				$text .= "<a href=\"" . url( "?id," . $url['id'] . ";m," . $nuoroda['id'] ) . "\" >{$lang['admin']['gallery_next']} ></a>";
 			}
 			$text .= "</center>";
 
-			lentele($row['pavadinimas'], $text);
+			lentele( $row['pavadinimas'], $text );
 
-			if ((int)$conf['galkom'] == 1 && $row['kom'] == 'taip') {
-				include_once ("priedai/komentarai.php");
-				komentarai($url['m']);
+			if ( (int)$conf['galkom'] == 1 && $row['kom'] == 'taip' ) {
+				include_once ( "priedai/komentarai.php" );
+				komentarai( $url['m'] );
 			}
 		} else {
-			klaida($lang['system']['warning'], $lang['admin']['gallery_cant']);
+			klaida( $lang['system']['warning'], $lang['admin']['gallery_cant'] );
 		}
 	}
 }
-if (kiek("galerija", "WHERE rodoma='TAIP' AND `lang` = ".escape(lang())."") == 0)
-	klaida($lang['system']['warning'], $lang['system']['no_content']);
+if ( kiek( "galerija", "WHERE rodoma='TAIP' AND `lang` = " . escape( lang() ) . "" ) == 0 ) {
+	klaida( $lang['system']['warning'], $lang['system']['no_content'] );
+}
 
-unset($text, $row, $sql);
+unset( $text, $row, $sql );
 
 ?>

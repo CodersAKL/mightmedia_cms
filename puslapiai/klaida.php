@@ -10,7 +10,7 @@
  * @$Date$
  **/
 
-	klaida($lang['system']['warning'], $lang['system']['nopage']);
+klaida( $lang['system']['warning'], $lang['system']['nopage'] );
 
 
 

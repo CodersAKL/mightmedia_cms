@@ -13,33 +13,32 @@
 if ( ar_admin( 'com' ) ) { //jei ledzia moderuot komentarus, leidzia ir duk'a
 	//Jei adminas bando trinti. $_GET['d'] == ID
 	if ( isset( $_GET['d'] ) ) {
-		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` = " . escape( (int) $_GET['d'] ) );
+		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` = " . escape( (int)$_GET['d'] ) );
 		redirect( url( "?id," . $_GET['id'] ), "header" );
 
 	} elseif ( isset( $_GET['n'] ) || isset( $_GET['e'] ) ) {
 
 		$klausimas = '';
 		$atsakymas = '';
-		$order = 0;
-		$id = '';
+		$order     = 0;
+		$id        = '';
 
 		//Jeigu adminas nori redaguoti
 		// url['e'] pasakome kokį ID redaguosime
 		if ( isset( $_GET['e'] ) ) {
-			$value = $lang['faq']['edit'];
-			$id = (int) $_GET['e'];
-			$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` = " . escape( $id ) . " LIMIT 1" );
+			$value     = $lang['faq']['edit'];
+			$id        = (int)$_GET['e'];
+			$sql       = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` = " . escape( $id ) . " LIMIT 1" );
 			$klausimas = $sql['klausimas'];
 			$atsakymas = $sql['atsakymas'];
-			$order = (int) $sql['order'];
-		}
-		//Jei adminas bando rasyti nauja DUK
+			$order     = (int)$sql['order'];
+		} //Jei adminas bando rasyti nauja DUK
 		elseif ( isset( $_GET['n'] ) && $_GET['n'] == 1 ) {
 			$value = $lang['faq']['submit'];
 		}
 
 		$duk = array(
-			"Form"  => array(
+			"Form"                        => array(
 				"action"  => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ),
 				"method"  => "post",
 				"enctype" => "",
@@ -53,25 +52,25 @@ if ( ar_admin( 'com' ) ) { //jei ledzia moderuot komentarus, leidzia ir duk'a
 				"name"  => "Klausimas",
 				"class" => "input"
 			),
-			"{$lang['faq']['answer']}:" => array(
+			"{$lang['faq']['answer']}:"   => array(
 				"type"  => "string",
 				"value" => editorius( 'standartinis', 'mini', 'Atsakymas', ( isset( $atsakymas ) ? $atsakymas : '' ) )
 			),
-			"{$lang['faq']['order']}:" => array(
+			"{$lang['faq']['order']}:"    => array(
 				"type"  => "text",
-				"value" => input( (int) $order ),
+				"value" => input( (int)$order ),
 				"name"  => "Order",
 				"class" => "input"
 			),
-			" " => array(
+			" "                           => array(
 				"type"  => "hidden",
 				"value" => input( $id ),
 				"name"  => "eid",
 				"id"    => "id"
 			),
-			"" => array(
-				"type" => "submit",
-				"name" => "dukas",
+			""                            => array(
+				"type"  => "submit",
+				"name"  => "dukas",
 				"value" => $value
 			)
 		);
@@ -86,8 +85,8 @@ if ( ar_admin( 'com' ) ) { //jei ledzia moderuot komentarus, leidzia ir duk'a
 	if ( isset( $_POST['dukas'] ) ) {
 		$klausimas = $_POST['Klausimas'];
 		$atsakymas = $_POST['Atsakymas'];
-		$order = (int) $_POST['Order'];
-		$id = (int) $_POST['eid'];
+		$order     = (int)$_POST['Order'];
+		$id        = (int)$_POST['eid'];
 
 		// Jeigu rašom naują
 		if ( $_POST['dukas'] == $lang['faq']['submit'] ) {
@@ -105,7 +104,7 @@ if ( ar_admin( 'com' ) ) { //jei ledzia moderuot komentarus, leidzia ir duk'a
 			$q = "UPDATE `" . LENTELES_PRIESAGA . "duk` SET
 			`atsakymas` = " . escape( $atsakymas ) . ",
 			`klausimas` = " . escape( $klausimas ) . ",
-			`order` = " . escape( (int) $_POST['Order'] ) . " WHERE `id`=" . $id . " LIMIT 1 ;";
+			`order` = " . escape( (int)$_POST['Order'] ) . " WHERE `id`=" . $id . " LIMIT 1 ;";
 			mysql_query1( $q );
 			redirect( url( "?id," . $url['id'] ), "header" );
 		}
@@ -113,15 +112,15 @@ if ( ar_admin( 'com' ) ) { //jei ledzia moderuot komentarus, leidzia ir duk'a
 
 	}
 }
-$text = '';
+$text  = '';
 $extra = "<ol>";
-$nr = 0;
-$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "duk` WHERE `lang` = " . escape( lang() ) . " ORDER by `order` ASC", 3600 );
+$nr    = 0;
+$sql   = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "duk` WHERE `lang` = " . escape( lang() ) . " ORDER by `order` ASC", 3600 );
 if ( sizeof( $sql ) > 0 ) {
 	foreach ( $sql as $row ) {
 		$nr++;
 		$extra .= "<li><a href='" . url( '?id,' . $_GET['id'] ) . "#" . $row['id'] . "'>" . $row['klausimas'] . "</a></li>\n";
-		$text .= "<h3>" . $nr . ". <a name='" . $row['id'] . "'>" . $row['klausimas'] . "</a>" . ( $_SESSION['level'] == 1 ? " <a href='" . url( "d," . (int) $row['id'] . "" ) . "' onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='images/icons/cross_small.png' class='middle' alt='" . $lang['faq']['delete'] . "' border='0' title='" . $lang['faq']['delete'] . "' /></a> <a href='" . url( "e," . (int) $row['id'] . "" ) . "'><img src='images/icons/pencil_small.png' class='middle' alt='" . $lang['faq']['edit'] . "' border='0' title='" . $lang['faq']['edit'] . "' /></a>" : "" ) . "</h3>\n" . $row['atsakymas'] . "\n";
+		$text .= "<h3>" . $nr . ". <a name='" . $row['id'] . "'>" . $row['klausimas'] . "</a>" . ( $_SESSION['level'] == 1 ? " <a href='" . url( "d," . (int)$row['id'] . "" ) . "' onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='images/icons/cross_small.png' class='middle' alt='" . $lang['faq']['delete'] . "' border='0' title='" . $lang['faq']['delete'] . "' /></a> <a href='" . url( "e," . (int)$row['id'] . "" ) . "'><img src='images/icons/pencil_small.png' class='middle' alt='" . $lang['faq']['edit'] . "' border='0' title='" . $lang['faq']['edit'] . "' /></a>" : "" ) . "</h3>\n" . $row['atsakymas'] . "\n";
 	}
 
 }

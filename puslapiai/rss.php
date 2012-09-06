@@ -1,3 +1,3 @@
 <?php
- header("location: rss.php");
+header( "location: rss.php" );
 ?>
