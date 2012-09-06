@@ -27,7 +27,15 @@ $buttons = "<div class=\"btns\">
 lentele($lang['admin']['vartotojai'], $buttons);
 include_once (ROOT . "priedai/kategorijos.php");
 kategorija("vartotojai", true);
-
+//trinimas
+if(isset($_POST['users_delete'])){
+  foreach($_POST['userss_delete'] as $a=>$b){
+    $trinti[]=escape($b);
+  }
+  mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "users` WHERE `id` IN(".implode(', ',$trinti).") AND `levelis` > 1");
+  header("Location:".$_SERVER['HTTP_REFERER']);
+  exit;
+}
 if (isset($url['d']) && $url['d'] != "" && $url['d'] != 0) {
 	$del = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "users` WHERE id=" . escape((int) $url['d']) . " AND `levelis` > 1");
 	header("Location: " . url('d,0'));
@@ -112,11 +120,11 @@ $val = array($_POST['nick'], $_POST['ip'], $_POST['email']);
 } else {
 $val = array("","","",);
 }
-$info2[] = array("<form method=\"post\">",
+$info2[] = array("#" => "<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('usersch');\" />",
 $lang['admin']['user_name'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"nick\" />",
  "IP <img src='../images/icons/help.png' title='<b>{$lang['system']['warning']}</b><br/>{$lang['admin']['user_ip_filter']}'>" => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"ip\" />",
  $lang['admin']['user_email'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"email\" />",
- " " => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" /></form>");
+ $lang['admin']['action'] => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />");
 //FILTRAVIMAS
 		$i = 0;
 $viso = kiek("users", "WHERE levelis=" . escape($_GET['k']));
@@ -124,11 +132,11 @@ $viso = kiek("users", "WHERE levelis=" . escape($_GET['k']));
 		if (sizeof($sql) > 0) {
 			foreach ($sql as $row2) {
 				$i++;
-				$info2[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />" => "<input type=\"checkbox\" value=\"{$row2['id']}\" name=\"articles_delete[]\" />", 
+				$info2[] = array("#" => "<input type=\"checkbox\" value=\"{$row2['id']}\" name=\"users_delete[]\" />",
 					$lang['admin']['user_name'] => user($row2['nick'], $row2['id'], $row2['levelis']),
 					"IP" => $row2['ip'],
 					$lang['admin']['user_email'] => "".$row2['email']."",
-					" " => "<a href='" . url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id']) . "'title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url("d," . $row2['id']) . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url("?id," . $_GET['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row2['ip']) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
+					$lang['admin']['action'] => "<a href='" . url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id']) . "'title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url("d," . $row2['id']) . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url("?id," . $_GET['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row2['ip']) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
 				);
 			}
 			$bla = new Table();

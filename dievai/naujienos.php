@@ -191,20 +191,20 @@ if ( isset( $_GET['v'] ) ) {
 				$val = array( "", "", "" );
 			}
 			$info[] = array(
-				"<form method=\"post\">",
+				"#" =>"<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('newsch');\" />",
 				$lang['admin']['news_name'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pavadinimas\" />",
 				$lang['admin']['news_date'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"data\" />",
 				$lang['admin']['news_more'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"naujiena\" />",
-				" "                         => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" /></form>"
+				$lang['admin']['action'] => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />"
 			);
 			//FILTRAVIMAS
 			foreach ( $sql_news as $row ) {
 				$info[] = array(
-					"<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('newsch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"news_delete[]\" />",
+					"#" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"news_delete[]\" />",
 					$lang['admin']['news_name']                                                   => '<span style="cursor:pointer;" title="<b>' . $row['pavadinimas'] . '</b><br />' . $lang['admin']['news_author'] . ': <b>' . $row['autorius'] . '</b>">' . trimlink( strip_tags( $row['pavadinimas'] ), 55 ) . '<span/></a>',
 					$lang['admin']['news_date']                                                   => date( 'Y-m-d', $row['data'] ),
 					$lang['admin']['news_more']                                                   => trimlink( strip_tags( $row['naujiena'] ), 55 ),
-					""                                                                            => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "images/icons/cross.png\" border=\"0\"></a>"
+					$lang['admin']['action']                                                    => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "images/icons/cross.png\" border=\"0\"></a>"
 				);
 			}
 			lentele( $lang['admin']['edit'], "<form id=\"newsch\" method=\"post\">" . $table->render( $info ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
@@ -295,21 +295,21 @@ if ( isset( $_GET['v'] ) ) {
 				$val = array( "", "", "" );
 			}
 			$info[] = array(
-				"<form method=\"post\">",
+				"#" =>"<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('newsch');\" />",
 				$lang['admin']['news_name'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pavadinimas\" />",
 				$lang['admin']['news_date'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"data\" />",
 				$lang['admin']['news_more'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"naujiena\" />",
-				" "                         => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" /></form>"
+				$lang['admin']['action']    => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />"
 			);
 			//FILTRAVIMAS
 
 			foreach ( $q as $sql ) {
 				$info[] = array(
-					"<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('newsch');\" />" => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"news_delete[]\" />",
+					"#" => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"news_delete[]\" />",
 					$lang['admin']['news_name'] => '<span style="cursor:pointer;" title="<b>' . $sql['pavadinimas'] . '</b><br />' . $lang['admin']['news_author'] . ': <b>' . $sql['autorius'] . '</b>">' . trimlink( strip_tags( $sql['pavadinimas'] ), 55 ) . '<span/></a>',
 					$lang['admin']['news_date'] => date( 'Y-m-d', $sql['data'] ),
 					$lang['admin']['news_more'] => trimlink( strip_tags( $sql['naujiena'] ), 55 ),
-					" "                         => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};priimti," . $sql['id'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "images/icons/cross.png' border='0'></a>"
+					$lang['admin']['action']=> "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "images/icons/cross.png' border='0'></a>"
 				);
 			}
 			lentele( $lang['admin']['news_unpublished'], "<form id=\"newsch\" method=\"post\">" . $bla->render( $info ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );

@@ -160,18 +160,18 @@ $val = array($_POST['pav'], $_POST['date'], $_POST['t_text']);
 } else {
 $val = array("","","");
 }
-$info[] = array("<form method=\"post\">",
+$info[] = array("#" => " <input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />",
  $lang['admin']['article'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pav\" />",
  $lang['admin']['article_date'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"date\" />",
  $lang['admin']['article_preface'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"t_text\" />",
- " " => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" /></form>");
+ $lang['admin']['action'] => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />");
 //FILTRAVIMAS
 	foreach ($sql2 as $row){
-  $info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"articles_delete[]\" />", 
+  $info[] = array("#" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"articles_delete[]\" />",
   $lang['admin']['article'] => "<span style='cursor:pointer;' title='" . $lang['admin']['article_author'] . ": <b>" . $row['autorius'] . "</b>' >" . input($row['pav']) . "</span>", 
   $lang['admin']['article_date'] => date('Y-m-d', $row['date']), 
   $lang['admin']['article_preface'] => "<span style='cursor:pointer;' title='".strip_tags($row['t_text'])."'>".trimlink(strip_tags($row['t_text']), 55)."</span>",
-  " " => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"".ROOT."images/icons/cross.png\" border=\"0\"></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
+  $lang['admin']['action'] => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ). "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"".ROOT."images/icons/cross.png\" border=\"0\"></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
 	}
 
 if(!empty($info) && count($info))
@@ -206,18 +206,18 @@ $val = array($_POST['pav'], $_POST['date'], $_POST['t_text']);
 } else {
 $val = array("","","",);
 }
-$info[] = array("<form method=\"post\">",
+$info[] = array("#" => " <input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />",
  $lang['admin']['article'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pav\" />",
  $lang['admin']['article_date'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"date\" />",
  $lang['admin']['article_preface'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"t_text\" />",
- " " => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" /></form>");
+ $lang['admin']['action'] => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />");
 //FILTRAVIMAS
 		foreach ($q as $sql) {
-			$info[] = array("<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />" => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"articles_delete[]\" />",
-			$lang['admin']['article'] => '<span style="cursor:pointer;" title="' . $lang['admin']['article_author'] . ': <b>' . $sql['autorius'] . '</b>" >' . input($sql['pav']) . '</span>', 
+			$info[] = array("#" => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"articles_delete[]\" />",
+			$lang['admin']['article'] => '<span style="cursor:pointer;" title="' . $lang['admin']['article_author'] . ': <b>' . $sql['autorius'] . '</b>" >' . input($sql['pav']) . '</span>',
 			$lang['admin']['article_date'] => date('Y-m-d', $sql['date']), 
 			$lang['admin']['article_preface'] => "<span style='cursor:pointer;' title='".strip_tags($sql['t_text'])."'>".trimlink(strip_tags($sql['t_text']), 55)."</span>",
-			" " => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};priimti," . $sql['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ). "' title='{$lang['admin']['delete']}'><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
+			$lang['admin']['action'] => "<a href='".url("?id,{$_GET['id']};a,{$_GET['a']};priimti," . $sql['id'] ). "'title='{$lang['admin']['acept']}'><img src='".ROOT."images/icons/tick_circle.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ). "' title='{$lang['admin']['delete']}'><img src='".ROOT."images/icons/cross.png' border='0'></a> <a href='".url("?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ). "' title='{$lang['admin']['edit']}'><img src='".ROOT."images/icons/pencil.png' border='0'></a>");
 
 		}
 
