@@ -65,12 +65,17 @@ include_once ("../priedai/prisijungimas.php");
      ?>
 	</div>
     </div>
-    </div>
-    <div class='sonas'></div>
+
+    
     <div id='kojos'>
     <div class='tekstas'><?php echo $conf['Copyright'];?></div>
     <a href='http://mightmedia.lt' target='_blank' title='Mightmedia'><div class='logo'></div></a>
     </div>
+	
+    </div>
+	
+    <div class='sonas'></div>
+	
     </div>
     </div>
     <div id='another' class='clear'><div class='lygiuojam'><div class='taisom'></div></div></div>

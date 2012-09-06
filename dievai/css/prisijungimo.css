@@ -40,18 +40,18 @@ a:hover {
 .sonas {
     float:right;
     background: #f69d4e;
-	height: 159px;
+	height: 38px;
 	width: 2px;
 }
 .sonas2 {
     float:left;
-    background: #7f786e;
-	height: 159px;
+    background: #f69d4e;
+	height: 38px;
 	width: 2px;
 }
 /* Meniu juosta*/
 #meniu_juosta {
-    border-left: 2px solid #7f786e;
+    border-left: 2px solid #f69d4e;
     border-right: 2px solid #f69d4e;
 	width: 488px;
 	background: #e6e6e6 url(../images/prisijungimo/meniu.png) repeat-x;
@@ -106,13 +106,13 @@ a:hover {
 	padding: 3px;
 }
 #kojos {
+    margin-top: 10px;
+	border-top: 2px solid #7f786e;
+	border-right: 2px solid #7f786e;
+	border-left: 2px solid #7f786e;
     clear: both;
 	height: 80px;
-	border-right: 2px solid #f69d4e;
-	border-left: 2px solid #7f786e;
 	background: url(../images/prisijungimo/kojos.png) repeat-x;
-	border-top: 0;
-	border-bottom: 0;
 }
 #kojos .tekstas{
 	color: #7f786e;
@@ -140,10 +140,10 @@ a:hover {
 }
 #another .lygiuojam{
     margin: 0 auto;
-	width: 700px;
+	width: 673px;
 }
 #another .taisom{
-    width: 493px;
+	width: 469px;
 	background: #E6E6E6;
 	margin-left: 101px;
 	height: 2px;
