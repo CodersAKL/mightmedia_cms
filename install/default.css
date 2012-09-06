@@ -1,546 +1,638 @@
 * {
-	padding: 0;
-	margin: 0;
-} 
-html, body {
-	margin:0;
-	padding: 0;
-	color: #6b655c;
-	font: 12px Arial, Verdana, Tahoma, sans-serif;
-	line-height: 17px;
-	background: url(images/fonas.png) repeat-x center top;
-	background-color: #E6E6E6;
+    padding: 0;
+    margin: 0;
 }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    color: #6b655c;
+    font: 12px Arial, Verdana, Tahoma, sans-serif;
+    line-height: 17px;
+    background: url(images/fonas.png) repeat-x center top;
+    background-color: #E6E6E6;
+}
+
 .clear {
     clear: both;
 }
+
 a, a:visited {
     color: #7f786e;
-  	text-decoration: none; 
+    text-decoration: none;
 }
-a:hover { 
+
+a:hover {
     color: #f69d4e;
-    text-decoration: underline; 
+    text-decoration: underline;
 }
+
 #plotis {
-	width: 902px;
-	margin: 0 auto;
+    width: 902px;
+    margin: 0 auto;
 }
+
 .logo {
-	background: url(images/mm_logo.png) no-repeat;
-	height: 82px;
-	width: 106px;
-	margin: 0 auto;
+    background: url(images/mm_logo.png) no-repeat;
+    height: 82px;
+    width: 106px;
+    margin: 0 auto;
 }
+
 .skalpas {
-	padding-top: 15px;
+    padding-top: 15px;
     border-right: 2px solid #f69d4e;
-	height: 94px;
+    height: 94px;
 }
+
 .sonas {
-    float:right;
+    float: right;
     background: #f69d4e;
-	height: 71px;
-	width: 2px;
+    height: 71px;
+    width: 2px;
 }
+
 /* Meniu juosta*/
 #meniu_juosta {
     border-right: 2px solid #f69d4e;
-	width: 693px;  
-	background: #e6e6e6 url(images/meniu.png) repeat-x;
-    float:left;
-	color: #fff;
-	font-family: Arial, Verdana, Tahoma, sans-serif;
-	font-size: 14px;
-	font-weight: bold;
-	height: 35px;
-	text-shadow: #6b655c 1px 0px 0px;
-	padding-left: 5px;
-	padding-top: 5px;
+    width: 693px;
+    background: #e6e6e6 url(images/meniu.png) repeat-x;
+    float: left;
+    color: #fff;
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    height: 35px;
+    text-shadow: #6b655c 1px 0px 0px;
+    padding-left: 5px;
+    padding-top: 5px;
 }
 
 #kunas {
-	background: #E6E6E6;
-    float:left;
-	width: 700px;
+    background: #E6E6E6;
+    float: left;
+    width: 700px;
 }
+
 #kaire {
     list-style: none;
-	float: left;
-	width: 200px;
-	margin-bottom: 30px;
+    float: left;
+    width: 200px;
+    margin-bottom: 30px;
 }
+
 #kaire .pavadinimas {
-	text-shadow: #c46b20 1px 0px 0px;
-	background: url(images/blokas.png) no-repeat;
-	width: 196px;
-	height: 21px;
-	padding-left: 5px;
-	padding-top: 5px;
-	color: #fff;
-	font-family: Arial, Verdana, Tahoma, sans-serif;
-	font-size: 14px;
-	font-weight: bold;
+    text-shadow: #c46b20 1px 0px 0px;
+    background: url(images/blokas.png) no-repeat;
+    width: 196px;
+    height: 21px;
+    padding-left: 5px;
+    padding-top: 5px;
+    color: #fff;
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
 }
+
 #kaire .vidus {
     text-shadow: #f8f8f8 1px 0px 0px;
     border: 1px solid #f8f8f8;
-	background: #f8f8f8 url(images/bloko_fonas.png) repeat-x;
+    background: #f8f8f8 url(images/bloko_fonas.png) repeat-x;
 }
-#centras { 
-	float: left;
+
+#centras {
+    float: left;
     width: 675px;
-	margin-bottom: 10px;
-	margin-left: 12px;
-	line-height: 17px;
+    margin-bottom: 10px;
+    margin-left: 12px;
+    line-height: 17px;
 }
+
 #centras .vidus {
     text-shadow: #f8f8f8 1px 0px 0px;
     border: 1px solid #f8f8f8;
-	background: #f8f8f8 url(images/bloko_fonas.png) repeat-x;
+    background: #f8f8f8 url(images/bloko_fonas.png) repeat-x;
 }
+
 #centras .pavadinimas {
-	text-shadow: #6b655c 1px 0px 0px;
-	background: url(images/meniu.png) repeat-x;
-	width: auto;
-	height: 21px;
-	color: #fff;
-	padding-left: 5px;
-	padding-top: 5px;
-	color: #fff;
-	font-family: Arial, Verdana, Tahoma, sans-serif;
-	font-size: 14px;
-	font-weight: bold;
-	overflow: hidden;
+    text-shadow: #6b655c 1px 0px 0px;
+    background: url(images/meniu.png) repeat-x;
+    width: auto;
+    height: 21px;
+    color: #fff;
+    padding-left: 5px;
+    padding-top: 5px;
+    color: #fff;
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    overflow: hidden;
 }
+
 #centras .pavadinimas2 {
-	text-shadow: #6b655c 1px 0px 0px;
-	background: url(images/centrinis_blokas.png) no-repeat;
-	width: auto;
-	height: 21px;
-	color: #fff;
-	padding-left: 5px;
-	padding-top: 5px;
-	color: #fff;
-	font-family: Arial, Verdana, Tahoma, sans-serif;
-	font-size: 14px;
-	font-weight: bold;
-	overflow: hidden;
+    text-shadow: #6b655c 1px 0px 0px;
+    background: url(images/centrinis_blokas.png) no-repeat;
+    width: auto;
+    height: 21px;
+    color: #fff;
+    padding-left: 5px;
+    padding-top: 5px;
+    color: #fff;
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    overflow: hidden;
 }
+
 /*IE6 Pataisa*/
-#centras { min-height: 300px; }
-* html #centras { height: 300px; }
-.text {
-	padding: 3px;
+#centras {
+    min-height: 300px;
 }
+
+* html #centras {
+    height: 300px;
+}
+
+.text {
+    padding: 3px;
+}
+
 #kojos {
     clear: both;
-	height: 80px;
-	border: 2px solid #7f786e;
-	background: url(images/kojos.png) repeat-x;
-	border-bottom: 0;
+    height: 80px;
+    border: 2px solid #7f786e;
+    background: url(images/kojos.png) repeat-x;
+    border-bottom: 0;
 }
-#kojos .tekstas{
-	color: #7f786e;
-	font-family: Arial, Verdana, Tahoma, sans-serif;
-	font-size: 14px;
-	font-weight: bold;
+
+#kojos .tekstas {
+    color: #7f786e;
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
     float: left;
-	height: 45px;
-	width: 300px;
-	margin-top: 20px;
-	margin-left: 20px;
+    height: 45px;
+    width: 300px;
+    margin-top: 20px;
+    margin-left: 20px;
 }
-#kojos .logo{
+
+#kojos .logo {
     float: right;
-	height: 45px;
-	width: 60px;
-	background: url(images/mm_kojos_logo.png) no-repeat;
-	margin-top: 10px;
-	margin-right: 20px;
+    height: 45px;
+    width: 60px;
+    background: url(images/mm_kojos_logo.png) no-repeat;
+    margin-top: 10px;
+    margin-right: 20px;
 }
+
 #another {
-	background: url(images/fonas2.png) repeat-x bottom;
-	width: 100%;
-	height: 30px;
+    background: url(images/fonas2.png) repeat-x bottom;
+    width: 100%;
+    height: 30px;
 }
-#another .lygiuojam{
+
+#another .lygiuojam {
     margin: 0 auto;
-	width: 700px;
+    width: 700px;
 }
-#another .taisom{
+
+#another .taisom {
     width: 696px;
-	background: #E6E6E6;
-	margin-left: 101px;
-	height: 2px;
+    background: #E6E6E6;
+    margin-left: 101px;
+    height: 2px;
 }
-/* Mightmedia pagrindinës stiliaus funkcijos */
+
+/* Mightmedia pagrindinï¿½s stiliaus funkcijos */
 img {
     border: 0;
 }
+
 ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
-hr, fieldset{
-	margin: 2px;
-	border: 1px dotted #CCC;
+
+hr, fieldset {
+    margin: 2px;
+    border: 1px dotted #CCC;
 }
+
 input, textarea, button, select {
-	font-family : Verdana, Arial, Helvetica, sans-serif;
-	font-size : 11px;
-	color : #6b655c;
-	background: #f8f8f8;
-	border : 1px solid #6b655c;
-	padding-left: 5px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #6b655c;
+    background: #f8f8f8;
+    border: 1px solid #6b655c;
+    padding-left: 5px;
 }
+
 input[type="submit"], .submit, .perveiza {
     cursor: pointer;
     padding: 2px;
-	background: #e6e6e6 url(images/hover.png) repeat-x;
-	border: 1px solid #6b655c;
-	color: #6b655c;
+    background: #e6e6e6 url(images/hover.png) repeat-x;
+    border: 1px solid #6b655c;
+    color: #6b655c;
 }
+
 button {
     cursor: pointer;
     padding: 2px;
 }
+
 /* BB Kodo [code] forume laukas */
 .code {
     margin: 10px;
     height: auto;
     width: 95%;
-	background: #ccc;
+    background: #ccc;
 }
+
 textarea.input {
-	width: 95%;
-	background: #f8f8f8;
+    width: 95%;
+    background: #f8f8f8;
 }
+
 input.input {
-	height: 20px;
-	width: 95%;
+    height: 20px;
+    width: 95%;
 }
+
 /*Bloko meniu*/
 #navigation {
-	width: 100%;
-	font-size: 12px;
+    width: 100%;
+    font-size: 12px;
 }
-#navigation ul {	
-	list-style: none;
-	margin: 0px;
-	padding: 0px;
-	border: none;
+
+#navigation ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    border: none;
 }
+
 #navigation ul li a {
-	display: block;
-	border-bottom: 1px solid #f2f2f2;
-	padding: 5px 0px 2px 4px;
-	text-decoration: none;
-	color: #666666;
-	width: 188px;
+    display: block;
+    border-bottom: 1px solid #f2f2f2;
+    padding: 5px 0px 2px 4px;
+    text-decoration: none;
+    color: #666666;
+    width: 188px;
 }
+
 #navigation ul li:hover {
-	color: #000000;
-	background-color: #f2f2f2;
-	position: relative;
+    color: #000000;
+    background-color: #f2f2f2;
+    position: relative;
 }
+
 /*Sub Meniu*/
 #navigation ul ul {
-	border: 0px;
-	background: #f8f8f8 url(images/bloko_fonas.png) repeat-x;
-	display: none; 
-	position: absolute; 
-	left: 188px; 
-	top: 0px; 
-	z-index: 100;
+    border: 0px;
+    background: #f8f8f8 url(images/bloko_fonas.png) repeat-x;
+    display: none;
+    position: absolute;
+    left: 188px;
+    top: 0px;
+    z-index: 100;
 }
+
 #navigation ul li:hover ul {
-	display: block;
+    display: block;
 }
-#navigation ul ul li { 
-	font-size: 12px;
-	display: block;
-	padding: 0px 0px 2px 4px;
-	text-decoration: none;
-	color: #666666;
-	width: 188px;
+
+#navigation ul ul li {
+    font-size: 12px;
+    display: block;
+    padding: 0px 0px 2px 4px;
+    text-decoration: none;
+    color: #666666;
+    width: 188px;
 }
+
 #navigation ul ul li:hover {
 
 }
+
 #navigation li:hover ul li ul {
-	display: none;
+    display: none;
 }
+
 #navigation ul ul li ul {
-	left: 110px; 
+    left: 110px;
 }
+
 #navigation ul ul li:hover ul {
-	display:block;
+    display: block;
 }
-/* Mygtukai profilio redagavimui bei moderatoriø puslapiui */
+
+/* Mygtukai profilio redagavimui bei moderatoriï¿½ puslapiui */
 .blokas {
-	width: 77px;
-	text-align: center;
-	float: left;
-	cursor: pointer;
-	background: #f2f2f2;
-	border: 1px solid #ccc;
-	padding: 3px;
-	margin: 3px;
-	height: auto;
-	/*clear: both;*/
+    width: 77px;
+    text-align: center;
+    float: left;
+    cursor: pointer;
+    background: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 3px;
+    margin: 3px;
+    height: auto;
+    /*clear: both;*/
 }
+
 div.blokas a {
-	font-size: 11px;
-	font-weight: bold;
-	text-decoration: none;
-	display: block;
-	margin: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+    margin: 3px;
 }
-div.blokas a:active, div.blokas a:hover { 
-	margin-left: 4px;
-	margin-top: 4px;
-	margin-right: 2px;
-	margin-bottom: 2px;
+
+div.blokas a:active, div.blokas a:hover {
+    margin-left: 4px;
+    margin-top: 4px;
+    margin-right: 2px;
+    margin-bottom: 2px;
 }
-div.blokas img { 
-	display: block;
-	border: 0;
+
+div.blokas img {
+    display: block;
+    border: 0;
 }
-div.blokas img:hover { 
-	display: block;
-	border: 0;
+
+div.blokas img:hover {
+    display: block;
+    border: 0;
 }
+
 a.btn {
-	font-family: Arial, Helvetica, sans-serif;
-	text-align: center;
-	float: left;
-	cursor: pointer;
-	background: #f2f2f2;
-	border: 1px solid #CCCCCC;
-	padding: 3px;
-	margin: 3px;
-	font-weight: bold;
-	text-decoration: none;
-	display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    float: left;
+    cursor: pointer;
+    background: #f2f2f2;
+    border: 1px solid #CCCCCC;
+    padding: 3px;
+    margin: 3px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
 }
-a.btn:active,  a.btn:hover {
-	margin-left: 4px;
-	margin-top: 4px;
-	margin-right: 2px;
-	margin-bottom: 2px;
+
+a.btn:active, a.btn:hover {
+    margin-left: 4px;
+    margin-top: 4px;
+    margin-right: 2px;
+    margin-bottom: 2px;
 }
-/* Lentelëms */
+
+/* Lentelï¿½ms */
 .table {
-	border-bottom: 2px solid #d1d1d1;
-	border-right: 2px solid #d1d1d1;
+    border-bottom: 2px solid #d1d1d1;
+    border-right: 2px solid #d1d1d1;
 }
+
 .th {
-	text-align:center;
-	color: #6b655c;
-	background: #d1d1d1;
-	height: 22px;
-	padding-top: 5px;
-	padding-left: 5px;
-	font-weight: bold;
-	font-size: 13px;
+    text-align: center;
+    color: #6b655c;
+    background: #d1d1d1;
+    height: 22px;
+    padding-top: 5px;
+    padding-left: 5px;
+    font-weight: bold;
+    font-size: 13px;
 }
+
 .th a {
-	color: white;
+    color: white;
 }
+
 .tr2 {
-	padding: 5px;
-	background: #e5e5e5 url(images/hover.png) repeat-x;
-	vertical-align: middle;
-	overflow: hidden
+    padding: 5px;
+    background: #e5e5e5 url(images/hover.png) repeat-x;
+    vertical-align: middle;
+    overflow: hidden
 }
+
 .tr {
-	padding: 5px;
-	vertical-align: middle;
-	overflow: hidden
+    padding: 5px;
+    vertical-align: middle;
+    overflow: hidden
 }
+
 .td {
-	padding-left: 5px;
-	border-left: 1px solid #d1d1d1;
-	vertical-align: middle
+    padding-left: 5px;
+    border-left: 1px solid #d1d1d1;
+    vertical-align: middle
 }
+
 .td2 {
-	padding-left: 5px;
-	border-left: 1px solid #d1d1d1;
-	vertical-align: middle
+    padding-left: 5px;
+    border-left: 1px solid #d1d1d1;
+    vertical-align: middle
 }
-table tr td { 
-	padding:1px;
+
+table tr td {
+    padding: 1px;
 }
+
 /* Kalendoriui */
 .kalendorius table tr td {
-	border-bottom: 1px dashed #d6d6d6;
-	text-align:center;
+    border-bottom: 1px dashed #d6d6d6;
+    text-align: center;
 }
+
 .kalendorius .siandien {
-	background: #d6d6d6;
-	font-weight: bold;
-	color: #fff
+    background: #d6d6d6;
+    font-weight: bold;
+    color: #fff
 }
+
 /* Linija, po naujiena, straipsniu, siuntiniu ir t.t */
 .line {
-	border-top: 1px dashed #d6d6d6;
-	margin: 5px
+    border-top: 1px dashed #d6d6d6;
+    margin: 5px
 }
-/* Title lentelë iðokanti pelæ uþvedus ant nuorodos su pavadinimu (title="") */
-.tooltip{
-	padding: 3px;
-	border: 1px solid #666;
-	display: none;
-	background: #d6d6d6;
-	color: #666;
-	font: 11px Arial, Helvetica, sans-serif;
-	text-align: left;
-	position: absolute;
-	z-index: 1000;
+
+/* Title lentelï¿½ iï¿½okanti pelï¿½ uï¿½vedus ant nuorodos su pavadinimu (title="") */
+.tooltip {
+    padding: 3px;
+    border: 1px solid #666;
+    display: none;
+    background: #d6d6d6;
+    color: #666;
+    font: 11px Arial, Helvetica, sans-serif;
+    text-align: left;
+    position: absolute;
+    z-index: 1000;
 }
-/* Informaciniai praneðimai */
+
+/* Informaciniai praneï¿½imai */
 .klaida {
     margin-bottom: 5px;
     height: auto;
     width: 100%;
-	background: #f7e66c;
-	border: 1px solid #c8bb45;
-	color: #afa233;
+    background: #f7e66c;
+    border: 1px solid #c8bb45;
+    color: #afa233;
 }
+
 .info_tekstas {
-	color: #3d403d;
-	padding-left: 40px;
-	padding-bottom: 3px;
+    color: #3d403d;
+    padding-left: 40px;
+    padding-bottom: 3px;
 }
+
 .info_pavadinimas {
-	padding-top: 3px;
-	padding-left: 40px;
+    padding-top: 3px;
+    padding-left: 40px;
 }
+
 .msg {
     margin-bottom: 5px;
     height: auto;
     width: 100%;
-	background: #c3ea86;
-	border: 1px solid #a2cd5e;
-	color: #769b3d;
+    background: #c3ea86;
+    border: 1px solid #a2cd5e;
+    color: #769b3d;
 }
+
 .klaida .info_ikona {
-    margin-top:3px;
-    margin-left:5px;
+    margin-top: 3px;
+    margin-left: 5px;
     float: left;
     height: 32px;
     width: 32px;
-	background: url(images/warrning.png) no-repeat;
+    background: url(images/warrning.png) no-repeat;
 }
+
 .msg .info_ikona {
-    margin-top:3px;
-    margin-left:5px;
+    margin-top: 3px;
+    margin-left: 5px;
     float: left;
     height: 32px;
     width: 32px;
-	background: url(images/tick.png) no-repeat;
+    background: url(images/tick.png) no-repeat;
 }
-/* Nario avataro paveikslëlis */
+
+/* Nario avataro paveikslï¿½lis */
 .avataras img {
-	background: #fff;
-	border: 1px solid #ccc;
-	display: block;
-	margin: 2px 10px 2px 2px;
-	padding: 2px;
-	float: left;
+    background: #fff;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 2px 10px 2px 2px;
+    padding: 2px;
+    float: left;
 }
-/* Kategorijø paveikslëlis */
+
+/* Kategorijï¿½ paveikslï¿½lis */
 .kat img {
-	background: #fff;
-	border: 1px solid #ccc;
-	display: block;
-	margin: 2px 10px 2px 2px;
-	padding: 2px;
-	float: left;
+    background: #fff;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 2px 10px 2px 2px;
+    padding: 2px;
+    float: left;
 }
-/* Nario paraðui */
+
+/* Nario paraï¿½ui */
 .signature {
-	border-top: 1px dashed #fff;
+    border-top: 1px dashed #fff;
 }
+
 /* Puslapiavimui */
 .puslapiavimas {
     text-shadow: 0px 0px 0px;
     text-align: center;
 }
-.puslapiavimas a:hover{
+
+.puslapiavimas a:hover {
     color: #fff;
-	text-decoration: none;
-}
-.puslapiavimas .nuoroda {
-	vertical-align: middle;
-	background: #f2f2f2;
-	padding: 2px;
-	padding-left: 7px;
-	padding-right: 7px;
-}
-.puslapiavimas .nuoroda:hover {
-	background: #f09c1b;
-}
-.puslapiavimas .paspaustas {
-    color: #fff;
-	vertical-align: middle;
-    font-weight: bold;
-	background: #f09c1b;
-	padding: 2px;
-	padding-left: 7px;
-	padding-right: 7px;
-}
-/* Siustis.php puslapio siuntimosi mygtukas */
-a.siust {
-	font-family: Arial, Helvetica, sans-serif;
-	text-align: center;
-	float: left;
-	cursor: pointer;
-	background: #f2f2f2;
-	border: 1px solid #CCCCCC;
-	padding: 3px;
-	margin: 3px;
-	font-weight: bold;
-	text-decoration: none;
-	display: inline-block;
-}
-/* Galerijai */
-#gallery { 
-	position: relative;
-}
-.gallery_title, .gallery_menu {
-	background: black;
-	color: white;
-	font-weight: bold;
-	opacity: 0.7;
-	position: absolute;
-	text-align: center;
-	width: 100%;
-}
-.gallery_title {
-	top: 0;
-}
-.gallery_menu {
-	bottom: 5px;
-}
-.gallery_menu img {
-	vertical-align: middle;
-}
-/* Apsaugos kodui */
-#captcha {
-	background-color: white;
-}
-/* Reitingavimas */
-.base{
-	background:url(images/ratings.png) 0 0 no-repeat;
-}
-.average{
-	background:url(images/ratings.png) 0 -16px no-repeat; 
-}
-.score a:hover{
-	background:url(images/ratings.png) bottom left no-repeat;
+    text-decoration: none;
 }
 
-/* Mightmedia pagrindinës stiliaus funkcijos */
+.puslapiavimas .nuoroda {
+    vertical-align: middle;
+    background: #f2f2f2;
+    padding: 2px;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+.puslapiavimas .nuoroda:hover {
+    background: #f09c1b;
+}
+
+.puslapiavimas .paspaustas {
+    color: #fff;
+    vertical-align: middle;
+    font-weight: bold;
+    background: #f09c1b;
+    padding: 2px;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+/* Siustis.php puslapio siuntimosi mygtukas */
+a.siust {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    float: left;
+    cursor: pointer;
+    background: #f2f2f2;
+    border: 1px solid #CCCCCC;
+    padding: 3px;
+    margin: 3px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Galerijai */
+#gallery {
+    position: relative;
+}
+
+.gallery_title, .gallery_menu {
+    background: black;
+    color: white;
+    font-weight: bold;
+    opacity: 0.7;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+.gallery_title {
+    top: 0;
+}
+
+.gallery_menu {
+    bottom: 5px;
+}
+
+.gallery_menu img {
+    vertical-align: middle;
+}
+
+/* Apsaugos kodui */
+#captcha {
+    background-color: white;
+}
+
+/* Reitingavimas */
+.base {
+    background: url(images/ratings.png) 0 0 no-repeat;
+}
+
+.average {
+    background: url(images/ratings.png) 0 -16px no-repeat;
+}
+
+.score a:hover {
+    background: url(images/ratings.png) bottom left no-repeat;
+}
+
+/* Mightmedia pagrindinï¿½s stiliaus funkcijos */
