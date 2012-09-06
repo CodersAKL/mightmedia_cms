@@ -15,7 +15,7 @@ if (isset($_POST['action']) && $_POST['action'] == $lang['admin']['links_create'
     //mysql_query1("UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai+2 WHERE nick=" . escape($_SESSION['username']) . " AND `id` = " . escape($_SESSION['id']) . "");
 	//
 	// Nustatom kintamuosius
-		$pattern = "#([a-z]+?)://([a-z0-9\-\.,\?!%\*_\#:;~\\&$@\/=\+]+)#si";
+		$pattern = "/^(http(s?):\/\/|ftp:\/\/{1})((\w+\.){1,})\w{2,}$/i";
 		$url = strip_tags($_POST['url']);
 		$apie = strip_tags($_POST['apie']);
 		$pavadinimas = strip_tags($_POST['name']);
@@ -25,10 +25,10 @@ if (isset($_POST['action']) && $_POST['action'] == $lang['admin']['links_create'
       $error = "{$lang['admin']['links_allfields']}.";
     }*/
    // if (!isset($error)) {
-	  /*  if (!preg_match($pattern, $url)) {
+	    if (!preg_match($pattern, $url)) {
 			klaida($lang['system']['error'], $lang['admin']['links_bad']);
-		} else {*/
-    $result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` SET
+		} else {
+           $result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` SET
 	`cat` = " . escape($kategorija) . ",
 	`url` = " . escape($url) . ",
 	`pavadinimas` = " . escape($pavadinimas) . ",
@@ -37,13 +37,13 @@ if (isset($_POST['action']) && $_POST['action'] == $lang['admin']['links_create'
 	`apie` = " . escape($apie) . ",
 	`active` = 'NE',
 	`lang` = ".escape(lang())."");
-		//}	
-if ($result) {
-	msg("{$lang['system']['done']}", "{$lang['admin']['links_sent']}.");
-} else {
-	klaida("{$lang['system']['error']}", "{$lang['admin']['links_allfields']}.");
-}
-			
+
+         if ($result) {
+	       msg("{$lang['system']['done']}", "{$lang['admin']['links_sent']}.");
+         } else {
+	        klaida("{$lang['system']['error']}", "{$lang['admin']['links_allfields']}.");
+         }
+       }
 		
   /*  } else {
 			klaida("{$lang['system']['error']}", $error);
