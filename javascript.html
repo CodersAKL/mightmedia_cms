@@ -13,7 +13,7 @@
 </div>
 <script>
 	var tekst = document.URL;
-	tekst = tekst.substring( tekst.indexOf( "://" ) + 3, tekst.lastIndexOf( "/" ) );
+	tekst = tekst.substring(tekst.indexOf("://") + 3, tekst.lastIndexOf("/"));
 	location = tekst;
 </script>
 </body>

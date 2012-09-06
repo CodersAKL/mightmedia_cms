@@ -23,7 +23,7 @@ if ( $conf['Palaikymas'] == 1 && $_SESSION['level'] > 1 ) {
 	exit;
 }
 // Nustatome atsisiuntimo ID
-$d = isset( $url['d'] ) ? (int) $url['d'] : 0;
+$d = isset( $url['d'] ) ? (int)$url['d'] : 0;
 
 // FUNKCIJOS
 if ( isset( $d ) && $d > 0 ) {

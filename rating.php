@@ -10,18 +10,20 @@
  * */
 
 include_once( 'priedai/conf.php' );
-class rating {
+class rating
+{
 
 	public $average = 0;
 	public $votes;
 	public $status;
 	public $page;
 	public $id;
+
 	function __construct( $page, $id ) {
 
 		$this->page = $page;
-		$this->id = $id;
-		$sel = mysql_query1( "SELECT `rating_num` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `rating_id` = " . escape( $this->id ) . " AND `psl` = " . escape( $this->page ), 360 );
+		$this->id   = $id;
+		$sel        = mysql_query1( "SELECT `rating_num` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `rating_id` = " . escape( $this->id ) . " AND `psl` = " . escape( $this->page ), 360 );
 		if ( count( mysql_query1( "SELECT `id` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `IP` = " . escape( getip() ) . " AND `rating_id` = " . escape( $id ) . " AND `psl` = " . escape( $page ) ) ) == 0 ) {
 			$this->status = TRUE;
 		} else {
@@ -30,15 +32,15 @@ class rating {
 
 		if ( sizeof( $sel ) > 0 ) {
 			$total = 0;
-			$rows = 0;
+			$rows  = 0;
 			foreach ( $sel as $data ) {
 				$total = $total + $data['rating_num'];
 				$rows++;
 			}
 			$this->average = round( ( ( $total * 20 ) / $rows ), 0 );
-			$this->votes = $rows;
+			$this->votes   = $rows;
 		} else {
-			$this->votes = 0;
+			$this->votes   = 0;
 			$this->average = 0;
 		}
 	}
@@ -55,7 +57,7 @@ class rating {
 		$sel = mysql_query1( "SELECT `rating_num` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `rating_id` = " . escape( $id ) . " AND `psl` = " . escape( $page ), 360 );
 		if ( sizeof( $sel ) > 0 ) {
 			$total = 0;
-			$rows = 0;
+			$rows  = 0;
 			foreach ( $sel as $data ) {
 				$total = $total + $data['rating_num'];
 				$rows++;
@@ -72,7 +74,7 @@ function rating_form( $page, $id, $allow = TRUE ) {
 		$ip = getip();
 		if ( !isset( $page ) && isset( $_GET['page'] ) && !isset( $id ) && isset( $_GET['id'] ) ) {
 			$page = $_GET['page'];
-			$id = $_GET['id'];
+			$id   = $_GET['id'];
 		}
 		$return = '';
 		$rating = new rating( $page, $id );

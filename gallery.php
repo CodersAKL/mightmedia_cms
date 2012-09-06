@@ -13,7 +13,8 @@ if ( isset( $conf['puslapiai']['galerija.php'] ) ) {
 	echo $lang['admin']['gallery_noimages'];
 }
 
-class RssGallery {
+class RssGallery
+{
 
 	function __construct() {
 
@@ -48,14 +49,14 @@ class RssGallery {
 
 		global $conf;
 		$rssItems = '';
-		$query = "SELECT * FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `rodoma` = 'TAIP' ORDER BY id DESC";
-		$query = mysql_query1( $query, 3600 );
+		$query    = "SELECT * FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `rodoma` = 'TAIP' ORDER BY id DESC";
+		$query    = mysql_query1( $query, 3600 );
 
 		foreach ( $query as $row ) {
-			$id = $row['ID'];
-			$title = trimlink( $row["pavadinimas"], 50 );
-			$text = input( $row["apie"] );
-			$img_id = $row["file"];
+			$id        = $row['ID'];
+			$title     = trimlink( $row["pavadinimas"], 50 );
+			$text      = input( $row["apie"] );
+			$img_id    = $row["file"];
 			$timestamp = $row["data"];
 
 			$rssItems .= "    <item>

@@ -24,7 +24,7 @@ if ( $conf['Palaikymas'] == 0 ) {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><?php header_info(); ?></head>
 <body>
-	<?php remontas( $lang['admin']['maintenance'], $conf['Maintenance'] ) ?>
+<?php remontas( $lang['admin']['maintenance'], $conf['Maintenance'] ) ?>
 </body>
 </html>
 <?php ob_end_flush(); ?>

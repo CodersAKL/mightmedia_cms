@@ -9,12 +9,12 @@
  * @$Revision$
  * @$Date$
  **/
- 
+
 //Šis failas skirtas moduliams, naudojantiems ajax
-if(isset($_GET)){
+if ( isset( $_GET ) ) {
 //Įterpti, jei duomenys paduodami get metodu
 }
-if(isset($_POST)){
+if ( isset( $_POST ) ) {
 //Įterpti, jei duomenys paduodami post metodu
 }
 

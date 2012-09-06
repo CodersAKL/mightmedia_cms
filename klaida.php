@@ -10,11 +10,11 @@
  * @$Date$
  **/
 ob_start();
-header("Cache-control: public");
-header("Content-type: text/html; charset=utf-8");
+header( "Cache-control: public" );
+header( "Content-type: text/html; charset=utf-8" );
 include_once( "priedai/conf.php" );
 $status = isset( $_SERVER['REDIRECT_STATUS'] ) ? $_SERVER['REDIRECT_STATUS'] : 500;
-switch ($status) {
+switch ( $status ) {
 	case 403:
 		{
 		$tipas = $lang['system']['nohacking'];
@@ -32,7 +32,7 @@ switch ($status) {
 		}
 }
 
-header(' ', TRUE, $status);
+header( ' ', TRUE, $status );
 
 ?>
 
