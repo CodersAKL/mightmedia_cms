@@ -9,399 +9,403 @@
  *
  */
 
-(function($) {
+(function ($) {
 
-	$.fn.asmSelect = function(customOptions) {
+    $.fn.asmSelect = function (customOptions) {
 
-		var options = {
+        var options = {
 
-			listType: 'ol',						// Ordered list 'ol', or unordered list 'ul'
-			sortable: false, 					// Should the list be sortable?
-			highlight: false,					// Use the highlight feature? 
-			animate: false,						// Animate the the adding/removing of items in the list?
-			addItemTarget: 'bottom',				// Where to place new selected items in list: top or bottom
-			hideWhenAdded: false,					// Hide the option when added to the list? works only in FF
-			debugMode: false,					// Debug mode keeps original select visible 
+            listType:'ol', // Ordered list 'ol', or unordered list 'ul'
+            sortable:false, // Should the list be sortable?
+            highlight:false, // Use the highlight feature?
+            animate:false, // Animate the the adding/removing of items in the list?
+            addItemTarget:'bottom', // Where to place new selected items in list: top or bottom
+            hideWhenAdded:false, // Hide the option when added to the list? works only in FF
+            debugMode:false, // Debug mode keeps original select visible
 
-			removeLabel: 'remove',					// Text used in the "remove" link
-			highlightAddedLabel: 'Added: ',				// Text that precedes highlight of added item
-			highlightRemovedLabel: 'Removed: ',			// Text that precedes highlight of removed item
+            removeLabel:'remove', // Text used in the "remove" link
+            highlightAddedLabel:'Added: ', // Text that precedes highlight of added item
+            highlightRemovedLabel:'Removed: ', // Text that precedes highlight of removed item
 
-			containerClass: 'asmContainer',				// Class for container that wraps this widget
-			selectClass: 'asmSelect',				// Class for the newly created <select>
-			optionDisabledClass: 'asmOptionDisabled',		// Class for items that are already selected / disabled
-			listClass: 'asmList',					// Class for the list ($ol)
-			listSortableClass: 'asmListSortable',			// Another class given to the list when it is sortable
-			listItemClass: 'asmListItem',				// Class for the <li> list items
-			listItemLabelClass: 'asmListItemLabel',			// Class for the label text that appears in list items
-			removeClass: 'asmListItemRemove',			// Class given to the "remove" link
-			highlightClass: 'asmHighlight'				// Class given to the highlight <span>
+            containerClass:'asmContainer', // Class for container that wraps this widget
+            selectClass:'asmSelect', // Class for the newly created <select>
+            optionDisabledClass:'asmOptionDisabled', // Class for items that are already selected / disabled
+            listClass:'asmList', // Class for the list ($ol)
+            listSortableClass:'asmListSortable', // Another class given to the list when it is sortable
+            listItemClass:'asmListItem', // Class for the <li> list items
+            listItemLabelClass:'asmListItemLabel', // Class for the label text that appears in list items
+            removeClass:'asmListItemRemove', // Class given to the "remove" link
+            highlightClass:'asmHighlight'                // Class given to the highlight <span>
 
-			};
+        };
 
-		$.extend(options, customOptions); 
+        $.extend(options, customOptions);
 
-		return this.each(function(index) {
+        return this.each(function (index) {
 
-			var $original = $(this); 				// the original select multiple
-			var $container; 					// a container that is wrapped around our widget
-			var $select; 						// the new select we have created
-			var $ol; 						// the list that we are manipulating
-			var buildingSelect = false; 				// is the new select being constructed right now?
-			var ieClick = false;					// in IE, has a click event occurred? ignore if not
-			var ignoreOriginalChangeEvent = false;			// originalChangeEvent bypassed when this is true
+            var $original = $(this); 				// the original select multiple
+            var $container; 					// a container that is wrapped around our widget
+            var $select; 						// the new select we have created
+            var $ol; 						// the list that we are manipulating
+            var buildingSelect = false; 				// is the new select being constructed right now?
+            var ieClick = false;					// in IE, has a click event occurred? ignore if not
+            var ignoreOriginalChangeEvent = false;			// originalChangeEvent bypassed when this is true
 
-			function init() {
+            function init() {
 
-				// initialize the alternate select multiple
+                // initialize the alternate select multiple
 
-				// this loop ensures uniqueness, in case of existing asmSelects placed by ajax (1.0.3)
-				while($("#" + options.containerClass + index).size() > 0) index++; 
+                // this loop ensures uniqueness, in case of existing asmSelects placed by ajax (1.0.3)
+                while ($("#" + options.containerClass + index).size() > 0) index++;
 
-				$select = $("<select></select>")
-					.addClass(options.selectClass)
-					.attr('name', options.selectClass + index)
-					.attr('id', options.selectClass + index); 
+                $select = $("<select></select>")
+                    .addClass(options.selectClass)
+                    .attr('name', options.selectClass + index)
+                    .attr('id', options.selectClass + index);
 
-				$selectRemoved = $("<select></select>"); 
+                $selectRemoved = $("<select></select>");
 
-				$ol = $("<" + options.listType + "></" + options.listType + ">")
-					.addClass(options.listClass)
-					.attr('id', options.listClass + index); 
+                $ol = $("<" + options.listType + "></" + options.listType + ">")
+                    .addClass(options.listClass)
+                    .attr('id', options.listClass + index);
 
-				$container = $("<div></div>")
-					.addClass(options.containerClass) 
-					.attr('id', options.containerClass + index); 
+                $container = $("<div></div>")
+                    .addClass(options.containerClass)
+                    .attr('id', options.containerClass + index);
 
-				buildSelect();
+                buildSelect();
 
-				$select.change(selectChangeEvent)
-					.click(selectClickEvent); 
+                $select.change(selectChangeEvent)
+                    .click(selectClickEvent);
 
-				$original.change(originalChangeEvent)
-					.wrap($container).before($select).before($ol);
+                $original.change(originalChangeEvent)
+                    .wrap($container).before($select).before($ol);
 
-				if(options.sortable) makeSortable();
+                if (options.sortable) makeSortable();
 
-				if($.browser.msie) $ol.css('display', 'inline-block'); 
-			}
+                if ($.browser.msie) $ol.css('display', 'inline-block');
+            }
 
-			function makeSortable() {
+            function makeSortable() {
 
-				// make any items in the selected list sortable
-				// requires jQuery UI sortables, draggables, droppables
+                // make any items in the selected list sortable
+                // requires jQuery UI sortables, draggables, droppables
 
-				$ol.sortable({
-					items: 'li.' + options.listItemClass,
-					handle: '.' + options.listItemLabelClass,
-					axis: 'y',
-					update: function(e, data) {
+                $ol.sortable({
+                    items:'li.' + options.listItemClass,
+                    handle:'.' + options.listItemLabelClass,
+                    axis:'y',
+                    update:function (e, data) {
 
-						var updatedOptionId;
+                        var updatedOptionId;
 
-						$(this).children("li").each(function(n) {
+                        $(this).children("li").each(function (n) {
 
-							$option = $('#' + $(this).attr('rel')); 
+                            $option = $('#' + $(this).attr('rel'));
 
-							if($(this).is(".ui-sortable-helper")) {
-								updatedOptionId = $option.attr('id'); 
-								return;
-							}
+                            if ($(this).is(".ui-sortable-helper")) {
+                                updatedOptionId = $option.attr('id');
+                                return;
+                            }
 
-							$original.append($option); 
-						}); 
+                            $original.append($option);
+                        });
 
-						if(updatedOptionId) triggerOriginalChange(updatedOptionId, 'sort'); 
-					}
+                        if (updatedOptionId) triggerOriginalChange(updatedOptionId, 'sort');
+                    }
 
-				}).addClass(options.listSortableClass); 
-			}
+                }).addClass(options.listSortableClass);
+            }
 
-			function selectChangeEvent(e) {
-				
-				// an item has been selected on the regular select we created
-				// check to make sure it's not an IE screwup, and add it to the list
+            function selectChangeEvent(e) {
 
-				if($.browser.msie && $.browser.version < 7 && !ieClick) return;
-				var id = $(this).children("option:selected").slice(0,1).attr('rel'); 
-				addListItem(id); 	
-				ieClick = false; 
-				triggerOriginalChange(id, 'add'); // for use by user-defined callbacks
-			}
+                // an item has been selected on the regular select we created
+                // check to make sure it's not an IE screwup, and add it to the list
 
-			function selectClickEvent() {
+                if ($.browser.msie && $.browser.version < 7 && !ieClick) return;
+                var id = $(this).children("option:selected").slice(0, 1).attr('rel');
+                addListItem(id);
+                ieClick = false;
+                triggerOriginalChange(id, 'add'); // for use by user-defined callbacks
+            }
 
-				// IE6 lets you scroll around in a select without it being pulled down
-				// making sure a click preceded the change() event reduces the chance
-				// if unintended items being added. there may be a better solution?
+            function selectClickEvent() {
 
-				ieClick = true; 
-			}
+                // IE6 lets you scroll around in a select without it being pulled down
+                // making sure a click preceded the change() event reduces the chance
+                // if unintended items being added. there may be a better solution?
 
-			function originalChangeEvent(e) {
+                ieClick = true;
+            }
 
-				// select or option change event manually triggered
-				// on the original <select multiple>, so rebuild ours
+            function originalChangeEvent(e) {
 
-				if(ignoreOriginalChangeEvent) {
-					ignoreOriginalChangeEvent = false; 
-					return; 
-				}
+                // select or option change event manually triggered
+                // on the original <select multiple>, so rebuild ours
 
-				$select.empty();
-				$ol.empty();
-				buildSelect();
+                if (ignoreOriginalChangeEvent) {
+                    ignoreOriginalChangeEvent = false;
+                    return;
+                }
 
-				// opera has an issue where it needs a force redraw, otherwise
-				// the items won't appear until something else forces a redraw
-				if($.browser.opera) $ol.hide().fadeIn("fast");
-			}
+                $select.empty();
+                $ol.empty();
+                buildSelect();
 
-			function buildSelect() {
+                // opera has an issue where it needs a force redraw, otherwise
+                // the items won't appear until something else forces a redraw
+                if ($.browser.opera) $ol.hide().fadeIn("fast");
+            }
 
-				// build or rebuild the new select that the user
-				// will select items from
+            function buildSelect() {
 
-				buildingSelect = true; 
+                // build or rebuild the new select that the user
+                // will select items from
 
-				// add a first option to be the home option / default selectLabel
-				$select.prepend("<option>" + $original.attr('title') + "</option>"); 
+                buildingSelect = true;
 
-				$original.children("option").each(function(n) {
+                // add a first option to be the home option / default selectLabel
+                $select.prepend("<option>" + $original.attr('title') + "</option>");
 
-					var $t = $(this); 
-					var id; 
+                $original.children("option").each(function (n) {
 
-					if(!$t.attr('id')) $t.attr('id', 'asm' + index + 'option' + n); 
-					id = $t.attr('id'); 
+                    var $t = $(this);
+                    var id;
 
-					if($t.is(":selected")) {
-						addListItem(id); 
-						addSelectOption(id, true); 						
-					} else {
-						addSelectOption(id); 
-					}
-				});
+                    if (!$t.attr('id')) $t.attr('id', 'asm' + index + 'option' + n);
+                    id = $t.attr('id');
 
-				if(!options.debugMode) $original.hide(); // IE6 requires this on every buildSelect()
-				selectFirstItem();
-				buildingSelect = false; 
-			}
+                    if ($t.is(":selected")) {
+                        addListItem(id);
+                        addSelectOption(id, true);
+                    } else {
+                        addSelectOption(id);
+                    }
+                });
 
-			function addSelectOption(optionId, disabled) {
+                if (!options.debugMode) $original.hide(); // IE6 requires this on every buildSelect()
+                selectFirstItem();
+                buildingSelect = false;
+            }
 
-				// add an <option> to the <select>
-				// used only by buildSelect()
+            function addSelectOption(optionId, disabled) {
 
-				if(disabled == undefined) var disabled = false; 
+                // add an <option> to the <select>
+                // used only by buildSelect()
 
-				var $O = $('#' + optionId); 
-				var $option = $("<option>" + $O.text() + "</option>")
-					.val($O.val())
-					.attr('rel', optionId);
+                if (disabled == undefined) var disabled = false;
 
-				if(disabled) disableSelectOption($option); 
+                var $O = $('#' + optionId);
+                var $option = $("<option>" + $O.text() + "</option>")
+                    .val($O.val())
+                    .attr('rel', optionId);
 
-				$select.append($option); 
-			}
+                if (disabled) disableSelectOption($option);
 
-			function selectFirstItem() {
+                $select.append($option);
+            }
 
-				// select the firm item from the regular select that we created
+            function selectFirstItem() {
 
-				$select.children(":eq(0)").attr("selected", true); 
-			}
+                // select the firm item from the regular select that we created
 
-			function disableSelectOption($option) {
+                $select.children(":eq(0)").attr("selected", true);
+            }
 
-				// make an option disabled, indicating that it's already been selected
-				// because safari is the only browser that makes disabled items look 'disabled'
-				// we apply a class that reproduces the disabled look in other browsers
+            function disableSelectOption($option) {
 
-				$option.addClass(options.optionDisabledClass)
-					.attr("selected", false)
-					.attr("disabled", true);
+                // make an option disabled, indicating that it's already been selected
+                // because safari is the only browser that makes disabled items look 'disabled'
+                // we apply a class that reproduces the disabled look in other browsers
 
-				if(options.hideWhenAdded) $option.hide();
-				if($.browser.msie) $select.hide().show(); // this forces IE to update display
-			}
+                $option.addClass(options.optionDisabledClass)
+                    .attr("selected", false)
+                    .attr("disabled", true);
 
-			function enableSelectOption($option) {
+                if (options.hideWhenAdded) $option.hide();
+                if ($.browser.msie) $select.hide().show(); // this forces IE to update display
+            }
 
-				// given an already disabled select option, enable it
+            function enableSelectOption($option) {
 
-				$option.removeClass(options.optionDisabledClass)
-					.attr("disabled", false);
+                // given an already disabled select option, enable it
 
-				if(options.hideWhenAdded) $option.show();
-				if($.browser.msie) $select.hide().show(); // this forces IE to update display
-			}
+                $option.removeClass(options.optionDisabledClass)
+                    .attr("disabled", false);
 
-			function addListItem(optionId) {
+                if (options.hideWhenAdded) $option.show();
+                if ($.browser.msie) $select.hide().show(); // this forces IE to update display
+            }
 
-				// add a new item to the html list
+            function addListItem(optionId) {
 
-				var $O = $('#' + optionId); 
+                // add a new item to the html list
 
-				if(!$O) return; // this is the first item, selectLabel
+                var $O = $('#' + optionId);
 
-				var $removeLink = $("<a></a>")
-					.attr("href", "#")
-					.addClass(options.removeClass)
-					.prepend(options.removeLabel)
-					.click(function() { 
-						dropListItem($(this).parent('li').attr('rel')); 
-						return false; 
-					}); 
+                if (!$O) return; // this is the first item, selectLabel
 
-				var $itemLabel = $("<span></span>")
-					.addClass(options.listItemLabelClass)
-					.html($O.html()); 
+                var $removeLink = $("<a></a>")
+                    .attr("href", "#")
+                    .addClass(options.removeClass)
+                    .prepend(options.removeLabel)
+                    .click(function () {
+                        dropListItem($(this).parent('li').attr('rel'));
+                        return false;
+                    });
 
-				var $item = $("<li></li>")
-					.attr('rel', optionId)
-					.addClass(options.listItemClass)
-					.append($itemLabel)
-					.append($removeLink)
-					.hide();
+                var $itemLabel = $("<span></span>")
+                    .addClass(options.listItemLabelClass)
+                    .html($O.html());
 
-				if(!buildingSelect) {
-					if($O.is(":selected")) return; // already have it
-					$O.attr('selected', true); 
-				}
+                var $item = $("<li></li>")
+                    .attr('rel', optionId)
+                    .addClass(options.listItemClass)
+                    .append($itemLabel)
+                    .append($removeLink)
+                    .hide();
 
-				if(options.addItemTarget == 'top' && !buildingSelect) {
-					$ol.prepend($item); 
-					if(options.sortable) $original.prepend($O); 
-				} else {
-					$ol.append($item); 
-					if(options.sortable) $original.append($O); 
-				}
+                if (!buildingSelect) {
+                    if ($O.is(":selected")) return; // already have it
+                    $O.attr('selected', true);
+                }
 
-				addListItemShow($item); 
+                if (options.addItemTarget == 'top' && !buildingSelect) {
+                    $ol.prepend($item);
+                    if (options.sortable) $original.prepend($O);
+                } else {
+                    $ol.append($item);
+                    if (options.sortable) $original.append($O);
+                }
 
-				disableSelectOption($("[rel=" + optionId + "]", $select));
+                addListItemShow($item);
 
-				if(!buildingSelect) {
-					setHighlight($item, options.highlightAddedLabel); 
-					selectFirstItem();
-					if(options.sortable) $ol.sortable("refresh"); 	
-				}
+                disableSelectOption($("[rel=" + optionId + "]", $select));
 
-			}
+                if (!buildingSelect) {
+                    setHighlight($item, options.highlightAddedLabel);
+                    selectFirstItem();
+                    if (options.sortable) $ol.sortable("refresh");
+                }
 
-			function addListItemShow($item) {
+            }
 
-				// reveal the currently hidden item with optional animation
-				// used only by addListItem()
+            function addListItemShow($item) {
 
-				if(options.animate && !buildingSelect) {
-					$item.animate({
-						opacity: "show",
-						height: "show"
-					}, 100, "swing", function() { 
-						$item.animate({
-							height: "+=2px"
-						}, 50, "swing", function() {
-							$item.animate({
-								height: "-=2px"
-							}, 25, "swing"); 
-						}); 
-					}); 
-				} else {
-					$item.show();
-				}
-			}
+                // reveal the currently hidden item with optional animation
+                // used only by addListItem()
 
-			function dropListItem(optionId, highlightItem) {
+                if (options.animate && !buildingSelect) {
+                    $item.animate({
+                        opacity:"show",
+                        height:"show"
+                    }, 100, "swing", function () {
+                        $item.animate({
+                            height:"+=2px"
+                        }, 50, "swing", function () {
+                            $item.animate({
+                                height:"-=2px"
+                            }, 25, "swing");
+                        });
+                    });
+                } else {
+                    $item.show();
+                }
+            }
 
-				// remove an item from the html list
+            function dropListItem(optionId, highlightItem) {
 
-				if(highlightItem == undefined) var highlightItem = true; 
-				var $O = $('#' + optionId); 
+                // remove an item from the html list
 
-				$O.attr('selected', false); 
-				$item = $ol.children("li[rel=" + optionId + "]");
+                if (highlightItem == undefined) var highlightItem = true;
+                var $O = $('#' + optionId);
 
-				dropListItemHide($item); 
-				enableSelectOption($("[rel=" + optionId + "]", options.removeWhenAdded ? $selectRemoved : $select));
+                $O.attr('selected', false);
+                $item = $ol.children("li[rel=" + optionId + "]");
 
-				if(highlightItem) setHighlight($item, options.highlightRemovedLabel); 
+                dropListItemHide($item);
+                enableSelectOption($("[rel=" + optionId + "]", options.removeWhenAdded ? $selectRemoved : $select));
 
-				triggerOriginalChange(optionId, 'drop'); 
-				
-			}
+                if (highlightItem) setHighlight($item, options.highlightRemovedLabel);
 
-			function dropListItemHide($item) {
+                triggerOriginalChange(optionId, 'drop');
 
-				// remove the currently visible item with optional animation
-				// used only by dropListItem()
+            }
 
-				if(options.animate && !buildingSelect) {
+            function dropListItemHide($item) {
 
-					$prevItem = $item.prev("li");
+                // remove the currently visible item with optional animation
+                // used only by dropListItem()
 
-					$item.animate({
-						opacity: "hide",
-						height: "hide"
-					}, 100, "linear", function() {
-						$prevItem.animate({
-							height: "-=2px"
-						}, 50, "swing", function() {
-							$prevItem.animate({
-								height: "+=2px"
-							}, 100, "swing"); 
-						}); 
-						$item.remove(); 
-					}); 
-					
-				} else {
-					$item.remove(); 
-				}
-			}
+                if (options.animate && !buildingSelect) {
 
-			function setHighlight($item, label) {
+                    $prevItem = $item.prev("li");
 
-				// set the contents of the highlight area that appears
-				// directly after the <select> single
-				// fade it in quickly, then fade it out
+                    $item.animate({
+                        opacity:"hide",
+                        height:"hide"
+                    }, 100, "linear", function () {
+                        $prevItem.animate({
+                            height:"-=2px"
+                        }, 50, "swing", function () {
+                            $prevItem.animate({
+                                height:"+=2px"
+                            }, 100, "swing");
+                        });
+                        $item.remove();
+                    });
 
-				if(!options.highlight) return; 
+                } else {
+                    $item.remove();
+                }
+            }
 
-				$select.next("#" + options.highlightClass + index).remove();
+            function setHighlight($item, label) {
 
-				var $highlight = $("<span></span>")
-					.hide()
-					.addClass(options.highlightClass)
-					.attr('id', options.highlightClass + index)
-					.html(label + $item.children("." + options.listItemLabelClass).slice(0,1).text()); 
-					
-				$select.after($highlight); 
+                // set the contents of the highlight area that appears
+                // directly after the <select> single
+                // fade it in quickly, then fade it out
 
-				$highlight.fadeIn("fast", function() {
-					setTimeout(function() { $highlight.fadeOut("slow"); }, 50); 
-				}); 
-			}
+                if (!options.highlight) return;
 
-			function triggerOriginalChange(optionId, type) {
+                $select.next("#" + options.highlightClass + index).remove();
 
-				// trigger a change event on the original select multiple
-				// so that other scripts can pick them up
+                var $highlight = $("<span></span>")
+                    .hide()
+                    .addClass(options.highlightClass)
+                    .attr('id', options.highlightClass + index)
+                    .html(label + $item.children("." + options.listItemLabelClass).slice(0, 1).text());
 
-				ignoreOriginalChangeEvent = true; 
-				$option = $("#" + optionId); 
+                $select.after($highlight);
 
-				$original.trigger('change', [{
-					'option': $option,
-					'value': $option.val(),
-					'id': optionId,
-					'item': $ol.children("[rel=" + optionId + "]"),
-					'type': type
-				}]); 
-			}
+                $highlight.fadeIn("fast", function () {
+                    setTimeout(function () {
+                        $highlight.fadeOut("slow");
+                    }, 50);
+                });
+            }
 
-			init();
-		});
-	};
+            function triggerOriginalChange(optionId, type) {
+
+                // trigger a change event on the original select multiple
+                // so that other scripts can pick them up
+
+                ignoreOriginalChangeEvent = true;
+                $option = $("#" + optionId);
+
+                $original.trigger('change', [
+                    {
+                        'option':$option,
+                        'value':$option.val(),
+                        'id':optionId,
+                        'item':$ol.children("[rel=" + optionId + "]"),
+                        'type':type
+                    }
+                ]);
+            }
+
+            init();
+        });
+    };
 
 })(jQuery); 
