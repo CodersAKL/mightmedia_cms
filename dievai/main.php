@@ -169,13 +169,13 @@ HTML;
       foreach ($id as $key => $val) {
         $return .= <<<HTML
         <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;" ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
-	<textarea id="{$key}" name="{$key}" style="min-height:200px; width: 100%;">{$value[$key]}</textarea>
+	<textarea id="{$key}" name="{$key}" >{$value[$key]}</textarea>
 HTML;
       }
     } else {
       $return .= <<<HTML
       <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$id}','mywindow','menubar=1,resizable=1,width=820,height=500'); return false;" ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
-<textarea id="{$id}" name="{$id}" style="min-height:200px; width: 100%;">{$value}</textarea>
+<textarea id="{$id}" name="{$id}" >{$value}</textarea>
 HTML;
 
     }
@@ -190,7 +190,7 @@ HTML;
 		/*plugins : "paste",*/
 		mode : "textareas",
 		theme : "advanced",
-		/*skin : "o2k7",*/
+		skin : "o2k7",
 		skin_variant : "silver",
 		plugins : "paste,lists,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,inlinepopups,autosave",
 
@@ -223,14 +223,14 @@ HTML;
         $return .= <<<HTML
         <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;
 " ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button><br />
-	<div style="width:750px;"><textarea id="{$key}" name="{$key}" style="width:750px;" class="tinymce">{$value[$key]}</textarea></div>
+	<textarea id="{$key}" name="{$key}" class="tinymce">{$value[$key]}</textarea>
 HTML;
       }
     } else {
       $return .= <<<HTML
       <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$id}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;
 "><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button><br />
-<div style="width:750px;"><textarea id="{$id}" name="{$id}" style="width:750px;" class="tinymce">{$value}</textarea></div>
+<textarea id="{$id}" name="{$id}" class="tinymce">{$value}</textarea>
 HTML;
 
     }
@@ -250,7 +250,7 @@ bkLib.onDomLoaded(function() {
 	new nicEditor({fullPanel : true, iconsPath : '{$dir}htmlarea/nicedit/nicEditorIcons.gif', width: '100%'}).panelInstance('{$key}');
 });
 </script>
-<textarea id="{$key}" name="{$key}" style="width: 750px;">{$value[$key]}</textarea>
+<textarea id="{$key}" name="{$key}">{$value[$key]}</textarea>
 HTML;
 		}
 	} else {
@@ -261,12 +261,12 @@ bkLib.onDomLoaded(function() {
 });
 </script>
 
-<textarea id="{$id}" name="{$id}" style="width: 750px;">{$value}</textarea>
+<textarea id="{$id}" name="{$id}">{$value}</textarea>
 HTML;
 
 	}
 	
-	}elseif($conf['Editor'] == 'ckeditor'){
+	} elseif($conf['Editor'] == 'ckeditor'){
         $dir = adresas();
 
     	$return = <<<HTML
@@ -311,8 +311,8 @@ HTML;
         <!--[if IE]>
 		<link type='text/css' rel='stylesheet' href='css/defaultie.css' media="screen" />
         <![endif]-->
-        <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
 		<script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.7.1.custom.min.js"></script>
         <script type="text/javascript" src="js/superfish.js"></script>
 		<script type="text/javascript" src="js/excanvas.pack.js"></script>

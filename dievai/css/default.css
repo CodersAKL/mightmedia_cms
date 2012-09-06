@@ -36,7 +36,7 @@ h1,h2,h3,h4,h5,h6 {
 	padding: 3px;
 	color: #666666;
 	margin-bottom: 3px;
-    width: 50%;
+    width: 70%;
 }
 
 
@@ -44,6 +44,7 @@ h1,h2,h3,h4,h5,h6 {
     width: 100%;
 }
 textarea {
+min-height:200px;
     width: 80%;
 	background: url('../images/input.png') repeat-x;
 	border: 1px solid #D7D7D7;
@@ -51,7 +52,7 @@ textarea {
 	color: #666666;
 	margin-bottom: 3px;
 }
-input[type="submit"], .submit, button{
+input[type="submit"], .submit, button {
     width: auto;
 	background: #E6E6E6;
 	border-bottom:1px solid #666;
@@ -59,9 +60,9 @@ input[type="submit"], .submit, button{
 	border-left:1px solid #ccc;
 	border-top:1px solid #ccc;
 	color:#555555;
-	padding-left:6px;
-	padding-right:6px;
-
+	padding: 4px;
+	padding-left: 6px;
+	padding-right: 6px;
 }
 a {
 	color: #FF7910;
