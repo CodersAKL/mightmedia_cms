@@ -23,155 +23,156 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', 'On');
+ini_set( 'error_reporting', E_ALL );
+ini_set( 'display_errors', 'On' );
 //ini_set("memory_limit", "50M");
-session_id($_POST['PHPSESSID']);
+session_id( $_POST['PHPSESSID'] );
 session_start();
-define('ROOT', '../../../');
-if (!empty($_FILES)) {
-  require_once(ROOT.'priedai/conf.php');
-  require_once(ROOT.'priedai/funkcijos.php');
-  if (!isset($_SESSION['level']) || $_SESSION['level'] != 1)
-	die('eik lauk..');
+define( 'ROOT', '../../../' );
+if ( !empty( $_FILES ) ) {
+	require_once( ROOT . 'priedai/conf.php' );
+	require_once( ROOT . 'priedai/funkcijos.php' );
+	if ( !isset( $_SESSION['level'] ) || $_SESSION['level'] != 1 ) {
+		die( 'eik lauk..' );
+	}
 	//$tempFile = $_FILES['Filedata']['tmp_name'];
 	//$targetPath = $_SERVER['DOCUMENT_ROOT'] . $_REQUEST['folder'] . '/';
 	//$targetFile =  str_replace('//','/',$targetPath) . $_FILES['Filedata']['name'];
-	
-    $big_img = ROOT."images/galerija/";			//Kur bus saugomi didesni paveiksliukai
-		$mini_img = ROOT."images/galerija/mini";	//Kur bus saugomos miniatiuros
-		
-		$img_thumb_width = $conf['minidyd']; //Mini paveiksliuku dydis
 
-		//Sara�as leid�iamu failu
-		$limitedext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", "gif", "GIF", "bmp", "BMP");
-		$fileParts  = pathinfo($_FILES['Filedata']['name']);
-		//$file_type = $_FILES['Filedata']['type'];
-		$file_name = $_FILES['Filedata']['name'];
-		$file_size = $_FILES['Filedata']['size'];
-		$file_tmp = $_FILES['Filedata']['tmp_name'];
-		if ($file_size <= MFDYDIS){
+	$big_img  = ROOT . "images/galerija/"; //Kur bus saugomi didesni paveiksliukai
+	$mini_img = ROOT . "images/galerija/mini"; //Kur bus saugomos miniatiuros
+
+	$img_thumb_width = $conf['minidyd']; //Mini paveiksliuku dydis
+
+	//Sara�as leid�iamu failu
+	$limitedext = array( "jpg", "JPG", "jpeg", "JPEG", "png", "PNG", "gif", "GIF", "bmp", "BMP" );
+	$fileParts  = pathinfo( $_FILES['Filedata']['name'] );
+	//$file_type = $_FILES['Filedata']['type'];
+	$file_name = $_FILES['Filedata']['name'];
+	$file_size = $_FILES['Filedata']['size'];
+	$file_tmp  = $_FILES['Filedata']['tmp_name'];
+	if ( $file_size <= MFDYDIS ) {
 		//Patikrinam ar failas ikeltas sekmingai
-		if (!is_uploaded_file($file_tmp)) {
+		if ( !is_uploaded_file( $file_tmp ) ) {
 			//klaida("{$lang['system']['warning']}", "{$lang['admin']['gallery_nofile']}.");
 		} else {
 			//gaunamm failo galune
-			$ext = strrchr($file_name, '.');
-			$ext = strtolower($ext);
+			$ext = strrchr( $file_name, '.' );
+			$ext = strtolower( $ext );
 
 			//Tikrinam ar tinkamas failas
-			if (!in_array($fileParts['extension'], $limitedext)) {
+			if ( !in_array( $fileParts['extension'], $limitedext ) ) {
 				//klaida("{$lang['system']['warning']}", "{$lang['admin']['gallery_notimg']}");
 			}
 
 			//create a random file name
-			$rand_pre = random();
+			$rand_pre  = random();
 			$rand_name = $rand_pre . time();
 
 			//the new width variable
 			$ThumbWidth = $img_thumb_width;
-			if ($file_size) {
-				if ($fileParts['extension'] == "jpeg" || $fileParts['extension'] == "jpg" || $fileParts['extension'] == "JPG") {
-					$img = imagecreatefromjpeg($file_tmp);
-				} elseif ($fileParts['extension'] == "png" || $fileParts['extension'] == "PNG") {
-					$img = imagecreatefrompng($file_tmp);
-				} elseif ($fileParts['extension'] == "gif" || $fileParts['extension'] == "GIF") {
-					$img = imagecreatefromgif($file_tmp);
-				} elseif ($fileParts['extension'] == "bmp" || $fileParts['extension'] == "BMP") {
-					$img = imagecreatefrombmp($file_tmp);
+			if ( $file_size ) {
+				if ( $fileParts['extension'] == "jpeg" || $fileParts['extension'] == "jpg" || $fileParts['extension'] == "JPG" ) {
+					$img = imagecreatefromjpeg( $file_tmp );
+				} elseif ( $fileParts['extension'] == "png" || $fileParts['extension'] == "PNG" ) {
+					$img = imagecreatefrompng( $file_tmp );
+				} elseif ( $fileParts['extension'] == "gif" || $fileParts['extension'] == "GIF" ) {
+					$img = imagecreatefromgif( $file_tmp );
+				} elseif ( $fileParts['extension'] == "bmp" || $fileParts['extension'] == "BMP" ) {
+					$img = imagecreatefrombmp( $file_tmp );
 				}
 				//list the width and height and keep the height ratio.
-				$width = imageSX($img);
-				$height = imageSY($img);
-				
+				$width  = imageSX( $img );
+				$height = imageSY( $img );
+
 				// Build the thumbnail
-				$target_width = $conf['minidyd'];
+				$target_width  = $conf['minidyd'];
 				$target_height = $conf['minidyd'];
-				$target_ratio = $target_width / $target_height;
+				$target_ratio  = $target_width / $target_height;
 
 				$img_ratio = $width / $height;
 
 				//calculate the image ratio
 				$imgratio = $width / $height;
-				
-				if ($target_ratio > $img_ratio) {
+
+				if ( $target_ratio > $img_ratio ) {
 					$new_height = $target_height;
-					$new_width = $img_ratio * $target_height;
+					$new_width  = $img_ratio * $target_height;
 				} else {
 					$new_height = $target_width / $img_ratio;
-					$new_width = $target_width;
+					$new_width  = $target_width;
 				}
 
-				if ($new_height > $target_height) {
+				if ( $new_height > $target_height ) {
 					$new_height = $target_height;
 				}
-				if ($new_width > $target_width) {
+				if ( $new_width > $target_width ) {
 					$new_height = $target_width;
 				}
-				
-				
-				$new_img = ImageCreateTrueColor($conf['minidyd'], $conf['minidyd']);
-				if (!@imagefilledrectangle($new_img, 0, 0, $target_width-1, $target_height-1, 0)) {	// Fill the image black
+
+
+				$new_img = ImageCreateTrueColor( $conf['minidyd'], $conf['minidyd'] );
+				if ( !@imagefilledrectangle( $new_img, 0, 0, $target_width - 1, $target_height - 1, 0 ) ) { // Fill the image black
 					//klaida($lang['system']['error'], 'GD v2+' . $lang['system']['error']);
-					exit(0);
+					exit( 0 );
 				}
 
-				if (!@imagecopyresampled($new_img, $img, ($target_width-$new_width)/2, ($target_height-$new_height)/2, 0, 0, $new_width, $new_height, $width, $height)) {
+				if ( !@imagecopyresampled( $new_img, $img, ( $target_width - $new_width ) / 2, ( $target_height - $new_height ) / 2, 0, 0, $new_width, $new_height, $width, $height ) ) {
 					//klaida($lang['system']['error'], 'GD v2+' . $lang['system']['error']);
-					exit(0);
+					exit( 0 );
 				}
 
-			 imagejpeg($new_img, $mini_img."/".$rand_name.$ext, 95);
+				imagejpeg( $new_img, $mini_img . "/" . $rand_name . $ext, 95 );
 
-				chmod($mini_img."/".$rand_name.$ext,0777);
-				ImageDestroy($img);
-				ImageDestroy($new_img);
+				chmod( $mini_img . "/" . $rand_name . $ext, 0777 );
+				ImageDestroy( $img );
+				ImageDestroy( $new_img );
 
 			}
 
-			if ($file_size) {
-				if ($fileParts['extension'] == "jpeg" || $fileParts['extension'] == "jpg" || $fileParts['extension'] == "JPG") {
-					$new_img = imagecreatefromjpeg($file_tmp);
-				} elseif ($fileParts['extension'] == "png" || $fileParts['extension'] == "PNG") {
-					$new_img = imagecreatefrompng($file_tmp);
-				} elseif ($fileParts['extension'] == "gif" || $fileParts['extension'] == "GIF") {
-					$new_img = imagecreatefromgif($file_tmp);
-				} elseif ($fileParts['extension'] == "bmp" || $fileParts['extension'] == "BMP") {
-					$new_img = imagecreatefrombmp($file_tmp);
+			if ( $file_size ) {
+				if ( $fileParts['extension'] == "jpeg" || $fileParts['extension'] == "jpg" || $fileParts['extension'] == "JPG" ) {
+					$new_img = imagecreatefromjpeg( $file_tmp );
+				} elseif ( $fileParts['extension'] == "png" || $fileParts['extension'] == "PNG" ) {
+					$new_img = imagecreatefrompng( $file_tmp );
+				} elseif ( $fileParts['extension'] == "gif" || $fileParts['extension'] == "GIF" ) {
+					$new_img = imagecreatefromgif( $file_tmp );
+				} elseif ( $fileParts['extension'] == "bmp" || $fileParts['extension'] == "BMP" ) {
+					$new_img = imagecreatefrombmp( $file_tmp );
 				}
 
 				$bigsize = $conf['fotodyd'];
-				list($width, $height) = getimagesize($file_tmp);
+				list( $width, $height ) = getimagesize( $file_tmp );
 				//calculate the image ratio
 				$imgratio = $width / $height;
-				if ($width > $bigsize) {
-					if ($imgratio > 1) {
-						$newwidth = $bigsize;
+				if ( $width > $bigsize ) {
+					if ( $imgratio > 1 ) {
+						$newwidth  = $bigsize;
 						$newheight = $bigsize / $imgratio;
 					} else {
 						$newheight = $bigsize;
-						$newwidth = $bigsize * $imgratio;
+						$newwidth  = $bigsize * $imgratio;
 					}
 				} else {
-					$newwidth = $width;
+					$newwidth  = $width;
 					$newheight = $height;
 				}
-				$resized_imgbig = imagecreatetruecolor($newwidth, $newheight);
-				imagecopyresampled($resized_imgbig, $new_img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+				$resized_imgbig = imagecreatetruecolor( $newwidth, $newheight );
+				imagecopyresampled( $resized_imgbig, $new_img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
 
 				//finally, save the image
 
-				ImageJpeg($resized_imgbig, $big_img."/".$rand_name.$ext, 95);
-				chmod($big_img."/".$rand_name.$ext,0777);
-				ImageDestroy($resized_imgbig);
-				ImageDestroy($new_img);
+				ImageJpeg( $resized_imgbig, $big_img . "/" . $rand_name . $ext, 95 );
+				chmod( $big_img . "/" . $rand_name . $ext, 0777 );
+				ImageDestroy( $resized_imgbig );
+				ImageDestroy( $new_img );
 
-				move_uploaded_file($file_tmp, $big_img."/originalai/".$rand_name.$ext);
-            chmod($big_img."/originalai/".$rand_name.$ext,0777);
+				move_uploaded_file( $file_tmp, $big_img . "/originalai/" . $rand_name . $ext );
+				chmod( $big_img . "/originalai/" . $rand_name . $ext, 0777 );
 
-				$result = mysql_query1("INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`, `lang`) VALUES (" . escape($_FILES['Filedata']['name']) . "," . escape($rand_name . $ext) . "," . escape('') . "," . escape($_SESSION['id']) . ",'" . time() . "'," . escape($_POST['cat']) . ",'TAIP', ".escape(lang()).")");
+				$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`, `lang`) VALUES (" . escape( $_FILES['Filedata']['name'] ) . "," . escape( $rand_name . $ext ) . "," . escape( '' ) . "," . escape( $_SESSION['id'] ) . ",'" . time() . "'," . escape( $_POST['cat'] ) . ",'TAIP', " . escape( lang() ) . ")" );
 
-				if ($result) {
+				if ( $result ) {
 					//msg($lang['system']['done'], "{$lang['admin']['gallery_added']}");
 				} else {
 					//klaida("{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>");
@@ -181,10 +182,11 @@ if (!empty($_FILES)) {
 
 			}
 		}
-	
+
 		echo "1";
-	} else
-             klaida($lang['system']['error'], $lang['admin']['download_toobig']);
+	} else {
+		klaida( $lang['system']['error'], $lang['admin']['download_toobig'] );
+	}
 }
 
 ?>
