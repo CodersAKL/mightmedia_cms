@@ -534,10 +534,10 @@ table tr td {
 /* Title lentel� i�okanti pel� u�vedus ant nuorodos su pavadinimu (title="") */
 .tooltip {
     padding: 3px;
-    border: 1px solid #fff;
+    border: 1px solid #000;
     display: none;
     background: #d6d6d6;
-    color: #fff;
+    color: #000;
     font: 11px Arial, Helvetica, sans-serif;
     text-align: left;
     position: absolute;
