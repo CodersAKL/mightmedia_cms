@@ -24,50 +24,55 @@ include_once ("../priedai/prisijungimas.php");
 	<meta name="description" content="<?php echo input(strip_tags($conf['Pavadinimas']) . ' - ' . trimlink(strip_tags($conf['Apie']), 120)); ?>" />
 	<meta name="keywords" content="<?php echo input(strip_tags($conf['Keywords']));?>" />
 	<meta name="author" content="<?php echo input(strip_tags($conf['Copyright']));?>" />
-	<link rel="stylesheet" type="text/css" media="all" href="css/default.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/prisijungimo.css" />
 </head>
 <body>
-<div id="admin_main">
-			  <div id="admin_header" style="height: 15px;">
-<div style="text-align: right;color: #666;"><b><?php echo date('H:i:s'); ?></b></div>
-			  </div>
-
-		<div id="admin_hmenu" style="font-weight:bold; font-size:25px; color: #FFF; padding: 10px;margin-bottom: 100px;"><?php echo input(strip_tags($conf['Pavadinimas']));?></div>
-		<div id="container" style="border: 0;width:50%; margin:auto;">
-			<h2>Admin</h2>
-        <p style="border-top: 1px solid #7F7F7F;">
-
-	<?php if (!isset($_SESSION['username'])){?>
+<div id='plotis'>
+    <div id='kaire'>
+	<div class='skalpas'><a href='".adresas()."' title='".adresas()."'><div class='logo'></div></a>
+	</div>
+	</div>
+    <div id='kunas'>
+	<?php if (!empty($strError)):?>
+	<div class='klaida'><div class='info_ikona'></div>
+    <div class='info_pavadinimas'><?php echo $lang['system']['warning']; ?><blink>!</blink></div>
+    <div class='info_tekstas'><?php echo $strError; ?></div>
+    </div>
+	<?php endif ?>
+    <div id='meniu_juosta'><?php echo input(strip_tags($conf['Pavadinimas']));?></div>
+	<div class='sonas2'></div>
+    <div id='centras'>
+    <div class='pavadinimas'>Admin</div>
+    <div class='vidus'>
+    <div class='text'>
+		<?php if (!isset($_SESSION['username'])){?>
 	<form id="user_reg" name="user_reg" method="post" action="">
 		<div id="login" class="section">
-			<?php if (!empty($strError)):?>
-				<div id="fail" class="info_div"><span class="ico_cancel"><?php echo $strError; ?></span></div>
-			<?php endif ?>
 			<form name="loginform" id="loginform" action="panel.html" method="post">
-
 			<label><strong><?php echo $lang['user']['user'];?></strong></label><br /><input type="text" name="vartotojas" id="user_login"  size="28" class="input"/>
 			<br />
 			<label><strong><?php echo $lang['user']['password']; ?></strong></label><br /><input type="password" name="slaptazodis" id="user_pass"  size="28" class="input"/>
 			<br />
 			<!--<strong>Remember Me</strong><input type="checkbox" id="remember" class="input noborder" />-->
-
 			<br />
 			<input type="hidden" name="action" value="prisijungimas" />
 			<input id="save" class="loginbutton" type="submit" class="submit" value="<?php echo $lang['user']['login']; ?>" />
-
 			</form>
-		
 		</div>
 	</form>
-	<?php }elseif (isset($_SESSION['level']) && $_SESSION['level']==1)
+	<?php } elseif (isset($_SESSION['level']) && $_SESSION['level']==1)
               redirect('main.php');
-  ?>
-
-	
-</p>
-<span style="text-align: right;position:absolute;bottom:0;right:0; padding: 5px;">&copy; <a href="http://mightmedia.lt" style="color: #666;" target="_blank">MightMedia TVS</a></span>
-		</div>
-</div>
-
+     ?>
+	</div>
+    </div>
+    </div>
+    <div class='sonas'></div>
+    <div id='kojos'>
+    <div class='tekstas'><?php echo $conf['Copyright'];?></div>
+    <a href='http://mightmedia.lt' target='_blank' title='Mightmedia'><div class='logo'></div></a>
+    </div>
+    </div>
+    </div>
+    <div id='another' class='clear'><div class='lygiuojam'><div class='taisom'></div></div></div>
 </body>
 </html>
