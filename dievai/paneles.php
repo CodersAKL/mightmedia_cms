@@ -1,4 +1,20 @@
+<?php
 
+/**
+ * @Projektas: MightMedia TVS
+ * @Puslapis: www.coders.lt
+ * @$Author: FDisk $
+ * @copyright CodeRS ©2008
+ * @license GNU General Public License v2
+ * @$Revision: 375 $
+ * @$Date: 2010-02-07 16:15:41 +0200 (Sun, 07 Feb 2010) $
+ **/
+ 
+if (!defined("LEVEL") || LEVEL > 1 || !defined("OK")) {
+	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
+}
+
+?>
 <script type="text/javascript">
    $(document).ready(function() {
     $("#kaire").sortable({
@@ -6,8 +22,8 @@
       axis: 'y',
       update : function () {
 		var order = $('#kaire').sortable('serialize');
-		$("#la").show("slow");
-		$("#la").hide("slow");
+		$("#la").fadeIn(1500);
+		$("#la").fadeOut(3000);
 		$.post("<?php echo url("?id,".$_GET['id'].";a," . $_GET['a'] . ";"); ?>",{order:order});
 
 		}
@@ -17,8 +33,8 @@
       axis: 'y',
       update : function () {
 		var order = $('#desine').sortable('serialize');
-		$("#la").show("slow");
-		$("#la").hide("slow");
+		$("#la").fadeIn(1500);
+		$("#la").fadeOut(3000);
 		$.post("<?php echo url("?id,".$_GET['id'].";a," . $_GET['a'] . ";"); ?>",{order:order});
 
 		}
@@ -28,8 +44,8 @@
       axis: 'y',
       update : function () {
 		var order = $('#centras').sortable('serialize');
-		$("#la").show("slow");
-		$("#la").hide("slow");
+		$("#la").fadeIn(1500);
+		$("#la").fadeOut(3000);
 		$.post("<?php echo url("?id,".$_GET['id'].";a," . $_GET['a'] . ";"); ?>",{order:order});
 
 		}
@@ -37,10 +53,7 @@
 });
 </script>
 <script type="text/javascript" src="<?php echo ROOT;?>javascript/jquery/jquery.asmselect.js"></script>
-
 	<script type="text/javascript">
-
-		
 		$(document).ready(function() {
 			$("select[multiple]").asmSelect({
 				addItemTarget: 'bottom',
@@ -51,13 +64,8 @@
 			   highlightRemovedLabel: '<?php echo $lang['sb']['deleted']; ?>: ',	
 				sortable: true
 			});
-			
 		}); 
-			
-		 
-
 	</script>
-
 <script type="text/javascript">
 $(document).ready(function() {
   $("#pasirinkimas").hide();
@@ -80,22 +88,6 @@ $(document).ready(function() {
 });
 </script>
 <?php
-
-/**
- * @Projektas: MightMedia TVS
- * @Puslapis: www.coders.lt
- * @$Author: FDisk $
- * @copyright CodeRS ©2008
- * @license GNU General Public License v2
- * @$Revision: 375 $
- * @$Date: 2010-02-07 16:15:41 +0200 (Sun, 07 Feb 2010) $
- **/
-
-if (!defined("LEVEL") || LEVEL > 1 || !defined("OK")) {
-	redirect('location: http://' . $_SERVER["HTTP_HOST"]);
-}
-
-
 //lentele($lang['admin']['blokai'], $buttons);
 if (isset($_POST['order'])) {
 	$array = str_replace("&", ",", $_POST['order']);
@@ -250,7 +242,7 @@ HTML;
 			$panele = array("Form" => array("action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel"), 
 			"{$lang['admin']['panel_title']}:" => array("type" => "text", "value" => input($sql['panel']), "name" => "Panel", "class" => "input"), 
 			"{$lang['admin']['panel_side']}:" => array("id" => "lygiuojam", "type" => "select", "value" => array("L" => "{$lang['admin']['panel_left']}", "R" => "{$lang['admin']['panel_right']}", "C" => "Centras"), "selected" => input($sql['align']), "name" => "Align"), 
-			"<div id='pasirinkimas2'>Rinkis:</div>" => array("id" => "pasirinkimas", "type" => "select", "value" => array("Taip" => "Visuose puslapiuose", "Ne" => "Tik pirminiame"), "selected" => input($sql['rodyti']), "name" => "rodyti"), 
+			"<div id='pasirinkimas2'>{$lang['admin']['panel_do_show']}:</div>" => array("id" => "pasirinkimas", "type" => "select", "value" => array("Taip" => "Visuose puslapiuose", "Ne" => "Tik pirminiame"), "selected" => input($sql['rodyti']), "name" => "rodyti"), 
 			"{$lang['admin']['panel_showtitle']}?" => array("type" => "select", "value" => array("Y" => "{$lang['admin']['yes']}", "N" => "{$lang['admin']['no']}"), "selected" => input($sql['show']), "name" => "Show"), 
 			"{$lang['admin']['panel_showfor']}:" => array("type" => "select", "extra" => "multiple=multiple",
 				"value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai", "selected" => $selected), "" => array("type" => "submit", "name" => "Redaguoti_panele", "value" => "{$lang['admin']['edit']}"));
@@ -370,13 +362,17 @@ $sql2 = "SELECT id, panel, place from `" . LENTELES_PRIESAGA . "panel` WHERE ali
 </li> ';
 		}
 	}
-
-	$text .= '<div id="la" style="display:none"><b>' . $lang['system']['updated'] . '</b></div>
+	$text .= '
+	<div id="la" style="display:none">
+	<div class="success">
+	<img src="../images/icons/tick.png" title="' . $lang['system']['updated'] . '" align="left" hspace="10" alt=""/>
+	&nbsp;&nbsp;' . $lang['system']['updated'] . '</div>
+    </div>
 			<fieldset style="width: 28%; float:left;">
 			<legend>' . $lang['admin']['panel_left'] . '</legend>
 			<ul id="kaire">' . $li . '</ul></fieldset>';
 			$text .= '<fieldset style="width: 28%;float:left;">
-			<legend>Centras</legend>
+			<legend>'.$lang['admin']['panel_center'].'</legend>
 		<ul id="centras">' . $li2 . '</ul></fieldset>';
 	$text .= '<fieldset style="width: 28%;float:left;">
 	<legend>' . $lang['admin']['panel_right'] . '</legend>

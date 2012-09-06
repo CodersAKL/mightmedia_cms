@@ -20,7 +20,7 @@ function cat($kieno, $cat_id = 0, $space= 1, $x ='') {
 	}
 	return $x;
 }
-//kitas š..das (neišgėręs nesuprasi)
+//kitas š..das (neišgėręs nesuprasi), supratau ;)
 function kategorija($kieno, $leidimas = false) {
 	global $conf, $url, $lang;
 	$root = ROOT;
@@ -44,24 +44,15 @@ HTML;
 		$_GET['v'] = 0;
 	}
 			//Kalba galerijai
-			if ($kieno != 'galerija') {
-			$sub_catt = $lang['system']['subcat/cat'];
-			$no_catts = $lang['system']['nocategories'];
-			$cat_dell = $lang['system']['categorydeleted'];
-			$catt = $lang['system']['category'];
-			$atnjn = $lang['system']['categoryupdated'];
-			$redg_cat = $lang['system']['editcategory'];
-			$crt_cat = $lang['system']['createcategory'];
-			} else {
-			$sub_catt = $lang['gallery']['subphotoalbum/photoalbum'];
-			$no_catts = $lang['gallery']['nophotoalbums'];
-			$cat_dell = $lang['admin']['gallery_photoalbum_del'];
-			$catt = $lang['gallery']['photoalbum'];
-			$atnjn = $lang['admin']['gallery_photoalbum_up'];
-			$redg_cat = $lang['admin']['gallery_photoalbum_ed'];
-			$crt_cat = $lang['admin']['gallery_photoalbum_cr'];
-			}
-	
+			if ($kieno = 'galerija') {
+			$lang['system']['subcat/cat'] = $lang['gallery']['subphotoalbum/photoalbum'];
+			$lang['system']['nocategories'] = $lang['gallery']['nophotoalbums'];
+			$lang['system']['categorydeleted'] = $lang['admin']['gallery_photoalbum_del'];
+			$lang['system']['category'] = $lang['gallery']['photoalbum'];
+			$lang['system']['categoryupdated'] = $lang['admin']['gallery_photoalbum_up'];
+			$lang['system']['editcategory'] = $lang['admin']['gallery_photoalbum_ed'];
+			$lang['system']['createcategory'] =  $lang['admin']['gallery_photoalbum_cr'];
+	        }
 	$sql = mysql_query1('SELECT * FROM  `' . LENTELES_PRIESAGA . 'grupes` WHERE `kieno`=' . escape($kieno) . ' AND `lang` = ' . escape(lang()) . ' ORDER BY `id` DESC');
 	if (sizeof($sql) > 0) {
 
@@ -90,11 +81,15 @@ HTML;
 		$teises[0] = $lang['admin']['for_guests'];
 	}
 
-	if (isset($_POST['action']) && $_POST['action'] == $redg_cat) {
+	if (isset($_POST['action']) && $_POST['action'] == $lang['system']['createcategory']) {
 
 		$pavadinimas = input($_POST['Pavadinimas']);
 		$aprasymas = $_POST['Aprasymas'];
+		if ($kieno = 'galerija') {
+		$pav = basename('no_picture.png');
+		} else {
 		$pav = basename($_POST['Pav']);
+		}
 		$moderuoti = ((isset($_POST['punktai'])) ? serialize($_POST['punktai']) : '');
 
 		if (isset($_POST['Teises'])) {
@@ -129,11 +124,15 @@ HTML;
 			}
 		}
 		unset($aprasymas, $pavadinimas,/* $teises,*/ $pav, $einfo, $result, $pathas);
-	} elseif (isset($_POST['action']) && $_POST['action'] == $redg_cat) {
+	} elseif (isset($_POST['action']) && $_POST['action'] == $lang['system']['editcategory']) {
 
 		$pavadinimas = $_POST['Pavadinimas'];
 		$aprasymas = $_POST['Aprasymas'];
+		if ($kieno = 'galerija') {
+		$pav = strip_tags('no_picture.png');
+		} else {
 		$pav = strip_tags($_POST['Pav']);
+		}
 		$id = ceil((int) $_POST['Kategorijos_id']);
 		if ($kieno == 'vartotojai')
 			$teises_in = 'N;';
@@ -150,7 +149,7 @@ HTML;
 			WHERE `id`= ' . escape($id) . ';
 			');
 		if ($result) {
-			msg($lang['system']['done'], $atnjn);
+			msg($lang['system']['done'], $lang['system']['categoryupdated']);
 		} else {
 			klaida($lang['system']['error'], $lang['system']['error']);
 		}
@@ -228,7 +227,7 @@ HTML;
 
 
 			if ($result23) {
-				msg($lang['system']['done'], $cat_dell);
+				msg($lang['system']['done'], $lang['system']['categorydeleted']);
 			} else {
 				klaida($lang['system']['error'], $lang['system']['error']);
 			}
@@ -238,7 +237,7 @@ if ($_GET['v'] == 2) {
 		if ($kieno == 'vartotojai') {
 			$textas = $lang['system']['grouplevel'];
 			//$puslapiai[""]="";
-			$failai = getFiles(ROOT . $conf['Admin_folder'], '.htaccess|index.php|index.html|index.htm|index.php3|conf.php|config.php|vartotojai.php|logai.php|upload.php|todo.php|paneles.php|meniu.php|komentarai.php|narsykle.php|main.php|sfunkcijos.php|pokalbiai.php|start.php|uncache.php|search.php|antivirus.php|sfunkcijos.php');
+			$failai = getFiles(ROOT . $conf['Admin_folder'], '.htaccess|index.php|index.html|index.htm|index.php3|conf.php|config.php|vartotojai.php|logai.php|upload.php|todo.php|paneles.php|meniu.php|komentarai.php|narsykle.php|main.php|sfunkcijos.php|pokalbiai.php|start.php|uncache.php|search.php|antivirus.php|sfunkcijos.php|style-switcher.php');
 			foreach ($failai as $file) {
 				if ($file['type'] == 'file') {
 
@@ -266,12 +265,12 @@ if ($_GET['v'] == 2) {
 			$kategorijos = array(
 				'Form' => array('action' => url("?id,{$_GET['id']};a,{$_GET['a']};v,{$_GET['v']}"), 'method' => 'post', 'name' => 'reg'),
 				$lang['system']['name'] => array('type' => 'text', 'value' => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', 'name' => 'Pavadinimas', 'class' => 'input'),
-				($kieno != 'vartotojai' ? $sub_catt : '') => ($kieno != 'vartotojai' ? array('type' => 'select', 'value' => @$kategorijoss, 'name' => 'path', 'selected' => (isset($extra['path']) ? input($extra['path']) : '0'), 'disabled' => @$kategorijoss) : ''),
+				($kieno != 'vartotojai' ? $lang['system']['subcat/cat'] : '') => ($kieno != 'vartotojai' ? array('type' => 'select', 'value' => @$kategorijoss, 'name' => 'path', 'selected' => (isset($extra['path']) ? input($extra['path']) : '0'), 'disabled' => @$kategorijoss) : ''),
 				 $lang['system']['about'] . ':' => array('type' => 'textarea', 'value' => (isset($extra['aprasymas'])) ? input($extra['aprasymas']) : '', 'name' => 'Aprasymas', 'rows' => '3', 'class' => 'input', 'class' => 'input', 'id' => 'Aprasymas'),
 				 '  ' => array('type' => 'string', 'value' => '<div class="kat" style="float:inherit;"><img src="'.ROOT.'/' . $dir . '/' . (isset($extra['pav']) ? $extra['pav'] : 'no_picture.png') . '" id="kategorijos_img" /></div>'),
 				($kieno != 'galerija' ? $lang['system']['picture'] . ':': '') => ($kieno != 'galerija' ?  array('type' => 'select', 'value' => $kategoriju_pav, 'name' => 'Pav', 'class' => 'input', 'class' => 'input', 'selected' => (isset($extra['pav']) ? input($extra['pav']) : 'no_picture.png'), 'extra' => 'onchange="$(\'#kategorijos_img\').attr({ src: \''.ROOT.'/' . $dir . '/\'+this.value });"') : ""),
 				 $lang['admin']['what_moderate'] => '', $textas => '', '' => array('type' => 'hidden', 'name' => 'Kategorijos_id', 'value' => (isset($extra['id']) ? input($extra['id']) : '')),
-				 (isset($extra)) ? $redg_cat :  $crt_cat => array('type' => 'submit', 'name' => 'action', 'value' => (isset($extra)) ? $redg_cat : $crt_cat)
+				 (isset($extra)) ? $lang['system']['editcategory'] : $lang['system']['createcategory'] => array('type' => 'submit', 'name' => 'action', 'value' => (isset($extra)) ? $lang['system']['editcategory'] : $lang['system']['createcategory'])
 			);
 			if ($kieno == 'vartotojai') {
 				//	echo $mod;
@@ -293,13 +292,13 @@ if ($_GET['v'] == 2) {
 		if (isset($kategorijoss)) {
 			$kategorijos_redagavimas = array(
 				 'Form' => array('action' => url('?id,'.$_GET['id'].';a,'.$_GET['a'].';v,2'), 'method' => 'post', 'name' => 'reg'),
-				 $catt => array('type' => 'select', 'value' => $kategorijoss, 'name' => 'Kategorijos_id'),
+				 $lang['system']['category'] => array('type' => 'select', 'value' => $kategorijoss, 'name' => 'Kategorijos_id'),
 				 $lang['system']['edit'] => array('type' => 'submit', 'name' => 'Kategorija', 'value' => $lang['system']['edit']),
 				 $lang['system']['delete'] => array('type' => 'submit', 'name' => 'Kategorija', 'value' => $lang['system']['delete'])
 			);
-			lentele($redg_cat, $bla->form($kategorijos_redagavimas));
+			 lentele($lang['system']['editcategory'], $bla->form($kategorijos_redagavimas));
 		} else {
-			klaida($lang['system']['warning'],$no_catts);
+			klaida($lang['system']['warning'], $lang['system']['nocategories']);
 		}
 	}
 	delete_cache('SELECT * FROM `' . LENTELES_PRIESAGA . 'grupes` WHERE `kieno` = \'straipsniai\' AND `lang`= ' . escape(lang()) . ' ORDER BY `pavadinimas`');
