@@ -30,25 +30,34 @@ $subs = 0;
 if ( !isset( $url['m'] ) ) {
 	$sqlas = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `lang` = " . escape( lang() ) . " ORDER BY `pavadinimas`", 86400 );
 	if ( $sqlas && sizeof( $sqlas ) > 0 ) {
+		$info = "";
 		foreach ( $sqlas as $sql ) {
 			//TODO: skaiciavimas is neriboto gylio.. dabar tik kategorija + sub kategorija skaiciuoja
 			if ( $sql['path'] == $k ) {
 				// $sqlkiek = kiek('galerija', "WHERE ".($k != 0 ? "`categorija` =" . escape($sql['path']) . " OR" : "")." `categorija` =" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
 				$kiek    = mysql_query1( "SELECT count(*) + (SELECT count(*) FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `categorija` IN (SELECT `id` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`=" . escape( $sql['id'] ) . ")) as `kiek` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `categorija`=" . escape( $sql['id'] ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " LIMIT 1" );
+				$paskut  = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `categorija`=" . escape( $sql['id'] ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " ORDER BY `data` LIMIT 1" );
 				$sqlkiek = $kiek['kiek'];
 				$subs++;
-				$info[] = array(
-					$lang['system']['categories'] => "<a style=\"float: left;\" class=\"kat\" href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><img src='images/naujienu_kat/" . input( $sql['pav'] ) . "' alt=\"\"  border=\"0\" /></a><div><a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><b>" . input( $sql['pavadinimas'] ) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input( $sql['aprasymas'] ) . "</div><div>{$lang['category']['images']}: $sqlkiek</div></span></div>" //,
-				);
+				if ( isset( $paskut['file'] ) ) {
+					$fotke = "images/galerija/mini/" . input( $paskut['file'] ) . "";
+				} else {
+					$fotke = "images/naujienu_kat/camera_48.png";
+				}
 
-
+				$info .= "<div class='albumas'>
+	                <a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "' title='" . input( $sql['pavadinimas'] ) . "'>	" . trimlink( $sql['pavadinimas'], 20 ) . "</a>
+	                <a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "' title='" . input( $sql['aprasymas'] ) . "'>	<div class='foto' style='background-image :url({$fotke});'>	</div></a>
+		            <small>{$lang['category']['images']}: {$sqlkiek} </small>
+                </div>";
 			}
 		}
-		include_once ( "priedai/class.php" );
-		$bla = new Table();
-		if ( isset( $info ) ) {
-			lentele( $page_pavadinimas, $bla->render( $info ), FALSE );
-		}
+		$info .= "<div class='clear'></div>";
+		//if (isset($info)) {
+		lentele( $page_pavadinimas, $info );
+		//	}
+
+
 	}
 }
 
@@ -121,7 +130,7 @@ if ( empty( $url['m'] ) ) {
 					<img src=\"images/galerija/mini/" . input( $row['file'] ) . "\" alt=\"\" />
 				</a>
 				<div class='gallery_title'>
-					" . trimlink( ( !empty( $row['pavadinimas'] ) ? input( $row['pavadinimas'] ) : '' ), 10 ) . "
+					" . trimlink( ( !empty( $row['pavadinimas'] ) ? input( $row['pavadinimas'] ) : '' ), 15 ) . "
 				</div>
 			</div>
 		";

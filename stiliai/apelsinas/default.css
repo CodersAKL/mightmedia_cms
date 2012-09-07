@@ -723,4 +723,35 @@ a.siust {
     background: url(paveiksleliai/ratings.png) bottom left no-repeat;
 }
 
+/* Galerijos fotoalbumams */
+.albumas {
+    text-align: center;
+    float: left;
+    padding: 5px;
+    background: #f2f2f2;
+    border: 1px solid #ccc;
+    width: 133px;
+    height: 140px;
+    margin: 5px;
+}
+
+.albumas .foto {
+    background: #e1e1e1;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100px;
+    margin-bottom: 4px;
+}
+
+.albumas .foto:hover {
+    opacity: 0.7;
+    background: #d5d5d5;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.albumas small {
+    font-size: 10px;
+}
+
 /* Mightmedia pagrindin�s stiliaus funkcijos */
