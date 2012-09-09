@@ -48,7 +48,7 @@ if ( !isset( $url['m'] ) ) {
 				$info .= "<div class='albumas'>
 	                <a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "' title='" . input( $sql['pavadinimas'] ) . "'>	" . trimlink( $sql['pavadinimas'], 20 ) . "</a>
 	                <a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "' title='" . input( $sql['aprasymas'] ) . "'>	<div class='foto' style='background-image :url({$fotke});'>	</div></a>
-		            <small>{$lang['category']['images']}: {$sqlkiek} </small>
+		            <small>{$lang['gallery']['photoalbum_img']}: {$sqlkiek} </small>
                 </div>";
 			}
 		}

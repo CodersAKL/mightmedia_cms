@@ -283,7 +283,7 @@ if ( isset( $_SESSION['id'] ) && $_SESSION['id'] ) {
 	$forma          = array( "Form"                              => array( "enctype" => "multipart/form-data", "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "action" ),
 	                         "{$lang['admin']['gallery_file']}:" => array( "name" => "failas", "type" => "file", "value" => "", "class"=> "input" ),
 	                         "{$lang['system']['name']}:"        => array( "type" => "text", "value" => '', "name" => "Pavadinimas", "class"=> "input" ),
-	                         "{$lang['system']['category']}:"    => array( "type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "class"=> "input" ),
+	                         "{$lang['gallery']['photoalbum']}:"    => array( "type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "class"=> "input" ),
 	                         "{$lang['system']['about']}:"       => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
 		//"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","class"=>"input"),
 	                         ""                                  => array( "type" => "submit", "name" => "action", "value" => "{$lang['gallery']['submit']}" ) );
