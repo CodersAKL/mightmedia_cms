@@ -21,7 +21,7 @@
 			removeLabel:'<?php echo $lang['system']['delete']; ?>',
 			highlightAddedLabel:'<?php echo $lang['admin']['added']; ?>: ',
 			highlightRemovedLabel:'<?php echo $lang['sb']['deleted']; ?>: ',
-			//sortable: true
+			sortable: true
 		});
 	});
 </script>
@@ -49,7 +49,7 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 		$_GET['v'] = 0;
 	}
 	//Kalba galerijai
-	if ( $kieno = 'galerija' ) {
+	if ( $kieno == 'galerija' ) {
 		$lang['system']['subcat/cat']      = $lang['gallery']['subphotoalbum/photoalbum'];
 		$lang['system']['nocategories']    = $lang['gallery']['nophotoalbums'];
 		$lang['system']['categorydeleted'] = $lang['admin']['gallery_photoalbum_del'];
