@@ -49,16 +49,15 @@ h1, h2, h3, h4, h5, h6 {
     padding: 3px;
     color: #666666;
     margin-bottom: 3px;
-    width: 70%;
+    width: 600px;
 }
 
 .filtrui {
     width: 100%;
 }
-
 textarea {
     min-height: 200px;
-    width: 80%;
+    width: 600px;
     background: url('../images/input.png') repeat-x;
     border: 1px solid #D7D7D7;
     padding: 3px;
@@ -351,6 +350,7 @@ a {
 
 /*Right side */
 #right {
+    min-width: 720px;
     border: 1px solid #F06B09;
     margin-top: 10px;
     margin-right: 20px;
@@ -391,7 +391,7 @@ a {
 }
 
 #admin_lang.up, #admin_user.up {
-    background: #E6E6E6 url('../images/up.png') 99% 50% no-repeat;
+    background: #E6E6E6;
 }
 
 #admin_lang ul {

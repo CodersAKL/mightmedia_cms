@@ -169,13 +169,15 @@ HTML;
 		if ( is_array( $id ) ) {
 			foreach ( $id as $key => $val ) {
 				$return .= <<<HTML
-        <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;" ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
+        <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;" >
+        <img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button><br />
 	<textarea id="{$key}" name="{$key}" >{$value[$key]}</textarea>
 HTML;
 			}
 		} else {
 			$return .= <<<HTML
-      <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$id}','mywindow','menubar=1,resizable=1,width=820,height=500'); return false;" ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button>
+      <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$id}','mywindow','menubar=1,resizable=1,width=820,height=500'); return false;" >
+      <img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button><br />
 <textarea id="{$id}" name="{$id}" >{$value}</textarea>
 HTML;
 
@@ -422,10 +424,7 @@ HTML;
 				<script type="text/javascript">
 					$.getJSON('<?php echo $update_url; ?>');
 					function versija(data) {
-						if (<?php echo versija();?> <
-						(data.version)
-					)
-						{
+						if (<?php echo versija();?> < (data.version)){
 							$('#version_check').attr('class', 'msg');
 							$('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><strong>' + data.title + '</strong> ' + '' + data.version + ' - ' + '' + data.about + ' ' + (data.log ? '<span id="news" title="' + data.log + '">[info]</span>' : '') + (data.url ? ' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>' : ''));
 						}
