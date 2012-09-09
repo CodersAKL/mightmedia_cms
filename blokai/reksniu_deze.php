@@ -1,5 +1,5 @@
 <?php
-
+unset( $i );
 /**
  * @Projektas: MightMedia TVS
  * @Puslapis: www.coders.lt
@@ -61,10 +61,13 @@ if ( sizeof( $chat ) > 0 ) {
 		$i++;
 		$tr = $i % 2 ? '2' : '';
 		if ( ar_admin( 'com' ) && puslapis( 'deze.php' ) ) {
-			$extras = "<a style=\"float: right;\" title=\"{$lang['admin']['delete']}\" href=\"" . url( "?id,{$conf['puslapiai']['deze.php']['id']};d,{$row['id']}" ) . "\" onclick=\"return confirm('{$lang['system']['delete_confirm']}')\"><img height=\"12\" src=\"images/icons/cross.png\" alt=\"[d]\" class=\"middle\" border=\"0\" /></a>
-			<a style=\"float: right;\" title=\"{$lang['admin']['edit']}\" href=\"" . url( "?id,{$conf['puslapiai']['deze.php']['id']};r,{$row['id']}" ) . "\"><img height=\"12\" src=\"images/icons/pencil.png\" alt=\"[r]\" class=\"middle\" border=\"0\" /></a>";
+			$extras = "<span style='display: none;' id='irankiai{$i}'>
+			<a style=\"float: right;\" title=\"{$lang['admin']['delete']}\" href=\"" . url( "?id,{$conf['puslapiai']['deze.php']['id']};d,{$row['id']}" ) . "\" onclick=\"return confirm('{$lang['system']['delete_confirm']}')\"><img height=\"12\" src=\"images/icons/cross.png\" alt=\"[d]\" class=\"middle\" border=\"0\" /></a>
+			<a style=\"float: right;\" title=\"{$lang['admin']['edit']}\" href=\"" . url( "?id,{$conf['puslapiai']['deze.php']['id']};r,{$row['id']}" ) . "\"><img height=\"12\" src=\"images/icons/pencil.png\" alt=\"[r]\" class=\"middle\" border=\"0\" /></a>
+			</span>
+			";
 		}
-		$chat_box .= "<div class=\"tr{$tr}\"><b>" . user( $row['nikas'], $row['niko_id'] ) . "</b><font style='font-size:9px;'><em>(" . $row['time'] . ")</em></font>{$extras}
+		$chat_box .= "<div class=\"tr{$tr}\" onmouseover=\"document.getElementById('irankiai{$i}').style.display = '';\" onMouseOut=\"document.getElementById('irankiai{$i}').style.display = 'none';\"><b>" . user( $row['nikas'], $row['niko_id'] ) . "</b><font style='font-size:9px;'><em>(" . $row['time'] . ")</em></font>{$extras}
 		<br />" . smile( bbchat( wrap( $row['msg'], 18 ) ) ) . "<br />
 		
 		</div>";
@@ -79,5 +82,5 @@ if ( puslapis( 'deze.php' ) ) {
 
 
 $text = $chat_box;
-
+unset( $i );
 ?>
