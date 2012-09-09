@@ -75,7 +75,7 @@ $nuorodos = array( "Form"                        => array( "action" => url( "?id
 	//"Url" => array("type" => "text", "extra" => "title=\"http://\" onchange=\"$.post('".url("?id,{$_GET['id']};ajax,1")."',{ tikrink: $(this).val() }, function(data) { $('#temp').html(data); $('#apie').val($('#temp').html())});\"", "name" => "url"),
                    "Url"                         => array( "type" => "text", "value" => "http://", "name" => "url" ),
 	//TODO: AJAX get extra info about the page
-                   $lang['admin']['links_about'] => array( "type" => "textarea", "value" => "", "name" => "apie", "id" => "apie" ),
+                   $lang['admin']['links_about'] => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'apie' ) ),
                    " "                           => array( "type" => "submit", "name" => "action", "value" => $lang['admin']['links_create'] ) );
 
 lentele( $lang['admin']['links_create'], $bla->form( $nuorodos ) );
