@@ -2,10 +2,19 @@
 //Papildymas - antras
 $lang['user']['profile'] = 'Mano profilis';
 $lang['admin']['poll_active_q'] = 'Aktyvumas';
+$lang['gallery']['photoalbum_img'] = 'Nuotraukų fotoalbume';
 $lang['gallery']['subphotoalbum/photoalbum'] = 'Fotoalbumas/ Subfotoalbumas';
 $lang['gallery']['nophotoalbums'] = 'Nėra fotoalbumų';
 $lang['gallery']['photoalbums'] = 'Fotoalbumai';
 $lang['gallery']['photoalbum'] = 'Fotoalbumas';
+$lang['admin']['duk'] = 'D.U.K.';
+$lang['faq']['faq_answers'] = 'Dažniausiai užduodami klausimai';
+$lang['admin']['faq_new'] = 'Pridėti klausimą';
+$lang['admin']['faq_edit'] = 'Redaguoti klausimus';
+$lang['admin']['faq_updated'] = 'Klausimas atnaujintas';
+$lang['admin']['faq_created'] = 'Klausimas patalpintas';
+$lang['admin']['faq_deleted'] = 'Klausimas ištrintas';
+$lang['admin']['faq'] = 'D.U.K.';
 $lang['admin']['gallery_photoalbum_up'] = 'Fotoalbumas atnaujintas';
 $lang['admin']['gallery_photoalbum_del'] = 'Fotoalbumas pašalintas';
 $lang['admin']['gallery_photoalbum_cr'] = 'Sukurti fotoalbumą';

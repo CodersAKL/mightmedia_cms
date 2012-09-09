@@ -2,10 +2,19 @@
 //Papildymas - antras
 $lang['user']['profile'] = 'My profile';
 $lang['admin']['poll_active_q'] = 'Active';
+$lang['gallery']['photoalbum_img'] = 'Photos in photoalbum';
 $lang['gallery']['subphotoalbum/photoalbum'] = 'Photoalbum/ Subphotoalbum';
 $lang['gallery']['nophotoalbums'] = 'No photoalbums yet';
 $lang['gallery']['photoalbums'] = 'Photoalbums';
 $lang['gallery']['photoalbum'] = 'Photoalbum';
+$lang['admin']['duk'] = 'F.A.Q.';
+$lang['faq']['faq_answers'] = 'Frequently Asked Questions';
+$lang['admin']['faq_new'] = 'Add Question';
+$lang['admin']['faq_edit'] = 'Edit questions';
+$lang['admin']['faq_updated'] = 'Question updated';
+$lang['admin']['faq_created'] = 'Question created';
+$lang['admin']['faq_deleted'] = 'Question deleted';
+$lang['admin']['faq'] = 'F.A.Q.';
 $lang['admin']['gallery_photoalbum_up'] = 'Photoalbum updated';
 $lang['admin']['gallery_photoalbum_del'] = 'Photoalbum deleted';
 $lang['admin']['gallery_photoalbum_cr'] = 'Create photoalbum';
@@ -797,7 +806,7 @@ $lang['setup']['reload'] = 'Reload';
 $lang['setup']['if_you_think_ok'] = 'If you believe that all is well';
 $lang['setup']['mysql_info'] = '
 Enter into the fields below to your MySQL server logins. Logins are required to create MightMedia CMS system tables into the data base. <br /> <br />
-Bring together all the data <strong> click on "Create tables" </ strong>. If you login successfully then you will see an additional <b> "Go" </ b>. <br /> <br />
+Bring together all the data <strong> click on "Create tables" </strong>. If you login successfully then you will see an additional <b> "Go" </b>. <br /> <br />
 After completing all the steps you will see the next button to switch to another menu item. If at least one of the steps fail you will not continue the installation.';
 $lang['setup']['mysql_connect'] = 'MySQL Connection form';
 $lang['setup']['mysql_host'] = 'Host';
@@ -807,7 +816,7 @@ $lang['setup']['mysql_db'] = 'Database';
 $lang['setup']['mysql_prfx'] = 'Prefix';
 $lang['setup']['admin_info'] = 'Create a master administrator who will manage MightMedia CMS.';
 $lang['setup']['end_info'] = 'Welcome to the introduction of MightMedia CMS (Content Management System). <br />
-Click "Finish" to complete the final installation. Will be deleted <b> setup.php </ b> file. Just in case - check online to an FTP server. <br /> <br />';
+Click \"Finish" to complete the final installation. Will be deleted <b> setup.php </b> file. Just in case - check online to an FTP server. <br /> <br />';
 $lang['setup']['agree_please'] = 'Please agree to the License';
 $lang['setup']['admin_dir'] = 'Rename directory';
 $lang['setup']['admin_dir_info'] = '"dievai" - the directory name must be known only to administrators. Rename it to the more difficult.';
