@@ -30,11 +30,15 @@ $vardas   = ( isset( $_COOKIE['komentatorius'] ) ? $_COOKIE['komentatorius'] : $
 $sveciams = ( isset( $conf['kmomentarai_sveciams'] ) && $conf['kmomentarai_sveciams'] == 1 );
 if ( ( isset( $_SESSION['username'] ) && !empty( $_SESSION['username'] ) ) || $sveciams ) {
 	$chat_box = "<form name=\"chat_box\" action=\"\" method=\"post\">
-	               " . ( $sveciams && !isset( $_SESSION['username'] ) ?
-		'<input type="text" name="name" class="submit" value="' . $vardas . '"/>' : '' ) . "
-                   <textarea name=\"chat_msg\" rows=\"3\" cols=\"10\" class=\"input\" style=\"margin-bottom:5px;\"></textarea>
+	               " . ( $sveciams && !isset( $_SESSION['username'] ) ? '<input type="text" name="name" class="submit" value="' . $vardas . '"/>' : '' ) . "
+                   <textarea onkeypress=\"return imposeMaxLength(event, this, 300);\" name=\"chat_msg\" rows=\"3\" cols=\"10\" class=\"input\" style=\"margin-bottom:5px;\"></textarea>
+                     <script>
+		               function imposeMaxLength(Event, Object, MaxLen){
+                         return (Object.value.length <= MaxLen)||(Event.keyCode == 8 ||Event.keyCode==46||(Event.keyCode>=35&&Event.keyCode<=40))
+                       }
+		            </script>
                    <input type=\"submit\" name=\"chat_box\" class=\"submit\" value=\"{$lang['sb']['send']}\" />
-               </form>";
+                </form>";
 } else {
 	$chat_box = $lang['system']['pleaselogin'];
 }
