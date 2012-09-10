@@ -29,34 +29,6 @@ CREATE TABLE `admin_chat` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=1 ;
 
 
-
--- --------------------------------------------------------
-
---
--- Table structure for table `balsavimas`
---
-
-CREATE TABLE `balsavimas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `info` set('vis','nar') COLLATE utf8_lithuanian_ci DEFAULT NULL,
-  `ips` text COLLATE utf8_lithuanian_ci,
-  `nariai` text COLLATE utf8_lithuanian_ci,
-  `autorius` int(11) DEFAULT NULL,
-  `laikas` int(10) DEFAULT NULL,
-  `ijungtas` set('TAIP','NE') COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'TAIP',
-  `klausimas` text COLLATE utf8_lithuanian_ci,
-  `pirmas` text COLLATE utf8_lithuanian_ci,
-  `antras` text COLLATE utf8_lithuanian_ci,
-  `trecias` text COLLATE utf8_lithuanian_ci,
-  `ketvirtas` text COLLATE utf8_lithuanian_ci,
-  `penktas` text COLLATE utf8_lithuanian_ci,
-  `lang` varchar(3) COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language',
-  PRIMARY KEY (`id`),
-  KEY `lang` (`lang`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=1 ;
-
-
-
 -- --------------------------------------------------------
 
 --
@@ -75,7 +47,7 @@ CREATE TABLE `chat_box` (
 --
 -- Dumping data for table `chat_box`
 --
-
+INSERT INTO `chat_box` VALUES(1, 'System','Hello, World :)', '2012-09-09 13:48:22', 1);
 
 -- --------------------------------------------------------
 
@@ -328,7 +300,7 @@ CREATE TABLE `naujienos` (
 -- Dumping data for table `naujienos`
 --
 
-INSERT INTO `naujienos` VALUES(1, 'Welcome to the introduction of MightMedia CMS ', 0, 'You have successfully installed <a target="_blank" href="http://www.mightmedia.org"> MightMedia CMS </a>. They are the authors of the <a target =" _blank href = "http://coders.lt"> <strong> CodeRS </strong> </a>. \r\n', '', 'lt', 1346622467, 'System', 'taip', 'TAIP', 0);
+INSERT INTO `naujienos` VALUES(1, 'Welcome to the introduction of MightMedia CMS v1.5 ', 0, 'You have successfully installed <a target="_blank" href="http://www.mightmedia.org"> MightMedia CMS </a>. They are the authors of the <a target =" _blank href = "http://coders.lt"> <strong> CodeRS </strong> </a>. \r\n', '', 'lt', 1346622467, 'System', 'taip', 'TAIP', 0);
 
 -- --------------------------------------------------------
 

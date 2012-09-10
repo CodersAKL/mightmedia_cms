@@ -86,8 +86,8 @@ if ( !empty( $_GET['lang'] ) ) {
 
 include_once ( "priedai/header.php" );
 //Tikrinam ar setup.php failas paљalintas. Saugumo sumetimais
-if ( is_file( 'install/index.php' ) && $_SESSION['level'] == 1 && !@unlink( 'install/index.php' ) ) {
-	die( '<h1>Demesio / Warning</h1><h3>Neištrintas install aplankalas.</h3> Tai saugumo spraga. Prašome pašalinkite šį failą iš serverio arba pakeiskite jo pavadinimą. /Please, remove install folder from server.</h3>' );
+if ( is_dir( 'install/' ) && $_SESSION['level'] == 1 && !@unlink( 'install/index.php' ) ) {
+	die( '<h1>Demesio / Warning</h1><h3>Neištrintas install aplankalas.</h3> Tai saugumo spraga. Prašome pašalinkite šį aplankalą iš serverio arba pakeiskite jo pavadinimą. /Please, remove install folder from server.</h3>' );
 }
 include_once 'stiliai/' . $conf['Stilius'] . '/sfunkcijos.php';
 if ( empty( $_GET['ajax'] ) ) {

@@ -15,7 +15,7 @@ ob_start();
 header( "Content-type: text/html; charset=utf-8" );
 session_start();
 @ini_set( 'error_reporting', E_ALL );
-@ini_set( 'display_errors', 'Off' );
+@ini_set( 'display_errors', 'On' );
 $root     = '';
 $out_page = TRUE;
 $inc      = "priedai/conf.php";
@@ -28,6 +28,7 @@ if ( !defined( 'ROOT' ) ) {
 } else {
 	define( 'ROOT', $root );
 }
+
 if ( isset( $_SESSION['language'] ) ) {
 	include_once( ROOT . "lang/" . $_SESSION['language'] );
 	//echo $lang['system']['warning'];
@@ -36,8 +37,18 @@ if ( isset( $_SESSION['language'] ) ) {
 }
 //slaptaþodþio kodavimas
 function koduoju( $pass ) {
-
 	return md5( sha1( md5( $pass ) ) );
+}
+
+// Aplankalo - papkės - folderio - direktorijos trinimui.
+//Neveikia...
+function trinam_direktorija($direktorija) {
+	$d = dir($direktorija);
+	while($entry = $d->read()) {
+			unlink($entry);
+		}
+	$d->close();
+	rmdir($direktorija);
 }
 
 // Sarašas failų kurių teisės turi suteikti svetainei įrašymo galimybę
@@ -617,7 +628,7 @@ if ( !empty( $_POST['acc_create'] ) ) {
 
 //Administravimo direktorijos keitimas
 if ( !empty( $_POST['admin_dir'] ) ) {
-	if ( is_dir( '".ROOT."dievai' ) ) //Pervadink "dievai" direktoriją į sunkiau nuspėjamą
+	if ( is_dir( ROOT."dievai" ) ) //Pervadink "dievai" direktoriją į sunkiau nuspėjamą
 	{
 		header( "Location: index.php?step=5" );
 	} else {
@@ -701,10 +712,11 @@ ErrorDocument 501 " . adresas() . "/klaida.php
 		die( "{$lang['setup']['cant_write']} (" . $chmod_files[2] . ")" );
 	}
 	fclose( $handle );
-	@chmod( ROOT . "install", 0777 );
-	unlink( ROOT . "install" );
+	@chmod("index.php", 0777 );
+
+	unlink( "index.php" );
 	//}
-	header( "Location: index.php" );
+	header( "Location: ".  ROOT . "index.php" );
 }
 
 ?>
@@ -712,7 +724,6 @@ ErrorDocument 501 " . adresas() . "/klaida.php
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="shortcut icon" href="<?php echo ROOT; ?>images/favicon.ico" />
 	<meta name="resource-type" content="document" />
 	<meta name="distribution" content="global" />
 	<meta name="author" content="CodeRS - MightMedia TVS" />
@@ -950,7 +961,8 @@ if ( $step == 6 ) {
 				echo '<option ' . ( $tz == 'Europe/Vilnius' ? 'selected' : '' ) . ' value="' . $tz . '">' . $tz;
 				?>
 			</select>
-			<input name="tzone" type="submit" value="<?php echo $lang['setup']['next'];?>" /></center>
+			<input name="tzone" type="submit" value="<?php echo $lang['setup']['next'];?>" />
+		</center>
 	</form>
 	<?php
 }
@@ -962,8 +974,7 @@ if ( $step == 7 ) {
 <div class='text'>
 <?php echo $lang['setup']['end_info']; ?>
 	<form name="finish_install" method="post" action="">
-		<center><input class="submit" name="finish" type="submit" value="<?php echo $lang['setup']['end'];?>" />
-		</center>
+		<center><input class="submit" name="finish" type="submit" value="<?php echo $lang['setup']['end'];?>" /></center>
 	</form>
 	<?php
 }
