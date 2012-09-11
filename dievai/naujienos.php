@@ -142,7 +142,8 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 			$nuoroda_atsisakyti  = "" . url( "?id," . $conf['puslapiai']['naujienlaiskiai.php']['id'] ) . "";
 			$mail->SetFrom( $admin_email, $conf['Pavadinimas'] );
 			$mail->Subject = strip_tags( $conf['Pavadinimas'] ) . " " . $pavadinimas;
-			$mail->MsgHTML( $naujienlaiskis );
+			$body           = naujienlaiskis($pavadinimas, $izanga, $nuoroda_i_naujiena, $nuoroda_atsisakyti);
+			$mail->MsgHTML( $body );
 			$sql = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "newsgetters`" );
 			foreach ( $sql as $row ) {
 				if ( $mail->ValidateAddress( $row['email'] ) ) {
