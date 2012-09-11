@@ -494,8 +494,14 @@ function random( $return = '' ) {
 //adresas
 function adresas() {
 
-	//NEVEIKIA :/
-	return "http://" . $_SERVER["HTTP_HOST"] . preg_replace( "/[^\/]*$/", "", $_SERVER["PHP_SELF"] );
+	$adresas = isset( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) !== 'off' ? 'https' : 'http';
+	$adresas .= '://' . $_SERVER['HTTP_HOST'];
+	$adresas .= str_replace( '/' . basename( $_SERVER['SCRIPT_NAME'] ), '', $_SERVER['SCRIPT_NAME'] );
+
+	$aExplode =  explode( '/', $adresas );
+	array_pop( $aExplode );
+
+	return implode( '/', $aExplode);
 }
 
 // Diegimo stadijų registravimas
@@ -751,7 +757,7 @@ foreach ( $menu_pavad as $key => $value ) {
 }
 ?>
 <div id="kaire">
-	<div class="skalpas"><a href="?" title="<?php echo adresas(); ?>">
+	<div class="skalpas"><a href="<?php echo adresas(); ?>" title="<?php echo adresas(); ?>">
 		<div class="logo"></div>
 	</a></div>
 	<div class='pavadinimas'><?php echo $lang['setup']['steps']; ?></div>
