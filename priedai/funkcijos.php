@@ -905,12 +905,12 @@ function getip() {
  */
 function random_name( $i = 10 ) {
 
-	$chars = "abcdefghijkmnopqrstuvwxyz023456789";
+	$chars = "abcdefghijkmnopqrstuvwxyz023456789ABCDEFGHJKLMNOPQRSTUVWXYZ";
 	srand( (double)microtime() * 1000000 );
 	$name = '';
 
 	while ( $i >= 0 ) {
-		$num  = rand() % 33;
+		$num  = rand() % strlen($chars);
 		$tmp  = substr( $chars, $num, 1 );
 		$name = $name . $tmp;
 		$i--;

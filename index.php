@@ -25,7 +25,7 @@ $stime = $m1[1] + $m1[0];
 clearstatcache();
 
 if ( is_file( 'priedai/conf.php' ) && filesize( 'priedai/conf.php' ) > 10 ) {
-	include_once ( "priedai/conf.php" );
+	include_once 'priedai/conf.php';
 } elseif ( is_file( 'install/index.php' ) && !isset( $conf['Palaikymas'] ) ) {
 	header( 'location: install/index.php' );
 	exit();
@@ -34,7 +34,7 @@ if ( is_file( 'priedai/conf.php' ) && filesize( 'priedai/conf.php' ) > 10 ) {
 }
 include_once ( 'priedai/prisijungimas.php' );
 if ( !isset( $conf ) ) {
-	include_once ( 'priedai/funkcijos.php' );
+	include_once 'priedai/funkcijos.php';
 }
 /* Puslapiu aprasymas */
 if ( isset( $url['id'] ) && !empty( $url['id'] ) && isnum( $url['id'] ) ) {
@@ -84,16 +84,16 @@ if ( !empty( $_GET['lang'] ) ) {
 	require(ROOT . 'lang/' . basename($_SESSION['lang'], '.php') . '.php');
 }*/
 
-include_once ( "priedai/header.php" );
+include_once 'priedai/header.php';
 //Tikrinam ar setup.php failas paљalintas. Saugumo sumetimais
 if ( is_dir( 'install/' ) && $_SESSION[SLAPTAS]['level'] == 1 && !@unlink( 'install/index.php' ) ) {
 	die( '<h1>Demesio / Warning</h1><h3>Neištrintas install aplankalas.</h3> Tai saugumo spraga. Prašome pašalinkite šį aplankalą iš serverio arba pakeiskite jo pavadinimą. /Please, remove install folder from server.</h3>' );
 }
 include_once 'stiliai/' . $conf['Stilius'] . '/sfunkcijos.php';
 if ( empty( $_GET['ajax'] ) ) {
-	include_once ( 'stiliai/' . $conf['Stilius'] . '/index.php' );
+	include_once 'stiliai/' . $conf['Stilius'] . '/index.php';
 } else {
-	include_once( $page . ".php" );
+	include_once $page . '.php';
 }
 
 mysql_close( $prisijungimas_prie_mysql );

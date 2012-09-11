@@ -10,6 +10,12 @@
  * @$Date$
  **/
 
+if ( is_file( 'conf.php' ) && filesize( 'conf.php' ) > 10 ) {
+	include_once 'conf.php';
+} else {
+	die();
+}
+
 session_start();
 //SUGENERUOJA PATVIRTINIMO PAVEIKSLIUKA
 header( "Content-type: image/png" ); //nurodome narsyklei kad cia PNG paveiksliukas
@@ -41,22 +47,5 @@ for ( $i = 0; $i < 16; $i++ ) {
 imagepng( $im ); //atvaizduojam paveiksliuka
 imagedestroy( $im ); //isvalom atminti
 unset( $font, $im, $bg, $fg, $x, $rcode, $i );
-
-/**
- * Sugeneruojam atsitiktinæ frazæ
- *
- * @param frazës ilgis $i
- *
- * @return string
- */
-function random_name( $length = "" ) {
-
-	$code = md5( uniqid( rand(), TRUE ) );
-	if ( $length != "" ) {
-		return strtoupper( substr( $code, 0, $length ) );
-	} else {
-		return strtoupper( $code );
-	}
-}
 
 ?> 
