@@ -6,7 +6,6 @@ header( 'P3P: CP="NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM"' );
 if ( !isset( $_SESSION ) ) {
 	session_start();
 }
-define( 'LEVEL', $_SESSION['level'] );
 /* detect root */
 $out_page = TRUE;
 $inc      = "priedai/conf.php";
@@ -40,6 +39,7 @@ if ( is_file( $root . 'priedai/conf.php' ) && filesize( $root . 'priedai/conf.ph
 	require_once( "sfunkcijos.php" );
 	//Inkludinam tai ko mums reikia
 	require_once( $root . 'priedai/funkcijos.php' );
+	define( 'LEVEL', $_SESSION[SLAPTAS]['level'] );
 
 } elseif ( is_file( $root . 'install/index.php' ) ) {
 	header( 'location: ' . $root . 'install/index.php' );
@@ -59,17 +59,17 @@ foreach ( $kalbos as $file ) {
 }
 $language .= '</ul></li></ul>';
 if ( !empty( $_GET['lang'] ) ) {
-	$_SESSION['lang'] = basename( $_GET['lang'], '.php' );
+	$_SESSION[SLAPTAS]['lang'] = basename( $_GET['lang'], '.php' );
 	redirect( url( "?id," . $_GET['id'] ) );
 }
-if ( !empty( $_SESSION['lang'] ) && is_file( ROOT . 'lang/' . basename( $_SESSION['lang'] ) . '.php' ) ) {
-	require( ROOT . 'lang/' . basename( $_SESSION['lang'], '.php' ) . '.php' );
+if ( !empty( $_SESSION[SLAPTAS]['lang'] ) && is_file( ROOT . 'lang/' . basename( $_SESSION[SLAPTAS]['lang'] ) . '.php' ) ) {
+	require( ROOT . 'lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' );
 }
-if ( empty( $_SESSION['username'] ) || $_SESSION['level'] != 1 ) {
+if ( empty( $_SESSION[SLAPTAS]['username'] ) || $_SESSION[SLAPTAS]['level'] != 1 ) {
 	redirect( ROOT . 'index.php' );
 }
 if ( isset( $_GET['do'] ) ) {
-	unset( $_SESSION['username'], $_SESSION['level'], $_SESSION['password'], $_SESSION['id'] );
+	unset( $_SESSION[SLAPTAS]['username'], $_SESSION[SLAPTAS]['level'], $_SESSION[SLAPTAS]['password'], $_SESSION[SLAPTAS]['id'] );
 	redirect( ROOT . 'index.php' );
 }
 $glob        = glob( '*.php' );
@@ -404,7 +404,7 @@ HTML;
                 <div class="admin_user down">
 					<a href="<?php echo url( '?id,999;do,logout' );?>" title="<?php echo $lang['user']['logout']; ?>">
 						<img src="images/icons/logout.png" alt="off" />
-						<?php echo $_SESSION['username']; ?>
+						<?php echo $_SESSION[SLAPTAS]['username']; ?>
 					</a>
 				</div>
 				<div id="admin_lang" class="down"><?php echo $language; ?></div>
@@ -434,7 +434,7 @@ HTML;
 				</script>
 
 				<?php
-				if ( isset( $url['a'] ) && file_exists( dirname( __file__ ) . "/" . ( isset( $admin_pages[(int)$url['a']] ) ? $admin_pages[(int)$url['a']] : 'n/a' ) . '.php' ) && isset( $_SESSION['username'] ) && $_SESSION['level'] == 1 && defined( "OK" ) ) {
+				if ( isset( $url['a'] ) && file_exists( dirname( __file__ ) . "/" . ( isset( $admin_pages[(int)$url['a']] ) ? $admin_pages[(int)$url['a']] : 'n/a' ) . '.php' ) && isset( $_SESSION[SLAPTAS]['username'] ) && $_SESSION[SLAPTAS]['level'] == 1 && defined( "OK" ) ) {
 					if ( count( $_POST ) > 0 && $conf['keshas'] == 1 ) {
 						msg( $lang['system']['warning'], $lang['system']['cache_info'] );
 					}

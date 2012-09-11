@@ -63,7 +63,7 @@ $buttons = "
 	<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,6" ) . "\"><span><img src=\"" . ROOT . "images/icons/photo_album__arrow.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_conf']}</span></a>
 	<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,7" ) . "\"><span><img src=\"" . ROOT . "images/icons/picture__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_unpublished']}</span></a>
 	<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,1" ) . "\"><span><img src=\"" . ROOT . "images/icons/picture__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_add']}</span></a>
-	" . ( $_SESSION['level'] == 1 ? "<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,9" ) . "\"><span><img src=\"" . ROOT . "images/icons/pictures__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_group_add']}</span></a>" : "" ) . "
+	" . ( $_SESSION[SLAPTAS]['level'] == 1 ? "<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,9" ) . "\"><span><img src=\"" . ROOT . "images/icons/pictures__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_group_add']}</span></a>" : "" ) . "
 	<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,8" ) . "\"><span><img src=\"" . ROOT . "images/icons/picture__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_edit']}</span></a>
 	<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,2" ) . "\"><span><img src=\"" . ROOT . "images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_photoalbum_cr']}</span></a>
 	<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,3" ) . "\"><span><img src=\"" . ROOT . "images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_photoalbum_ed']}</span></a>
@@ -284,7 +284,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 					chmod( $big_img . "/originalai/" . $rand_name . $ext, 0777 );
 					$komentaras = ( isset( $_POST['kom'] ) ? $_POST['kom'] : 'taip' );
 					$rodymas    = ( isset( $_POST['rodoma'] ) ? $_POST['rodoma'] : 'TAIP' );
-					$result     = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`,`kom`, `lang`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $rand_name . $ext ) . "," . escape( strip_tags( $_POST['Aprasymas'] ) ) . "," . escape( $_SESSION['id'] ) . ",'" . time() . "'," . escape( $_POST['cat'] ) . "," . escape( $rodymas ) . "," . escape( $komentaras ) . ", " . escape( lang() ) . ")" );
+					$result     = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`,`kom`, `lang`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $rand_name . $ext ) . "," . escape( strip_tags( $_POST['Aprasymas'] ) ) . "," . escape( $_SESSION[SLAPTAS]['id'] ) . ",'" . time() . "'," . escape( $_POST['cat'] ) . "," . escape( $rodymas ) . "," . escape( $komentaras ) . ", " . escape( lang() ) . ")" );
 
 					if ( $result ) {
 						msg( $lang['system']['done'], "{$lang['admin']['gallery_added']}" );
@@ -430,7 +430,7 @@ if ( isset( $_GET['v'] ) ) {
 		} else {
 			klaida( $lang['system']['warning'], $lang['system']['no_items'] );
 		}
-	} elseif ( $_GET['v'] == 9 && $_SESSION['level'] == 1 ) {
+	} elseif ( $_GET['v'] == 9 && $_SESSION[SLAPTAS]['level'] == 1 ) {
 		$text = "
       <link href=\"uploadify/css/default.css\" rel=\"stylesheet\" type=\"text/css\" />
 <link href=\"uploadify/css/uploadify.css\" rel=\"stylesheet\" type=\"text/css\" />

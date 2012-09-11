@@ -143,7 +143,7 @@ function bbk( $forma ) {
 <button onclick=\"addText('$forma', '[url]', '[/url]'); return false;\" title=\"URL\"><img src=\"images/icons/link.png\"></button>
 <button onclick=\"addText('$forma', '[img]', '[/img]'); return false;\" title=\"IMG\"><img src=\"images/icons/picture.png\"></button>
 ";
-	if ( $_SESSION['level'] == 1 ) {
+	if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
 		$return .= "
 <button onclick=\"addText('$forma', '[hide=Tik registruotiems]', '[/hide]'); return false;\" title=\"HIDE\"><img src=\"images/icons/eye.png\"></button>
 ";

@@ -19,7 +19,7 @@
 session_start();
 include_once('../../../../../../priedai/conf.php');
 include_once('../../../../../../priedai/prisijungimas.php');
-if(!isset($_SESSION['level']) || $_SESSION['level'] != 1)
+if(!isset($_SESSION[SLAPTAS]['level']) || $_SESSION[SLAPTAS]['level'] != 1)
 	die('eik lauk..');
 $_POST['dir'] = urldecode($_POST['dir']);
 $root = '../../../../../../siuntiniai/';

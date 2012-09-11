@@ -68,7 +68,7 @@ if ( isset( $info ) ) {
 
 if ( $k >= 0 ) {
 	$teis = mysql_query1( "SELECT teises FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "' AND `lang` = " . escape( lang() ) . " LIMIT 1", 86400 );
-	if ( teises( $teis['teises'], $_SESSION['level'] ) ) {
+	if ( teises( $teis['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
 		$q = mysql_query1( "SELECT `" . LENTELES_PRIESAGA . "nuorodos`.`id`,
 		`" . LENTELES_PRIESAGA . "nuorodos`.`url`,
 		`" . LENTELES_PRIESAGA . "nuorodos`.`pavadinimas`,

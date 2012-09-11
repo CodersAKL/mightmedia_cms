@@ -32,7 +32,7 @@ define( 'ROOT', '../../../' );
 if ( !empty( $_FILES ) ) {
 	require_once( ROOT . 'priedai/conf.php' );
 	require_once( ROOT . 'priedai/funkcijos.php' );
-	if ( !isset( $_SESSION['level'] ) || $_SESSION['level'] != 1 ) {
+	if ( !isset( $_SESSION[SLAPTAS]['level'] ) || $_SESSION[SLAPTAS]['level'] != 1 ) {
 		die( 'eik lauk..' );
 	}
 	//$tempFile = $_FILES['Filedata']['tmp_name'];
@@ -170,7 +170,7 @@ if ( !empty( $_FILES ) ) {
 				move_uploaded_file( $file_tmp, $big_img . "/originalai/" . $rand_name . $ext );
 				chmod( $big_img . "/originalai/" . $rand_name . $ext, 0777 );
 
-				$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`, `lang`) VALUES (" . escape( $_FILES['Filedata']['name'] ) . "," . escape( $rand_name . $ext ) . "," . escape( '' ) . "," . escape( $_SESSION['id'] ) . ",'" . time() . "'," . escape( $_POST['cat'] ) . ",'TAIP', " . escape( lang() ) . ")" );
+				$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`, `lang`) VALUES (" . escape( $_FILES['Filedata']['name'] ) . "," . escape( $rand_name . $ext ) . "," . escape( '' ) . "," . escape( $_SESSION[SLAPTAS]['id'] ) . ",'" . time() . "'," . escape( $_POST['cat'] ) . ",'TAIP', " . escape( lang() ) . ")" );
 
 				if ( $result ) {
 					//msg($lang['system']['done'], "{$lang['admin']['gallery_added']}");

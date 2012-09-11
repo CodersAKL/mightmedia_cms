@@ -13,8 +13,8 @@
 include_once( 'priedai/class.php' );
 $forma = new forma();
 //jeigu prisijunges narys
-if ( isset( $_SESSION['username'] ) ) {
-	$el    = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape( $_SESSION['username'] ) . " LIMIT 1" );
+if ( isset( $_SESSION[SLAPTAS]['username'] ) ) {
+	$el    = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " LIMIT 1" );
 	$email = $el['email'];
 //jeigu gauna linka is emailo deaktyvacijai
 } elseif ( isset( $_GET['e'] ) ) {
@@ -22,7 +22,7 @@ if ( isset( $_SESSION['username'] ) ) {
 }
 //jeigu paspaudzia mygtuka
 if ( isset( $_POST['email'] ) ) {
-	if ( $_SESSION['code'] == strip_tags( strtoupper( $_POST['kode'] ) ) ) {
+	if ( $_SESSION[SLAPTAS]['code'] == strip_tags( strtoupper( $_POST['kode'] ) ) ) {
 		if ( check_email( $_POST['email'] ) ) {
 			$sql = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "newsgetters` WHERE `email`=" . escape( $_POST['email'] ) . " LIMIT 1" );
 			if ( isset( $sql['email'] ) ) {

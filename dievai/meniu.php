@@ -170,7 +170,7 @@ lentele($page_pavadinimas,$text);
 		$data2 = '';
 		$res   = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=" . escape( lang() ) . " ORDER BY `place` ASC" );
 		foreach ( $res as $row ) {
-			if ( teises( $row['teises'], $_SESSION['level'] ) ) {
+			if ( teises( $row['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
 				$data2[$row['parent']][] = $row;
 			}
 		}

@@ -32,7 +32,7 @@ session_start();
 require_once('../../../../../../priedai/conf.php');
 require_once('../../../../../../priedai/funkcijos.php');
 
-if (!isset($_SESSION['level']) || $_SESSION['level'] != 1)
+if (!isset($_SESSION[SLAPTAS]['level']) || $_SESSION[SLAPTAS]['level'] != 1)
 	die('eik lauk..');
 
 if (!empty($_FILES)) {

@@ -25,7 +25,7 @@ if ( !defined( 'ROOT' ) ) {
 }
 include_once( "" . ROOT . "priedai/conf.php" );
 include_once( "" . ROOT . "priedai/prisijungimas.php" );
-if ( isset( $_SESSION['id'] ) && $_SESSION['id'] == 1 ) {
+if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] == 1 ) {
 	//į kokią versiją atnaujinam
 	$versija = versija();
 	// Sarašas failų kurių teisės turi suteikti svetainei įrašymo galimybę
@@ -39,16 +39,16 @@ if ( isset( $_SESSION['id'] ) && $_SESSION['id'] == 1 ) {
 
 	// Diegimo stadijų registravimas
 	if ( !isset( $_GET['step'] ) || empty( $_GET['step'] ) ) {
-		$_SESSION['step'] = 1;
+		$_SESSION[SLAPTAS]['step'] = 1;
 		$step             = 1;
 	} else {
 		if ( $_GET['step'] != 0 && $_GET['step'] > 1 ) {
 			$step = (int)$_GET['step'];
-			if ( $_SESSION['step'] == ( $step - 1 ) ) {
-				$_SESSION['step'] = $step;
+			if ( $_SESSION[SLAPTAS]['step'] == ( $step - 1 ) ) {
+				$_SESSION[SLAPTAS]['step'] = $step;
 			}
 		} else {
-			header( "Location: upgrade.php?step=" . $_SESSION['step'] );
+			header( "Location: upgrade.php?step=" . $_SESSION[SLAPTAS]['step'] );
 		}
 	}
 
@@ -159,7 +159,7 @@ if ( isset( $_SESSION['id'] ) && $_SESSION['id'] == 1 ) {
 <body>
 <body>
 <div id="plotis">
-	<?php if ( isset( $_SESSION['id'] ) && $_SESSION['id'] == 1 ) { ?>
+	<?php if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] == 1 ) { ?>
 	<div id="kaire">
 		<div class="skalpas"><a href="?" title="<?php echo adresas(); ?>">
 			<div class="logo"></div>

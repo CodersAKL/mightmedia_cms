@@ -23,7 +23,7 @@ $limit = 15;
 //
 include_once ( ROOT . "priedai/class.php" );
 //trinam irasa
-if ( isset( $url['d'] ) && isnum( $url['d'] ) && $_SESSION['level'] == 1 ) {
+if ( isset( $url['d'] ) && isnum( $url['d'] ) && $_SESSION[SLAPTAS]['level'] == 1 ) {
 	if ( $url['d'] == "0" && isset( $_POST['ip'] ) && !empty( $_POST['ip'] ) && $_POST['del_all'] == $lang['admin']['delete'] && isnum( $_POST['ip'] ) ) {
 		$sql = mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "logai` WHERE `ip` = " . escape( $_POST['ip'] ) );
 		msg( $lang['system']['done'], "<b>" . long2ip( $_POST['ip'] ) . "</b> {$lang['admin']['logs_logsdeleted']}." );
@@ -40,7 +40,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $_SESSION['level'] == 1 ) {
 //valom zurnala
 if ( !empty( $url['t'] ) ) {
 	mysql_query1( "TRUNCATE TABLE `" . LENTELES_PRIESAGA . "logai`" );
-	mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( " " . $_SESSION['username'] . ":{$lang['admin']['logs_logsdeleted']}." ) . ", '" . time() . "', INET_ATON(" . escape( getip() ) . "))" );
+	mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( " " . $_SESSION[SLAPTAS]['username'] . ":{$lang['admin']['logs_logsdeleted']}." ) . ", '" . time() . "', INET_ATON(" . escape( getip() ) . "))" );
 	header( "location: " . url( "?id," . $url['id'] . ";a,{$_GET['a']}" ) );
 //rodom zurnala
 } else {

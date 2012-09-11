@@ -42,14 +42,14 @@ if ( isset( $_POST['admin_chat_send'] ) && $_POST['admin_chat_send'] == $lang['a
 		if ( sizeof( $sql ) > 0 ) {
 			foreach ( $sql as $row ) {
 				if ( kiek( "private_msg", "WHERE `to`=" . escape( $row['nick'] ) . "" ) < 51 ) {
-					mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "private_msg` (`from` , `to` , `title` , `msg` , `date`) VALUES (" . escape( $_SESSION['username'] ) . ", " . escape( $row['nick'] ) . ", '" . $lang['admin']['readme'] . "!', " . escape( $_POST['admin_chat'] ) . ", '" . time() . "')" );
+					mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "private_msg` (`from` , `to` , `title` , `msg` , `date`) VALUES (" . escape( $_SESSION[SLAPTAS]['username'] ) . ", " . escape( $row['nick'] ) . ", '" . $lang['admin']['readme'] . "!', " . escape( $_POST['admin_chat'] ) . ", '" . time() . "')" );
 				}
 			}
 		}
 	}
 
 
-	mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "admin_chat` (admin, msg, date) VALUES(" . escape( $_SESSION['username'] ) . "," . escape( $extra . $_POST['admin_chat'] ) . ",'" . time() . "')" ) or die( mysql_error() );
+	mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "admin_chat` (admin, msg, date) VALUES(" . escape( $_SESSION[SLAPTAS]['username'] ) . "," . escape( $extra . $_POST['admin_chat'] ) . ",'" . time() . "')" ) or die( mysql_error() );
 	redirect( $_SERVER['HTTP_REFERER'] );
 }
 //trinam zinute
@@ -63,7 +63,7 @@ if ( isset( $url['r'] ) && !isset( $url['d'] ) && !isset( $url['a'] ) && isnum( 
 		$extra = mysql_query1( "SELECT msg FROM `" . LENTELES_PRIESAGA . "admin_chat` WHERE id=" . escape( (int)$url['r'] ) . " LIMIT 1" );
 		$extra = $extra['msg'];
 	} elseif ( $_POST['admin_chat_send'] == $lang['admin']['edit'] ) {
-		mysql_query( "UPDATE `" . LENTELES_PRIESAGA . "admin_chat` SET `msg`=" . escape( $_POST['admin_chat'] ) . ",`date` = '" . time() . "' WHERE `admin`=" . escape( $_SESSION['username'] ) . " AND id=" . escape( (int)$url['r'] ) . " LIMIT 1" );
+		mysql_query( "UPDATE `" . LENTELES_PRIESAGA . "admin_chat` SET `msg`=" . escape( $_POST['admin_chat'] ) . ",`date` = '" . time() . "' WHERE `admin`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " AND id=" . escape( (int)$url['r'] ) . " LIMIT 1" );
 		//header("Location: ".url("?id," . $url['id']));
 		redirect( $_SERVER['PHP_SELF'] );
 	}
@@ -98,7 +98,7 @@ if ( sizeof( $sql ) > 0 ) {
 	$i = 0;
 	foreach ( $sql as $row ) {
 		$text .= "
-				<div class='" . ( is_int( $i / 2 ) ? 'tr2' : 'tr' ) . "'><em><a href=\"" . url( "d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\">[{$lang['admin']['delete']}]</a> " . ( ( $_SESSION['username'] == $row['admin'] ) ? "<a href=\"" . url( "r," . $row['id'] . "" ) . "\">[{$lang['admin']['edit']}]</a> " : "" ) . $row['admin'] . " [" . date( 'Y-m-d H:i:s ', $row['date'] ) . "] - " . kada( date( 'Y-m-d H:i:s ', $row['date'] ) ) . " " . naujas( $row['date'], $row['admin'] ) . "</em><br />
+				<div class='" . ( is_int( $i / 2 ) ? 'tr2' : 'tr' ) . "'><em><a href=\"" . url( "d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\">[{$lang['admin']['delete']}]</a> " . ( ( $_SESSION[SLAPTAS]['username'] == $row['admin'] ) ? "<a href=\"" . url( "r," . $row['id'] . "" ) . "\">[{$lang['admin']['edit']}]</a> " : "" ) . $row['admin'] . " [" . date( 'Y-m-d H:i:s ', $row['date'] ) . "] - " . kada( date( 'Y-m-d H:i:s ', $row['date'] ) ) . " " . naujas( $row['date'], $row['admin'] ) . "</em><br />
 				" . bbcode( $row['msg'] ) . "<br /></div>
 		";
 		$i++;

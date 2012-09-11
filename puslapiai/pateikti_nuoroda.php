@@ -20,7 +20,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['links_crea
 	$apie        = strip_tags( $_POST['apie'] );
 	$pavadinimas = strip_tags( $_POST['name'] );
 	$kategorija  = strip_tags( $_POST['kat'] );
-	$autoriusid  = ( isset( $_SESSION['id'] ) ? $_SESSION['id'] : 0 );
+	$autoriusid  = ( isset( $_SESSION[SLAPTAS]['id'] ) ? $_SESSION[SLAPTAS]['id'] : 0 );
 	/*  if (empty($url) || empty($pavadinimas)) {
 		  $error = "{$lang['admin']['links_allfields']}.";
 		}*/

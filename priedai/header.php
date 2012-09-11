@@ -45,9 +45,9 @@ $timestamp = time(); //timestampas
 $timeout   = $timestamp - $timeoutseconds; //taimout aritmetika :)
 $db_expire = $timestamp - 259200; //3 dienos
 
-if ( isset( $_SESSION['username'] ) && !empty( $_SESSION['username'] ) ) {
-	$username = $_SESSION['username'];
-	$uzerid   = $_SESSION['id'];
+if ( isset( $_SESSION[SLAPTAS]['username'] ) && !empty( $_SESSION[SLAPTAS]['username'] ) ) {
+	$username = $_SESSION[SLAPTAS]['username'];
+	$uzerid   = $_SESSION[SLAPTAS]['id'];
 } else {
 	$username = $lang['system']['guest'];
 	$uzerid   = '0';
@@ -107,7 +107,7 @@ $u      = '';
 
 foreach ( $q as $row ) {
 	$nekvepuoja = $timestamp - $row['timestamp'];
-	if ( time() - $nekvepuoja >= 1 * 60 * 60 && isset( $_SESSION['id'] ) && $row['id'] == $_SESSION['id'] ) {
+	if ( time() - $nekvepuoja >= 1 * 60 * 60 && isset( $_SESSION[SLAPTAS]['id'] ) && $row['id'] == $_SESSION[SLAPTAS]['id'] ) {
 		mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET `login_data` = '" . time() . "', `ip` = INET_ATON(" . escape( getip() ) . ") WHERE `id` ='" . $uzerid . "' LIMIT 1" );
 	}
 	if ( !empty( $row['id'] ) ) {

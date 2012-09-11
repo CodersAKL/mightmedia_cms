@@ -102,7 +102,7 @@ if ( $vid > 0 ) {
 	}
 	if ( sizeof( $sql ) > 0 && isset( $sql['id'] ) ) {
 		//$sql = mysql_fetch_assoc($sql);
-		if ( !isset( $sql['teises'] ) || teises( $sql['teises'], $_SESSION['level'] ) ) {
+		if ( !isset( $sql['teises'] ) || teises( $sql['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
 			if ( isset( $sql['Nick'] ) ) {
 				$autorius = user( $sql['Nick'], $sql['nick_id'], $sql['levelis'] );
 			} else {
@@ -196,7 +196,7 @@ else {
 		$bla  = new Table();
 		$info = array();
 		foreach ( $sql_s as $sql ) {
-			if ( !isset( $sql['teises'] ) || teises( $sql['teises'], $_SESSION['level'] ) ) {
+			if ( !isset( $sql['teises'] ) || teises( $sql['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
 				if ( isset( $sql['Nick'] ) ) {
 					$autorius = user( $sql['Nick'], $sql['nick_id'], $sql['levelis'] );
 				} else {

@@ -198,7 +198,7 @@ function ar_admin( $failas ) {
 
 	global $_SESSION;
 
-	if ( ( is_array( unserialize( $_SESSION['mod'] ) ) && in_array( $failas, unserialize( $_SESSION['mod'] ) ) ) || $_SESSION['level'] == 1 ) {
+	if ( ( is_array( unserialize( $_SESSION[SLAPTAS]['mod'] ) ) && in_array( $failas, unserialize( $_SESSION[SLAPTAS]['mod'] ) ) ) || $_SESSION[SLAPTAS]['level'] == 1 ) {
 		return TRUE;
 	} else {
 		return FALSE;
@@ -277,7 +277,7 @@ function puslapis( $puslapis, $extra = FALSE ) {
 
 	if ( isset( $conf['puslapiai'][$puslapis]['id'] ) && !empty( $conf['puslapiai'][$puslapis]['id'] ) && is_file( dirname( __file__ ) . '/../puslapiai/' . $puslapis ) ) {
 
-		if ( $_SESSION['level'] == 1 || ( is_array( $teises ) && in_array( $_SESSION['level'], $teises ) ) || empty( $teises ) ) {
+		if ( $_SESSION[SLAPTAS]['level'] == 1 || ( is_array( $teises ) && in_array( $_SESSION[SLAPTAS]['level'], $teises ) ) || empty( $teises ) ) {
 
 			if ( $extra && isset( $conf['puslapiai'][$puslapis][$extra] ) ) {
 				return $conf['puslapiai'][$puslapis][$extra];
@@ -612,7 +612,7 @@ function user( $user, $id = 0, $level = 0, $extra = FALSE ) {
 
 		return $lang['system']['guest'];
 	} else {
-		if ( isset( $conf['puslapiai']['pm.php'] ) && $id != 0 && isset( $_SESSION['id'] ) && $id != $_SESSION['id'] ) {
+		if ( isset( $conf['puslapiai']['pm.php'] ) && $id != 0 && isset( $_SESSION[SLAPTAS]['id'] ) && $id != $_SESSION[SLAPTAS]['id'] ) {
 			$pm = "<a href=\"" . url( "?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $user ) ) ) . "\"><img src=\"" . ROOT . "images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>";
 		} else {
 			$pm = '';
@@ -1180,8 +1180,8 @@ function apvalinti( $sk, $kiek = 2 ) {
 function naujas( $data, $nick = NULL ) {
 
 	global $lang;
-	if ( isset( $_SESSION['lankesi'] ) ) {
-		return ( ( $data > $_SESSION['lankesi'] ) ? '<img src="' . ROOT . 'images/icons/new.png" onload="$(this).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);" alt="New" border="0" style="vertical-align: middle;" title="' . $lang['system']['new'] . '" />' : '' );
+	if ( isset( $_SESSION[SLAPTAS]['lankesi'] ) ) {
+		return ( ( $data > $_SESSION[SLAPTAS]['lankesi'] ) ? '<img src="' . ROOT . 'images/icons/new.png" onload="$(this).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);" alt="New" border="0" style="vertical-align: middle;" title="' . $lang['system']['new'] . '" />' : '' );
 	} else {
 		return '';
 	}
@@ -1774,12 +1774,12 @@ function checkUrl( $url ) {
  */
 function lang() {
 
-	if ( empty( $_SESSION['lang'] ) ) {
+	if ( empty( $_SESSION[SLAPTAS]['lang'] ) ) {
 		global $conf;
-		$_SESSION['lang'] = basename( $conf['kalba'], '.php' );
+		$_SESSION[SLAPTAS]['lang'] = basename( $conf['kalba'], '.php' );
 	}
 
-	return $_SESSION['lang'];
+	return $_SESSION[SLAPTAS]['lang'];
 }
 
 //unset($_SESSION['lang']);
@@ -1902,12 +1902,12 @@ function site_tree( $data, $id = 0, $active_class = 'active' ) {
 		$re = "";
 		foreach ( $data[$id] as $row ) {
 			if ( isset( $data[$row['id']] ) ) {
-				if ( teises( $row['teises'], $_SESSION['level'] ) ) {
+				if ( teises( $row['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
 					$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><ul>";
 					$re .= site_tree( $data, $row['id'], $active_class );
 					$re .= "</ul></li>";
 				}
-			} else if ( teises( $row['teises'], $_SESSION['level'] ) ) {
+			} else if ( teises( $row['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
 				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a></li>";
 			}
 		}

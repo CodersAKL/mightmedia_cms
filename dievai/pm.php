@@ -113,7 +113,7 @@ if ( sizeof( $sql ) > 0 ) {
 	foreach ( $sql as $row ) {
 		$select[$row['nick']] = $row['nick'] . " - " . $row['viso'];
 	}
-	$nustatymai = array( "Form" => array( "action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";d,0", "method" => "post", "name" => "reg" ), "{$lang['admin']['pm_deleteto']}:" => array( "type" => "select", "value" => $select, "selected" => $_SESSION['username'], "name" => "to" ), "" => array( "type" => "submit", "name" => "del_all", "value" => $lang['admin']['delete'] ) );
+	$nustatymai = array( "Form" => array( "action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";d,0", "method" => "post", "name" => "reg" ), "{$lang['admin']['pm_deleteto']}:" => array( "type" => "select", "value" => $select, "selected" => $_SESSION[SLAPTAS]['username'], "name" => "to" ), "" => array( "type" => "submit", "name" => "del_all", "value" => $lang['admin']['delete'] ) );
 	$bla        = new forma();
 	lentele( $lang['admin']['pm_deleteto'], $bla->form( $nustatymai ) );
 	unset( $nustatymai, $select, $sql );
@@ -125,7 +125,7 @@ if ( sizeof( $sql ) > 0 ) {
 	foreach ( $sql as $row ) {
 		$select[$row['nick']] = $row['nick'] . " - " . $row['viso'];
 	}
-	$nustatymai = array( "Form" => array( "action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";d,0", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg" ), "{$lang['admin']['pm_deletefrom']}:" => array( "type" => "select", "value" => $select, "selected" => $_SESSION['username'], "name" => "from" ), "" => array( "type" => "submit", "name" => "del_all", "value" => $lang['admin']['delete'] ) );
+	$nustatymai = array( "Form" => array( "action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";d,0", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg" ), "{$lang['admin']['pm_deletefrom']}:" => array( "type" => "select", "value" => $select, "selected" => $_SESSION[SLAPTAS]['username'], "name" => "from" ), "" => array( "type" => "submit", "name" => "del_all", "value" => $lang['admin']['delete'] ) );
 	$bla        = new forma();
 	lentele( $lang['admin']['pm_deletefrom'], $bla->form( $nustatymai ) );
 	unset( $nustatymai, $select, $sql );

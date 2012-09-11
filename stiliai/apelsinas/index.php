@@ -23,11 +23,11 @@
 		<div id="meniu_juosta">
 			<ul>
 				<?php
-				$limit = '8'; //Kiek nuorod� rodome
+				$limit = '8'; //Kiek nuorodų rodome
 				$sql1  = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent` = 0 AND `show` = 'Y' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC LIMIT {$limit}" );
 				$text  = '';
 				foreach ( $sql1 as $row1 ) {
-					if ( teises( $row1['teises'], $_SESSION['level'] ) ) {
+					if ( teises( $row1['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
 						$text .= '<li><a href="' . url( '?id,' . (int)$row1['id'] ) . '">' . input( $row1['pavadinimas'] ) . '</a></li>';
 					}
 				}

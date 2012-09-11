@@ -16,7 +16,7 @@ if ( isset( $memb[1] ) ) {
 	if ( isset( $sql['nick'] ) ) {
 		addtotitle( $sql['nick'] );
 		include_once ( "rating.php" );
-		if ( isset( $_SESSION['id'] ) && $_SESSION['id'] != $sql['id'] ) {
+		if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] != $sql['id'] ) {
 			$vote = rating_form( $page, (int)$sql['id'] );
 		} else {
 			$vote = rating_form( $page, (int)$sql['id'], FALSE );
@@ -35,7 +35,7 @@ if ( isset( $memb[1] ) ) {
 			$grupe = '-';
 		}
 		//Profilio rodymas
-		if ( $_SESSION['level'] == 1 ) {
+		if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
 			$admin = 'IP: ' . $sql['ip'];
 		} else {
 			$admin = '';
@@ -98,7 +98,7 @@ if ( isset( $memb[1] ) ) {
 		
 ';
 		// Jei kitas vartotojas perziuri kita vartotoja BET ne SAVE
-		if ( isset( $_SESSION['id'] ) && $_SESSION['id'] != $sql['id'] ) {
+		if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] != $sql['id'] ) {
 			if ( isset( $conf['puslapiai']['pm.php']['id'] ) ) {
 				$text .= "
 				<center>
@@ -117,7 +117,7 @@ if ( isset( $memb[1] ) ) {
 
 		// Jeigu perziurima TIK informacija, o vartotojas SAVES NEZIURI per nustatyta puslapi
 		//komentarų nereikės
-		if ( isset( $_SESSION['id'] ) ) {
+		if ( isset( $_SESSION[SLAPTAS]['id'] ) ) {
 			include( "priedai/komentarai.php" );
 			komentarai( $sql['id'], TRUE );
 		}

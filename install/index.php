@@ -658,6 +658,7 @@ date_default_timezone_set('{$zone}');//Lithuanian time zone
 \$db = "{$_SESSION['mysql']['db']}";	//Duomenu baze
 define("LENTELES_PRIESAGA", "{$_SESSION['mysql']['prefix']}");	//Lenteliu pavadinimu priesaga
 \$slaptas = "{$slaptas}";	//Sausainiams ir kitai informacijai
+define('SLAPTAS', \$slaptas);
 
 //Admin paneles vartotojas ir slaptazodis
 \$admin_name="Admin";	//useris
@@ -677,7 +678,7 @@ unset(\$row,\$sql,\$user,\$host,\$pass,\$db);
 //kalba
 \$lang = array();
 if (isset(\$conf['kalba'])) {
-    require_once (realpath(dirname(__file__)) . '/../lang/' . (empty(\$_SESSION['lang'])?basename(\$conf['kalba'],'.php'):\$_SESSION['lang']). '.php');
+    require_once (realpath(dirname(__file__)) . '/../lang/' . (empty(\$_SESSION[SLAPTAS]['lang'])?basename(\$conf['kalba'],'.php'):\$_SESSION[SLAPTAS]['lang']). '.php');
 } else {
     require_once (realpath(dirname(__file__)) . '/../lang/lt.php');
 }

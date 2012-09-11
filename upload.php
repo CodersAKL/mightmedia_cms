@@ -3,7 +3,7 @@ ob_start();
 session_start();
 include_once( "priedai/conf.php" );
 include_once( "priedai/prisijungimas.php" );
-if ( isset( $_SESSION['level'] ) && $_SESSION['level'] > 0 && isset( $_FILES['userfile']['type'] ) ) {
+if ( isset( $_SESSION[SLAPTAS]['level'] ) && $_SESSION[SLAPTAS]['level'] > 0 && isset( $_FILES['userfile']['type'] ) ) {
 
 
 	//$allowed_types = array('image/jpg', 'image/jpeg');

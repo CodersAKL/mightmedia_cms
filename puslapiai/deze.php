@@ -29,8 +29,8 @@ if ( ar_admin( 'com' ) ) {
 	}
 	// Jei adminas paspaude redaguoti
 	if ( isset( $url['r'] ) && !empty( $url['r'] ) ) {
-		$nick    = $_SESSION['username'];
-		$nick_id = $_SESSION['id'];
+		$nick    = $_SESSION[SLAPTAS]['username'];
+		$nick_id = $_SESSION[SLAPTAS]['id'];
 		// Jei redaguotas pranesimas nesiunciamas
 		if ( !isset( $_POST['chat_box'] ) ) {
 			$msg = mysql_query1( "SELECT `msg` FROM `" . LENTELES_PRIESAGA . "chat_box` WHERE `id`=" . escape( ceil( (int)$url['r'] ) ) . " LIMIT 1" );
@@ -60,7 +60,7 @@ if ( ar_admin( 'com' ) ) {
 			lentele( $lang['sb']['edit'], $form->form( $form_array ) );
 
 		} else {
-			$msg = trim( $_POST['msg'] ) . "\n[sm] [i] {$lang['sb']['editedby']}: " . $_SESSION['username'] . " [/i] [/sm]";
+			$msg = trim( $_POST['msg'] ) . "\n[sm] [i] {$lang['sb']['editedby']}: " . $_SESSION[SLAPTAS]['username'] . " [/i] [/sm]";
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "chat_box` SET `msg` = " . escape( strip_tags( $msg ) ) . " WHERE `id` =" . escape( $url['r'] ) . " LIMIT 1" );
 			// Pranesimas ir nukreipimas
 			msg( $lang['system']['done'], $lang['sb']['updated'] );

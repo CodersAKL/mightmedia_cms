@@ -14,7 +14,7 @@ $res = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`
 
 if ( sizeof( $res ) > 0 ) {
 	foreach ( $res as $row ) {
-		if ( teises( $row['teises'], $_SESSION['level'] ) ) {
+		if ( teises( $row['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
 			$data[$row['parent']][] = $row;
 		}
 	}

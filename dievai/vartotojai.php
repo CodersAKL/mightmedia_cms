@@ -47,7 +47,7 @@ if ( isset( $url['d'] ) && $url['d'] != "" && $url['d'] != 0 ) {
 	header( "Location: " . url( 'd,0' ) );
 }
 if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['save'] && $_POST['id'] > 0 ) {
-	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $_POST['id'] . "'" . ( $_SESSION['id'] == 1 ? '' : 'AND `levelis` > 1' ) . " LIMIT 1" );
+	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $_POST['id'] . "'" . ( $_SESSION[SLAPTAS]['id'] == 1 ? '' : 'AND `levelis` > 1' ) . " LIMIT 1" );
 
 	if ( !empty( $_POST['tsk'] ) ) {
 		$tsk = (int)$_POST['tsk'];
@@ -70,7 +70,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['save'] && 
 		$mail = $info['email'];
 	}
 
-	$resut = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET `taskai`=" . escape( $tsk ) . " , `levelis`=" . escape( $lvl ) . " , `pass`=" . escape( $slapt ) . " , `email`=" . escape( $mail ) . " WHERE `id`=" . escape( (int)$_POST['id'] ) . " " . ( $_SESSION['id'] == 1 ? '' : 'AND `levelis` > 1' ) );
+	$resut = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET `taskai`=" . escape( $tsk ) . " , `levelis`=" . escape( $lvl ) . " , `pass`=" . escape( $slapt ) . " , `email`=" . escape( $mail ) . " WHERE `id`=" . escape( (int)$_POST['id'] ) . " " . ( $_SESSION[SLAPTAS]['id'] == 1 ? '' : 'AND `levelis` > 1' ) );
 	if ( $resut ) {
 		msg( $lang['system']['done'], $lang['admin']['user_updated'] );
 		unset( $_POST );
@@ -83,7 +83,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['save'] && 
 //Jei redaguojam
 if ( isset( $url['r'] ) && $url['r'] != "" && $url['r'] != 0 ) {
 
-	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $url['r'] . "'" . ( $_SESSION['id'] == 1 ? '' : ' AND `levelis` > 1' ) . " LIMIT 1" );
+	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $url['r'] . "'" . ( $_SESSION[SLAPTAS]['id'] == 1 ? '' : ' AND `levelis` > 1' ) . " LIMIT 1" );
 	if ( $info ) {
 		$lygiai2 = array_keys( $conf['level'] );
 		foreach ( $lygiai2 as $key ) {
@@ -91,12 +91,12 @@ if ( isset( $url['r'] ) && $url['r'] != "" && $url['r'] != 0 ) {
 		}
 
 		$text = array(
-			'Form'                                                                                                                                                      => array( 'action' => url( "?id,{$_GET['id']};a,{$_GET['a']}" ), "method" => "post", "name" => "reg", 'extra' => "onSubmit=\"return checkMail('change_contacts','email')\"" ),
-			$lang['admin']['user_points']                                                                                                                               => array( 'type' => 'text', 'name' => 'tsk', 'extra' => "onkeyup=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\"", 'value' => ( isset( $info['taskai'] ) ? input( $info['taskai'] ) : "" ) ),
-			$lang['admin']['user_level']                                                                                                                                => array( "type" => "select", "value" => $lygiai, "name" => "lvl", "class" => "input", "class" => "input", "selected" => ( isset( $info['levelis'] ) ? (int)$info['levelis'] : '' ) ),
+			'Form'                         => array( 'action' => url( "?id,{$_GET['id']};a,{$_GET['a']}" ), "method" => "post", "name" => "reg", 'extra' => "onSubmit=\"return checkMail('change_contacts','email')\"" ),
+			$lang['admin']['user_points']  => array( 'type' => 'text', 'name' => 'tsk', 'extra' => "onkeyup=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\"", 'value' => ( isset( $info['taskai'] ) ? input( $info['taskai'] ) : "" ) ),
+			$lang['admin']['user_level']   => array( "type" => "select", "value" => $lygiai, "name" => "lvl", "class" => "input", "class" => "input", "selected" => ( isset( $info['levelis'] ) ? (int)$info['levelis'] : '' ) ),
 			"{$lang['admin']['user_pass']} <img src='../images/icons/help.png' title='<b>{$lang['system']['warning']}</b><br/>{$lang['admin']['user_passinfo']}<br/>'>" => array( 'type' => 'password', 'name' => 'slapt' ),
-			$lang['admin']['user_email']                                                                                                                                => array( 'type' => 'text', 'value' => ( isset( $info['email'] ) ? input( $info['email'] ) : "" ) ),
-			""                                                                                                                                                          => array( 'type' => 'string', "value" => '<input type="hidden" name="id" value="' . $url['r'] . '" /><input type="submit" name="action" value="' . $lang['admin']['save'] . '">' )
+			$lang['admin']['user_email']   => array( 'type' => 'text', 'value' => ( isset( $info['email'] ) ? input( $info['email'] ) : "" ) ),
+			""                             => array( 'type' => 'string', "value" => '<input type="hidden" name="id" value="' . $url['r'] . '" /><input type="submit" name="action" value="' . $lang['admin']['save'] . '">' )
 		);
 		include_once ( ROOT . "priedai/class.php" );
 		$bla = new forma();
@@ -126,11 +126,13 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 		} else {
 			$val = array( "", "", "", );
 		}
-		$info2[] = array( "#"                                                                                                                          => "<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('usersch');\" />",
-		                  $lang['admin']['user_name']                                                                                                  => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"nick\" />",
-		                  "IP <img src='../images/icons/help.png' title='<b>{$lang['system']['warning']}</b><br/>{$lang['admin']['user_ip_filter']}'>" => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"ip\" />",
-		                  $lang['admin']['user_email']                                                                                                 => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"email\" />",
-		                  $lang['admin']['action']                                                                                                     => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />" );
+		$info2[] = array(
+			"#"                          => "<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('usersch');\" />",
+			$lang['admin']['user_name']  => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"nick\" />",
+			"IP <img src='../images/icons/help.png' title='<b>{$lang['system']['warning']}</b><br/>{$lang['admin']['user_ip_filter']}'>" => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"ip\" />",
+			$lang['admin']['user_email'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"email\" />",
+			$lang['admin']['action']     => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />"
+		);
 //FILTRAVIMAS
 		$i    = 0;
 		$viso = kiek( "users", "WHERE levelis=" . escape( $_GET['k'] ) );
@@ -138,11 +140,12 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 		if ( sizeof( $sql ) > 0 ) {
 			foreach ( $sql as $row2 ) {
 				$i++;
-				$info2[] = array( "#"                          => "<input type=\"checkbox\" value=\"{$row2['id']}\" name=\"users_delete[]\" />",
-				                  $lang['admin']['user_name']  => user( $row2['nick'], $row2['id'], $row2['levelis'] ),
-				                  "IP"                         => $row2['ip'],
-				                  $lang['admin']['user_email'] => "" . $row2['email'] . "",
-				                  $lang['admin']['action']     => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "'title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
+				$info2[] = array(
+					"#"                           => "<input type=\"checkbox\" value=\"{$row2['id']}\" name=\"users_delete[]\" />",
+				     $lang['admin']['user_name']  => user( $row2['nick'], $row2['id'], $row2['levelis'] ),
+				     "IP"                         => $row2['ip'],
+				     $lang['admin']['user_email'] => "" . $row2['email'] . "",
+				     $lang['admin']['action']     => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "'title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
 				);
 			}
 			$bla = new Table();
@@ -164,10 +167,12 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 4 ) {
 		$resultas = mysql_query1( "SELECT *, INET_NTOA(ip) AS ip FROM `" . LENTELES_PRIESAGA . "users` WHERE nick LIKE " . escape( "%" . $_POST['vardas'] . "%" ) . "LIMIT 0,100" );
 		if ( sizeof( $resultas ) > 0 ) {
 			foreach ( $resultas as $row2 ) {
-				$info3[] = array( $lang['admin']['user_name']      => user( $row2['nick'], $row2['id'], $row2['levelis'] ),
-				                  "IP"                             => $row2['ip'],
-				                  "{$lang['admin']['user_email']}" => "" . $row2['email'] . "",
-				                  " "                              => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>" );
+				$info3[] = array(
+					$lang['admin']['user_name']      => user( $row2['nick'], $row2['id'], $row2['levelis'] ),
+					"IP"                             => $row2['ip'],
+					"{$lang['admin']['user_email']}" => "" . $row2['email'] . "",
+					" "                              => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
+				);
 			}
 			$bla = new Table();
 			lentele( $lang['admin']['user_list'], $bla->render( $info3 ) );

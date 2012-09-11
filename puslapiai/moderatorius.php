@@ -10,14 +10,14 @@
  * @$Date$
  **/
 
-if ( !empty( $_SESSION['mod'] ) ) {
+if ( !empty( $_SESSION[SLAPTAS]['mod'] ) ) {
 
 	function editor( $tipas = 'jquery', $dydis = 'standartinis', $id = FALSE, $value = '' ) {
 
 		return editorius( $tipas, $dydis, $id, $value );
 	}
 
-	$failai = unserialize( $_SESSION['mod'] );
+	$failai = unserialize( $_SESSION[SLAPTAS]['mod'] );
 	$text   = "
 	<script type=\"text/javascript\" src=\"javascript/jquery/jquery-ui-1.7.2.custom.min.js\"></script>
 	<table border=\"0\">

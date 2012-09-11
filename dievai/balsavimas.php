@@ -42,7 +42,7 @@ if ( isset( $_GET['t'] ) ) {
 //poll creation
 if ( $_GET['v'] == 1 ) {
 	if ( isset( $_POST['question'] ) ) {
-		mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "poll_questions` (`question`, `radio`, `shown`, `only_guests`, `author_id`, `author_name`, `lang`) VALUES (" . escape( $_POST['question'] ) . ", " . escape( (int)$_POST['type'] ) . ", " . escape( (int)$_POST['shown'] ) . ", " . escape( (int)$_POST['only_guests'] ) . ", " . escape( $_SESSION['id'] ) . "," . escape( $_SESSION['username'] ) . ", " . escape( lang() ) . ")" );
+		mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "poll_questions` (`question`, `radio`, `shown`, `only_guests`, `author_id`, `author_name`, `lang`) VALUES (" . escape( $_POST['question'] ) . ", " . escape( (int)$_POST['type'] ) . ", " . escape( (int)$_POST['shown'] ) . ", " . escape( (int)$_POST['only_guests'] ) . ", " . escape( $_SESSION[SLAPTAS]['id'] ) . "," . escape( $_SESSION[SLAPTAS]['username'] ) . ", " . escape( lang() ) . ")" );
 		$qid = mysql_query1( "SELECT `id` FROM `" . LENTELES_PRIESAGA . "poll_questions` WHERE `lang` = " . escape( lang() ) . " ORDER BY `id` DESC LIMIT 1", 3600 );
 		foreach ( $_POST['answers'] as $ans ) {
 			//echo $ans.'</br>';

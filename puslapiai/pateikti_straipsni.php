@@ -21,8 +21,8 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti' ) {
 		$komentaras  = 'taip';
 		$kategorija  = (int)$_POST['kategorija'];
 		$pavadinimas = strip_tags( $_POST['pav'] );
-		$autorius    = ( isset( $_SESSION['username'] ) ? $_SESSION['username'] : '-' );
-		$autoriusid  = ( isset( $_SESSION['id'] ) ? $_SESSION['id'] : 0 );
+		$autorius    = ( isset( $_SESSION[SLAPTAS]['username'] ) ? $_SESSION[SLAPTAS]['username'] : '-' );
+		$autoriusid  = ( isset( $_SESSION[SLAPTAS]['id'] ) ? $_SESSION[SLAPTAS]['id'] : 0 );
 		if ( empty( $apr ) || empty( $pavadinimas ) ) {
 			$error = "{$lang['admin']['article_emptyfield']}.";
 		}

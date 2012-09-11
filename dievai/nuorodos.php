@@ -209,7 +209,7 @@ if ( isset( $_GET['c'] ) ) {
 		if ( !preg_match( $pattern, $url ) ) {
 			klaida( $lang['system']['error'], "{$lang['admin']['links_bad']}" );
 		} else {
-			$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie`, `active`) VALUES (" . escape( $cat ) . ", " . escape( $url ) . ", " . escape( $pavadinimas ) . ", " . escape( $_SESSION['id'] ) . ", '" . time() . "', " . escape( $apie ) . ", " . escape( $active ) . ");" );
+			$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie`, `active`) VALUES (" . escape( $cat ) . ", " . escape( $url ) . ", " . escape( $pavadinimas ) . ", " . escape( $_SESSION[SLAPTAS]['id'] ) . ", '" . time() . "', " . escape( $apie ) . ", " . escape( $active ) . ");" );
 			if ( $result ) {
 				msg( $lang['system']['done'], "{$lang['admin']['links_created']}." );
 				redirect( url( "?id,{$_GET['id']};a,{$_GET['a']};v,{$_GET['v']}" ), 'meta' );

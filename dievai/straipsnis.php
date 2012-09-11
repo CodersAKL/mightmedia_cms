@@ -105,8 +105,8 @@ if ( isset( $url['t'] ) ) {
 	$kategorija  = (int)$_POST['kategorija'];
 	$pavadinimas = strip_tags( $_POST['pav'] );
 	$rodoma      = ( isset( $_POST['rodoma'] ) && $_POST['rodoma'] == 'TAIP' ? 'TAIP' : 'NE' );
-	$autorius    = $_SESSION['username'];
-	$autoriusid  = $_SESSION['id'];
+	$autorius    = $_SESSION[SLAPTAS]['username'];
+	$autoriusid  = $_SESSION[SLAPTAS]['id'];
 	if ( empty( $apr ) || empty( $pavadinimas ) ) {
 		$error = "{$lang['admin']['article_emptyfield']}.";
 	}

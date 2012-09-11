@@ -51,7 +51,7 @@ include_once ( "../priedai/prisijungimas.php" );
 			<div class='pavadinimas'>Admin</div>
 			<div class='vidus'>
 				<div class='text'>
-					<?php if ( !isset( $_SESSION['username'] ) ) { ?>
+					<?php if ( !isset( $_SESSION[SLAPTAS]['username'] ) ) { ?>
 					<form id="user_reg" name="user_reg" method="post" action="">
 						<div id="login" class="section">
 							<form name="loginform" id="loginform" action="panel.html" method="post">
@@ -67,7 +67,7 @@ include_once ( "../priedai/prisijungimas.php" );
 						</div>
 					</form>
 					<?php
-				} elseif ( isset( $_SESSION['level'] ) && $_SESSION['level'] == 1 ) {
+				} elseif ( isset( $_SESSION[SLAPTAS]['level'] ) && $_SESSION[SLAPTAS]['level'] == 1 ) {
 					redirect( 'main.php' );
 				}
 					?>

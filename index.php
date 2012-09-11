@@ -72,12 +72,12 @@ if ( isset( $pslid ) && isnum( $pslid ) && $pslid > 0 ) {
 }
 //Jei svetaine uzdaryta remontui ir jei jungiasi ne administratorius
 if ( $conf['Palaikymas'] == 1 ) {
-	if ( !isset( $_SESSION['id'] ) || $_SESSION['level'] != 1 ) {
+	if ( !isset( $_SESSION[SLAPTAS]['id'] ) || $_SESSION[SLAPTAS]['level'] != 1 ) {
 		redirect( "remontas.php" );
 	}
 }
 if ( !empty( $_GET['lang'] ) ) {
-	$_SESSION['lang'] = basename( $_GET['lang'], '.php' );
+	$_SESSION[SLAPTAS]['lang'] = basename( $_GET['lang'], '.php' );
 	redirect( url( "?id," . $_GET['id'] ) );
 }
 /*if (!empty($_SESSION['lang']) && is_file(ROOT . 'lang/' . basename($_SESSION['lang']) . '.php')) {
@@ -86,7 +86,7 @@ if ( !empty( $_GET['lang'] ) ) {
 
 include_once ( "priedai/header.php" );
 //Tikrinam ar setup.php failas paљalintas. Saugumo sumetimais
-if ( is_dir( 'install/' ) && $_SESSION['level'] == 1 && !@unlink( 'install/index.php' ) ) {
+if ( is_dir( 'install/' ) && $_SESSION[SLAPTAS]['level'] == 1 && !@unlink( 'install/index.php' ) ) {
 	die( '<h1>Demesio / Warning</h1><h3>Neištrintas install aplankalas.</h3> Tai saugumo spraga. Prašome pašalinkite šį aplankalą iš serverio arba pakeiskite jo pavadinimą. /Please, remove install folder from server.</h3>' );
 }
 include_once 'stiliai/' . $conf['Stilius'] . '/sfunkcijos.php';
@@ -101,7 +101,7 @@ $m2    = explode( " ", microtime() );
 $etime = $m2[1] + $m2[0];
 $ttime = ( $etime - $stime );
 $ttime = number_format( $ttime, 7 );
-if ( $_SESSION['level'] == 1 ) {
+if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
 	echo '<!-- Generated ' . apvalinti( $ttime, 2 ) . 's. -->';
 }
 ob_end_flush();

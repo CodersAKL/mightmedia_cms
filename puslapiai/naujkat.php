@@ -46,10 +46,10 @@ if ( isset( $info ) ) {
 }
 //Rodom naujienas esancias kategorijoj
 
-$sql = mysql_query1( "
+$sql = mysql_query1("
 			SELECT *, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/naujienos' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "naujienos`.`id`) AS `viso`
 			FROM `" . LENTELES_PRIESAGA . "naujienos`
-			WHERE `rodoma`= 'TAIP' AND `kategorija`=" . escape(=$k ) . "
+			WHERE `rodoma`= 'TAIP' AND `kategorija`=" . escape( $k ) . "
 			AND `lang` = " . escape( lang() ) . "
 			ORDER BY `sticky` DESC, `data` DESC
 			LIMIT {$p},{$limit}", 86400);
@@ -61,7 +61,7 @@ if ( $viso > 0 ) {
 		lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 	}
 	if ( $k >= 0 ) {
-		if ( teises( $sqlas['teises'], $_SESSION['level'] ) || LEVEL == 1 ) {
+		if ( teises( $sqlas['teises'], $_SESSION[SLAPTAS]['level'] ) || LEVEL == 1 ) {
 			foreach ( $sql as $row ) {
 				if ( isset( $conf['puslapiai']['naujienos.php']['id'] ) ) {
 
