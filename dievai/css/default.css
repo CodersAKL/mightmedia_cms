@@ -347,6 +347,7 @@ a {
 
 #controls {
     margin-top: -1px;
+	overflow: hidden;
 }
 
 #admin_lang, #admin_user, .admin_user {
