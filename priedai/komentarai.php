@@ -22,8 +22,23 @@ function komentarai( $id, $hide = FALSE ) {
 				include_once ( "priedai/class.php" );
 				$bla  = new forma();
 				$form = array(
-					"Form"                                       => array( "action" => "", "method" => "post", "name" => "n_kom" ),
-					$lang['guestbook']['name']                   => ( !isset( $_SESSION['id'] ) ? array( "type" => "text", "value" => ( isset( $_COOKIE['komentatorius'] ) ? $_COOKIE['komentatorius'] : "" ), "name" => "name" ) : array( "type" => "string", "value" => "<b>" . $_SESSION['username'] . "</b>" ) ),
+					"Form"                     => array( "action" => "", "method" => "post", "name" => "n_kom" ),
+					$lang['guestbook']['name'] => (
+						!isset( $_SESSION['username'] )
+							? array(
+								"type" => "text",
+								"value" => (
+									isset( $_COOKIE['komentatorius'] )
+										? $_COOKIE['komentatorius']
+										: ""
+								),
+								"name" => "name"
+							)
+							: array(
+							"type" => "string",
+							"value" => "<b>" . $_SESSION['username'] . "</b>"
+						)
+					),
 					"  \r\r\r\r\r"                               => array( "type" => "string", "value" => bbs( 'n_kom' ) ),
 					$lang['guestbook']['message']                => array( "type" => "textarea", "value" => "", "class" => "input", "name" => "n_kom", "extra" => "rows=\"5\" cols=\"3\"" ),
 					( !isset( $_SESSION['id'] ) ? kodas() : "" ) => ( !isset( $_SESSION['id'] ) ? array( "type" => "text", "value" => "", "name" => "code", "class" => "chapter" ) : "" ),
@@ -71,7 +86,7 @@ function komentarai( $id, $hide = FALSE ) {
 				if ( isset( $_SESSION['id'] ) ) {
 					mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai+1 WHERE nick=" . escape( $_SESSION['username'] ) . " AND `id` = " . escape( $_SESSION['id'] ) . "" );
 				} else if ( !isset( $_COOKIE['komentatorius'] ) || $_POST['name'] != $_COOKIE['komentatorius'] ) {
-					setcookie( "komentatorius", $_POST['name'], time() + 60 * 60 * 24 * 30 );
+					setcookie( "komentatorius", input( $_POST['name'] ), time() + 60 * 60 * 24 * 30 );
 				}
 
 				$nick_id = ( isset( $_SESSION['id'] ) ? $_SESSION['id'] : 0 );

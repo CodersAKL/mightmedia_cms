@@ -69,7 +69,7 @@ if ( empty( $_SESSION['username'] ) || $_SESSION['level'] != 1 ) {
 	redirect( ROOT . 'index.php' );
 }
 if ( isset( $_GET['do'] ) ) {
-	unset( $_SESSION['username'], $_SESSION['level'], $_SESSION['password'] );
+	unset( $_SESSION['username'], $_SESSION['level'], $_SESSION['password'], $_SESSION['id'] );
 	redirect( ROOT . 'index.php' );
 }
 $glob        = glob( '*.php' );
@@ -351,7 +351,7 @@ HTML;
 			<div class="fixed">
 
 				<div id="virslogo"></div>
-				<a href="#">
+				<a href="<?php echo adresas(); ?>">
 					<div id="admin_logo"></div>
 				</a>
 

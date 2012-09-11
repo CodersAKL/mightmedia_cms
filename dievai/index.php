@@ -30,7 +30,7 @@ include_once ( "../priedai/prisijungimas.php" );
 <body>
 <div id='plotis'>
 	<div id='kaire'>
-		<div class='skalpas'><a href='".adresas()."' title='".adresas()."'>
+		<div class='skalpas'><a href="<?php echo adresas(); ?>" title="<?php echo adresas(); ?>">
 			<div class='logo'></div>
 		</a>
 		</div>
