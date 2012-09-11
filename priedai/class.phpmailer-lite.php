@@ -1869,40 +1869,21 @@ class PHPMailerLite
 	 * @access public
 	 * @return $message
 	 */
-	public function MsgHTML( $message, $basedir = '' ) {
 
-		preg_match_all( "/(src|background)=\"(.*)\"/Ui", $message, $images );
-		if ( isset( $images[2] ) ) {
-			foreach ( $images[2] as $i => $url ) {
-				// do not change urls for absolute images (thanks to corvuscorax)
-				if ( !preg_match( '#^[A-z]+://#', $url ) ) {
-					$filename  = basename( $url );
-					$directory = dirname( $url );
-					( $directory == '.' ) ? $directory = '' : '';
-					$cid      = 'cid:' . md5( $filename );
-					$ext      = pathinfo( $filename, PATHINFO_EXTENSION );
-					$mimeType = self::_mime_types( $ext );
-					if ( strlen( $basedir ) > 1 && substr( $basedir, -1 ) != '/' ) {
-						$basedir .= '/';
-					}
-					if ( strlen( $directory ) > 1 && substr( $directory, -1 ) != '/' ) {
-						$directory .= '/';
-					}
-					if ( $this->AddEmbeddedImage( $basedir . $directory . $filename, md5( $filename ), $filename, 'base64', $mimeType ) ) {
-						$message = preg_replace( "/" . $images[1][$i] . "=\"" . preg_quote( $url, '/' ) . "\"/Ui", $images[1][$i] . "=\"" . $cid . "\"", $message );
-					}
-				}
-			}
-		}
+	public function MsgHTML( $message ) {
+
+		//public function MsgHTML( $pavadinimas, $tekstas, $nuoroda_i_naujiena, $nuoroda_atsisakyti) {
+		//global $lang, $conf;
+		/*$message = "<div class='pavadinimas'>{$pavadinimas}</div>
+			<div class='text'>{$tekstas}</div>
+			<a href='{$nuoroda_i_naujiena}' target='_blank' title='{$lang['news']['read']}'>{$lang['news']['read']}</a>
+			<a href='{$nuoroda_atsisakyti}' target='_blank' title='{$lang['news']['unorder']}'>{$lang['news']['unorder']}</a>";*/
+		//require_once( ROOT . 'stiliai/'.$conf['Stilius'].'/naujienlaiskiui.php' );
+		//naujienlaiskis( $pavadinimas, $tekstas, $nuoroda_i_naujiena, $nuoroda_atsisakyti );
 		$this->IsHTML( TRUE );
+
 		$this->Body = $message;
-		$textMsg    = trim( strip_tags( preg_replace( '/<(head|title|style|script)[^>]*>.*?<\/\\1>/s', '', $message ) ) );
-		if ( !empty( $textMsg ) && empty( $this->AltBody ) ) {
-			$this->AltBody = html_entity_decode( $textMsg );
-		}
-		if ( empty( $this->AltBody ) ) {
-			$this->AltBody = 'To view this email message, open it in a program that understands HTML!' . "\n\n";
-		}
+
 	}
 
 	/**

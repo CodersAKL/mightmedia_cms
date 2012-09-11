@@ -129,17 +129,15 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 		$result    = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, rodoma, kategorija, lang, sticky) VALUES (" . escape( $pavadinimas ) . ", " . escape( $izanga ) . ", " . escape( $placiau ) . ",  '" . time() . "', '" . $_SESSION['username'] . "', " . escape( $komentaras ) . ", " . escape( $rodymas ) . ", " . escape( $kategorija ) . ",  " . escape( lang() ) . ", " . escape( $sticky ) . ")" );
 		$last_news = mysql_query1( "SELECT `id` FROM `" . LENTELES_PRIESAGA . "naujienos` ORDER BY `id` DESC LIMIT 1" );
 		if ( isset( $_POST['letter'] ) ) {
-
-			//TODO:Reikalingi email templeytai
 			require_once( ROOT . 'priedai/class.phpmailer-lite.php' );
-			include( ROOT . 'stiliai/' . $conf['Stilius'] . '/sfunkcijos.php' );
 			$mail = new PHPMailerLite();
 			$mail->IsMail();
 			$mail->CharSet  = 'UTF-8';
 			$mail->SingleTo = TRUE;
-			$nuoroda_sk     = "" . url( "?id,{$conf['puslapiai']['naujienos.php']['id']};k,{$last_news['id']}" ) . "";
-			$nuoroda_atsis  = "" . url( "?id," . $conf['puslapiai']['naujienlaiskiai.php']['id'] ) . "";
-			$body           = naujienlaiskis( $pavadinimas, $izanga, $nuoroda_sk, $nuoroda_atsis );
+			$nuoroda_i_naujiena     = "" . url( "?id,{$conf['puslapiai']['naujienos.php']['id']};k,{$last_news['id']}" ) . "";
+			$nuoroda_atsisakyti  = "" . url( "?id," . $conf['puslapiai']['naujienlaiskiai.php']['id'] ) . "";
+			include_once( ROOT . 'stiliai/'.$conf['Stilius'].'/naujienlaiskiui.php' );
+			$body           = "".$naujienlaiskis;
 			$mail->SetFrom( $admin_email, $conf['Pavadinimas'] );
 			$mail->Subject = strip_tags( $conf['Pavadinimas'] ) . " " . $pavadinimas;
 			$mail->MsgHTML( $body );

@@ -1,14 +1,4 @@
 <?php
-//Atvaizduojame naujienlaiškio stilių
-function naujienlaiskis( $pavadinimas, $tekstas, $nuoroda_i_naujiena, $nuoroda_atsisakyti ) {
-
-	global $conf, $lang;
-	echo "<div class='pavadinimas'>{$pavadinimas}</div>
-    <div class='text'>{$tekstas}</div>
-    <a href='{$nuoroda_i_naujiena}' target='_blank' title='{$lang['news']['read']}'>{$lang['news']['read']}</a>
-    <a href='{$nuoroda_atsisakyti}' target='_blank' title='{$lang['news']['unorder']}'>{$lang['news']['unorder']}</a>";
-}
-
 //Atvaizduojame remonto pranešimą
 function remontas( $pavadinimas, $tekstas ) {
 
