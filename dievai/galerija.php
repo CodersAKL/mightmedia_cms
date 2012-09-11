@@ -456,13 +456,11 @@ $(document).ready(function() {
 		foreach ( $kategorijos as $id => $kategorija ) {
 			$text .= "<option value=\"$id\" " . ( $id == 0 ? "selected" : "" ) . ">$kategorija";
 		}
-		$text .= "</select></fieldset>
-            
-
-
-<div id=\"fileQueue\"></div>
-<input type=\"file\" name=\"uploadify\" id=\"uploadify\" />
-<p><a href=\"javascript:jQuery('#uploadify').uploadifyClearQueue()\">" . $lang['admin']['cancel'] . "</a></p>";
+		$text .= "</select>
+			<div id=\"fileQueue\"></div>
+			<input type=\"file\" name=\"uploadify\" id=\"uploadify\" />
+			<p><a href=\"javascript:jQuery('#uploadify').uploadifyClearQueue()\">" . $lang['admin']['cancel'] . "</a></p>
+		</fieldset>";
 		lentele( $lang['admin']['gallery_group_add'], $text );
 	}
 

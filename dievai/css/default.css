@@ -68,14 +68,9 @@ textarea {
 input[type="submit"], .submit, button {
     width: auto;
     background: #E6E6E6;
-    border-bottom: 1px solid #666;
-    border-right: 1px solid #666;
-    border-left: 1px solid #ccc;
-    border-top: 1px solid #ccc;
-    color: #555555;
-    padding: 4px;
-    padding-left: 6px;
-    padding-right: 6px;
+	border: 1px solid #ccc; border-right-color: #666; border-bottom-color: #666;
+	color: #555555;
+	padding: 4px 6px;
 }
 
 a {
@@ -102,9 +97,7 @@ a {
     vertical-align: middle;
     border: 1px solid #999;
     background: #FFFFFF url(../images/hover.png) repeat-x;
-    padding: 2px;
-    padding-left: 7px;
-    padding-right: 7px;
+	padding: 2px 7px;
 }
 
 .puslapiavimas .nuoroda:hover {
@@ -118,9 +111,7 @@ a {
     vertical-align: middle;
     font-weight: bold;
     background: #d9d9d9;
-    padding: 2px;
-    padding-left: 7px;
-    padding-right: 7px;
+	padding: 2px 7px;
 }
 
 /* Galerijai */
@@ -173,17 +164,14 @@ a {
 
 /*message*/
 .msg {
-    background-color: #FFFFCC;
-    border: 1px solid #FFCC99;
+	border: 1px solid #FFCC99;
     color: #FF770A;
     display: block;
     padding: 3px;
     margin-right: 20px;
     margin-left: 10px;
-    background-image: url('../images/icons/check.png');
-    background-repeat: no-repeat;
-    background-position: 98% 48%;
-    overflow: hidden;
+	background: #FFFFCC url('../images/icons/check.png') no-repeat 98% 48%;
+	overflow: hidden;
     z-index: 999;
 
 }
@@ -268,9 +256,8 @@ a {
     width: 124px;
     padding: 4px;
     border: 0;
-    margin: 3px;
-    margin-left: 10px;
-    height: 25px;
+	margin: 3px 3px 3px 10px;
+	height: 25px;
 }
 
 #left .nav ul li img {
@@ -284,7 +271,7 @@ a {
     color: #666;
     font-size: 15px;
     font-weight: bold;
-    font-family: Arial;
+    font-family: Arial,serif;
     text-decoration: none;
     padding: 8px 1px 8px 19px;
     min-width: 141px;
@@ -309,8 +296,7 @@ a {
 }
 
 #left .nav ul li ul {
-    margin-left: 10px;
-    margin: 5px;
+	margin: 5px;
 }
 
 #left .nav ul li ul li {
@@ -331,7 +317,7 @@ a {
 
 #left ul li.active ul a {
     border: 0;
-    text-transform: uppercase;
+    text-transform: none;
     font-weight: normal;
     font-size: 12px;
 }

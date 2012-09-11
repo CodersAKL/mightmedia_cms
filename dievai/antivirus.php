@@ -1,6 +1,4 @@
 <?php
-ini_set( 'error_reporting', E_ALL );
-ini_set( 'display_errors', 'On' );
 //                  _                   _   _     _
 //             _ __| |_  _ __  __ _ _ _| |_(_)_ _(_)_ _ _  _ ___
 //            | '_ \ ' \| '_ \/ _` | ' \  _| \ V / | '_| || (_-<
@@ -30,10 +28,9 @@ ini_set( 'display_errors', 'On' );
 // the number of files inside this directory - if it is too
 // large it may fail.
 // Default: Document root defined in Apache
-$CONFIG               = Array();
+$CONFIG = Array();
 $CONFIG['extensions'] = Array();
 $CONFIG['scanpath']   = realpath( dirname( __file__ ) . '/../' );
-//die($CONFIG['scanpath']);
 // SCANABLE FILES
 // --------------
 // The next few lines tell PHP AntiVirus what files to scan
@@ -65,8 +62,6 @@ $filecount = 0;
 $infected  = 0;
 $debug     = $CONFIG['debug'];
 // load virus defs from flat file
-//if (!check_defs(ROOT.'virus.def'))
-//	trigger_error(ROOT."Virus.def vulnerable to overwrite, please change permissions", E_USER_ERROR);
 $defs = load_defs( ROOT . 'virus.def', $debug );
 // scan specified root for specified defs
 $report .= '<div style="width:100%; height:400px; overflow:auto;">';
@@ -95,12 +90,11 @@ function file_scan( $folder, $defs, $debug ) {
 			$isdir = is_dir( $folder . '/' . $entry );
 			if ( !$isdir and $entry != '.' and $entry != '..' and $entry != '.svn' ) {
 				virus_check( $folder . '/' . $entry, $defs, $debug );
-			} elseif ( $isdir  and $entry != '.' and $entry != '..' and $entry != '.svn' ) {
+			} elseif ( $isdir && !in_array( $entry, array( '.', '..', '.svn', '.idea' ) ) ) {
 				file_scan( $folder . '/' . $entry, $defs, $debug );
 			}
 		}
 		$d->close();
-
 	}
 }
 
@@ -149,17 +143,8 @@ function load_defs( $file, $debug ) {
 	if ( $debug ) {
 		echo '<p>Loaded ' . sizeof( $defs ) . ' virus definitions</p>';
 	}
+
 	return $defs;
 }
 
-/*
-function check_defs($file) {
-	// check for >755 perms on virus defs
-	clearstatcache();
-	$perms = substr(decoct(fileperms($file)),-2);
-	if ($perms > 55)
-		return false;
-	else
-		return true;
-}*/
 ?>
