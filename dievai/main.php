@@ -402,8 +402,10 @@ HTML;
 					<?php echo $lang['admin']['user_lastvisit']; ?>: <b><?php echo date( 'H:i:s' ); ?></b>
 				</div>
                 <div class="admin_user down">
-					<a href="<?php echo url( '?id,999;do,logout' );?>" title="<?php echo $lang['user']['logout']; ?>"><img src="images/icons/logout.png" alt="off" /></a>
-					<?php echo $_SESSION['username']; ?>
+					<a href="<?php echo url( '?id,999;do,logout' );?>" title="<?php echo $lang['user']['logout']; ?>">
+						<img src="images/icons/logout.png" alt="off" />
+						<?php echo $_SESSION['username']; ?>
+					</a>
 				</div>
 				<div id="admin_lang" class="down"><?php echo $language; ?></div>
 			</div>

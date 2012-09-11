@@ -356,9 +356,15 @@ a {
     float: right;
     cursor: pointer;
     height: 20px;
-    padding: 3px 10px 3px 10px;
+	padding: 8px 10px 3px;
     font-size: 12px;
     margin: 0 10px 0;
+}
+div#controls div.admin_user a {
+	text-decoration: none;
+}
+div#controls div.admin_user a img {
+	vertical-align: middle;
 }
 
 #admin_lang {
