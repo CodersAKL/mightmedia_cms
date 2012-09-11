@@ -49,8 +49,8 @@ if ( isset( $_SESSION[SLAPTAS]['username'] ) && isset( $_SESSION[SLAPTAS]['passw
 		logout();
 	}
 //jeigu yra sausainis bandom jungtis naudojant ji
-} elseif ( isset( $_COOKIE['user'] ) && !empty( $_COOKIE['user'] ) ) {
-	$user_id = explode( ".", $_COOKIE['user'], 2 );
+} elseif ( isset( $_COOKIE[SLAPTAS]['user'] ) && !empty( $_COOKIE[SLAPTAS]['user'] ) ) {
+	$user_id = explode( ".", $_COOKIE[SLAPTAS]['user'], 2 );
 	if ( isnum( $user_id['0'] ) ) {
 		$user_pass = $user_id['1'];
 		$user_id   = $user_id['0'];
