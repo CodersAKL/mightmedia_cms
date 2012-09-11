@@ -154,13 +154,16 @@ HTML;
  * @return string formated html
  */
 function avatar( $mail, $size = 80 ) {
-
 	global $conf;
 	if ( file_exists( ROOT . 'images/avatars/' . md5( $mail ) . '.jpeg' ) ) {
 		$result = '<img src="' . ROOT . 'images/avatars/' . md5( $mail ) . '.jpeg?' . time() . '" width="' . $size . '" height="' . $size . '" alt="avataras" />';
 	} else {
-		$avatardir = ( file_exists( 'stiliai/' . $conf['Stilius'] . '/no_avatar.png' ) ? 'stiliai/' . $conf['Stilius'] . '/no_avatar.png' : 'images/avatars/no_avatar.png' );
-		$result    = '<img src="http://www.gravatar.com/avatar/' . md5( strtolower( $mail ) ) . '?s=' . htmlentities( $size . '&r=any&default=' . urlencode( adresas() . ROOT . $avatardir ) . '&time=' . time() ) . '"  width="' . $size . '" alt="avataras" />';
+		$avatardir = (
+		file_exists( ROOT . 'stiliai/' . $conf['Stilius'] . '/no_avatar.png' )
+			? 'stiliai/' . $conf['Stilius'] . '/no_avatar.png'
+			: 'images/avatars/no_avatar.png'
+		);
+		$result    = '<img src="http://www.gravatar.com/avatar/' . md5( strtolower( $mail ) ) . '?s=' . htmlentities( $size . '&r=any&default=' . urlencode( adresas() . $avatardir ) . '&time=' . time() ) . '"  width="' . $size . '" alt="avataras" />';
 	}
 
 	return $result;
