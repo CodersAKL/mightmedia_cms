@@ -398,10 +398,10 @@ HTML;
 		<div id="right">
 
 			<div id="controls">
-				<div id="admin_user" class="down">
+                <div class="admin_user down">
 					<?php echo $lang['admin']['user_lastvisit']; ?>: <b><?php echo date( 'H:i:s' ); ?></b>
 				</div>
-				<div id="admin_user" class="down">
+                <div class="admin_user down">
 					<a href="<?php echo url( '?id,999;do,logout' );?>" title="<?php echo $lang['user']['logout']; ?>"><img src="images/icons/logout.png" alt="off" /></a>
 					<?php echo $_SESSION['username']; ?>
 				</div>
@@ -424,7 +424,7 @@ HTML;
 				<script type="text/javascript">
 					$.getJSON('<?php echo $update_url; ?>');
 					function versija(data) {
-						if (<?php echo versija();?> < (data.version)){
+						if ( parseInt('<?php echo versija();?>') < parseInt( data.version ) ){
 							$('#version_check').attr('class', 'msg');
 							$('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><strong>' + data.title + '</strong> ' + '' + data.version + ' - ' + '' + data.about + ' ' + (data.log ? '<span id="news" title="' + data.log + '">[info]</span>' : '') + (data.url ? ' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>' : ''));
 						}

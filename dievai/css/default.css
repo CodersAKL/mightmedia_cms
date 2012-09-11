@@ -363,7 +363,7 @@ a {
     margin-top: -1px;
 }
 
-#admin_lang, #admin_user {
+#admin_lang, #admin_user, .admin_user {
     border-bottom: 1px solid #F06B09;
     border-left: 1px solid #F06B09;
     border-right: 1px solid #F06B09;

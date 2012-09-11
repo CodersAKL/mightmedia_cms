@@ -32,7 +32,7 @@ $buttons = "<div class=\"btns\"><a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['
 </div>";
 
 lentele( $lang['admin']['naujienos'], $buttons );
-include_once ( ROOT . "priedai/kategorijos.php" );
+include_once ROOT . "priedai/kategorijos.php";
 kategorija( "naujienos", TRUE );
 $sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `path`=0 AND `lang` = " . escape( lang() ) . " ORDER BY `id` DESC" );
 if ( sizeof( $sql ) > 0 ) {
@@ -129,18 +129,20 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 		$result    = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, rodoma, kategorija, lang, sticky) VALUES (" . escape( $pavadinimas ) . ", " . escape( $izanga ) . ", " . escape( $placiau ) . ",  '" . time() . "', '" . $_SESSION['username'] . "', " . escape( $komentaras ) . ", " . escape( $rodymas ) . ", " . escape( $kategorija ) . ",  " . escape( lang() ) . ", " . escape( $sticky ) . ")" );
 		$last_news = mysql_query1( "SELECT `id` FROM `" . LENTELES_PRIESAGA . "naujienos` ORDER BY `id` DESC LIMIT 1" );
 		if ( isset( $_POST['letter'] ) ) {
-			require_once( ROOT . 'priedai/class.phpmailer-lite.php' );
+
+			require_once ROOT . 'priedai/class.phpmailer-lite.php';
+			include_once ROOT . 'stiliai/' . $conf['Stilius'] . '/sfunkcijos.php';
+			include_once ROOT . 'stiliai/' . $conf['Stilius'] . '/naujienlaiskiui.php';
+
 			$mail = new PHPMailerLite();
 			$mail->IsMail();
 			$mail->CharSet  = 'UTF-8';
 			$mail->SingleTo = TRUE;
 			$nuoroda_i_naujiena     = "" . url( "?id,{$conf['puslapiai']['naujienos.php']['id']};k,{$last_news['id']}" ) . "";
 			$nuoroda_atsisakyti  = "" . url( "?id," . $conf['puslapiai']['naujienlaiskiai.php']['id'] ) . "";
-			include_once( ROOT . 'stiliai/'.$conf['Stilius'].'/naujienlaiskiui.php' );
-			$body           = "".$naujienlaiskis;
 			$mail->SetFrom( $admin_email, $conf['Pavadinimas'] );
 			$mail->Subject = strip_tags( $conf['Pavadinimas'] ) . " " . $pavadinimas;
-			$mail->MsgHTML( $body );
+			$mail->MsgHTML( $naujienlaiskis );
 			$sql = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "newsgetters`" );
 			foreach ( $sql as $row ) {
 				if ( $mail->ValidateAddress( $row['email'] ) ) {
@@ -155,7 +157,6 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 			}
 		}
 
-
 		if ( $result ) {
 			msg( $lang['system']['done'], $lang['admin']['news_created'] );
 		} else {
@@ -165,19 +166,18 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 		klaida( $lang['system']['error'], $error );
 	}
 
-
 	unset( $naujiena, $placiau, $rodymas, $komentaras, $pavadinimas, $result, $error, $_POST['action'] );
 	redirect( url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ), "meta" );
 }
 
 //print_r($sql_news);
 if ( isset( $_GET['v'] ) ) {
-	include_once ( ROOT . "priedai/class.php" );
+	include_once ROOT . 'priedai/class.php';
 	$bla = new forma();
 
 	if ( $_GET['v'] == 4 ) {
 		///FILTRAVIMAS
-		$viso     = kiek( "naujienos", "WHERE `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . "" );
+		$viso     = kiek( 'naujienos', "WHERE `rodoma`='TAIP' AND `lang` = " . escape( lang() ) );
 		$sql_news = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "naujienos` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pavadinimas'] ) ? "AND (`pavadinimas` LIKE " . escape( "%" . $_POST['pavadinimas'] . "%" ) . " " . ( !empty( $_POST['data'] ) ? " AND `data` <= " . strtotime( $_POST['data'] ) . "" : "" ) . " " . ( !empty( $_POST['naujiena'] ) ? " AND `naujiena` LIKE " . escape( "%" . $_POST['naujiena'] . "%" ) . "" : "" ) . ")" : "" ) . " AND rodoma='TAIP' ORDER BY sticky DESC, id DESC LIMIT {$p},{$limit}" );
 
 		if ( count( $sql_news ) > 0 ) {
@@ -189,23 +189,23 @@ if ( isset( $_GET['v'] ) ) {
 				$val = array( "", "", "" );
 			}
 			$info[] = array(
-				"#"                         => "<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('newsch');\" />",
-				$lang['admin']['news_name'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pavadinimas\" />",
-				$lang['admin']['news_date'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"data\" />",
-				$lang['admin']['news_more'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"naujiena\" />",
-				$lang['admin']['action']    => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />"
+				"#"                         => '<input type="checkbox" name="visi" onclick="checkedAll(\'newsch\');" />',
+				$lang['admin']['news_name'] => '<input class="filtrui" type="text" value="' . $val[0] . '" name="pavadinimas" />',
+				$lang['admin']['news_date'] => '<input class="filtrui" type="text" value="' . $val[1] . '" name="data" />',
+				$lang['admin']['news_more'] => '<input class="filtrui" type="text" value="' . $val[2] .'" name="naujiena" />',
+				$lang['admin']['action']    => '<input type="submit" value="' . $lang['admin']['filtering']. '" name="" />'
 			);
 			//FILTRAVIMAS
 			foreach ( $sql_news as $row ) {
 				$info[] = array(
-					"#"                                                                           => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"news_delete[]\" />",
-					$lang['admin']['news_name']                                                   => '<span style="cursor:pointer;" title="<b>' . $row['pavadinimas'] . '</b><br />' . $lang['admin']['news_author'] . ': <b>' . $row['autorius'] . '</b>">' . trimlink( strip_tags( $row['pavadinimas'] ), 55 ) . '<span/></a>',
-					$lang['admin']['news_date']                                                   => date( 'Y-m-d', $row['data'] ),
-					$lang['admin']['news_more']                                                   => trimlink( strip_tags( $row['naujiena'] ), 55 ),
-					$lang['admin']['action']                                                      => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "images/icons/cross.png\" border=\"0\"></a>"
+					"#"                         => '<input type="checkbox" value="' . $row['id'] . '" name="news_delete[]" />',
+					$lang['admin']['news_name'] => '<span style="cursor:pointer;" title="<b>' . $row['pavadinimas'] . '</b><br />' . $lang['admin']['news_author'] . ': <b>' . $row['autorius'] . '</b>">' . trimlink( strip_tags( $row['pavadinimas'] ), 55 ) . '<span/></a>',
+					$lang['admin']['news_date'] => date( 'Y-m-d', $row['data'] ),
+					$lang['admin']['news_more'] => trimlink( strip_tags( $row['naujiena'] ), 55 ),
+					$lang['admin']['action']    => '<a href="' . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . '" title="' . $lang['admin']['edit'] . '"><img src="' . ROOT . 'images/icons/pencil.png" border="0"></a> <a href="' . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . '" title="' . $lang['admin']['delete'] . '" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="' . ROOT . 'images/icons/cross.png" border="0"></a>'
 				);
 			}
-			lentele( $lang['admin']['edit'], "<form id=\"newsch\" method=\"post\">" . $table->render( $info ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
+			lentele( $lang['admin']['edit'], '<form id="newsch" method="post">' . $table->render( $info ) . '<input type="submit" value="' . $lang['system']['delete'] . '" /></form>' );
 
 			if ( $viso > $limit ) {
 				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
@@ -218,32 +218,32 @@ if ( isset( $_GET['v'] ) ) {
 		$kom      = array( 'taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no'] );
 		$rodoma   = array( 'TAIP' => $lang['admin']['yes'], 'NE' => $lang['admin']['no'] );
 		$naujiena = array(
-			"Form"                                                                          => array(
+			"Form" => array(
 				"action" => url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . "" ),
 				"method" => "post",
 				"name"   => "reg"
 			),
-			$lang['admin']['news_name']                                                     => array(
+			$lang['admin']['news_name'] => array(
 				"type"  => "text",
 				"value" => input( ( isset( $extra ) ) ? $extra['pavadinimas'] : '' ),
 				"name"  => "pav",
 				"class" => "input"
 			),
-			$lang['admin']['komentarai']                                                    => array(
+			$lang['admin']['komentarai'] => array(
 				"type"     => "select",
 				"selected" => input( ( isset( $extra ) ) ? $extra['kom'] : '' ),
 				"value"    => $kom,
 				"name"     => "kom",
 				"class"    => "input"
 			),
-			$lang['admin']['article_shown']                                                 => array(
+			$lang['admin']['article_shown'] => array(
 				"type"     => "select",
 				"selected" => input( ( isset( $extra ) ) ? $extra['rodoma'] : '' ),
 				"value"    => $rodoma,
 				"name"     => "rodoma",
 				"class"    => "input"
 			),
-			$lang['admin']['news_category']                                                 => array(
+			$lang['admin']['news_category'] => array(
 				"type"     => "select",
 				"value"    => $kategorijos,
 				"name"     => "kategorija",
@@ -253,15 +253,26 @@ if ( isset( $_GET['v'] ) ) {
 			//more
 			"<a href=\"javascript:rodyk('more')\">{$lang['admin']['news_moreoptions']}</a>" => array(
 				"type"  => "string",
-				"value" => "<div id=\"more\" style=\"display: none;\">
-			" . ( ( !isset( $extra ) && isset( $conf['puslapiai']['naujienlaiskiai.php']['id'] ) ) ? $lang['news']['newsletter?'] . " <input type=\"checkbox\" name=\"letter\" /><br />" : '' ) . "
-			" . $lang['admin']['news_sticky'] . " <input type=\"checkbox\" name=\"sticky\" " . ( ( isset( $extra ) && $extra['sticky'] == 1 ) ? 'checked' : '' ) . " /></div>"
+				"value" => '<div id="more" style="display: none;">
+				' . ( ( !isset( $extra ) && isset( $conf['puslapiai']['naujienlaiskiai.php']['id'] ) ) ? $lang['news']['newsletter?'] . " <input type=\"checkbox\" name=\"letter\" /><br />" : '' ) . "
+				" . $lang['admin']['news_sticky'] . ' <input type="checkbox" name="sticky" ' . ( ( isset( $extra ) && $extra['sticky'] == 1 ) ? 'checked' : '' ) . ' /></div>'
 			),
 
-			$lang['admin']['news_text']                                                     => array( "type"  => "string",
-			                                                                                          "value" => editor( 'jquery', 'standartinis', array( 'naujiena' => $lang['admin']['news_preface'] ), array( 'naujiena' => ( isset( $extra ) ? $extra['naujiena'] . ( empty( $extra['daugiau'] ) ? '' : "\n===page===\n" . $extra['daugiau'] ) : $lang['admin']['news_preface'] ) ) )
+			$lang['admin']['news_text'] => array(
+				"type"  => "string",
+			    "value" => editor(
+					'jquery',
+					'standartinis',
+					array( 'naujiena' => $lang['admin']['news_preface'] ),
+					array( 'naujiena' => (
+						isset( $extra )
+							? $extra['naujiena'] . ( empty( $extra['daugiau'] ) ? ''
+							: "\n===page===\n" . $extra['daugiau'] ) : $lang['admin']['news_preface']
+						)
+					)
+				)
 			),
-			( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['news_create']    => array(
+			( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['news_create'] => array(
 				"type"  => "submit",
 				"name"  => "action",
 				"value" => ( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['news_create']
@@ -283,7 +294,7 @@ if ( isset( $_GET['v'] ) ) {
 		$q    = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "naujienos` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pavadinimas'] ) ? "AND (`pavadinimas` LIKE " . escape( "%" . $_POST['pavadinimas'] . "%" ) . " " . ( !empty( $_POST['data'] ) ? " AND `data` <= " . strtotime( $_POST['data'] ) . "" : "" ) . " " . ( !empty( $_POST['naujiena'] ) ? " AND `naujiena` LIKE " . escape( "%" . $_POST['naujiena'] . "%" ) . "" : "" ) . ")" : "" ) . " AND rodoma='NE' ORDER BY sticky DESC, id DESC LIMIT {$p},{$limit}" );
 		//
 		if ( sizeof( $q ) > 0 ) {
-			include_once ( ROOT . "priedai/class.php" );
+			include_once ROOT . "priedai/class.php";
 			$bla  = new Table();
 			$info = array();
 			//
