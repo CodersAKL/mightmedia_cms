@@ -91,7 +91,7 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 
 		$pavadinimas = input( $_POST['Pavadinimas'] );
 		$aprasymas   = $_POST['Aprasymas'];
-		if ( $kieno = 'galerija' ) {
+		if ( $kieno == 'galerija' ) {
 			$pav = basename( 'no_picture.png' );
 		} else {
 			$pav = basename( $_POST['Pav'] );
@@ -137,7 +137,7 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 
 		$pavadinimas = $_POST['Pavadinimas'];
 		$aprasymas   = $_POST['Aprasymas'];
-		if ( $kieno = 'galerija' ) {
+		if ( $kieno == 'galerija' ) {
 			$pav = strip_tags( 'no_picture.png' );
 		} else {
 			$pav = strip_tags( $_POST['Pav'] );
