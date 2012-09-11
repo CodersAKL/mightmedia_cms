@@ -126,7 +126,7 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 		$error = $lang['admin']['news_required'];
 	}
 	if ( !isset( $error ) ) {
-		$result    = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, rodoma, kategorija, rodoma, lang, sticky) VALUES (" . escape( $pavadinimas ) . ", " . escape( $izanga ) . ", " . escape( $placiau ) . ",  '" . time() . "', '" . $_SESSION['username'] . "', " . escape( $komentaras ) . ", " . escape( $rodymas ) . ", " . escape( $kategorija ) . ", 'TAIP', " . escape( lang() ) . ", " . escape( $sticky ) . ")" );
+		$result    = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, rodoma, kategorija, lang, sticky) VALUES (" . escape( $pavadinimas ) . ", " . escape( $izanga ) . ", " . escape( $placiau ) . ",  '" . time() . "', '" . $_SESSION['username'] . "', " . escape( $komentaras ) . ", " . escape( $rodymas ) . ", " . escape( $kategorija ) . ",  " . escape( lang() ) . ", " . escape( $sticky ) . ")" );
 		$last_news = mysql_query1( "SELECT `id` FROM `" . LENTELES_PRIESAGA . "naujienos` ORDER BY `id` DESC LIMIT 1" );
 		if ( isset( $_POST['letter'] ) ) {
 
