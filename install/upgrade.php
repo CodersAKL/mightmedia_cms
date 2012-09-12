@@ -194,7 +194,7 @@ if ( isset( $sesiono_aidi ) && $sesiono_aidi == 1 ) {
 		<div class='text'>
 			<ul>
 				<?php
-				$menu_pavad = array( 1 => "Failų tikrinimas", 2 => "Duomenų bazės atnaujinimas", 3 => "conf.php keitimas", 4 => "Pabaiga" );
+				$menu_pavad = array( 1 => "Failų tikrinimas", 2 => "Duomenų bazės atnaujinimas", 3 => "Failų keitimas", 4 => "Pabaiga" );
 				foreach ( $menu_pavad as $key => $value ) {
 					if ( $key <= $step ) {
 						echo "\t\t\t<li><img src=\"" . ROOT . "images/icons/tick_circle.png\" style=\"vertical-align: middle;\" /><font color=\"green\"><b>" . $value . "</b></font></li>";
@@ -261,6 +261,7 @@ if ( isset( $sesiono_aidi ) && $sesiono_aidi == 1 ) {
 					$file_error = 'Y';
 				}
 				echo "
+<tr class=\"tr\"><td class=\"td2\"><h2>Dėmesio, nepamirškite visų blokų iš 'paneles' direktorijos perkelti į 'blokai' direktoriją </h2></td></tr>
 <tr class=\"tr\">
 <td>" . $file . "</td>
 <td>" . ( !file_exists( $file ) ? "<img src=\"" . ROOT . "images/icons/tick.png\" />" : "<img src=\"" . ROOT . "images/icons/cross.png\" />" ) . "</td>
@@ -306,7 +307,7 @@ Norėdami atnaujinti lenteles, spauskite mygtuką, esantį žemiau.
 // HTML DALIS - TVS administratoriaus sukūrimas
 	if ( $step == 3 ) {
 		?>
-		<div class='pavadinimas'>conf.php failo keitimas</div>
+		<div class='pavadinimas'>Failų keitimas</div>
 <div class='vidus'>
 <div class='text'>
 Atlikite žemiau nurodytus pakeitimus <i>priedai/conf.php</i> faile.
@@ -317,14 +318,8 @@ Atlikite žemiau nurodytus pakeitimus <i>priedai/conf.php</i> faile.
 		ikoną, ji atlikta neteisingai. <br />
 		<hr />
 		<br />
+		<h2>priedai/conf.php failo keitimas</h2>
 		<div class="tr">
-			<img src="<?php echo ( isset( $update_url ) ? "" . ROOT . "images/icons/tick.png" : "" . ROOT . "images/icons/cross.png" ); ?>" />
-			priedai/conf.php faile, prieš
-			<input type="text" value='$prisijungimas_prie_mysql = mysql_connect($host, $user, $pass)' />
-			įklijuokite šį kodą
-			<input type="text" value='$update_url = "http://www.assembla.com/code/mightmedia/subversion/node/blob/naujienos.json?jsoncallback=?";' />
-		</div>
-		<div class="tr2">
 			<img src="<?php $amslpts = SLAPTAS; echo ( isset( $amslpts ) ? "" . ROOT . "images/icons/tick.png" : "" . ROOT . "images/icons/cross.png" ); ?>" />
 			Prieš
 			<input type="text" value='//Admin paneles vartotojas ir slaptazodis' />
@@ -338,10 +333,28 @@ Atlikite žemiau nurodytus pakeitimus <i>priedai/conf.php</i> faile.
 			įklijuokite šį kodą
 			<input type="text" value='require_once (realpath(dirname(__file__)) . &#039;/../lang/&#039; . (empty($_SESSION[SLAPTAS][&#039;lang&#039;])?basename($conf[&#039;kalba&#039;],&#039;.php&#039;):$_SESSION[SLAPTAS][&#039;lang&#039;]). &#039;.php &#039;);' />
 		</div>
+
+		<h2>stiliai/<?php echo $conf['Stilius'];?>/index.php failo keitimas</h2>
 		<div class="tr">
-			<img src="<?php echo ( !function_exists( 'lentele' ) ? "" . ROOT . "images/icons/tick.png" : "" . ROOT . "images/icons/cross.png" ); ?>" />
-			Failo apačioje ištrinkite kodą
-			<input type="text" value='require_once(realpath(dirname(__file__))."/../stiliai/".$conf[&#039;Stilius&#039;]."/sfunkcijos.php");' />
+			Vietoje
+			<input type="text" value='include ( "priedai/kairespaneles.php" );' />
+			įklijuokite šį kodą
+			<input type="text" value='include "priedai/kaires_blokai.php";' />
+			Vietoje
+			<input type="text" value='include ( "priedai/desinespaneles.php" );' />
+			įklijuokite šį kodą
+			<input type="text" value='include "priedai/desines_blokai.php";' />
+			Virš
+			<input type="text" value='include ( $page . ".php" );' />
+			įklijuokite šį kodą
+			<input type="text" value='include "priedai/centro_blokai.php";' />
+		</div>
+		<div class="tr2">
+			<img src="<?php echo ( isset( $_SESSION[SLAPTAS]['lang'] ) ? "" . ROOT . "images/icons/tick.png" : "" . ROOT . "images/icons/cross.png" ); ?>" />
+			Apie 32 eilutėje, vietoje šio
+			<input type="text" value='require_once (realpath(dirname(__file__)) . &#039;/../lang/&#039; . (empty($_SESSION[&#039;lang&#039;])?basename($conf[&#039;kalba&#039;],&#039;.php&#039;):$_SESSION[&#039;lang&#039;]). &#039;.php &#039;);' />
+			įklijuokite šį kodą
+			<input type="text" value='require_once (realpath(dirname(__file__)) . &#039;/../lang/&#039; . (empty($_SESSION[SLAPTAS][&#039;lang&#039;])?basename($conf[&#039;kalba&#039;],&#039;.php&#039;):$_SESSION[SLAPTAS][&#039;lang&#039;]). &#039;.php &#039;);' />
 		</div>
 		<div class="tr">
 			Atlikę šias užduotis spauskite „Atnaujinti“ ir
