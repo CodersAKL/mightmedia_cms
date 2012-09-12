@@ -9,7 +9,7 @@
 session_start();
 header( "Content-type: text/html; charset=utf-8" );
 @ini_set( 'error_reporting', E_ALL );
-@ini_set( 'display_errors', 'Off' );
+@ini_set( 'display_errors', 'On' );
 ob_start();
 $root     = '';
 $out_page = TRUE;
@@ -25,9 +25,13 @@ if ( !defined( 'ROOT' ) ) {
 }
 include_once( "" . ROOT . "priedai/conf.php" );
 include_once( "" . ROOT . "priedai/prisijungimas.php" );
+$versija = versija();
+$step = 1;
+$chmod_files[0] = "" . ROOT . "blokai";
+//ką trinam
+$delete_files[] = "" . ROOT . "paneles";
 if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] == 1 ) {
 	//į kokią versiją atnaujinam
-	$versija = versija();
 	/*// Sarašas failų kurių teisės turi suteikti svetainei įrašymo galimybę
 	$chmod_files[0] = "" . ROOT . "siuntiniai/media";
 	$chmod_files[]  = "" . ROOT . "sandeliukas";
@@ -37,9 +41,6 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] == 1 ) {
 	$delete_files[] = "" . ROOT . "javascript/htmlarea/Xinha0.96beta2/";
 	$delete_files[] = "" . ROOT . "javascript/forum/perview.php";*/
 	// Sarašas failų kurių teisės turi suteikti svetainei įrašymo galimybę
-	$chmod_files[0] = "" . ROOT . "blokai";
-	//ką trinam
-	$delete_files[] = "" . ROOT . "paneles";
 
 	// Diegimo stadijų registravimas
 	if ( !isset( $_GET['step'] ) || empty( $_GET['step'] ) ) {
@@ -261,13 +262,13 @@ if ( isset( $sesiono_aidi ) && $sesiono_aidi == 1 ) {
 					$file_error = 'Y';
 				}
 				echo "
-<tr class=\"tr\"><td class=\"td2\"><h2>Dėmesio, nepamirškite visų blokų iš 'paneles' direktorijos perkelti į 'blokai' direktoriją </h2></td></tr>
 <tr class=\"tr\">
 <td>" . $file . "</td>
 <td>" . ( !file_exists( $file ) ? "<img src=\"" . ROOT . "images/icons/tick.png\" />" : "<img src=\"" . ROOT . "images/icons/cross.png\" />" ) . "</td>
 <td>" . ( !file_exists( $file ) ? "-" : "Būtina ištrinti <strong>" . $file . "</strong> " ) . "</td>
 </tr>";
 			}
+			echo '<tr class="tr"><td class="td2" colspan=\'3\'><h2>Dėmesio, nepamirškite visų blokų iš \'paneles\' direktorijos perkelti į "blokai" direktoriją</h2></td></tr>';
 			?>
 		</table>
 		<br />
