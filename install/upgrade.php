@@ -23,8 +23,8 @@ if ( !defined( 'ROOT' ) ) {
 }
 include_once( "" . ROOT . "priedai/conf.php" );
 include_once( "" . ROOT . "priedai/prisijungimas.php" );
-$versija = versija();
-$step = 1;
+$versija        = versija();
+$step           = 1;
 $chmod_files[0] = "" . ROOT . "blokai";
 //ką trinam
 $delete_files[] = "" . ROOT . "paneles";
@@ -43,7 +43,7 @@ $delete_files[] = "" . ROOT . "paneles";
 // Diegimo stadijų registravimas
 if ( !isset( $_GET['step'] ) || empty( $_GET['step'] ) ) {
 	$_SESSION['step'] = 1;
-	$step                      = 1;
+	$step             = 1;
 } else {
 	if ( $_GET['step'] != 0 && $_GET['step'] > 1 ) {
 		$step = (int)$_GET['step'];
@@ -215,7 +215,8 @@ if ( $step == 1 ) {
 <div class='pavadinimas'>Failų tikrinimas</div>
 <div class='vidus'>
 <div class='text'>
-Žemiau surašyti failai, kurių keitimas bus reikalingas atnaujinant
+	<h2 style="color: red;">Dėmesio, nepamirškite pasidaryti pilnas failų ir MySql duomenų bazės kopijas </h2>
+	Žemiau surašyti failai, kurių keitimas bus reikalingas atnaujinant
 	šią sistemą. Jei sistema surado klaidų prašome jas ištaisyti ir
 	spausti atnaujinti. Kitu atveju jums nebus leidžiama tęsti įdiegimo.
 	<br />
@@ -228,7 +229,9 @@ if ( $step == 1 ) {
 	aprašymas“ stulpelyje.
 	<br />
 	<br />
+	<h2>Dėmesio, nepamirškite visų blokų iš "paneles" direktorijos perkelti į "blokai" direktoriją</h2>
 	<table border="0" class="table">
+
 		<tr>
 			<th class="th" valign="top" width="10%">Failas</th>
 			<th class="th" valign="top" width="5%">Būsena</th>
@@ -259,7 +262,6 @@ if ( $step == 1 ) {
 <td>" . ( !file_exists( $file ) ? "-" : "Būtina ištrinti <strong>" . $file . "</strong> " ) . "</td>
 </tr>";
 		}
-		echo '<tr class="tr"><td class="td2" colspan=\'3\'><h2>Dėmesio, nepamirškite visų blokų iš \'paneles\' direktorijos perkelti į "blokai" direktoriją</h2></td></tr>';
 		?>
 	</table>
 	<br />
@@ -302,8 +304,7 @@ if ( $step == 3 ) {
 	<div class='pavadinimas'>Failų keitimas</div>
 <div class='vidus'>
 <div class='text'>
-Atlikite žemiau nurodytus pakeitimus <i>priedai/conf.php</i> faile.
-	<h2>Legenda</h2>
+		<h2>Legenda</h2>
 	<img src="<?php echo ROOT; ?>images/icons/tick.png" /> Jei prie užduoties matote šią
 	ikoną, ji atlikta teisingai. <br />
 	<img src="<?php echo ROOT; ?>images/icons/cross.png" /> Jei prie užduoties matote šią
@@ -313,49 +314,59 @@ Atlikite žemiau nurodytus pakeitimus <i>priedai/conf.php</i> faile.
 	<h2>priedai/conf.php failo keitimas</h2>
 	<div class="tr">
 		<img src="<?php $amslpts = SLAPTAS; echo ( isset( $amslpts ) ? "" . ROOT . "images/icons/tick.png" : "" . ROOT . "images/icons/cross.png" ); ?>" />
-		Prieš
-		<input type="text" value='//Admin paneles vartotojas ir slaptazodis' />
+		Prieš <br />
+		<textarea rows="2" cols="100">//Admin paneles vartotojas ir slaptazodis</textarea>
+		<br />
 		įklijuokite šį kodą
-		<input type="text" value='define('SLAPTAS', $slaptas);' />
+		<br />
+		<textarea rows="2" cols="100">define('SLAPTAS', $slaptas);</textarea>
 	</div>
 	<div class="tr2">
-		<img src="<?php echo ( isset( $_SESSION['lang'] ) ? "" . ROOT . "images/icons/tick.png" : "" . ROOT . "images/icons/cross.png" ); ?>" />
-		Apie 32 eilutėje, vietoje šio
-		<input type="text" value='require_once (realpath(dirname(__file__)) . &#039;/../lang/&#039; . (empty($_SESSION[&#039;lang&#039;])?basename($conf[&#039;kalba&#039;],&#039;.php&#039;):$_SESSION[&#039;lang&#039;]). &#039;.php &#039;);' />
+		<img src="<?php echo ( isset( $_SESSION[SLAPTAS]['lang'] ) ? "" . ROOT . "images/icons/tick.png" : "" . ROOT . "images/icons/cross.png" ); ?>" />
+		Apie 32 eilutėje, vietoje šio<br />
+		<textarea rows="7" cols="100">require_once (realpath(dirname(__file__)) . &#039;/../lang/&#039; . (empty($_SESSION[&#039;lang&#039;])?basename($conf[&#039;kalba&#039;],&#039;.php&#039;):$_SESSION[&#039;lang&#039;]). &#039;.php &#039;);</textarea>
+		<br />
 		įklijuokite šį kodą
-		<input type="text" value='require_once (realpath(dirname(__file__)) . &#039;/../lang/&#039; . (empty($_SESSION[&#039;lang&#039;])?basename($conf[&#039;kalba&#039;],&#039;.php&#039;):$_SESSION[&#039;lang&#039;]). &#039;.php &#039;);' />
+		<br />
+		<textarea rows="7" cols="100">require_once (realpath(dirname(__file__)) . &#039;/../lang/&#039; . (empty($_SESSION[SLAPTAS][&#039;lang&#039;])?basename($conf[&#039;kalba&#039;],&#039;.php&#039;):$_SESSION[SLAPTAS][&#039;lang&#039;]). &#039;.php &#039;);</textarea>
 	</div>
 
 	<h2>stiliai/<?php echo $conf['Stilius'];?>/index.php failo keitimas</h2>
 	<div class="tr">
 		Vietoje
-		<input type="text" value='include ( "priedai/kairespaneles.php" );' />
+		<br />
+		<textarea rows="2" cols="100">include ( "priedai/kairespaneles.php" );</textarea>
+		<br />
 		įklijuokite šį kodą
-		<input type="text" value='include "priedai/kaires_blokai.php";' />
+		<br />
+		<textarea rows="2" cols="100">include "priedai/kaires_blokai.php";</textarea>
+		<br />
 		Vietoje
-		<input type="text" value='include ( "priedai/desinespaneles.php" );' />
+		<br />
+		<textarea rows="2" cols="100">include ( "priedai/desinespaneles.php" );</textarea>
+		<br />
 		įklijuokite šį kodą
-		<input type="text" value='include "priedai/desines_blokai.php";' />
+		<br />
+		<textarea rows="2" cols="100">include "priedai/desines_blokai.php";</textarea>
+		<br />
 		Virš
-		<input type="text" value='include ( $page . ".php" );' />
+		<br />
+		<textarea rows="2" cols="100">include ( $page . ".php" );</textarea>
+		<br />
 		įklijuokite šį kodą
-		<input type="text" value='include "priedai/centro_blokai.php";' />
+		<br />
+		<textarea rows="2" cols="100">include "priedai/centro_blokai.php";</textarea>
+		<br />
 	</div>
 	<div class="tr2">
-		<img src="<?php echo ( isset( $_SESSION['lang'] ) ? "" . ROOT . "images/icons/tick.png" : "" . ROOT . "images/icons/cross.png" ); ?>" />
-		Apie 32 eilutėje, vietoje šio
-		<input type="text" value='require_once (realpath(dirname(__file__)) . &#039;/../lang/&#039; . (empty($_SESSION[&#039;lang&#039;])?basename($conf[&#039;kalba&#039;],&#039;.php&#039;):$_SESSION[&#039;lang&#039;]). &#039;.php &#039;);' />
-		įklijuokite šį kodą
-		<input type="text" value='require_once (realpath(dirname(__file__)) . &#039;/../lang/&#039; . (empty($_SESSION[&#039;lang&#039;])?basename($conf[&#039;kalba&#039;],&#039;.php&#039;):$_SESSION[&#039;lang&#039;]). &#039;.php &#039;);' />
-	</div>
-	<div class="tr">
 		Atlikę šias užduotis spauskite „Atnaujinti“ ir
-		įsitikinlite, kadužduotys atliktos teisingai (žr. į ikonas šalia
+		įsitikinkite, kad užduotys atliktos teisingai (žr. į ikonas šalia
 		užduoties)
 	</div>
+	<br />
 	<center>
 		<input type="reset" value="Atnaujinti" class="submit" onclick="JavaScript:location.reload(true);" />
-		<input type="reset" value="Toliau" class="submit" onclick="Go('3');" />
+		<input type="reset" value="Toliau" class="submit" onclick="Go('4');" />
 	</center>
 	<?php
 }
