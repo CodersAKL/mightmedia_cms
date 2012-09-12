@@ -83,53 +83,55 @@ if ( isset( $_POST['next_msyql'] ) ) {
 									   }
 									   break;
 									   }*/
-	}
-} else {
-	/*	if ( !file_exists( "" . ROOT . "sql-upgrade-1.3to1.4.sql" ) ) {
-			  $sql = file_get_contents( 'http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade-1.3to1.4.sql' );
-		  } else {
-			  $sql = file_get_contents( "" . ROOT . "sql-upgrade-1.3to1.4.sql" );
-		  }*/
-	if ( !file_exists( "" . ROOT . "sql-upgrade-beta.sql" ) ) {
-		$sql = file_get_contents( 'http://code.assembla.com/mightmedia/subversion/node/blob/v1/install/sql-upgrade-beta.sql' );
 	} else {
-		$sql = file_get_contents( "" . ROOT . "sql-upgrade-beta.sql" );
-	}
-}
-
-// Paruošiam užklausas
-$sql = str_replace( "CREATE TABLE IF NOT EXISTS `", "CREATE TABLE IF NOT EXISTS `" . LENTELES_PRIESAGA, $sql );
-$sql = str_replace( "CREATE TABLE `", "CREATE TABLE IF NOT EXISTS `" . LENTELES_PRIESAGA, $sql );
-$sql = str_replace( "INSERT INTO `", "INSERT INTO `" . LENTELES_PRIESAGA, $sql );
-$sql = str_replace( "ALTER TABLE `", "ALTER TABLE `" . LENTELES_PRIESAGA, $sql );
-$sql = str_replace( "UPDATE `", "UPDATE `" . LENTELES_PRIESAGA, $sql );
-
-// Prisijungiam prie duombazės
-mysql_query( "SET NAMES utf8" );
-
-// Atliekam SQL apvalymą
-$match = '';
-preg_match_all( "/(?:CREATE|UPDATE|INSERT|ALTER).*?;[\r\n]/s", $sql, $match );
-
-$mysql_info  = "<ol>";
-$mysql_error = 0;
-foreach ( $match[0] as $key => $val ) {
-	if ( !empty( $val ) ) {
-		$query = mysql_query( $val );
-		if ( !$query ) {
-			$mysql_info .= "<li><b>Klaida:" . mysql_errno() . "</b> " . mysql_error() . "<hr><b>Užklausa:</b><br/>" . $val . "</li><hr>";
-			$mysql_error++;
+		/*	if ( !file_exists( "" . ROOT . "sql-upgrade-1.3to1.4.sql" ) ) {
+					  $sql = file_get_contents( 'http://code.assembla.com/mightmedia/subversion/node/blob/v1/sql-upgrade-1.3to1.4.sql' );
+				  } else {
+					  $sql = file_get_contents( "" . ROOT . "sql-upgrade-1.3to1.4.sql" );
+				  }*/
+		if ( !file_exists( "" . ROOT . "sql-upgrade-beta.sql" ) ) {
+			$sql = file_get_contents( 'http://code.assembla.com/mightmedia/subversion/node/blob/v1/install/sql-upgrade-beta.sql' );
+		} else {
+			$sql = file_get_contents( "" . ROOT . "sql-upgrade-beta.sql" );
 		}
 	}
-}
-$mysql_info .= "</ol>";
 
-if ( $mysql_error == 0 ) {
-	$mysql_info = 'Lentelės sėkmingai atnaujintos. Galite tęsti atnaujinimą.';
-	$next_mysql = '<center><input type="reset" value="Toliau" onClick="Go(\'3\');" class="submit"></center>';
-} else {
-	$next_mysql = '<center><input type="reset" value="Bandyti dar kartą" onClick="Go(\'2\');" class="submit"></center>';
+	// Paruošiam užklausas
+	$sql = str_replace( "CREATE TABLE IF NOT EXISTS `", "CREATE TABLE IF NOT EXISTS `" . LENTELES_PRIESAGA, $sql );
+	$sql = str_replace( "CREATE TABLE `", "CREATE TABLE IF NOT EXISTS `" . LENTELES_PRIESAGA, $sql );
+	$sql = str_replace( "INSERT INTO `", "INSERT INTO `" . LENTELES_PRIESAGA, $sql );
+	$sql = str_replace( "ALTER TABLE `", "ALTER TABLE `" . LENTELES_PRIESAGA, $sql );
+	$sql = str_replace( "UPDATE `", "UPDATE `" . LENTELES_PRIESAGA, $sql );
+
+	// Prisijungiam prie duombazės
+	mysql_query( "SET NAMES utf8" );
+
+	// Atliekam SQL apvalymą
+	$match = '';
+	preg_match_all( "/(?:CREATE|UPDATE|INSERT|ALTER).*?;[\r\n]/s", $sql, $match );
+
+	$mysql_info  = "<ol>";
+	$mysql_error = 0;
+	foreach ( $match[0] as $key => $val ) {
+		if ( !empty( $val ) ) {
+			$query = mysql_query( $val );
+			if ( !$query ) {
+				$mysql_info .= "<li><b>Klaida:" . mysql_errno() . "</b> " . mysql_error() . "<hr><b>Užklausa:</b><br/>" . $val . "</li><hr>";
+				$mysql_error++;
+			}
+		}
+	}
+	$mysql_info .= "</ol>";
+
+	if ( $mysql_error == 0 ) {
+		$mysql_info = 'Lentelės sėkmingai atnaujintos. Galite tęsti atnaujinimą.';
+		$next_mysql = '<center><input type="reset" value="Toliau" onClick="Go(\'3\');" class="submit"></center>';
+	} else {
+		$next_mysql = '<center><input type="reset" value="Bandyti dar kartą" onClick="Go(\'2\');" class="submit"></center>';
+	}
+
 }
+
 
 if ( !isset( $next_mysql ) ) {
 	/*$next_mysql = '<select name="sql">
