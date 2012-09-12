@@ -60,7 +60,7 @@ include_once ( "../priedai/prisijungimas.php" );
 								<br />
 								<!--<strong>Remember Me</strong><input type="checkbox" id="remember" class="input noborder" />-->
 								<input type="hidden" name="action" value="prisijungimas" />
-								<input id="save" class="loginbutton" type="submit" class="submit" value="<?php echo $lang['user']['login']; ?>" />
+								<input style="margin-top: 5px;" id="save" class="loginbutton" type="submit" class="submit" value="<?php echo $lang['user']['login']; ?>" />
 							</form>
 						</div>
 					</form>
