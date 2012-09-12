@@ -8,8 +8,6 @@
  * */
 session_start();
 header( "Content-type: text/html; charset=utf-8" );
-@ini_set( 'error_reporting', E_ALL );
-@ini_set( 'display_errors', 'On' );
 ob_start();
 $root     = '';
 $out_page = TRUE;
