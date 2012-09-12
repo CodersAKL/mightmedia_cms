@@ -175,13 +175,14 @@ if ( !empty( $_POST['finish'] ) ) {
 <body>
 <body>
 <div id="plotis">
-<?php
-if ( isset( $_SESSION['id'] ) && $_SESSION['id'] == 1 ) {
-	?>
 <div id="kaire">
 	<div class="skalpas"><a href="?" title="<?php echo adresas(); ?>">
 		<div class="logo"></div>
 	</a></div>
+<?php
+if ( isset( $_SESSION['id'] ) && $_SESSION['id'] == 1 ) {
+	?>
+
 	<div class='pavadinimas'>Įdiegimo stadijos</div>
 	<div class='vidus'>
 		<div class='text'>
@@ -217,54 +218,54 @@ if ( isset( $_SESSION['id'] ) && $_SESSION['id'] == 1 ) {
 <div class='vidus'>
 <div class='text'>
 Žemiau surašyti failai, kurių keitimas bus reikalingas atnaujinant
-	šią sistemą. Jei sistema surado klaidų prašome jas ištaisyti ir
-	spausti atnaujinti. Kitu atveju jums nebus leidžiama tęsti įdiegimo.
-	<br />
-	<br />
-	<h2>Legenda</h2>
-	<img src="<?php echo ROOT; ?>images/icons/tick.png" /> Jei prie failo nustatyta ši
-	ikonėlė vadinasi failas yra paruoštas sistemai.<br />
-	<img src="<?php echo ROOT; ?>images/icons/cross.png" /> Jei rasite šią ikonėlę prie
-	nurodyto failo tuomet reikia atlikti užduotį, aprašytą „Klaidos
-	aprašymas“ stulpelyje.
-	<br />
-	<br />
-	<table border="0" class="table">
-		<tr>
-			<th class="th" valign="top" width="10%">Failas</th>
-			<th class="th" valign="top" width="5%">Būsena</th>
-			<th class="th" valign="top" width="35%">Klaidos aprašymas</th>
-		</tr>
-		<?php
-		$kartot = count( $chmod_files ) - 1;
-		for ( $i = 0; $i <= $kartot; $i++ ) {
-			$teises = substr( sprintf( '%o', fileperms( $chmod_files[$i] ) ), -4 );
-			if ( $teises != 777 && $teises != 666 && !is_writable( $chmod_files[$i] ) ) {
-				$file_error = 'Y';
-			}
-			echo "
+		šią sistemą. Jei sistema surado klaidų prašome jas ištaisyti ir
+		spausti atnaujinti. Kitu atveju jums nebus leidžiama tęsti įdiegimo.
+		<br />
+		<br />
+		<h2>Legenda</h2>
+		<img src="<?php echo ROOT; ?>images/icons/tick.png" /> Jei prie failo nustatyta ši
+		ikonėlė vadinasi failas yra paruoštas sistemai.<br />
+		<img src="<?php echo ROOT; ?>images/icons/cross.png" /> Jei rasite šią ikonėlę prie
+		nurodyto failo tuomet reikia atlikti užduotį, aprašytą „Klaidos
+		aprašymas“ stulpelyje.
+		<br />
+		<br />
+		<table border="0" class="table">
+			<tr>
+				<th class="th" valign="top" width="10%">Failas</th>
+				<th class="th" valign="top" width="5%">Būsena</th>
+				<th class="th" valign="top" width="35%">Klaidos aprašymas</th>
+			</tr>
+			<?php
+			$kartot = count( $chmod_files ) - 1;
+			for ( $i = 0; $i <= $kartot; $i++ ) {
+				$teises = substr( sprintf( '%o', fileperms( $chmod_files[$i] ) ), -4 );
+				if ( $teises != 777 && $teises != 666 && !is_writable( $chmod_files[$i] ) ) {
+					$file_error = 'Y';
+				}
+				echo "
 <tr class=\"tr\">
 <td>" . $chmod_files[$i] . "</td>
 <td>" . ( ( $teises == 777 ) || ( $teises == 666 ) || is_writable( $chmod_files[$i] ) ? "<img src=\"" . ROOT . "images/icons/tick.png\" />" : "<img src=\"" . ROOT . "images/icons/cross.png\" />" ) . "</td>
 <td>" . ( ( $teises == 777 ) || ( $teises == 666 ) || is_writable( $chmod_files[$i] ) ? "-" : "Būtina nurodyti chmod 777 failui <strong>" . $chmod_files[$i] . "</strong> kadangi esamas chmod yra <strong>" . $teises . "</strong>" ) . "</td>
 </tr>";
-		}
-		foreach ( $delete_files as $file ) {
-			if ( file_exists( $file ) ) {
-				$file_error = 'Y';
 			}
-			echo "
+			foreach ( $delete_files as $file ) {
+				if ( file_exists( $file ) ) {
+					$file_error = 'Y';
+				}
+				echo "
 <tr class=\"tr\">
 <td>" . $file . "</td>
 <td>" . ( !file_exists( $file ) ? "<img src=\"" . ROOT . "images/icons/tick.png\" />" : "<img src=\"" . ROOT . "images/icons/cross.png\" />" ) . "</td>
 <td>" . ( !file_exists( $file ) ? "-" : "Būtina ištrinti <strong>" . $file . "</strong> " ) . "</td>
 </tr>";
-		}
-		echo '<tr class="tr"><td class="td2" colspan=\'3\'><h2>Dėmesio, nepamirškite visų blokų iš \'paneles\' direktorijos perkelti į "blokai" direktoriją</h2></td></tr>';
-		?>
-	</table>
-	<br />
-	<br />
+			}
+			echo '<tr class="tr"><td class="td2" colspan=\'3\'><h2>Dėmesio, nepamirškite visų blokų iš \'paneles\' direktorijos perkelti į "blokai" direktoriją</h2></td></tr>';
+			?>
+		</table>
+		<br />
+		<br />
 		<?php
 		if ( isset( $file_error ) && $file_error == 'Y' ) {
 			echo '<center><input type="reset" class="submit" value="Atnaujinti" onClick="JavaScript:location.reload(true);"> <input type="reset" class="submit" value="Jeigu esate isitikines, kad viskas gerai" onClick="Go(\'2\');"><center>';
@@ -276,7 +277,7 @@ if ( isset( $_SESSION['id'] ) && $_SESSION['id'] == 1 ) {
 // HTML DALIS - MySQL duomenų bazės nustatymai
 	if ( $step == 2 ) {
 		?>
-	<div class='pavadinimas'>MySQL Duomenų bazės atnaujinimas</div>
+		<div class='pavadinimas'>MySQL Duomenų bazės atnaujinimas</div>
 <div class='vidus'>
 <div class='text'>
 Norėdami atnaujinti lenteles, spauskite mygtuką, esantį žemiau.
@@ -386,18 +387,14 @@ Sveikiname įdiegus MightMedia TVS (Turinio Valdymo Sistemą).<br />
 		}
 	</script>
 	<?php } else { ?>
-	<form id="user_reg" name="user_reg" method="post" action="">
-		<div id="login" class="section">
-			<form name="loginform" id="loginform" action="panel.html" method="post">
-				<label><strong><?php echo $lang['user']['user'];?></strong></label><br /><input type="text" name="vartotojas" id="user_login" size="28" class="input" />
-				<br />
-				<label><strong><?php echo $lang['user']['password']; ?></strong></label><br /><input type="password" name="slaptazodis" id="user_pass" size="28" class="input" />
-				<br />
-				<input type="hidden" name="action" value="prisijungimas" />
-				<input id="save" class="loginbutton" type="submit" class="submit" value="<?php echo $lang['user']['login']; ?>" />
-			</form>
-		</div>
-	</form>
+	</div>
+<div id="kunas">
+<div id="meniu_juosta">MightMedia TVS atnaujinimas</div>
+<div id="centras">
+	<div class='pavadinimas'>Dėmesio</div>
+<div class='vidus'>
+<div class='text'>
+	Norint pradėti atnaujinimą būtina prisijungti.
 	<?php } ?>
 </div>
 </div>
