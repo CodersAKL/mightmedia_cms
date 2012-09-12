@@ -6,10 +6,10 @@
  * @$Date: 2009-05-23 17:22:13 +0300 (Št, 23 Geg 2009) $
  * @Apie: upgrade.php - TVS atnaujinimo įrankis
  * */
+session_start();
 header( "Content-type: text/html; charset=utf-8" );
 @ini_set( 'error_reporting', E_ALL );
 @ini_set( 'display_errors', 'Off' );
-session_start();
 ob_start();
 $root     = '';
 $out_page = TRUE;
@@ -157,7 +157,7 @@ if ( !empty( $_POST['finish'] ) ) {
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns:SLAPTAS="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="resource-type" content="document" />
