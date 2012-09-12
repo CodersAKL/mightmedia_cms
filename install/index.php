@@ -737,8 +737,8 @@ ErrorDocument 501 " . adresas() . "/klaida.php
 	<meta name="copyright" content="copyright (c) by CodeRS www.coders.lt" />
 	<meta name="rating" content="general" />
 	<meta name="generator" content="notepad" />
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-	<link rel="icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="<?php echo ROOT; ?>images/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="<?php echo ROOT; ?>images/favicon.ico" type="image/x-icon" />
 	<script src="<?php echo ROOT; ?>javascript/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
 	<script src="<?php echo ROOT; ?>javascript/jquery/tooltip.js" type="text/javascript"></script>
 	<title>MightMedia TVS/CMS</title>
