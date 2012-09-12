@@ -209,7 +209,7 @@ img {
     border: 0;
 }
 
-ul {
+ul, ol {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -505,7 +505,6 @@ table tr td {
     float: left;
     height: 32px;
     width: 32px;
-    background: url(images/warrning.png) no-repeat;
 }
 
 .msg .info_ikona {
@@ -514,7 +513,6 @@ table tr td {
     float: left;
     height: 32px;
     width: 32px;
-    background: url(images/tick.png) no-repeat;
 }
 
 /* Nario avataro paveiksl�lis */
