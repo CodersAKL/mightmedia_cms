@@ -347,7 +347,6 @@ a {
 
 #controls {
     margin-top: -1px;
-	overflow: hidden;
 }
 
 #admin_lang, #admin_user, .admin_user {
@@ -379,7 +378,7 @@ div#controls div.admin_user a img {
     margin-right: 5px;
 }
 
-#admin_lang.down, #admin_user.down {
+#admin_lang.down, #admin_user.down, .admin_user.down {
     background: #E6E6E6;
 }
 
