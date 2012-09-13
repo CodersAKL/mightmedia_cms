@@ -239,6 +239,9 @@ a:hover {
     margin-top: 20px;
     margin-left: 20px;
 }
+#kojos .tekstas a{
+    color: #cccccc;
+}
 
 #kojos .logo {
     float: right;
