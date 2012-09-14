@@ -195,7 +195,7 @@ HTML;
 		tinyMCE.init({
 		// General options
 		/*plugins : "paste",*/
-		mode : "textareas",
+		/*mode : "textareas",*/
 		theme : "advanced",
 		skin : "o2k7",
 		skin_variant : "silver",
