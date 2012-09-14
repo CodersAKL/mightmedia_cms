@@ -150,6 +150,8 @@ HTML;
 		$('#{$key}').markItUp(mySettings);
 	});
 	</script>
+	        <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;" >
+        <img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button><br />
 <textarea id="{$key}" name="{$key}">{$value[$key]}</textarea>
 HTML;
 			}
@@ -160,6 +162,8 @@ HTML;
 		$('#{$id}').markItUp(mySettings);
 	});
 	</script>
+	        <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$id}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;" >
+        <img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button><br />
 <textarea id="{$id}" name="{$id}">{$value}</textarea>
 HTML;
 
