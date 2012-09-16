@@ -423,16 +423,18 @@ HTML;
 				<?php klaida( '', 'Internet Explorer nėra gera naršyklė bei yra nepatogi, ji iškraipo dauguma dizaino funkcijų, siūlome naudoti: <a targer="_blank" href="https://www.google.com/chrome">Google Chrome</a>, <a targer="_blank" href="http://apple.com/safari">Safari</a>, <a targer="_blank" href="http://www.mozilla.org/firefox/">Mozilla Firefox</a>, <a targer="_blank" href="http://opera.com">Opera</a>' );?>
 				<![endif]-->
 
-				<div id="version_check"></div>
-				<script type="text/javascript">
-					$.getJSON('<?php echo $update_url; ?>');
-					function versija(data) {
-						if ( parseInt('<?php echo versija();?>') < parseInt( data.version ) ){
-							$('#version_check').attr('class', 'msg');
-							$('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><strong>' + data.title + '</strong> ' + '' + data.version + ' - ' + '' + data.about + ' ' + (data.log ? '<span id="news" title="' + data.log + '">[info]</span>' : '') + (data.url ? ' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank">' + data.title + ' v' + data.version + '</a></span>' : ''));
-						}
-					}
-				</script>
+                <br />
+
+                <div id="version_check"></div>
+                <script type="text/javascript">
+                    $.getJSON('<?php echo $update_url; ?>');
+                    function versija(data) {
+                        if (<?php echo versija();?> < data.version) {
+                            $('#version_check').attr('class', 'msg');
+                            $('#version_check').html('<img src="images/icons/lightbulb.png" alt="" /><b>' + data.title + '</b> ' + '' + data.version + ' - ' + '' + data.about + ' ' + (data.log ? '<a href="' + data.log + '" target="_blank" title="' + data.log + '">[Informacija]</a>' : '') + (data.url ? ' <span class="number" style="display:inline;"><a href="' + data.url + '" target="_blank"> Atsisiuntimas MM.TVS v' + data.version + '</a></span>' : ''));
+                        }
+                    }
+                </script>
 
 				<?php
 				if ( isset( $url['a'] ) && file_exists( dirname( __file__ ) . "/" . ( isset( $admin_pages[(int)$url['a']] ) ? $admin_pages[(int)$url['a']] : 'n/a' ) . '.php' ) && isset( $_SESSION[SLAPTAS]['username'] ) && $_SESSION[SLAPTAS]['level'] == 1 && defined( "OK" ) ) {

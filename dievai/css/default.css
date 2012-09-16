@@ -171,7 +171,7 @@ a {
     margin-right: 20px;
     margin-left: 10px;
 	background: #FFFFCC url('../images/icons/check.png') no-repeat 98% 48%;
-	overflow: hidden;
+	/*overflow: hidden;*/
     z-index: 999;
 
 }
