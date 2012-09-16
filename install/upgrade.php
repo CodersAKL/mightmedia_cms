@@ -140,7 +140,7 @@ if ( !isset( $next_mysql ) ) {
 			</select>
 			<br />';*/
 	$next_mysql = '<form method="post" action="" name="sql">
-			1.4 atnaujinimas į 1.5
+			1.4 atnaujinimas į 1.46
 			<br />';
 	$next_mysql .= '<input name="next_msyql" type="submit" value="Atnaujinti lenteles" class="submit" style="margin-top: 5px;">
 	</form>
