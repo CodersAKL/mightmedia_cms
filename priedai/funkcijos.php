@@ -909,7 +909,7 @@ function random_name( $i = 10 ) {
 	srand( (double)microtime() * 1000000 );
 	$name = '';
 
-	while ( $i >= 0 ) {
+	while ( $i > 0 ) {
 		$num  = rand() % strlen($chars);
 		$tmp  = substr( $chars, $num, 1 );
 		$name = $name . $tmp;

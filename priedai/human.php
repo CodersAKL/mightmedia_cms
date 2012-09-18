@@ -32,7 +32,7 @@ $fg = ImageColorAllocate( $im, 170, 34, 17 ); //Raidziu spalva rgb(170, 34, 17)
 
 $x                = '5';
 $code             = '';
-$code             = random_name( 5 ); //sugeneruojam atsitiktini koda
+$code             = strtoupper(random_name( 5 )); //sugeneruojam atsitiktini koda
 $_SESSION[SLAPTAS]['code'] = $code;
 
 
