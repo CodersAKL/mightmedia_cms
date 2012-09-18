@@ -72,6 +72,7 @@ if ( $vid == 0 ) {
 # Rodom siuntini
 if ( $vid > 0 ) {
 	$sql = mysql_query1( "SELECT
+
   `" . LENTELES_PRIESAGA . "grupes`.`pavadinimas` AS `Kategorija`,
     `" . LENTELES_PRIESAGA . "grupes`.`pav` AS `img`,
    `" . LENTELES_PRIESAGA . "grupes`.`id` AS `kid`,
@@ -80,17 +81,13 @@ if ( $vid > 0 ) {
   `" . LENTELES_PRIESAGA . "siuntiniai`.`id`,
   `" . LENTELES_PRIESAGA . "siuntiniai`.`apie`,
     `" . LENTELES_PRIESAGA . "siuntiniai`.`data`,
-  `" . LENTELES_PRIESAGA . "users`.`nick` AS `Nick`,
-  `" . LENTELES_PRIESAGA . "users`.`id` AS `nick_id`,
-  `" . LENTELES_PRIESAGA . "users`.`levelis` AS `levelis`,
   `" . LENTELES_PRIESAGA . "siuntiniai`.`file`
   FROM
   `" . LENTELES_PRIESAGA . "grupes`
   Inner Join `" . LENTELES_PRIESAGA . "siuntiniai` ON `" . LENTELES_PRIESAGA . "grupes`.`id` = `" . LENTELES_PRIESAGA . "siuntiniai`.`categorija`
-  Inner Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "siuntiniai`.`autorius` = `" . LENTELES_PRIESAGA . "users`.`id`
   WHERE  
    `" . LENTELES_PRIESAGA . "siuntiniai`.`ID` = '$vid' AND
-   `" . LENTELES_PRIESAGA . "siuntiniai`.`categorija` =  '$k'
+   `" . LENTELES_PRIESAGA . "siuntiniai`.`categorija` =   " . escape( $k ) . "
    AND
    `" . LENTELES_PRIESAGA . "siuntiniai`.`rodoma` =  'TAIP'
    AND `" . LENTELES_PRIESAGA . "siuntiniai`.`lang` = " . escape( lang() ) . "
@@ -103,8 +100,9 @@ if ( $vid > 0 ) {
 	if ( sizeof( $sql ) > 0 && isset( $sql['id'] ) ) {
 		//$sql = mysql_fetch_assoc($sql);
 		if ( !isset( $sql['teises'] ) || teises( $sql['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
-			if ( isset( $sql['Nick'] ) ) {
-				$autorius = user( $sql['Nick'], $sql['nick_id'], $sql['levelis'] );
+			$sql_autr = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `id`= '" . $sql['autorius'] . "' LIMIT 1" );
+			if ( isset( $sql_autr ['nick'] ) ) {
+				$autorius = user( $sql_autr ['nick'], $sql_autr['id'], $sql_autr ['levelis'] );
 			} else {
 				$autorius = $lang['system']['guest'];
 			}
@@ -169,8 +167,6 @@ else {
 		}
 
 	} else {
-
-
 		$sql_s = mysql_query1( " SELECT
     `" . LENTELES_PRIESAGA . "siuntiniai`.`pavadinimas`,
     `" . LENTELES_PRIESAGA . "siuntiniai`.`data`,
@@ -202,7 +198,10 @@ else {
 				} else {
 					$autorius = '';
 				}
-				$info[] = array( "{$lang['download']['title']}:" => "<a href=\"" . url( "v," . $sql['id'] . "" ) . "\">" . input( $sql['pavadinimas'] ) . "</a>", "{$lang['download']['date']}:" => date( 'Y-m-d H:i:s ', $sql['data'] ), "{$lang['download']['download']}:" => "<a href=\"siustis.php?d," . $sql['id'] . "\"><img src=\"images/icons/disk.png\" alt=\"" . $sql['file'] . "\" border=\"0\" /></a>" );
+				$info[] = array( "{$lang['download']['title']}:" => "<a href=\"" . url( "v," . $sql['id'] . "" ) . "\">" . input( $sql['pavadinimas'] ) . "</a>",
+				                 "{$lang['download']['date']}:" => date( 'Y-m-d H:i:s ', $sql['data'] ),
+				                 //"{$lang['admin']['download_author']} :" => $autorius,
+				                 "{$lang['download']['download']}:" => "<a href=\"siustis.php?d," . $sql['id'] . "\"><img src=\"images/icons/disk.png\" alt=\"" . $sql['file'] . "\" border=\"0\" /></a>" );
 
 			} else {
 				klaida( $lang['system']['error'], $lang['download']['notallowed'] );
