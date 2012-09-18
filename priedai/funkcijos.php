@@ -909,7 +909,7 @@ function random_name( $i = 10 ) {
 	srand( (double)microtime() * 1000000 );
 	$name = '';
 
-	while ( $i > 0 ) {
+	while ( $i >= 0 ) {
 		$num  = rand() % strlen($chars);
 		$tmp  = substr( $chars, $num, 1 );
 		$name = $name . $tmp;
@@ -2015,7 +2015,8 @@ function showCalendar( $year = 0, $month = 0 ) {
 	$sql = mysql_query1( $sql, 86400 );
 	foreach ( $sql as $row ) {
 		if ( $row['diena'] >= date( "j" ) ) {
-			$sventes[date( 'n' ) . "-" . $row['diena']][] = "<b>" . $row['nick'] . "</b> {$lang['calendar']['birthday']}. " . ( amzius( $row['gim_data'] ) + 1 ) . "m.";
+			$sventes[date( 'n' ) . "-" . $row['diena']][] = "<b>" . $row['nick'] . "</b> {$lang['calendar']['birthday']}. " . ( ($row['diena'] < date('j')) ? (amzius( $row['gim_data'] ) + 1) : amzius($row['gim_data'])) . "m.";
+			//$sventes[date( 'n' ) . "-" . $row['diena']][] = "<b>" . $row['nick'] . "</b> {$lang['calendar']['birthday']}. " . ( amzius( $row['gim_data'] ) + 1 ) . "m.";
 		}
 	}
 
