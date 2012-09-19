@@ -1,47 +1,4 @@
-.middle {
-    vertical-align: middle;
-}
-
-td#line {
-    padding-right: 5px;
-    padding-left: 5px;
-    border-right: 1px solid;
-    text-align: right;
-    background: #cccccc;
-    font-family: arial;
-    font-size: 12px;
-    width: 20px;
-}
-
-td#code {
-    font-size: 12px;
-    font-family: arial;
-    white-space: nowrap;
-}
-
-.img_left {
-    float: left;
-    margin-right: 5px;
-    position: relative;
-}
-
-input.chapter {
-    font-size: 20px;
-    font-weight: bold;
-    height: 30px;
-    padding-top: 5px;
-    text-align: center;
-    text-transform: uppercase;
-    vertical-align: middle;
-    width: 100px;
-}
-
-.tr, .tr2, .td, .td2, .th {
-    word-wrap: break-word;
-    overflow: hidden;
-}
-
-/* Mightmedia pagrindin�s stiliaus funkcijos */
+/* Mightmedia pagrindinės stiliaus funkcijos */
 img {
     border: 0;
 }
@@ -67,10 +24,27 @@ input, textarea, button, select {
     padding-left: 5px;
 }
 
+textarea .input, .input, .select {
+    width: 95%;
+}
+
 input, button, select {
     height: 20px
 }
 
+/* Apsaugos kodas */
+input.chapter {
+    font-size: 20px;
+    font-weight: bold;
+    height: 30px;
+    padding-top: 5px;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    width: 100px;
+}
+
+/* Mygtukai */
 input[type="submit"], .submit, .perveiza {
     cursor: pointer;
     padding: 2px;
@@ -92,16 +66,8 @@ button {
     background: #ccc;
 }
 
-textarea.input {
-    width: 90%;
-    background: #f8f8f8;
-}
-
-select, input.input {
-    width: 90%;
-}
-
 /*Bloko meniu*/
+/*
 #navigation {
     width: 100%;
     font-size: 12px;
@@ -109,8 +75,8 @@ select, input.input {
 
 #navigation ul {
     list-style: none;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     border: none;
 }
 
@@ -128,15 +94,16 @@ select, input.input {
     background-color: #f2f2f2;
     position: relative;
 }
-
+*/
 /*Sub Meniu*/
+/*
 #navigation ul ul {
-    border: 0px;
+    border: 0;
     background: #f8f8f8;
     display: none;
     position: absolute;
     left: 188px;
-    top: 0px;
+    top: 0;
     z-index: 100;
 }
 
@@ -147,7 +114,7 @@ select, input.input {
 #navigation ul ul li {
     font-size: 12px;
     display: block;
-    padding: 0px 0px 2px 4px;
+    padding: 0 0 2px 4px;
     text-decoration: none;
     color: #666666;
     width: 188px;
@@ -168,8 +135,9 @@ select, input.input {
 #navigation ul ul li:hover ul {
     display: block;
 }
+*/
 
-/* Mygtukai profilio redagavimui bei moderatori� puslapiui */
+/* Mygtukai profilio redagavimui bei moderatorių puslapiui */
 .blokas {
     width: 77px;
     text-align: center;
@@ -185,17 +153,15 @@ select, input.input {
 
 div.blokas a {
     font-size: 11px;
-    font-weight: bold;
-    text-decoration: none;
     display: block;
     margin: 3px;
 }
 
 div.blokas a:active, div.blokas a:hover {
-    margin-left: 4px;
-    margin-top: 4px;
-    margin-right: 2px;
-    margin-bottom: 2px;
+    /* margin-left: 4px;
+        margin-top: 4px;
+        margin-right: 2px;
+        margin-bottom: 2px;*/
 }
 
 div.blokas img {
@@ -223,13 +189,13 @@ a.btn {
 }
 
 a.btn:active, a.btn:hover {
-    margin-left: 4px;
-    margin-top: 4px;
-    margin-right: 2px;
-    margin-bottom: 2px;
+    /*  margin-left: 4px;
+        margin-top: 4px;
+        margin-right: 2px;
+        margin-bottom: 2px;*/
 }
 
-/* Lentel�ms */
+/* Lentelėms */
 .table {
     border-bottom: 2px solid #d1d1d1;
     border-right: 2px solid #d1d1d1;
@@ -244,10 +210,6 @@ a.btn:active, a.btn:hover {
     padding-left: 5px;
     font-weight: bold;
     font-size: 13px;
-}
-
-.th a {
-    color: white;
 }
 
 .tr2 {
@@ -297,7 +259,7 @@ table tr td {
     margin: 5px
 }
 
-/* Title lentel� i�okanti pel� u�vedus ant nuorodos su pavadinimu (title="") */
+/* Title lentelė iššokanti pele užvedus ant nuorodos su pavadinimu (title="") */
 .tooltip {
     padding: 3px;
     border: 1px solid #666;
@@ -310,7 +272,7 @@ table tr td {
     z-index: 1000;
 }
 
-/* Informaciniai prane�imai */
+/* Informaciniai pranešimai */
 .klaida {
     margin-bottom: 5px;
     height: auto;
@@ -358,7 +320,7 @@ table tr td {
     background: url(../images/tick.png) no-repeat;
 }
 
-/* Nario avataro paveiksl�lis */
+/* Nario avataro paveikslėlis */
 .avataras img {
     background: #fff;
     border: 1px solid #ccc;
@@ -368,7 +330,7 @@ table tr td {
     float: left;
 }
 
-/* Kategorij� paveiksl�lis */
+/* Kategorijų paveikslėlis */
 .kat img {
     height: 40px;
     width: 40px;
@@ -381,6 +343,7 @@ table tr td {
     clear: left;
 }
 
+/* Forume tarp [IMG] tag'ų padėtas paveikslėlis */
 .forum_img {
     max-width: 400px;
     max-height: 400px;
@@ -391,14 +354,13 @@ table tr td {
     padding: 2px;
 }
 
-/* Nario para�ui */
+/* Nario parašui */
 .signature {
     border-top: 1px dashed #fff;
 }
 
 /* Puslapiavimui */
 .puslapiavimas {
-    text-shadow: 0px 0px 0px;
     text-align: center;
 }
 
@@ -489,18 +451,58 @@ a.siust {
 }
 
 .albumas .foto {
-    background: #e1e1e1;
-    background-repeat: no-repeat;
-    background-position: center center;
+    background: #d5d5d5;
     height: 100px;
     margin-bottom: 4px;
+}
+
+.albumas .foto:hover {
+
 }
 
 .albumas small {
     font-size: 10px;
 }
 
-/* Mightmedia pagrindin�s stiliaus funkcijos */
+/* Mightmedia pagrindinės stiliaus funkcijos */
+
+/* Papildomai */
+.clear {
+    clear: both;
+}
+
+.middle {
+    vertical-align: middle;
+}
+
+td#line {
+    padding-right: 5px;
+    padding-left: 5px;
+    border-right: 1px solid;
+    text-align: right;
+    background: #cccccc;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    width: 20px;
+}
+
+td#code {
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+}
+
+.img_left {
+    float: left;
+    margin-right: 5px;
+    position: relative;
+}
+
+.tr, .tr2, .td, .td2, .th {
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
 /* Moderavimui ir t.t. */
 .drag_block {
     display: block;
