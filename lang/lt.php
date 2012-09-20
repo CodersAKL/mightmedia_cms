@@ -25,6 +25,7 @@ $lang['admin']['panel_center'] = 'Centras';
 $lang['admin']['panel_do_show'] = 'Rodymas';
 $lang['admin']['panel_do_all'] = 'Visuose puslapiuose';
 $lang['admin']['panel_do_one'] = 'Tik pagrindiniame';
+$lang['system']['file_exists'] = 'Toks failas jau egzistuoja';
 $lang['system']['rate'] = 'Įvertinimas';
 $lang['system']['info'] = 'Informacija';
 //Siuntinio pateikimas
