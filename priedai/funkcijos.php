@@ -961,18 +961,21 @@ function input( $s ) {
 /**
  * Seo url TODO
  */
+
 function seo_url( $url, $id ) {
 
-	// Sušveplinam
+// Sušveplinam
 	$url = iconv( 'UTF-8', 'US-ASCII//TRANSLIT', $url );
-	// Neaiškius simbolius pakeičiam brūkšniukais
-	$url = preg_replace( '/[^A-z0-9-]/', '-', $url );
-	// Išvalom besikartojančius brūkšniukus
+// Nuimam tarpus pradžioje bei pabaigoje
+	$url = trim( $url );
+// Neaiškius simbolius pakeičiam brūkšniukais
+	$url = preg_replace( '/[^A-z0-9-]/', '_', $url );
+// Išvalom besikartojančius brūkšniukus
 	$url = preg_replace( '/-+/', "-", $url );
-	// Verčiam viską į mažasias raides
+// Verčiam viską į mažasias raides
 	$url = strtolower( $url );
 
-	return $url . '_' . $id . '.html';
+	return $url . $id;
 }
 
 /**

@@ -86,7 +86,8 @@ if ( isset( $_POST['order'] ) ) {
 
 	if ( isset( $_POST['Naujas_puslapis2'] ) && $_POST['Naujas_puslapis2'] == $lang['admin']['page_create'] ) {
 		// Nurodote failo pavadinimą:
-		$failas = ROOT . "puslapiai/" . preg_replace( "/[^a-z0-9-]/", "_", strtolower( $_POST['pav'] ) ) . ".php";
+		//$failas = ROOT . "puslapiai/" . preg_replace( "/[^a-z0-9-]/", "_", strtolower( $_POST['pav'] ) ) . ".php";
+		$failas = ROOT . "puslapiai/" . seo_url( basename( $_POST['pav'] ), '' ) . ".php";
 
 		// Nurodote įrašą kuris bus faile kai jį sukurs:
 		$tekstas = str_replace( array( '$', 'HTML' ), array( '&#36;', 'html' ), $_POST['Page'] );
@@ -98,16 +99,19 @@ $text =
 HTML;
 lentele($page_pavadinimas,$text);
 ?>';
-
-		// Irasom faila
-		$fp = fopen( $failas, "w+" );
-		fwrite( $fp, $irasas );
-		fclose( $fp );
-		chmod( $failas, 0777 );
-
-		// Rezultatas:
-		//	msg($lang['system']['done'], "{$lang['admin']['page_created']}.");
-		redirect( url( "?id,{$_GET['id']};a,{$_GET['a']};n,1" ), "header" );
+		//Tikrinam ar nera tokio pacio failo
+		if (file_exists($failas)) {
+			klaida($lang['system']['error'], "{$lang['system']['file_exists']}.");
+		} else {
+			// Irasom faila
+			$fp = fopen( $failas, "w+" );
+			fwrite( $fp, $irasas );
+			fclose( $fp );
+			chmod( $failas, 0777 );
+			// Rezultatas:
+			//msg($lang['system']['done'], "{$lang['admin']['page_created']}.");
+			redirect( url( "?id,{$_GET['id']};a,{$_GET['a']};n,1" ), "header" );
+		}
 	}
 
 	if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
@@ -148,20 +152,78 @@ lentele($page_pavadinimas,$text);
 			klaida( $lang['system']['warning'], "<h3>{$lang['admin']['page_nounused']}</h3>" );
 		} else {
 			$info = " <img src=\"" . ROOT . "/images/icons/help.png\" title=\"{$lang['system']['about_allow_pg']}\">";
-			$psl  = array(
-				"Form"                                                                                                                                                                                                                     => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel" ),
-				$lang['admin']['page_name']                                                                                                                                                                                                => array( "type" => "text", "value" => "{$lang['admin']['page_name']}", "name" => "Page", "class" => "input" ),
-				$lang['admin']['page_file'] . " <a id=\"linkas\" onclick=\"$('#failas').replaceWith('<input name=\'File\' value=\'http://\' class=\'input\' />'); $('#linkas').empty();return fale;\">[{$lang['admin']['page_link']}]</a>" => array( "type" => "select", "value" => $puslapiai, "name" => "File", "id" => "failas" ), "Sub" => array( "type" => "select", "value" => $parents, "name" => "parent" ),
-				$lang['admin']['page_show']                                                                                                                                                                                                => array( "type" => "select", "value" => array( "Y" => $lang['admin']['yes'], "N" => "{$lang['admin']['no']}" ), "name" => "Show" ),
-				$lang['admin']['page_showfor'] . $info                                                                                                                                                                                     => array( "type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai" ),
-				""                                                                                                                                                                                                                         => array( "type" => "submit", "name" => "Naujas_puslapis", "value" => $lang['admin']['page_create'] )
+			$psl = array(
+				"Form"                                        => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel" ),
+				$lang['admin']['page_name']                   => array(
+					"type"  => "text",
+					"value" => "{$lang['admin']['page_name']}",
+					"name"  => "Page",
+					"class" => "input" ),
+
+				$lang['admin']['page_file'] . "<a id=\"linkas\" onclick=\"$('#failas').replaceWith('<input name=\'File\' value=\'http://\' class=\'input\' />');$('#linkas').empty();return fale;\">[{$lang['admin']['page_link']}]</a>"  => array(
+					"type"  => "select",
+					"value" => $puslapiai,
+					"name"  => "File",
+					"id"    => "failas" ),
+
+				"Sub"                                         => array(
+					"type"  => "select",
+					"value" => $parents,
+					"name"  => "parent" ),
+
+				$lang['admin']['page_show']                   => array(
+					"type"  => "select",
+					"value" => array( "Y" => $lang['admin']['yes'],
+					                  "N" => "{$lang['admin']['no']}" ),
+					"name"  => "Show" ),
+
+				$lang['admin']['page_showfor'] . $info        => array(
+					"type"  => "select",
+					"extra" => "multiple=multiple",
+					"value" => $teises,
+					"class" => "asmSelect",
+					"style" => "width:100%",
+					"name"  => "Teises[]",
+					"id"    => "punktai" ),
+				""                                            => array(
+					"type" => "submit",
+					"name" => "Naujas_puslapis",
+					"value" => $lang['admin']['page_create'] )
 			);
 			include_once ( ROOT . "priedai/class.php" );
 			$bla = new forma();
 			lentele( $lang['admin']['page_select'], $bla->form( $psl ) );
 		}
 	} elseif ( isset( $url['n'] ) && $url['n'] == 2 ) {
-		$psl = array( "Form" => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_page2" ), "{$lang['admin']['page_filename']}:" => array( "type" => "text", "value" => "{$lang['admin']['page_name']}", "name" => "pav", "class" => "input" ), "{$lang['admin']['page_text']}:" => array( "type" => "string", "value" => editor( 'spaw', 'standartinis', array( 'Page' => 'Page' ), FALSE ), "name" => "Page", "class" => "input", "rows" => "8", "class" => "input" ), "" => array( "type" => "submit", "name" => "Naujas_puslapis2", "value" => $lang['admin']['page_create'] ) );
+		$psl = array(
+
+			"Form"                               => array(
+				"action"  => "",
+				"method"  => "post",
+				"enctype" => "",
+				"id"      => "",
+				"class"   => "",
+				"name"    => "new_page2" ),
+
+			"{$lang['admin']['page_filename']}:" => array(
+				"type"  => "text",
+				"value" => "{$lang['admin']['page_name']}",
+				"name"  => "pav",
+				"class" => "input" ),
+
+			"{$lang['admin']['page_text']}:"     => array(
+				"type"  => "string",
+				"value" => editor( 'spaw', 'standartinis', array( 'Page' => 'Page' ), FALSE ),
+				"name"  => "Page",
+				"class" => "input",
+				"rows"  => "8",
+				"class" => "input" ),
+			""                                   => array(
+				"type"  => "submit",
+				"name"  => "Naujas_puslapis2",
+				"value" => $lang['admin']['page_create'] )
+		);
+
 		include_once ( ROOT . "priedai/class.php" );
 		$bla = new forma();
 		lentele( $lang['admin']['page_create'], $bla->form( $psl, $lang['admin']['page_create'] ) );
@@ -204,14 +266,50 @@ lentele($page_pavadinimas,$text);
 			$selected = unserialize( $sql['teises'] );
 			unset( $parents[$sql['id']] );
 			$info = " <img src=\"" . ROOT . "/images/icons/help.png\" title=\"{$lang['system']['about_allow_pg']}\">";
-			$psl  = array(
-				"Form"                                 => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_psl" ),
-				$lang['admin']['page_name']            => array( "type" => "text", "value" => $sql['pavadinimas'], "name" => "pslp", "class" => "input" ),
-				//$lang['admin']['page_showfor'] => array("type" => "select", "value" => $teises, "name" => "Teises", "class" => "input", "class" => "input", "selected" => (isset($sql['teises']) ? input($sql['teises']) : '')),
-				$lang['admin']['page_show']            => array( "type" => "select", "value" => array( "Y" => $lang['admin']['yes'], "N" => $lang['admin']['no'] ), "selected" => input( $sql['show'] ), "name" => "Show" ), "Sub" => array( "type" => "select", "value" => $parents, "selected" => input( $sql['parent'] ), "name" => "parent" ),
-				$lang['admin']['page_showfor'] . $info => array( "type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai" ),
-				""                                     => array( "type" => "submit", "name" => "Redaguoti_psl", "value" => $lang['admin']['edit'] )
+			$psl = array(
+				"Form"                                 => array(
+					"action"  => "",
+					"method"  => "post",
+					"enctype" => "",
+					"id"      => "",
+					"class"   => "",
+					"name"    => "new_psl" ),
+
+				$lang['admin']['page_name']            => array(
+					"type"  => "text",
+					"value" => $sql['pavadinimas'],
+					"name"  => "pslp",
+					"class" => "input" ),
+
+				$lang['admin']['page_show']            => array(
+					"type"     => "select",
+					"value"    => array( "Y" => $lang['admin']['yes'],
+					                     "N" => $lang['admin']['no'] ),
+					"selected" => input( $sql['show'] ),
+					"name"     => "Show" ),
+
+				"Sub"                                  => array(
+					"type"     => "select",
+					"value"    => $parents,
+					"selected" => input( $sql['parent'] ),
+					"name"     => "parent" ),
+
+				$lang['admin']['page_showfor'] . $info => array(
+					"type"  => "select",
+					"extra" => "multiple=multiple",
+					"value" => $teises,
+					"class" => "asmSelect",
+					"style" => "width:100%",
+					"name"  => "Teises[]",
+					"id"    => "punktai" ),
+
+				""                                     => array(
+					"type"  => "submit",
+					"name"  => "Redaguoti_psl",
+					"value" => $lang['admin']['edit'] )
 			);
+
+
 			if ( !empty( $selected ) ) {
 				$psl[$lang['admin']['page_showfor'] . $info]['selected'] = $selected;
 			}
@@ -229,7 +327,6 @@ lentele($page_pavadinimas,$text);
 			$sql     = "SELECT `file`,`pavadinimas` FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape( $psl_id ) . " LIMIT 1";
 			$sql     = mysql_query1( $sql );
 			$tekstas = str_replace( array( '$', 'HTML' ), array( '&#36;', 'html' ), $_POST['Page'] );
-
 			$irasas = '<?php
 $text =
 <<<HTML
@@ -237,7 +334,6 @@ $text =
 HTML;
 lentele($page_pavadinimas,$text);
 ?>';
-
 
 			// Irasom faila
 			$fp = fopen( ROOT . 'puslapiai/' . $sql['file'], "w+" );
@@ -264,14 +360,31 @@ lentele($page_pavadinimas,$text);
 
 			//tikrinimo pabaiga
 			if ( isset( $nr ) && $nr == 2 ) {
+				$page_pavadinimas = $sql['pavadinimas'];
+
 				include ROOT . 'puslapiai/' . $sql['file'];
 
 				$puslapio_txt = $text;
 
 				$puslapis = array(
-					"Form"                      => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "psl_txt" ),
-					$lang['admin']['page_text'] => array( "type" => "string", "value" => editor( 'spaw', 'standartinis', array( 'Page' => 'Page' ), array( 'Page' => $puslapio_txt ) ), "name" => "Turinys", "class" => "input", "rows" => "10" ),
-					""                          => array( "type" => "submit", "name" => "Redaguoti_txt", "value" => $lang['admin']['edit'] )
+					"Form"                      => array(
+						"action"  => "",
+						"method"  => "post",
+						"enctype" => "",
+						"id"      => "",
+						"class"   => "",
+						"name"    => "psl_txt" ),
+					$lang['admin']['page_text'] => array(
+						"type"  => "string",
+						"value" => editor( 'spaw', 'standartinis', array( 'Page' => 'Page' ), array( 'Page' => $puslapio_txt ) ),
+						"name"  => "Turinys",
+						"class" => "input",
+						"rows"  => "10" ),
+
+					""                          => array(
+						"type"  => "submit",
+						"name"  => "Redaguoti_txt",
+						"value" => $lang['admin']['edit'] )
 				);
 
 				include_once ( ROOT . "priedai/class.php" );

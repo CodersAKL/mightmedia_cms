@@ -47,7 +47,11 @@ if ( $kid == 0 ) {
 	if ( sizeof( $sql ) > 0 ) {
 		foreach ( $sql as $row ) {
 			if ( isset( $conf['puslapiai']['naujienos.php']['id'] ) ) {
-				$n_nuoroda = "" . url( "?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] ) . "";
+				//Paprasta nuoroda
+				//$n_nuoroda = "" . url( "?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] ) . "";
+				//SEO nuoroda
+				$n_nuoroda = "" . url( "?id," . $conf['puslapiai']['naujienos.php']['id'] . ";".seo_url($row['pavadinimas'],";k,".$row['id']) ) . "";
+
 				if ( $row['kom'] == 'taip' && isset( $conf['kmomentarai_sveciams'] ) && $conf['kmomentarai_sveciams'] != 3 ) {
 					$kiekis = $row['viso'];
 				}
@@ -128,7 +132,11 @@ if ( $kid != 0 ) {
 			if ( sizeof( $susijus ) > 0 ) {
 				$naujienos = "<ul id=\"naujienos\">";
 				foreach ( $susijus as $susijusios ) {
-					$naujienos .= "<li><a href=\"" . url( "?id," . $_GET['id'] . ";k," . $susijusios['id'] ) . "\" title=\"{$susijusios['pavadinimas']}\">" . trimlink( $susijusios['pavadinimas'], 55 ) . "</a> (" . date( 'Y-m-d H:i:s', $susijusios['data'] ) . ")</li>";
+					//Paprasta nuoroda
+					// " . url( "?id," . $_GET['id'] . ";k," . $susijusios['id'] ) . "
+					//SEO nuoroda
+					// " . url( "?id," . $_GET['id'] . ";".seo_url($susijusios['pavadinimas'],";k,".$susijusios['id']) ) . "
+					$naujienos .= "<li><a href=\"" . url( "?id," . $_GET['id'] . ";".seo_url($susijusios['pavadinimas'],";k,".$susijusios['id']) ) . "\" title=\"{$susijusios['pavadinimas']}\">" . trimlink( $susijusios['pavadinimas'], 55 ) . "</a> (" . date( 'Y-m-d H:i:s', $susijusios['data'] ) . ")</li>";
 				}
 				$naujienos .= "</ul>";
 				lentele( $lang['news']['related'], $naujienos );

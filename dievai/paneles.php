@@ -124,21 +124,32 @@ if ( isset( $_POST['order'] ) ) {
 	$teises[0] = $lang['admin']['for_guests'];
 	if ( isset( $_POST['Naujaa_pnl'] ) && $_POST['Naujaa_pnl'] == $lang['admin']['panel_create'] ) {
 		// Nurodote failo pavadinimą
-		$failas  = ROOT . "blokai/" . preg_replace( "/[^a-z0-9-]/", "_", strtolower( $_POST['pav'] ) ) . ".php";
+		//$failas  = ROOT . "blokai/" . preg_replace( "/[^a-z0-9-]/", "_", strtolower( $_POST['pav'] ) ) . ".php";
+
+		$failas = ROOT . "blokai/" . seo_url( basename( $_POST['pav'] ), '' ) . ".php";
+
 		$tekstas = str_replace( array( '$', 'HTML', '<br>' ), array( '&#36;', 'html', '<br/>' ), $_POST['pnl'] );
+
 		$irasas  = '<?php
 $text =
 <<<HTML
 ' . $tekstas . '
 HTML;
 ?>';
-
-		//Irasom faila
-		$fp = fopen( $failas, "w+" );
-		fwrite( $fp, $irasas );
-		fclose( $fp );
-		chmod( $failas, 0777 );
-		redirect( url( "?id,{$_GET['id']};a,{$_GET['a']};n,1" ), "header" );
+//Tikrinam ar nera tokio pacio failo
+		if (file_exists($failas)) {
+			klaida($lang['system']['error'], "{$lang['system']['file_exists']}.");
+		} else {
+			//Irasom faila
+			$fp = fopen( $failas, "w+" );
+			fwrite( $fp, $irasas );
+			fclose( $fp );
+			chmod( $failas, 0777 );
+			redirect( url( "?id,{$_GET['id']};a,{$_GET['a']};n,1" ), "header" );
+			// Rezultatas:
+			//msg($lang['system']['done'], "{$lang['admin']['page_created']}.");
+			redirect( url( "?id,{$_GET['id']};a,{$_GET['a']};n,1" ), "header" );
+		}
 	}
 	if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 		$psl = array( "Form" => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "Naujaa_pnl" ), "{$lang['admin']['panel_name']}:" => array( "type" => "text", "value" => "Naujas blokas", "name" => "pav", "class" => "input" ), "{$lang['admin']['panel_text']}:" => array( "type" => "string", "value" => editor( 'spaw', 'standartinis', array( 'pnl' => 'pnl' ), FALSE ), "name" => "pnl", "class" => "input", "rows" => "8", "class" => "input" ), "" => array( "type" => "submit", "name" => "Naujaa_pnl", "value" => "{$lang['admin']['panel_create']}" ) );
@@ -194,14 +205,67 @@ HTML;
 		if ( !isset( $blokai ) || count( $blokai ) < 1 ) {
 			klaida( $lang['system']['error'], "<h3>{$lang['admin']['panel_no']}.</h3>" );
 		} else {
-			$panele = array( "Form"                                                                                                                                                                                                                                    => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel" ),
-			                 "{$lang['admin']['panel_title']}:"                                                                                                                                                                                                        => array( "type" => "text", "value" => "{$lang['admin']['panel_new']}", "name" => "Panel", "class" => "input" ),
-			                 "{$lang['admin']['panel_name']}:"                                                                                                                                                                                                         => array( "type" => "select", "value" => $blokai, "name" => "File" ),
-			                 "{$lang['admin']['panel_side']}:"                                                                                                                                                                                                         => array( "id" => "lygiuojam", "type" => "select", "value" => array( "L" => "{$lang['admin']['panel_left']}", "R" => "{$lang['admin']['panel_right']}", "C" => "Centras" ), "name" => "Align" ),
-			                 "<div id='pasirinkimas2'>{$lang['admin']['panel_do_show']}:</div>"                                                                                                                                                                        => array( "id" => "pasirinkimas", "type" => "select", "value" => array( "Taip" => "{$lang['admin']['panel_do_all']}", "Ne" => "{$lang['admin']['panel_do_all']}" ), "name" => "rodyti" ),
-			                 "{$lang['admin']['panel_showtitle']}?"                                                                                                                                                                                                    => array( "type" => "select", "value" => array( "Y" => "{$lang['admin']['yes']}", "N" => "{$lang['admin']['no']}" ), "name" => "Show" ),
-			                 "{$lang['admin']['panel_showfor']}:"                                                                                                                                                                                                      => array( "type"            =>
-			                                                                                                                                                                                                                                                                     "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai" ), "" => array( "type" => "submit", "name" => "Nauja_panele", "value" => "{$lang['admin']['panel_create']}" ) );
+
+			$panele = array(
+				"Form"                                 => array(
+					"action"  => "",
+					"method"  => "post",
+					"enctype" => "",
+					"id"      => "",
+					"class"   => "",
+					"name"    => "new_panel" ),
+
+				"{$lang['admin']['panel_title']}:"     => array(
+					"type"  => "text",
+					"value" => "{$lang['admin']['panel_new']}",
+					"name"  => "Panel",
+					"class" => "input" ),
+
+				"{$lang['admin']['panel_name']}:"      => array(
+					"type"  => "select",
+					"value" => $blokai,
+					"name"  => "File" ),
+
+				"{$lang['admin']['panel_side']}:"      => array(
+					"id"    => "lygiuojam",
+					"type"  => "select",
+					"value" => array(
+						"L" => "{$lang['admin']['panel_left']}",
+						"R" => "{$lang['admin']['panel_right']}",
+						"C" => "{$lang['admin']['panel_center']}" ),
+					"name"  => "Align" ),
+
+				"<div id='pasirinkimas2'>
+			    {$lang['admin']['panel_do_show']}:
+			    </div>"                => array(
+					"id"    => "pasirinkimas",
+					"type"  => "select",
+					"value" => array(
+						"Taip" => "{$lang['admin']['panel_do_all']}",
+						"Ne"   => "{$lang['admin']['panel_do_one']}" ),
+					"name"  => "rodyti" ),
+				
+				"{$lang['admin']['panel_showtitle']}" => array(
+					"type"  => "select",
+					"value" => array(
+						"Y" => "{$lang['admin']['yes']}",
+						"N" => "{$lang['admin']['no']}" ),
+					"name"  => "Show" ),
+
+				"{$lang['admin']['panel_showfor']}:"   => array(
+					"type"  => "select",
+					"extra" => "multiple=multiple",
+					"value" => $teises,
+					"class" => "asmSelect",
+					"style" => "width:100%",
+					"name"  => "Teises[]",
+					"id"    => "punktai" ),
+
+				""                                     => array(
+					"type"  => "submit",
+					"name"  => "Nauja_panele",
+					"value" => "{$lang['admin']['panel_create']}" )
+			);
 
 			include_once ( ROOT . "priedai/class.php" );
 			$bla = new forma();
@@ -238,13 +302,64 @@ HTML;
 			$sql      = "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`=" . escape( (int)$url['r'] ) . " LIMIT 1";
 			$sql      = mysql_query1( $sql );
 			$selected = unserialize( $sql['teises'] );
-			$panele   = array( "Form"                                                                                                                                                                                                                   => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "new_panel" ),
-			                   "{$lang['admin']['panel_title']}:"                                                                                                                                                                                       => array( "type" => "text", "value" => input( $sql['panel'] ), "name" => "Panel", "class" => "input" ),
-			                   "{$lang['admin']['panel_side']}:"                                                                                                                                                                                        => array( "id" => "lygiuojam", "type" => "select", "value" => array( "L" => "{$lang['admin']['panel_left']}", "R" => "{$lang['admin']['panel_right']}", "C" => "Centras" ), "selected" => input( $sql['align'] ), "name" => "Align" ),
-			                   "<div id='pasirinkimas2'>{$lang['admin']['panel_do_show']}:</div>"                                                                                                                                                       => array( "id" => "pasirinkimas", "type" => "select", "value" => array( "Taip" => "Visuose puslapiuose", "Ne" => "Tik pirminiame" ), "selected" => input( $sql['rodyti'] ), "name" => "rodyti" ),
-			                   "{$lang['admin']['panel_showtitle']}?"                                                                                                                                                                                   => array( "type" => "select", "value" => array( "Y" => "{$lang['admin']['yes']}", "N" => "{$lang['admin']['no']}" ), "selected" => input( $sql['show'] ), "name" => "Show" ),
-			                   "{$lang['admin']['panel_showfor']}:"                                                                                                                                                                                     => array( "type"  => "select", "extra" => "multiple=multiple",
-			                                                                                                                                                                                                                                                      "value" => $teises, "class" => "asmSelect", "style" => "width:100%", "name" => "Teises[]", "id" => "punktai", "selected" => $selected ), "" => array( "type" => "submit", "name" => "Redaguoti_panele", "value" => "{$lang['admin']['edit']}" ) );
+			$panele = array(
+				"Form"                                    => array(
+					"action"  => "",
+					"method"  => "post",
+					"enctype" => "",
+					"id"      => "",
+					"class"   => "",
+					"name"    => "new_panel" ),
+				"{$lang['admin']['panel_title']}:"        => array(
+					"type"  => "text",
+					"value" => input( $sql['panel'] ),
+					"name"  => "Panel",
+					"class" => "input" ),
+
+				"{$lang['admin']['panel_side']}:"         => array(
+					"id"       => "lygiuojam",
+					"type"     => "select",
+					"value"    => array(
+						"L" => "{$lang['admin']['panel_left']}",
+						"R" => "{$lang['admin']['panel_right']}",
+						"C" => "{$lang['admin']['panel_center']}" ),
+					"selected" => input( $sql['align'] ),
+					"name"     => "Align" ),
+
+				"<div id='pasirinkimas2'>
+				{$lang['admin']['panel_do_show']}:
+				</div>"                   => array(
+					"id"       => "pasirinkimas",
+					"type"     => "select",
+					"value"    => array(
+						"Taip" => "{$lang['admin']['panel_do_all']}",
+						"Ne"   => "{$lang['admin']['panel_do_one']}"),
+					"selected" => input( $sql['rodyti'] ),
+					"name"     => "rodyti" ),
+
+				"{$lang['admin']['panel_showtitle']}"    => array(
+					"type"     => "select",
+					"value"    => array(
+						"Y" => "{$lang['admin']['yes']}",
+						"N" => "{$lang['admin']['no']}" ),
+					"selected" => input( $sql['show'] ),
+					"name"     => "Show" ),
+
+				"{$lang['admin']['panel_showfor']}:"      => array(
+					"type"     => "select",
+					"extra"    => "multiple=multiple",
+					"value"    => $teises,
+					"class"    => "asmSelect",
+					"style"    => "width:100%",
+					"name"     => "Teises[]",
+					"id"       => "punktai",
+					"selected" => $selected ),
+
+				""                                        => array(
+					"type"  => "submit",
+					"name"  => "Redaguoti_panele",
+					"value" => "{$lang['admin']['edit']}" )
+			);
 
 			include_once ( ROOT . "priedai/class.php" );
 			$bla = new forma();
@@ -301,7 +416,24 @@ HTML;
 
 				if ( isset( $text ) && is_writable( ROOT . 'blokai/' . $sql['file'] ) ) {
 					$blokai_txt = $text;
-					$panele     = array( "Form" => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "panel_txt" ), $lang['admin']['panel_text'] => array( "type" => "string", "value" => editor( 'spaw', 'standartinis', array( 'Turinys' => 'Bloko turinys' ), array( 'Turinys' => ( isset( $blokai_txt ) ) ? $blokai_txt : '' ) ) ), "" => array( "type" => "submit", "name" => "Redaguoti_txt", "value" => "{$lang['admin']['edit']}" ) );
+					$panele = array(
+						"Form"                       => array(
+							"action"  => "",
+							"method"  => "post",
+							"enctype" => "",
+							"id"      => "",
+							"class"   => "",
+							"name"    => "panel_txt" ),
+
+						$lang['admin']['panel_text'] => array(
+							"type"  => "string",
+							"value" => editor( 'spaw', 'standartinis', array( 'Turinys' => 'Bloko turinys' ), array( 'Turinys' => ( isset( $blokai_txt ) ) ? $blokai_txt : '' ) ) ),
+
+						""                           => array(
+							"type"  => "submit",
+							"name"  => "Redaguoti_txt",
+							"value" => "{$lang['admin']['edit']}" )
+					);
 
 					include_once ( ROOT . "priedai/class.php" );
 					$bla = new forma();
