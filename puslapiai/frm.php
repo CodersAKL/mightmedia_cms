@@ -33,7 +33,7 @@ $qid = isset( $url['q'] ) ? $url['q'] : 0;
 include_once ( "priedai/class.php" );
 $imagedir = ( file_exists( "stiliai/{$conf['Stilius']}/forum/" ) ? "stiliai/{$conf['Stilius']}/forum/" : "images/forum/" );
 //kur tu?
-$kur = mysql_query1( "SELECT pav, (SELECT pav from " . LENTELES_PRIESAGA . "d_straipsniai Where id={$tid} AND `lang` = " . escape( lang() ) . ")AS tema,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_zinute Where sid={$tid} AND tid={$sid}  AND `lang` = " . escape( lang() ) . ")AS zinute,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_zinute Where tid={$sid} AND `lang` = " . escape( lang() ) . ")AS subzinute,(SELECT count(id) from " . LENTELES_PRIESAGA . "d_straipsniai Where tid={$sid} AND `lang` = " . escape( lang() ) . ")AS temos FROM " . LENTELES_PRIESAGA . "d_temos WHERE id={$sid} AND `lang` = " . escape( lang() ) . " limit 1", 120 );
+$kur = mysql_query1( "SELECT pav, (SELECT pav FROM " . LENTELES_PRIESAGA . "d_straipsniai Where id={$tid} AND `lang` = " . escape( lang() ) . ")AS tema,(SELECT count(id) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE sid={$tid} AND tid={$sid}  AND `lang` = " . escape( lang() ) . ")AS zinute,(SELECT count(id) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE tid={$sid} AND `lang` = " . escape( lang() ) . ")AS subzinute,(SELECT count(id) FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`={$sid} AND `lang` = " . escape( lang() ) . ")AS temos FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`={$sid} AND `lang` = " . escape( lang() ) . " LIMIT 1", 120 );
 //Sausainiai naujiems fiksuoti
 if ( $sid > 0 ) {
 	setcookie( "sub_{$sid}", $kur['subzinute'], time() + ( 60 * 60 * 24 * 365 ) );
@@ -222,7 +222,7 @@ if ( $tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0 ) 
 						$tool .= " <a style='float: right; margin-right:2px;' href='" . url( "?id," . $url['id'] . ";t," . $tid . ";s," . $sid . ";d," . $row['zid'] ) . "' title='" . $lang['system']['delete'] . "'  onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='{$imagedir}" . lang() . "/trinti.png' border='0' alt='[t]'/></a> ";
 					}
 				}
-				$reply = ( $_SESSION[SLAPTAS]['level'] > 0 ? ' <a style="float: right; margin-right:2px;"  href="' . url( "q," . $row['zid'] . "" ) . '" title="' . $lang['admin']['pm_reply'] . '"><img src="' . $imagedir . lang() . '/atsakyti.png" border="0" alt="re"></a> ' : '' );
+				$reply = ( $_SESSION[SLAPTAS]['level'] > 0 ? ' <a style="float: right; margin-right:2px;"  href="' . url( "q," . $row['zid'] . "#end" ) . '" title="' . $lang['admin']['pm_reply'] . '"><img src="' . $imagedir . lang() . '/atsakyti.png" border="0" alt="re"></a> ' : '' );
 				$turinys .= "<div style=\"\" class=\"tr\">
 			  <div style=\"margin-bottom: 6px;\" >{$reply}{$tool}<em> " . user( $row['nick'], $row['id'], $row['levelis'] ) . " (" . ( ( $row['laikas'] == '0000000000' ) ? '---' : date( 'Y-m-d H:i:s', $row['laikas'] ) ) . ") " . naujas( $row['laikas'], $row['nick'] ) . "</em></div>
 			  <div class=\"avataras\" align=\"left\">" . avatar( $row['email'], 55 ) . "</div><div class=\"tr2\" style=\"\">" . bbcode( $row['zinute'] ) . "<br />" . ( !empty( $row['parasas'] ) ? "<div class=\"signature\">" . bbcode( input( $row['parasas'] ) ) . "</div>" : "" ) . "</div></div>";
@@ -245,7 +245,8 @@ if ( $tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0 ) 
 					} else {
 						mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape( $_POST['msg'] . "\n[sm][i]{$lang['forum']['edited_by']}: " . $_SESSION[SLAPTAS]['username'] . " " . date( 'Y-m-d H:i:s', time() ) . "[/i][/sm]" ) . " WHERE `id`=" . escape( $eid ) . " AND `nick`=" . escape( $_SESSION[SLAPTAS]['id'] ) );
 					}
-					redirect( url( "?id," . $url['id'] . ";s,$sid;t,$tid;p,{$_GET['p']}" ) );
+					//redirect( url( "?id," . $url['id'] . ";s,$sid;t,$tid;p,{$_GET['p']}" ) );
+					redirect( url( "?id," . $url['id'] . ";s,$sid;t,$tid;p,{$pid}" ) );
 					//redirect($_SERVER['HTTP_REFERAL']);
 				} else {
 					if ( ar_admin( 'frm' ) ) {
@@ -385,11 +386,37 @@ elseif ( (int)$kid && (int)$kid && (int)$kid > 0 ) {
 
 		$bla  = new forma();
 		$form = array(
-			"Form"                                   => array( "action" => "", "method" => "post", "name" => "rename" ),
-			"{$lang['admin']['forum_subcategory']}:" => array( "type" => "select", "class" => "select", "value" => $kategorijos, "name" => "keliam", "class" => "select", "selected" => $tsql['tid'] ),
-			"{$lang['admin']['forum_cangeto']}:"     => array( "type" => "text", "class" => "input", "value" => $tsql['pav'], "name" => "name" ),
-			"{$lang['forum']['sticky']}?:"           => array( "type" => "select", "class" => "select", "value" => array( "1" => $lang['admin']['yes'], "0" => $lang['admin']['no'] ), "name" => "sticky", "class" => "select", "selected" => $tsql['sticky'] ),
-			""                                       => array( "type" => "submit", "name" => "sub", "value" => "{$lang['admin']['edit']}" )
+			"Form"                                   => array(
+				"action" => "",
+				"method" => "post",
+				"name"   => "rename" ),
+
+			"{$lang['admin']['forum_subcategory']}:" => array(
+				"type"     => "select",
+				"class"    => "select",
+				"value"    => $kategorijos,
+				"name"     => "keliam",
+				"selected" => $tsql['tid'] ),
+
+			"{$lang['admin']['forum_cangeto']}:"     => array(
+				"type"  => "text",
+				"class" => "input",
+				"value" => $tsql['pav'],
+				"name"  => "name" ),
+
+			"{$lang['forum']['sticky']}?:"           => array(
+				"type"     => "select",
+				"class"    => "select",
+				"value"    => array(
+					"1" => $lang['admin']['yes'],
+					"0" => $lang['admin']['no'] ),
+				"name"     => "sticky",
+				"selected" => $tsql['sticky'] ),
+
+			""                                       => array(
+				"type"  => "submit",
+				"name"  => "sub",
+				"value" => "{$lang['admin']['edit']}" )
 		);
 		lentele( $tsql['pav'], $bla->form( $form ) );
 
@@ -465,24 +492,52 @@ elseif ( $aid == 1 && $kid == 0 && $lid == 0 && $rid == 0 ) {
 			}
 			unset( $uid, $pavadinimas, $zinute, $error, $result, $inf );
 		}
-		echo "<script type=\"text/javascript\">$(document).ready(function() {
-    $('.perveiza').click(function() {
-        $.post('javascript/forum/preview.php', {'msg':$('textarea#msg').val()}, function(data) {
-            $(\"#perveiza\").empty().append($(data));
-        }, \"text\");
-    });
-  });</script>
-  ";
+echo "<script type=\"text/javascript\">$(document).ready(function() {
+        $('.perveiza').click(function() {
+          $.post('javascript/forum/preview.php', {'msg':$('textarea#msg').val()}, function(data) {
+             $(\"#perveiza\").empty().append($(data));
+             }, \"text\");
+        });
+     });
+  </script>";
 		$bla   = new forma();
 		$forma = array(
-			"Form"                      => array( "action" => "", "method" => "post", "name" => "post_msg" ),
-			"    "                      => array( "type" => "string", "value" => "<div id='perveiza'></div>" ),
-			$lang['forum']['topicname'] => array( "type" => "text", "class" => "input", "name" => "post_pav" ),
-			" "                         => array( "type" => "string", "value" => bbs( 'post_msg' ) ),
-			$lang['forum']['message']   => array( "type" => "textarea", "rows" => "8", "value" => ( ( !empty( $extra ) ) ? input( $extra ) : '' ), "name" => "post_msg", "class" => "input", "id" => "msg" ),
-			"  "                        => array( "type" => "string", "value" => bbk( 'post_msg' ) ),
-			""                          => array( "type" => "string", "value"=> "<input type=\"button\" class=\"perveiza\" value=\"{$lang['forum']['perview']}\" /> <input type=\"submit\" class=\"submit\" value=\"{$lang['forum']['submit']}\" />" )
+			"Form"                      => array(
+				"action" => "",
+				"method" => "post",
+				"name"   => "post_msg" ),
+
+			"    "                      => array(
+				"type"  => "string",
+				"value" => "<div id='perveiza'></div>" ),
+
+			$lang['forum']['topicname'] => array(
+				"type"  => "text",
+				"class" => "input",
+				"name"  => "post_pav" ),
+
+			" "                         => array(
+				"type"  => "string",
+				"value" => bbs( 'post_msg' ) ),
+
+			$lang['forum']['message']   => array(
+				"type"  => "textarea",
+				"rows"  => "8",
+				"value" => ( ( !empty( $extra ) ) ? input( $extra ) : '' ),
+				"name"  => "post_msg",
+				"class" => "input",
+				"id"    => "msg" ),
+
+			"  "                        => array(
+				"type"  => "string",
+				"value" => bbk( 'post_msg' ) ),
+
+			""                          => array(
+				"type" => "string",
+				"value"=> "<input type=\"button\" class=\"perveiza\" value=\"{$lang['forum']['perview']}\" />
+				<input type=\"submit\" class=\"submit\" value=\"{$lang['forum']['submit']}\" />" )
 		);
+
 		addtotitle( $lang['forum']['newtopic'] );
 		lentele( $lang['forum']['newtopic'], $bla->form( $forma ) );
 	}
