@@ -89,7 +89,7 @@ if ( $kid == 0 ) {
 		lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 	}
 
-	unset( $sql, $row, $extra, $pav, $n_nuoroda, $kiekis );
+	unset( $sql, $row, $extra, $pav, $autorius, $data, $n_nuoroda, $kiekis );
 }
 if ( $kid != 0 ) {
 	$sql = "SELECT `" . LENTELES_PRIESAGA . "naujienos`.*, `" . LENTELES_PRIESAGA . "grupes`.`teises` AS `teises` FROM `" . LENTELES_PRIESAGA . "naujienos` Inner Join `" . LENTELES_PRIESAGA . "grupes` ON `" . LENTELES_PRIESAGA . "naujienos`.`kategorija` = `" . LENTELES_PRIESAGA . "grupes`.`id` WHERE `" . LENTELES_PRIESAGA . "naujienos`.`rodoma`='TAIP'  AND `" . LENTELES_PRIESAGA . "naujienos`.`id` = " . escape( $kid ) . " limit 1";
