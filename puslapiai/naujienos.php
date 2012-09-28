@@ -31,7 +31,7 @@ $limit = $conf['News_limit'];
 $viso  = kiek( "naujienos", "WHERE `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . "" );
 $text  = '';
 $data  = '';
-
+$kiekis = '';
 
 // Jei niekas nepaspaudziama, o atidaromas pirminis puslapis
 if ( $kid == 0 ) {
@@ -53,7 +53,7 @@ if ( $kid == 0 ) {
 				$n_nuoroda = "" . url( "?id," . $conf['puslapiai']['naujienos.php']['id'] . ";".seo_url($row['pavadinimas'],";k,".$row['id']) ) . "";
 
 				if ( $row['kom'] == 'taip' && isset( $conf['kmomentarai_sveciams'] ) && $conf['kmomentarai_sveciams'] != 3 ) {
-					$kiekis = $row['viso'];
+					$kiekis .= $row['viso'];
 				}
 			}
 			$sql_autr        = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= '" . $row['autorius'] . "' LIMIT 1" );
