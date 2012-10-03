@@ -11,9 +11,9 @@
 
 //nustatom pid ir kid
 if ( isset( $url['k'] ) && isnum( $url['k'] ) && $url['k'] > 0 ) {
-	$kid = (int)$url['k'];
+	$k = (int)$url['k'];
 } else    {
-	$kid = 0;
+	$k = 0;
 }
 if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 	$p = (int)$url['p'];
