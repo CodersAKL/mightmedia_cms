@@ -3,118 +3,241 @@
 /**
  * @Projektas: MightMedia TVS
  * @Puslapis: www.coders.lt
- * @$Author: FDisk $
+ * @$Author: p.dambrauskas $
  * @copyright CodeRS ©2008
  * @license GNU General Public License v2
- * @$Revision: 975 $
- * @$Date: 2012-09-12 00:52:19 +0300 (Wed, 12 Sep 2012) $
+ * @$Revision: 366 $
+ * @$Date: 2009-12-03 20:46:01 +0200 (Thu, 03 Dec 2009) $
  **/
 
-$p     = isset( $url['p'] ) ? (int)$url['p'] : 0;
-$k     = isset( $url['k'] ) ? (int)$url['k'] : 0;
-$limit = $conf['News_limit'];
-$subs  = 0;
-$text  = '';
-include_once ( "rating.php" );
-//Kategorijų sąrašas
-$sqlas = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `lang` = " . escape( lang() ) . " ORDER BY `pavadinimas`", 86400 );
-if ( $sqlas && sizeof( $sqlas ) > 0 && !isset( $url['m'] ) ) {
-	foreach ( $sqlas as $sql ) {
-		//TODO: skaiciavimas is neriboto gylio.. dabar tik kategorija + sub kategorija skaiciuoja
-		if ( $sql['path'] == $k ) {
-			//$sqlkiek = kiek('straipsniai', "WHERE ".($k != 0 ? "`kat` =" . escape($sql['path']) . " OR" : "")." `kat` =" . escape($sql['id']) . " AND `rodoma`='TAIP' AND `lang` = ".escape(lang())."");
-			$kiek    = mysql_query1( "SELECT count(*) + (SELECT count(*) FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `kat` IN (SELECT `id` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`=" . escape( $sql['id'] ) . ")) as `kiek` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `kat`=" . escape( $sql['id'] ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " LIMIT 1" );
-			$sqlkiek = $kiek['kiek'];
-			$subs++;
-			$info[] = array(
-				$lang['system']['categories'] => "<a style=\"float: left;\" class=\"kat\" href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><img src='images/naujienu_kat/" . input( $sql['pav'] ) . "' alt=\"\"  border=\"0\" /></a><div><a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><b>" . input( $sql['pavadinimas'] ) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input( $sql['aprasymas'] ) . "</div><div>{$lang['category']['articles']}: $sqlkiek</div></span></div>" //,
-			);
+if ( !defined( "OK" ) || !ar_admin( basename( __file__ ) ) ) {
+	redirect( 'location: http://' . $_SERVER["HTTP_HOST"] );
+}
+unset( $text, $extra );
+if ( count( $_GET ) < 3 ) {
+	$_GET['v'] = 7;
+}
+//Puslapiavimui
+if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
+	$p = (int)$url['p'];
+} else {
+	$p = 0;
+}
+$limit = 15;
+//
+$buttons = "
+<div class=\"btns\">
+	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,6" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/script__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['article_unpublished']}</span></a>
+	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,7" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/script__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['article_create']}</span></a>
+	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,4" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/script__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['article_edit']}</span></a>
+	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,2" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
+	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,3" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>
+</div>";
+if ( empty( $_GET['v'] ) ) {
+	$_GET['v'] = 0;
+}
+lentele( $lang['admin']['straipsnis'], $buttons );
+unset( $buttons );
+include_once ( ROOT . "priedai/kategorijos.php" );
+kategorija( "straipsniai", TRUE );
+
+if ( isset( $_GET['priimti'] ) ) {
+	$result = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "straipsniai` SET rodoma='TAIP' WHERE `id`=" . escape( $_GET['priimti'] ) . ";" );
+	if ( $result ) {
+		msg( $lang['system']['done'], "{$lang['admin']['article_activated']}." );
+	} else {
+		klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+	}
+}
+//trinimas
+if ( isset( $_POST['articles_delete'] ) ) {
+	foreach ( $_POST['articles_delete'] as $a=> $b ) {
+		$trinti[] = escape( $b );
+	}
+	mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `id` IN(" . implode( ', ', $trinti ) . ")" );
+	header( "Location:" . $_SERVER['HTTP_REFERER'] );
+	exit;
+}
+if ( isset( $url['t'] ) ) {
+	$trinti = (int)$url['t'];
+	$ar     = mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE id=" . escape( $trinti ) . " LIMIT 1" );
+	if ( $ar ) {
+		msg( $lang['system']['done'], "{$lang['admin']['article_Deleted']}" );
+	} else {
+		klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+	}
+	mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/straipsnis' AND kid=" . escape( $trinti ) . "" );
+} elseif ( isset( $_POST['action'] ) && isset( $_POST['str'] ) && $_POST['action'] == $lang['admin']['edit'] ) {
+	$straipsnis  = explode( '===page===', $_POST['str'] );
+	$apr         = $straipsnis[0];
+	$str         = empty( $straipsnis[1] ) ? '' : $straipsnis[1];
+	$komentaras  = ( isset( $_POST['kom'] ) && $_POST['kom'] == 'taip' ? 'taip' : 'ne' );
+	$rodoma      = ( isset( $_POST['rodoma'] ) && $_POST['rodoma'] == 'TAIP' ? 'TAIP' : 'NE' );
+	$kategorija  = (int)$_POST['kategorija'];
+	$pavadinimas = strip_tags( $_POST['pav'] );
+	$id          = ceil( (int)$_POST['idas'] );
+
+	if ( $komentaras == 'ne' ) {
+		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid=" . escape( (int)$_GET['id'] ) . " AND kid=" . escape( $id ) );
+	}
+
+	$resultas = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "straipsniai` SET
+	    `kat` = " . escape( $kategorija ) . ",
+			`pav` = " . escape( $pavadinimas ) . ",
+			`t_text` = " . escape( $apr ) . ",
+			`f_text` = " . escape( $str ) . ",
+			`kom` = " . escape( $komentaras ) . ",
+			`rodoma` = " . escape( $rodoma ) . "
+			WHERE `id`=" . escape( $id ) . ";
+			" ) or klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+	if ( $resultas ) {
+		msg( $lang['system']['done'], "{$lang['admin']['article_updated']}." );
+	} else {
+		klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+	}
+
+} elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['article_create'] ) {
+
+	$straipsnis  = explode( '===page===', $_POST['str'] );
+	$apr         = $straipsnis[0];
+	$str         = empty( $straipsnis[1] ) ? '' : $straipsnis[1];
+	$komentaras  = ( isset( $_POST['kom'] ) && $_POST['kom'] == 'taip' ? 'taip' : 'ne' );
+	$kategorija  = (int)$_POST['kategorija'];
+	$pavadinimas = strip_tags( $_POST['pav'] );
+	$rodoma      = ( isset( $_POST['rodoma'] ) && $_POST['rodoma'] == 'TAIP' ? 'TAIP' : 'NE' );
+	$autorius    = $_SESSION[SLAPTAS]['username'];
+	$autoriusid  = $_SESSION[SLAPTAS]['id'];
+	if ( empty( $apr ) || empty( $pavadinimas ) ) {
+		$error = "{$lang['admin']['article_emptyfield']}.";
+	}
+	if ( !isset( $error ) ) {
+		$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "straipsniai` SET
+	    `kat` = " . escape( $kategorija ) . ",
+			`pav` = " . escape( $pavadinimas ) . ",
+			`t_text` = " . escape( $apr ) . ",
+			`f_text` = " . escape( $str ) . ",
+			`date` = " . time() . ",
+			`autorius` = " . escape( $autorius ) . ",
+			`autorius_id` = " . escape( $autoriusid ) . ",
+			`kom` = " . escape( $komentaras ) . ",
+			`rodoma` = " . escape( $rodoma ) . ",
+			`lang` = " . escape( lang() ) . "" );
+		if ( $result ) {
+			msg( $lang['system']['done'], "{$lang['admin']['article_created']}" );
+		} else {
+			klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
 		}
+	} else {
+		klaida( "{$lang['system']['error']}", $error );
 	}
-	include_once ( "priedai/class.php" );
-	$bla = new Table();
-	if ( isset( $info ) ) {
-		lentele( $page_pavadinimas, $bla->render( $info ), FALSE );
-	}
+	unset( $rodoma, $pavadinimas, $kategorija, $komentaras, $str, $apr, $_POST['action'], $result );
+	//redirect(url("?id," . $_GET['id'] . ";a," . $_GET['a']), "meta");
 
 }
-//Kategorijų sąrašo pabaiga
-//Jei pasirinkta kategoriją
-if ( $k >= 0 && empty( $url['m'] ) ) {
+//straipsnio redagavimas
+elseif ( ( ( isset( $_POST['edit_new'] ) && isNum( $_POST['edit_new'] ) && $_POST['edit_new'] > 0 ) ) || isset( $url['h'] ) ) {
+	if ( isset( $url['h'] ) ) {
+		$redaguoti = (int)$url['h'];
+	} elseif ( isset( $_POST['edit_new'] ) ) {
+		$redaguoti = (int)$_POST['edit_new'];
+	}
 
-	$pav  = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='$k' AND `lang` = " . escape( lang() ) . " LIMIT 1", 86400 );
-	$viso = kiek( "straipsniai", "WHERE `rodoma`='TAIP' AND `kat`='" . $k . "' AND `lang` = " . escape( lang() ) . "" );
-	if ( $viso > 0 ) {
-		//$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' AND `kat`='" . $k . "' AND `lang` = ".escape(lang())." ORDER BY `date` DESC LIMIT $p, $limit", 86400);
-		$sql = mysql_query1( "
-			SELECT *, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/straipsnis' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "straipsniai`.`id`) AS `viso`
-			FROM `" . LENTELES_PRIESAGA . "straipsniai`
-			WHERE `rodoma`= 'TAIP'
-			AND `kat`='" . $k . "'
-			AND `lang` = " . escape( lang() ) . "
-			ORDER BY `date` DESC
-			LIMIT {$p},{$limit}", 100 );
-		if ( teises( $pav['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
+	$extra = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `id`=" . escape( $redaguoti ) . " LIMIT 1" );
+}
+if ( isset( $_GET['v'] ) ) {
+	$sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `path`=0 AND `lang` = " . escape( lang() ) . " ORDER BY `id` DESC" );
+	if ( sizeof( $sql ) > 0 ) {
 
-			lentele( ( !empty( $pav['pavadinimas'] ) ? $pav['pavadinimas'] : $lang['pages']['straipsnis.php'] ), $pav['aprasymas'] . "<br /><i>{$lang['category']['articles']}: {$viso}</i>" );
-			foreach ( $sql as $row ) {
-				$sql_autr = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= '" . $row['autorius'] . "' LIMIT 1" );
-				$data     = $row['date'];
-				$autorius = user( $row['autorius'], $sql_autr['id'], $sql_autr['levelis'] );
+		$kategorijos = cat( 'straipsniai', 0 );
+	}
 
-				if ( isset( $conf['puslapiai']['straipsnis.php']['id'] ) ) {
-					if ( $row['kom'] == 'taip' && isset( $conf['kmomentarai_sveciams'] ) && $conf['kmomentarai_sveciams'] != 3 ) {
-						$kiekis = $row['viso'];
-					}
-					$nuoroda = "" . url( "?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] . ";" . seo_url( $row['pav'], $row['id'] ) ) . "";
-					lentele_c( $row['pav'], $row['t_text'], $nuoroda, $kiekis, $data, $autorius, rating_form( $page, $row['id'] ) );
-				}
-			}
+	$kategorijos[0] = "--";
+}
+include_once ( ROOT . "priedai/class.php" );
+$bla = new forma();
+
+if ( $_GET['v'] == 4 ) {
+	$table = new Table();
+///FILTRAVIMAS
+	$viso = kiek( "straipsniai", "WHERE `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . "" );
+	$sql2 = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "straipsniai` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pav'] ) ? "AND (`pav` LIKE " . escape( "%" . $_POST['pav'] . "%" ) . " " . ( !empty( $_POST['date'] ) ? " AND `date` <= " . strtotime( $_POST['date'] ) . "" : "" ) . " " . ( !empty( $_POST['t_text'] ) ? " AND `t_text` LIKE " . escape( "%" . $_POST['t_text'] . "%" ) . "" : "" ) . ")" : "" ) . " AND rodoma='TAIP' ORDER BY id LIMIT {$p},{$limit}" );
+	if ( isset( $_POST['pav'] ) && $_POST['date'] && $_POST['t_text'] ) {
+		$val = array( $_POST['pav'], $_POST['date'], $_POST['t_text'] );
+	} else {
+		$val = array( "", "", "" );
+	}
+	$info[] = array( "#"                               => " <input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />",
+	                 $lang['admin']['article']         => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pav\" />",
+	                 $lang['admin']['article_date']    => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"date\" />",
+	                 $lang['admin']['article_preface'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"t_text\" />",
+	                 $lang['admin']['action']          => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />" );
+//FILTRAVIMAS
+	foreach ( $sql2 as $row ) {
+		$info[] = array( "#"                               => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"articles_delete[]\" />",
+		                 $lang['admin']['article']         => "<span style='cursor:pointer;' title='" . $lang['admin']['article_author'] . ": <b>" . $row['autorius'] . "</b>' >" . input( $row['pav'] ) . "</span>",
+		                 $lang['admin']['article_date']    => date( 'Y-m-d', $row['date'] ),
+		                 $lang['admin']['article_preface'] => "<span style='cursor:pointer;' title='" . strip_tags( $row['t_text'] ) . "'>" . trimlink( strip_tags( $row['t_text'] ), 55 ) . "</span>",
+		                 $lang['admin']['action']          => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "images/icons/cross.png\" border=\"0\"></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>" );
+	}
+
+	if ( !empty( $info ) && count( $info ) ) {
+		lentele( $lang['admin']['article_edit'], "<form id=\"arch\" method=\"post\">" . $table->render( $info ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
+	}
+	if ( $viso > $limit ) {
+		lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+	}
+}
+
+if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
+	$ar         = array( "TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}" );
+	$straipsnis = array( "Form"                                                        => array( "action" => url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ), "method" => "post", "name" => "reg" ), "{$lang['admin']['article_title']}:" => array( "type" => "text", "value" => input( ( isset( $extra ) ) ? $extra['pav'] : '' ), "name" => "pav", "class" => "input" ), "" => array( "type" => "hidden", "name" => "idas", "value" => ( isset( $extra['id'] ) ? input( $extra['id'] ) : '' ) ), "{$lang['admin']['article_comments']}:" => array( "type" => "select", "value" => array( 'taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no'] ), "name" => "kom", "class" => "input", "class" => "input" ), "{$lang['system']['category']}:" => array( "type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => ( isset( $extra['kat'] ) ?
+		input( $extra['kat'] ) : '' ) ), "{$lang['admin']['article_shown']}:"          => array( "type" => "select", "value" => $ar, "name" => "rodoma", "class" => "input", "class" => "input", "selected" => ( isset( $extra['rodoma'] ) ? input( $extra['rodoma'] ) : '' ) ), "{$lang['admin']['article']}:" => array( "type" => "string", "value" =>
+	editor( 'jquery', 'standartinis', array( 'str' => $lang['admin']['article'] ), array( 'str' => ( isset( $extra ) ? $extra['t_text'] . ( empty( $extra['f_text'] ) ? '' : "\n===page===\n" . $extra['f_text'] ) : $lang['admin']['article'] ) ) )
+
+	), ( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['article_create'] => array( "type" => "submit", "name" => "action", "value" => ( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['article_create'] ) );
+	if ( isset( $extra['id'] ) ) {
+		$naujiena[''] = array( "type" => "text", "name" => "idas", "value" => ( isset( $extra['id'] ) ? input( $extra['id'] ) : '' ) );
+	}
+
+	lentele( $lang['admin']['article_create'], $bla->form( $straipsnis ) );
+} elseif ( $_GET['v'] == 6 ) {
+///FILTRAVIMAS
+	$q = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "straipsniai` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pav'] ) ? "AND (`pav` LIKE " . escape( "%" . $_POST['pav'] . "%" ) . " " . ( !empty( $_POST['date'] ) ? " AND `date` <= " . strtotime( $_POST['date'] ) . "" : "" ) . " " . ( !empty( $_POST['t_text'] ) ? " AND `t_text` LIKE " . escape( "%" . $_POST['t_text'] . "%" ) . "" : "" ) . ")" : "" ) . " AND rodoma='NE' ORDER BY id DESC LIMIT {$p},{$limit}" );
+//
+	$viso = kiek( "straipsniai", "WHERE `rodoma`='NE' AND `lang` = " . escape( lang() ) . "" );
+	if ( $q ) {
+		$bla  = new Table();
+		$info = array();
+//
+		if ( isset( $_POST['pav'] ) && $_POST['date'] && $_POST['t_text'] ) {
+			$val = array( $_POST['pav'], $_POST['date'], $_POST['t_text'] );
 		} else {
-			klaida( $lang['system']['warning'], "{$lang['article']['cant']}." );
+			$val = array( "", "", "", );
 		}
+		$info[] = array( "#"                               => " <input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />",
+		                 $lang['admin']['article']         => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pav\" />",
+		                 $lang['admin']['article_date']    => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"date\" />",
+		                 $lang['admin']['article_preface'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"t_text\" />",
+		                 $lang['admin']['action']          => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />" );
+//FILTRAVIMAS
+		foreach ( $q as $sql ) {
+			$info[] = array( "#"                               => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"articles_delete[]\" />",
+			                 $lang['admin']['article']         => '<span style="cursor:pointer;" title="' . $lang['admin']['article_author'] . ': <b>' . $sql['autorius'] . '</b>" >' . input( $sql['pav'] ) . '</span>',
+			                 $lang['admin']['article_date']    => date( 'Y-m-d', $sql['date'] ),
+			                 $lang['admin']['article_preface'] => "<span style='cursor:pointer;' title='" . strip_tags( $sql['t_text'] ) . "'>" . trimlink( strip_tags( $sql['t_text'] ), 55 ) . "</span>",
+			                 $lang['admin']['action']          => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};priimti," . $sql['id'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ) . "' title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>" );
+
+		}
+
+		lentele( $lang['admin']['article_unpublished'], "<form id=\"arch\" method=\"post\">" . $bla->render( $info ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
+
 		if ( $viso > $limit ) {
 			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 		}
-		unset( $text, $row, $sql );
-
-	} elseif ( $k > 0 && $subs == 0 ) {
-		klaida( $lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>" );
-	}
-
-} elseif ( !empty( $url['m'] ) ) {
-	$row = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' AND `id`=" . escape( (int)$url['m'] ) . " AND `lang` = " . escape( lang() ) . " LIMIT 1", 86400 );
-
-	$sqlas = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape( $row['kat'] ) . " AND `kieno`='straipsniai' AND `lang` = " . escape( lang() ) . " ORDER BY `pavadinimas` LIMIT 1", 86400 );
-	addtotitle( $row['pav'] );
-	if ( teises( $sqlas['teises'], $_SESSION[SLAPTAS]['level'] ) && !empty( $row['date'] ) ) {
-
-		$text = $row['t_text'] . "<div class='line'></div>";
-		if ( !empty( $row['f_text'] ) ) {
-			$text = $row['f_text'] . "<div class='line'></div>";
-		}
-		$sql_aut = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= '" . $row['autorius'] . "' LIMIT 1" );
-		$text .= "{$lang['article']['date']}: " . date( 'Y-m-d H:i:s', $row['date'] ) . ",
-	{$lang['article']['author']}: " . user( $row['autorius'], $sql_aut['id'], $sql_aut['levelis'] ) . "";
-		//Dalintis
-		$text .= "
-			<div class='line'></div>
-			<!-- AddThis Button BEGIN -->
-			<div class='addthis_toolbox addthis_default_style '><a href='http://www.addthis.com/bookmark.php?v=250&amp;pubid=xa-4e7a05051d3cf281' class='addthis_button_compact'>" . $lang['news']['share'] . "</a><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a05051d3cf281'></script><a class='addthis_button_facebook_like' fb:like:layout='button_count'></a><a class='addthis_button_tweet'></a><a class='addthis_button_google_plusone' g:plusone:size='medium'></a></div><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a03fc44b95268'></script>
-			<!-- AddThis Button END -->
-			";
-		lentele( input( $row['pav'] ), $text, rating_form( $page, $row['id'] ) );
-		include ( "priedai/komentarai.php" );
-
-		komentarai( $url['m'], TRUE );
 	} else {
-		klaida( $lang['system']['warning'], "{$lang['article']['cant']}." );
+		klaida( $lang['system']['warning'], $lang['system']['no_items'] );
 	}
-}
-if ( count( $_GET ) == 1 ) {
-	if ( kiek( "straipsniai", "WHERE rodoma='TAIP' AND `lang` = " . escape( lang() ) . "" ) <= 0 ) {
-		klaida( $lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>" );
-	}
+
 }
 
 ?>
