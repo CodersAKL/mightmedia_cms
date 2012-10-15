@@ -91,39 +91,38 @@ if ( isset( $_POST['siunt_delete'] ) ) {
 	foreach ( $sql as $row ) {
 		if ( isset( $row['file'] ) && !empty( $row['file'] ) ) {
 			@unlink( ROOT . "siuntiniai/" . $row['file'] );
-			//echo $row['file'];
 		}
 	}
 	mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` IN (" . implode( ",", $trinti ) . ")" );
-	//echo "DELETE FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE id IN (".implode(",", $trinti).")";
 	header( "Location:" . $_SERVER['HTTP_REFERER'] );
 	exit;
-} //Siuntinio redagavimas
-elseif ( ( ( isset( $_POST['edit_new'] ) && isNum( $_POST['edit_new'] ) && $_POST['edit_new'] > 0 ) ) || isset( $url['h'] ) ) {
+	//Siuntinio redagavimas
+} elseif ( ( ( isset( $_POST['edit_new'] ) && isNum( $_POST['edit_new'] ) && $_POST['edit_new'] > 0 ) ) || isset( $url['h'] ) ) {
 	if ( isset( $url['h'] ) ) {
 		$redaguoti = (int)$url['h'];
 	} elseif ( isset( $_POST['edit_new'] ) ) {
 		$redaguoti = (int)$_POST['edit_new'];
 	}
 	$extra = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `id`=" . escape( $redaguoti ) . " LIMIT 1" );
-	//$extra = mysql_fetch_assoc($extra);
 } elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['edit'] ) {
 	$apie        = $_POST['Aprasymas'];
 	$pavadinimas = strip_tags( $_POST['Pavadinimas'] );
 	$kategorija  = (int)$_POST['cat'];
 	$file        = strip_tags( $_POST['failas2'] );
 	$id          = ceil( (int)$_POST['news_id'] );
-
+	$rodoma      = ( isset( $_POST['rodoma'] ) && $_POST['rodoma'] == 'TAIP' ? 'TAIP' : 'NE' );
 
 	$result = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "siuntiniai` SET
 			`pavadinimas` = " . escape( $pavadinimas ) . ",
 			`categorija` = " . escape( $kategorija ) . ",
 			`apie` = " . escape( $apie ) . ",
-			`file` = " . escape( $file ) . "
+			`file` = " . escape( $file ) . ",
+			`rodoma` = " . escape( $rodoma ) . "
 			WHERE `id`=" . escape( $id ) . ";
 			" );
 	if ( $result ) {
 		msg( $lang['system']['done'], "{$lang['admin']['download_updated']}" );
+		redirect( url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ), "meta" );
 	} else {
 		klaida( $lang['system']['error'], "<br /><b>" . mysql_error() . "</b>" );
 	}
@@ -170,8 +169,7 @@ elseif ( ( ( isset( $_POST['edit_new'] ) && isNum( $_POST['edit_new'] ) && $_POS
 				} else {
 					klaida( $lang['system']['error'], '<font color="#FF0000">' . $filename . '</font> ' . $lang['admin']['download_toobig'] . '' );
 				}
-			} // if
-			else {
+			} else {
 				klaida( $lang['system']['error'], '<font color="#FF0000">' . $filename . '</font> ' . $lang['admin']['download_badfile'] . '' );
 			}
 		}
@@ -186,7 +184,8 @@ elseif ( ( ( isset( $_POST['edit_new'] ) && isNum( $_POST['edit_new'] ) && $_POS
 		}
 	}
 	if ( isset( $_POST['failas2'] ) && !empty( $_POST['failas2'] ) ) {
-		$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $_POST['failas2'] ) . ", " . escape( $_POST['Aprasymas'] ) . "," . escape( $_SESSION[SLAPTAS]['id'] ) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ", 'TAIP')" );
+		$rodoma = ( isset( $_POST['rodoma'] ) && $_POST['rodoma'] == 'TAIP' ? 'TAIP' : 'NE' );
+		$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $_POST['failas2'] ) . ", " . escape( $_POST['Aprasymas'] ) . "," . escape( $_SESSION[SLAPTAS]['id'] ) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ", " . escape( $rodoma ) . ")" );
 
 		if ( $result ) {
 			msg( $lang['system']['done'], $lang['admin']['download_created'] );
@@ -194,11 +193,11 @@ elseif ( ( ( isset( $_POST['edit_new'] ) && isNum( $_POST['edit_new'] ) && $_POS
 			klaida( $lang['system']['error'], $lang['system']['error'] );
 		}
 	}
-	unset( $_FILES['failas'], $filename, $result, $_POST['Pavadinimas'], $_POST['Aprasymas'], $_POST['action'], $_POST['failas2'] );
+	unset( $_FILES['failas'], $filename, $result, $_POST['Pavadinimas'], $_POST['Aprasymas'], $_POST['action'], $_POST['failas2'], $rodoma );
 	redirect( url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ), "meta" );
 
 }
-unset( $naujiena, $placiau, $komentaras, $pavadinimas, $result, $error, $pav );
+unset( $naujiena, $placiau, $komentaras, $pavadinimas, $rodoma, $result, $error, $pav );
 
 
 if ( isset( $_GET['v'] ) ) {
@@ -229,7 +228,7 @@ if ( isset( $_GET['v'] ) ) {
 			);
 		}
 
-		lentele( $lang['admin']['edit'], "<form id=\"siuntssch\" method=\"post\"><div id=\"news\">" . $table->render( $info ) . "</div><input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
+		lentele( $lang['admin']['edit'], "<form id=\"siuntssch\" method=\"post\">" . $table->render( $info ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
 		if ( $viso > $limit ) {
 			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 		}
@@ -240,19 +239,83 @@ if ( isset( $_GET['v'] ) ) {
 				$type[1] = $lang['admin']['download_uploaded'];
 				$type[2] = $lang['admin']['link'];
 
-				$tipas = array( "Form" => array( "action" => url( "?id,{$_GET['id']};a,{$_GET['a']};v,1" ), "method" => "post", "name" => "type" ), "{$lang['admin']['download_type']}:" => array( "type" => "select", "value" => $type, "name" => "tipas" ), "{$lang['admin']['download_select']}:" => array( "type" => "submit", "name" => "action", "value" => "{$lang['admin']['download_select']}" ) );
+				$tipas = array(
+					"Form"                                 => array(
+						"action" => url( "?id,{$_GET['id']};a,{$_GET['a']};v,1" ),
+						"method" => "post",
+						"name"   => "type" ),
+
+					"{$lang['admin']['download_type']}:"   => array(
+						"type"  => "select",
+						"value" => $type,
+						"name"  => "tipas" ),
+
+					"{$lang['admin']['download_select']}:" => array(
+						"type"  => "submit",
+						"name"  => "action",
+						"value" => "{$lang['admin']['download_select']}" )
+				);
+
 				lentele( $lang['admin']['download_Create'], $bla->form( $tipas ) );
 			}
 			if ( isset( $_POST['tipas'] ) || isset( $extra ) ) {
-				//if(!isset($_post['tipas'])){$_POST['tipas']=3;}
-				$forma = array( "Form"                                                                           => array( "enctype" => "multipart/form-data", "action" => url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ), "method" => "post", "name" => "action" ), ( !isset( $extra ) && @$_POST['tipas'] != 2 ) ? "{$lang['admin']['download_file']}:" : "" => array( "name" => "failas", "type" => ( isset( $extra ) || $_POST['tipas'] != 2 ) ? "file" : "hidden", "value" => "", "class" => "input" ), ( isset( $extra ) || $_POST['tipas'] == 2 ) ? "{$lang['admin']['download_fileurl']}:" : "" => array( "name" => "failas2", "type" => ( isset( $extra ) || $_POST['tipas'] == 2 ) ? "text" : "hidden", "value" => ( isset( $extra['pavadinimas'] ) ) ? input( $extra['file'] ) : '', "class" => "input" ), "{$lang['admin']['download_download']}:" => array( "type" => "text", "value" => ( isset( $extra['pavadinimas'] ) ) ? input( $extra['pavadinimas'] ) :
-					'', "name"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    => "Pavadinimas", "class" => "input" ),
-				                "{$lang['system']['category']}:"                                                 => array( "type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "class" => "input", "selected" => ( isset( $extra['categorija'] ) ? input( $extra['categorija'] ) : '0' ) ),
-				                "{$lang['admin']['download_about']}:"                                            => array( "type" => "string", "value" => editor( 'jquery', 'mini', 'Aprasymas', ( isset( $extra['apie'] ) ) ? $extra['apie'] : '' ) ),
-					//"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","class"=>"input"),
-				                ( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['download_create'] => array( "type" => "submit", "name" => "action", "value" => ( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['download_create'] ), );
+				$ar    = array( "TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}" );
+				$forma = array(
+					"Form"                                                                                     => array(
+						"enctype" => "multipart/form-data",
+						"action"  => url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ),
+						"method"  => "post",
+						"name"    => "action" ),
+
+					( !isset( $extra ) && @$_POST['tipas'] != 2 ) ? "{$lang['admin']['download_file']}:" : ""  => array(
+						"name"  => "failas",
+						"type"  => ( isset( $extra ) || $_POST['tipas'] != 2 ) ? "file" : "hidden",
+						"value" => "",
+						"class" => "input" ),
+
+					( isset( $extra ) || $_POST['tipas'] == 2 ) ? "{$lang['admin']['download_fileurl']}:" : "" => array(
+						"name"  => "failas2",
+						"type"  => ( isset( $extra ) || $_POST['tipas'] == 2 ) ? "text" : "hidden",
+						"value" => ( isset( $extra['pavadinimas'] ) ) ? input( $extra['file'] ) : '',
+						"class" => "input" ),
+
+					"{$lang['admin']['download_download']}:"                                                   => array(
+						"type"  => "text",
+						"value" => ( isset( $extra['pavadinimas'] ) ) ? input( $extra['pavadinimas'] ) : '',
+						"name"  => "Pavadinimas",
+						"class" => "input" ),
+
+					"{$lang['admin']['article_shown']}:"                                                       => array(
+						"type"     => "select",
+						"value"    => $ar,
+						"name"     => "rodoma",
+						"class"    => "input",
+						"selected" => ( isset( $extra['rodoma'] ) ? input( $extra['rodoma'] ) : '' ) ),
+
+					"{$lang['system']['category']}:"                                                           => array(
+						"type"     => "select",
+						"value"    => $kategorijos,
+						"name"     => "cat",
+						"class"    => "input",
+						"selected" => ( isset( $extra['categorija'] ) ? input( $extra['categorija'] ) : '0' ) ),
+
+					"{$lang['admin']['download_about']}:"                                                      => array(
+						"type"  => "string",
+						"value" => editor( 'jquery', 'mini', 'Aprasymas', ( isset( $extra['apie'] ) ) ? $extra['apie'] : '' ) ),
+
+					" "                                                                                         => array(
+						"type"  => "submit",
+						"name"  => "action",
+						"value" => ( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['download_create'] )
+
+				);
 				if ( isset( $extra ) ) {
-					$forma[''] = array( "type" => "hidden", "name" => "news_id", "value" => ( isset( $extra ) ? input( $extra['ID'] ) : '' ) );
+					$forma[''] = array(
+						"type"  =>
+						"hidden",
+						"name"  => "news_id",
+						"value" => ( isset( $extra ) ? input( $extra['ID'] ) : '' )
+					);
 				}
 				lentele( $lang['admin']['download_create'], $bla->form( $forma ) );
 			}
