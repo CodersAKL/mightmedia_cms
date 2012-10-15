@@ -72,15 +72,15 @@ if ( $vid == 0 ) {
 # Rodom siuntini
 if ( $vid > 0 ) {
 	$sql = mysql_query1( "SELECT
-
   `" . LENTELES_PRIESAGA . "grupes`.`pavadinimas` AS `Kategorija`,
-    `" . LENTELES_PRIESAGA . "grupes`.`pav` AS `img`,
-   `" . LENTELES_PRIESAGA . "grupes`.`id` AS `kid`,
-    `" . LENTELES_PRIESAGA . "grupes`.`teises` AS `teises`,
+  `" . LENTELES_PRIESAGA . "grupes`.`pav` AS `img`,
+  `" . LENTELES_PRIESAGA . "grupes`.`id` AS `kid`,
+  `" . LENTELES_PRIESAGA . "grupes`.`teises` AS `teises`,
   `" . LENTELES_PRIESAGA . "siuntiniai`.`pavadinimas`,
   `" . LENTELES_PRIESAGA . "siuntiniai`.`id`,
   `" . LENTELES_PRIESAGA . "siuntiniai`.`apie`,
-    `" . LENTELES_PRIESAGA . "siuntiniai`.`data`,
+  `" . LENTELES_PRIESAGA . "siuntiniai`.`data`,
+  `" . LENTELES_PRIESAGA . "siuntiniai`.`autorius`,
   `" . LENTELES_PRIESAGA . "siuntiniai`.`file`
   FROM
   `" . LENTELES_PRIESAGA . "grupes`
@@ -140,8 +140,8 @@ else {
 	if ( $k > 0 ) {
 		$sql_s = mysql_query1( "
    SELECT
-   `" . LENTELES_PRIESAGA . "grupes`.`pavadinimas` AS `Kategorija`,
-   `" . LENTELES_PRIESAGA . "grupes`.`teises` AS `teises`,
+    `" . LENTELES_PRIESAGA . "grupes`.`pavadinimas` AS `Kategorija`,
+    `" . LENTELES_PRIESAGA . "grupes`.`teises` AS `teises`,
     `" . LENTELES_PRIESAGA . "siuntiniai`.`pavadinimas`,
     `" . LENTELES_PRIESAGA . "siuntiniai`.`data`,
     `" . LENTELES_PRIESAGA . "siuntiniai`.`id`,
