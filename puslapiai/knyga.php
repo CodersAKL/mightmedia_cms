@@ -112,7 +112,7 @@ if ( !isset( $_GET['r'] ) ) {
 		" "                           => array( "type" => "submit", "name" => "knyga", "value" => $lang['guestbook']['submit'] )
 	);
 
-	hide( $lang['guestbook']['write'], $bla->form( $form ), TRUE );
+	lentele( $lang['guestbook']['write'], $bla->form( $form ), TRUE );
 }
 if ( strlen( $text ) < 1 ) {
 	$text = $lang['guestbook']['empty'];
