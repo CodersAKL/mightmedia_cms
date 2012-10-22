@@ -31,7 +31,6 @@ $limit = $conf['News_limit'];
 $viso  = kiek( "naujienos", "WHERE `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . "" );
 $text  = '';
 $data  = '';
-$kiekis = '';
 
 // Jei niekas nepaspaudziama, o atidaromas pirminis puslapis
 if ( $kid == 0 ) {
@@ -51,7 +50,7 @@ if ( $kid == 0 ) {
 				//$n_nuoroda = "" . url( "?id," . $conf['puslapiai']['naujienos.php']['id'] . ";k," . $row['id'] ) . "";
 				//SEO nuoroda
 				$n_nuoroda = "" . url( "?id," . $conf['puslapiai']['naujienos.php']['id'] . ";".seo_url($row['pavadinimas'],";k,".$row['id']) ) . "";
-
+                $kiekis = '';
 				if ( $row['kom'] == 'taip' && isset( $conf['kmomentarai_sveciams'] ) && $conf['kmomentarai_sveciams'] != 3 ) {
 					$kiekis .= $row['viso'];
 				}
