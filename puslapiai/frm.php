@@ -10,25 +10,25 @@
  * @$Date$
  * */
 //subkategorijos
-$sid = isset( $url['s'] ) ? $url['s'] : 0;
+$sid = isset( $url['s'] ) ? (int)$url['s'] : 0;
 //temos
-$tid = isset( $url['t'] ) ? $url['t'] : 0;
+$tid = isset( $url['t'] ) ? (int)$url['t'] : 0;
 //veiksmai
-$aid = isset( $url['a'] ) ? $url['a'] : 0;
+$aid = isset( $url['a'] ) ? (int)$url['a'] : 0;
 //edit
-$eid = isset( $url['e'] ) ? $url['e'] : 0;
+$eid = isset( $url['e'] ) ? (int)$url['e'] : 0;
 //puslapiai
-$pid = isset( $url['p'] ) ? $url['p'] : 0;
+$pid = isset( $url['p'] ) ? (int)$url['p'] : 0;
 //trinti msg
-$did = isset( $url['d'] ) ? $url['d'] : 0;
+$did = isset( $url['d'] ) ? (int)$url['d'] : 0;
 //trint tema
-$kid = isset( $url['k'] ) ? $url['k'] : 0;
+$kid = isset( $url['k'] ) ? (int)$url['k'] : 0;
 //Uzrakinamos temos ID
-$lid = isset( $url['l'] ) ? $url['l'] : 0;
+$lid = isset( $url['l'] ) ? (int)$url['l'] : 0;
 //redagavimo
-$rid = isset( $url['r'] ) ? $url['r'] : 0;
+$rid = isset( $url['r'] ) ? (int)$url['r'] : 0;
 //citatos
-$qid = isset( $url['q'] ) ? $url['q'] : 0;
+$qid = isset( $url['q'] ) ? (int)$url['q'] : 0;
 
 include_once ( "priedai/class.php" );
 $imagedir = ( file_exists( "stiliai/{$conf['Stilius']}/forum/" ) ? "stiliai/{$conf['Stilius']}/forum/" : "images/forum/" );
