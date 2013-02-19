@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /siuntiniai
+Disallow: /priedai
+Disallow: /puslapiai
+Disallow: /sandeliukas
+Disallow: /stiliai
+Disallow: /install
+Disallow: /dievai

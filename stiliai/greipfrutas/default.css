@@ -1,0 +1,760 @@
+* {
+    padding: 0;
+    margin: 0;
+    word-wrap: break-word;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: #6b655c;
+    font: 12px Arial, Verdana, Tahoma, sans-serif;
+    line-height: 17px;
+    background: url(paveiksleliai/fonas.png) repeat-x top;
+    background-color: #68563d;
+}
+
+.clear {
+    clear: both;
+}
+
+a, a:visited {
+    color: #68563d;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #e69e17;
+    text-decoration: underline;
+}
+
+#plotis {
+    width: 912px;
+    margin: 0 auto;
+}
+
+.logo {
+    float: left;
+    background: url(paveiksleliai/mm_logo.png) no-repeat;
+    height: 82px;
+    width: 106px;
+    margin-left: 45px;
+}
+
+.skalpas {
+    width: 200px;
+    padding-top: 15px;
+    height: 94px;
+}
+
+.sonas {
+    float: right;
+    background: #e69e17;
+    height: 51px;
+    width: 2px;
+}
+
+.sonas2 {
+    margin-top: 5px;
+    float: right;
+    background: #e69e17;
+    height: 89px;
+    width: 2px;
+}
+
+/* Meniu juosta*/
+#meniu_juosta {
+    border-right: 2px solid #e69e17;
+    width: 708px;
+    background: #493313 url(paveiksleliai/meniu.png) repeat-x;
+    float: left;
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    height: 40px;
+}
+
+#meniu_juosta ul {
+    list-style: none;
+    margin: 0px;
+    padding-top: 5px;
+}
+
+#meniu_juosta ul li {
+    display: inline;
+    margin: 0px;
+    padding: 0px;
+}
+
+#meniu_juosta ul li a {
+    text-shadow: #c46b20 1px 0px 0px;
+    padding-top: 0px;
+    padding-left: 7px;
+    padding-right: 7px;
+    display: inline;
+    text-decoration: none;
+    color: #fff;
+}
+
+#meniu_juosta ul li a:hover, #meniu_juosta ul li .active {
+    text-shadow: #493313 1px 0px 0px;
+    padding-top: 2px;
+    padding-bottom: 7px;
+    background: #8e7046 url(paveiksleliai/hover.png) repeat-x;
+    color: #fff;
+}
+
+#kunas {
+    height: 100%;
+    margin-top: 20px;
+    background: #68563d;
+    float: left;
+    width: 710px;
+}
+
+#kaire {
+    float: left;
+    width: 200px;
+    margin-bottom: 30px;
+}
+
+#kaire .pavadinimas {
+    text-shadow: #c46b20 1px 0px 0px;
+    background: url(paveiksleliai/blokas.png) no-repeat;
+    width: 196px;
+    height: 21px;
+    padding-left: 5px;
+    padding-top: 5px;
+    color: #fff;
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#kaire .vidus {
+    text-shadow: #f4f3f3 1px 0px 0px;
+    border: 1px solid #f4f3f3;
+    background: #f4f3f3 url(paveiksleliai/bloko_fonas.png) repeat-x;
+}
+
+#centras {
+    float: left;
+    width: 473px;
+    margin-bottom: 10px;
+    margin-left: 12px;
+    line-height: 17px;
+}
+
+#centras .vidus {
+    text-shadow: #f4f3f3 1px 0px 0px;
+    border: 1px solid #f4f3f3;
+    background: #f4f3f3 url(paveiksleliai/bloko_fonas.png) repeat-x;
+}
+
+#centras .pavadinimas {
+    text-shadow: #6b655c 1px 0px 0px;
+    background: url(paveiksleliai/meniu.png) repeat-x;
+    width: auto;
+    height: 21px;
+    color: #fff;
+    padding-left: 5px;
+    padding-top: 5px;
+    color: #fff;
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+#centras .pavadinimas2 {
+    text-shadow: #6b655c 1px 0px 0px;
+    background: url(paveiksleliai/centrinis_blokas.png) no-repeat;
+    width: auto;
+    height: 21px;
+    color: #fff;
+    padding-left: 5px;
+    padding-top: 5px;
+    color: #fff;
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+#desine {
+    margin-bottom: 20px;
+    margin-left: 13px;
+    float: left;
+    width: 200px;
+}
+
+/*IE6 Pataisa*/
+#centras {
+    min-height: 700px;
+}
+
+* html #centras {
+    height: 700px;
+}
+
+#desine .pavadinimas {
+    text-shadow: #c46b20 1px 0px 0px;
+    background: url(paveiksleliai/blokas.png) no-repeat;
+    width: 196px;
+    height: 21px;
+    padding-left: 5px;
+    padding-top: 5px;
+    color: #fff;
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#desine .vidus {
+    text-shadow: #f4f3f3 1px 0px 0px;
+    border: 1px solid #f4f3f3;
+    background: #f4f3f3 url(paveiksleliai/bloko_fonas.png) repeat-x;
+}
+
+.text {
+    padding: 3px;
+}
+
+#kojos {
+    clear: both;
+    height: 80px;
+    border: 2px solid #cccccc;
+    background: #68563d url(paveiksleliai/kojos.png) repeat-x;
+    border-bottom: 0;
+}
+
+#kojos .tekstas {
+    color: #cccccc;
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    float: left;
+    height: 45px;
+    width: 300px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+#kojos .tekstas a{
+    color: #cccccc;
+}
+
+#kojos .logo {
+    float: right;
+    height: 45px;
+    width: 60px;
+    background: url(paveiksleliai/mm_kojos_logo.png) no-repeat;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+#another {
+    background: url(paveiksleliai/fonas2.png) repeat-x bottom;
+    width: 100%;
+    height: 30px;
+}
+
+#another .lygiuojam {
+    margin: 0 auto;
+    width: 710px;
+}
+
+#another .taisom {
+    width: 706px;
+    background: #68563d;
+    margin-left: 101px;
+    height: 2px;
+}
+
+/* Mightmedia pagrindin�s stiliaus funkcijos */
+img {
+    border: 0;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+hr, fieldset {
+    margin: 2px;
+    border: 1px dotted #CCC;
+}
+
+input, textarea, button, select {
+    outline: none;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #5d5141;
+    background: #cabfb0;
+    border: 1px solid #5d5141;
+    padding-left: 5px;
+}
+
+.editorius {
+    width: 370px;
+}
+
+input, button, select {
+    height: 20px
+}
+
+input[type="submit"], .submit, .perveiza {
+    cursor: pointer;
+    padding: 2px;
+    background: #493313 url(paveiksleliai/hover.png) repeat-x;
+    border: 1px solid #ccc;
+    color: #fff;
+}
+
+button {
+    cursor: pointer;
+    padding: 2px;
+}
+
+/* BB Kodo [code] forume laukas */
+.code {
+    margin: 10px;
+    height: auto;
+    width: 95%;
+    background: #ccc;
+}
+
+textarea.input {
+    width: 90%;
+    background: #cccccc;
+}
+
+select, input.input {
+    width: 90%;
+}
+
+/*Bloko meniu*/
+#navigation {
+    width: 100%;
+    font-size: 12px;
+}
+
+#navigation ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+#navigation ul li a {
+    display: block;
+    border-bottom: 1px solid #d2ccc3;
+    padding: 5px 0px 2px 4px;
+    text-decoration: none;
+    color: #666666;
+    width: 188px;
+}
+
+#navigation ul li:hover, #navigation ul li .active {
+    color: #000000;
+    background-color: #d2ccc3;
+    position: relative;
+}
+
+/*Sub Meniu*/
+#navigation ul ul {
+    border: 0px;
+    background: #cccccc url(paveiksleliai/bloko_fonas.png) repeat-x;
+    display: none;
+    position: absolute;
+    left: 188px;
+    top: 0px;
+    z-index: 100;
+}
+
+#navigation ul li:hover ul {
+    display: block;
+}
+
+#navigation ul ul li {
+    font-size: 12px;
+    display: block;
+    padding: 0px 0px 2px 4px;
+    text-decoration: none;
+    color: #cccccc;
+    width: 188px;
+}
+
+#navigation ul ul li a {
+    width: 180px;
+}
+
+#navigation ul ul li:hover {
+
+}
+
+#navigation li:hover ul li ul {
+    display: none;
+}
+
+#navigation ul ul li ul {
+    left: 110px;
+}
+
+#navigation ul ul li:hover ul {
+    display: block;
+}
+
+/* Mygtukai profilio redagavimui bei moderatori� puslapiui */
+.blokas {
+    width: 77px;
+    text-align: center;
+    float: left;
+    cursor: pointer;
+    background: #d2ccc3;
+    border: 1px solid #a88b62;
+    padding: 3px;
+    margin: 3px;
+    height: auto;
+    /*clear: both;*/
+}
+
+div.blokas a {
+    font-size: 11px;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+    margin: 3px;
+}
+
+div.blokas a:active, div.blokas a:hover {
+    margin-left: 4px;
+    margin-top: 4px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
+div.blokas img {
+    display: block;
+    border: 0;
+}
+
+div.blokas img:hover {
+    display: block;
+    border: 0;
+}
+
+a.btn {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    /*float: left;*/
+    cursor: pointer;
+    background: #d2ccc3;
+    border: 1px solid #a88b62;
+    padding: 3px;
+    margin: 3px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a.btn:active, a.btn:hover {
+    margin-left: 4px;
+    margin-top: 4px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
+/* Lentel�ms */
+.table {
+    border-bottom: 2px solid #d1d1d1;
+    border-right: 2px solid #d1d1d1;
+}
+
+.th {
+    text-align: center;
+    color: #6b655c;
+    background: #d1d1d1;
+    height: 22px;
+    padding-top: 5px;
+    padding-left: 5px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.th a {
+    color: white;
+}
+
+.tr2 {
+    padding: 5px;
+    background: #d2ccc3;
+    vertical-align: middle;
+    overflow: hidden
+}
+
+.tr {
+    padding: 5px;
+    vertical-align: middle;
+    overflow: hidden
+}
+
+.td {
+    padding-left: 5px;
+    border-left: 1px solid #d1d1d1;
+    vertical-align: middle
+}
+
+.td2 {
+    padding-left: 5px;
+    border-left: 1px solid #d1d1d1;
+    vertical-align: middle
+}
+
+table tr td {
+    padding: 1px;
+}
+
+/* Kalendoriui */
+.kalendorius table tr td {
+    border-bottom: 1px dashed #d2ccc3;
+    text-align: center;
+}
+
+.kalendorius .siandien {
+    background: #d2ccc3;
+    font-weight: bold;
+    color: #fff
+}
+
+/* Linija, po naujiena, straipsniu, siuntiniu ir t.t */
+.line {
+    border-top: 1px dashed #d2ccc3;
+    margin: 5px
+}
+
+/* Title lentel� i�okanti pel� u�vedus ant nuorodos su pavadinimu (title="") */
+.tooltip {
+    max-width: 300px;
+    padding: 3px;
+    border: 1px solid #fff;
+    display: none;
+    background: #78531f;
+    color: #fff;
+    font: 11px Arial, Helvetica, sans-serif;
+    text-align: left;
+    position: absolute;
+    z-index: 1000;
+}
+
+/* Informaciniai prane�imai */
+.klaida {
+    margin-bottom: 5px;
+    height: auto;
+    width: 100%;
+    background: #f7e66c;
+    border: 1px solid #c8bb45;
+    color: #afa233;
+}
+
+.info_tekstas {
+    color: #3d403d;
+    padding-left: 40px;
+    padding-bottom: 3px;
+}
+
+.info_pavadinimas {
+    padding-top: 3px;
+    padding-left: 40px;
+}
+
+.msg {
+    margin-bottom: 5px;
+    height: auto;
+    width: 100%;
+    background: #c3ea86;
+    border: 1px solid #a2cd5e;
+    color: #769b3d;
+}
+
+.klaida .info_ikona {
+    margin-top: 3px;
+    margin-left: 5px;
+    float: left;
+    height: 32px;
+    width: 32px;
+    background: url(paveiksleliai/warrning.png) no-repeat;
+}
+
+.msg .info_ikona {
+    margin-top: 3px;
+    margin-left: 5px;
+    float: left;
+    height: 32px;
+    width: 32px;
+    background: url(paveiksleliai/tick.png) no-repeat;
+}
+
+/* Nario avataro paveiksl�lis */
+.avataras img {
+    background: #fff;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 2px 10px 2px 2px;
+    padding: 2px;
+    float: left;
+}
+
+/* Kategorij� paveiksl�lis */
+.kat img {
+    height: 40px;
+    width: 40px;
+    background: #d2ccc3;
+    border: 1px solid #a88b62;
+    display: block;
+    margin: 2px;
+    padding: 2px;
+    float: left;
+    clear: left;
+}
+
+.forum_img {
+    max-width: 400px;
+    max-height: 400px;
+    background: #d2ccc3;
+    border: 1px solid #a88b62;
+    display: block;
+    margin: 2px;
+    padding: 2px;
+}
+
+/* Nario para�ui */
+.signature {
+    border-top: 1px dashed #fff;
+}
+
+/* Puslapiavimui */
+.puslapiavimas {
+    text-shadow: none;
+    text-align: center;
+}
+
+.puslapiavimas a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.puslapiavimas .nuoroda {
+    vertical-align: middle;
+    background: #d2ccc3;
+    padding: 2px;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+.puslapiavimas .nuoroda:hover {
+    background: #f09c1b;
+}
+
+.puslapiavimas .paspaustas {
+    color: #fff;
+    vertical-align: middle;
+    font-weight: bold;
+    background: #f09c1b;
+    padding: 2px;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+/* Siustis.php puslapio siuntimosi mygtukas */
+a.siust {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    cursor: pointer;
+    background: #d2ccc3;
+    border: 1px solid #CCCCCC;
+    padding: 3px;
+    margin: 3px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Galerijai */
+#gallery {
+    position: relative;
+}
+
+.gallery_title, .gallery_menu {
+    background: black;
+    color: #fff;
+    font-weight: bold;
+    opacity: 0.7;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+.gallery_title {
+    top: 0;
+}
+
+.gallery_menu {
+    bottom: 5px;
+}
+
+.gallery_menu img {
+    vertical-align: middle;
+}
+
+/* Apsaugos kodui */
+#captcha {
+    background: #cccccc;
+}
+
+/* Reitingavimas */
+.base {
+    background: url(paveiksleliai/ratings.png) 0 0 no-repeat;
+}
+
+.average {
+    background: url(paveiksleliai/ratings.png) 0 -16px no-repeat;
+}
+
+.score a:hover {
+    background: url(paveiksleliai/ratings.png) bottom left no-repeat;
+}
+
+/* Galerijos fotoalbumams */
+.albumas {
+    text-align: center;
+    float: left;
+    padding: 5px;
+    background: #d2ccc3;
+    border: 1px solid #a88b62;
+    width: 133px;
+    height: 140px;
+    margin: 5px;
+}
+
+.albumas .foto {
+    background: #e1e1e1;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100px;
+    margin-bottom: 4px;
+}
+
+.albumas .foto:hover {
+    opacity: 0.7;
+    background: #d5d5d5;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.albumas small {
+    font-size: 10px;
+}
+
+/* Mightmedia pagrindin�s stiliaus funkcijos */

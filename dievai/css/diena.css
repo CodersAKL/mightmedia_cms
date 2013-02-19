@@ -1,0 +1,31 @@
+body {
+    background: #E6E6E6;
+}
+
+#virslogo {
+    background: #E6E6E6;
+}
+
+#admin_logo {
+    background: #E6E6E6 url(../images/mm_logo.png) no-repeat;
+}
+
+#admin_lang.down, #admin_user.down {
+    background: #E6E6E6;
+}
+
+#admin_lang.up, #admin_user.up {
+    background: #E6E6E6 url('../images/up.png') 99% 50% no-repeat;
+}
+
+#admin_lang ul li ul {
+    background: #E6E6E6;
+}
+
+#footer .copy {
+    background: #E6E6E6;
+}
+
+#footer .images {
+    background: #E6E6E6;
+}
