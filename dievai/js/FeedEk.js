@@ -30,7 +30,8 @@
                     dateString += pubdt.getFullYear() + "-";
                     dateString += (pubdt.getMonth() + 1) + "-";
                     dateString += pubdt.getDate();
-                    $('#' + idd).append('<div class="ItemDate">' + dateString + '</div>')
+                    $('#' + idd).append('<div class="ItemDate">' + pubdt.toLocaleDateString() + '</div>')
+                    //$('#' + idd).append('<div class="ItemDate">' + dateString + '</div>')
                 }
                 if (def.ShowDesc)$('#' + idd).append('<div class="ItemContent">' + entry.content + '</div>')
             })
