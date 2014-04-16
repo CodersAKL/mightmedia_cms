@@ -1,2 +1,2 @@
 #!/bin/sh
-git rev-list --count HEAD > "..\version.txt"
+git rev-list --count HEAD > version.txt
