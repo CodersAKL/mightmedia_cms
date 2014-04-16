@@ -1629,13 +1629,15 @@ HTML;
 }
 
 /** Gražina versijos numerį */
-function versija( $failas = FALSE ) {
+function versija() {
 
 	if ( !$failas ) {
 		$svnid = '$Rev$';
-		$scid  = utf8_substr( $svnid, 6 );
+		$scid  = file( ROOTAS . '/version.txt' );
+		$scid = array_shift( array_values( $scid ) );
+		var_dump($scid);
 
-		return apvalinti( ( intval( utf8_substr( $scid, 0, strlen( $scid ) - 2 ) ) / 5000 ) + '1.26', 2 );
+		return apvalinti( ( intval( $scid ) / 5000 ) + '1.28', 2 );
 	} else {
 		// Nuskaityti failą ir paimti su regexp versijos numerį
 		return '$Rev$';
