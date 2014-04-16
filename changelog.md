@@ -1,10 +1,22 @@
+2014-04-16 13:52:44 +0300 Vytenis 
+
+	* Bandymas (HEAD, trunk)
+
+2014-04-16 13:52:28 +0300 Vytenis 
+
+	* Bandymas
+
+2014-04-16 13:52:03 +0300 Vytenis 
+
+	* Versijavimo sistemos tobulinimai (origin/trunk)
+
 2014-04-16 13:51:10 +0300 Vytenis 
 
-	* Versijavimo sistemos tobulinimai (HEAD, trunk)
+	* Versijavimo sistemos tobulinimai
 
 2014-04-16 13:45:13 +0300 Vytenis 
 
-	* Versijavimo sistemos tobulinimai (origin/trunk)
+	* Versijavimo sistemos tobulinimai
 
 2014-04-16 13:42:57 +0300 Vytenis 
 
