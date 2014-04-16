@@ -1,3 +1,10 @@
+Used hooks
+==========
+Please make hard link to the .git/hooks/pre-commit from file ROOT/version_hook.sh
+
+    mklink /H .git\hooks\pre-commit .\version_hook.sh
+
+
 mightmedia cms change log
 ==============
 
