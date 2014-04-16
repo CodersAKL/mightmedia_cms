@@ -1,14 +1,3 @@
-Used hooks
-==========
-Please make hard link to the .git/hooks/pre-commit from file ROOT/version_hook.sh
-
-    mklink /H .git\hooks\post-commit .\hooks\post_commit_hook.sh
-    mklink /H .git\hooks\pre-commit .\hooks\pre_commit_hook.sh
-
-
-mightmedia cms change log
-==============
-
 ----------------------------------------------
 MightMedia v1.46 | 9/13/2012 12:30 AM
 Autoriai: zlotas, FDisk, p.dambrauskas
@@ -547,3 +536,4 @@ Autoriai: FDisk, p.dambrauskas
  * buvo nevalidųs tie buttonai
  * timlink
  * komentarai
+

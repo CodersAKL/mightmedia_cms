@@ -1,1 +1,924 @@
-920
+d6b4b1879291f51e624857a61b9354f557856405 Upss. Removed debug
+1c9436d41a33c97756cdbdeccd57f23d8ada181f Merge remote-tracking branch 'origin/trunk' into trunk
+4c383089da9e60f026df4b25723254794fba3067 Add version.txt hook for git
+b815e41b01a1bb28328f202c6f7f317bc8a9bdce added symbol to license
+0163300750782356be6774490ab91204646c2b43 Add version.txt hook for git
+e98359f0eeb68a40680f3d5384b570d20ffba13a Add version.txt hook for git
+29a701d12317bd8961a12aa2ac67981eb8d6c7f2 Merge pull request #2 from zlotas/trunk
+698ad5bab593d5634946d6b1a515f4bb56413212 Update FeedEk.js
+7770688e2e6ba120adc51e854b4eb2a5a53263e5 Added GIT ignore file
+c1e820cd0f8a22e0d0b84137a680a22c03db4003 Update galerija.php
+9516be178ee802578b183b289b2c3379e56332d3 Added empty files - prevent from directory browsing
+d8bd950ebe9342272c94349e1d12e8c140f9a29b Create README.md
+fd5ca7862438dec20eecd6f8b62d0cdcc7aafb60 SQL injection bugfix
+302b3c47a2c4612c90081dcb7fbfe1acfdc7a025 kintamasis ne vietoje
+76388f4ef4b9b7d68849524fe978212a746e6987 Neveikė. hide() pakeista į lentele()
+a7a6063745ae66f7242e15ef8945464702cc2b2d stiliuose " a. siust{" funkcijoje nereikia: float: left; , priešingu atveju gali kraipytis stilių proporcijos
+6580350e0daad1bd52ffe981b0fcd80df71321a8 Kategorijose nerodė autoriaus. SUTVARKYTA
+90d1a1e19269e80ff7f2653fbdfaf02990de42b8 Nebuvo funkcijos : RODOMA : TAIP/NE + sulygiuotos formos
+a25f09e5f4bd943ef8e1ed67ab6ffad99b530979 Kategorijų rodymo pataisymas.
+df775827838c6300923a86b23ec02c7fe46b1a80 Kategorijų rodymo pataisymas.
+773262e7bb2da9a6e86af9b01c5433cd66f5d1d8 Naujienų kategorijų pataisymas
+b13195fb00655affe7bd384eeeeca36faaec8675 $kiekis =""; buvo tik tarp if {}
+f135e9f61b0fbfd3b2fc674ee6f86fdb3b743ac3 buvo pamiršti keli kintamieji į unset.
+0630ea5da4d9b98748bc13b59645990ae53cebcb MENIU BLOKO pataisymas
+0eb730b223368aec7130f81dd268d465e190a16a Forumo pataisymai.
+96f387cfa813789fe4761d79c9ee3743acdd132c $lang['system']['file_exists'] = 'Toks failas jau egzistuoja';
+e15aa96b0afc7e4ad196bb64cfb369326e6ef5dd Seo url funkcijos tiuningas, pridėtas tikrinimas file_exist blokų bei puslapių kūrime + sutvarkyti kuriamų failų vardai, naujienose pridėtos seo nuorodos kaip pavyzdžiai.
+e65821e306eb587a8561766282dc2cf1e867364f Stilistikos pataisymai
+834dd232e674362883e765d8efbfc949a8c3415d - random_name
+980f15fe0d03cc2e0787b73fba8e20d7a6539843 Pataisyta ShowCalendar funkcija
+4502b14b69e83519efed5c6b65f42f0f1dc22803 apklausos paveiksliukas
+7900f5319bfb3bcfdac857dcf20ee3fe44c0a235 Taisom siųstis užklausą
+e58150b71e13e5d93cad4bd6a82b0c29a4840bae sukniso visą CAPTCHA su funkcijos pakeitimu, ir funkcijos ciklas per ilgai sukosi. sutvarkyta
+5f414cea84352460982b9ba9378511b196a29f59 - šš niekam nesakytkit
+2c67451d4c9c04973eda7bd633dea76e1862a1e2 blokų pataisymai
+080f229315e2f91cb1eb4777aba503c2d4fa9c4a - versijos skaiciaus tikslinimas
+cb165f50caa3036f0a6ba5ceb5793376f20198cf - Generuojame pranešimą MM admin pulte apie naują versiją
+3d40d617365a2356b775e5a5e4d295a9ffda2bbe - Editoriai...4
+a9b2060fd291427f3d915953eedc3e72e84a5432 - Editoriai...3
+411a0274e7fbab68b307c4b3385b7f7a4761820c - Editoriai...2
+2034f93eff5ea395152ee6532d613e461cec4e9e - Editoriai...
+a92ef8c23ce5468887c4bcb0f951287d1f9b18cb - Įdiegimo naujienoje parašyta tiksli versija
+ccf839cd3ce5843c97a3abd3eafa850aeba7c586 - Įdiegimo naujienoje parašyta tiksli versija
+74ed6f993ec6552a903d0e2043412df02e676d4a Admin dizaino pataisymai, pridetas changelog.txt
+6e717aeb9bb4278df8fff881a7fe5df63ef2f5e8 - footer linko spalvos pataisymas
+29130d6e2621ac6fb2f15c8443f274f0e9242a45 kosmetinis pataisymas. dievai/index.php prisijungimo submit buvo prilipęs prie input
+6bd5113237486b25bebe7ae5f7b9c867debf2c9a kosmetinis pataisymas. default.css šalinam nereikalingas funkcijas
+357b95f52101132f4a34990e220b01fd502b2800 kosmetinis pataisymas. ol list style none
+2dd09d86dd9675f352075380c76be0ab4709c0f8 bandyk dabar
+775ef7ba35eb09b9b5f722788f167bc62f4df13a kosmetinis pataisymas. taisom klaidas
+2cc3dcf5143d4be2419f85dc98437e24a292f821 kosmetinis pataisymas. Šalinam prisijungimą :D
+11d738796b841a08e61a567e8f6e75f452e8b62c kosmetinis pataisymas. Prisijungimas
+29f654ef9932c2664b7763be4df0baf69345df9a kosmetinis pataisymas.
+8863301ae23594ebedb740de70d5ec5f10bda41c ini_set išmestas lauk
+ac9de8e8f121debdfb4ca710acb0cdf9fe3ad8e4 bandyk dabar
+9292501572f8a7163dd9a9474da8f7cb89d57312 bandyk dabar
+ab804f76a6d327f2c019a2342e5139d746834124 kosmetinis pataisymas.
+a899bef39618c704e912fb4e81a2207570d5a8de reikia testuot
+a0fac7a002e887634771a791a5f1f79842b940ca upgrade iš v1.4 į v1.5 beveik paruošta.
+394c12340729f8a5eba32f8e73cb510aea1baefa naujienlaiškių dizaino karkasas, kaip ir baigta.
+ef8dcfd8af3847d90d7774e38bd972c74b1d0727 BUGFIX: Sesiju palaikymas tame paciame serveryje
+3e03a5bcac309b6a2399d05cb860008662a1a42f BUGFIX: Sesiju palaikymas tame paciame serveryje
+e7e10dc757764196144760da449dd78296b80be2 BUGFIX: Sesiju palaikymas tame paciame serveryje
+0292160ac200f1d3a6bfa85d369d21e919cc1897 BUGFIX: Virsutinis meniu per daug prilipes prie virsaus.
+116480ed628b5c4ab3b15a5a15f8982d5eccb3a4 BUGFIX: Patogiau atsijungti is admin paneles
+2f6e5470805c1461617f225cd195157083b68c06 BUGFIX: nerodo avataro kai raso svecias.
+4337ab72c548feb523f7e9683d8a194f9823faac BUGFIX: Atsijungus nuo admin paneles nebuvo unsetinamas User ID
+8e0e2e0d6f90780c9ef47456cf72d105494a6961 BUGFIX: Install adresas()
+34b7b80a8364fa2d5340d877a16bd3fd2c7e5299 Įvedam truputi tvarkos
+c8947b8148df6dc230f51d118502fa42b54617f4 Įvedam truputi tvarkos
+efc0f2914ba7babd33550ea261727ed98be844e1 naujienlaiškių dizaino sprendimas...
+87609e0f425cd5cb72ee6681551ff6169f8ddb14 "kažkas :)" neteisingai if'us parašęs buvo
+25bff3de5c7c8caea4f59775001939abb84f993b "kažkas :)" sugadinęs užklausą buvo su dviem vienodais laukais.
+7790f3d913f8712001ccc4d46eabea74040896ae rėksnių dėžės textarea maxialus simbolių skaičius - 300
+96d171bad402ec76b6563cb7ac269408a5a19602 instaliacijos pataisymai.
+f11874ad0ae4a78488c92a7acad3e280f41becf1 Editoriaus laukų pataisymai
+4489622d0897c4db7440e41cdb59db50f5dadf9c textarea to editorius, kitur buvo pritaikyta editoriui.
+b53182e46ace2f09627b811a112ed1b324eab00a if ( $kieno == 'galerija' ), buvo if ( $kieno = 'galerija' ) + viršuje esantis jquery buvo su klaidele
+8b24bc06340b5748ee9122458ff5f98e590331e5 smulkmena: šaukykloje žinutės redagavimo įrankiai atsiranda tik užvedus pelę ant DIV, kurio klasė tr : tr2
+3c3545a6c1814fc29e9412ca371cd783548070ee Baigta su fotoalbumais.
+c6e9327806937fbf307a60bb21cf1d1144a0e542 Fixed #154 , padarytas administravimo puslapis, duk puslapyje viskas padaryta su jquery slidetogle
+0409c6c9683df6e247bfc91023f95de23f0bcfa1 senų reitingų js - šalinam
+cf5851151995b808d44bda81445ee2a9554b4a78 fotogalerijos albumų atvaizdavimas. THE END - ???
+d2ed5944ae5a2be99194ad1450ef1c7331f376ec tooltip color: #000;
+3cba4e8dafbe0e27ae27af70bbf13727072ee55f stilių korekcija "padidintas plotis bei meniu 20px nuo viršaus"
+263f8851f71e0424d2e0dfa56d67ad2a0644a830 blokai lygiavimas :D
+276f9e1c27cd4e5c22b8457f06cac533cd1fca79 dievai lygiavimas
+220bbc7b44359b680223c1d29188f57f7489127e install lygiavimas
+4719f5b0048743b843620e45d4e6b61f552e7a7e javascript lygiavimas
+955f2ce0e3d6f40d16575f378099e2d9b0daf698 priedai lygiavimas
+d7356a3b57e7769be71c71cc189252651c3efaa0 stiliai lygiavimas
+20d9d9b4f01fc2438152802f074547c3eb926706 ROOT lygiavimas
+496a43b1d36979f28f9591ddef4698363dec4d5e lygiuojam puslapius
+9495b127a1029198d1829585a17a4c32a822514a pataisytas: undefined, kategorijose, galerijoje sutvarkytas fancybox
+2247a7d3020d2d4f7e4f5903757cb58cee3fbd52 kategorijų pataisymai + blokų administravimo pataisymai
+e91d5bc91d33a7b8b8b5fdea9f4b3ec18aa85be5 Fixed #152 ir filtras patobuliuntas
+a6e42329385da44e1b3a070adbdb3a33b4a8c06b pataisymai
+50f2c081bf4e5236e4bca49d1261355e7f3e9887 ...
+beea2ef90773acc593674080b99c120b5271e897 Fixed #150
+e9597b93b7814988b26e1aec9bb55c4cd795217c galerijos lokalizacija, nebuvo išvis aktyvavimo funkcijos.
+9368644285633b128ac2ed0034d4cb2c7cfaf670 kadangi iš url puslapiuodami ieškom 'p' BUG nes toks pats ir aktyvavimo buvo. p keičiam į priimti
+952e3c8e4a83c03a45780df1e2ff10b1463b3c2a prie news_limit klasė buvo select :D, blyn, pakeista į input.
+05211cd1345034f85accbcb0a73d54e59014a14a admin prisijungimo dizaino pataisymai.
+40a67680cb4cdfd18029129ef5aec081fd79467f admin prisijungimo dizainas
+fd084404adf30d7e886415aca39133f7fcb80a06 pataisymas su install papke
+bc5a8fb7b3beda1ead25d4b87cf6a864e8577599 ...
+7f6d9226cbcde1530a7485721a181fb9fce5a043 nuorodų puslapiau update // dalis darbo
+6b4aad9f0ca47797bf1b5c5897c4a80a2602c58e a. btn klasėje nereikia float:left; - iškraipo vaizdą., o nuorodos ir taip savaime lygiuojasi į eilę.
+0aa671ebb6f05227f85cc8beeda2dd63433b90b3 Galerijai kuriam paprastą foto albumų funkciją, dabar tik lokalizuota.
+373b8b06b5e1d419f315ddf3239c85e8f648d58f #147 blokų sulietuvinimai, ir sql pozicijų delionė
+372cd46bc9a4cfaafe5ebe1220ae1bb1ac72e829 #133 Perkoduota, pagal blokai/online
+d797635880d202a3df7891e88677150063ee252e #126 Puslapiavimas.
+a5532b37a9b994950fbeb208178da21d1eda4a4d nereikalinga input klasė ant formos.
+94e1ebda9c9a36e85d322e2075ab7796908a230a git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@924 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+fa4ae91ebea39888867b48899db80458993a7d97 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@923 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+e8217d92cfee5b60df156ba8e6ae90a9b8777159 RSS BUG: Bandau pataisyti
+6d430824aefabf243b9fd7aa299912ff1abe7eb2 rss nukreipimas
+892300291b902cf762115ee6aabc5f41e5fe6075 #149 Fixed
+e20476969f3d667367a7ae35912b5f9a4023c172 Įvedam truputi tvarkos
+5d2a49ef54af437ded74544d3d1077776480bc7e BUGFIX: adresas()
+591886173e6a8076c607d4d7827eda456b32db07 Įvedam truputi tvarkos
+f8e3275fa762f186b6cc114f6a8d99710a8cdb1c tooltip spalva.
+f524d526ed1cd73709044430839f4dd2c1c482a9 #149 Test
+d82bad8d93cbfa995c625ad7ec951e2b37dc65b9 naujas google lankomumo grafikas
+b43ca0fc462921969eb10fd57de9c609e7ee7afd naujas google lankomumo grafikas, keli css pataisymai
+626c9d3ad42c057ae9e8653c9c79326628363261 kategorijų paveiksliukų atnaujinimas
+e0c4cebc2b08ba315740b3dee43b21486ad6b4f7 icons/flags - atnaujinimas
+26c5322d7f1e4b0d1279197b8f8e5b1bb830d187 kategoriju selectboxai
+ff2f965ec30fea08f60189f69a78604b0055e098 nereikalingi failai
+dfb74af933acfc13364cad981e76f6442dc0efb6 kategorija keičiam į fotoalbumą
+8146bee869717df0d5793cdfed59b2791d6ddc11 kategoriju selectboxai
+126b6ef7893528098d9287ff7fd68449749dba04 #134 Test nors labai abejoju
+ccff6c2e5765a84014e38408cd012e633be31ac9 #98 Test
+57673dd4dd1c66e6d32c93b190c9c9a47414a52d edit.
+0e828792b054516a1c8cabc21adc031c624ee3f3 images papkės papildymas, korekcija
+62dac15e4c2b3d332bf99bacc7cfb27bfd637cce #98 Test
+74a295c3998ccbbec8e7dd0dc48f0724d18b040c puslapiavimas
+7d179d26c672f11a391744ec50a41514b7c7f489 Stiliai lietuviškai
+a7cce66526f0d66bc8166634d256c5031d554fa7 kalbos papildymas
+c81b30f8fb0396843ed6fd70b5d57bc7f85c5d61 Stilius : default - orange
+842ac8d46f9f9bc46259766db9dce6367d460e3a du default dizainai, pervadinti.
+ff23bdd2633d3b35db5012ca3e1ff6d466d46dda hide funkcija pakeista į lentele
+0c916d7849e66a8e1ef21d6b03c0dd20e7a6c6fc tooltip BUG FIX : max-width: 300px;
+a25e3b4de97a744f348c1e8c22416bda93034d4c galerijos stilius.
+433cf2e71d178835e1054f9a8aab0d89aae4b8af git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@893 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+5803e9c1f7f96cddf5e1c93971067318c2953148 tvarkom papkę
+8a9a6ca015fc6591a39aac11e339b4148db69aef ++
+975dc3294c15f4f0f3dd32cb630107523a605155 buvo komentaro klaida, ne //, o /. Pridėtas siuntinio URL pateikimas.
+c7edb31805df42b301dd19a348d520339df9064a   `kom` set('taip','ne') COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'taip',
+de1c02e5bac8aac9e2f70183334c9ba7491b4173 Dabar galima bus individualiai nustatyti 'kom' TAIP/NE
+3706fa57cd991f884f6aa3b59d560cc55a9100d4 images papkės pataisymas
+a17ded2116be3747e2c58c01835fb87d478c1316 Filtras + puslapiavimas. Filtro nėra : pm/banai/balsavimas/... atrodo tik ten
+e8bda77760010f7db3eaec8c12fe7416a970805d AFTER `align`, ADD INDEX ( `rodyti` ) < Naujos MYSQL versijos neskaito šito. + pridėta galimybė išjungti komentarus galerijoje.
+0bfbb76f07e0c0338b8d8db11581bf96a9301f79 pašalinama nuoroda į stiliai/system.css, jis nereikalingas
+c60ce76518de613135d0eae4197c2c1df22d8c73 editoriaus textarea klasė, editoriaus konkrečiam pločiui nustatyti
+aa8969899caa7dba06020aa3d4f5613d62f4d866 buvo blogas kelias iki .js failo + textarea klasė, editoriaus pločiui redaguoti. Ji slėpsis stiliai/system.css ir dizaino default.css
+d0bf012ce5928def8b9047e2f752298e272e551c editoriaus funkcijos pataisymai, nes nauja nicedit versija.
+c03fb944b426ca73c8f5753cfc9177798f432ab9 install pataisymai
+1879ddbc81dafd5e2dcd83d83072afc7f90e2e66 paneles to blokai
+8a63e42ad6e8ee1bf75f689ac1be56d0de5f8873 nurodom kelią iki install papkės
+7cd6af5b04e37c7ee7e543a7b98e365d37a42cff nustatom ROOT'ą
+b3dd4dc37f1fba51bddad683c261beb3d01a7eed atnaujinta instaliavimo naujienos data.
+575becc2acbb8ff53a348734a01a3363e7913bb0 atnaujinti sql upgrade failai, reikia test.
+2d3434a5055248596337bbaed8bf794203df8cb9 ištrinam favicon.ico, jis yra images papkėje ROOT'oj
+3ae796f800b9d2f29f45e318a5892b50dab386ed faviconą traukiam iš images ROOT'os
+c2bafc415ddaf13a370b40c873de2aa287807ac1 setupo kalba, pataisytos nuorodos į img scr
+83158b3467a1de22de46d8f073a886074647cb31 taisom nuorodas ikonų
+2160bf0eee854a5af435d3c82f5fb26f96b47830 klaidos ir msg funkcijom.
+5b6a82110a2bb6906614b378af5365dbed9b1990 netyčia :)
+6020c2b926660641a13ec90194a3191cd31cb25f kalbos papildymas, bei paneles failo su lang'inimas
+1f54fd0dd16ffc34b665aa1a8797160ddd2b4453 Atnaujinam dievulėlius "ten, angelai gyvena, ant aukštų kalnų" citata iš Velnio Nuotakos
+562101efe5e1f01b82379a70616efd3bad41d8e9 atnaujiname dievai katalogą
+affdaaf3d0d9a7552972dbf6490d28717aacad44 paneles keičiam į blokai, gana painiojimusi, tai panelės tai blokai, netvarkinga
+cba44c67764d04cfd6bc4567a3c72617aefe7839 nafik tie du megabaitai?
+f925dc5cd18d1ff7aaf2db31c7cd0c6ed9d02547 images papkės tvarka, naujos ikonos, pratrinta flags papkė, bus padaryta papildomam atsisiuntimui.
+977187567f10afafdfdfc0f29924b414a279bcb7 atia atia colorbox, sveikas fancybox
+a25d69ec935a20eb84c3185450f95f9d0a1bcd13 atnaujinta javascript papkė
+e553150ed1b1b290cd18b7e1d4e85bee9f3179a5 centriniai blokai, pakeisti include pavadinimai, atnaujinti failai
+8aae97fe45af62a71a15f5e5de7159ad813b9201 puslapiavimas
+8ed47a2df9c76c340d6b335a5075b7c4d9030a65 naujas default dizainas
+07c4774a5811b22f02a2057b61c4f6d003c57f84 stiliaus papkės atnaujinimas + naujas default dizainas
+1b00175dcd182a060f2d4bba720ba69507fd93d7 ROOT atnaujinimas + install papkė
+1d7b2ccee631fd73ef8956bde780d3b1ef236ffd ROOT atnaujinimas
+0e8563add9f1379bda8e71101f5a6aa2e5d743e9 puslapių atnaujinimas SQL_CAHE pašalinimas, papildomos funkcijos
+50ac9a4ae73beedc475e3f478afcb9b834e1d11b Galerijos atnaujinimas, fancybox, nuoroda į nuotraukos puslapį.
+552488f586f7b60213644b4aaeecc30554f11cde Galerijos atnaujinimas - fancybox ir kt.
+90924dfcbf8f9f557881142cc8cb850cd49ec759 padariau filtravimo pradžią, išėmiau tą javascript filtrą, reik visur sudėt tokius filtrus administravime ir dar puslapiavimą lentelei padaryt.
+c5d21a4512244033e02ef8ffcf0f22d7f7ee52dc šūdo krūva
+dc1bb83d7b14ab7bca47ba503a37afab7d22c688 #125 fixed  atrodo pataisiau
+60087ae0a9a40b17b900842fe6413ae837d25d13 Admin dizaino atnaujinimas
+51d83934bfa3e879dfc9f2991fc923c494256416 Admin dizaino atnaujinimas
+09dd94d7e494a75dc4710f8e950c1dddd75445d0 Prie failų galūnių pridėti failų formatus iš didžiųjų raidžių, kaip .PNG, .JPG.
+5e55b548b57b26c1d7ce25021d888a1602579a7c Prie failų galūnių pridėti failų formatus iš didžiųjų raidžių, kaip .PNG, .JPG.
+8a9b3e85f67bd38dc5e9c600eb97841f482a5f8b RSS BUG: Bandau pataisyti
+d1725d0e2fd0edc9c21fd1e28e05252cdfe25d9e git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@843 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+6aa31176e98327531a56af1026f23084aca06b71 tiny_mce naujos versijos failai
+435e14dc1e966ad4a3e5e2caa453f47206882c13 Naujas editorius: ckeditor
+8199b4f68286ac25bacec29bcedc67c6d884b799 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@840 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+69a43f72bbb9cd0cdce3f6ba605b523fd88b8bc5 Atnaujinti: tiny_mce, nicEdit editoriai bei pridėtas naujas: ckeditor
+3b0dc44cd3060f5102c23465d2afba2e88cee3be git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@838 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f6880ddbfdb9f2726e1e9e6b4e52b08c533687aa e-propaganda paveiksliuko pakeitimas bei pridėta nuoroda į e-propagandos puslapį, Redaguotas lang/lt.php
+cc4f047db4758d7b28f1f06770148616ada853b1 images/balsavimas/ nereikalingi paveikslėliai pašalinti
+7695f26922f558b6a5c9526145bdaefaf34ec8a8 images/galerija nereikalingi lightbox GIF'ai pašalinti
+9b9f39aba31a6299427ff89c38020f3f65ed6eac images/levelis/ panaikinimas
+1654d5376cb979250844b35d510dc21fb06fd099 kintamieji tarp {}
+3675e6dccc9b6359bf11f646287daa47e5669874 SQL_CACHE panaikinimas
+382cb53136493bc7ec08e303cad07644d48ff289 SQL_CACHE panaikinimas
+2c0a571e7f19b8560798dea6fc95b0ba1f117c1d SQL_CACHE panaikinimas AddThis Button pridėjimas
+48a4314e6977d6d808ba071f325081477130b788 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@824 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+80e3c179971296b4310c77d484eac04b5a01cb63 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@822 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+a65a4cabb18fc4fec349eaee0f78528a045fc5d5 ...
+f28967c2611bf05165bb2c9c942f016285aca5e5 ...
+62c08d06cc61afda532a924c65eeca44e2ed5179 html klaida
+8115ed2b83ad6b81e144d48d48a7c648480fc924 pravalymas
+188d9feb77c7e7b379252c9cb38a556b3252025d pravalymas
+66d776fe6ebdc5a9509e4c9b7c51c8e393404176 ..
+7c324c69fc885d9d50cde798f914fed2176f6da1 ..
+306acce498be6467ce4378ccf401db17b04b21b0 pakeiciau atvaizdavima
+1de986d7868c925d8a699b30db82a44440907fbd ...
+d28ab2d73dbf4ab40989532376a8ab912cc427ee nereik pagr pakete sito.
+8fbc1d6fd74dc488cfa55469548a8bf412677795 paneles aptvarkaiu kazkiek
+caa886aeaa4df17c5d41d2481c39c2398c6e6505 Nereikalinga, per daug užklausų
+3c29ce479f0701dce3ac05d0ea82d1aaffccb171 Directory 'tags' created by JetBrains PhpStorm
+137302e52afa5da15b12dc3d5fd0a821dc5f221c Directory 'branches' created by JetBrains PhpStorm
+7f1897eba9adcbd9914abc539ce5f89b004b811d Directory 'trunk' created by JetBrains PhpStorm
+514427232c5f36c3e5acc61d4b5cebd27605790f Directory 'mightmedia' created by JetBrains PhpStorm
+94207705e1f7377d8d5943ee4dc6c7b18fd12fe3 Bandom firendly urls pataisyt
+dcbe80bc2b1ad80c307947f8b62d72430c188f9c BUGFIX: 404 nerastu failu parsinimas
+fccd13f5e4666ce8b325bfd3c803f49fe8d7a3f7 test
+4b9c463688835d9ad1afc9fae3b3f8611f11a18e 113 eilutėje pridėtas autoriaus atvaizdavimas , virš datos.
+44a931ee37e931ffd95de733b4ee6dcca32e9848 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@801 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+95c5d9b257589d9fb449ce668c4a57afd56e2ae0 Beta fixai
+b6413c091f12281dc214c94a814219442230f243 Beta fixai
+73bf64a02a8cd9972b030bb9992823b090a24a35 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@798 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+c15261481d11400bcfad014f93955892ba8c25a8 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@797 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+1cdd6a669c65c8751bff7ca7d4113fe7545a0033 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@796 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+2719a22befcf1c0deb27678ea8d937d9c357613a git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@795 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+60ddbc6f3b2ab6c2a9c913f0e828d23ad4e4bbec git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@794 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+433e9830a5cf84f9ef3e5f4f6d1b3ba3cee1d3c8 Testas
+c4d23b6f29e7e4a4156e72bd7afb639574b876df Trinam nenaudojama
+414ea12474af915782b5637c69b4bbc727d6cbf8 Apvalymas upgrade.php
+acb306b709f2472a1205980e7db59dcfa9d1f721 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@790 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+8b9f5ed9f1bea3adf774912b7ae18e074842a6dc Vertimai
+22fc9177edd5c15907a3bd6a19affa80e403c7e4 BUGFIX: nera tikrinimo
+aa88dfcdfaf5f33d2079a1efe89c773dabf30719 BUGFIX: user-agent
+2cb4e668716bd38fedcd97c92cf9990a38aa1d54 Paskutinio apsilankymo bugas
+7db892d662ace2c761b959d9402453382d6388b3 Paskutinio apsilankymo bugas
+3d84f1f9a506af40fc0459ed4876ad6d250f7f26 Kesho valymas
+a7e59cda5c32c7cbada9623141c8bb53dca7aff9 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@783 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+a7ae65c9b64b3fbd276cd09f3d1b879e33a8ab9e Ijungtas keshavimas komentarams
+d269b22b13949ff0160d43f8373330331dd41600 Atnaujinta uzklausa
+6d2f721c50501edf90230a8e8d6464bec36c964c Straipsniu limitas toks kaip ir naujienu
+48ff418d12c9b580f9bfc556e1e547ebc6ab2362 BUGFIX: admin menu mose over
+0f26796c849de2c99f158a01a56cb5b8d0a6216b BUGFIX: admin menu mose over
+0e4d01f6f8c0bbf334de7f6468d03b50e4a0681b BUGFIX: Galerijos rusiavimas
+de3b45af5e29f1caf403b7227f733daf5ffa8aea git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@776 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+799549cf3c000110d8f73d4bd0a29b6ee34dddda git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@775 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+03a2950a912f0d956379029ab54df11c09596311 Galerijos administravimo bugai
+e3e52d80aad4c88d37e702a036fc823336cdfda9 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@773 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+229ef37f807d49d6e6a5e2d03c25659ba4140745 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@772 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+fd06902a61e7bf77b1f171103be53c98314b3651 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@771 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+018e720b5000708c6f04a472090b02f07b7921e2 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@770 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+5f95180205aec373826f1b54fcf7b141dcd52bbc git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@769 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+ed6e6c4555427bc94e55e39d1b275df76e45e1e7 moderavimas
+15b5c8eefe58a307a59046822f55caf428e265c3 hyperiator išjungimo galimybė, stiliaus pataisymai
+e851fb61553654e9aeeb27e52a47b87e545f200e git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@766 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+99b6e0eb36770aea594c788c724f70352e7a1227 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@765 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+941b1769da8638e195bbc774d0c0a05edfd2beec NEW: Share mygtukas TODO: Reikalingas default css mygtukui (class: a2a_default_style)
+3fa3bd6cc13e2c215c4ff22a75d9b8f85a42bab4 BUGFIX: blogas paveiksliukas naujiem irasam atvaizduoti
+cd0ee4eebb5575ae20fec9a8b6780e180fc8c987 BUGFIX: klaidingas URL
+b769d331232eb4d29823481775412117978ea6f5 BUGFIX: klaidingas URL
+ea236aed4f8771203d3297ef47630ce13e4f1adb BUGFIX: moderatoriu puslapiui administravimo mygtuku pagrindinis css
+0b50c488cb506e257df80863ab2af7ef236fce21 BUGFIX: kad eitu vietoje puslapiu det ir nuorodas be http:// --- http:// ir http://www. autologout bugas.
+d073bd1a2b50d2a0d605b8309b0609e83d6e6421 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@758 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f45d375839357d97984a5ae71e4905065456b206 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@757 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+0e39a71b3aa95f21ff40ccd95817d112af850ffa git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@756 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+54a9599b23329558f90a04e3da1f524d363880ca git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@755 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+21e73d3c52a408d0fb717c059f0d3992e7ba9efe git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@754 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+45e09620af5307f39407b5b627f72bffa420581c git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@753 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+0e1520ad9e6bc0a3d6ce02e385d4b659a3e69418 Kategoriju cleanup
+c0706bcc8049d660068c7a49fc1403956724ae3c Image konfliktas
+267c7877390d8f81325970784be9c475f4898a75 Po truputi valome koda.
+73d8c726c3c3e829ab59a2b0a4a8a28d43a53e26 Default3 dizaino pataisymai
+fc4c07a36ec683fddf8e390b4078d2a04bfbcc37 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@748 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+66b0cbed6aded214fa7500dda9c805dacf15e75f Admin css pataisymai
+056d0b2faa8fb26e3df8b68804c972f4f0866b24 Diegimo proceduros mini pataisymai
+952fa7007f35c6873080528b64903aa0395b8e26 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@733 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+65bf149c90c4a7b61046f6febcf756e96063b5ed git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@732 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7da1386425cbc1db2b7a1061c1a05be3f0989828 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@731 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+76c33f0a49337ef1d901bf86d92982b5468f8685 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@730 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+b4a04173b581cc5e631d2316385ced3721c38f84 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@729 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d12dff34094223ab667e659c5511ae63e0e680ff git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@728 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+94929dcf308a7b935a0ff7d2cf99762564303ad6 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@727 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d260d3fd8cf4e63c11bbc11578d63934a5ae5168 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@726 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+1d2c892f27b9ea8995d609c44b135cc6225c8d77 Siaip
+d087232db69a3134c15abf83f6ee7c002dc6867b git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@724 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+006b8a6b6f5f5dd2768950d6556c374eb825d217 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@723 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+fca22ec3c2408de4ac499651bf2e3829bf591ced git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@722 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d4afe553d1831b9ac384431767a8e14e245bb96a git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@721 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+3366a890973dabe6b5b793e504a1b9fe98efaf27 user update bugfix
+295c9833f73a015ba80240414b2f566833239509 closed #122
+a70d7bff02589a241ac41c15860d1b737bb6c58e git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@718 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+8c136fe0311962cae8d80e1caa4d04ebe6000f68 bugfix: ban bad bots
+edb49ebde0173d22b76774fb71da76fa2518a650 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@716 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+b2ec8cc3da56852c913a9cd52791750640f41230 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@715 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+32c655f11e1dd54f10bf38a66171556a59dfdc19 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@714 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+46d84ea78d54406666cc121bcc72b316ddff65b3 http://www.cooliris.com/
+a04767ceb66c8f7318fa186f58f62e8216643a10 http://www.cooliris.com/developer/tools/
+7284ee6059fcf94f283f9ad21f2caf5038d55037 http://www.cooliris.com/developer/tools/
+fc5a8730e032130650439fe4ec3b0d67cd321970 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@710 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+11a4305ec15b0522fb8956d83b540cf5f52feb4f upgrade
+f434e79aa184f71b3a6bab26361569b097e39e86 upgrade
+51e6e20d4715e6d75928ff8157c41e95cd3ecb5b bloodhound exploit - antivirus
+7b4c873daf3450237d8dbcbfe8e0b2e3e0f1ebd9 fixed #121
+dc996d2423d784346c6942633621415a4a558302 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@705 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d3e9f1c68e1e5425b34a1120789c55779483672c git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@704 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+76c1f8ce93339ce8ca648bcb218071cf62e19434 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@703 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+636355f88bcd72564d11ade56ac4b534f4a78176 skaitliukas kategorijų
+2b6e7faf53cdbb63590078cbcde458ceb6083a01 nėra įrašų bugfix
+5c3c66f8300815ee03c1ef52750134b6a60af49a Save HTML - removed style
+e5608a77f775a81f58facbd462f6baa2e327c975 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@699 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d6e649461357f4953702a38ac6fa340d41d4ad8a git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@698 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+88422e18f3b9ac156054c234c1ddf66e8c58e54d git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@697 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d4e0375b7c0603110a1a66874e6183b7285623c5 kazkas blogai?
+f3ff3cf40d7d23210e105a20bb0f9e8121fa43c3 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@695 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+21c7f9a50e39abc1f8ae7dcacb33eeae7e7bfdd3 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@694 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+356a83b7d5f51dcc33a500fffaff6dc51c2139c6 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@693 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7e7b01f6399eaead2c59638a8ee6d1670bb3f644 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@692 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+50f47e65c79933d5dd559edb2fba112ea1074903 upgrade ready to test :)
+a47c1c23e5a9ccb0f38bd04a0248d7b968283046 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@690 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+9f8fd6e521f37df00d2c9e8cae126c710d822914 Daug smulki? bugfix? Žodži? k?limas ? nauj? eilut?
+28d849d7a79a1cbb7da2a45347377cd67cbfc986 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@688 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+344f525fe302498176a5dbf0d42ad7e130881a29 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@687 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+c7517f0a3f52a6133ff19ae4c88fc9ff2e40ba5f git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@686 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+2a0fd35331cff2c6fd6ec5388c907aa5acd1066f fixed #116
+7cd87a9e51ca9bc0de2772b91eea94c3ad7c6dd1 Nuorodu info
+85cd8b01fea3707fcbc043641c17ab1a1de4f925 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@680 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+467ced5656a2f7e1dfda89f88416cf289807f59f truputis apsaugos nuo XSS ir bugo ištaisymas (mistiškas puslapio dingimas ištrynus jo "tėvą")
+993d477a09e3c5bb5f41b0e681ebe677ed30fd83 bugfix: nuorodos, siuntiniai
+ad2f5ea3043450181a22f73b33fc8600b1fdfd84 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@677 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+2b9922921a0667eeff97df2e3cc7c9286367b53f git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@676 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+c2c1ecf8fdf9d867f7c1ebec305b3e893e2bb2fa git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@675 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+b397574aabc4e2b5022c09bcaeddadcb64e8a135 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@674 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f917e9e1f3dc4ce83ea474ed059f10b3f066680b git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@673 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d0a7dd89e3693b1ca4b515a6a65b8a692598ca79 fixed #120
+eef8f1c274f6cbf00f3e501b98a5b9ccb18ce8c8 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@671 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+fe4a15546e2f4053378bd65ceb8ff87fb77deb08 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@670 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+a5b8bbb890e60a34585a739e14a454ccd47385d8 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@669 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+328ec43ec843aa54bc7d5776a2a5e4cd8cc18b7c git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@668 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+98916b9e9544c56771faa09502bf86118af369b1 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@667 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+8b479f557fedd8466aef6f9dab1c075b84d608f4 Nepavyko
+82950321cc34cd6a266a096be15d067b8419b872 Pataisymai
+88a31f24d1a4f57a0aab60f57184109891a41298 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@664 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+dc0e8e79e117eba40d64458af6493808a3655ec9 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@663 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7c4bc3d25bcfbd79d00c293778202689dddecb03 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@662 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+fdc35e46cf40febd0c5dff94f55e2821f8db0524 Testing
+dfa3d949b898f1db8c65a35487534613d22f9aaa Testing
+642e8ce00733c8ab4fcf117c59cb75182ec690c8 ka as zinau ko neveikia
+37738f7642746ca3e06cd1a1df4041012d4a0de5 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@658 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+1e87125f100ffc4900964072ba91300bb2f01dee Virus? atnaujinimas
+a444c2e59ffee74296c77c78d0e5c95eb5c40dbc git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@656 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+aadac6147e10c0e30024c2499be2dbe9e01597cf git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@655 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+a10da8d0f91669d1b8e2faef194cb6e5cdf6db7f git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@654 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+2acd6d77ff6ecc3e4a0cb1e5e3b636e10c206ac7 tinymce fullscreen bugfix
+312efab7e2ef2c5868bba61b7eafee750b891c8b admin CSS bugfixai
+d2a59947d96b3ae6be1cb768537589feb32fb858 RSS nesuprantu kur klaida
+8eb8b49323e48e30e755af33eec57386b64ef042 dizainas
+176871487677104b03061fbff1c0f82b47876fb4 dizaino pataisymas
+6872b38a02184933a786b8443ce15197890208b5 bugfix: tinymce
+624c459831b906a19b1bad5b003d05356c4dc7d6 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@647 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+4caf27252b17f8fc1cbedf9db28438e27d28626c git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@646 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d0005077c1d85bc0419c8aa3266d1e10ead66a3b git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@645 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+c1a92d56e3d1b76753be2f56c94775cd4f3b4840 class sticky
+757eba6cbcc7ae1cfc5eeb791ef030b54c5dfa64 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@643 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d79756eab9fd86f3fb72a868fdbfaaf78b88af1b bugfix: tinymce
+06b9452c9bbf0f614766185285dca4f6606754ff git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@641 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+088f5f895192442ae8414e0ecc01a81630478a81 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@640 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+04dc60f838d3b657e35c883e63267b23bceb6b07 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@639 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+19fbd058c707d7cbbee036514235b0a2ebc68dcf git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@638 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+46a9895fd6858633a6b62e6f6e60a788cccbc1ba dėl komentarų
+67bdcf571e559403e8d03bedad28262dff301e35 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@635 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+dabd4bbc7a1ade5a3e4c23a0fcc3c9928e724110 fixed #98
+64ce4a202a01c699d9d0bf72aa359b97693f4373 ponas F... susitvarkyk tą savo jsoną, tie, [ 				"<a href=\"http:\/\/mightmedia.lt\/help\/lt\/\">TVS Pagalba<\/a>", 				"<a href=\"http:\/\/code.google.com\/p\/mightmedia\/issues\/entry\">Pranešti apie klaidą<\/a>", 				"<a href=\"http:\/\/mightmedia.lt\/\">MightMedia svetainė<\/a>" 			], nežino kur lyst
+83e4a05a4151d807183c1f574e329dba43d85f86 fixed #115
+c590b34fcf3df91a1ec0dff8bc78239e4cdd2c0c tinymce
+ac6f609274cf2fde5c1e912fda05f1a1a1d3beae bugfix: tinymce del Š raid?s
+691cd4f9011a1b82d74926be092b2c60c26b7667 BUGFIX newsleter on SAFEMODE
+725d7f798cb184deaa6632d0588c810722f0ea77 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@623 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7da31aa970c06f67540953a8a4a4e1bd228272c5 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@622 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+28c1e9554d8340c5d83a1441bbc3a9db569405f3 BUGFIX dubliuojasi
+1ef50ee770fea4a366f115dba2b69ac53d048f26 escape(basename($_POST['pirminis'],'.php'))
+d4d46cf45fe3c94ac5d21dd15f343ca193b5d5f5 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@619 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+3df8d97c009dd3078d4f7c87b9a09d38723a1862 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@618 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+be106a92e503e501c5e78cf7c6e45326b6d6506b BUGFIX kas naujo
+b90629333aa83bbe0cfad70ce1b217cc1694cf6d git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@616 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+ea6318a3b8cc6530647110b078399df4b6fc1d0e git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@615 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+59513fa11146438ab3e481aad54eee92b4945981 fixed #114
+70d46a4d6665a7cc91ebcd77f04f25fd043d4f86 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@613 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+8402281078891ec5ae6cd9bc84549346fe2550a1 fixed #113
+abcf79ccc8f1ac3deba50ca6fcedc885731423a9 fixed #117
+1cdd1aedc9dbe91dd8d9bba3a7aaab1db6d58752 fixed #111
+c90c6dbb90d18dc8a1eade60605c7de3bc366bd2 fixed #112
+cc386084866c2e16e9db030d4d8cbc03a5d15de4 fixed #109
+2956e1f10fb72db3714e940b065246c2eb7a4e42 fixed #108
+6d027deac9a691eaaf8e3fefff60b4b9402e1c0d Bug: banu administravime paima bloga komentara prie uzbaninto ip
+83d0d72869c541a4beb5f3acbe053afa6fef42bc Antivirus defs ir administravime kesho valymo mygtukas - nereikalingas kai keshavimas isjungtas ir atvirksciai
+94f3dbbeacd05bd0272b8b8536ec999a30117ec4 Naujienlaiskiai
+2246cb95b0951f5d8d4cd965c08e5a82f41b9cc8 Reik failu tikrinima pataisyt ir desinespaneles.php faile
+e4a2706f32ae95cc6c642a736de1e064a1fd63c6 BUG
+f46bcaaebad617d34afbd26336189c92c8f014d7 kalbos.php
+6ed1ad4734485f30a05c735d12e0100da3f81df3 Ping pong for the versioning number
+5dbedf8a2690ac036db3511dc1e6d41822166326 Admin paneles inputu teksto spalva - patamsinam
+9d6809118ac1c98037f31169783d6e0446f5bc72 Apklausa - pridedam keshavima apvalom koda. Pridedam usability
+cf2657541894cac0904c9177b5a84f6fb4bfe3bd bugfix - startinis puslapis
+f32b8442d986a2ae90c78e3f1396a63a8829f124 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@596 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+b858f7636f6f6122e65789cb4024b5609ae0488c git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@595 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+6955e5dd7f94c8fe0b731d67b3cd03f72f470d61 forumo teisės
+74ef9e9496583a22d66d61d61c762fd6f439d130 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@593 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+5138734c4041b1ef529dc585da04196ea6e49eaa redagavimas
+62216cf6e566e6d92dc2ee58015f032c0b1fb6bf git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@591 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+377c45417821e94806e3fb546db0dadc097eb4ba balsavimo archyvas
+9880f02b4eeb8bfb1ad80d004156c583b007a661 Nauja apklausa, TODO: archyvas, komentavimas, redagavimas, testavimas
+634e5de826382c997fcb26f7e9ff02cbd5ba7410 Puslapio medis
+c46a53379617cea00ed923f482cee89203a97002 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@587 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+59d37fab896ce34d5a2e41b6debc10a01b76f796 uglymce
+8e1508bb7aae3472541d20a94baf3c7185158b1b git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@585 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+0c46acd5c6768e5edeae637be971c6d48c3615d0 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@584 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+5e253166ad43eee3d89adbe977ed4fc0cfaed91e git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@583 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+dccc008dd8ec182abc82b7b1ed5264ad59067e27 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@582 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f470207ebfbda152fccf848be955a154508e2369 table sorter
+d9e4f8d8054ef945c4d58a4f7883e967e76e08f0 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@580 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+581073f7789273a1b1c9f0c365751f74dd7b784e git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@579 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+c568e1f4f43d2207dfb35f16e6f6941d5032059c git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@578 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f64c236d569054053d14b07e3291d09180fd072d git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@577 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+c25adbfb60dd23c26d4b6df80647d101343f976e git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@576 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+8ec4e57a77a33dadf22fb3b10c8256daa9f75ca1 biskiuka bugfixai del stiliaus
+899176183f1a2e9fbeae1117d001dbbf3d969531 biskiuka bugfixai del stiliaus
+9c693e11adaea4e6546dfd395124bf943c4d349c ar tirkai reikalingas float left ant formu?
+d81f5b89c9c124be7f7da50db1c93437d4e26502 bugfix: markitup - filemanager - blogas kelias
+c2012f6d4ec0d340599aadc2de76c8c4696cbe0f deafault dizaino pataisymai
+9e400ad0fbb1e85284469c3514214c1a1f45dbc4 Jei setup.php neistrintas - klaidos kodas
+69fb87ec3f08d632d71a366c6c0f6cb29ae58f25 test
+56cd2faea61bc394ab75724a9f3035e847d4a2d0 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@568 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+5358893988bc75a67c6ad10674aa61781025ab5d default zone
+4fc45cd2b33dbd2e566daab12034e173acc2a29a time zone
+72e84f4abaa2c00d9755dd127ddd2ea1472a6d44 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@565 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+eb483e338a3a9745c3a2dd8d266bf6d31295eaf7 galerijos tiuningas
+523c7a730659f6862a80f42bace0ca6f1654744b Setup pataisymai
+dbf15c950721da14d20314e4271e0d4da9cd90fa pono F.... užmačia: galimybė pasirinkt redaktorių, CKeditor nedėjau, nes užima tiek pat, kiek tvs'as
+e1680264ce35444cc5b2dc3a95f9ac3eccb46d73 setup išvaizda
+a502f0f042168df861c3f5de319476c892daeb9a upgrade išvaizda
+21425d81c6b202acbd6ff40398e7f96488a9216d multiple upload
+cf17fced37496fc233e5d1d4323e92aefd2b729f Nauji virusai
+88974cb885cf3c3313053fb2e637414c77810306 Dizaina Default3 patvirtintu. Manau tinkamas - dar kada patiuninguosiu
+a87b66cd3e26ebf3bc894a6b89dca878b0aab9d5 Admin paneles tiuningas, nepatikimai veikia filemanageris - reik pratestuot skirtingom narsyklem
+5c0f4a2891a29a26c5890b12b5c726e6cacf9d49 Papildytas atnaujinimas mysql lenteles
+3d77f04987e909920710c9b385dc1ac18c7610f5 Kas naujo tiuningas
+c5858724b6809e52a441d951ffd9cf9493055203 Grazinam config faila i 0kb
+82538843bdaa5aecfcc8c5f43fb2f11151883531 Patikslinti išsireiškimai
+319c308cbf15bf0d7c19d1f8d93c3c94a426aa3d Galerijoje ignoruojam visus failus
+d2acf81b7f1667161869b4784d2cb0959855ab1d galerijos rikiavimo nustatymai
+480f3f919aadda52663c81745e1ac010a8f0ca10 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@549 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+60d079384ac6378b0442e17f8c699f20dc634e16 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@548 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d3611d06a5a2158cc8579888483b82b9c0ee4bdc Apvalymas
+1b0a6ceda7be454bc5b13020ff097da25221d9b6 galerija
+35851843df220bcf038b0b01a227b5d65f62b102 Antivirusines pataisymai
+1aedca5b816c7eed7a4b9f5a3337fb1bfd5dbe95 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@544 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+70f95887e37e25ab52c470c78bb2bd9af691363d git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@543 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+9a31c5a06208b9c569e542a128d6372b559e6784 Lygiuojame koda
+792029628beda526d748fa3de9be49df3f06abb6 meniu administravimo tiuningas
+b8234fcadbc69f97024901c7673a265614c36f61 Dizainas admin paneles
+f2ad21fa63988d3ffc7f02fa2342c8cdd4600337 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@539 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+94af5a23e3f6afbf75f39e9b5ab9f82e27cf7baa git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@538 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+4df24802b838d4d9c2c49765c30b78407f226196 Straipsniai - nebaigtas pagebreake
+d3551bdb33fe7b064ba9d241344e2690ab440478 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@536 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+b5fdc97bbc1522bc332ec76d299d50611c029f3e kad nebūtų tušti puslapiai
+287a5d4ff22f565937fc74f46187c74da358119e git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@534 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+9f9a4e8b494d6d22e2f396eaa5d9875e31a7d7e6 Admin naujas dizainas - pataisymai
+0e162c8d44555eb38f8aa509900fef95bcb0398e break
+6abfdeb2283edb110f488a3c5794c9d24f672c0e git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@531 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+b2a7da1abf43a364748d8ee960f53187717426ba git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@530 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+8b8a058bb96b1a08345bf08c86fe60b70fcd9b11 Admin cp
+f7572eabe323ba8c82b374d06666a9158da65797 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@528 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+1530b9f46b0f20a03e0f41b117ecb8ad42e734b2 Admin naujas dizainas
+691fd8f19a06880d225b3733f883962a0f6d55a7 getip()
+84770bf8ab6dc6c301c5a0d7d9b164827f931a0f git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@525 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+351ac203a767472bc1e78c592be3702131c0f0fc git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@524 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7747703ee4da93e531d505d2a9316b6483722bb2 sticky news
+f699399dd15d1d3dd848af3c7420368b6fd19d05 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@522 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+6e665e946df1b7be3a872a37ca122e7737f4e1e1 v1.4 mysql lenteles EN
+1fbec3006f653def4c1f805877e95e2a14693a6a v1.4 mysql lenteles
+534f3c297abd33beab328bfc9ac26f2de8fda28e git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@519 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7231cc126289a1bb1afede00b10fcbb7a49065c9 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@518 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+3f29ea3257cae8f7174bec100a96c242898ee0ec Naujienos multilanguage
+2d65dae9e736e8d65e6fe41e5e6eff0a23f91f4b undefined $conf
+729beb364f0de72a4c15c921cf368894e442670a Administravimo direktorijos keitimas - reikia pratestuoti setup.php apvalymas
+114c0e7407997ab8d7eaa60020a56127051a1602 editorius
+69d1ee0b007f9aabe6730e98f4d5169bccea3166 Nauja eilute htaccess failui, kad banai eitu is naujos eilutes
+fef20333a9f4df98d59c5c3868c953e40a6d066b nezinau kas cia
+7f6efee4520d732f51b9af2822a3f1b4716d8a4e WYSIWYG perkėlimas į saugią zoną.
+731efe67bdcdb87445773c181a0c9c31503826b5 WYSIWYG perkėlimas į saugią zoną.
+5472a33ca50f18ecbe6cf616696ca94831b66074 Truputis pataisymu susijusiu su daugiakalbyste
+656d2f7718ec570efe12f9ee4dcf0dfca3df1ed9 Truputis pataisymu susijusiu su daugiakalbyste
+d37971c13acd453422dc4124d640e7ec5fd5d06f Truputis pataisymu susijusiu su daugiakalbyste
+f568dde3add906e4309917a83214f52369aae287 Padaryta: Plačiau galimybės
+f174cd0fd91ec027702c53e065987a2efccdeefc Ignoras ant betkokiu failu esanciu sandeliuke
+a50ad6f71599f6f92436c09f8de15138d0b5107a Default dizaino pataisymai
+73d3bd4ad67f157a23a0d62423dab703352a5b26 Ignoras ant betkokiu failu esanciu siuntiniuose
+0a4a9ca394f30bf2f87745b4287d5687dd554548 htaccess leidziam failu tikrinima
+18a218475e7d2508379f2383df7a9978553f9749 biskiuka bugfix filemanager
+8c3d9adb0ee7cf15701838f6d054563884765935 biskiuka bugfix filemanager
+f9733a1e56801423f6ec485d257e13389afd2198 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@498 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+780d62ef7a7b40beff199a0c57bfb063d605582b biskiuka bugfix filemanager
+70cfb82cd795384cea7a2dff7af3604263c04bd9 neveikia funkcija adresas(), gražina kelią iki ten, kur esi, tai netinka administravimui ir manageriui, suprantu, kodėl visi tvsai klausia kur instaliuotas TVS'AS, gal reiktų į configą tokį laukelį įkišt?
+0f60f589b4c2c811d4c2d3e6261d2479e4bfc079 manageris, uploadina tik į siuntiniai/ , į sub direktorijas - ne, peržiūra neveikia  (nerodo img), peržiūros failo commitint neleidžia
+98b22355d625b13b71442e509834c7f48cb251f8 antivirus
+dc0873eae935fccd274dc891c2a1ef8d5ecd3c37 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@493 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+20be84b80153e46f645a0958f2b6f42a5fca1a05 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@492 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+c360d7ac0ecec4e3d60536b425ad3b251079c681 naujienlaiškiai
+a4c0badee9030d18958e75cb91bd038f5073f282 slaptažodžio priminimas
+612c80da2925d1104cf34b62c957b259b8db6724 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@489 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+a3c3a457f93a5b30b67b304c692f59cbc158a2ba lang()
+2634b66279421eeaa1e30d3bcc2202440821899c lang()
+e3a72c79d2fabc347c3e17fd59df5cb080511fa3 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@486 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+aa9ff860e7c91214e5df2a39ac01aba9f4362a54 klaidos dėl tų lang()
+06d1f2d556be517e772cce7b57992d66553dd4e9 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@484 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+684e70646e3a7ff645ed528561bade47317e736c Daugiakalbystes SQL
+021f15aee377ab94a72fc2f0a99f887c1ca5be76 Daugiakalbyste. Truksta tik administravimo.
+73490719ef9adce1706d71e7f917781d1f9763d2 pločiai
+37d37085aafb5601d7af5a2242bfc83367ebd672 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@480 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+b6fd43a900d9b9873e55ecb9b62f28318e247150 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@479 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+5c6e14ad8a1da07b2492eed2c194603123411a39 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@478 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+92368b14008a00e810da64e028a4efd1180a9c54 siuntiniai
+207e17cc62ee9964770e3f7dc6e3d1c03154f34e nuorodos + moderatoriaus puslapis
+b5af498458cbfe9a22a38303116543a4bceb30eb nuorodų puslapis, administravimas
+f5bc0b1f8ce0bb1fb3aee9805f42c0489517a7c0 subrykiavimas, admin pokalbiai, nukreipimas
+9c0734b19657d04f2faa349970a8879fc24cce6f Botu gaudyklė. Pataisyta admin CP lankomumo statistika.
+94599d453f4e92df5a28d9235558b20673ac97f9 Admin CP - submeniu zodziu lauzymas
+f5cf274a2196eedb59992ce7e87d8b3c0d768c36 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@470 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d464a7da90266a5d732afa8b72c676ea5449d01e git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@469 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+1275e55e84beabef11a77ab3d000d9cd3a3f4786 pagrindinis.js neįkeltas buvo
+51ccd145fe1e0cf5a8d8fe7eeda36bd1073cb15f atja prototype/scriptaculous
+71969ffdc65c62438df620d0442c2f5907443d52 skelbimai?
+ce161398df2c5325ea5d40bce3a4bcc9b5315c32 forumas, panelės :)
+550f27bdc1f35707e1b8bad99995cc881bedf164 Admin panelės meniu reorganizacija. Rezervuojam plotą mums. Svetainės struktūra perkeliame ir atvaizduojame kaip submeniu.
+bcdfc7aebbf36ee7b811bf774667928827636c30 Naujienu tikrinimo tiuningas, admin paneles tiuningas,  galerijos redirectai
+9da356e45d5a5f9d5db2a7d6ca26a29e0aca50b6 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@451 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+0d9cce2db370260351c917e7601090a71df2fb55 input() ir dar kažkas
+50a2ea465b9ed2e9e011a4f67f57bd783cd17539 persistengęs buvau
+8fe81faf23a8c4ad9a4a7ff982afc7ca8ca83b03 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@448 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d004fb01caad82fee8daa3d6677e9b4b31443b0d straipsniai
+bd9e1eeca5d775c7913c2d621697e058d8b00b2b naujienos, jų kategorijos, administravimas pataisymai
+e82f5a48684017e2cdbd29d4e094fde020c3585f git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@445 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+bbb3ed0c88f0c1840e26bce08c4a615b89fe37c0 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@444 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+85508b4d2d34d368e92ad4ced0f31b91745c69bb git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@443 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+8a6da6144b1bcb685c95b8e04171d49f1ebbfc18 furls
+c631b3e07be04a61f85b5ff08f4295d1226cbab0 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@441 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+07e2fc1b33e6e208714f5f5bfdfc5fb17a302f3d git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@440 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+57074de9127af11b4fb107513949cfdf52869e12 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@439 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+ce514d216d791bf3609a61e95eb99e4b08de0f76 email keitimas, gimimo datos selected
+090f4894638763157391424061532bc30775f5ad forumo pritaikymas 1.4tai
+404475fd288623795badf2f979991b542bc2ab00 Kategorijos bugfix
+232064b7f6de76d9347ba8c95e9c50fa1490d153 duko remontas
+41531502004fe8cb6a931126ecbc41e87f2d1fb4 Galerija bugfix
+585814c3853f4c44721d751ab027632f5884ee12 šaukyklos aptvarkymas
+5f8e0d8b2bb76716baaed7a3555f6349b79c75fa nerastas pranešimas
+9d52fb4b3fd3f658209e57c5bca78778dac273a6 Bandom
+21834f855455fbab9f8ed6ce8a49218d78133035 pataisymų keletas
+928901fbac41ade5d58d787a93315627d91a4fc8 break
+1d7f4597d606ac8d52dd57fe36954879434001aa googlui patinka aiškūs title
+f9ff412e810661a6f73ba94d8419dd56f175371d ...
+6f7a48a850dde4cf1a1215d47293ce56345f9e93 url() + furls išjungimas
+90f87e5a6a250da01f2fead7f4e611ea662bd554 klaidos klaidelės, didelės ir mažos
+d3a5209da931d561e61cebef13a905ff956c469b Versijos tikrinimo configas
+a58f39c5cf1b6687dd3c1612832926e2e55a1542 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@423 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+8df8b19b705480a3b06eaa4447d147b54a9b8965 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@422 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+4ce307258d86cf08fe84a58da0b85901eba1ac41 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@421 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+32d014092a5b503276aad98e79436aa8ef843d9e vaizdelis ir bėdelė dėl url()
+4533d0b65ad784c2d2f9f74f9195ac74dc74a356 Versijos tikrinimo - testas
+3ee9a61647d04c470772e432dcb11bed31faaa9c jSON versijos tikrinimo bugfix
+fcdc8ee5e97572503f5e2483ed252644c205ca3a git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@413 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+e81d9acc0fec6773fcaa2de13caf997d72ab588a git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@411 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+26a89b3199b34768568a9634c73adf9adfed9aa2 Versiju tikrinimas
+87684a0382ef7f773ef5e0b7e3dc5c7205fd1863 MarkitUp preview
+8e76c2ade504600d4a5cc98edc83c98c232b32b8 MarkitUp preview
+f74d24fe562909413a72f29a6bccd0b4930bf59b git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@407 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+0806f0f64df42a00abc3dfa1cea6454a1b87fc4a git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@406 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+13df1c3abdcd012fef526e14fc58ad17db6ee30d git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@405 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+8bc6399704ddd5c1cef2b287c47d4daa4daf42d2 RSS feed markitup'ui. ShortTags buvo paliktas
+aff4fed27f91ffdbd6f57f72faa34fa952287880 friendly urls + tvarkelė
+ace861ae0cfae165f85b03a4fc2305481b73588a friendly urls dizaino meniu
+e546eddd47b68ab48e8c6c531c48f5cac1dc7f64 Per siauras
+d80bec40dc03b7acc6c6c96c03ba99aa9ccccc7e Isimu ir remonto puslapio lenteles virsutini borderi
+5e506f44a19962da6b6456a6bcc9fbe32156b294 mini bugfixai
+5a6f4c3d07bccadbf716365a8a78e9243adb9c26 Direktorijos pavadinimas sutapo su friendly urls Galerija perkeliame i images/gallery
+9507b72ddca51805b77812b226623226b20ee339 atnajiname setup
+b8203809a853bf6a05740a7d2b0cad35f2256757 Direktorijos pavadinimas sutapo su friendly urls Galerija perkeliame i images/gallery
+35c5727d470e4d2c227c815a3905df8d7ef4d837 Direktorijos pavadinimas sutapo su friendly urls Galerija perkeliame i images/gallery
+9939198c7a5dbff5d1e7a189e1a83f077e941c93 Privalomas folderis
+ac794a3473d1f4d29b330e1b043347d89de0535d git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@393 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7ce1ae8bcbf254af9468e5f16e8f9c2681bdfc51 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@392 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+36ed340c190590e1110402758ddbb7d2841fef18 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@391 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+bf158c3d8c4dca9144db433b530e8638ffc6bd74 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@390 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+767942f5011c86272191a206376a5bdb269ae103 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@389 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+182a92dd9c696eeb76a5f233ab605a7da8c4e949 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@388 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+4e0ab9c8fcb322fa8b048ee5ba6603a1e001ab11 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@387 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f5b2ddf916571bfed07cdc7fd87af4be7ad8f6da Kas naujo
+afc22e9eb4af8804ef949567df22fe13d05653e0 ups
+e9fb602d319f0f4bead51baf6529ecf8bcc8d9fa ups
+94e305d6579e480129478e8b96219420d5450fa3 ups
+81643d3f478cb6f665f50780fb18b3913facae9e ups
+47a542aa6a3b7b2e278cd52d85a5fb1f458a3c39 Patiuninguotas "kas naujo"
+21a2661b8021ba3ee9c730ba5a27e19339061709 Nuorodu tikrinimui
+4346cb275142c0a90b871428488989635864249b friendly urls
+023d91a2d43944fbdb738b5ce9c8813da2aa7234 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@375 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+152a51d378a59bec4c6a5514161082574c6fac9f git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@374 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+97cfb6f83949b894f7c8e3d7b212f1abbbc1978b git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@373 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f7b1d8c11ce1352a8e139183f29827b8721182f3 tos su**ktos kategorijos
+875e77d8bbf74a9083bd4d695b67599f9e79d122 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@371 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+c3f1d01604894d4f4a940deba10086a9322f452c Slaptažodžio priminime pataisymas, kad įvedus betkokį emailą nesiųstų laiško, profilio redagavime draudimas palikti tuščią email laukelį
+e354c4e3384ae68fcb2355e0c1a1c089a9b7bf3b Bedos su nariu kategorijom ir editorium
+59387cf042bcdc85d9b9deb51c313550604bc825 editorius moderatoriams
+a8cf54c1031ec10293eaac407374d1e93fc46cee ...
+f4c6da4b9f2d85afa17f5c69b627612c18290f7e truputis tiuningo
+47146ad4af6be80261a1d5ef8dcf53ece8be6a8a Admin panele - automatiskai uzkrauname modulio paveiksliuka defultini jei tokio nera
+b9c2d8c90c0abd962840ee50034b623b8de18e98 Format
+a98a40476c0fda8da2a810b67bd431023c0c0f83 BUGFIX: superadminas dabar gali redaguoti ir kitus adminus Pakeista galerijos isvaizda, pridetas redagavimas
+5f107bd24b644b60064504dba6886620b62b4a1e git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@360 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+becf3a670f7c94d3d0cccffd655e2810789d0f48 gražesnis remontas, kiek funkcija, avatarai neužsikešuos (reik testuot)
+4964d5f989d122d50f7c1ba9c2e2ab4fa0965675 peržiūros lang
+680f5b0d91724bfba3f3315ecc87d7a35030db58 url bb code
+273bf241a5440aa1fb433919b98b324338c9126f bugfix: balsavimas.php - 5 klausimo nebuvimas
+be69346482f12d05c21b07f0cf00701629ef143a bugfix: delete_cache()
+d704b7b9f59a5e89e5101c506d66d632b595ac2f git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@354 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f8ef03f0a9e65b0422f82a6d7dff113328c6d6bb meniu
+b1b8f3a2498e6838c6634638fdaf70185c3b333a meniu
+f4b68818a020754fa0e9d36f6596e6573b379d20 meniu
+b1b14a6501091720ba14cf293fabb0b9dc4f11cc darbas
+a1933175d28493e43bbb4131a1616da8d66046c7 :/
+2ac488743e751c6e453d50f4a79ea6069ebb2b8e git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@348 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+76b607ea62785b82ba0dd80f439736fddd2b11e2 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@347 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+2ce4a53e0873ef550907aea6439c14da5892597d fixed #85
+a093ef967fdc5b414ea3e9aa114eb62a032315a5 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@345 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7582b7b20c92230d2c7bbc70f4e40fb49f0fa0d9 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@344 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+fabfa7f46db54385837b34346d4dd0fdf8d71ca9 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@343 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+efd0debe1bbd5d120dbb33ffaba6962620df8512 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@342 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+0cd6c1c19e06818c7c4b67b5d26493b80cd188ff stilistika
+ec9b5f09862a7e0b991a9599ac58bfd882634c8e ka pavadinimą normaliai rodytų
+e14116e6b1271dcfbe7ee6d190fc231c45ed7906 wrap(
+918758931f27dfe87cfb63edbd26c56a5cf247f3 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@338 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+28bb13891f3266d07c9ea94f791f05939c881151 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@337 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+ff18a0ee0d923fda9feb385bad82a0bdeaf579df git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@336 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+01b81623d4cef6b58ad457a66445e742ca65b479 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@335 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f63931244ea211be48681a827a1099175e9bbd09 Galimybė užkrauti betkokį puslapį (AJAX) - be dizaino
+297e41415f48e1148fb74d2ad6626b6c6dbc70c5 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@333 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+a443dbb8a574c6f112d9a4a176917bd3b3752ca7 ups
+d259b0fb06503faebffd15dba9f914b91d54c9c9 Input bugas.
+61ec6de28bb1f31da9f03e1ff8cdb371e83b6612 Kalendorius su nuorodom į kas_naujo.php puslapį ir online.php tiuningas
+7ea56da9d2138f5e7230af6d0664b4a9021050cd fixed v
+07ac89a7deef1140efbe39a5e218b59612cc0851 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@328 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+1217f13ed04c7bb04a62d45ec0fe713aed45e19d git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@327 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+eb2eccdadfae3cfd2d28277d2b8f2d34f2097666 fixed #82
+492be84f61a9fe7df760ce56d06b467f69c131e5 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@325 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+5df7ebcbf64377373912888031cb13aca4b73045 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@324 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+502be96fc9da89414da82b50790aa7ce21d67aa5 oi bugfixas
+e83b36266ffe32dc30afb1997e43cd89a030a27d comment #81 Pridėjau vėliavas
+f77a12eb3809ed7a7a293f2f7ee4885eef55f36c close #81
+2bbaecb7c5bdc8df9a9608302115e91b8bc4ff3f git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@320 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+035e7ed089593d603d50cfb11b1fe368e546b370 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@319 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+9e484f041d91a8a0f35900ab17c731a32c0f30c6 setupo dvikalbystė
+38dd8536318cc6a85fce781171cc159e95604ca7 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@317 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+25da5200d62c6dad9c2c27e4120f250d4ce8f732 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@316 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+ff2335b32475c4ab5c611ae8c9862a5769179e9d #80
+6877e6e1bffb299ac422c9b32ece13266e851faa BUGFIX - balsavimo tiuningas
+9bceddca4cbcd347e50e6e3aade3796df1e61bab data ir vertimas
+6553a8d153da8ad1cd1334763447404477b71566 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@312 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+9853230bcb5eb6cc6baf6f667d9f7bc9157f6b99 test
+d8a2ecd1ec12461c76f434c1f0e83af8704cb82d Dokumentacija - bus gerai
+427fefd592a618dede50e272e97f4fd6625a5672 Dokumentacija - bus gerai
+e077f4087387bf311de2b025cc25c7919378aef5 closed #79 Pataisyta - galimybė įdėti daugiau balsavimų į vieną puslapį, ištaisytas baninimas po balsavimo, prijungti kalbų failai.
+cd0511194941d5d91398c2ad7b0e862dadb218cb Geriau be animacijos ir geriau kai permatomas
+a5ec7218fe22fee05d474f8fcd8ca04b28f856c8 Pridejau trukstama paveiksliuką
+9e1b3ef496a83e2523fb92d44f58246499b048e6 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@305 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+862c0727915e010787087f1fc3dd96b3b599d852 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@304 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+5d02a5282d5ba89861a5cb7930b8eaba450f93a8 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@303 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+bc63c8f9b9c29b7ce06580f59903235e3a89c34b git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@302 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+375dcbe16569be50977677f5fece6f275f29c632 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@301 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+df6cae97bcaaf002f466a8a2962607bd25355d09 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@300 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+dcdaef7209796287ff085172eecc4902cda9336b ip
+7f2311258892825ce84a32435f9ebe54adc8f4c0 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@298 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+ac2f616b7d41c1425931f4ad41f41fbc055b79a4 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@297 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+b153b38a60ead2f6a7d98f9aff35375e50da53cc SEO urls @TODO
+6eca882c3b07fe9aa7f0ea82914208650faa316a paiškos sistemoms
+bb982b19f24caa0ab719f298c359efff71115759 Apvalymas
+f60e34b529eebb666078be933399ff8041b4ab0e fixed #75
+9614472cc7e83b37353e81121029920a041511aa fixed #62
+4c8d40efe05e2bb1944a6fd8ad894633fa04c62f fixed #77 paveiksliukas iskvieciamas su javascript pagalba.
+6927b32e27dc7adf0381d43e19ac4a5c9078884f fixed #78
+2b22bdfa354856377c279a47b0fbbc9465058dc5 kontaktas.php - pridėtas siuntėjo IP adresas
+953fb8ddee3508d9cb1e5f8bfd38d75233135168 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@288 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+ffc7b782f6207e18038518d58c23c36b4edc93f7 dėl vaizdo
+0aea7a9aa55868e34155ef321b62cf7de8eb6015 avatarai2
+edb0c6123d309b02f3f7ff2d50ee9664aaf9479c avatarai
+6f2a2ee950aafb48da4dc3fcc3c6eea37289cab1 banai
+f62857a2950a546bd6a107203afef87bb28d485d vertimas
+e47f314fd0116e61fca27a1c57410fcbcb2be412 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@282 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+1e144f7931c945e0f20c0f38815917d23bfd6f96 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@281 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+a5caf78e3bdc0b58a4155a3df259da634eb12769 Ai niekas
+da4469cdfb111904346c4a7670fc029714cb6693 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@279 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7ad8399d172fe796a5b1a7a27a939b317c305c5e googlui
+a9a0c0fda0ed0407c2ee85c558649c6faae39d48 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@277 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+384f45ee336263f22856c309b46fc4b52e412857 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@276 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+a3b672c0bbe82ebe856021fbecb13d3bea866f91 dėl forumo sausainių
+4038ed5aefb987c127e227467dd54c86c363d4d0 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@274 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+5de02224d2429bab3b4a93f9d9e78395f1b9059e generated negali būti po </html>
+2b1a91906968718fdaebf4ccf13603838541b711 validumas, išėmiau nereikalingą lentelę
+1cd307e32f5c422beee8cbe77a1e23c761339855 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@271 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+9a29290e0eb6f0196e1e8124f4e2424b1ab9ed7d git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@270 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+85e0d0ea17cbe4279c513e25f8922a1248b3b2b2 fixed #73
+d4a2ffea81693faf814a82f78ed558bebdcc0556 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@267 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+df6eb1e75dfa9ab4f8d6ec1292fe33ecbc70d77d git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@266 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+4267b964171acdb5cf9c7ffabb71d5c2041a44e5 fixed #72
+ed31937fa3c790e1e7ac3673cf6b91de8163f650 fixed #71
+120cd16cf5e7256e82c787336c0f0111e72fad7a bloga insert užklausa
+18ce80e68478b7a1d08ecff2451314275c0e3fff git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@261 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+1a18cbf6d256c896a10a9fd16d961593d254dc09 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@260 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d55905bf0337cb4feb0e1017872872a051b5e96f git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@259 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+b2ab7c8af82a5bf0f61cf36fa1b562d03259b347 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@258 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+872e7d16d953597bc17986637e553b6045bc626a git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@257 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+724d4e4ba5d377047090851117b0447841db4fd4 fixed #61
+deeaf29e0a98c25993ab0a1ed1cb1c986970aaf9 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@255 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+de9a5712bf5ebc9a1de69156675444ccade30c2b fixed #69
+adef737a34ff81624828c5d3899453003d5155d2 fixed #68
+3905501fc687e6d8d8c37f6ff7894b96616e3516 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@252 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f3fd28d5800addbb6340a380e4f9c3a32518c306 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@249 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+6cff90da04669c68e94774448dd44bc8095033aa git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@246 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+466ee30a93b34308af86d83f854a609d413cb166 tarpas po labas
+08cfc75b32027445a1cdd8bab113a00475458ed1 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@244 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+55a6998133d44cfdc9074f1b1b89b455b89cab69 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@243 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+0dd60a300840f7eb26b52c68a699afeca7e6780b ne visuose hostinguose veikia, nežinau ar dėl to ką užkomentavau
+77ff5c691a49ee763396586a8877dc24e1821187 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@241 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+b449c9e5aed019bab332f6fb58818ec2c873e1e3 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@240 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+3313a6125164dd78237b6b601b4b974a6bd08e90 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@239 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+bd8f11f9e5dd4fffd7967200d067442a93ed35d3 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@238 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+5a2858ceb76e493a071b840798ca7e401d99dc7f git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@237 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+bf8c3b119ec89ee9cca1ed75c0f4d952e485ac49 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@236 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+9cae6afe9afd068e6d994873d21b8926af0b960b git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@235 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+81dcd6c26760a10544ea16e1b3c1181258aeb9e7 duk
+cb5bf50c6187e26ad0e300abb17b28b7d7ee3067 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@233 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+e2642aeda0479b1ac421cba5743e3f9688cec276 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@232 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+69af86a1f7d444dcb737c77769f54406a455fc43 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@231 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+fd60078b7d604a93660fd842864bf546faf08ea3 undefined
+7d52cb99efc65b97513d6e3bc031c8d8820374ac user_idas ?
+7a09f41bbb61e81fbf42c0bd53161b3bac50ab69 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@228 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7abbf82f6900b3da50f1e59d41adcb45cd7da983 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@227 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+20b2e6c2f1c255184fa8e4d69cb45e7523a2a8b9 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@226 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+bd0c05ec1f0a6f499b04ab71a5c44d95a088ce69 radau kodėl neveikė man :)
+ead52699e3402d22e83026df38f29e94a8307cc9 neegzistuojantį pluginą išėmiau (InsertPicture)
+543a37524d7c4575a5aa79fca348d513ccd0566c blogas kelias į paveikslėlius buvo
+9d98977efe0a2192f0a7e72eaf8605dbdc7bd472 Niu nezinau - man veikia nieko kaip ir nepakeiciau. Isbandziau ant kito kompo - viskas ok.
+90eb04ba7130e72bda8d7a67d2c882196d5d5335 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@221 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+42235f44873822226be898848f60192a15604769 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@220 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+9e04036b7ef6184f5c76ebcfbaf208280f2fc28c git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@219 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+80e9e658e0c1a4f46a130e52f92bb61e7f607a5c git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@215 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+6c65d7f88a263ec8bb530cc9b0577d52e3819b79 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@214 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+55e01e2053631254bb6c570dca1d74a56071da82 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@213 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7edea16b159a4c172d4dbb1550bea01809f6272e WYSIWYG editoriu perestroika
+00e41f36a9e25fd0fa15ad26321871d01d447ebf WYSIWYG editoriu perestroika
+18ff9c16571e3a30414652b96dc5968288f7949a git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@210 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+250c5787f58ebd64898289d12b873e8f26df5ae8 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@209 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+2980b249c03d9d02bb7f2140533cad5233f9f8a8 kalidos dėl lang
+9a7598669555a2a4fff8f62cdff8ba6444023077 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@207 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+27f3ffd04a001bc15c1275e7f554e13521101155 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@204 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+0d0cd492a753285595a789fcdef3f3c2be94944e Ignorai
+be4b459f122ab819f5c77d8b96038e570d25bc9c php sintakse
+81ffbf60ec70e2df41db01cdcf7beba06cc32244 Jquery Hint
+24cf021abc95358696a6a8b6498eff7b0788ab37 Jquery Hint
+4f6c2134f7464a4e048417f30614a511c1074d50 php sintakse
+84b3b59204ca0cc3e7f971d3498609e564814457 php sintakse
+95cadbe4b113f699ed3a59e5be19d8c9684e870a favicon allow
+c07c07808c17119a3397d0f9e96f750b69720d0b HTML
+5e8d8f1bbafd40887621fc042b59f04cbf1f739c Jquery Hint
+5c10de6e7bea0230faa1b7d49fca1d44fcad4db5 perkeltas favicon i dizaino direktorija
+9e9b8298385a20671f2e0572ec663f1adb41970f prailgintas keshas
+4f3cb48e773e39be6822754e4e34193661613abb nzn kazkas
+4ad1f81361eda529540f64c3d76df6bb7c7a2340 HTML valid
+d9e77f9bd5197a893189fc20905ec010f162af49 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@188 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+6f0ba3722a37b9252dc33752eb079fdcd4711319 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@187 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+bcb80f2422f9b0f94ca83f86f1f2d865ec8f0404 niekas
+33fa89dd6bad84c0642ca338308be917ee023f1e fixed #55
+360b48b4bfcf2e69d292542332f333868bc41c8d git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@181 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+9977eb62fe7f200a16f136f94fe0491e231357eb git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@180 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+aa7d2fdf7c6539c76043a4febe94ac85d00ae317 #52
+58815581821c25627af77e07002ebbb40c680682 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@175 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+90d3e377b9f2c2525779ec1fa97ba99650c4be18 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@174 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+0aaf6346e28ac5429e2a910cacf8e6caff3fd3f7 smulkmenos...
+34f50b05794a3cd0d534e199148f82336ff49ed1 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@172 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+0a97f5918796c0991772a2dde78648cf00e4a183 teisės
+56b1f442f1d81fe82cadedf2a0b21332e97739e6 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@170 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+01b19f2883452ce476af05014219d536bd7d1b42 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@169 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+6ac9a795548a41324bd5ade95bfc16270b799218 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@168 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+e9f6d3f9b8bc2cc056ea3edc1ff47fac74fa80ee truputis validumo
+b53348f37097ae3df90269a03d159071b63620d8 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@166 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+9f3c2180319232ebf1609218860f8dec4d536bf5 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@165 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+722633ffa6125ec3efdc691179df24facb39e2c1 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@164 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+83254255bec1d048fa3dbc2df64b876afaadd2bb git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@163 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f73b5402b0bdc0b0269e63c333b1e9267e0c096f adresas() gal dar patobulint reikėtų
+8ceeb21eecc4ba8fa5a42eecf576ff067f542904 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@161 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+4b8dc3249833b6800001c0609ea2644ff4f478dd git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@160 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+538a6327fa367f816303cf0835733430c4316346 buvo nevalidųs tie buttonai
+e415305ae2f8c6c32b8a649f814e654835fad12d #48
+c83433b9d107fb8ec29e1fc54d89b19acc50cc6a git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@157 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+3b2a0e723d0d17438b80b6bf9051c2a4293d82cd timlink
+665c621aded42c15515f71c746fd338633070851 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@155 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+335e54090d217f3eda7f107ac2109fd13278545f git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@154 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f49693178272fef6529558cb358953f0e011b793 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@153 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d4f4654c049ab0a4f7bfbb41b2902509f521e193 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@152 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7855ff7f6fc0d0d8d2a8e09e9a2ca6c7560959c1 #46 Komentarai
+703a7fbbc8a26775770507a7b17536e1825a839c komentarai
+015f34d7b2e0f7ac868e298b8a1c95ca0f1738d4 balsavimaass
+d56b5533bf9955b95bd501f5841a5c468b25b2d2 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@148 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7490928860a69f51b9dfcc91703dab05d33bbfc0 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@147 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+3637a0cfa8e8aa73f5671147f4496391aadcfe10 #43
+7dde32adf9865f12bb61e087dbd074dfb0bb8571 #40
+56742ee41317606b187c1681094ecbfc7b3b12cd redirect
+0a8579205087ab356b59d23e24117142f324d08b #34
+35ec9f47ed7d505a57ce6619efaf9b5ed0f59b47 #35
+b8fa23626deda0dd50fe307ce376f12c05168dba git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@141 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+6da816295d29f694af6ea9766f430f086ba72fed BUGFIX: missing language :)
+ef5ca261889ccc9e17b1f47be31cce1baac1ad53 BUGFIX: css
+ba29fd2e817754093487a34316fe21bab704555f SECURITY: slepiam klaidingus slaptazodzius
+2560449e5c5f8f033c3cb62f1f99942b41cd118b stilius: dizaino kaire ir desine
+d895cf0c19043ac404b22c31a161d4a4e34e63c6 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@136 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7d1fd6fb56585df38b6bdb5e60a7ad5c00f1e8f9 stilius truputi perplatus butonai
+396af68c5d7591d1ee18bd554c6f8832be66fb52 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@134 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+eba552c3ce8d3d853633da9ec7630a1021e76370 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@133 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+a4d3346020096b06d19371a411dcfcff25b44de9 css
+6a963b4c1dde25e29727ad9a4ed9585316d4ad24 css
+d18c818f40ed8875410a23bef14da2c5a0efd8d3 čia reik sql upgrade sukraut, dar reikia teisių laukelių pakeitimus įdėt.
+db20b981e0beade5c1391d44aa5a7b1ca5b1c57e kad refreshinant nefloodintų
+445072338aca2c1015d8e75d553c48ae84b7d03d git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@128 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+c0fbcb53baf68fa4ffd5e4f3aee73ab69e929f10 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@127 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+b6e5e4407d76f6e01669a13deb8dfd2ea56decd6 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@126 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+10fece1dada8ece9e70fa53af8b606560d436f12 submeniu, deja tik vieno lygio, dar šiektiek administravimo reik griaučius padėti kitur, nes į adminstravimą nuorodų būna ir iš paprastų psl.
+f2d4a80b1fd855a122635cf759e308eca1267be2 Admin paneles reorganizacija
+07928651aee1c374b7502a48ab815222ca22a5c7 #32 + style 100%;400px --> class input
+2ee731d382e5343d3442d412b85d021be9c7ca16 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@122 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+bfd7f8786e100ce7327ea3eb5c0f063ef1993d52 bloga direktorija
+57d8a2f829ed247dc448e9ef2420b7c5471af5bb lightbox
+fbe579f7050e4646f17c6720245a3b2bb7aae5ef BUGFIX: reikia testuoti slaptazodzio priminima nuo pradzios iki pabaigos.
+28b9b818a6ed34e407dae45d9c5de768ca60c7e2 Svetaines emeilas
+bfd6dbc563b350da565b8e3f1ee33aea496b3c98 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@117 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+3c5e410aa9907ea29a19433b2a229a4cae9880e6 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@116 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+5c6a347992a5d4b468d13328c68fe69b0930326d git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@115 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7308666fc7565a4ecd9c5609deee855553f0e56b git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@114 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f688a89edede91e28558740b2175204a39d8249a Visi ticketai v1.29 kurie neužimti buvo
+4ae928758df7512ecb782fa7ac788ee1dadcf4f4 BUGFIX: vartotoju teises ir dizaino truputis
+2d8aee121b02c86b890473847cad13d8317f666b Reported BUGFIX:
+7019f7bbe754bafd343592855ecdb58bb181a3ad ups :D
+8182b30721f15e1718d7ec625b7df352b9b74552 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@109 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+ed9a4c6b0d092daa8b8af2f7919dd1dedb9460ec git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@108 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+0b363bdb420d61a004dbae2d41fb1869cc128aa0 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@107 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+76ce9b6c8545e08b55aa2023e2370d6cfd1d425d BUGFIX: missing chmod(0777)
+3f728e99f4224034aded8e8c516c0d10d5aca8b8 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@105 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+b626edf2e30b92369f6c9b0e12bcba26db910cd0 superduper selectorius
+7610e714e53efcfe5567d07f551e4d54140b9039 šlamštas
+9ae643dae88bccd58a419cd71ac4d6489f67c53f IMPRUVEMENTS: kešavimas
+dc9281bf708e6b7604847dae2f1c957a00956080 IMPRUVEMENTS: kešavimas
+65cf78dd2f636d95f81c9f2b381764397aa6e4a0 KeSHAVIMAS testuot jau galim
+de939b8af51f0f8cee6c494c8e113eb95fadffea KESHAVIMAS puslapiai/dievai ir paneles/, liko puslapiai/, remontas.php
+f520f49469fd6827bdcc210a2d239d65713fdb0f KESHAVIMAS
+fd757cb9b09e043c0c5c97f0c7510c4c2bd8b0f4 BUGFIX: adresas()
+8880e3e2fe5a65e703a3b1736bd5cada425b71ff git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@96 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+87f7821b36180bdfdec55a1a050efb82106601ee Kategorijose radau klaidą :P
+846d698d7bd03b8fa9a27ec23b668623b3da8571 #28
+d744e9ffe15bfeda352bcfe22aab77dc2a012ddd adresas()
+bc868c290451cd90c5f91cab62faa8894de74825 ištryniau nesąmonę, kuri trukdė dizainams su baltom raidėm
+6aedfe4fae74a856f85e87f709f9070490108123 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@88 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+012163c02a42026c115418ea9c7812e00b9a98f2 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@87 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+d5b90128eef16f1306d584a9f51c44d317d2d7ba kad amžius nebūtų -56
+314d8fea6e41b1afd1695b36d6bb0a2e68e17d89 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@85 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+02e87be596e9b7294eac93e4e9dcf89719f229f5 #27
+fa6d770706765a016961c089b036dea943270fd7 e-propoganda ir search puslapio patobulinimai.
+12fbd0e77863c732c23c35ab20e91e43aa2cd29a git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@79 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+3bb5a584a30b1fa0b6825efb042162475ea0b851 Po instaliacijos meniu tuscias.
+d0cd2c3a9476637a3709dfaca299fe450c4b4c00 Pora bugiukų
+04e7a1b79d6c754f031efe156a867f3af6465437 #26 daug testavimo... Be to PAKEISTA SQL STRUKTŪRA, PRIEŠ TESTUOJANT ATSINAUJINKIT.
+19cfffff487214dec0828fac71b97dd694152b6c git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@75 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+b1ad828076209a1402d2ca559aa19ca1a97f1889 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@74 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+cdfadb337fec4a13223721ffc4e219a8596193fc #24
+d23fb715ebb41534c071269faf60da19727ed43b #22 + label tago uždarymas paieškoj
+a7a9a2e9984af536ac51e1fa1e75b374cdea69b8 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@71 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f8a5dafafe435bd0ee67cc0b5db52ddd8ca8d257 Merge v1.28 to trunk
+70bb73c2f3c43f1a22b0262045878325299dc3c4 FIXED: #14
+e53ebc8da9e479749b24437a4e1843b2bc6d2cde Publishing: v1.28
+46c9cce2b4167dd5fd82839ea30505b515afbf55 CLOSED TICKETS: #16
+4b70c4d19603a3939760e29c5ea60fb287dad289 CLOSED TICKETS: #16 #23 #24 ready for testing :)
+2bb33faaf960608ba0e9dbc32810e344f5307a5f SECURITY BUGFIX: #24
+a0daaa70bb1ffb738f6fa263e599e557d080836b SECURITY BUGFIX: #24
+bb8b761fcc490d9132ca91b0fb307ff435efe8fc SECURITY: ticket: #23
+fcf4e862e1078f7aa86441d9f3acb034b3f634a2 SECURITY: ticket: #23
+8bb956784c97ec899652855c96b5126f8e9b2b8c BUGFIX: ticket #20
+552f650328eb065330e35f9e7319d84115c31221 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@48 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+15448056f214abef504a531f8c7597b728586d73 LT raidės
+976cfd661f74717b611bb1dfd6d51b610eb616ed BUGFIX: login_before default NULL
+4d1a5e9dbcd9a50ca601d0ba5307cdfdc3adb1d2 BUGFIX: login_before default NULL
+9616a827e4fbad5b8dcc46f3ad4cbbd36d49b748 bandom
+dac01da07ba68bd8e0c8f5aad2d825373bf22c33 BUGFIX: login_before default NULL
+0b3a97d73e3e7c566855daf816a9c08934e0a2a9 Publishing: v1.27
+5220b5fbc63b6ec96b8c7593c3c7e7a9b77b2846 git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@32 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+f60ad10a8026f184691ea8d70a9eef756f15bd14 Š
+e75746fa2f48cbf153fec500a5059d124b6c79bb git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@30 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+7cf5e20bf264540568a861f4b4ff17e91c4c5be0 #10
+99d90eb32b2ad7e1b69b7686a6694096fa3edaf5 #6
+91f393b79de435ca38ddb392beefe738c7d17f46 #10
+806e2a9ea59b51dbe955f4fe756368d614424ba4 BUGFIX: #13
+41353ab63b733de56c9fa25282f83c167a6992d5 BUGFIX: #13
+0a54c3b3ac55d258b4a3b0e0fe6c83ce8822cfcc BUGFIX: neteisingos nuorodos
+7577bb7dd8936238c827b7187e090441397c76fd BUGFIX: id:#8 ticket: 8 ticket: #8
+62ae772464c85c895cba991deabd8bc5360cd473 <a href="?">namų img</a>
+4b87bb5408a992a3f323faac69e246b90e4eecab puslapiavimas, jeigu tušti galerija, straipsniai, siuntiniai, šaukyklos archyvas, forumas, svečių knyga išveda pranešimą, be to panašių naujienų lentelėj uždariau </ul>
+e6a07ba0ff8e90e01c398139e8158a598269af51 Pagal Ticked id: #2, išimtas "MightMedia TVS Naujienos" blokas iš visų puslapių išskyrus index.php t.y -> pokalbiai.php. Jis bus rodomas, tik pagrindiniame administravimo puslapyje.
+6e6d616f882bcd8fbbb396d9d1db661bebb8975e git-svn-id: http://subversion.assembla.com/svn/mightmedia/v1@14 080cfd25-d5d9-4c59-82ea-70d02a200d8b
+1e8f92807d53314628ec55d4afe51b37e4b13116 Pradzia
