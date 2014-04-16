@@ -1,3 +1,4 @@
+9e7dc7705557245266eba2bcf0a6cc1e1589604d Hooksai perkelti i direktorija
 d6b4b1879291f51e624857a61b9354f557856405 Upss. Removed debug
 1c9436d41a33c97756cdbdeccd57f23d8ada181f Merge remote-tracking branch 'origin/trunk' into trunk
 4c383089da9e60f026df4b25723254794fba3067 Add version.txt hook for git
