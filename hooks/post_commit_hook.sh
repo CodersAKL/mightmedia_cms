@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # the final changelog file
-OUTPUT_FILE = "../CHANGELOG.md"
+OUTPUT_FILE="..\CHANGELOG.md"
 
 # generate the changelogs
 git --no-pager log --no-merges --format="%ai %aN %n%n%x09* %s%d%n" > $OUTPUT_FILE
