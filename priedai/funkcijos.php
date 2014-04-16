@@ -1635,7 +1635,6 @@ function versija() {
 		$svnid = '$Rev$';
 		$scid  = file( ROOTAS . '/version.txt' );
 		$scid = array_shift( array_values( $scid ) );
-		var_dump($scid);
 
 		return apvalinti( ( intval( $scid ) / 5000 ) + '1.28', 2 );
 	} else {
