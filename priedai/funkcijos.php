@@ -12,7 +12,7 @@
 
 // Patikrinimui ar nesikreipiama tiesiogiai
 if ( basename( $_SERVER['PHP_SELF'] ) == 'funkcijos.php' ) {
-	ban( $lang['system']['forhacking'] );
+	ban( getip(), $lang['system']['forhacking'] );
 }
 // Nustatom maksimalu leidziama keliamu failu dydi
 $max_upload   = (int)( ini_get( 'upload_max_filesize' ) );
@@ -328,7 +328,7 @@ function ban( $ipas = '', $kodel = '' ) {
 	if ( empty( $ipas ) ) {
 		$ipas = getip();
 	}
-	$atidaryti = fopen( ROOT . ".htaccess", "a" );
+	$atidaryti = fopen( ROOTAS . ".htaccess", "a" );
 	fwrite( $atidaryti, '# ' . $kodel . " \nSetEnvIf Remote_Addr \"^{$ipas}$\" draudziam\n" );
 	fclose( $atidaryti );
 	//@chmod(".htaccess", 0777);
@@ -348,6 +348,8 @@ HTML;
 
 	if ( $kodel == $lang['system']['forhacking'] ) {
 		die( "<center><h1>{$lang['system']['nohacking']}!</h1><font color='red'><b>" . $kodel . " - {$lang['system']['forbidden']}<blink>!</blink></b></font><hr/></center>" );
+	} else {
+		die;
 	}
 }
 
@@ -869,30 +871,16 @@ function isNum( $value ) {
  */
 function getip() {
 
-	if ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
-
-		$ip3 = '';
-		$ip  = $_SERVER['REMOTE_ADDR'];
-
-		if ( preg_match( "/^([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/", getenv( 'HTTP_X_FORWARDED_FOR' ), $ip3 ) ) {
-			$ip2 = array(
-				'/^0\./',
-				'/^127\.0\.0\.1/',
-				'/^192\.168\..*/',
-				'/^172\.16\..*/',
-				'/^10..*/',
-				'/^224..*/',
-				'/^240..*/'
-			);
-			$ip  = preg_replace( $ip2, $ip, $ip3[1] );
-		}
-	} else {
-		$ip = $_SERVER['REMOTE_ADDR'];
+	$ip = (( !empty($_SERVER["HTTP_X_FORWARDED_FOR"]) )
+		? $_SERVER["HTTP_X_FORWARDED_FOR"]
+		: $_SERVER["REMOTE_ADDR"]
+	);
+	if (strstr( $ip, "," )) {
+		echo 'cia';
+		$ip = explode( ',', $ip );
+		$ip = reset($ip);
+		$ip = trim($ip );
 	}
-	if ( $ip == "" ) {
-		$ip = "x.x.x.x";
-	}
-
 	return $ip;
 }
 

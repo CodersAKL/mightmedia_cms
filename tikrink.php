@@ -17,5 +17,3 @@ if ( isset( $_GET ) ) {
 if ( isset( $_POST ) ) {
 //Įterpti, jei duomenys paduodami post metodu
 }
-
-?>

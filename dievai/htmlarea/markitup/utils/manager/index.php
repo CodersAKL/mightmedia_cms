@@ -7,6 +7,22 @@ require_once('../../../../../priedai/prisijungimas.php');
 if(!isset($_SESSION[SLAPTAS]['level']) || $_SESSION[SLAPTAS]['level'] != 1)
 	die('eik lauk..');
 
+function return_bytes($val) {
+	$val = trim($val);
+	$last = strtolower($val[strlen($val)-1]);
+	switch($last) {
+		// The 'G' modifier is available since PHP 5.1.0
+	case 'g':
+		$val *= 1024;
+	case 'm':
+		$val *= 1024;
+	case 'k':
+		$val *= 1024;
+	}
+
+	return $val;
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -46,7 +62,7 @@ if(!isset($_SESSION[SLAPTAS]['level']) || $_SESSION[SLAPTAS]['level'] != 1)
 					'uploader'       : 'scripts/uploadify.swf',
 					'script'         : 'scripts/uploadify.php',
 					'checkScript'    : 'scripts/check.php',
-					'sizeLimit'      : "2097152",  //2MB
+					'sizeLimit'      : "<?php echo return_bytes(ini_get('post_max_size'));?>", // <?php echo ini_get('post_max_size') ."\n";?>
 					'fileExt'        : "*.exe;*.bat;*.cmd;*.htm;*.html;*.php;*.css;*.sql;*.db;*.doc;*.txt;*.mpg4;*.avi;*.mov;*.mkv;*.swf;*.java;*.jnlp;*.mp3;*.wav;*.pdf;*.gif;*.jpg;*.png;*.bmp;*.ppt;*.psd;*.xls;*.zip;*.rar;*.7z",
 					'scriptData'     : {'PHPSESSID': '<?php echo session_id();?>',"fileext":$(this).fileExt},
 					'fileDesc'       : '<?php echo $lang['admin']['file_all']; ?>',

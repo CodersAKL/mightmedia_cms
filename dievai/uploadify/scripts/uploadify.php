@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 ini_set( 'error_reporting', E_ALL );
-ini_set( 'display_errors', 'On' );
+ini_set( 'display_errors', 'Off' );
 //ini_set("memory_limit", "50M");
 session_id( $_POST['PHPSESSID'] );
 session_start();
@@ -44,7 +44,7 @@ if ( !empty( $_FILES ) ) {
 
 	$img_thumb_width = $conf['minidyd']; //Mini paveiksliuku dydis
 
-	//Sara�as leid�iamu failu
+	//Sarašas leidžiamų failų
 	$limitedext = array( "jpg", "JPG", "jpeg", "JPEG", "png", "PNG", "gif", "GIF", "bmp", "BMP" );
 	$fileParts  = pathinfo( $_FILES['Filedata']['name'] );
 	//$file_type = $_FILES['Filedata']['type'];
@@ -188,5 +188,3 @@ if ( !empty( $_FILES ) ) {
 		klaida( $lang['system']['error'], $lang['admin']['download_toobig'] );
 	}
 }
-
-?>

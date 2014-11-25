@@ -1,6 +1,14 @@
+2014-11-25 23:28:54 +0200 FDiskas 
+
+	* Istaisyta saugumo spraga. (HEAD, trunk)
+
+2014-04-16 14:00:08 +0300 Vytenis 
+
+	* Sutvarkyta versijavimo sistema. (origin/trunk)
+
 2014-04-16 13:52:44 +0300 Vytenis 
 
-	* Bandymas (HEAD, trunk)
+	* Bandymas
 
 2014-04-16 13:52:28 +0300 Vytenis 
 
@@ -8,7 +16,7 @@
 
 2014-04-16 13:52:03 +0300 Vytenis 
 
-	* Versijavimo sistemos tobulinimai (origin/trunk)
+	* Versijavimo sistemos tobulinimai
 
 2014-04-16 13:51:10 +0300 Vytenis 
 
@@ -3596,7 +3604,7 @@
 
 2009-05-11 13:01:41 +0000 FDisk 
 
-	* Merge v1.28 to trunk (v1.28)
+	* Merge v1.28 to trunk (tag: v1.28)
 
 2009-05-08 12:27:51 +0000 FDisk 
 

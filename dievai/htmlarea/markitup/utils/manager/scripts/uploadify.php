@@ -35,6 +35,11 @@ require_once('../../../../../../priedai/funkcijos.php');
 if (!isset($_SESSION[SLAPTAS]['level']) || $_SESSION[SLAPTAS]['level'] != 1)
 	die('eik lauk..');
 
+$safe_dir = strstr(ROOTAS . $_REQUEST['folder'] . '/','siuntiniai');
+if (strstr($safe_dir,'../')) {
+	ban(getip(),$lang['system']['forhacking']);
+}
+
 if (!empty($_FILES)) {
 	$tempFile = $_FILES['Filedata']['tmp_name'];
 	$targetPath = /*$_SERVER['DOCUMENT_ROOT'] .*/ ROOTAS.$_REQUEST['folder'] . '/';

@@ -467,6 +467,3 @@ $(document).ready(function() {
 }
 unset( $sql, $extra, $row );
 //unset($_POST);
-
-
-?>
