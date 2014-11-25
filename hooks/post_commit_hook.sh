@@ -15,3 +15,6 @@ if [ "$res" -gt 0 ]; then
   git commit --amend
   echo "Populated Changelog in $OUTPUT_FILE"
 fi
+
+# generate version
+git rev-list --count HEAD > version.txt
