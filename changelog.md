@@ -1,10 +1,14 @@
 2014-11-26 02:02:14 +0200 FDiskas 
 
-	* MYSQL to MYSQLI. Išjungtas kešavimas. Kolkas nesuderinama su mysqli (HEAD, trunk)
+	* MYSQL to MYSQLI. Išjungtas kešavimas. Kolkas nesuderinama su mysqli
+
+2014-11-25 23:34:44 +0200 Vytenis 
+
+	* Update README.md (origin/trunk)
 
 2014-11-25 23:31:45 +0200 FDiskas 
 
-	* Istaisyta saugumo spraga. (origin/trunk)
+	* Istaisyta saugumo spraga.
 
 2014-11-25 23:28:54 +0200 FDiskas 
 
