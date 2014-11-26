@@ -16,7 +16,7 @@
 			<div class="sonas2"></div>
 		</div>
 
-		<?php include ( "priedai/kaires_blokai.php" ); ?>
+		<?php include ( ROOTAS . "priedai/kaires_blokai.php" ); ?>
 	</div>
 
 	<div id="kunas">

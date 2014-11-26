@@ -124,7 +124,7 @@ if ( isset( $_POST['f_sukurimas'] ) ) {
 	} else {
 
 
-		klaida( $lang['system']['error'], ' <b>' . mysql_error() . '</b>' );
+		klaida( $lang['system']['error'], ' <b>' . mysqli_error($prisijungimas_prie_mysql) . '</b>' );
 
 	}
 
@@ -140,7 +140,7 @@ if ( isset( $_POST['keisti'] ) && $_POST['keisti'] == $lang['admin']['edit'] ) {
 		msg( $lang['system']['done'], $lang['system']['categoryupdated'] );
 
 	} else {
-		klaida( $lang['system']['error'], ' <b>' . mysql_error() . '</b>' );
+		klaida( $lang['system']['error'], ' <b>' . mysqli_error($prisijungimas_prie_mysql) . '</b>' );
 
 	}
 	unset( $f_info, $forumas, $result );
@@ -170,7 +170,7 @@ if ( isset( $_GET['d'] ) ) {
 		msg( $lang['system']['done'], $lang['system']['categorydeleted'] );
 
 	} else {
-		klaida( $lang['system']['error'], ' <b>' . mysql_error() . '</b>' );
+		klaida( $lang['system']['error'], ' <b>' . mysqli_error($prisijungimas_prie_mysql) . '</b>' );
 	}
 	unset( $f_info, $forumas, $result );
 }
@@ -194,7 +194,7 @@ if ( isset( $_GET['t'] ) ) {
 		msg( $lang['system']['done'], $lang['admin']['forum_deletesub'] );
 
 	} else {
-		klaida( $lang['system']['error'], ' <b>' . mysql_error() . '</b>' );
+		klaida( $lang['system']['error'], ' <b>' . mysqli_error($prisijungimas_prie_mysql) . '</b>' );
 	}
 	unset( $f_id, $result2, $result );
 }
@@ -208,7 +208,7 @@ if ( isset( $_POST['kurk'] ) && $_POST['kurk'] == $lang['admin']['forum_createsu
 		msg( $lang['system']['done'], $lang['admin']['forum_createdsub'] );
 
 	} else {
-		klaida( $lang['system']['error'], '<b>' . mysql_error() . '</b>' );
+		klaida( $lang['system']['error'], '<b>' . mysqli_error($prisijungimas_prie_mysql) . '</b>' );
 
 	}
 
@@ -261,7 +261,7 @@ if ( isset( $_POST['subred'] ) && $_POST['subred'] == $lang['admin']['edit'] ) {
 		msg( $lang['system']['done'], $lang['admin']['forum_updatedsub'] );
 
 	} else {
-		klaida( $lang['system']['error'], '<b>' . mysql_error() . '</b>' );
+		klaida( $lang['system']['error'], '<b>' . mysqli_error($prisijungimas_prie_mysql) . '</b>' );
 
 	}
 

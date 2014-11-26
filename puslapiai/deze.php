@@ -20,10 +20,10 @@ if ( ar_admin( 'com' ) ) {
 	if ( isset( $url['d'] ) && !empty( $url['d'] ) ) {
 		$id = (int)$url['d'];
 		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "chat_box` WHERE `id` = " . escape( $id ) . " LIMIT 1" );
-		if ( mysql_affected_rows() > 0 ) {
+		if ( mysqli_affected_rows($prisijungimas_prie_mysql) > 0 ) {
 			msg( $lang['system']['done'], $lang['sb']['deleted'] );
 		} else {
-			klaida( $lang['system']['error'], mysql_error() );
+			klaida( $lang['system']['error'], mysqli_error($prisijungimas_prie_mysql) );
 		}
 		redirect( url( "?id," . $url['id'] . ";p,$p" ), "meta" );
 	}
@@ -101,6 +101,3 @@ if ( $viso > $limit ) {
 unset( $admin_tools, $text, $viso, $limit );
 
 //PABAIGA - atvaizdavimo
-
-
-?>

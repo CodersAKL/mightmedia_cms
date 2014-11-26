@@ -25,7 +25,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) ) {
 	}
 	if ( $url['d'] == "0" && isset( $_POST['from'] ) && !empty( $_POST['from'] ) && $_POST['del_all'] == $lang['admin']['delete'] ) {
 		$sql = mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape( $_POST['from'] ) . "" );
-		//$i = mysql_affected_rows();
+		//$i = mysqli_affected_rows($prisijungimas_prie_mysql);
 		if ( $sql ) {
 			msg( $lang['system']['done'], "<b>" . input( $_POST['from'] ) . "</b> {$lang['admin']['pm_msgsdeleted']}." );
 			redirect( url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ), "meta" );

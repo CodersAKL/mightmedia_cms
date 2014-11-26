@@ -35,7 +35,7 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 
 				//Patikrinam ar failas įkeltas sėkmingai
 				if ( !is_uploaded_file( $file_tmp ) ) {
-					klaida( "{$lang['system']['warning']}", "{$lang['admin']['gallery_nofile']}." );
+					klaida( $lang['system']['warning'], "{$lang['admin']['gallery_nofile']}." );
 				} else {
 					//gaunamm failo galunę
 					$ext = strrchr( $file_name, '.' );
@@ -43,7 +43,7 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 
 					//Tikrinam ar tinkamas failas
 					if ( !in_array( $ext, $limitedext ) ) {
-						klaida( "{$lang['system']['warning']}", "{$lang['admin']['gallery_notimg']}" );
+						klaida( $lang['system']['warning'], "{$lang['admin']['gallery_notimg']}" );
 					}
 
 					//create a random file name
@@ -155,7 +155,7 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 						if ( $result ) {
 							msg( $lang['system']['done'], "{$lang['gallery']['sumbit_scc']}." );
 						} else {
-							klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+							klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 						}
 						unset( $_FILES['failas'], $filename, $_POST['action'] );
 						redirect( url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";v,1" ), "meta" );
@@ -164,7 +164,7 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 				}
 			}
 		} else {
-			klaida( "{$lang['system']['warning']}", "{$lang['admin']['news_required']}." );
+			klaida( $lang['system']['warning'], "{$lang['admin']['news_required']}." );
 		}
 
 		/**
@@ -274,7 +274,7 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 	}
 
 	$sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `lang` = " . escape( lang() ) . " AND `path`=0 ORDER BY `id` DESC" );
-	include_once ( "priedai/kategorijos.php" );
+	include_once ( ROOTAS . "priedai/kategorijos.php" );
 	kategorija( "galerija", TRUE );
 	if ( sizeof( $sql ) > 0 ) {
 		$kategorijos = cat( 'galerija', 0 );
@@ -287,8 +287,7 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 	                         "{$lang['system']['about']}:"       => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
 		//"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","class"=>"input"),
 	                         ""                                  => array( "type" => "submit", "name" => "action", "value" => "{$lang['gallery']['submit']}" ) );
-	lentele( "{$lang['gallery']['submiting']}", $bla->form( $forma ) );
+	lentele( $lang['gallery']['submiting'], $bla->form( $forma ) );
 } else {
-	klaida( "{$lang['system']['warning']}", "{$lang['system']['pleaselogin']}" );
+	klaida( $lang['system']['warning'], $lang['system']['pleaselogin'] );
 }
-?>

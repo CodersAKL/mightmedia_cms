@@ -26,7 +26,7 @@ if ( isset( $url['c'] ) && !empty( $url['c'] ) && strlen( $url['c'] ) == 11 ) {
 		$slaptas = random_name();
 		$nick    = $sqlis['nick'];
 
-		$up = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET `slaptas`='', pass=" . escape( koduoju( $slaptas ) ) . " WHERE `nick`=" . escape( $nick ) . " LIMIT 1" ) or die( mysql_error() );
+		$up = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET `slaptas`='', pass=" . escape( koduoju( $slaptas ) ) . " WHERE `nick`=" . escape( $nick ) . " LIMIT 1" ) or die( mysqli_error($prisijungimas_prie_mysql) );
 
 		if ( !empty( $up ) ) {
 			msg( $lang['system']['done'], sprintf( $lang['user']['hello'], $nick ) . ",<br/>{$lang['pass']['new']} <b>" . $slaptas . "</b><br/>" );
@@ -81,10 +81,10 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'siusti' ) {
 }
 if ( isset( $error ) ) {
 	if ( !empty( $error ) || $error != "" ) {
-		klaida( "{$lang['system']['sorry']}", $error );
+		klaida( $lang['system']['sorry'], $error );
 	}
 } elseif ( !isset( $_POST['action'] ) && !isset( $url['c'] ) ) {
-	include_once ( "priedai/class.php" );
+	include_once ( ROOTAS . "priedai/class.php" );
 
 	$bla   = new forma();
 	$forma = array(
@@ -99,5 +99,3 @@ if ( isset( $error ) ) {
 	lentele( $lang['pass']['remain'], $bla->form( $forma ) );
 	unset( $text );
 }
-
-?>

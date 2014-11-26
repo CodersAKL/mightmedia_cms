@@ -49,7 +49,7 @@ if ( isset( $_POST['admin_chat_send'] ) && $_POST['admin_chat_send'] == $lang['a
 	}
 
 
-	mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "admin_chat` (admin, msg, date) VALUES(" . escape( $_SESSION[SLAPTAS]['username'] ) . "," . escape( $extra . $_POST['admin_chat'] ) . ",'" . time() . "')" ) or die( mysql_error() );
+	mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "admin_chat` (admin, msg, date) VALUES(" . escape( $_SESSION[SLAPTAS]['username'] ) . "," . escape( $extra . $_POST['admin_chat'] ) . ",'" . time() . "')" ) or die( mysqli_error($prisijungimas_prie_mysql) );
 	redirect( $_SERVER['HTTP_REFERER'] );
 }
 //trinam zinute
@@ -63,7 +63,7 @@ if ( isset( $url['r'] ) && !isset( $url['d'] ) && !isset( $url['a'] ) && isnum( 
 		$extra = mysql_query1( "SELECT msg FROM `" . LENTELES_PRIESAGA . "admin_chat` WHERE id=" . escape( (int)$url['r'] ) . " LIMIT 1" );
 		$extra = $extra['msg'];
 	} elseif ( $_POST['admin_chat_send'] == $lang['admin']['edit'] ) {
-		mysql_query( "UPDATE `" . LENTELES_PRIESAGA . "admin_chat` SET `msg`=" . escape( $_POST['admin_chat'] ) . ",`date` = '" . time() . "' WHERE `admin`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " AND id=" . escape( (int)$url['r'] ) . " LIMIT 1" );
+		mysqli_query( "UPDATE `" . LENTELES_PRIESAGA . "admin_chat` SET `msg`=" . escape( $_POST['admin_chat'] ) . ",`date` = '" . time() . "' WHERE `admin`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " AND id=" . escape( (int)$url['r'] ) . " LIMIT 1" );
 		//header("Location: ".url("?id," . $url['id']));
 		redirect( $_SERVER['PHP_SELF'] );
 	}
@@ -109,4 +109,3 @@ lentele( "{$lang['admin']['admin_chat']}", $text );
 if ( $viso > $limit ) {
 	lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 }
-?>

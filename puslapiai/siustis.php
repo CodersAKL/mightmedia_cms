@@ -207,7 +207,7 @@ else {
 				klaida( $lang['system']['error'], $lang['download']['notallowed'] );
 			}
 		}
-		$name = mysql_query1( "SELECT `pavadinimas` FROM " . LENTELES_PRIESAGA . "grupes WHERE id= " . escape( $k ) . " LIMIT 1", 86400 );
+		$name = mysql_query1( "SELECT `pavadinimas` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE id= " . escape( $k ) . " LIMIT 1", 86400 );
 		lentele( "{$lang['download']['downloads']} >> " . input( $name['pavadinimas'] ), $bla->render( $info ) . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>" );
 		if ( $viso > $limit ) {
 			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
@@ -221,5 +221,3 @@ if ( count( $_GET ) == 1 ) {
 		klaida( $lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>" );
 	}
 }
-
-?>

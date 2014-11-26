@@ -52,21 +52,21 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 							$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $filename ) . ", " . escape( $_POST['Aprasymas'] ) . "," . escape( $autorius ) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ")" );
 
 							if ( $result ) {
-								msg( "{$lang['system']['info']}", "{$lang['download']['sumbit_scc']}" );
+								msg( $lang['system']['info'], $lang['download']['sumbit_scc'] );
 
 							} else {
-								klaida( "{$lang['system']['error']}", "{$lang['download']['doc']}: <font color='#FF0000'>" . $filename . "</font> {$lang['download']['not_uploaded']}." );
+								klaida( $lang['system']['error'], "{$lang['download']['doc']}: <font color='#FF0000'>" . $filename . "</font> {$lang['download']['not_uploaded']}." );
 
 							}
 						} else {
-							klaida( "{$lang['system']['error']}", "{$lang['download']['doc']}: <font color='#FF0000'>" . $filename . "</font> {$lang['download']['not_uploaded']}." );
+							klaida( $lang['system']['error'], "{$lang['download']['doc']}: <font color='#FF0000'>" . $filename . "</font> {$lang['download']['not_uploaded']}." );
 						}
 						/*} else {
 							klaida('Įkėlimo klaida', '<font color="#FF0000">' . $filename . '</font> dokumentas perdidelis');
 						}*/
 					} // if
 					else {
-						klaida( "{$lang['system']['error']}", '<font color="#FF0000">' . $filename . "</font> {$lang['download']['not_good']}." );
+						klaida( $lang['system']['error'], '<font color="#FF0000">' . $filename . "</font> {$lang['download']['not_good']}." );
 					}
 				}
 			}
@@ -81,7 +81,7 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 			//unset($result,$_POST['action'],$_FILES['failas'],$file);
 			redirect( url( "?id," . $_GET['id'] ), "meta" );
 		} else {
-			klaida( "{$lang['system']['warning']}", "{$lang['admin']['news_required']}." );
+			klaida( $lang['system']['warning'], "{$lang['admin']['news_required']}." );
 		}
 	}
 	$sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `lang` = " . escape( lang() ) . " AND `path`=0 ORDER BY `id` DESC" );
@@ -101,10 +101,8 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 	                "{$lang['system']['about']}:"        => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
 	                ""                                   => array( "type" => "submit", "name" => "action", "value" => "{$lang['admin']['download_Create']}" ), );
 
-	lentele( "{$lang['admin']['download_Create']}", $bla->form( $forma ) );
+	lentele( $lang['admin']['download_Create'], $bla->form( $forma ) );
 
 } else {
-	klaida( "{$lang['system']['warning']}", "{$lang['system']['pleaselogin']}" );
+	klaida( $lang['system']['warning'], $lang['system']['pleaselogin'] );
 }
-
-?>

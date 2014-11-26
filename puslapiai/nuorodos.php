@@ -59,7 +59,7 @@ if ( sizeof( $sqlas ) > 0 ) {
 		}
 	}
 }
-include_once ( "priedai/class.php" );
+include_once ( ROOTAS . "priedai/class.php" );
 $bla = new Table();
 if ( isset( $info ) ) {
 	lentele( $lang['system']['categories'], $bla->render( $info ), FALSE );
@@ -170,5 +170,3 @@ function clean_str( $string ) {
 	$string = preg_replace( '~\s{2,}~', ' ', $string ); //Ištrinam pasikartojančius tarpus
 	return trim( str_replace( array_keys( $entities_array ), $entities_array, $string ) );
 }
-
-?>

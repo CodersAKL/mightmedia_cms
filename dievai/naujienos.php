@@ -46,7 +46,7 @@ if ( isset( $_GET['priimti'] ) ) {
 	if ( $result ) {
 		msg( $lang['system']['done'], "{$lang['admin']['news_activated']}." );
 	} else {
-		klaida( $lang['system']['error'], "{$lang['system']['error']}<br><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], "{$lang['system']['error']}<br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 }
 
@@ -161,7 +161,7 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 		if ( $result ) {
 			msg( $lang['system']['done'], $lang['admin']['news_created'] );
 		} else {
-			klaida( $lang['system']['error'], "<b>" . mysql_error() . "</b>" );
+			klaida( $lang['system']['error'], "<b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 		}
 	} else {
 		klaida( $lang['system']['error'], $error );

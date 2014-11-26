@@ -32,7 +32,7 @@ if ( isset( $_POST['kontaktas'] ) && $_POST['kontaktas'] == 'Siųsti' && strtoup
 	}
 
 } elseif ( isset( $_POST ) && !empty( $_POST['kontaktas'] ) ) {
-	klaida( "{$lang['system']['error']}", "{$lang['contact']['bad']}" );
+	klaida( $lang['system']['error'], "{$lang['contact']['bad']}" );
 } else {
 	if ( isset( $_SESSION[SLAPTAS]['username'] ) ) {
 		$from  = $_SESSION[SLAPTAS]['username'];
@@ -55,6 +55,3 @@ $form = array(
 lentele( $lang['contact']['form'], $bla->form( $form ) );
 unset( $forma, $result, $from, $forma, $error, $to, $msg, $email, $title );
 //PABAIGA - atvaizdavimo
-
-
-?>

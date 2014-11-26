@@ -11,7 +11,7 @@
  **/
 
 
-//Sara�as kur ie�koti
+//Sarasas kur ieskoti
 $kur = array();
 if ( isset( $conf['puslapiai']['naujienos.php']['id'] ) ) {
 	$kur['naujienos'] = $lang['search']['news'];
@@ -42,7 +42,7 @@ foreach ( $kur as $name => $check ) {
 	$box .= "<label><input type=\"checkbox\" name=\"$name\" value=\"$name\" " . ( ( isset( $_POST[$name] ) && !empty( $_POST[$name] ) ) || ( isset( $_POST['vis'] ) && !empty( $_POST['vis'] ) ) ? 'checked="yes"' : '' ) . "/> $check</label><br /> ";
 }
 $box .= "<label><input type='checkbox' name='vis' onclick='checkedAll(\"search\");'/> {$lang['search']['everything']}</label>";
-//Paie�kos forma
+//Paieskos forma
 $search = array(
 	"Form"                      => array( "action" => url( "?id,999;m,4" ), "method" => "post", "enctype" => "", "id" => "search", "name" => "search" ),
 	" "                         => array( "type" => "text", "value" => ( isset( $_POST['s'] ) ? input( $_POST['s'] ) : '' ), "name" => "s", "class"=> "input", "extra"=> "title='{$lang['search']['for']}'" ),
@@ -50,12 +50,12 @@ $search = array(
 	""                          => array( "type" => "submit", "class" => "submit", "name" => "subsearch", "value" => $lang['search']['search'] )
 );
 
-//Nupie�iam paie�kos forma
+//Nupiesiam paieskos forma
 include_once ( ROOT . "priedai/class.php" );
 $bla = new forma();
 lentele( $lang['search']['search'], $bla->form( $search ) );
 $i = 0;
-//Atliekam paie�ka
+//Atliekam paieska
 //print_r($_POST);
 if ( isset( $_POST['s'] ) ) {
 	if ( strlen( str_replace( array( " ", "\r", "\n", "<", ">", "\"", "'", "." ), "", $_POST['s'] ) ) >= 3 ) {
@@ -180,7 +180,7 @@ if ( isset( $_POST['s'] ) ) {
 						$link = "m," . $row2['kid'] . "";
 					} elseif ( $row2['pid'] == 'puslapiai/siustis' && isset( $conf['puslapiai']['siustis.php']['id'] ) ) {
 
-						$linkas = mysql_fetch_assoc( mysql_query1( "SELECT categorija FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID`='" . $row2['kid'] . "' AND `lang` = " . escape( lang() ) . "LIMIT 1" ) );
+						$linkas = mysqli_fetch_assoc( $prisijungimas_prie_mysql, mysql_query1( "SELECT categorija FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID`='" . $row2['kid'] . "' AND `lang` = " . escape( lang() ) . "LIMIT 1" ) );
 						$link   = "k," . $linkas['categorija'] . "v," . $row2['kid'] . "";
 					} else {
 						$link = "";
@@ -209,5 +209,3 @@ if ( isset( $_POST['s'] ) ) {
 }
 
 unset( $kur, $ka, $link, $link2, $link3, $text, $row, $search, $kuriam, $iskur, $iskurdar, $sqlas, $bla, $forma );
-
-?>

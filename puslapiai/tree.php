@@ -13,4 +13,3 @@ $tree        = site_tree( $data2 );
 $hidden_tree = site_tree( $data3 );
 lentele( $page_pavadinimas, $tree );
 lentele( $lang['tree']['hidden'], $hidden_tree );
-?>

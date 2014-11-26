@@ -46,6 +46,3 @@ $form = array( "Form"                     => array( "action" => url( "?id," . $c
                kodas()                    => array( "type"=> "text", "name"=> "kode", "class"=> "chapter" ),
                " "                        => array( "type" => "submit", "name" => "submit", "value" => $lang['news']['Order/Unorder'] ) );
 lentele( $page_pavadinimas, $forma->form( $form ) );
-
-
-?>

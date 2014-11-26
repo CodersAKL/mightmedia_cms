@@ -52,7 +52,7 @@ if ( isset( $_GET['t'] ) ) {
 	if ( $ar ) {
 		msg( $lang['system']['done'], "{$lang['admin']['faq_deleted']}" );
 	} else {
-		klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 //	mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` = " . escape( (int)$_GET['t'] ) );
 
@@ -74,11 +74,11 @@ if ( isset( $_GET['t'] ) ) {
 			`atsakymas` = " . escape( $atsakymas ) . ",
 			`klausimas` = " . escape( $klausimas ) . ",
 			`order` = " . escape( $order ) . " WHERE `id`=" . $id . ";
-			" ) or klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+			" ) or klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	if ( $q ) {
 		msg( $lang['system']['done'], "{$lang['admin']['faq_updated']}." );
 	} else {
-		klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 } elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['faq']['new'] ) {
 	$klausimas = $_POST['Klausimas'];
@@ -92,7 +92,7 @@ if ( isset( $_GET['t'] ) ) {
 	if ( $q ) {
 		msg( $lang['system']['done'], "{$lang['admin']['faq_created']}." );
 	} else {
-		klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 }
 
@@ -116,7 +116,7 @@ if ( $_GET['v'] == 4 ) {
 			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 		}
 	} else {
-		klaida( "{$lang['system']['error']}", $lang['system']['no_items'] );
+		klaida( $lang['system']['error'], $lang['system']['no_items'] );
 	}
 
 } elseif ( $_GET['v'] == 7 || isset( $url['h'] ) ) {

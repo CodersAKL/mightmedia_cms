@@ -464,7 +464,7 @@ elseif ( $aid == 1 && $kid == 0 && $lid == 0 && $rid == 0 ) {
 				unset( $error );
 				$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "d_straipsniai` (`tid`, `pav`, `autorius`,`last_data`,`last_nick`,`lang`) VALUES(" . escape( $sid ) . ", " . escape( $pavadinimas ) . ", " . escape( $_SESSION[SLAPTAS]['username'] ) . ", '" . time() . "', " . escape( $_SESSION[SLAPTAS]['username'] ) . ", " . escape( lang() ) . ")" );
 				if ( !$result ) {
-					$error .= "<b> " . mysql_error() . "</b>.";
+					$error .= "<b> " . mysqli_error($prisijungimas_prie_mysql) . "</b>.";
 				}
 				if ( !isset( $error ) ) {
 					unset( $result );
@@ -478,10 +478,10 @@ elseif ( $aid == 1 && $kid == 0 && $lid == 0 && $rid == 0 ) {
 								  `" . LENTELES_PRIESAGA . "users`.`taskai`=`" . LENTELES_PRIESAGA . "users`.`taskai`+1 ,
 								  `" . LENTELES_PRIESAGA . "d_temos`.`last_data`= '" . time() . "',
 								  `" . LENTELES_PRIESAGA . "d_temos`.`last_nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . "
-								  WHERE `" . LENTELES_PRIESAGA . "users`.nick=" . escape( $_SESSION[SLAPTAS]['username'] ) . " AND `" . LENTELES_PRIESAGA . "d_temos`.`id`=" . escape( $sid ) . "" ) or die( mysql_error() );
+								  WHERE `" . LENTELES_PRIESAGA . "users`.nick=" . escape( $_SESSION[SLAPTAS]['username'] ) . " AND `" . LENTELES_PRIESAGA . "d_temos`.`id`=" . escape( $sid ) . "" ) or die( mysqli_error($prisijungimas_prie_mysql) );
 					$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "d_zinute` (`tid`, `sid`, `nick`, `zinute`, `laikas`) VALUES (" . escape( $sid ) . ", (SELECT max(id) FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE  autorius=" . escape( $_SESSION[SLAPTAS]['username'] ) . "), " . escape( $uid ) . ", " . escape( $zinute ) . ", '" . time() . "')" );
 					if ( !$result ) {
-						$error .= "<b> " . mysql_error() . "</b>";
+						$error .= "<b> " . mysqli_error($prisijungimas_prie_mysql) . "</b>";
 					}
 					if ( !isset( $error ) ) {
 						redirect( url( "?id," . $url['id'] . ";s," . $sid . ";t," . $inf['id'] ) );
@@ -542,4 +542,3 @@ echo "<script type=\"text/javascript\">$(document).ready(function() {
 		lentele( $lang['forum']['newtopic'], $bla->form( $forma ) );
 	}
 }
-?>

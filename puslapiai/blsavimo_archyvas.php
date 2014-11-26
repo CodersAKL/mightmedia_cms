@@ -60,4 +60,3 @@ if ( !isset( $_GET['m'] ) ) {
 		klaida( $lang['system']['error'], "{$lang['system']['pagenotfounfd']}." );
 	}
 }
-?>

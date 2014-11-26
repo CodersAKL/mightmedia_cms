@@ -39,20 +39,20 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti' ) {
 			`rodoma` = 'NE',
 			`lang` = " . escape( lang() ) . "" );
 			if ( $result ) {
-				msg( "{$lang['system']['info']}", "{$lang['article']['sumbit_scc']}." );
+				msg( $lang['system']['info'], "{$lang['article']['sumbit_scc']}." );
 			} else {
-				klaida( "{$lang['system']['error']}", "{$lang['article']['sumbit_no']}." );
+				klaida( $lang['system']['error'], "{$lang['article']['sumbit_no']}." );
 			}
 		} else {
-			klaida( "{$lang['system']['error']}", $error );
+			klaida( $lang['system']['error'], $error );
 		}
 		redirect( url( "?id," . $_GET['id'] ), "meta" );
 	} else {
-		klaida( "{$lang['system']['warning']}", "{$lang['admin']['news_required']}." );
+		klaida( $lang['system']['warning'], "{$lang['admin']['news_required']}." );
 	}
 }
 $sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `lang` = " . escape( lang() ) . " AND `path`=0 ORDER BY `id` DESC" );
-include_once ( "priedai/kategorijos.php" );
+include_once ( ROOTAS . "priedai/kategorijos.php" );
 kategorija( "straipsniai", TRUE );
 if ( sizeof( $sql ) > 0 ) {
 	$kategorijos = cat( 'straipsniai', 0 );
@@ -67,4 +67,3 @@ $straipsnis = array( "Form"                           => array( "action" => url(
                      "{$lang['admin']['article']}:"   => array( "type" => "string", "value" => editorius( 'jquery', 'standartinis', 'str' ) ),
                      ""                               => array( "type" => "submit", "name" => "action", "value" => "{$lang['article']['submit']}" ), );
 lentele( "{$lang['article']['submiting']}", $bla->form( $straipsnis ) );
-?>

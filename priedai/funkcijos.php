@@ -8,6 +8,8 @@
  * @license   GNU General Public License v2
  * @$Revision$
  * @$Date$
+ * @var array $conf
+ * @var array $lang
  * */
 
 // Patikrinimui ar nesikreipiama tiesiogiai
@@ -664,15 +666,15 @@ function mysql_query1( $query, $lifetime = 0 ) {
 			// Įrašom į kešo failą
 			$mysql_num++;
 
-			$sql = mysql_query( $query, $prisijungimas_prie_mysql ); // or die(mysql_error());
-			if ( mysql_error() ) {
-				mysql_query( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "MySql error:  " . mysql_error() . " query: " . $query ) . ",'" . time() . "',INET_ATON(" . escape( getip() ) . "));" );
+			$sql = mysqli_query( $prisijungimas_prie_mysql, $query ); // or die(mysqli_error($prisijungimas_prie_mysql));
+			if ( mysqli_error($prisijungimas_prie_mysql) ) {
+				mysqli_query( $prisijungimas_prie_mysql, "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "MySql error:  " . mysqli_error($prisijungimas_prie_mysql) . " query: " . $query ) . ",'" . time() . "',INET_ATON(" . escape( getip() ) . "));" );
 			}
 			// Jeigu užklausoje nurodyta, kad reikia tik vieno įrašo tai nesudarom masyvo.
 			if ( substr( strtolower( $query ), -7 ) == 'limit 1' ) {
-				$return = mysql_fetch_assoc( $sql );
+				$return = mysqli_fetch_assoc( $sql );
 			} else {
-				while ( $row = mysql_fetch_assoc( $sql ) ) {
+				while ( $row = mysqli_fetch_assoc( $sql ) ) {
 					$return[] = $row;
 				}
 			}
@@ -694,21 +696,21 @@ function mysql_query1( $query, $lifetime = 0 ) {
 	} else {
 		$mysql_num++;
 
-		$sql = mysql_query( $query, $prisijungimas_prie_mysql ); // or die(mysql_error());
-		if ( mysql_error() ) {
-			mysql_query( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "MySql error:  " . mysql_error() . " query: " . $query ) . ",'" . time() . "',INET_ATON(" . escape( getip() ) . "));" );
+		$sql = mysqli_query( $prisijungimas_prie_mysql, $query ); // or die(mysqli_error($prisijungimas_prie_mysql));
+		if ( mysqli_error($prisijungimas_prie_mysql) ) {
+			mysqli_query( $prisijungimas_prie_mysql, "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "MySql error:  " . mysqli_error($prisijungimas_prie_mysql) . " query: " . $query ) . ",'" . time() . "',INET_ATON(" . escape( getip() ) . "));" );
 		}
 		if ( in_array( strtolower( substr( $query, 0, 6 ) ), array( 'delete', 'insert', 'update' ) ) ) {
 			if ( in_array( strtolower( substr( $query, 0, 6 ) ), array( 'insert' ) ) ) {
-				$return = mysql_insert_id( $prisijungimas_prie_mysql );
+				$return = mysqli_insert_id( $prisijungimas_prie_mysql );
 			} else {
-				$return = mysql_affected_rows( $prisijungimas_prie_mysql );
+				$return = mysqli_affected_rows( $prisijungimas_prie_mysql );
 			}
 		} else {
 			if ( substr( strtolower( $query ), -7 ) == 'limit 1' ) {
-				$return = mysql_fetch_assoc( $sql );
+				$return = mysqli_fetch_assoc( $sql );
 			} else {
-				while ( $row = mysql_fetch_assoc( $sql ) ) {
+				while ( $row = mysqli_fetch_assoc( $sql ) ) {
 					$return[] = $row;
 				}
 			}
@@ -802,7 +804,7 @@ function kiek( $table, $where = '', $as = "viso" ) {
  * @param int      $total viso
  * @param int      $range ruožas
  *
- * @return unknown
+ * @return string
  */
 function puslapiai( $start, $count, $total, $range = 0 ) {
 
@@ -1619,16 +1621,10 @@ HTML;
 /** Gražina versijos numerį */
 function versija() {
 
-	if ( !$failas ) {
-		$svnid = '$Rev$';
-		$scid  = file( ROOTAS . '/version.txt' );
-		$scid = array_shift( array_values( $scid ) );
+	$scid  = file( ROOTAS . '/version.txt' );
+	$scid = trim(array_shift( array_values( $scid ) ));
 
-		return apvalinti( ( intval( $scid ) / 5000 ) + '1.28', 2 );
-	} else {
-		// Nuskaityti failą ir paimti su regexp versijos numerį
-		return '$Rev$';
-	}
+	return apvalinti( ( intval( $scid ) / 5000 ) + '1.28', 2 );
 }
 
 // compress HTML BLOGAS DUOMENŲ SUSPAUDIMO BŪDAS
@@ -1654,6 +1650,7 @@ function editorius( $tipas = 'rte', $dydis = 'standartinis', $id = FALSE, $value
 		$id = md5( uniqid() );
 	}
 
+	$arr = array();
 	if ( is_array( $id ) ) {
 		foreach ( $id as $key => $val ) {
 			$arr[$val] = "'$key'";
@@ -2143,5 +2140,3 @@ function showCalendar( $year = 0, $month = 0 ) {
 
 	return $return;
 }
-
-?>

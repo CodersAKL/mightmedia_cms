@@ -147,12 +147,10 @@ if ( $kid != 0 ) {
 			}
 			unset( $text, $title, $data, $kalba );
 		} else {
-			( !defined( 'LEVEL' ) ? klaida( $lang['system']['forbidden'], $lang['news']['notallowed'] ) : klaida( "{$lang['system']['error']}", $lang['news']['notallowed'] ) );
+			( !defined( 'LEVEL' ) ? klaida( $lang['system']['forbidden'], $lang['news']['notallowed'] ) : klaida( $lang['system']['error'], $lang['news']['notallowed'] ) );
 
 		}
 	} else {
 		klaida( $lang['system']['error'], $lang['news']['notexists'] );
 	}
 }
-
-?>

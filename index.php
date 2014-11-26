@@ -96,7 +96,7 @@ if ( empty( $_GET['ajax'] ) ) {
 	include_once $page . '.php';
 }
 
-mysql_close( $prisijungimas_prie_mysql );
+mysqli_close( $prisijungimas_prie_mysql );
 $m2    = explode( " ", microtime() );
 $etime = $m2[1] + $m2[0];
 $ttime = ( $etime - $stime );
@@ -105,5 +105,3 @@ if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
 	echo '<!-- Generated ' . apvalinti( $ttime, 2 ) . 's. -->';
 }
 ob_end_flush();
-
-?>

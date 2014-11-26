@@ -54,4 +54,3 @@ lentele( $lang['online']['users'] . ' - ' . $u, $bla->render( $info ) );
 
 //mysql_free_result($result);
 unset( $user, $nekvepuoja, $file, $img, $content, $i, $u, $q, $row, $extra );
-?>

@@ -24,10 +24,10 @@ if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
 	if ( isset( $url['d'] ) && !empty( $url['d'] ) && isnum( $url['d'] ) ) {
 		$id = (int)$url['d'];
 		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "knyga` WHERE `id` = " . escape( $id ) . " LIMIT 1" );
-		if ( mysql_affected_rows() > 0 ) {
+		if ( mysqli_affected_rows($prisijungimas_prie_mysql) > 0 ) {
 			msg( $lang['system']['done'], "{$lang['guestbook']['deleted']}" );
 		} else {
-			klaida( $lang['system']['error'], mysql_error() );
+			klaida( $lang['system']['error'], mysqli_error($prisijungimas_prie_mysql) );
 		}
 		redirect( url( "?id," . (int)$_GET['id'] . ";p,$p" ), 'header' );
 	}
@@ -47,7 +47,7 @@ if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
 		} elseif ( isset( $_POST['knyga'] ) && $_POST['knyga'] == $lang['admin']['edit'] && !empty( $_POST['msg'] ) ) {
 			$msg = trim( $_POST['msg'] ) . "\n[sm][i]Redagavo: " . $_SESSION[SLAPTAS]['username'] . "[/i][/sm]";
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "knyga` SET `msg` = " . escape( htmlspecialchars( $msg ) ) . " WHERE `id` =" . escape( $url['r'] ) . " LIMIT 1" );
-			if ( mysql_affected_rows() > 0 ) {
+			if ( mysqli_affected_rows($prisijungimas_prie_mysql) > 0 ) {
 				msg( $lang['system']['done'], $lang['guestbook']['messageupdated'] );
 			}
 			redirect( url( "?id,{$_GET['id']};p,$p#" . escape( $url['r'] ) ), "meta" );

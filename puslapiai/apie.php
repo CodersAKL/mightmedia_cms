@@ -28,4 +28,3 @@ if ( sizeof( $sql ) > 0 ) {
 if ( !empty( $adminai ) ) {
 	lentele( $lang['about']['admins'], $adminai );
 }
-?>

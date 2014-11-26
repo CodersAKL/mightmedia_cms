@@ -39,6 +39,5 @@ if ( sizeof( $sql ) > 0 ) {
 	lentele( $lang['faq']['faq_answers'], $text );
 	unset( $text );
 } else {
-	klaida( "{$lang['system']['error']}", $lang['system']['no_items'] );
+	klaida( $lang['system']['error'], $lang['system']['no_items'] );
 }
-?>

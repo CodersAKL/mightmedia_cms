@@ -104,5 +104,3 @@ if ( isset( $_GET['id'] ) && !empty( $_GET['id'] ) && $_GET['id'] == $lang['user
 	header( "HTTP/1.0 401 Unauthorized" );
 	header( "Location: " . ( isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : adresas() ) );
 }
-//print_r($_SESSION);
-?> 

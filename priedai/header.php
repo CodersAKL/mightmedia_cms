@@ -196,5 +196,3 @@ function getUserCountry( $ip ) {
 		return 'lt';
 	}
 }
-
-?>

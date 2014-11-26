@@ -41,12 +41,12 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['links_crea
 		if ( $result ) {
 			msg( "{$lang['system']['done']}", "{$lang['admin']['links_sent']}." );
 		} else {
-			klaida( "{$lang['system']['error']}", "{$lang['admin']['links_allfields']}." );
+			klaida( $lang['system']['error'], "{$lang['admin']['links_allfields']}." );
 		}
 	}
 
 	/*  } else {
-				klaida("{$lang['system']['error']}", $error);
+				klaida($lang['system']['error'], $error);
 		}*/
 
 
@@ -57,11 +57,11 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['links_crea
 	}*/
 	//redirect(url("?id," . $_GET['id']), "meta");
 	/*} else {
-		klaida("{$lang['system']['warning']}", "{$lang['admin']['news_required']}.");
+		klaida($lang['system']['warning'], "{$lang['admin']['news_required']}.");
 	}*/
 }
 $sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `lang` = " . escape( lang() ) . " AND `path`=0 ORDER BY `id` DESC" );
-include_once ( "priedai/kategorijos.php" );
+include_once ( ROOTAS . "priedai/kategorijos.php" );
 kategorija( "nuorodos", TRUE );
 if ( sizeof( $sql ) > 0 ) {
 	$kategorijos = cat( 'nuorodos', 0 );
@@ -79,5 +79,3 @@ $nuorodos = array( "Form"                        => array( "action" => url( "?id
                    " "                           => array( "type" => "submit", "name" => "action", "value" => $lang['admin']['links_create'] ) );
 
 lentele( $lang['admin']['links_create'], $bla->form( $nuorodos ) );
-
-?>

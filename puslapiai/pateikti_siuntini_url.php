@@ -23,24 +23,24 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
     " . escape( $_POST['Aprasymas'] ) . "," . escape( $_SESSION[SLAPTAS]['id'] ) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ")" );
 
 			if ( $result ) {
-				msg( "{$lang['system']['info']}", "{$lang['download']['sumbit_scc']}" );
+				msg( $lang['system']['info'], "{$lang['download']['sumbit_scc']}" );
 			} else {
-				klaida( "{$lang['system']['error']}", "{$lang['download']['doc']}: <font color='#FF0000'>" . $filename . "</font> {$lang['download']['not_uploaded']}." );
+				klaida( $lang['system']['error'], "{$lang['download']['doc']}: <font color='#FF0000'>" . $filename . "</font> {$lang['download']['not_uploaded']}." );
 			}
 			//unset($result,$_POST['action'],$_FILES['failas'],$file);
 			redirect( "?id," . $_GET['id'] . ";", "meta" );
 		} else {
-			klaida( "{$lang['system']['warning']}", "{$lang['admin']['news_required']}." );
+			klaida( $lang['system']['warning'], "{$lang['admin']['news_required']}." );
 		}
 	}
 	$sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `lang` = " . escape( lang() ) . " AND `path`=0 ORDER BY `id` DESC" );
-	include_once ( "priedai/kategorijos.php" );
+	include_once ( ROOTAS . "priedai/kategorijos.php" );
 	kategorija( "siuntiniai", TRUE );
 	if ( sizeof( $sql ) > 0 ) {
 		$kategorijos = cat( 'siuntiniai', 0 );
 	}
 	$kategorijos[0] = "--";
-	include_once ( "priedai/class.php" );
+	include_once ( ROOTAS . "priedai/class.php" );
 	$bla   = new forma();
 	$forma = array( "Form"                                  => array( "action" => '', "method" => "post", "name" => "action" ),
 	                "{$lang['admin']['download_fileurl']}:" => array( "name" => "url", "type" => "text", "value" => "http://", "class"=> "input" ),
@@ -48,10 +48,8 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 	                "{$lang['system']['category']}:"        => array( "type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "class"=> "input" ),
 	                "{$lang['system']['about']}:"           => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
 	                ""                                      => array( "type" => "submit", "name" => "action", "value" => "{$lang['admin']['download_Create']}" ), );
-	lentele( "{$lang['admin']['download_Create']}", $bla->form( $forma ) );
+	lentele( $lang['admin']['download_Create'], $bla->form( $forma ) );
 
 } else {
-	klaida( "{$lang['system']['warning']}", "{$lang['system']['pleaselogin']}" );
+	klaida( $lang['system']['warning'], $lang['system']['pleaselogin'] );
 }
-
-?> 

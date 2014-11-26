@@ -75,7 +75,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['save'] && 
 		msg( $lang['system']['done'], $lang['admin']['user_updated'] );
 		unset( $_POST );
 	} else {
-		klaida( $lang['system']['error'], "" . mysql_error() . "" );
+		klaida( $lang['system']['error'], "" . mysqli_error($prisijungimas_prie_mysql) . "" );
 	}
 	unset( $result, $info );
 }
@@ -181,4 +181,3 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 4 ) {
 		}
 	}
 }
-?>

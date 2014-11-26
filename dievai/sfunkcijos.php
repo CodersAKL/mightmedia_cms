@@ -366,5 +366,3 @@ function bbcode_autolink( $str ) {
 function lauzymas( $txt ) {
 	//return str_replace("\r\n", "<br>", $txt);
 }
-
-?>

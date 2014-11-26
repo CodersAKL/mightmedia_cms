@@ -104,7 +104,7 @@ if ( isset( $_POST['next_msyql'] ) ) {
 	$sql = str_replace( "UPDATE `", "UPDATE `" . LENTELES_PRIESAGA, $sql );
 
 	// Prisijungiam prie duombazės
-	mysql_query( "SET NAMES utf8" );
+	mysqli_query( $prisijungimas_prie_mysql, "SET NAMES utf8" );
 
 	// Atliekam SQL apvalymą
 	$match = '';
@@ -114,9 +114,9 @@ if ( isset( $_POST['next_msyql'] ) ) {
 	$mysql_error = 0;
 	foreach ( $match[0] as $key => $val ) {
 		if ( !empty( $val ) ) {
-			$query = mysql_query( $val );
+			$query = mysqli_query( $prisijungimas_prie_mysql, $val );
 			if ( !$query ) {
-				$mysql_info .= "<li><b>Klaida:" . mysql_errno() . "</b> " . mysql_error() . "<hr><b>Užklausa:</b><br/>" . $val . "</li><hr>";
+				$mysql_info .= "<li><b>Klaida:" . mysqli_errno($prisijungimas_prie_mysql) . "</b> " . mysqli_error($prisijungimas_prie_mysql) . "<hr><b>Užklausa:</b><br/>" . $val . "</li><hr>";
 				$mysql_error++;
 			}
 		}

@@ -46,7 +46,7 @@ if ( isset( $_GET['priimti'] ) ) {
 	if ( $result ) {
 		msg( $lang['system']['done'], "{$lang['admin']['article_activated']}." );
 	} else {
-		klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 }
 //trinimas
@@ -64,7 +64,7 @@ if ( isset( $url['t'] ) ) {
 	if ( $ar ) {
 		msg( $lang['system']['done'], "{$lang['admin']['article_Deleted']}" );
 	} else {
-		klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 	mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/straipsnis' AND kid=" . escape( $trinti ) . "" );
 } elseif ( isset( $_POST['action'] ) && isset( $_POST['str'] ) && $_POST['action'] == $lang['admin']['edit'] ) {
@@ -89,11 +89,11 @@ if ( isset( $url['t'] ) ) {
 			`kom` = " . escape( $komentaras ) . ",
 			`rodoma` = " . escape( $rodoma ) . "
 			WHERE `id`=" . escape( $id ) . ";
-			" ) or klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+			" ) or klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	if ( $resultas ) {
 		msg( $lang['system']['done'], "{$lang['admin']['article_updated']}." );
 	} else {
-		klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 
 } elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['article_create'] ) {
@@ -125,10 +125,10 @@ if ( isset( $url['t'] ) ) {
 		if ( $result ) {
 			msg( $lang['system']['done'], "{$lang['admin']['article_created']}" );
 		} else {
-			klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+			klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 		}
 	} else {
-		klaida( "{$lang['system']['error']}", $error );
+		klaida( $lang['system']['error'], $error );
 	}
 	unset( $rodoma, $pavadinimas, $kategorija, $komentaras, $str, $apr, $_POST['action'], $result );
 	//redirect(url("?id," . $_GET['id'] . ";a," . $_GET['a']), "meta");
@@ -239,5 +239,3 @@ if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
 	}
 
 }
-
-?>

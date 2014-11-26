@@ -75,7 +75,7 @@ if ( isset( $_POST['edit'] ) && $_POST['edit'] == $lang['system']['edit'] ) {
 	if ( $result ) {
 		msg( $lang['system']['done'], "{$lang['admin']['links_updated']}" );
 	} else {
-		klaida( $lang['system']['error'], "<br><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], "<br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 }
 if ( isset( $_GET['r'] ) ) {
@@ -97,7 +97,7 @@ if ( isset( $_GET['m'] ) ) {
 	if ( $result ) {
 		msg( $lang['system']['done'], "{$lang['admin']['links_Deleted']}" );
 	} else {
-		klaida( $lang['system']['error'], "<br><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], "<br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 }
 if ( isset( $_POST['links_delete'] ) ) {
@@ -113,7 +113,7 @@ if ( isset( $_GET['c'] ) ) {
 	if ( $result ) {
 		msg( $lang['system']['done'], "{$lang['admin']['links_activated']}." );
 	} else {
-		klaida( $lang['system']['error'], "<br><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], "<br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 } elseif ( $_GET['v'] == 1 ) {
 ///FILTRAVIMAS

@@ -77,5 +77,3 @@ if ( $viso > 0 ) {
 } elseif ( $k > 0 ) {
 	klaida( $lang['system']['warning'], "{$lang['category']['no_news']}." );
 }
-
-?>

@@ -52,7 +52,7 @@ if ( isset( $_POST['select'] ) || isset( $_GET['s'] ) ) {
 		} else {
 			$msg = trim( $_POST['msg'] ) . "\n[sm] [i] {$lang['sb']['editedby']}: " . $_SESSION[SLAPTAS]['username'] . " [/i] [/sm]";
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "kom` SET `zinute` = " . escape( strip_tags( $msg ) ) . " WHERE `id` =" . escape( $url['e'] ) . " LIMIT 1" );
-			if ( mysql_affected_rows() > 0 ) {
+			if ( mysqli_affected_rows($prisijungimas_prie_mysql) > 0 ) {
 				msg( $lang['system']['done'], $lang['sb']['updated'] );
 			}
 		}

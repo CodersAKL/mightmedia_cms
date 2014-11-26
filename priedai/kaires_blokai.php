@@ -33,5 +33,3 @@ foreach ( $sql_p as $row_p ) {
 	}
 }
 unset( $sql_p, $row_p, $title, $text );
-
-?>

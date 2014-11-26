@@ -54,7 +54,7 @@ if ( !empty( $_FILES ) ) {
 	if ( $file_size <= MFDYDIS ) {
 		//Patikrinam ar failas ikeltas sekmingai
 		if ( !is_uploaded_file( $file_tmp ) ) {
-			//klaida("{$lang['system']['warning']}", "{$lang['admin']['gallery_nofile']}.");
+			//klaida($lang['system']['warning'], "{$lang['admin']['gallery_nofile']}.");
 		} else {
 			//gaunamm failo galune
 			$ext = strrchr( $file_name, '.' );
@@ -62,7 +62,7 @@ if ( !empty( $_FILES ) ) {
 
 			//Tikrinam ar tinkamas failas
 			if ( !in_array( $fileParts['extension'], $limitedext ) ) {
-				//klaida("{$lang['system']['warning']}", "{$lang['admin']['gallery_notimg']}");
+				//klaida($lang['system']['warning'], "{$lang['admin']['gallery_notimg']}");
 			}
 
 			//create a random file name
@@ -175,7 +175,7 @@ if ( !empty( $_FILES ) ) {
 				if ( $result ) {
 					//msg($lang['system']['done'], "{$lang['admin']['gallery_added']}");
 				} else {
-					//klaida("{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>");
+					//klaida($lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>");
 				}
 				//unset($_FILES['Filedata'], $filename, $_POST['action']);
 				//redirect(url("?id," . $_GET['id'] . ";a," . $_GET['a'] . ";v,1"), "meta");

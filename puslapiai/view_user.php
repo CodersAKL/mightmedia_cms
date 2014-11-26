@@ -118,7 +118,7 @@ if ( isset( $memb[1] ) ) {
 		// Jeigu perziurima TIK informacija, o vartotojas SAVES NEZIURI per nustatyta puslapi
 		//komentarų nereikės
 		if ( isset( $_SESSION[SLAPTAS]['id'] ) ) {
-			include( "priedai/komentarai.php" );
+			include( ROOTAS . "priedai/komentarai.php" );
 			komentarai( $sql['id'], TRUE );
 		}
 	} else {
@@ -127,5 +127,3 @@ if ( isset( $memb[1] ) ) {
 } else {
 	klaida( $lang['system']['error'], "{$lang['system']['pagenotfounfd']}." );
 }
-
-?>

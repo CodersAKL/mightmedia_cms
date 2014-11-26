@@ -48,7 +48,7 @@ class rating
 	function set_score( $rating, $ip, $page, $id ) {
 
 		if ( $this->status ) {
-			mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "ratings` (`rating_id`,`rating_num`,`IP`,`psl`) VALUES (" . escape( $id ) . "," . escape( $rating ) . "," . escape( getip() ) . "," . escape( $page ) . ")" ) or die( mysql_error() );
+			mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "ratings` (`rating_id`,`rating_num`,`IP`,`psl`) VALUES (" . escape( $id ) . "," . escape( $rating ) . "," . escape( getip() ) . "," . escape( $page ) . ")" ) or die( mysqli_error($prisijungimas_prie_mysql) );
 			delete_cache( "SELECT `rating_num` FROM `" . LENTELES_PRIESAGA . "ratings` WHERE `rating_id` = " . escape( $id ) . " AND `psl` = " . escape( $page ) );
 			$this->status = '';
 		} else {

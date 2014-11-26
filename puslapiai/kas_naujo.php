@@ -138,6 +138,3 @@ if ( sizeof( $q ) > 0 ) {
 	lentele( $lang['new']['comments'], $text );
 	unset( $text, $row, $q );
 }
-/*}*/
-
-?>

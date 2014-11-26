@@ -89,9 +89,9 @@ $kategorijos[0] = "--";
 if ( isset( $_GET['priimti'] ) ) {
 	$result = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "galerija` SET rodoma='TAIP' WHERE `id`=" . escape( $_GET['priimti'] ) . ";" );
 	if ( $result ) {
-		msg( $lang['system']['done'], "{$lang['admin']['gallery_activated']}." );
+		msg( $lang['system']['done'], $lang['admin']['gallery_activated'] );
 	} else {
-		klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 }
 //foto salinimas
@@ -109,10 +109,10 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 		@unlink( ROOT . "images/galerija/originalai/" . $sql['file'] );
 	}
 	mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "galerija` WHERE id=" . escape( $trinti ) . " LIMIT 1" );
-	if ( mysql_affected_rows() > 0 ) {
+	if ( mysqli_affected_rows($prisijungimas_prie_mysql) > 0 ) {
 		msg( $lang['system']['done'], $lang['admin']['gallery_deleted'] );
 	} else {
-		klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 	mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/galerija' AND kid=" . escape( $trinti ) . "" );
 	//redirect("?id,".$_GET['id'].";a,".$_GET['a'],"header");
@@ -146,7 +146,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 		msg( $lang['system']['done'], $lang['admin']['gallery_updated'] );
 		redirect( $_SERVER['HTTP_REFERER'] );
 	} else {
-		klaida( $lang['system']['error'], " <br><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 
 } elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['gallery_add'] ) {
@@ -289,7 +289,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 					if ( $result ) {
 						msg( $lang['system']['done'], "{$lang['admin']['gallery_added']}" );
 					} else {
-						klaida( "{$lang['system']['error']}", " <br><b>" . mysql_error() . "</b>" );
+						klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 					}
 
 					unset( $_FILES['failas'], $filename, $_POST['action'] );

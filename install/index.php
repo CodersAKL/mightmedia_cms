@@ -52,20 +52,20 @@ function trinam_direktorija($direktorija) {
 }
 
 // Sarašas failų kurių teisės turi suteikti svetainei įrašymo galimybę
-$chmod_files[0] = "" . ROOT . "priedai/conf.php";
-$chmod_files[]  = "" . ROOT . "install/index.php";
-$chmod_files[]  = "" . ROOT . ".htaccess";
-$chmod_files[]  = "" . ROOT . "siuntiniai/failai";
-$chmod_files[]  = "" . ROOT . "siuntiniai/images";
-$chmod_files[]  = "" . ROOT . "siuntiniai/media";
-$chmod_files[]  = "" . ROOT . "sandeliukas";
-$chmod_files[]  = "" . ROOT . "puslapiai";
-$chmod_files[]  = "" . ROOT . "blokai";
-$chmod_files[]  = "" . ROOT . "images/avatars";
-$chmod_files[]  = "" . ROOT . "images/nuorodu";
-$chmod_files[]  = "" . ROOT . "images/galerija";
-$chmod_files[]  = "" . ROOT . "images/galerija/originalai";
-$chmod_files[]  = "" . ROOT . "images/galerija/mini";
+$chmod_files[0] = ROOT . "priedai/conf.php";
+$chmod_files[]  = ROOT . "install/index.php";
+$chmod_files[]  = ROOT . ".htaccess";
+$chmod_files[]  = ROOT . "siuntiniai/failai";
+$chmod_files[]  = ROOT . "siuntiniai/images";
+$chmod_files[]  = ROOT . "siuntiniai/media";
+$chmod_files[]  = ROOT . "sandeliukas";
+$chmod_files[]  = ROOT . "puslapiai";
+$chmod_files[]  = ROOT . "blokai";
+$chmod_files[]  = ROOT . "images/avatars";
+$chmod_files[]  = ROOT . "images/nuorodu";
+$chmod_files[]  = ROOT . "images/galerija";
+$chmod_files[]  = ROOT . "images/galerija/originalai";
+$chmod_files[]  = ROOT . "images/galerija/mini";
 // Unikalus kodas, naudojamas svetainės identifikacijai.
 $slaptas = md5( uniqid( rand(), TRUE ) );
 //Laiko zonos
@@ -494,14 +494,15 @@ function random( $return = '' ) {
 //adresas
 function adresas() {
 
-	$adresas = isset( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) !== 'off' ? 'https' : 'http';
-	$adresas .= '://' . $_SERVER['HTTP_HOST'];
-	$adresas .= str_replace( '/' . basename( $_SERVER['SCRIPT_NAME'] ), '', $_SERVER['SCRIPT_NAME'] );
+	if ( isset( $_SERVER['HTTP_HOST'] ) ) {
+		$adresas = isset( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) !== 'off' ? 'https' : 'http';
+		$adresas .= '://' . $_SERVER['HTTP_HOST'];
+		$adresas .= str_replace( basename( $_SERVER['SCRIPT_NAME'] ), '', $_SERVER['SCRIPT_NAME'] );
+	} else {
+		$adresas = 'http://localhost/';
+	}
 
-	$aExplode =  explode( '/', $adresas );
-	array_pop( $aExplode );
-
-	return implode( '/', $aExplode);
+	return $adresas;
 }
 
 // Diegimo stadijų registravimas
@@ -544,16 +545,16 @@ if ( isset( $_POST['next_msyql'] ) ) {
 	 * 3. Reikalinga funkcija kuri nuskaitytų sql.sql failą tiek local tiek remote. TUri būti universalus ir veikti ant SAFE_MODE režimo
 	 */
 
-	$mysql_con = mysql_connect( $host, $user, $pass );
-	mysql_select_db( $db );
+	$mysql_con = mysqli_connect( $host, $user, $pass );
+	mysqli_select_db( $mysql_con, $db );
 	if ( !$mysql_con ) {
-		$mysql_info = '<b>' . $lang['system']['error'] . '</b> ' . mysql_error( $mysql_con ) . '<br/><b> #</b>' . mysql_errno( $mysql_con );
+		$mysql_info = '<b>' . $lang['system']['error'] . '</b> ' . mysqli_error( $mysql_con ) . '<br/><b> #</b>' . mysqli_errno( $mysql_con );
 	}
-	if ( mysql_errno( $mysql_con ) == 1049 ) {
+	if ( mysqli_errno( $mysql_con ) == 1049 ) {
 		$next_mysql = '<input name="next_msyql" type="submit" value="' . $lang['setup']['crete_db'] . '" />';
-		mysql_connect( $host, $user, $pass );
-		mysql_query( "CREATE DATABASE `$db` DEFAULT CHARACTER SET utf8 COLLATE utf8_lithuanian_ci" );
-		mysql_select_db( $db );
+		$mysql_con2 = mysqli_connect( $host, $user, $pass );
+		mysqli_query( $mysql_con2, "CREATE DATABASE `$db` DEFAULT CHARACTER SET utf8 COLLATE utf8_lithuanian_ci" );
+		mysqli_select_db( $mysql_con2, $db );
 	} else {
 		$mysql_info = '<strong>' . $lang['setup']['mysql_connected'] . '</strong><br />';
 
@@ -571,9 +572,9 @@ if ( isset( $_POST['next_msyql'] ) ) {
 		$sql = str_replace( "UPDATE `", "UPDATE `" . $prefix, $sql );
 
 		// Prisijungiam prie duombazės
-		mysql_connect( $host, $user, $pass );
-		mysql_select_db( $db );
-		mysql_query( "SET NAMES utf8" );
+		$mysql_con3 = mysqli_connect( $host, $user, $pass );
+		mysqli_select_db( $mysql_con3, $db );
+		mysqli_query( $mysql_con3, "SET NAMES utf8" );
 
 		// Atliekam SQL apvalymą
 		$match = '';
@@ -583,9 +584,9 @@ if ( isset( $_POST['next_msyql'] ) ) {
 		$mysql_error = 0;
 		foreach ( $match[0] as $key => $val ) {
 			if ( !empty( $val ) ) {
-				$query = mysql_query( $val );
+				$query = mysqli_query( $mysql_con3, $val );
 				if ( !$query ) {
-					$mysql_info .= "<li><b>{$lang['system']['error']} " . mysql_errno() . "</b> " . mysql_error() . "<hr><b>{$lang['setup']['query']}:</b><br/>" . $val . "</li><hr>";
+					$mysql_info .= "<li><b>{$lang['system']['error']} " . mysqli_errno($mysql_con3) . "</b> " . mysqli_error($mysql_con3) . "<hr><b>{$lang['setup']['query']}:</b><br/>" . $val . "</li><hr>";
 					$mysql_error++;
 				}
 			}
@@ -618,13 +619,13 @@ if ( !empty( $_POST['acc_create'] ) ) {
 		$admin_info = $lang['user']['edit_badconfirm'];
 	} else {
 		if ( !empty( $user ) && !empty( $pass ) && !empty( $pass2 ) && !empty( $email ) ) {
-			mysql_connect( $_SESSION['mysql']['host'], $_SESSION['mysql']['user'], $_SESSION['mysql']['pass'] );
-			mysql_query( "SET NAMES utf8" );
-			mysql_select_db( $_SESSION['mysql']['db'] );
-			mysql_query( "UPDATE `" . $_SESSION['mysql']['prefix'] . "users` SET `nick`='" . $user . "', `pass`='" . $pass . "', `email`='" . $email . "', `reg_data`='" . time() . "', `ip`=INET_ATON('" . $_SERVER['REMOTE_ADDR'] . "') WHERE `nick`='Admin'" ) or die( mysql_error() );
+			$mysql_con4 = mysqli_connect( $_SESSION['mysql']['host'], $_SESSION['mysql']['user'], $_SESSION['mysql']['pass'] );
+			mysqli_query( $mysql_con4, "SET NAMES utf8" );
+			mysqli_select_db( $mysql_con4, $_SESSION['mysql']['db'] );
+			mysqli_query( $mysql_con4, "UPDATE `" . $_SESSION['mysql']['prefix'] . "users` SET `nick`='" . $user . "', `pass`='" . $pass . "', `email`='" . $email . "', `reg_data`='" . time() . "', `ip`=INET_ATON('" . $_SERVER['REMOTE_ADDR'] . "') WHERE `nick`='Admin'" ) or die( mysqli_error($mysql_con4) );
 			//mysql_query("INSERT INTO `" . $_SESSION['mysql']['prefix'] . "private_msg` (`id`, `from`, `to`, `title`, `msg`, `read`, `date`) VALUES (2, 'CodeRS', '" . $user . "', 'Administracija praneša!', 'Labadiena. Sveikiname sėkmingai įdiegus MightMedia TVS. Ačiū, kad naudojatės [b]CodeRS[/b] produktu.', 'NO', '" . time() . "');") or die(mysql_error());
-			mysql_query( "INSERT INTO `" . $_SESSION['mysql']['prefix'] . "nustatymai` (`key`, `val`) VALUES ('Pastas', '" . $email . "');" ) or die( mysql_error() );
-			mysql_query( "INSERT INTO `" . $_SESSION['mysql']['prefix'] . "nustatymai` (`key`, `val`) VALUES ('kalba', '" . $_SESSION['language'] . "');" ) or die( mysql_error() );
+			mysqli_query( $mysql_con4, "INSERT INTO `" . $_SESSION['mysql']['prefix'] . "nustatymai` (`key`, `val`) VALUES ('Pastas', '" . $email . "');" ) or die( mysqli_error($mysql_con4) );
+			mysqli_query( $mysql_con4, "INSERT INTO `" . $_SESSION['mysql']['prefix'] . "nustatymai` (`key`, `val`) VALUES ('kalba', '" . $_SESSION['language'] . "');" ) or die( mysqli_error($mysql_con4) );
 			header( "Location: index.php?step=5" );
 		} else {
 			$admin_info = $lang['admin']['news_required'];
@@ -668,12 +669,12 @@ define('SLAPTAS', \$slaptas);
 \$update_url = "http://www.assembla.com/code/mightmedia/subversion/node/blob/naujienos.json?jsoncallback=?";
 
 // DB Prisijungimas
-\$prisijungimas_prie_mysql = mysql_connect(\$host, \$user, \$pass) or die("<center><h1>Klaida 1</h1><br/>Svetainė laikinai neveikia. <h4>Prašome užsukti vėliau</h4></center>");
-mysql_select_db(\$db,\$prisijungimas_prie_mysql) or die("<center><h1>Klaida 2</h1><br/>Svetainė neidiegta. <h4>Prašome užsukti vėliau</h4></center>");
-mysql_query("SET NAMES 'utf8'",\$prisijungimas_prie_mysql);
-\$sql = mysql_query("SELECT * FROM `".LENTELES_PRIESAGA."nustatymai`",\$prisijungimas_prie_mysql);
+\$prisijungimas_prie_mysql = mysqli_connect(\$host, \$user, \$pass) or die("<center><h1>Klaida 1</h1><br/>Svetainė laikinai neveikia. <h4>Prašome užsukti vėliau</h4></center>");
+mysqli_select_db(\$prisijungimas_prie_mysql, \$db) or die("<center><h1>Klaida 2</h1><br/>Svetainė neidiegta. <h4>Prašome užsukti vėliau</h4></center>");
+mysqli_query(\$prisijungimas_prie_mysql,"SET NAMES 'utf8'");
+\$sql = mysqli_query(\$prisijungimas_prie_mysql,"SELECT * FROM `".LENTELES_PRIESAGA."nustatymai`",\$prisijungimas_prie_mysql);
 \$conf = array();
-if(mysql_num_rows(\$sql) > 1) while(\$row = mysql_fetch_assoc(\$sql)) \$conf[\$row['key']] = \$row['val'];
+if(mysqli_num_rows(\$sql) > 1) while(\$row = mysqli_fetch_assoc(\$sql)) \$conf[\$row['key']] = \$row['val'];
 unset(\$row,\$sql,\$user,\$host,\$pass,\$db);
 //kalba
 \$lang = array();

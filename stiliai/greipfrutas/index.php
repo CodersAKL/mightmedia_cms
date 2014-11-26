@@ -23,7 +23,7 @@
 		<div id="meniu_juosta">
 			<ul>
 				<?php
-				$limit = '8'; //Kiek nuorod� rodome
+				$limit = '8'; //Kiek nuorodu rodome
 				$sql1  = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent` = 0 AND `show` = 'Y' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC LIMIT {$limit}" );
 				$text  = '';
 				foreach ( $sql1 as $row1 ) {

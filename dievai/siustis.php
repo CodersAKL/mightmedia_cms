@@ -57,7 +57,7 @@ if ( isset( $_GET['p'] ) ) {
 	if ( $result ) {
 		msg( $lang['system']['done'], "{$lang['admin']['download_activated']}." );
 	} else {
-		klaida( $lang['system']['error'], " <br /><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], " <br /><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 }
 if ( /*((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete']  && isset($_POST['edit_new']) && $_POST['edit_new'] > 0)) || */
@@ -74,7 +74,7 @@ if ( /*((isset($_POST['action']) && $_POST['action'] == $lang['admin']['delete']
 		@unlink( ROOT . "siuntiniai/" . $row['file'] );
 	}
 	mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE id=" . escape( $trinti ) . " LIMIT 1" );
-	if ( mysql_affected_rows() > 0 ) {
+	if ( mysqli_affected_rows($prisijungimas_prie_mysql) > 0 ) {
 		msg( $lang['system']['done'], "{$lang['admin']['download_deleted']}" );
 	} else {
 		klaida( $lang['system']['error'], "Trinimo klaida" );
@@ -124,7 +124,7 @@ if ( isset( $_POST['siunt_delete'] ) ) {
 		msg( $lang['system']['done'], "{$lang['admin']['download_updated']}" );
 		redirect( url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ), "meta" );
 	} else {
-		klaida( $lang['system']['error'], "<br /><b>" . mysql_error() . "</b>" );
+		klaida( $lang['system']['error'], "<br /><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 	}
 
 } elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['download_create'] ) {
@@ -365,8 +365,4 @@ if ( isset( $_GET['v'] ) ) {
 
 }
 
-
 unset( $sql, $extra, $row );
-
-
-?>

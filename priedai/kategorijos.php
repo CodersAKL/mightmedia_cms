@@ -69,13 +69,13 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 		$dir = 'images/icons';
 	}
 
-	$array = getFiles( ROOT . $dir );
+	$array = getFiles( ROOTAS . $dir );
 	foreach ( $array as $key => $val ) {
 		if ( $array[$key]['type'] == 'file' ) {
 			$kategoriju_pav[$array[$key]['name']] = $array[$key]['name'] . ' - ' . $array[$key]['sizetext'];
 		}
 	}
-	include_once ( ROOT . 'priedai/class.php' );
+	include_once ( ROOTAS . 'priedai/class.php' );
 
 	$bla    = new forma();
 	$lygiai = array_keys( $conf['level'] );
@@ -192,8 +192,8 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 
 				if ( isset( $row['file'] ) && !empty( $row['file'] ) ) {
 					mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'kom` WHERE pid = \'puslapiai/siustis\' AND kid = ' . escape( $row['ID'] ) );
-					@copy( ROOT . 'siuntiniai/' . $row['file'], ROOT . 'sandeliukas/' . $row['file'] ); //backup
-					@unlink( ROOT . 'siuntiniai/' . $row['file'] );
+					@copy( ROOTAS . 'siuntiniai/' . $row['file'], ROOTAS . 'sandeliukas/' . $row['file'] ); //backup
+					@unlink( ROOTAS . 'siuntiniai/' . $row['file'] );
 				}
 			}
 
@@ -205,10 +205,10 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 			$sql = mysql_query1( 'SELECT `ID`,`file` FROM `' . LENTELES_PRIESAGA . 'galerija` WHERE `categorija` = ' . escape( $id ) );
 			foreach ( $sql as $row ) {
 				if ( isset( $row['file'] ) && !empty( $row['file'] ) ) {
-					@copy( ROOT . 'galerija/originalai/' . $row['file'], ROOT . 'sandeliukas/' . $row['file'] ); //backup
-					@unlink( ROOT . 'galerija/' . $row['file'] );
-					@unlink( ROOT . 'galerija/mini/' . $row['file'] );
-					@unlink( ROOT . 'galerija/originalai/' . $row['file'] );
+					@copy( ROOTAS . 'galerija/originalai/' . $row['file'], ROOTAS . 'sandeliukas/' . $row['file'] ); //backup
+					@unlink( ROOTAS . 'galerija/' . $row['file'] );
+					@unlink( ROOTAS . 'galerija/mini/' . $row['file'] );
+					@unlink( ROOTAS . 'galerija/originalai/' . $row['file'] );
 					mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'kom` WHERE pid = \'puslapiai/galerija\' AND kid = ' . escape( $row['ID'] ) );
 				}
 			}
@@ -247,7 +247,7 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 		if ( $kieno == 'vartotojai' ) {
 			$textas = $lang['system']['grouplevel'];
 			//$puslapiai[""]="";
-			$failai = getFiles( ROOT . $conf['Admin_folder'], '.htaccess|index.php|index.html|index.htm|index.php3|conf.php|config.php|vartotojai.php|logai.php|upload.php|todo.php|paneles.php|meniu.php|komentarai.php|narsykle.php|main.php|sfunkcijos.php|pokalbiai.php|start.php|uncache.php|search.php|antivirus.php|sfunkcijos.php' );
+			$failai = getFiles( ROOTAS . $conf['Admin_folder'], '.htaccess|index.php|index.html|index.htm|index.php3|conf.php|config.php|vartotojai.php|logai.php|upload.php|todo.php|paneles.php|meniu.php|komentarai.php|narsykle.php|main.php|sfunkcijos.php|pokalbiai.php|start.php|uncache.php|search.php|antivirus.php|sfunkcijos.php' );
 			foreach ( $failai as $file ) {
 				if ( $file['type'] == 'file' ) {
 
@@ -260,7 +260,6 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 
 		} else {
 			$textas     = $lang['system']['showfor'] . ' <img src="' . ROOT . 'images/icons/help.png" title="' . $lang['system']['about_allow_cat'] . '" />:';
-			$vartotojai = FALSE;
 		}
 
 		//if (count($teises) > 0) {
@@ -276,9 +275,9 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 			'Form'                                                                                    => array( 'action' => url( "?id,{$_GET['id']};a,{$_GET['a']};v,{$_GET['v']}" ), 'method' => 'post', 'name' => 'reg' ),
 			$lang['system']['name']                                                                   => array( 'type' => 'text', 'value' => ( isset( $extra['pavadinimas'] ) ) ? input( $extra['pavadinimas'] ) : '', 'name' => 'Pavadinimas', 'class' => 'input' ),
 			( $kieno != 'vartotojai' ? $lang['system']['subcat/cat'] : '' )                           => ( $kieno != 'vartotojai' ? array( 'type' => 'select', 'value' => @$kategorijoss, 'name' => 'path', 'selected' => ( isset( $extra['path'] ) ? input( $extra['path'] ) : '0' ), 'disabled' => @$kategorijoss ) : '' ),
-			$lang['system']['about'] . ':'                                                            => array( 'type' => 'textarea', 'value' => ( isset( $extra['aprasymas'] ) ) ? input( $extra['aprasymas'] ) : '', 'name' => 'Aprasymas', 'rows' => '3', 'class' => 'input', 'class' => 'input', 'id' => 'Aprasymas' ),
+			$lang['system']['about'] . ':'                                                            => array( 'type' => 'textarea', 'value' => ( isset( $extra['aprasymas'] ) ) ? input( $extra['aprasymas'] ) : '', 'name' => 'Aprasymas', 'rows' => '3', 'class' => 'input', 'id' => 'Aprasymas' ),
 			'  '                                                                                      => array( 'type' => 'string', 'value' => '<div class="kat" style="float:inherit;"><img src="' . ROOT . '/' . $dir . '/' . ( isset( $extra['pav'] ) ? $extra['pav'] : 'no_picture.png' ) . '" id="kategorijos_img" /></div>' ),
-			( $kieno != 'galerija' ? $lang['system']['picture'] . ':' : '' )                          => ( $kieno != 'galerija' ? array( 'type' => 'select', 'value' => $kategoriju_pav, 'name' => 'Pav', 'class' => 'input', 'class' => 'input', 'selected' => ( isset( $extra['pav'] ) ? input( $extra['pav'] ) : 'no_picture.png' ), 'extra' => 'onchange="$(\'#kategorijos_img\').attr({ src: \'' . ROOT . '/' . $dir . '/\'+this.value });"' ) : "" ),
+			( $kieno != 'galerija' ? $lang['system']['picture'] . ':' : '' )                          => ( $kieno != 'galerija' ? array( 'type' => 'select', 'value' => $kategoriju_pav, 'name' => 'Pav', 'class' => 'input', 'selected' => ( isset( $extra['pav'] ) ? input( $extra['pav'] ) : 'no_picture.png' ), 'extra' => 'onchange="$(\'#kategorijos_img\').attr({ src: \'' . ROOT . '/' . $dir . '/\'+this.value });"' ) : "" ),
 			$lang['admin']['what_moderate']                                                           => '', $textas => '', '' => array( 'type' => 'hidden', 'name' => 'Kategorijos_id', 'value' => ( isset( $extra['id'] ) ? input( $extra['id'] ) : '' ) ),
 			( isset( $extra ) ) ? $lang['system']['editcategory'] : $lang['system']['createcategory'] => array( 'type' => 'submit', 'name' => 'action', 'value' => ( isset( $extra ) ) ? $lang['system']['editcategory'] : $lang['system']['createcategory'] )
 		);
@@ -317,5 +316,3 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 	delete_cache( 'SELECT * FROM `' . LENTELES_PRIESAGA . 'grupes` WHERE `kieno` = \'straipsniai\' AND `lang`= ' . escape( lang() ) . ' ORDER BY `pavadinimas`' );
 	unset( $bla, $info, $sql, $sql2, $q, $result, $result2 );
 }
-
-?>

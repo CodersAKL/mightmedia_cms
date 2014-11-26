@@ -42,7 +42,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'registracija' ) {
 	$pass2  = $_POST['pass2'];
 	$email  = strip_tags( $_POST['email'] );
 	$error  = "";
-	$einfo  = count( mysql_query1( "SELECT * FROM " . LENTELES_PRIESAGA . "users WHERE nick=" . escape( $vardas ) . "" ) );
+	$einfo  = count( mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape( $vardas ) . "" ) );
 	if ( $einfo != 0 ) {
 		$error .= "{$lang['reg']['takenusername']}<br />";
 	}
@@ -85,22 +85,21 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'registracija' ) {
 					NULL , " . escape( $vardas ) . ", '2', " . escape( koduoju( $pass ) ) . " , " . escape( $email ) . ", '" . time() . "' , '" . time() . "'
 					)" )
 		) {
-			msg( "{$lang['system']['done']}", "{$lang['reg']['registered']}." );
+			msg( $lang['system']['done'], $lang['reg']['registered'] );
 			$sekme = TRUE;
 		} else {
-			klaida( "{$lang['system']['error']}", "{$lang['system']['systemerror']}" . mysql_error() );
+			klaida( $lang['system']['error'], "{$lang['system']['systemerror']}" . mysqli_error($prisijungimas_prie_mysql) );
 		}
 	} else {
 		klaida( $lang['reg']['wronginfo'], $error );
 	}
 }
 if ( $sekme == FALSE ) {
-	$title = "{$lang['reg']['registration']}";
+	$title = $lang['reg']['registration'];
 	$text  = registracijos_forma();
 	lentele( $title, $text );
 }
 unset( $title, $text );
-
 
 ?>
 <script language="JavaScript1.2">

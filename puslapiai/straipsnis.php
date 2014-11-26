@@ -102,7 +102,7 @@ if ( $k >= 0 && empty( $url['m'] ) ) {
 			<!-- AddThis Button END -->
 			";
 		lentele( input( $row['pav'] ), $text, rating_form( $page, $row['id'] ) );
-		include ( "priedai/komentarai.php" );
+		include ( ROOTAS . "priedai/komentarai.php" );
 
 		komentarai( $url['m'], TRUE );
 	} else {
@@ -114,5 +114,3 @@ if ( count( $_GET ) == 1 ) {
 		klaida( $lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>" );
 	}
 }
-
-?>

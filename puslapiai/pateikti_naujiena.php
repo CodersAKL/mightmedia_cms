@@ -27,11 +27,11 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti' ) {
 		if ( $result ) {
 			msg( "{$lang['system']['done']}", "{$lang['news']['sumbit_scc']}." );
 		} else {
-			klaida( "{$lang['system']['error']}", "{$lang['news']['sumbit_no']}." );
+			klaida( $lang['system']['error'], "{$lang['news']['sumbit_no']}." );
 		}
 		redirect( url( "?id," . $_GET['id'] ), "meta" );
 	} else {
-		klaida( "{$lang['system']['warning']}", "{$lang['admin']['news_required']}." );
+		klaida( $lang['system']['warning'], "{$lang['admin']['news_required']}." );
 	}
 }
 $sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `lang` = " . escape( lang() ) . " AND `path`=0 ORDER BY `id` DESC" );
@@ -41,7 +41,7 @@ if ( sizeof( $sql ) > 0 ) {
 	$kategorijos = cat( 'naujienos', 0 );
 }
 $kategorijos[0] = "--";
-include_once ( "priedai/class.php" );
+include_once ( ROOTAS . "priedai/class.php" );
 $bla      = new forma();
 $naujiena = array(
 	"Form"                           => array( "action" => "", "method" => "post", "name" => "reg" ),
@@ -52,4 +52,3 @@ $naujiena = array(
 	""                               => array( "type" => "submit", "name" => "action", "value" => "{$lang['news']['submit']}" )
 );
 lentele( "{$lang['news']['submiting']}", $bla->form( $naujiena ) );
-?>
