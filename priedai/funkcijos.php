@@ -689,8 +689,6 @@ function mysql_query1( $query, $lifetime = 0 ) {
 				echo "Negaliu užrakinti failo !";
 			}
 
-			mysqli_free_result($sql);
-			mysqli_close($prisijungimas_prie_mysql);
 			// Baigiam failo įrašymą
 			fclose( $fh );
 		}
@@ -718,8 +716,6 @@ function mysql_query1( $query, $lifetime = 0 ) {
 				}
 			}
 		}
-		mysqli_free_result($sql);
-		mysqli_close($prisijungimas_prie_mysql);
 
 	}
 
@@ -922,7 +918,7 @@ function random_name( $i = 10 ) {
  * @return string escaped
  */
 function escape( $sql ) {
-
+	global $prisijungimas_prie_mysql;
 	// Stripslashes
 	if ( get_magic_quotes_gpc() ) {
 		$sql = stripslashes( $sql );
@@ -930,7 +926,7 @@ function escape( $sql ) {
 	// Jei ne skaičius
 	if ( !isnum( $sql ) || $sql[0] == '0' ) {
 		if ( !isnum( $sql ) ) {
-			$sql = "'" . @mysql_real_escape_string( $sql ) . "'";
+			$sql = "'" . @mysqli_real_escape_string( $prisijungimas_prie_mysql, $sql ) . "'";
 		}
 	}
 

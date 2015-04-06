@@ -30,4 +30,4 @@ Options +Indexes
 Order Allow,Deny
 Deny from env=draudziam
 
-Allow from all 
+Allow from all

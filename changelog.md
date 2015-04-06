@@ -1,6 +1,14 @@
+2015-04-06 22:00:17 +0300 FDiskas 
+
+	* MYSQL to MYSQLI bugfixes (HEAD, trunk)
+
+2015-04-06 21:28:03 +0300 Vytenis 
+
+	* Update funkcijos.php (origin/trunk)
+
 2014-11-26 02:22:07 +0200 FDiskas 
 
-	* MYSQL to MYSQLI (HEAD, trunk)
+	* MYSQL to MYSQLI
 
 2014-11-26 02:02:14 +0200 FDiskas 
 
@@ -8,7 +16,7 @@
 
 2014-11-25 23:34:44 +0200 Vytenis 
 
-	* Update README.md (origin/trunk)
+	* Update README.md
 
 2014-11-25 23:31:45 +0200 FDiskas 
 
