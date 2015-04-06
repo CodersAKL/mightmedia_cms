@@ -1,3 +1,7 @@
+2014-11-26 02:22:07 +0200 FDiskas 
+
+	* MYSQL to MYSQLI (HEAD, trunk)
+
 2014-11-26 02:02:14 +0200 FDiskas 
 
 	* MYSQL to MYSQLI. Išjungtas kešavimas. Kolkas nesuderinama su mysqli

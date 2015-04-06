@@ -688,6 +688,9 @@ function mysql_query1( $query, $lifetime = 0 ) {
 			} else {
 				echo "Negaliu užrakinti failo !";
 			}
+
+			mysqli_free_result($sql);
+			mysqli_close($prisijungimas_prie_mysql);
 			// Baigiam failo įrašymą
 			fclose( $fh );
 		}
@@ -715,6 +718,9 @@ function mysql_query1( $query, $lifetime = 0 ) {
 				}
 			}
 		}
+		mysqli_free_result($sql);
+		mysqli_close($prisijungimas_prie_mysql);
+
 	}
 
 	return $return;

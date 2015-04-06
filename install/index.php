@@ -669,10 +669,9 @@ define('SLAPTAS', \$slaptas);
 \$update_url = "http://www.assembla.com/code/mightmedia/subversion/node/blob/naujienos.json?jsoncallback=?";
 
 // DB Prisijungimas
-\$prisijungimas_prie_mysql = mysqli_connect(\$host, \$user, \$pass) or die("<center><h1>Klaida 1</h1><br/>Svetainė laikinai neveikia. <h4>Prašome užsukti vėliau</h4></center>");
-mysqli_select_db(\$prisijungimas_prie_mysql, \$db) or die("<center><h1>Klaida 2</h1><br/>Svetainė neidiegta. <h4>Prašome užsukti vėliau</h4></center>");
+\$prisijungimas_prie_mysql = mysqli_connect(\$host, \$user, \$pass, \$db) or die("<center><h1>Klaida 1</h1><br/>Svetainė laikinai neveikia. <h4>Prašome užsukti vėliau</h4></center>");
 mysqli_query(\$prisijungimas_prie_mysql,"SET NAMES 'utf8'");
-\$sql = mysqli_query(\$prisijungimas_prie_mysql,"SELECT * FROM `".LENTELES_PRIESAGA."nustatymai`",\$prisijungimas_prie_mysql);
+\$sql = mysqli_query(\$prisijungimas_prie_mysql,"SELECT * FROM `".LENTELES_PRIESAGA."nustatymai`");
 \$conf = array();
 if(mysqli_num_rows(\$sql) > 1) while(\$row = mysqli_fetch_assoc(\$sql)) \$conf[\$row['key']] = \$row['val'];
 unset(\$row,\$sql,\$user,\$host,\$pass,\$db);
