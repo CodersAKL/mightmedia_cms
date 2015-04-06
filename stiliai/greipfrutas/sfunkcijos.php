@@ -280,13 +280,13 @@ function bbcode( $str ) {
 	//$str=str_replace("\\","&#92;",$str);
 	//$str = preg_replace('&','#&amp;#',$str);
 	$str = input( $str );
-	$str = preg_replace( "#\[code\](.*?)\[\/code\]#sie", "base64encode('<textarea name=\"code\" class=\"code\">\\1</textarea>')", $str );
-	$str = preg_replace( "#\[php\](.*?)\[\/php\]#sie", "base64encode('<textarea name=\"code\" class=\"php\" rows=\"15\" cols=\"100\">\\1</textarea>')", $str );
-	$str = preg_replace( "#\[mirc\](.*?)\[\/mirc\]#sie", "base64encode('<textarea name=\"code\" class=\"mirc\" rows=\"15\" cols=\"100\">\\1</textarea>')", $str );
-	$str = preg_replace( "#\[html\](.*?)\[\/html\]#sie", "base64encode('<textarea name=\"code\" class=\"html\" rows=\"15\" cols=\"100\">\\1</textarea>')", $str );
-	$str = preg_replace( "#\[css\](.*?)\[\/css\]#sie", "base64encode('<textarea name=\"code\" class=\"css\" rows=\"15\" cols=\"100\">\\1</textarea>')", $str );
-	$str = preg_replace( "#\[js\](.*?)\[\/js\]#sie", "base64encode('<textarea name=\"code\" class=\"js\" rows=\"15\" cols=\"100\">\\1</textarea>')", $str );
-	$str = preg_replace( "#\[sql\](.*?)\[\/sql\]#sie", "base64encode('<textarea name=\"code\" class=\"sql\" rows=\"15\" cols=\"100\">\\1</textarea>')", $str );
+	$str = preg_replace_callback ( "#\[code\](.*?)\[\/code\]#si", function(){ return base64encode('<textarea name=\"code\" class=\"code\">\\1</textarea>');}, $str );
+	$str = preg_replace_callback ( "#\[php\](.*?)\[\/php\]#si", function(){ return base64encode('<textarea name=\"code\" class=\"php\" rows=\"15\" cols=\"100\">\\1</textarea>');}, $str );
+	$str = preg_replace_callback ( "#\[mirc\](.*?)\[\/mirc\]#si", function(){ return base64encode('<textarea name=\"code\" class=\"mirc\" rows=\"15\" cols=\"100\">\\1</textarea>');}, $str );
+	$str = preg_replace_callback ( "#\[html\](.*?)\[\/html\]#si", function(){ return base64encode('<textarea name=\"code\" class=\"html\" rows=\"15\" cols=\"100\">\\1</textarea>');}, $str );
+	$str = preg_replace_callback ( "#\[css\](.*?)\[\/css\]#si", function(){ return base64encode('<textarea name=\"code\" class=\"css\" rows=\"15\" cols=\"100\">\\1</textarea>');}, $str );
+	$str = preg_replace_callback ( "#\[js\](.*?)\[\/js\]#si", function(){ return base64encode('<textarea name=\"code\" class=\"js\" rows=\"15\" cols=\"100\">\\1</textarea>');}, $str );
+	$str = preg_replace_callback ( "#\[sql\](.*?)\[\/sql\]#si", function(){ return base64encode('<textarea name=\"code\" class=\"sql\" rows=\"15\" cols=\"100\">\\1</textarea>');}, $str );
 
 	// Atverciam linka naujame lange
 	$str = preg_replace( "#\[url\](.*?)?(.*?)\[/url\]#si", "<A HREF=\"\\1\\2\" TARGET=\"_blank\" rel=\"nofollow\" >\\1\\2</A>", $str );
