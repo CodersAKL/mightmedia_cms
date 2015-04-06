@@ -4,7 +4,7 @@
  * @Projektas : MightMedia TVS
  * @Puslapis  : www.coders.lt
  * @$Author$
- * @copyright CodeRS Â©2008
+ * @copyright CodeRS ©2008
  * @license   GNU General Public License v2
  * @$Revision$
  * @$Date$
@@ -878,7 +878,6 @@ function getip() {
 		: $_SERVER["REMOTE_ADDR"]
 	);
 	if (strstr( $ip, "," )) {
-		echo 'cia';
 		$ip = explode( ',', $ip );
 		$ip = reset($ip);
 		$ip = trim($ip );
