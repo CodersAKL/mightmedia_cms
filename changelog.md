@@ -1,10 +1,14 @@
+2015-04-06 23:00:22 +0300 FDiskas 
+
+	* Removed deprecated (HEAD, trunk)
+
 2015-04-06 22:38:04 +0300 FDiskas 
 
-	* MYSQL to MYSQLI done (HEAD, trunk)
+	* MYSQL to MYSQLI done (origin/trunk)
 
 2015-04-06 22:00:17 +0300 FDiskas 
 
-	* MYSQL to MYSQLI bugfixes (origin/trunk)
+	* MYSQL to MYSQLI bugfixes
 
 2015-04-06 21:28:03 +0300 Vytenis 
 
