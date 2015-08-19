@@ -10,7 +10,7 @@ script: phpunit
 sudo: false
 
 notifications:
-  slack: asgardcms:KxCIbNZLKtq8gqQ18aw7RO23
+  #slack: asgardcms:KxCIbNZLKtq8gqQ18aw7RO23
 
 matrix:
   allow_failures:
