@@ -1,4 +1,4 @@
-Used hooks [![Deployment status from dploy.io](https://mightmedia.dploy.io/badge/23779029942970/15244.png)](http://dploy.io)
+Used hooks [![Stories in Ready](https://badge.waffle.io/CodersAKL/mightmedia_cms.png?label=ready&title=Ready)](http://waffle.io/CodersAKL/mightmedia_cms) [![Deployment status from dploy.io](http://mightmedia.dploy.io/badge/23779029942970/15244.png)](http://dploy.io)
 ==========
 Please make hard link to the .git/hooks/pre-commit from file ROOT/version_hook.sh
 
