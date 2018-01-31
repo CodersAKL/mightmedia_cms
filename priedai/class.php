@@ -119,7 +119,7 @@ class Table
 	var $style = 1;
 	var $width;
 
-	function Table() {
+	function __construct() {
 
 		$ids = uniqid();
 		/*<script> $(document).ready(function() 
