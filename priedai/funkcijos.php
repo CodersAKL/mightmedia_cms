@@ -350,8 +350,6 @@ HTML;
 
 	if ( $kodel == $lang['system']['forhacking'] ) {
 		die( "<center><h1>{$lang['system']['nohacking']}!</h1><font color='red'><b>" . $kodel . " - {$lang['system']['forbidden']}<blink>!</blink></b></font><hr/></center>" );
-	} else {
-		die;
 	}
 }
 
