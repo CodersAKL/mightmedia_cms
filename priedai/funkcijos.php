@@ -165,7 +165,7 @@ function avatar( $mail, $size = 80 ) {
 			? 'stiliai/' . $conf['Stilius'] . '/no_avatar.png'
 			: 'images/avatars/no_avatar.png'
 		);
-		$result    = '<img src="http://www.gravatar.com/avatar/' . md5( strtolower( $mail ) ) . '?s=' . htmlentities( $size . '&r=any&default=' . urlencode( adresas() . $avatardir ) . '&time=' . time() ) . '"  width="' . $size . '" alt="avataras" />';
+		$result    = '<img src="//www.gravatar.com/avatar/' . md5( strtolower( $mail ) ) . '?s=' . htmlentities( $size . '&r=any&default=' . urlencode( adresas() . $avatardir ) . '&time=' . time() ) . '"  width="' . $size . '" alt="avataras" />';
 	}
 
 	return $result;
