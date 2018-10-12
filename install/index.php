@@ -621,7 +621,7 @@ if ( !empty( $_POST['acc_create'] ) ) {
 			mysql_connect( $_SESSION['mysql']['host'], $_SESSION['mysql']['user'], $_SESSION['mysql']['pass'] );
 			mysql_query( "SET NAMES utf8" );
 			mysql_select_db( $_SESSION['mysql']['db'] );
-			mysql_query( "UPDATE `" . $_SESSION['mysql']['prefix'] . "users` SET `nick`='" . $user . "', `pass`='" . $pass . "', `email`='" . $email . "', `reg_data`='" . time() . "', `ip`=INET_ATON('" . $_SERVER['REMOTE_ADDR'] . "') WHERE `nick`='Admin'" ) or die( mysql_error() );
+			mysql_query( "UPDATE `" . $_SESSION['mysql']['prefix'] . "users` SET `nick`='" . $user . "', `pass`='" . $pass . "', `email`='" . $email . "', `reg_data`='" . time() . "', `ip`='" . $_SERVER['REMOTE_ADDR'] . "' WHERE `nick`='Admin'" ) or die( mysql_error() );
 			//mysql_query("INSERT INTO `" . $_SESSION['mysql']['prefix'] . "private_msg` (`id`, `from`, `to`, `title`, `msg`, `read`, `date`) VALUES (2, 'CodeRS', '" . $user . "', 'Administracija praneša!', 'Labadiena. Sveikiname sėkmingai įdiegus MightMedia TVS. Ačiū, kad naudojatės [b]CodeRS[/b] produktu.', 'NO', '" . time() . "');") or die(mysql_error());
 			mysql_query( "INSERT INTO `" . $_SESSION['mysql']['prefix'] . "nustatymai` (`key`, `val`) VALUES ('Pastas', '" . $email . "');" ) or die( mysql_error() );
 			mysql_query( "INSERT INTO `" . $_SESSION['mysql']['prefix'] . "nustatymai` (`key`, `val`) VALUES ('kalba', '" . $_SESSION['language'] . "');" ) or die( mysql_error() );
