@@ -184,7 +184,7 @@ CREATE TABLE `kas_prisijunges` (
   `id` int(11) NOT NULL,
   `uid` varchar(11) COLLATE utf8_lithuanian_ci NOT NULL DEFAULT '',
   `timestamp` int(15) NOT NULL DEFAULT '0',
-  `ip` varchar(40) COLLATE utf8_lithuanian_ci DEFAULT NULL,
+  `ip` varchar(45) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `file` varchar(100) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `user` varchar(100) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `agent` varchar(255) COLLATE utf8_lithuanian_ci DEFAULT NULL,
@@ -238,7 +238,7 @@ CREATE TABLE `logai` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `action` text COLLATE utf8_lithuanian_ci,
   `time` int(10) DEFAULT NULL,
-  `ip` varchar(15) COLLATE utf8_lithuanian_ci NOT NULL DEFAULT '0',
+  `ip` varchar(45) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=1 ;
 
@@ -449,7 +449,7 @@ CREATE TABLE `ratings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `rating_id` varchar(80) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `rating_num` int(11) DEFAULT NULL,
-  `IP` varchar(25) COLLATE utf8_lithuanian_ci DEFAULT NULL,
+  `IP` varchar(45) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `psl` varchar(255) COLLATE utf8_lithuanian_ci NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci AUTO_INCREMENT=1 ;
@@ -563,7 +563,7 @@ INSERT INTO `s_punktai` VALUES(1, 'Atviras Kodas', 1);
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ip` int(10) unsigned DEFAULT NULL,
+  `ip` varchar(45) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `nick` varchar(15) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `levelis` int(2) NOT NULL DEFAULT '3',
   `pass` varchar(32) COLLATE utf8_lithuanian_ci DEFAULT NULL,
@@ -625,7 +625,7 @@ CREATE TABLE `poll_questions` (
 
 CREATE TABLE `poll_votes` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
-  `ip` varchar(255) NOT NULL DEFAULT '0',
+  `ip` varchar(45) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `question_id` int(255) NOT NULL DEFAULT '0',
   `answer_id` int(255) NOT NULL DEFAULT '0',
   `lang` varchar(3) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL DEFAULT 'lt' COMMENT 'Language',

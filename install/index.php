@@ -622,8 +622,8 @@ if ( !empty( $_POST['acc_create'] ) ) {
 			$mysql_con4 = mysqli_connect( $_SESSION['mysql']['host'], $_SESSION['mysql']['user'], $_SESSION['mysql']['pass'] );
 			mysqli_query( $mysql_con4, "SET NAMES utf8" );
 			mysqli_select_db( $mysql_con4, $_SESSION['mysql']['db'] );
-			mysqli_query( $mysql_con4, "UPDATE `" . $_SESSION['mysql']['prefix'] . "users` SET `nick`='" . $user . "', `pass`='" . $pass . "', `email`='" . $email . "', `reg_data`='" . time() . "', `ip`=INET_ATON('" . $_SERVER['REMOTE_ADDR'] . "') WHERE `nick`='Admin'" ) or die( mysqli_error($mysql_con4) );
-			//mysql_query("INSERT INTO `" . $_SESSION['mysql']['prefix'] . "private_msg` (`id`, `from`, `to`, `title`, `msg`, `read`, `date`) VALUES (2, 'CodeRS', '" . $user . "', 'Administracija praneša!', 'Labadiena. Sveikiname sėkmingai įdiegus MightMedia TVS. Ačiū, kad naudojatės [b]CodeRS[/b] produktu.', 'NO', '" . time() . "');") or die(mysql_error());
+			mysqli_query( $mysql_con4, "UPDATE `" . $_SESSION['mysql']['prefix'] . "users` SET `nick`='" . $user . "', `pass`='" . $pass . "', `email`='" . $email . "', `reg_data`='" . time() . "', `ip`='" . $_SERVER['REMOTE_ADDR'] . "' WHERE `nick`='Admin'" ) or die( mysqli_error($mysql_con4) );
+			
 			mysqli_query( $mysql_con4, "INSERT INTO `" . $_SESSION['mysql']['prefix'] . "nustatymai` (`key`, `val`) VALUES ('Pastas', '" . $email . "');" ) or die( mysqli_error($mysql_con4) );
 			mysqli_query( $mysql_con4, "INSERT INTO `" . $_SESSION['mysql']['prefix'] . "nustatymai` (`key`, `val`) VALUES ('kalba', '" . $_SESSION['language'] . "');" ) or die( mysqli_error($mysql_con4) );
 			header( "Location: index.php?step=5" );
