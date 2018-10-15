@@ -53,7 +53,7 @@ if ( isset( $_GET['b'] ) && $_GET['b'] == 1 ) {
 	                " "                        => array( "type" => "submit", "name" => "Portai", "value" => "{$lang['admin']['save']}" ) );
 	if ( isset( $_POST['ip'] ) && isset( $_POST['priezastis'] ) ) {
 		if ( preg_match( "/^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])" . "(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$/", $_POST['ip'] ) ) {
-			$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE ip =INET_ATON(" . escape( $_POST['ip'] ) . ") AND levelis='1'" );
+			$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE ip = '" . escape( $_POST['ip'] ) . "' AND levelis='1'" );
 			if ( count( $sql ) == 0 ) {
 				ban( $_POST['ip'], $_POST['priezastis'] );
 				msg( $lang['system']['done'], "IP {$_POST['ip']} {$lang['admin']['banned']}." );

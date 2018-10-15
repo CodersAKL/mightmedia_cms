@@ -122,7 +122,7 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 	if ( isset( $_GET['k'] ) ) {
 //vartotoju sarasas pagal esamą levelį
 ///FILTRAVIMAS
-		$sql = mysql_query1( "SELECT *, INET_NTOA(ip) AS ip FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=" . escape( (int)$_GET['k'] ) . " " . ( isset( $_POST['nick'] ) ? "AND (`nick` LIKE " . escape( "%" . $_POST['nick'] . "%" ) . " " . ( !empty( $_POST['ip'] ) ? " AND `ip` LIKE " . escape( sprintf( "%u", ip2long( $_POST['ip'] ) ) ) . "" : "" ) . "" . ( !empty( $_POST['email'] ) ? " AND `email` LIKE " . escape( "%" . $_POST['email'] . "%" ) . "" : "" ) . ")" : "" ) . " ORDER BY id DESC LIMIT {$p},{$limit}" );
+		$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=" . escape( (int)$_GET['k'] ) . " " . ( isset( $_POST['nick'] ) ? "AND (`nick` LIKE " . escape( "%" . $_POST['nick'] . "%" ) . " " . ( !empty( $_POST['ip'] ) ? " AND `ip` LIKE " . escape( sprintf( "%u", ip2long( $_POST['ip'] ) ) ) . "" : "" ) . "" . ( !empty( $_POST['email'] ) ? " AND `email` LIKE " . escape( "%" . $_POST['email'] . "%" ) . "" : "" ) . ")" : "" ) . " ORDER BY id DESC LIMIT {$p},{$limit}" );
 		if ( isset( $_POST['nick'] ) && $_POST['ip'] && $_POST['email'] ) {
 			$val = array( $_POST['nick'], $_POST['ip'], $_POST['email'] );
 		} else {
@@ -166,7 +166,7 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 4 ) {
 	$text = "<form name='rasti' method='post' id='rasti' action=''>{$lang['admin']['user_name']}: <input type='text' name='vardas'> <input name='rasti' type='submit' value='{$lang['admin']['user_find']}'></form>";
 	lentele( "{$lang['admin']['user_find']}", $text );
 	if ( isset( $_POST['rasti'] ) && isset( $_POST['vardas'] ) ) {
-		$resultas = mysql_query1( "SELECT *, INET_NTOA(ip) AS ip FROM `" . LENTELES_PRIESAGA . "users` WHERE nick LIKE " . escape( "%" . $_POST['vardas'] . "%" ) . "LIMIT 0,100" );
+		$resultas = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick LIKE " . escape( "%" . $_POST['vardas'] . "%" ) . "LIMIT 0,100" );
 		if ( sizeof( $resultas ) > 0 ) {
 			foreach ( $resultas as $row2 ) {
 				$info3[] = array(
