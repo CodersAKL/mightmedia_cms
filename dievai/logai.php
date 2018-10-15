@@ -40,12 +40,12 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $_SESSION[SLAPTAS]['level'] == 
 //valom zurnala
 if ( !empty( $url['t'] ) ) {
 	mysql_query1( "TRUNCATE TABLE `" . LENTELES_PRIESAGA . "logai`" );
-	mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( " " . $_SESSION[SLAPTAS]['username'] . ":{$lang['admin']['logs_logsdeleted']}." ) . ", '" . time() . "', INET_ATON(" . escape( getip() ) . "))" );
+	mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( " " . $_SESSION[SLAPTAS]['username'] . ":{$lang['admin']['logs_logsdeleted']}." ) . ", '" . time() . "', '" . escape( getip() ) . "')" );
 	header( "location: " . url( "?id," . $url['id'] . ";a,{$_GET['a']}" ) );
 //rodom zurnala
 } else {
 	$viso = kiek( "logai" );
-	$sql  = mysql_query1( "SELECT `" . LENTELES_PRIESAGA . "logai`.`id`, INET_NTOA(`" . LENTELES_PRIESAGA . "logai`.`ip`) as ip, `" . LENTELES_PRIESAGA . "logai`.`action`, INET_NTOA(`" . LENTELES_PRIESAGA . "logai`.`ip`) AS ip1, `" . LENTELES_PRIESAGA . "logai`.`time`,	IF(`" . LENTELES_PRIESAGA . "users`.`nick` <> '', `" . LENTELES_PRIESAGA . "users`.`nick`, 'Svečias') AS nick, IF(`" . LENTELES_PRIESAGA . "users`.`id` <> '', `" . LENTELES_PRIESAGA . "users`.`id`, '0') AS nick_id, IF(`" . LENTELES_PRIESAGA . "users`.`levelis` <> '', `" . LENTELES_PRIESAGA . "users`.`levelis`, '0') AS levelis	FROM `" . LENTELES_PRIESAGA . "logai` Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "logai`.`ip` = `" . LENTELES_PRIESAGA . "users`.`ip`	ORDER BY `id` DESC LIMIT {$p}, {$limit}" );
+	$sql  = mysql_query1( "SELECT `" . LENTELES_PRIESAGA . "logai`.`id`, `" . LENTELES_PRIESAGA . "logai`.`ip` AS ip, `" . LENTELES_PRIESAGA . "logai`.`action`, `" . LENTELES_PRIESAGA . "logai`.`ip` AS ip1, `" . LENTELES_PRIESAGA . "logai`.`time`,	IF(`" . LENTELES_PRIESAGA . "users`.`nick` <> '', `" . LENTELES_PRIESAGA . "users`.`nick`, 'Svečias') AS nick, IF(`" . LENTELES_PRIESAGA . "users`.`id` <> '', `" . LENTELES_PRIESAGA . "users`.`id`, '0') AS nick_id, IF(`" . LENTELES_PRIESAGA . "users`.`levelis` <> '', `" . LENTELES_PRIESAGA . "users`.`levelis`, '0') AS levelis	FROM `" . LENTELES_PRIESAGA . "logai` Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "logai`.`ip` = `" . LENTELES_PRIESAGA . "users`.`ip`	ORDER BY `id` DESC LIMIT {$p}, {$limit}" );
 
 	$info = array();
 

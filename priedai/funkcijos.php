@@ -666,7 +666,7 @@ function mysql_query1( $query, $lifetime = 0 ) {
 
 			$sql = mysqli_query( $prisijungimas_prie_mysql, $query ); // or die(mysqli_error($prisijungimas_prie_mysql));
 			if ( mysqli_error($prisijungimas_prie_mysql) ) {
-				mysqli_query( $prisijungimas_prie_mysql, "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "MySql error:  " . mysqli_error($prisijungimas_prie_mysql) . " query: " . $query ) . ",'" . time() . "',INET_ATON(" . escape( getip() ) . "));" );
+				mysqli_query( $prisijungimas_prie_mysql, "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "MySql error:  " . mysqli_error($prisijungimas_prie_mysql) . " query: " . $query ) . ",'" . time() . "', '" . escape( getip() ) . "');" );
 			}
 			// Jeigu užklausoje nurodyta, kad reikia tik vieno įrašo tai nesudarom masyvo.
 			if ( substr( strtolower( $query ), -7 ) == 'limit 1' ) {
@@ -697,7 +697,7 @@ function mysql_query1( $query, $lifetime = 0 ) {
 
 		$sql = mysqli_query( $prisijungimas_prie_mysql, $query ); // or die(mysqli_error($prisijungimas_prie_mysql));
 		if ( mysqli_error($prisijungimas_prie_mysql) ) {
-			mysqli_query( $prisijungimas_prie_mysql, "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "MySql error:  " . mysqli_error($prisijungimas_prie_mysql) . " query: " . $query ) . ",'" . time() . "',INET_ATON(" . escape( getip() ) . "));" );
+			mysqli_query( $prisijungimas_prie_mysql, "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "MySql error:  " . mysqli_error($prisijungimas_prie_mysql) . " query: " . $query ) . ",'" . time() . "', '" . escape( getip() ) . "');" );
 		}
 		if ( in_array( strtolower( substr( $query, 0, 6 ) ), array( 'delete', 'insert', 'update' ) ) ) {
 			if ( in_array( strtolower( substr( $query, 0, 6 ) ), array( 'insert' ) ) ) {
@@ -1527,7 +1527,7 @@ function admin_login() {
 		header( "WWW-Authenticate: Basic realm='AdminAccess'" );
 		header( "HTTP/1.0 401 Unauthorized" );
 		header( "status: 401 Unauthorized" );
-		mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "ADMIN pultas - Klaida loginantis: User: " . ( isset( $_SERVER['PHP_AUTH_USER'] ) ? $_SERVER['PHP_AUTH_USER'] : "N/A" ) . " Pass: " . ( isset( $_SERVER['PHP_AUTH_PW'] ) ? $_SERVER['PHP_AUTH_PW'] : "N/A" ) ) . ",NOW(),INET_ATON(" . escape( getip() ) . "));" );
+		mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "ADMIN pultas - Klaida loginantis: User: " . ( isset( $_SERVER['PHP_AUTH_USER'] ) ? $_SERVER['PHP_AUTH_USER'] : "N/A" ) . " Pass: " . ( isset( $_SERVER['PHP_AUTH_PW'] ) ? $_SERVER['PHP_AUTH_PW'] : "N/A" ) ) . ",NOW(), '" . escape( getip() ) . "');" );
 		die( klaida( "{$lang['system']['forbidden']}!", "{$lang['system']['notadmin']}" ) );
 	} else {
 		unset( $admin_name, $admin_pass );
