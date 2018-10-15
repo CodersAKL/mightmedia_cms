@@ -34,7 +34,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $_SESSION[SLAPTAS]['level'] == 
 	}
 //rodom irasa
 } elseif ( isset( $url['v'] ) && !empty( $url['v'] ) && isnum( $url['v'] ) ) {
-	$sql = mysql_query1( "SELECT id, INET_NTOA(ip) AS ip, action, time FROM `" . LENTELES_PRIESAGA . "logai` WHERE id=" . escape( $url['v'] ) . " LIMIT 1" );
+	$sql = mysql_query1( "SELECT id, ip, action, time FROM `" . LENTELES_PRIESAGA . "logai` WHERE id=" . escape( $url['v'] ) . " LIMIT 1" );
 	lentele( $sql['ip'] . " - " . date( 'Y-m-d H:i:s', $sql['time'] ), input( $sql['action'] ) );
 }
 //valom zurnala
@@ -71,10 +71,11 @@ if ( !empty( $url['t'] ) ) {
 	}
 
 
-	$sql = mysql_query1( "SELECT count(*) as viso, ip, INET_NTOA(ip) AS ip1 FROM `" . LENTELES_PRIESAGA . "logai` GROUP BY ip ORDER BY time DESC" );
-	if ( sizeof( $sql ) > 0 ) {
+	$sql = mysql_query1("SELECT count(`id`) as `viso`, `ip` FROM `" . LENTELES_PRIESAGA . "logai` GROUP BY `ip`, `id` ORDER BY `time` DESC");
+	
+	if (! empty($sql)) {
 		foreach ( $sql as $row ) {
-			$select[$row['ip']] = $row['ip1'] . " - " . $row['viso'];
+			$select[$row['ip']] = $row['ip'] . " - " . $row['viso'];
 		}
 		$delete = array( "Form" => array( "action" => url( "?id," . $url['id'] . ";a," . $url['a'] . ";d,0" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg" ), "{$lang['admin']['logs_deletebyip']}:" => array( "type" => "select", "value" => $select, "selected" => ip2long( $_SERVER['REMOTE_ADDR'] ), "name" => "ip" ), "" => array( "type" => "submit", "name" => "del_all", "extra" => "onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"", "value" => $lang['admin']['delete'] ) );
 		$bla    = new forma();
@@ -85,6 +86,5 @@ if ( !empty( $url['t'] ) ) {
 		lentele( $lang['admin']['logs_clear'], $bla->form( $delete ) );
 	}
 }
-unset( $row, $bla, $info, $sql, $select, $viso, $nustatymai );
 
-?>
+unset($row, $bla, $info, $sql, $select, $viso, $nustatymai);

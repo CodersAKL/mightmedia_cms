@@ -19,7 +19,7 @@ include_once ( "priedai/class.php" );
 $limit = 30;
 $viso  = kiek( "users" );
 //vartotojų sarašas
-$sql = mysql_query1( "SELECT id, INET_NTOA(ip) AS ip, reg_data, gim_data, login_data, nick, vardas, pavarde, email, levelis FROM `" . LENTELES_PRIESAGA . "users` LIMIT $p, $limit", 86400 );
+$sql = mysql_query1( "SELECT id, ip, reg_data, gim_data, login_data, nick, vardas, pavarde, email, levelis FROM `" . LENTELES_PRIESAGA . "users` LIMIT $p, $limit", 86400 );
 $i   = 0;
 
 if ( sizeof( $sql ) > 0 ) {
