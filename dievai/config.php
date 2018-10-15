@@ -59,28 +59,28 @@ if ( isset( $conf['puslapiai'] ) && count( $conf['puslapiai'] ) > 0 ) {
 } else {
 	$psl[] = '';
 }
-$nustatymai = array( "Form"                                 => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg" ),
-                     "{$lang['admin']['sitename']}:"        => array( "type" => "text", "value" => input( $conf['Pavadinimas'] ), "name" => "Pavadinimas", "class" => "input" ),
-                     "{$lang['admin']['homepage']}:"        => array( "type" => "select", "value" => $psl, "selected" => ( isset( $conf['pirminis'] ) ? $conf['pirminis'] . '.php' : '' ), "name" => "pirminis", "class" => "select" ),
-                     "{$lang['admin']['about']}:"           => array( "type" => "textarea", "name" => "Apie", "value" => ( isset( $conf['Apie'] ) ? $conf['Apie'] : '' ) ),
-                     "{$lang['admin']['keywords']}:"        => array( "type" => "text", "value" => input( $conf['Keywords'] ), "name" => "keywords", "class" => "input" ),
-                     "{$lang['admin']['copyright']}:"       => array( "type" => "text", "value" => input( $conf['Copyright'] ), "name" => "Copyright", "class" => "input" ),
-                     "{$lang['admin']['email']}:"           => array( "type" => "text", "value" => input( $conf['Pastas'] ), "name" => "Pastas", "class" => "input" ),
-                     "{$lang['admin']['maintenance']}:"     => array( "type" => "select", "value" => array( "1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}" ), "selected" => input( $conf['Palaikymas'] ), "name" => "Palaikymas", "class" => "select" ),
-                     "{$lang['admin']['maintenancetext']}:" => array( "type" => "string", "value" => editor( 'jquery', 'mini', 'Maintenance', isset( $conf['Maintenance'] ) ? $conf['Maintenance'] : '' ) ),
-                     "Friendly url:"                        => array( "type"=> "select", "value"=> array( '/'=> '/', ';'=> ';', '0'=> $lang['admin']['off'] ), "selected"=> "" . $conf['F_urls'] . "", "name"=> "F_urls", "class" => "select" ),
-                     "{$lang['admin']['comm_guests']}:"     => array( "type" => "select", "value" => array( "1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}", "3"=> "{$lang['admin']['comments_off']}" ), "selected" => input( @$conf['kmomentarai_sveciams'] ), "name" => "koment", "class" => "select" ),
-                     "{$lang['admin']['gallery_rate']}:"    => array( "type" => "select", "value" => array( "1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}" ), "selected" => input( $conf['galbalsuot'] ), "name" => "galbalsuot", "class" => "select" ),
-                     "{$lang['admin']['newsperpage']}:"     => array( "type" => "text", "value" => input( $conf['News_limit'] ), "name" => "News_limit", 'extra' => "on`key`up=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\"", "class" => "input" ),
-//                     "{$lang['admin']['cache']}:"           => array( "type" => "select", "value" => array( "1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}" ), "selected" => input( $conf['keshas'] ), "name" => "keshas", "class" => "select" ),
-                     "{$lang['admin']['theme']}:"           => array( "type" => "select", "value" => $stiliai, "selected" => input( $conf['Stilius'] ), "name" => "Stilius", "class" => "select" ),
-                     "{$lang['admin']['lang']}:"            => array( "type" => "select", "value" => $kalba, "selected" => input( $conf['kalba'] ), "name" => "kalba", "class" => "select" ),
-                     "{$lang['admin']['editor']}:"          => array( "type" => "select", "value" => $editors, "selected" => input( $conf['Editor'] ), "name" => "Editor", "class" => "select" ),
-                     "{$lang['admin']['use_hyphenator']}:"  => array( "type" => "select", "value" => array( "1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}" ), "selected" => input( $conf['hyphenator'] ), "name" => "hyphenator", "class" => "select" ),
-                     ""                                     => array( "type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}", "class" => "submit" )
+
+$settings = array( 
+	"Form" => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg"),
+	"{$lang['admin']['sitename']}:"        => array( "type" => "text", "value" => input( $conf['Pavadinimas'] ), "name" => "Pavadinimas"),
+	"{$lang['admin']['homepage']}:"        => array( "type" => "select", "value" => $psl, "selected" => ( isset( $conf['pirminis'] ) ? $conf['pirminis'] . '.php' : '' ), "name" => "pirminis"),
+	"{$lang['admin']['about']}:"           => array( "type" => "textarea", "name" => "Apie", "value" => ( isset( $conf['Apie'] ) ? $conf['Apie'] : '' ) ),
+	"{$lang['admin']['keywords']}:"        => array( "type" => "text", "value" => input( $conf['Keywords'] ), "name" => "keywords"),
+	"{$lang['admin']['copyright']}:"       => array( "type" => "text", "value" => input( $conf['Copyright'] ), "name" => "Copyright"),
+	"{$lang['admin']['email']}:"           => array( "type" => "text", "value" => input( $conf['Pastas'] ), "name" => "Pastas"),
+	"{$lang['admin']['maintenance']}:"     => array( "type" => "select", "value" => array( "1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}" ), "selected" => input( $conf['Palaikymas'] ), "name" => "Palaikymas"),
+	"{$lang['admin']['maintenancetext']}:" => array( "type" => "string", "value" => editor( 'jquery', 'mini', 'Maintenance', isset( $conf['Maintenance'] ) ? $conf['Maintenance'] : '' ) ),
+	"Friendly url:"                        => array( "type"=> "select", "value"=> array( '/'=> '/', ';'=> ';', '0'=> $lang['admin']['off'] ), "selected"=> "" . $conf['F_urls'] . "", "name"=> "F_urls"),
+	"{$lang['admin']['comm_guests']}:"     => array( "type" => "select", "value" => array( "1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}", "3"=> "{$lang['admin']['comments_off']}" ), "selected" => input( @$conf['kmomentarai_sveciams'] ), "name" => "koment"),
+	"{$lang['admin']['gallery_rate']}:"    => array( "type" => "select", "value" => array( "1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}" ), "selected" => input( $conf['galbalsuot'] ), "name" => "galbalsuot"),
+	"{$lang['admin']['newsperpage']}:"     => array( "type" => "text", "value" => input( $conf['News_limit'] ), "name" => "News_limit", 'extra' => "on`key`up=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\""),
+//                     "{$lang['admin']['cache']}:"           => array( "type" => "select", "value" => array( "1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}" ), "selected" => input( $conf['keshas'] ), "name" => "keshas"),
+	"{$lang['admin']['theme']}:"           => array( "type" => "select", "value" => $stiliai, "selected" => input( $conf['Stilius'] ), "name" => "Stilius"),
+	"{$lang['admin']['lang']}:"            => array( "type" => "select", "value" => $kalba, "selected" => input( $conf['kalba'] ), "name" => "kalba"),
+	"{$lang['admin']['editor']}:"          => array( "type" => "select", "value" => $editors, "selected" => input( $conf['Editor'] ), "name" => "Editor"),
+	"{$lang['admin']['use_hyphenator']}:"  => array( "type" => "select", "value" => array( "1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}" ), "selected" => input( $conf['hyphenator'] ), "name" => "hyphenator"),
+	""                                     => array( "type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}", "class" => "submit" )
 );
 
-
-include_once ( ROOTAS . "priedai/class.php" );
-$bla = new forma();
-lentele( $lang['admin']['config'], $bla->form( $nustatymai ) );
+$formClass = new Form($settings);
+lentele($lang['admin']['config'], $formClass->form());

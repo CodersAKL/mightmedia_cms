@@ -51,9 +51,9 @@ $search = array(
 );
 
 //Nupiesiam paieskos forma
-include_once ( ROOT . "priedai/class.php" );
-$bla = new forma();
-lentele( $lang['search']['search'], $bla->form( $search ) );
+$formClass = new Form($search);	
+lentele($lang['admin']['pm_deletefrom'], $formClass->form());
+
 $i = 0;
 //Atliekam paieska
 //print_r($_POST);

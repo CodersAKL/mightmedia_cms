@@ -157,10 +157,8 @@ if ( $_GET['v'] == 4 ) {
 			"value" => ( isset( $sql_ex ) ) ? $lang['admin']['edit'] : $lang['faq']['new']
 		)
 	);
+
 	// Verčiam msayvą į formą
-
-	$form = new forma();
-	lentele( "{$lang['faq']['edit']}", $form->form( $duk ) );
+	$formClass = new Form($duk);
+	lentele($lang['faq']['edit'], $formClass->form());
 }
-
-?>

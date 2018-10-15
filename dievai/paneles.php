@@ -153,9 +153,9 @@ HTML;
 	}
 	if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 		$psl = array( "Form" => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "Naujaa_pnl" ), "{$lang['admin']['panel_name']}:" => array( "type" => "text", "value" => "Naujas blokas", "name" => "pav", "class" => "input" ), "{$lang['admin']['panel_text']}:" => array( "type" => "string", "value" => editor( 'spaw', 'standartinis', array( 'pnl' => 'pnl' ), FALSE ), "name" => "pnl", "class" => "input", "rows" => "8", "class" => "input" ), "" => array( "type" => "submit", "name" => "Naujaa_pnl", "value" => "{$lang['admin']['panel_create']}" ) );
-		include_once ( ROOT . "priedai/class.php" );
-		$bla = new forma();
-		lentele( "{$lang['admin']['panel_new']}", $bla->form( $psl, "{$lang['admin']['panel_new']}" ) );
+		
+		$formClass = new Form($psl);	
+		lentele($lang['admin']['panel_new'], $formClass->form());
 	}
 	if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`= " . escape( (int)$url['d'] ) . " LIMIT 1" );
@@ -267,9 +267,8 @@ HTML;
 					"value" => "{$lang['admin']['panel_create']}" )
 			);
 
-			include_once ( ROOT . "priedai/class.php" );
-			$bla = new forma();
-			lentele( $lang['admin']['panel_new'], $bla->form( $panele, $lang['admin']['panel_new'] ) );
+			$formClass = new Form($panele);	
+			lentele($lang['admin']['panel_new'], $formClass->form());
 		}
 	}
 
@@ -361,9 +360,8 @@ HTML;
 					"value" => "{$lang['admin']['edit']}" )
 			);
 
-			include_once ( ROOT . "priedai/class.php" );
-			$bla = new forma();
-			lentele( $sql['panel'], $bla->form( $panele ) );
+			$formClass = new Form($panele);	
+			lentele($sql['panel'], $formClass->form());
 		}
 	}
 
@@ -435,9 +433,8 @@ HTML;
 							"value" => "{$lang['admin']['edit']}" )
 					);
 
-					include_once ( ROOT . "priedai/class.php" );
-					$bla = new forma();
-					lentele( $sql['panel'], $bla->form( $panele ) );
+					$formClass = new Form($panele);	
+					lentele($sql['panel'], $formClass->form());
 				} else {
 					klaida( $lang['system']['warning'], $lang['admin']['panel_cantedit'] );
 				}
@@ -542,5 +539,3 @@ HTML;
 	}
 	//unset($text, $_POST);
 }
-
-?>

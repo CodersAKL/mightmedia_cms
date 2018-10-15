@@ -75,31 +75,36 @@ $(document).ready(function() { // when document has loaded
 });
 </script>
 HTML;
-	$form   = new forma();
 	$inputs = array( "Form"                               => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg" ),
-	                 "{$lang['admin']['poll_question']}:" => array( "type" => "text", "name" => "question", "class" => "input" ),
-	                 "{$lang['admin']['poll_votecan']}:"  => array( "type" => "select", "name" => "only_guests", "value" => array( 0 => $lang['admin']['poll_all'], 1 => $lang['admin']['poll_membs'] ), "class" => "input" ),
-	                 "{$lang['admin']['poll_type']}:"     => array( "type" => "select", "name" => "type", "value" => array( 0 => 'checkbox', 1 => 'radio' ), "class" => "input" ),
-	                 "{$lang['admin']['poll_active']}:"   => array( "type" => "select", "name" => "shown", "value" => array( 1 => $lang['admin']['yes'], 0 => $lang['admin']['no'] ), "class" => "input" ),
-	                 "{$lang['admin']['poll_answers']}:"  => array( "type" => "string", "value" => "<a href=\"#\" onclick=\"return false;\" id=\"add\"><img src=\"" . ROOT . "images/icons/plus.png\" alt=\"[+]\" /></a> <a href=\"#\" onclick=\"return false;\" id=\"remove\"><img src=\"" . ROOT . "images/icons/minus.png\" alt=\"[-]\" /></a><div id=\"inputs\"><p><input type=\"text\" name=\"answers[]\" class=\"input\" /></p></div>", "class" => "input" ),
+	                 "{$lang['admin']['poll_question']}:" => array( "type" => "text", "name" => "question"),
+	                 "{$lang['admin']['poll_votecan']}:"  => array( "type" => "select", "name" => "only_guests", "value" => array( 0 => $lang['admin']['poll_all'], 1 => $lang['admin']['poll_membs'] )),
+	                 "{$lang['admin']['poll_type']}:"     => array( "type" => "select", "name" => "type", "value" => array( 0 => 'checkbox', 1 => 'radio' )),
+	                 "{$lang['admin']['poll_active']}:"   => array( "type" => "select", "name" => "shown", "value" => array( 1 => $lang['admin']['yes'], 0 => $lang['admin']['no'] )),
+	                 "{$lang['admin']['poll_answers']}:"  => array( "type" => "string", "value" => "<a href=\"#\" onclick=\"return false;\" id=\"add\"><img src=\"" . ROOT . "images/icons/plus.png\" alt=\"[+]\" /></a> <a href=\"#\" onclick=\"return false;\" id=\"remove\"><img src=\"" . ROOT . "images/icons/minus.png\" alt=\"[-]\" /></a><div id=\"inputs\"><p><input type=\"text\" name=\"answers[]\" class=\"input\" /></p></div>"),
 	                 " "                                  => array( "type" => "submit", "value" => $lang['admin']['poll_create'] )
 	);
-	lentele( $lang['admin']['poll_create'], $form->form( $inputs ) );
+
+	$formClass = new Form($inputs);
+	lentele($lang['admin']['poll_create'], $formClass->form());
+
 } elseif ( $_GET['v'] == 2 ) {
 	if ( isset( $_GET['e'] ) ) {
 		if ( isset( $_POST['update'] ) ) {
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "poll_questions` SET `question`=" . escape( $_POST['question'] ) . ", `radio`=" . escape( (int)$_POST['type'] ) . ", `shown`=" . escape( (int)$_POST['shown'] ) . ", `only_guests`=" . escape( (int)$_POST['only_guests'] ) . " WHERE `id`=" . escape( $_GET['e'] ) . "" );
 		}
+
 		$quest  = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "poll_questions` WHERE `id`=" . escape( $_GET['e'] ) . " LIMIT 1", 3600 );
-		$form   = new forma();
-		$inputs = array( "Form"                               => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg" ),
-		                 "{$lang['admin']['poll_question']}:" => array( "type" => "text", "name" => "question", "value" => input( $quest['question'] ), "class" => "input" ),
-		                 "{$lang['admin']['poll_votecan']}:"  => array( "type" => "select", "selected" => input( $quest['only_guests'] ), "name" => "only_guests", "value" => array( 0 => $lang['admin']['poll_all'], 1 => $lang['admin']['poll_membs'] ), "class" => "input" ),
-		                 "{$lang['admin']['poll_type']}:"     => array( "type" => "select", "name" => "type", "value" => array( 0 => 'checkbox', 1 => 'radio' ), "class" => "input", "selected" => input( $quest['radio'] ) ),
-		                 "{$lang['admin']['poll_active']}:"   => array( "type" => "select", "name" => "shown", "value" => array( 1 => $lang['admin']['yes'], 0 => $lang['admin']['no'] ), "class" => "input", "selected" => input( $quest['shown'] ) ),
-		                 " "                                  => array( "type" => "submit", "name" => "update", "value" => $lang['admin']['edit'] )
+		$inputs = array( 
+			"Form"	=> array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg" ),
+			"{$lang['admin']['poll_question']}:" => array( "type" => "text", "name" => "question", "value" => input( $quest['question'] )),
+			"{$lang['admin']['poll_votecan']}:"  => array( "type" => "select", "selected" => input( $quest['only_guests'] ), "name" => "only_guests", "value" => array( 0 => $lang['admin']['poll_all'], 1 => $lang['admin']['poll_membs'] )),
+			"{$lang['admin']['poll_type']}:"     => array( "type" => "select", "name" => "type", "value" => array( 0 => 'checkbox', 1 => 'radio' ), "selected" => input( $quest['radio'] ) ),
+			"{$lang['admin']['poll_active']}:"   => array( "type" => "select", "name" => "shown", "value" => array( 1 => $lang['admin']['yes'], 0 => $lang['admin']['no'] ), "selected" => input( $quest['shown'] ) ),
+			" "                                  => array( "type" => "submit", "name" => "update", "value" => $lang['admin']['edit'] )
 		);
-		lentele( $lang['admin']['poll_edit'], $form->form( $inputs ) );
+
+		$formClass = new Form($inputs);
+		lentele($lang['admin']['poll_edit'], $formClass->form());
 	}
 	$tbl   = new Table();
 	$viso  = kiek( "poll_questions", "WHERE `lang` = " . escape( lang() ) . "" );
@@ -121,5 +126,3 @@ HTML;
 		lentele( $lang['admin']['poll_edit'], $lang['admin']['poll_no'] );
 	}
 }
-
-?>

@@ -154,7 +154,6 @@ if ( isset( $_GET['v'] ) ) {
 	$kategorijos[0] = "--";
 }
 include_once ( ROOT . "priedai/class.php" );
-$bla = new forma();
 
 if ( $_GET['v'] == 4 ) {
 	$table = new Table();
@@ -199,7 +198,8 @@ if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
 		$naujiena[''] = array( "type" => "text", "name" => "idas", "value" => ( isset( $extra['id'] ) ? input( $extra['id'] ) : '' ) );
 	}
 
-	lentele( $lang['admin']['article_create'], $bla->form( $straipsnis ) );
+	$formClass = new Form($straipsnis);	
+	lentele($lang['admin']['article_create'], $formClass->form());
 } elseif ( $_GET['v'] == 6 ) {
 ///FILTRAVIMAS
 	$q = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "straipsniai` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pav'] ) ? "AND (`pav` LIKE " . escape( "%" . $_POST['pav'] . "%" ) . " " . ( !empty( $_POST['date'] ) ? " AND `date` <= " . strtotime( $_POST['date'] ) . "" : "" ) . " " . ( !empty( $_POST['t_text'] ) ? " AND `t_text` LIKE " . escape( "%" . $_POST['t_text'] . "%" ) . "" : "" ) . ")" : "" ) . " AND rodoma='NE' ORDER BY id DESC LIMIT {$p},{$limit}" );
@@ -214,19 +214,22 @@ if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
 		} else {
 			$val = array( "", "", "", );
 		}
-		$info[] = array( "#"                               => " <input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />",
-		                 $lang['admin']['article']         => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pav\" />",
-		                 $lang['admin']['article_date']    => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"date\" />",
-		                 $lang['admin']['article_preface'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"t_text\" />",
-		                 $lang['admin']['action']          => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />" );
+		$info[] = array( 
+			"#"                               => " <input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />",
+			$lang['admin']['article']         => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pav\" />",
+			$lang['admin']['article_date']    => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"date\" />",
+			$lang['admin']['article_preface'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"t_text\" />",
+			$lang['admin']['action']          => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />"
+		);
 //FILTRAVIMAS
 		foreach ( $q as $sql ) {
-			$info[] = array( "#"                               => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"articles_delete[]\" />",
-			                 $lang['admin']['article']         => '<span style="cursor:pointer;" title="' . $lang['admin']['article_author'] . ': <b>' . $sql['autorius'] . '</b>" >' . input( $sql['pav'] ) . '</span>',
-			                 $lang['admin']['article_date']    => date( 'Y-m-d', $sql['date'] ),
-			                 $lang['admin']['article_preface'] => "<span style='cursor:pointer;' title='" . strip_tags( $sql['t_text'] ) . "'>" . trimlink( strip_tags( $sql['t_text'] ), 55 ) . "</span>",
-			                 $lang['admin']['action']          => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};priimti," . $sql['id'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ) . "' title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>" );
-
+			$info[] = array( 
+				"#"                               => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"articles_delete[]\" />",
+				$lang['admin']['article']         => '<span style="cursor:pointer;" title="' . $lang['admin']['article_author'] . ': <b>' . $sql['autorius'] . '</b>" >' . input( $sql['pav'] ) . '</span>',
+				$lang['admin']['article_date']    => date( 'Y-m-d', $sql['date'] ),
+				$lang['admin']['article_preface'] => "<span style='cursor:pointer;' title='" . strip_tags( $sql['t_text'] ) . "'>" . trimlink( strip_tags( $sql['t_text'] ), 55 ) . "</span>",
+				$lang['admin']['action']          => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};priimti," . $sql['id'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ) . "' title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>"
+			);
 		}
 
 		lentele( $lang['admin']['article_unpublished'], "<form id=\"arch\" method=\"post\">" . $bla->render( $info ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );

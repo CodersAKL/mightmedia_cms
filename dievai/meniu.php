@@ -190,9 +190,9 @@ lentele($page_pavadinimas,$text);
 					"name" => "Naujas_puslapis",
 					"value" => $lang['admin']['page_create'] )
 			);
-			include_once ( ROOT . "priedai/class.php" );
-			$bla = new forma();
-			lentele( $lang['admin']['page_select'], $bla->form( $psl ) );
+			
+			$formClass = new Form($psl);
+			lentele($lang['admin']['page_select'], $formClass->form());
 		}
 	} elseif ( isset( $url['n'] ) && $url['n'] == 2 ) {
 		$psl = array(
@@ -224,9 +224,8 @@ lentele($page_pavadinimas,$text);
 				"value" => $lang['admin']['page_create'] )
 		);
 
-		include_once ( ROOT . "priedai/class.php" );
-		$bla = new forma();
-		lentele( $lang['admin']['page_create'], $bla->form( $psl, $lang['admin']['page_create'] ) );
+		$formClass = new Form($psl);
+		lentele($lang['admin']['page_create'], $formClass->form());
 	} elseif ( isset( $url['n'] ) && $url['n'] == 3 ) {
 		//tree
 		$data2 = '';
@@ -313,9 +312,9 @@ lentele($page_pavadinimas,$text);
 			if ( !empty( $selected ) ) {
 				$psl[$lang['admin']['page_showfor'] . $info]['selected'] = $selected;
 			}
-			include_once ( ROOT . "priedai/class.php" );
-			$bla = new forma();
-			lentele( $sql['pavadinimas'], $bla->form( $psl, $lang['admin']['edit'] ) );
+			
+			$formClass = new Form($psl);
+			lentele($sql['pavadinimas'], $formClass->form());
 		}
 	}
 
@@ -387,9 +386,8 @@ lentele($page_pavadinimas,$text);
 						"value" => $lang['admin']['edit'] )
 				);
 
-				include_once ( ROOT . "priedai/class.php" );
-				$bla = new forma();
-				lentele( $sql['pavadinimas'], $bla->form( $puslapis, $lang['admin']['edit'] ) );
+				$formClass = new Form($puslapis);
+				lentele($sql['pavadinimas'], $formClass->form());
 			} else {
 				klaida( $lang['system']['warning'], $lang['admin']['page_cantedit'] );
 			}

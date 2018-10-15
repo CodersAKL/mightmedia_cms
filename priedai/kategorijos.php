@@ -75,9 +75,9 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 			$kategoriju_pav[$array[$key]['name']] = $array[$key]['name'] . ' - ' . $array[$key]['sizetext'];
 		}
 	}
-	include_once ( ROOTAS . 'priedai/class.php' );
 
-	$bla    = new forma();
+	include_once (ROOTAS . 'priedai/class.php');
+
 	$lygiai = array_keys( $conf['level'] );
 	if ( $kieno != 'vartotojai' ) {
 
@@ -299,7 +299,9 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 			$kategorijos[''] = array( 'type' => 'hidden', 'name' => 'Teises', 'value' => ( isset( $extra['teises'] ) ? ( $kieno == 'vartotojai' ? $extra['teises'] : unserialize( $extra['teises'] ) ) : '' ) );
 		}
 		$kategorijos[' '] = array( 'type' => 'hidden', 'name' => 'Kategorijos_id', 'value' => ( isset( $extra['id'] ) ? input( $extra['id'] ) : '' ) );
-		lentele( $lang['system']['categories'], $bla->form( $kategorijos ) );
+		
+		$formClass = new Form($kategorijos);	
+		lentele($lang['system']['categories'], $formClass->form());
 	} elseif ( $_GET['v'] == 3 ) {
 		if ( isset( $kategorijoss ) ) {
 			$kategorijos_redagavimas = array(
@@ -308,11 +310,13 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 				$lang['system']['edit']     => array( 'type' => 'submit', 'name' => 'Kategorija', 'value' => $lang['system']['edit'] ),
 				$lang['system']['delete']   => array( 'type' => 'submit', 'name' => 'Kategorija', 'value' => $lang['system']['delete'] )
 			);
-			lentele( $lang['system']['editcategory'], $bla->form( $kategorijos_redagavimas ) );
+
+			$formClass = new Form($kategorijos_redagavimas);	
+			lentele($lang['system']['editcategory'], $formClass->form());
 		} else {
 			klaida( $lang['system']['warning'], $lang['system']['nocategories'] );
 		}
 	}
 	delete_cache( 'SELECT * FROM `' . LENTELES_PRIESAGA . 'grupes` WHERE `kieno` = \'straipsniai\' AND `lang`= ' . escape( lang() ) . ' ORDER BY `pavadinimas`' );
-	unset( $bla, $info, $sql, $sql2, $q, $result, $result2 );
+	unset( $formClass, $info, $sql, $sql2, $q, $result, $result2 );
 }

@@ -46,7 +46,7 @@ if ( isset( $_GET['d'] ) ) {
 if ( isset( $_GET['b'] ) && $_GET['b'] == 1 ) {
 	$title = "IP {$lang['admin']['bans']}"; //Atvaizdavimo pavadinimas
 	//$viso = kiek("ban_portai");	//suskaiciuojam kiek isviso irasu
-	$forma = array( "Form"                     => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port" ),
+	$form = array( "Form"                     => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port" ),
 	                "IP (xx.xxx.xxx.xx):"      => array( "type" => "text", "value" => "" . input( ( isset( $url['ip'] ) ) ? $url['ip'] : '' ) . "", "name" => "ip", ),
 		//"Veiksmas:"=>array("type"=>"select","value"=>array("1"=>"Baninti","0"=>"Peradresuoti"),"name"=>"veiksmas"),
 	                "{$lang['admin']['why']}:" => array( "type" => "text", "value" => "", "name" => "priezastis" ),
@@ -67,10 +67,9 @@ if ( isset( $_GET['b'] ) && $_GET['b'] == 1 ) {
 	}
 }
 //Atvaizduojam info ir formas
-if ( isset( $forma ) && isset( $title ) ) {
-	include_once ( ROOT . 'priedai/class.php' );
-	$bla = new forma();
-	lentele( $title, $bla->form( $forma ) );
+if (isset($form) && isset($title)) {
+	$formClass = new Form($form);
+	lentele($title, $formClass->form());
 }
 
 /**
@@ -159,4 +158,3 @@ if ( isset( $title ) && isset( $info ) ) {
 
 }
 //unset($_POST['ip'],$_POST['priezastis']);
-?>

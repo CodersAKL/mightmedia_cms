@@ -56,8 +56,7 @@ if ( sizeof( $sql2 ) > 0 ) {
 		$nuorodos[$row2['id']] = $row2['pavadinimas'];
 	}
 }
-include_once ( ROOT . "priedai/class.php" );
-$bla = new forma();
+
 if ( isset( $_POST['edit'] ) && $_POST['edit'] == $lang['system']['edit'] ) {
 	$pavadinimas = strip_tags( $_POST['name'] );
 	$url         = strip_tags( $_POST['url'] );
@@ -81,14 +80,17 @@ if ( isset( $_POST['edit'] ) && $_POST['edit'] == $lang['system']['edit'] ) {
 if ( isset( $_GET['r'] ) ) {
 	$sql                  = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE id='" . $_GET['r'] . "' LIMIT 1" );
 	$argi                 = array( "TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}" );
-	$nuorodos_redagavimas = array( "Form"                              => array( "action" => url( "?id,{$_GET['id']};a,{$_GET['a']};v,1" ), "method" => "post", "name" => "edit" ), "{$lang['system']['category']}:" => array( "type" => "select", "value" => $kategorijos, "name" => "Kategorijos_id" ),
-	                               "{$lang['admin']['links_title']}:"  => array( "type" => "text", "value" => $sql['pavadinimas'], "name" => "name" ),
-	                               "{$lang['admin']['links_about']}:"  => array( "type" => "string", "value" => editor( 'jquery', 'mini', 'Aprasymas', ( isset( $sql['apie'] ) ) ? $sql['apie'] : '' ) ),
-	                               "{$lang['admin']['link']}:"         => array( "type" => "text", "value" => $sql['url'], "name" => "url" ),
-	                               "{$lang['admin']['links_active']}:" => array( "type" => "select", "value" => $argi, "name" => "ar" ), "" => array( "type" => "hidden", "name" => "nuorodos_id", "value" => $_GET['r'] ),
-	                               "{$lang['admin']['edit']}:"         => array( "type" => "submit", "name" => "edit", "value" => "{$lang['admin']['edit']}" ) );
+	$nuorodos_redagavimas = array( 
+		"Form"                              => array( "action" => url( "?id,{$_GET['id']};a,{$_GET['a']};v,1" ), "method" => "post", "name" => "edit" ), "{$lang['system']['category']}:" => array( "type" => "select", "value" => $kategorijos, "name" => "Kategorijos_id" ),
+		"{$lang['admin']['links_title']}:"  => array( "type" => "text", "value" => $sql['pavadinimas'], "name" => "name" ),
+		"{$lang['admin']['links_about']}:"  => array( "type" => "string", "value" => editor( 'jquery', 'mini', 'Aprasymas', ( isset( $sql['apie'] ) ) ? $sql['apie'] : '' ) ),
+		"{$lang['admin']['link']}:"         => array( "type" => "text", "value" => $sql['url'], "name" => "url" ),
+		"{$lang['admin']['links_active']}:" => array( "type" => "select", "value" => $argi, "name" => "ar" ), "" => array( "type" => "hidden", "name" => "nuorodos_id", "value" => $_GET['r'] ),
+		"{$lang['admin']['edit']}:"         => array( "type" => "submit", "name" => "edit", "value" => "{$lang['admin']['edit']}" )
+	);
 
-	lentele( $lang['admin']['links_edit'], $bla->form( $nuorodos_redagavimas ) );
+	$formClass = new Form($nuorodos_redagavimas);	
+	lentele($lang['admin']['links_edit'], $formClass->form());
 
 }
 //trinam linką

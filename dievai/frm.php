@@ -122,10 +122,7 @@ if ( isset( $_POST['f_sukurimas'] ) ) {
 	if ( $result ) {
 		msg( $lang['system']['done'], $lang['system']['categorycreated'] );
 	} else {
-
-
 		klaida( $lang['system']['error'], ' <b>' . mysqli_error($prisijungimas_prie_mysql) . '</b>' );
-
 	}
 
 	unset( $forumas, $result );
@@ -245,11 +242,15 @@ if ( isset( $_GET['r'] ) && isset( $_GET['f'] ) ) {
 	$f_forumas  = $sql['pav'];
 	unset( $sql );
 	$t_info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`='" . $f_temos_id . "' limit 1" );
-	$bla    = new forma();
-	$forma  = array( "Form"                                => array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port" ), "{$lang['admin']['forum_category']}:" => array( "type" => "string", "value" => "<b>" . $f_forumas . "</b><input type=\"hidden\" name=\"forumo_id\"  value='" . $f_id . "' /><input type=\"hidden\" name=\"temos_id\"  value='" . $t_info['id'] . "' />" ), "{$lang['admin']['forum_subcategory']}:"=> array( "type"=> "text", "value"=> $t_info['pav'], "name"=> "temos_pav" ),
-	                 "{$lang['admin']['forum_subabout']}:" => array( "type" => "text", "value" => $t_info['aprasymas'], "name" => "temos_apr" ), "{$lang['system']['showfor']} :" => array( "type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "class"=> "input", "name" => "Teises[]", "id" => "punktai", "selected" => unserialize( $t_info['teises'] ) ), "" => array( "type" => "submit", "name" => "subred", "value" => $lang['admin']['edit'] ) );
-	lentele( $lang['admin']['forum_editsub'], $bla->form( $forma ) );
-	unset( $t_info, $f_id, $f_temod_id, $sql, $f_forumas );
+	$form  = array(
+		"Form"	=> array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port" ), "{$lang['admin']['forum_category']}:" => array( "type" => "string", "value" => "<b>" . $f_forumas . "</b><input type=\"hidden\" name=\"forumo_id\"  value='" . $f_id . "' /><input type=\"hidden\" name=\"temos_id\"  value='" . $t_info['id'] . "' />" ), "{$lang['admin']['forum_subcategory']}:"=> array( "type"=> "text", "value"=> $t_info['pav'], "name"=> "temos_pav" ),
+		"{$lang['admin']['forum_subabout']}:" => array( "type" => "text", "value" => $t_info['aprasymas'], "name" => "temos_apr" ), "{$lang['system']['showfor']} :" => array( "type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "name" => "Teises[]", "id" => "punktai", "selected" => unserialize( $t_info['teises'] ) ), "" => array( "type" => "submit", "name" => "subred", "value" => $lang['admin']['edit'] )
+	);
+	
+	$formClass = new Form($form);
+	lentele($lang['admin']['forum_editsub'], $formClass->form());
+		
+	unset( $t_info, $f_id, $f_temod_id, $sql, $f_forumas, $form );
 }
 if ( isset( $_POST['subred'] ) && $_POST['subred'] == $lang['admin']['edit'] ) {
 	$f_forumas      = (int)$_POST['forumo_id'];
@@ -271,10 +272,10 @@ if ( isset( $_POST['subred'] ) && $_POST['subred'] == $lang['admin']['edit'] ) {
 // ##############################################################
 if ( isset( $url['f'] ) ) {
 	if ( (int)$url['f'] == 1 ) {
-		$bla   = new forma();
 		$forma = array( "Form" => array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port" ), "{$lang['admin']['forum_category']}:" => array( "type" => "text", "name" => "f_pav" ), " " => array( "type" => "submit", "name" => "f_sukurimas", "value" => $lang['system']['createcategory'] ) );
-		lentele( $lang['system']['createcategory'], $bla->form( $forma ) );
-
+		
+		$formClass = new Form($forma);
+		lentele($lang['system']['createcategory'], $formClass->form());
 	}
 	//Kategorijos redagavimas
 	if ( (int)$url['f'] == 2 && !isset( $_GET['r'] ) ) {
@@ -290,10 +291,10 @@ if ( isset( $url['f'] ) ) {
 </li> ';
 			}
 
-			$bla = new forma();
-
 			$forma = array( "Form" => array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "" ), "{$lang['admin']['forum_category']}:" => array( "type" => "select", "name" => "f_edit", "value"=> $cats ), "{$lang['admin']['forum_cangeto']}:" => array( "type" => "text", "name" => "f_pav_keitimas" ), " " => array( "type" => "submit", "name" => "keisti", "value" => $lang['admin']['edit'] ) );
-			lentele( $lang['system']['editcategory'], $bla->form( $forma ) );
+			
+			$formClass = new Form($forma);
+			lentele($lang['system']['editcategory'], $formClass->form());
 
 			$tekstas = '
 <div id="la" style="display:none"><b>' . $lang['system']['updated'] . '</b></div>
@@ -308,17 +309,19 @@ if ( isset( $url['f'] ) ) {
 	if ( (int)$url['f'] == 3 && !isset( $_GET['r'] ) ) {
 		$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
 		if ( sizeof( $sql ) > 0 ) {
-			$bla = new forma();
 			foreach ( $sql as $row ) {
 				$categories[$row['id']] = $row['pav'];
 			}
 
-			$forma = array( "Form"                                => array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "kurk" ), "{$lang['admin']['forum_category']}:" => array( "type" => "select", "value" => $categories, "name"=> "f_forumas" ), "{$lang['admin']['forum_subcategory']}:"=> array( "type"=> "text", "value"=> "", "name"=> "f_tema" ),
-			                "{$lang['admin']['forum_subabout']}:" => array( "type" => "text", "name" => "f_aprasymas" ),
-			                "{$lang['system']['showfor']} :"      => array( "type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "class"=> "input", "name" => "Teises[]", "id" => "punktai" ),
-			                ""                                    => array( "type" => "submit", "name" => "kurk", "value" => $lang['admin']['forum_createsub'] ) );
+			$form = array( 
+				"Form"	=> array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "kurk" ), "{$lang['admin']['forum_category']}:" => array( "type" => "select", "value" => $categories, "name"=> "f_forumas" ), "{$lang['admin']['forum_subcategory']}:"=> array( "type"=> "text", "value"=> "", "name"=> "f_tema" ),
+				"{$lang['admin']['forum_subabout']}:" => array( "type" => "text", "name" => "f_aprasymas" ),
+				"{$lang['system']['showfor']} :"      => array( "type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "name" => "Teises[]", "id" => "punktai" ),
+				""                                    => array( "type" => "submit", "name" => "kurk", "value" => $lang['admin']['forum_createsub'] )
+			);
 
-			lentele( $lang['admin']['forum_createsub'], $bla->form( $forma ) );
+			$formClass = new Form($form);
+			lentele($lang['admin']['forum_createsub'], $formClass->form());
 		} else {
 			klaida( $lang['system']['warning'], $lang['system']['nocategories'] );
 		}
@@ -332,18 +335,18 @@ if ( isset( $url['f'] ) ) {
 				$forums[$row['id']] = $row['pav'];
 			}
 
-			$bla   = new forma();
-			$forma = array( "Form" => array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "" ), "{$lang['admin']['forum_subwhere']}:" => array( "type" => "select", "name" => "f_forumas", "value"=> $forums ),
+			$form = array(
+				"Form" => array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "" ), 
+				"{$lang['admin']['forum_subwhere']}:" => array( "type" => "select", "name" => "f_forumas", "value"=> $forums ),
+				" "    => array( "type" => "submit", "name" => "subedit", "value" => $lang['admin']['forum_select'] )
+			);
 
-			                " "    => array( "type" => "submit", "name" => "subedit", "value" => $lang['admin']['forum_select'] ) );
-			lentele( $lang['admin']['forum_editsub'], $bla->form( $forma ) );
+			$formClass = new Form($form);
+			lentele($lang['admin']['forum_editsub'], $formClass->form());
 		} else {
 			klaida( $lang['system']['warning'], $lang['system']['nocategories'] );
 		}
 
 		unset( $f_text, $sql, $row );
 	}
-}
-
-?>
-	
+}	

@@ -98,9 +98,11 @@ if ( isset( $url['r'] ) && $url['r'] != "" && $url['r'] != 0 ) {
 			$lang['admin']['user_email']   => array( 'type' => 'text', 'value' => ( isset( $info['email'] ) ? input( $info['email'] ) : "" ) ),
 			""                             => array( 'type' => 'string', "value" => '<input type="hidden" name="id" value="' . $url['r'] . '" /><input type="submit" name="action" value="' . $lang['admin']['save'] . '">' )
 		);
-		include_once ( ROOT . "priedai/class.php" );
-		$bla = new forma();
-		lentele( '<strong>' . input( $info['nick'] ) . '</strong> ', $bla->form( $text ) . "<br /><small>*{$lang['admin']['user_canteditadmin']}</small>", $lang['admin']['user_details'] );
+		
+		$formClass = new Form($text);
+		$title= '<strong>' . input( $info['nick'] ) . '</strong>';
+		lentele($title, $formClass->form() . "<br /><small>*{$lang['admin']['user_canteditadmin']}</small>", $lang['admin']['user_details']);
+		
 		unset( $info, $text );
 	} else {
 		klaida( $lang['system']['warning'], $lang['admin']['user_canteditadmin'] );

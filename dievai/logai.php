@@ -20,8 +20,6 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 	$p = 0;
 }
 $limit = 15;
-//
-include_once ( ROOT . "priedai/class.php" );
 //trinam irasa
 if ( isset( $url['d'] ) && isnum( $url['d'] ) && $_SESSION[SLAPTAS]['level'] == 1 ) {
 	if ( $url['d'] == "0" && isset( $_POST['ip'] ) && !empty( $_POST['ip'] ) && $_POST['del_all'] == $lang['admin']['delete'] && isnum( $_POST['ip'] ) ) {
@@ -34,7 +32,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $_SESSION[SLAPTAS]['level'] == 
 	}
 //rodom irasa
 } elseif ( isset( $url['v'] ) && !empty( $url['v'] ) && isnum( $url['v'] ) ) {
-	$sql = mysql_query1( "SELECT id, INET_NTOA(ip) AS ip, action, time FROM `" . LENTELES_PRIESAGA . "logai` WHERE id=" . escape( $url['v'] ) . " LIMIT 1" );
+	$sql = mysql_query1( "SELECT id, ip action, time FROM `" . LENTELES_PRIESAGA . "logai` WHERE id=" . escape( $url['v'] ) . " LIMIT 1" );
 	lentele( $sql['ip'] . " - " . date( 'Y-m-d H:i:s', $sql['time'] ), input( $sql['action'] ) );
 }
 //valom zurnala
@@ -76,15 +74,16 @@ if ( !empty( $url['t'] ) ) {
 		foreach ( $sql as $row ) {
 			$select[$row['ip']] = $row['ip1'] . " - " . $row['viso'];
 		}
+
 		$delete = array( "Form" => array( "action" => url( "?id," . $url['id'] . ";a," . $url['a'] . ";d,0" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg" ), "{$lang['admin']['logs_deletebyip']}:" => array( "type" => "select", "value" => $select, "selected" => ip2long( $_SERVER['REMOTE_ADDR'] ), "name" => "ip" ), "" => array( "type" => "submit", "name" => "del_all", "extra" => "onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"", "value" => $lang['admin']['delete'] ) );
-		$bla    = new forma();
-		lentele( $lang['admin']['logs_delete'], $bla->form( $delete ) );
+		
+		$formClass = new Form($delete);
+		lentele($lang['admin']['logs_delete'], $formClass->form());
 
 		$delete = array( "Form" => array( "action" => url( "?id," . $url['id'] . ";a," . $url['a'] . ";t,1" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg" ), $lang['admin']['logs_clear'] => array( "type" => "submit", "name" => "del_all", "value" => "Valyti", "extra" => "onclick=\"return confirm('{$lang['system']['delete_confirm']}')\"" ) );
-		$bla    = new forma();
-		lentele( $lang['admin']['logs_clear'], $bla->form( $delete ) );
+		
+		$formClass = new Form($delete);
+		lentele($lang['admin']['logs_clear'], $formClass->form());
 	}
 }
 unset( $row, $bla, $info, $sql, $select, $viso, $nustatymai );
-
-?>

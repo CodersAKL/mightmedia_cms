@@ -174,7 +174,6 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 //print_r($sql_news);
 if ( isset( $_GET['v'] ) ) {
 	include_once ROOT . 'priedai/class.php';
-	$bla = new forma();
 
 	if ( $_GET['v'] == 4 ) {
 		///FILTRAVIMAS
@@ -288,7 +287,11 @@ if ( isset( $_GET['v'] ) ) {
 			);
 		}
 
-		lentele( ( !isset( $extra ) ? $lang['admin']['news_create'] : $lang['admin']['news_edit'] ), $bla->form( $naujiena ) );
+		$formClass = new Form($naujiena);
+		$title = ( !isset( $extra ) ? $lang['admin']['news_create'] : $lang['admin']['news_edit'] );
+		
+		lentele($title, $formClass->form());
+
 	} elseif ( $_GET['v'] == 6 ) {
 		///FILTRAVIMAS
 		$viso = kiek( "naujienos", "WHERE `rodoma`='NE' AND `lang` = " . escape( lang() ) . "" );

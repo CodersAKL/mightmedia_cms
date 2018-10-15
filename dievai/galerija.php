@@ -307,8 +307,6 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 
 //foto kategoriju saraso rodymas
 if ( isset( $_GET['v'] ) ) {
-	include_once ( ROOT . "priedai/class.php" );
-	$bla = new forma();
 	if ( $_GET['v'] == 8 ) {
 		$text = "<fieldset><legend>{$lang['gallery']['photoalbums']}:</legend><ul>";
 		foreach ( $kategorijos as $id => $kategorija ) {
@@ -337,30 +335,38 @@ if ( isset( $_GET['v'] ) ) {
 		} else {
 			klaida( $lang['system']['warning'], $lang['system']['no_items'] );
 		}
+
 		lentele( $lang['admin']['gallery_edit'], $text );
+
 		if ( $viso > $limit ) {
 			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 		}
 
 	} elseif ( $_GET['v'] == 1 || isset( $url['h'] ) ) {
 
-		if ( sizeof( $sql ) > 0 ) {
+		if (! empty($sql) && count($sql) > 0) {
 			$kom    = array( 'taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no'] );
 			$rodoma = array( 'TAIP' => $lang['admin']['yes'], 'NE' => $lang['admin']['no'] );
 			$forma  = array(
 				"Form"                                                                       => array( "enctype" => "multipart/form-data", "action" => url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ), "method" => "post", "name" => "action" ),
 				( !isset( $extra ) ) ? "{$lang['admin']['gallery_file']}:" : ""              => array( "name" => "failas", "type" => ( !isset( $extra ) ) ? "file" : "hidden", "value" => "" ),
 				"{$lang['admin']['gallery_title']}:"                                         => array( "type" => "text", "value" => ( isset( $extra['pavadinimas'] ) ) ? input( $extra['pavadinimas'] ) : '', "name" => "Pavadinimas" ),
-				"{$lang['admin']['komentarai']}:"                                            => array( "type" => "select", "selected" => input( ( isset( $extra ) ) ? $extra['kom'] : '' ), "value" => $kom, "name" => "kom", "class" => "input" ),
-				"{$lang['admin']['article_shown']}:"                                         => array( "type" => "select", "selected" => input( ( isset( $extra ) ) ? $extra['rodoma'] : '' ), "value" => $rodoma, "name" => "rodoma", "class" => "input" ),
-				"{$lang['gallery']['photoalbum']}:"                                          => array( "type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "selected" => ( isset( $extra['categorija'] ) ? input( $extra['categorija'] ) : '0' ) ),
-				"{$lang['admin']['gallery_about']}:"                                         => array( "type" => "textarea", "name" => "Aprasymas", "rows" => "3", "class" => "input", "value" => ( isset( $extra['apie'] ) ) ? input( $extra['apie'] ) : '' ),
+				"{$lang['admin']['komentarai']}:"                                            => array( "type" => "select", "selected" => input( ( isset( $extra ) ) ? $extra['kom'] : '' ), "value" => $kom, "name" => "kom" ),
+				"{$lang['admin']['article_shown']}:"                                         => array( "type" => "select", "selected" => input( ( isset( $extra ) ) ? $extra['rodoma'] : '' ), "value" => $rodoma, "name" => "rodoma" ),
+				"{$lang['gallery']['photoalbum']}:"                                          => array( "type" => "select", "value" => $kategorijos, "name" => "cat", "selected" => ( isset( $extra['categorija'] ) ? input( $extra['categorija'] ) : '0' ) ),
+				"{$lang['admin']['gallery_about']}:"                                         => array( "type" => "textarea", "name" => "Aprasymas", "rows" => "3", "value" => ( isset( $extra['apie'] ) ) ? input( $extra['apie'] ) : '' ),
 				( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['gallery_add'] => array( "type" => "submit", "name" => "action", "value" => ( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['gallery_add'] )
 			);
+
 			if ( isset( $extra ) ) {
 				$forma[''] = array( "type" => "hidden", "name" => "news_id", "value" => ( isset( $extra ) ? input( $extra['ID'] ) : '' ) );
 			}
-			lentele( ( ( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['gallery_add'] ), '<a name="edit"></a>' . ( ( isset( $extra['file'] ) ) ? '<center><img src="' . ROOT . 'images/galerija/' . input( $extra['file'] ) . '"></center>' : '' ) . $bla->form( $forma ) );
+
+			$formClass = new Form($settings);
+			$title = ((isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add']);
+			$content = '<a name="edit"></a>' . ( ( isset( $extra['file'] ) ) ? '<center><img src="' . ROOT . 'images/galerija/' . input( $extra['file'] ) . '"></center>' : '' );
+
+			lentele($title, $content . $formClass->form());
 		} else {
 			klaida( $lang['system']['warning'], "{$lang['system']['nocategories']}" );
 		}
@@ -379,7 +385,8 @@ if ( isset( $_GET['v'] ) ) {
 			}
 			redirect( url( '?id,' . $_GET['id'] . ';a,' . $url['a'] . ';v,6' ) );
 		}
-		$nustatymai = array(
+
+		$settings = array(
 			"Form"                                         => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg" ),
 			"{$lang['admin']['gallery_maxwidth']}:"        => array( "type" => "text", "value" => input( $conf['fotodyd'] ), "name" => "fotodyd" ),
 			"{$lang['admin']['gallery_minwidth']}:"        => array( "type" => "text", "value" => input( $conf['minidyd'] ), "name" => "minidyd" ),
@@ -391,9 +398,8 @@ if ( isset( $_GET['v'] ) ) {
 			""                                             => array( "type" => "submit", "name" => "Konfiguracija", "value" => "{$lang['admin']['save']}" )
 		);
 
-		include_once ( ROOT . "priedai/class.php" );
-		$bla = new forma();
-		lentele( $lang['admin']['gallery_conf'], $bla->form( $nustatymai ) );
+		$formClass = new Form($settings);
+		lentele($lang['admin']['gallery_conf'], $formClass->form());
 
 	} elseif ( $_GET['v'] == 7 ) {
 

@@ -202,7 +202,6 @@ unset( $naujiena, $placiau, $komentaras, $pavadinimas, $rodoma, $result, $error,
 
 if ( isset( $_GET['v'] ) ) {
 	include_once ( ROOT . "priedai/class.php" );
-	$bla = new forma();
 	if ( $_GET['v'] == 7 ) {
 		$table = new Table();
 ///FILTRAVIMAS
@@ -256,7 +255,8 @@ if ( isset( $_GET['v'] ) ) {
 						"value" => "{$lang['admin']['download_select']}" )
 				);
 
-				lentele( $lang['admin']['download_Create'], $bla->form( $tipas ) );
+				$formClass = new Form($tipas);	
+				lentele($lang['admin']['download_Create'], $formClass->form());
 			}
 			if ( isset( $_POST['tipas'] ) || isset( $extra ) ) {
 				$ar    = array( "TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}" );
@@ -317,7 +317,9 @@ if ( isset( $_GET['v'] ) ) {
 						"value" => ( isset( $extra ) ? input( $extra['ID'] ) : '' )
 					);
 				}
-				lentele( $lang['admin']['download_create'], $bla->form( $forma ) );
+
+				$formClass = new Form($forma);	
+				lentele($lang['admin']['download_create'], $formClass->form());
 			}
 		} else {
 			klaida( $lang['system']['warning'], $lang['system']['nocategories'] );
