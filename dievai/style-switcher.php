@@ -6,4 +6,3 @@ if ( isset( $_GET['js'] ) ) {
 } else {
 	header( "Location: " . $_SERVER['HTTP_REFERER'] );
 }
-?>

@@ -58,17 +58,6 @@ $limit = 15;
 if ( count( $_GET ) < 3 ) {
 	$_GET['v'] = 1;
 }
-$buttons = "
-<div id=\"admin_menu\" class=\"btns\">
-	<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,6" ) . "\"><span><img src=\"" . ROOT . "images/icons/photo_album__arrow.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_conf']}</span></a>
-	<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,7" ) . "\"><span><img src=\"" . ROOT . "images/icons/picture__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_unpublished']}</span></a>
-	<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,1" ) . "\"><span><img src=\"" . ROOT . "images/icons/picture__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_add']}</span></a>
-	" . ( $_SESSION[SLAPTAS]['level'] == 1 ? "<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,9" ) . "\"><span><img src=\"" . ROOT . "images/icons/pictures__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_group_add']}</span></a>" : "" ) . "
-	<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,8" ) . "\"><span><img src=\"" . ROOT . "images/icons/picture__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_edit']}</span></a>
-	<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,2" ) . "\"><span><img src=\"" . ROOT . "images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_photoalbum_cr']}</span></a>
-	<a class=\"btn\" href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,3" ) . "\"><span><img src=\"" . ROOT . "images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['gallery_photoalbum_ed']}</span></a>
-	
-</div>";
 
 if ( empty( $url['s'] ) ) {
 	$url['s'] = 0;
@@ -77,7 +66,9 @@ if ( empty( $url['v'] ) ) {
 	$url['v'] = 0;
 }
 
-lentele( $lang['admin']['galerija'], $buttons );
+if(BUTTONS_BLOCK) {
+	lentele($lang['admin']['galerija'], buttonsMenu($buttons['gallery']));
+}
 
 unset( $buttons, $extra, $text );
 include_once ( ROOT . "priedai/kategorijos.php" );

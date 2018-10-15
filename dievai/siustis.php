@@ -24,15 +24,12 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 }
 $limit = 15;
 //
-$buttons = "
-<div class=\"btns\">
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,6" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/disk__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['download_unpublished']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,1" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/disk__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['download_Create']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,7" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/disk__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['download_edit']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,2" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,3" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>
-	
-</div>";
+if(BUTTONS_BLOCK) {
+	lentele($lang['admin']['siustis'], buttonsMenu($buttons['downloads']));
+}
+
+unset($buttons);
+
 if ( empty( $url['s'] ) ) {
 	$url['s'] = 0;
 }
@@ -40,9 +37,6 @@ if ( empty( $url['v'] ) ) {
 	$url['v'] = 0;
 }
 
-lentele( $lang['admin']['siustis'], $buttons );
-
-unset( $buttons );
 include_once ( ROOT . "priedai/kategorijos.php" );
 kategorija( "siuntiniai", TRUE );
 $sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `path`=0 ORDER BY `id` DESC" );

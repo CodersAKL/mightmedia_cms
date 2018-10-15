@@ -62,17 +62,12 @@ if ( !isset( $_GET['f'] ) && !isset( $_POST['f_forumas'] ) ) {
 	$_GET['f'] = 3;
 	$url['f']  = 3;
 }
-//echo $_GET['f'];
-$buttons = "
-<div class=\"btns\">
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};f,1" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};f,2" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};f,3" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/folders__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_createsub']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};f,4" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/folders__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['forum_editsub']}</span></a>
-</div>";
-lentele( $lang['admin']['frm'], $buttons );
 
-unset( $buttons );
+if(BUTTONS_BLOCK) {
+	lentele( $lang['admin']['frm'], buttonsMenu($buttons['forum']));
+}
+
+unset($buttons);
 
 //rikiuote
 if ( isset( $_POST['order'] ) ) {

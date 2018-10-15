@@ -380,3 +380,26 @@ function bbcode_autolink( $str ) {
 function lauzymas( $txt ) {
 	//return str_replace("\r\n", "<br>", $txt);
 }
+
+function buttonsMenu($buttons) 
+{
+	$return = '<div id="admin_menu" class="btns">';
+
+	foreach ($buttons as $button) {
+		$return .= '<a href="' . $button['url'] . '" class="btn btn-default waves-effect">';
+		$return .= $button['icon'];
+		$return .= $button['value'];
+		$return .= '</a>';
+	}
+
+	$return .= '</div>';
+
+	return $return;
+}
+
+function adminIcon($group, $icon) 
+{
+	global $icons;
+
+	return '<img src="' . ROOT . $icons[$group][$icon] . '" alt="" class="middle">';
+}

@@ -24,24 +24,16 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 }
 $limit = 15;
 //
-$buttons = "
-<div class=\"btns\">
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,1" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/chain__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['links_unpublished']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,5" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/chain__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['links_create']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,4" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/chain__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['links_edit']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,2" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,3" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>
-</div>
 
-";
+if(BUTTONS_BLOCK) {
+	lentele( $lang['admin']['nuorodos'],  buttonsMenu($buttons['links']));
+}
+
+unset( $buttons );
 
 if ( empty( $_GET['v'] ) ) {
 	$_GET['v'] = 0;
 }
-
-lentele( $lang['admin']['nuorodos'], $buttons );
-
-unset( $buttons );
 include_once ( ROOT . "priedai/kategorijos.php" );
 kategorija( "nuorodos" );
 

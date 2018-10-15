@@ -24,12 +24,11 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 	$p = 0;
 }
 $limit = 15;
-//
-$buttons = "<div id=\"admin_menu\" class=\"btns\">
-<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,1" ) . "\"class=\"btn\"><span><img src=\"" . ROOT . "images/icons/heart__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['poll_create']}</span></a>
-<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,2" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/heart__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['poll_edit']}</span></a>
-</div>";
-lentele( $lang['admin']['poll'], $buttons );
+
+if(BUTTONS_BLOCK) {
+	lentele($lang['admin']['poll'], buttonsMenu($buttons['polls']));
+}
+
 include_once( ROOT . 'priedai/class.php' );
 //delete poll
 if ( isset( $_GET['t'] ) ) {

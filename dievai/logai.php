@@ -47,7 +47,7 @@ if ( !empty( $url['t'] ) ) {
 
 	$info = array();
 
-	if ( sizeof( $sql ) > 0 ) {
+	if (! empty( $sql)) {
 		foreach ( $sql as $row ) {
 			if ( $row['nick'] == $lang['system']['guest'] ) {
 				$kas = $lang['system']['guest'];
@@ -56,7 +56,10 @@ if ( !empty( $url['t'] ) ) {
 			}
 			$info[] = array( $lang['admin']['logs_log'] => "<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v," . $row['id'] ) . "\" title=\"{$lang['admin']['logs_date']}: <b>" . date( 'Y-m-d H:i:s', $row['time'] ) . "</b><br/>IP: <b>" . $row['ip1'] . "</b><br/>{$lang['admin']['logs_log']}: <i>" . wrap1( input( $row['action'] ), 50 ) . "</i><br/>\">" . trimlink( input( strip_tags( $row['action'] ) ), 100 ) . "</a>", $lang['admin']['logs_user'] => $kas, $lang['admin']['action'] => "<a href=\"" . url( "d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a> <a href='" . url( "?id," . $url['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row['ip'] ) . "' title='{$lang['admin']['badip']}'><img src=\"" . ROOT . "images/icons/delete.png\" alt=\"[{$lang['admin']['badip']}]\" border=\"0\" class=\"middle\" /></a>" );
 		}
-		$bla                                     = new Table();
+		
+		include_once ( ROOT . 'priedai/class.php' );
+
+		$bla = new Table();
 		$bla->width[$lang['admin']['action']]    = '50px';
 		$bla->width[$lang['admin']['logs_user']] = '150px';
 		lentele( "{$lang['admin']['logai']} - {$lang['admin']['logs_yourip']}: <font color='red'>" . getip() . "</font>", $bla->render( $info ) );

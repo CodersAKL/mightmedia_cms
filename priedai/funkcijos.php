@@ -364,6 +364,14 @@ HTML;
 }
 }
 
+if(! function_exists('getUserMail')) {
+	function getUserMail($id) {
+		$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `id`=" . escape($id) . " LIMIT 1", 86400 );
+	
+		return $sql;
+	}
+}
+
 /**
  * Grąžina vartotojo avatarą
  *
@@ -1697,9 +1705,9 @@ HTML;
 /** Gražina versijos numerį */
 if(! function_exists('versija')) {
 	function versija() {
-
-		$scid  = file( ROOTAS . '/version.txt' );
-		$scid = trim(array_shift( array_values( $scid ) ));
+		$scid  	= file( ROOTAS . '/version.txt' );
+		$values = array_values($scid);
+		$scid 	= trim(array_shift($values));
 
 		return apvalinti( ( intval( $scid ) / 5000 ) + '1.28', 2 );
 	}

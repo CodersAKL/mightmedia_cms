@@ -63,13 +63,11 @@ if ( isset( $_POST['order'] ) ) {
 	$result = mysql_query1( $sqlas );
 	delete_cache( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
 } else {
-	$buttons = "
-<div class=\"btns\">
-	<a href=\"" . url( "?id," . $url['id'] . ";a,{$_GET['a']};n,1" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/script__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['page_select']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};n,2" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/script__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['page_create']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};n,3" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/script__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['page_tree']}</span></a>
-</div>";
-	echo $buttons;
+
+	if(BUTTONS_BLOCK) {
+		lentele($lang['admin']['meniu'], buttonsMenu($buttons['pages']));
+	}
+
 	$parent     = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent`='0' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
 	$parents[0] = "";
 	foreach ( $parent as $parent_row ) {
@@ -237,6 +235,7 @@ lentele($page_pavadinimas,$text);
 		}
 		$tree = build_tree( $data2 );
 		$text = '<ul id="treemenu">' . $tree . '</ul>';
+
 		lentele( $lang['system']['tree'], $text );
 	}
 	//puslapiai redagavimas

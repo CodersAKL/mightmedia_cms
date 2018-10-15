@@ -25,16 +25,17 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 }
 $limit = 15;
 //
-$buttons = "
-<div class=\"btns\">
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,7" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/script__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['faq_new']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,4" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/script__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['faq_edit']}</span></a>
-</div>";
+
+if(BUTTONS_BLOCK) {
+	lentele($lang['admin']['faq'], buttonsMenu($buttons['faq']));
+}
+
+unset($buttons);
+
 if ( empty( $_GET['v'] ) ) {
 	$_GET['v'] = 0;
 }
-lentele( $lang['admin']['faq'], $buttons );
-unset( $buttons );
+
 include_once ( ROOT . "priedai/class.php" );
 //trinimas
 if ( isset( $_POST['articles_delete'] ) ) {

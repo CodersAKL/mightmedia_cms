@@ -206,10 +206,12 @@ HTML;
 
 function defaultHead() 
 {
+	global $conf;
+
 	?>
 	<base href="<?php echo adresas(); ?>" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title><?php echo input( strip_tags( $conf['Pavadinimas'] ) . ' - Admin' ); ?></title>
+	<title><?php echo input(strip_tags($conf['Pavadinimas']) . ' - Admin'); ?></title>
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index,follow" />
@@ -221,7 +223,7 @@ function defaultHead()
 
 function adminPages() 
 {
-	global $url, $admin_pages, $lang, $conf;
+	global $url, $admin_pages, $admin_pagesid, $lang, $conf, $buttons;
 
 	if ( isset( $url['a'] ) && file_exists(dirname(__DIR__) . "/" . ( isset( $admin_pages[(int)$url['a']] ) ? $admin_pages[(int)$url['a']] : 'n/a' ) . '.php' ) && isset( $_SESSION[SLAPTAS]['username'] ) && $_SESSION[SLAPTAS]['level'] == 1 && defined( "OK" ) ) {
 		if ( count( $_POST ) > 0 && $conf['keshas'] == 1 ) {

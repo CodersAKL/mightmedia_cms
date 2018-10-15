@@ -24,14 +24,11 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 	$p = 0;
 }
 $limit   = 15;
-$buttons = "<div class=\"btns\"><a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,6" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/sticky_note__exclamation.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['news_unpublished']}</span></a>
-<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,1" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/sticky_note__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['news_create']}</span></a>
-<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,4" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/sticky_note__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['news_edit']}</span></a>
-<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,2" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
-<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,3" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>
-</div>";
 
-lentele( $lang['admin']['naujienos'], $buttons );
+if(BUTTONS_BLOCK) {
+	lentele($lang['admin']['naujienos'], buttonsMenu($buttons['news']));
+}
+
 include_once ROOT . "priedai/kategorijos.php";
 kategorija( "naujienos", TRUE );
 $sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `path`=0 AND `lang` = " . escape( lang() ) . " ORDER BY `id` DESC" );

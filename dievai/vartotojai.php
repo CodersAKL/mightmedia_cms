@@ -23,14 +23,12 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 }
 $limit = 15;
 //
-$buttons = "<div class=\"btns\">
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,1" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/users.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['user_list']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,4" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/users__arrow.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['user_find']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,2" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/folder__plus.png\" alt=\"\" class=\"middle\"/>{$lang['system']['createcategory']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v,3" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/folder__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['system']['editcategory']}</span></a>
-</div>";
+if(BUTTONS_BLOCK) {
+	lentele($lang['admin']['vartotojai'], buttonsMenu($buttons['users']));
+}
 
-lentele( $lang['admin']['vartotojai'], $buttons );
+unset($buttons);
+
 include_once ( ROOT . "priedai/kategorijos.php" );
 kategorija( "vartotojai", TRUE );
 //trinimas

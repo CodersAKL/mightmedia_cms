@@ -111,16 +111,17 @@ if ( isset( $_POST['order'] ) ) {
 	delete_cache( "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='C' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
 
 } else {
-	$text   = "
-<div class=\"btns\">
-	<a href=\"" . url( "?id," . $url['id'] . ";a,{$_GET['a']};n,1" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/script__plus.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['panel_select']}</span></a>
-	<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};n,2" ) . "\" class=\"btn\"><span><img src=\"" . ROOT . "images/icons/script__pencil.png\" alt=\"\" class=\"middle\"/>{$lang['admin']['panel_create']}</span></a>
-</div>";
+	if(BUTTONS_BLOCK) {
+		lentele($lang['admin']['paneles'], buttonsMenu($buttons['blocks']));
+	}
+	
+	$text   = "";
 	$lygiai = array_keys( $conf['level'] );
 
 	foreach ( $lygiai as $key ) {
 		$teises[$key] = $conf['level'][$key]['pavadinimas'];
 	}
+
 	$teises[0] = $lang['admin']['for_guests'];
 	if ( isset( $_POST['Naujaa_pnl'] ) && $_POST['Naujaa_pnl'] == $lang['admin']['panel_create'] ) {
 		// Nurodote failo pavadinimą
@@ -444,7 +445,6 @@ HTML;
 		}
 	}
 
-
 	//atvaizduojam blokus
 	$li        = "";
 	$li1       = "";
@@ -454,26 +454,25 @@ HTML;
 	if ( sizeof( $recordSet ) > 0 ) {
 		foreach ( $recordSet as $record ) {
 			$li .= '<li id="listItem_' . $record['id'] . '" class="drag_block"> 
-<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record['id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
-<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record['id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
-<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record['id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/pencil.png" title="' . $lang['admin']['panel_text'] . '" align="right" /></a>
-<img src="' . ROOT . 'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" />
-' . $record['panel'] . '
-</li> ';
+			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record['id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
+			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record['id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
+			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record['id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/pencil.png" title="' . $lang['admin']['panel_text'] . '" align="right" /></a>
+			<img src="' . ROOT . 'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" />
+			' . $record['panel'] . '
+			</li> ';
 		}
 	}
 	$sql1       = "SELECT `id`, `panel`, `place` FROM `" . LENTELES_PRIESAGA . "panel` WHERE align='R' AND `lang` = " . escape( lang() ) . " order by `place`";
 	$recordSet1 = mysql_query1( $sql1 );
 	if ( sizeof( $recordSet1 ) > 0 ) {
 		foreach ( $recordSet1 as $record1 ) {
-
 			$li1 .= '<li id="listItem_' . $record1['id'] . '" class="drag_block"> 
-<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
-<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
-<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record1['id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/pencil.png" title="' . $lang['admin']['panel_text'] . '" align="right" /></a>
-<img src="' . ROOT . 'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" />
-' . $record1['panel'] . '
-</li> ';
+			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
+			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
+			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record1['id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/pencil.png" title="' . $lang['admin']['panel_text'] . '" align="right" /></a>
+			<img src="' . ROOT . 'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" />
+			' . $record1['panel'] . '
+			</li> ';
 		}
 	}
 	$sql2       = "SELECT id, panel, place from `" . LENTELES_PRIESAGA . "panel` WHERE align='C' AND `lang` = " . escape( lang() ) . " order by place";
@@ -482,30 +481,34 @@ HTML;
 		foreach ( $recordSet2 as $record2 ) {
 
 			$li2 .= '<li id="listItem_' . $record2['id'] . '" class="drag_block"> 
-<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record2['id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
-<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record2['id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
-<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record2['id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/pencil.png" title="' . $lang['admin']['panel_text'] . '" align="right" /></a>
-<img src="' . ROOT . 'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" />
-' . $record2['panel'] . '
-</li> ';
+			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record2['id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
+			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record2['id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
+			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $record2['id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/pencil.png" title="' . $lang['admin']['panel_text'] . '" align="right" /></a>
+			<img src="' . ROOT . 'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" />
+			' . $record2['panel'] . '
+			</li> ';
 		}
 	}
 	$text .= '
-	<div id="la" style="display:none">
-	<div class="success">
-	<img src="../images/icons/tick.png" title="' . $lang['system']['updated'] . '" align="left" hspace="10" alt=""/>
-	&nbsp;&nbsp;' . $lang['system']['updated'] . '</div>
-    </div>
-			<fieldset style="width: 28%; float:left;">
+		<div id="la" style="display:none">
+			<div class="success">
+				<img src="../images/icons/tick.png" title="' . $lang['system']['updated'] . '" align="left" hspace="10" alt=""/>
+				&nbsp;&nbsp;' . $lang['system']['updated'] . '
+			</div>
+		</div>
+		<fieldset style="width: 28%; float:left;">
 			<legend>' . $lang['admin']['panel_left'] . '</legend>
-			<ul id="kaire">' . $li . '</ul></fieldset>';
+			<ul id="kaire">' . $li . '</ul>
+		</fieldset>';
 	$text .= '<fieldset style="width: 28%;float:left;">
-			<legend>' . $lang['admin']['panel_center'] . '</legend>
-		<ul id="centras">' . $li2 . '</ul></fieldset>';
+		<legend>' . $lang['admin']['panel_center'] . '</legend>
+		<ul id="centras">' . $li2 . '</ul>
+		</fieldset>';
 	$text .= '<fieldset style="width: 28%;float:left;">
-	<legend>' . $lang['admin']['panel_right'] . '</legend>
-		   <ul id="desine">' . $li1 . '</ul></fieldset>';
-
+		<legend>' . $lang['admin']['panel_right'] . '</legend>
+		<ul id="desine">' . $li1 . '</ul>
+		</fieldset>
+		<div style="clear:both;"></div>';
 
 	lentele( $lang['admin']['paneles'], $text );
 
