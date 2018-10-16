@@ -298,6 +298,7 @@ $lang['admin']['notallowed'] = 'Negalima uždrausti administratoriaus';
 $lang['admin']['save'] = 'Saugoti';
 $lang['admin']['cancel'] = 'Atšaukti';
 $lang['admin']['pm'] = 'Žinutės';
+$lang['admin']['start'] = 'Darbalaukis';
 $lang['admin']['logai'] = 'Žurnalas';
 $lang['admin']['meniu'] = 'Puslapiai';
 $lang['admin']['admin_chat'] = 'Užrašinė';
@@ -823,4 +824,3 @@ $lang['blocks']['kalbos.php'] = 'Kalbos pasirinkimas';
 //Kas naujo puslapis
 $lang['whatsnew']['title'] = 'Kas naujo?';
 $lang['whatsnew']['label'] = 'Kelių dienų naujienas norėtumėte peržvelgti?';
-?>

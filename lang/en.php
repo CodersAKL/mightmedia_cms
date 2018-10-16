@@ -310,6 +310,7 @@ $lang['admin']['notallowed'] = 'You are not allowed to ban admin';
 $lang['admin']['save'] = 'Save';
 $lang['admin']['cancel'] = 'Cancel';
 $lang['admin']['pm'] = 'Messages';
+$lang['admin']['start'] = 'Dashboard';
 $lang['admin']['logai'] = 'Logs';
 $lang['admin']['meniu'] = 'Pages';
 $lang['admin']['admin_chat'] = 'Note book';
@@ -865,4 +866,3 @@ $lang['blocks']['kalbos.php'] = 'Select language';
 
 $lang['whatsnew']['title'] = 'What\'s new?';
 $lang['whatsnew']['label'] = 'How many days?';
-?>

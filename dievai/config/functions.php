@@ -2,21 +2,21 @@
 //medzio darymo f-ja
 function build_tree( $data, $id = 0, $active_class = 'active' ) {
 
-	global $admin_pagesid, $lang;
+	global $lang;
 	if ( !empty( $data ) ) {
 		$re = "";
 		foreach ( $data[$id] as $row ) {
 			if ( isset( $data[$row['id']] ) ) {
-				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><span style=\"display: inline; width: 100px;margin:0; padding:0; height: 16px;\"><a href=\"" . url( '?id,999;a,' . $admin_pagesid['meniu'] . ';d,' . $row['id'] ) . "\"  onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"" . ROOT . "images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"  /></a>
-<a href=\"" . url( '?id,999;a,' . $admin_pagesid['meniu'] . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\"/></a>
-<a href=\"" . url( '?id,999;a,' . $admin_pagesid['meniu'] . ';e,' . $row['id'] ) . "\"><img src=\"" . ROOT . "images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span><ul>";
+				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><span style=\"display: inline; width: 100px;margin:0; padding:0; height: 16px;\"><a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\"  onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"" . ROOT . "images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"  /></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\"/></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\"><img src=\"" . ROOT . "images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span><ul>";
 				$re .= build_tree( $data, $row['id'], $active_class );
 				$re .= "</ul></li>";
 			} else {
 				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><span style=\"display: inline; width: 100px; margin:0; padding:0; height: 16px;\">
-<a href=\"" . url( '?id,999;a,' . $admin_pagesid['meniu'] . ';d,' . $row['id'] ) . "\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"" . ROOT . "images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"/></a>
-<a href=\"" . url( '?id,999;a,' . $admin_pagesid['meniu'] . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\" /></a>
-<a href=\"" . url( '?id,999;a,' . $admin_pagesid['meniu'] . ';e,' . $row['id'] ) . "\" ><img src=\"" . ROOT . "images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"" . ROOT . "images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"/></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\" /></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\" ><img src=\"" . ROOT . "images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span>
 </li>";
 			}
 		}
@@ -223,14 +223,16 @@ function defaultHead()
 
 function adminPages() 
 {
-	global $url, $admin_pages, $admin_pagesid, $lang, $conf, $buttons;
+	global $url, $lang, $conf, $buttons, $adminMenu, $timeout;
 
-	if ( isset( $url['a'] ) && file_exists(dirname(__DIR__) . "/" . ( isset( $admin_pages[(int)$url['a']] ) ? $admin_pages[(int)$url['a']] : 'n/a' ) . '.php' ) && isset( $_SESSION[SLAPTAS]['username'] ) && $_SESSION[SLAPTAS]['level'] == 1 && defined( "OK" ) ) {
-		if ( count( $_POST ) > 0 && $conf['keshas'] == 1 ) {
+	$fileName = (isset($url['a']) && isset($adminMenu[$url['a']] ) ? $adminMenu[$url['a']] : null);
+
+	if (! empty($fileName) && file_exists(dirname(__DIR__) . "/" . $fileName) && isset($_SESSION[SLAPTAS]['username']) && $_SESSION[SLAPTAS]['level'] == 1 && defined( "OK" ) ) {
+		if (count($_POST) > 0 && $conf['keshas'] == 1) {
 			msg( $lang['system']['warning'], $lang['system']['cache_info'] );
 		}
 		
-		include_once("/" . $admin_pages[(int)$url['a']] . '.php' );
+		include_once("/" . $fileName);
 
 	} elseif ( isset( $_GET['m'] ) ) {
 
@@ -257,7 +259,33 @@ function adminPages()
 
 function getAdminPages($page = null) 
 {
-	global $admin_pages;
+	global $adminMenu;
 
-	return ! empty($page) ? $admin_pages[$page] : $admin_pages;
+	$menu = event('adminPages', $adminMenu);
+
+	return ! empty($page) ? $menu[$page] : $menu;
+}
+
+function getAdminPagesbyId($id = null) 
+{
+	global $adminMenu;
+
+	$menu = getAdminPages();
+	$menu = array_flip($menu);
+
+	return ! empty($id) ? $menu[$id . '.php'] : $menu;
+}
+
+//default hook
+event('adminPages', NULL, function($menu) {
+
+	return $menu;
+});
+
+function getFeedArray($feedUrl) {
+     
+    $content = file_get_contents($feedUrl);
+	$x = simplexml_load_string($content, null, LIBXML_NOCDATA);
+	
+    return $x->channel;
 }

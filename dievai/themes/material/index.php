@@ -40,37 +40,32 @@ $user = getUserMail($_SESSION[SLAPTAS]['id']);
         <div class="menu">
             <ul class="list">
                 <li class="header">MAIN NAVIGATION</li>
-                <?php foreach (getAdminPages() as $id => $file) { ?>
+                <?php 
+               
+                foreach (getAdminPages() as $id => $file) { ?>
                     <?php
-                        $file       = basename( $file, '.php' );
-                        $inArray    = array( 'config', 'meniu', 'logai', 'paneles', 'vartotojai', 'komentarai', 'banai', 'balsavimas', 'siustis', 'duk' );
-                        $notArray   = array( 'index', 'pokalbiai', 'main', 'search', 'antivirus' );
+                        $linkValue = (isset( $lang['admin'][basename($file, '.php')] ) ? $lang['admin'][basename($file, '.php')] : nice_name($file));
                     ?>
-                    <?php if ((isset( $conf['puslapiai'][$file . '.php']['id']) || in_array( $file, $inArray)) && !in_array($file, $notArray)) { ?>
                         <li <?php echo ( isset( $_GET['a'] ) && $_GET['a'] == $id ? 'class="active"' : '' ); ?>>
-                            <a href="<?php echo url( '?id,999;a,' . $id ); ?>">
-                                <i class="material-icons">home</i>
-                                <span><?php echo ( isset( $lang['admin'][$file] ) ? $lang['admin'][$file] : nice_name( $file ) ); ?></span>
-                            </a>
-                            <?php if(isset( $_GET['a'] ) && $_GET['a'] == $id) { ?>
+                            <?php if(isset($buttons[$id]) && ! empty($buttons[$id])) { ?>
                                 <a href="javascript:void(0);" class="menu-toggle">
-                                    <i class="material-icons">widgets</i>
-                                    <span>Widgets</span>
+                                    <i class="material-icons"><?php echo adminMenuIcon($id); ?></i>
+                                    <span><?php echo $linkValue; ?></span>
                                 </a>
                                 <ul class="ml-menu" id="sub-menu-admin">
-                                    <li>
-                                        <a href="pages/widgets/cards/basic.html">Basic</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages/widgets/cards/colored.html">Colored</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages/widgets/cards/no-header.html">No Header</a>
-                                    </li>
+                                    <?php foreach($buttons[$id] as $button) { ?>
+                                        <li>
+                                            <a href="<?php echo $button['url']; ?>"><?php echo $button['value']; ?></a>
+                                        </li>
+                                    <?php } ?>
                                 </ul>
+                            <?php } else { ?>
+                                <a href="<?php echo url( '?id,999;a,' . $id ); ?>">
+                                    <i class="material-icons"><?php echo adminMenuIcon($id); ?></i>
+                                    <span><?php echo $linkValue; ?></span>
+                                </a>
                             <?php } ?>
                         </li>
-                    <?php } ?>
                 <?php } ?>
             </ul>
         </div>

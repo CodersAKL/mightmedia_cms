@@ -79,6 +79,7 @@ foreach ( $sqli as $sql ) {
 <li>{$lang['online']['lastregistered']}: <span class='number'>{$memberis}</span></li>
 ";
 }
+
 $text .= <<<HTM
 </ul>
 </div>
@@ -91,30 +92,38 @@ $text .= <<<HTM
 <br />
 </div>
 </div>
-
+HTM;
+$feedUrl = 'https://mightmedia.lt/rss.php';
+$rssContent = getFeedArray($feedUrl);
+$text .= '
 <div class="leftui" style="height: 400px;width:420px">
-<h2>Mightmedia {$lang['news']['news']}</h2>
-<script type="text/javascript" src="js/FeedEk.js"></script>
-<script type="text/javascript" >
-$(document).ready(function(){
-  $('#txtUrl').val('http://mightmedia.lt/rss.php');
-  $('#txtCount').val('5');
-  $('#chkDate').attr('checked','checked');
-  $('#chkDesc').attr('checked','checked');
-   $('#divRss').FeedEk({
-   FeedUrl : 'http://mightmedia.lt/rss.php',
-   MaxCount : 10,
-   ShowDesc : false,
-   ShowPubDate: true
-  });
-});
-</script>
-<div id="divRss"></div>
+<h2>Mightmedia ' . $lang['news']['news'] . '</h2>
+<div id="divRss">';
+$i = 0;
+foreach($rssContent->item as $key => $new) {
+	$date = strtotime($new->pubDate[0]);
+	$date = date('Y-m-d', $date);
+
+	$text .='<div class="ItemContent">';
+	$text .='<div class="ItemTitle">';
+	$text .='<a href="' . $new->link->__toString() . '" target="_blank" >' . $new->title->__toString() . '</a>';
+	$text .='</div>';
+	$text .='<div class="ItemDate">';
+	$text .= $date;
+	$text .='</div>';
+	$text .='</div>';
+	if (++$i > 5) {
+        break;
+    }
+}
+$text .= '
+</div>
 <br/><br/>
 </div>
 
 </div>
 <div style="clear:both;"></div>
-HTM;
+';
+
 lentele( $lang['system']['control'], $text );
-?>
+

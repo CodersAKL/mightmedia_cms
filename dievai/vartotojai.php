@@ -145,7 +145,7 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 				     $lang['admin']['user_name']  => user( $row2['nick'], $row2['id'], $row2['levelis'] ),
 				     "IP"                         => $row2['ip'],
 				     $lang['admin']['user_email'] => "" . $row2['email'] . "",
-				     $lang['admin']['action']     => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "'title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
+				     $lang['admin']['action']     => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "'title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a," . getAdminPagesbyId('banai') . ";b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
 				);
 			}
 			$bla = new Table();
@@ -171,7 +171,7 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 4 ) {
 					$lang['admin']['user_name']      => user( $row2['nick'], $row2['id'], $row2['levelis'] ),
 					"IP"                             => $row2['ip'],
 					"{$lang['admin']['user_email']}" => "" . $row2['email'] . "",
-					" "                              => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a,{$admin_pagesid['banai']};b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
+					" "                              => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a," . getAdminPagesbyId('banai') . ";b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
 				);
 			}
 			$bla = new Table();

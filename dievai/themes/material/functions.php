@@ -403,3 +403,20 @@ function adminIcon($group, $icon)
 
 	return '<img src="' . ROOT . $icons[$group][$icon] . '" alt="" class="middle">';
 }
+
+function adminMenuIcon($id) 
+{
+	global $icons;
+
+	return isset($icons['menu'][$id]) ? $icons['menu'][$id] : $icons['menu']['default'];
+}
+
+
+event('adminPages', NULL, function($menu) {
+
+	$themeMenu = [
+		'aaa' => 'bbbb'
+	];
+	
+	return array_merge($menu, $themeMenu);
+});

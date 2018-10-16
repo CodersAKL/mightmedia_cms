@@ -38,6 +38,9 @@
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="themes/material/css/themes/all-themes.css" rel="stylesheet" />
+
+     <!-- Jquery Core Js -->
+     <script src="themes/material/plugins/jquery/jquery.min.js"></script>
 </head>
 
 <body class="theme-deep-orange">

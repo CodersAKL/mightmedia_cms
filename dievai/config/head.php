@@ -71,13 +71,3 @@ if ( isset( $_GET['do'] ) ) {
 	unset( $_SESSION[SLAPTAS]['username'], $_SESSION[SLAPTAS]['level'], $_SESSION[SLAPTAS]['password'], $_SESSION[SLAPTAS]['id'] );
 	redirect( ROOT . 'index.php' );
 }
-//menu and pages
-$glob        = glob( '*.php' );
-$admin_pages = [];
-$admin_pagesid = [];
-
-foreach ($glob as $id => $file) {
-    $file                 = basename( $file, '.php' );
-    $admin_pages[$id]     = $file;
-    $admin_pagesid[$file] = $id;
-}

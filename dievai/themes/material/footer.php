@@ -1,6 +1,3 @@
-    <!-- Jquery Core Js -->
-    <script src="themes/material/plugins/jquery/jquery.min.js"></script>
-
     <!-- Bootstrap Core Js -->
     <script src="themes/material/plugins/bootstrap/js/bootstrap.js"></script>
 
