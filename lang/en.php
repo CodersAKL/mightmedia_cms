@@ -1,4 +1,6 @@
 <?php
+$lang['admin']['menu_main'] = 'Main menu';
+$lang['admin']['menu_extensions'] = 'Extensions';
 //Papildymas - antras
 $lang['user']['profile'] = 'My profile';
 $lang['admin']['poll_active_q'] = 'Active';

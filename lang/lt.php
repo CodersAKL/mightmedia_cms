@@ -1,4 +1,6 @@
 <?php
+$lang['admin']['menu_main'] = 'Pagrindinis meniu';
+$lang['admin']['menu_extensions'] = 'Plėtiniai';
 //Papildymas - antras
 $lang['user']['profile'] = 'Mano profilis';
 $lang['admin']['poll_active_q'] = 'Aktyvumas';

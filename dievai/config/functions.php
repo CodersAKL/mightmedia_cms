@@ -223,9 +223,10 @@ function defaultHead()
 
 function adminPages() 
 {
-	global $url, $lang, $conf, $buttons, $adminMenu, $timeout;
-
-	$fileName = (isset($url['a']) && isset($adminMenu[$url['a']] ) ? $adminMenu[$url['a']] : null);
+	global $url, $lang, $conf, $buttons, $adminMenu, $adminExtensionsMenu, $timeout;
+	
+	$mergedMenus = array_merge($adminMenu, $adminExtensionsMenu);
+	$fileName = (isset($url['a']) && isset($mergedMenus[$url['a']] ) ? $mergedMenus[$url['a']] : null);
 
 	if (! empty($fileName) && file_exists(dirname(__DIR__) . "/" . $fileName) && isset($_SESSION[SLAPTAS]['username']) && $_SESSION[SLAPTAS]['level'] == 1 && defined( "OK" ) ) {
 		if (count($_POST) > 0 && $conf['keshas'] == 1) {
@@ -257,6 +258,15 @@ function adminPages()
 	}
 }
 
+function getAdminExtensionsMenu($page = null) 
+{
+	global $adminExtensionsMenu;
+
+	$menu = event('adminExtensionsMenu', $adminExtensionsMenu);
+
+	return ! empty($page) ? $menu[$page] : $menu;
+}
+
 function getAdminPages($page = null) 
 {
 	global $adminMenu;
@@ -276,8 +286,13 @@ function getAdminPagesbyId($id = null)
 	return ! empty($id) ? $menu[$id . '.php'] : $menu;
 }
 
-//default hook
+//default hooks
 event('adminPages', NULL, function($menu) {
+
+	return $menu;
+});
+
+event('adminExtensionsMenu', NULL, function($menu) {
 
 	return $menu;
 });

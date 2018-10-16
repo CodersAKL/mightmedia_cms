@@ -39,8 +39,20 @@
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="themes/material/css/themes/all-themes.css" rel="stylesheet" />
 
-     <!-- Jquery Core Js -->
-     <script src="themes/material/plugins/jquery/jquery.min.js"></script>
+    <!-- Jquery Core Js -->
+    <script src="themes/material/plugins/jquery/jquery.min.js"></script>
+    <!-- treview -->
+    <link rel="stylesheet" href="css/jquery.treeview.css" />
+    <script src="js/jquery.treeview.js" type="text/javascript"></script>
+    <script type="text/javascript">
+		$(document).ready(function () {
+			$("#treemenu").treeview({
+				persist:"location",
+				collapsed:true,
+				unique:true
+			});
+		});
+	</script>
 </head>
 
 <body class="theme-deep-orange">
@@ -57,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            <p>Please wait...</p>
+            <p><?php echo $lang['sb']['loading']; ?></p>
         </div>
     </div>
     <!-- #END# Page Loader -->
@@ -71,7 +83,7 @@
         </div>
         <form method="post" action="<?php echo url( '?id,999;m,4' ); ?>">
             <input name="vis" value="vis" type="hidden" >
-            <input type="text" name="s" value="" placeholder="START TYPING...">
+            <input type="text" name="s" value="" placeholder="<?php echo $lang['search']['search']; ?>...">
         </form>
         <div class="close-search">
             <i class="material-icons">close</i>
@@ -93,7 +105,6 @@
                     <!-- Call Search -->
                     <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
                     <!-- #END# Call Search -->
-                    <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
                 </ul>
             </div>
         </div>

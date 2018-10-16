@@ -412,7 +412,7 @@ function adminMenuIcon($id)
 }
 
 
-event('adminPages', NULL, function($menu) {
+event('adminExtensionsPages', NULL, function($menu) {
 
 	$themeMenu = [
 		'aaa' => 'bbbb'
@@ -420,3 +420,87 @@ event('adminPages', NULL, function($menu) {
 	
 	return array_merge($menu, $themeMenu);
 });
+
+function dashTree($title, $content) 
+{
+	?>
+	<div class="card">
+		<div class="header">
+			<h2>
+			<?php echo $title; ?>
+			</h2>
+		</div>
+		<div class="body">
+			<ul id='treemenu'><?php echo $content; ?></ul>
+		</div>
+	</div>
+	<?php
+}
+
+function dashStats($title, $stats, $chartDates) 
+{
+	?>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = google.visualization.arrayToDataTable([
+			['', '<?php echo $title; ?>'],
+			[<?php echo $chartDates['two_days_ago'];  ?>, <?php echo $stats['uzvakar']; ?>],
+			[<?php echo $chartDates['yesterday'];  ?>,  <?php echo $stats['vakar']; ?>],
+			[<?php echo $chartDates['today'];  ?>, <?php echo $stats['siandien']; ?>]
+		]);
+
+		var options = {
+			chartArea:{ width:'80%', height:'80%'},
+			title:'',
+			isStacked:true,
+			colors:['#FF7910'],
+			legend:{position:'none'},
+			vAxis:{gridlines:{count:2}, textPosition:'in', title:" "},
+			hAxis:{title:" "}
+		};
+
+		var chart = new google.visualization.AreaChart(document.getElementById('placeholder'));
+		chart.draw(data, options);
+	}
+</script>
+<div class="card">
+	<div class="header bg-orange">
+		<h2>
+		<?php echo $title; ?>
+		</h2>
+	</div>
+	<div class="body">
+		<div id="chart">
+			<div id="placeholder" ></div>
+		</div>
+	</div>
+</div>
+
+	<?php
+}
+
+function infoBox($color, $icon, $text, $count)
+{
+	?>
+	<div class="info-box-3 bg-<?php echo $color; ?> hover-zoom-effect">
+		<div class="icon">
+			<i class="material-icons"><?php echo $icon; ?></i>
+		</div>
+		<div class="content">
+			<div class="text">
+			<?php echo $text; ?>
+			</div>
+			<?php if( isNum($count)) { ?>
+				<div class="number count-to" data-from="0" data-to="<?php echo $count; ?>" data-speed="1000" data-fresh-interval="20">
+			<?php } else { ?>
+				<div class="number">
+			<?php } ?>
+				<?php echo $count; ?>
+			</div>
+		</div>
+	</div>
+	<?php
+}
