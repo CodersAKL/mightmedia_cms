@@ -7,6 +7,9 @@
     <!-- Slimscroll Plugin Js -->
     <script src="themes/material/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
+    <!-- Autosize Plugin Js -->
+    <script src="themes/material/plugins/autosize/autosize.js"></script>
+
     <!-- Waves Effect Plugin Js -->
     <script src="themes/material/plugins/node-waves/waves.js"></script>
 
@@ -29,6 +32,9 @@
 
     <!-- Sparkline Chart Plugin Js -->
     <script src="themes/material/plugins/jquery-sparkline/jquery.sparkline.js"></script>
+
+    <!-- Jquery Nestable -->
+    <script src="themes/material/plugins/nestable/jquery.nestable.js"></script>
 
     <!-- Custom Js -->
     <script src="themes/material/js/admin.js"></script>

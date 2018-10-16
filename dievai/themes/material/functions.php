@@ -27,7 +27,7 @@ function lentele( $pavadinimas, $tekstas, $label = FALSE ) {
 					<?php echo $pavadinimas; ?>
 				</h2>
 			</div>
-			<div class="body">
+			<div class="body clearfix">
 				<?php echo $tekstas; ?>
 			</div>
 		</div>

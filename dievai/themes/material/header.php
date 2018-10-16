@@ -21,6 +21,9 @@
     <!-- Wait Me Css -->
     <link href="themes/material/plugins/waitme/waitMe.css" rel="stylesheet" />
 
+    <!-- JQuery Nestable Css -->
+    <link href="themes/material/plugins/nestable/jquery-nestable.css" rel="stylesheet" />
+
     <!-- Bootstrap Select Css -->
     <link href="themes/material/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
@@ -53,6 +56,9 @@
 			});
 		});
 	</script>
+    
+    <!-- Bootstrap Notify Plugin Js -->
+    <script src="themes/material/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 </head>
 
 <body class="theme-deep-orange">

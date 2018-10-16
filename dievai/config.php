@@ -41,8 +41,8 @@ if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['Konfiguracija'] ) ) {
 	redirect( url( '?id,999;a,' . $_GET['a'] . '' ) );
 }
 
-$stiliai             = getDirs( ROOT . 'stiliai/', 'remontas' );
-$editors             = getDirs( 'htmlarea/', 'svn' );
+$stiliai             = getDirs(ROOT . 'stiliai/', 'remontas');
+$editors             = getDirs('htmlarea/');
 $editors['textarea'] = 'textarea';
 $kalbos              = getFiles( ROOT . 'lang/' );
 foreach ( $kalbos as $file ) {

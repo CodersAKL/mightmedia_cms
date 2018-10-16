@@ -40,150 +40,78 @@ function editor( $tipas = 'jquery', $dydis = 'standartinis', $id = FALSE, $value
 	} else {
 		$areos = "'$id'";
 	}
+
 	$root = ROOT;
-	if ( $conf['Editor'] == 'markitup' ) {
-		$dir    = adresas();
-		$return = <<<HTML
-<script type="text/javascript" src="{$dir}htmlarea/markitup/jquery.markitup.js"></script>
-<script type="text/javascript" src="{$dir}htmlarea/markitup/sets/default/set.js"></script>
-<link rel="stylesheet" type="text/css" href="{$dir}htmlarea/markitup/skins/markitup/style.css" />
-<link rel="stylesheet" type="text/css" href="{$dir}htmlarea/markitup/sets/default/style.css" />
 
-HTML;
-
-		if ( is_array( $id ) ) {
-			foreach ( $id as $key => $val ) {
-				$return .= <<<HTML
-	<script type="text/javascript">
-	$(document).ready(function(){
-		$('#{$key}').markItUp(mySettings);
-	});
-	</script>
-	        <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;" >
-        <img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button><br />
-<textarea id="{$key}" name="{$key}">{$value[$key]}</textarea>
-HTML;
-			}
-		} else {
-			$return .= <<<HTML
-	<script type="text/javascript">
-	$(document).ready(function()	{
-		$('#{$id}').markItUp(mySettings);
-	});
-	</script>
-	        <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$id}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;" >
-        <img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button><br />
-<textarea id="{$id}" name="{$id}">{$value}</textarea>
-HTML;
-
-		}
-	} elseif ( $conf['Editor'] == 'textarea' ) {
+	if ( $conf['Editor'] == 'textarea' ) {
 		$return = '';
 		if ( is_array( $id ) ) {
 			foreach ( $id as $key => $val ) {
 				$return .= <<<HTML
 
-	<textarea id="{$key}" name="{$key}" >{$value[$key]}</textarea>
+	<textarea id="{$key}" name="{$key}" rows="1" class="form-control no-resize auto-growth">{$value[$key]}</textarea>
 HTML;
 			}
 		} else {
 			$return .= <<<HTML
 
-<textarea id="{$id}" name="{$id}" >{$value}</textarea>
+<textarea id="{$id}" name="{$id}" rows="1" class="form-control no-resize auto-growth">{$value}</textarea>
 HTML;
 
 		}
-	} elseif ( $conf['Editor'] == 'tiny_mce' ) {
+	} elseif ( $conf['Editor'] == 'tinymce' ) {
 		$dir    = adresas();
 		$return = <<<HTML
       <!-- Load TinyMCE -->
-<script src="{$dir}htmlarea/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+<script src="{$dir}htmlarea/tinymce/tinymce.js" type="text/javascript"></script>
 <script type="text/javascript">
-		tinyMCE.init({
-		// General options
-		mode : "textareas",
-		theme : "advanced",
-		skin : "o2k7",
-		skin_variant : "silver",
-		plugins : "paste,lists,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,inlinepopups,autosave",
-
-		// Theme options
-		theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
-		theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
-		theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
-		theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak,restoredraft",
-		theme_advanced_toolbar_location : "top",
-		theme_advanced_toolbar_align : "left",
-		theme_advanced_statusbar_location : "bottom",
-		theme_advanced_resizing : true,
-
-		// Example content CSS (should be your site CSS)
-		content_css : "{$dir}htmlarea/tiny_mce/css/content.css",
-
-		template_external_list_url : "{$dir}htmlarea/tiny_mce/template_list.js",
-		external_link_list_url : "{$dir}htmlarea/tiny_mce/link_list.js",
-		external_image_list_url : "{$dir}htmlarea/tiny_mce/image_list.js",
-		media_external_list_url : "{$dir}htmlarea/tiny_mce/media_list.js"
-
-
-	});
+	//TinyMCE
+    tinymce.init({
+        selector: "textarea.tinymce",
+        theme: "modern",
+        height: 300,
+        plugins: [
+            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            'searchreplace wordcount visualblocks visualchars code fullscreen',
+            'insertdatetime media nonbreaking save table contextmenu directionality',
+            'emoticons template paste textcolor colorpicker textpattern imagetools'
+        ],
+        toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        toolbar2: 'print preview media | forecolor backcolor emoticons',
+		image_advtab: true,
+		// images_upload_url: 'postAcceptor.php', - images local upload
+    });
+    // tinymce.suffix = ".min";
+    // tinyMCE.baseURL = '{$dir}tinymce';
 
 </script>
 <!-- /TinyMCE -->
 HTML;
 		if ( is_array( $id ) ) {
 			foreach ( $id as $key => $val ) {
-				$return .= <<<HTML
-        <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$key}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;
-" ><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button><br />
-	<textarea id="{$key}" name="{$key}" class="tinymce">{$value[$key]}</textarea>
-HTML;
-			}
-		} else {
-			$return .= <<<HTML
-      <button onclick="window.open('htmlarea/markitup/utils/manager/index.php?id={$id}','mywindow','menubar=1,resizable=1,width=820,height=500');return false;
-"><img src="../images/icons/pictures__plus.png" /> {$lang['admin']['insert_image']}</button><br />
-<textarea id="{$id}" name="{$id}" class="tinymce">{$value}</textarea>
-HTML;
-
-		}
-	} elseif ( $conf['Editor'] == 'nicedit' ) {
-		$dir = adresas();
-
-		$return = <<<HTML
-<script type="text/javascript" src="{$dir}htmlarea/nicedit/nicEdit.js"></script>	
-HTML;
-
-		if ( is_array( $id ) ) {
-			foreach ( $id as $key => $val ) {
 
 				$return .= <<< HTML
-<script type="text/javascript">
-bkLib.onDomLoaded(function() {
-	new nicEditor({fullPanel : true, iconsPath : '{$dir}htmlarea/nicedit/nicEditorIcons.gif', width: '100%'}).panelInstance('{$key}');
-});
-</script>
-<textarea id="{$key}" name="{$key}">{$value[$key]}</textarea>
+<textarea id="{$key}" name="{$key}" class="tinymce">{$value[$key]}</textarea>
 HTML;
 			}
 		} else {
 			$return .= <<< HTML
-<script type="text/javascript">
-bkLib.onDomLoaded(function() {
-	new nicEditor({fullPanel : true, iconsPath : '{$dir}htmlarea/nicedit/nicEditorIcons.gif', width: '100%'}).panelInstance('{$id}');
-});
-</script>
-
-<textarea id="{$id}" name="{$id}">{$value}</textarea>
+<textarea id="{$id}" name="{$id}" class="tinymce">{$value}</textarea>
 HTML;
 
 		}
-
+		
 	} elseif ( $conf['Editor'] == 'ckeditor' ) {
 		$dir = adresas();
 
 		$return = <<<HTML
-<script type="text/javascript" src="{$dir}htmlarea/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="{$dir}htmlarea/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript">
+		//CKEditor
+		CKEDITOR.replaceClass = 'ckeditor';
+		CKEDITOR.config.height = 300;
+		CKEDITOR.config.extraPlugins = 'uploadimage';
+	</script>
 HTML;
 
 		if ( is_array( $id ) ) {
@@ -200,7 +128,7 @@ HTML;
 
 		}
 	}
-
+	
 	return $return;
 }
 
@@ -297,10 +225,39 @@ event('adminExtensionsMenu', NULL, function($menu) {
 	return $menu;
 });
 
-function getFeedArray($feedUrl) {
+function getFeedArray($feedUrl) 
+{
      
     $content = file_get_contents($feedUrl);
 	$x = simplexml_load_string($content, null, LIBXML_NOCDATA);
 	
     return $x->channel;
+}
+
+function blocksOrder($data) 
+{
+	global $lang;
+
+	if ( isset( $data['order'] ) ) {
+		$array = json_decode($data['order'], true);
+		$case_place = '';
+		$where = '';
+		foreach ($array as $position => $item) {
+			$case_place .= "WHEN " . (int)$item['id'] . " THEN '" . (int)$position . "' ";
+	
+			$where .= $item['id'] . ",";
+		}
+		$where = rtrim($where, ", ");
+		$sqlas = "UPDATE `" . LENTELES_PRIESAGA . "panel` SET `place`= (CASE id " . $case_place . " END) WHERE id IN (" . $where . ")";
+
+		if($result = mysql_query1($sqlas)) {
+			delete_cache( "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
+			delete_cache( "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
+			delete_cache( "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='C' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
+
+			return $lang['system']['updated'];
+		}
+		
+		return null;
+	}
 }

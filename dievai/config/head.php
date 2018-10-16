@@ -43,20 +43,20 @@ if ( is_file( $root . 'priedai/conf.php' ) && filesize( $root . 'priedai/conf.ph
 } elseif ( is_file( $root . 'install/index.php' ) ) {
 	header( 'location: ' . $root . 'install/index.php' );
 	exit();
-}
-else {
+} else {
 	die( klaida( 'Sistemos klaida / System error', 'Atsiprašome svetaine neidiegta. Truksta sisteminiu failu. / CMS is not installed.' ) );
 }
 //kalbos
 $kalbos   = getFiles( ROOT . 'lang/' );
 $language = '<ul class="sf-menu" id="lang"><li><a href=""><img src="' . ROOT . 'images/icons/flags/' . lang() . '.png" alt="' . lang() . '"/></a><ul>';
-//echo lang();
+
 foreach ( $kalbos as $file ) {
 	if ( $file['type'] == 'file' && basename( $file['name'], '.php' ) != lang() ) {
 		$language .= '<li><a href="' . url( '?id,999;lang,' . basename( $file['name'], '.php' ) ) . '"><img src="' . ROOT . 'images/icons/flags/' . basename( $file['name'], '.php' ) . '.png" alt="' . basename( $file['name'], '.php' ) . '" class="language flag ' . basename( $file['name'], '.php' ) . '" /></a></li>';
 	}
 }
 $language .= '</ul></li></ul>';
+
 if ( !empty( $_GET['lang'] ) ) {
 	$_SESSION[SLAPTAS]['lang'] = basename( $_GET['lang'], '.php' );
 	redirect( url( "?id," . $_GET['id'] ) );

@@ -186,9 +186,9 @@ class Form
 					}
 				case "textarea":
 					{
-                    return "<" . $array['type'] . "
+                    return "<textarea
+                    rows=\"1\" class=\"form-control no-resize auto-growth" . ( isset( $array['class'] ) ? ' ' . $array['class'] : '' ) . "\"
                     " . ( isset( $array['rows'] ) ? " rows=\"" . $array['rows'] . "\"" : "" ) . "
-                    " . ( isset( $array['class'] ) ? " class=\"" . $array['class'] . "\"" : "" ) . "
                     " . ( isset( $array['id'] ) ? " id=\"" . $array['id'] . "\"" : "" ) . "
                     " . ( isset( $array['name'] ) ? " name=\"" . $array['name'] . "\"" : "" ) . "
                     " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . ">" . ( isset( $array['value'] ) ? $array['value'] : "" ) . "</" . $array['type'] . ">";
