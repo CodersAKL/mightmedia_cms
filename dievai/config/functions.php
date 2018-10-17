@@ -234,11 +234,23 @@ function getFeedArray($feedUrl)
     return $x->channel;
 }
 
+//atvaizduojam blokus
+function dragItem($id, $content, $subMenu = null)
+{
+	return '<li class="dd-item dd3-item" data-id="' . $id . '">
+	<div class="dd-handle dd3-handle"></div>
+	<div class="dd3-content">
+		' . $content . '
+	</div>
+	' . (! empty($subMenu) ? $subMenu : '') . '
+	</li>';
+}
+
 function blocksOrder($data) 
 {
 	global $lang;
 
-	if ( isset( $data['order'] ) ) {
+	if (isset($data['order'])) {
 		$array = json_decode($data['order'], true);
 		$case_place = '';
 		$where = '';
@@ -257,7 +269,44 @@ function blocksOrder($data)
 
 			return $lang['system']['updated'];
 		}
-		
-		return null;
 	}
+
+	return null;
+}
+
+function pagesOrder($data)
+{
+	global $lang;
+
+	$case_place = '';
+	$where      = '';
+
+	if (isset($data['order'])) {
+		$array = json_decode($data['order'], true);
+		
+
+		foreach ($array as $position => $item) {
+			if(! empty($item['children'])) {
+				foreach ($item['children'] as $childrenPosition => $childrenItem) {
+					$case_place .= "WHEN " . (int)$childrenItem['id'] . " THEN '" . (int)$childrenPosition . "' ";
+					$where .= $childrenItem['id'] . ",";
+				}
+			}
+			$case_place .= "WHEN " . (int)$item['id'] . " THEN '" . (int)$position . "' ";
+			$where .= $item['id'] . ",";
+		}
+
+		$where = rtrim($where, ", ");
+
+		$sqlas = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `place`=  CASE id " . $case_place . " END WHERE id IN (" . $where . ")";
+		// var_dump($sqlas); exit;
+		if($result = mysql_query1($sqlas)) {
+			delete_cache( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
+		
+			return $lang['system']['updated'];
+		}
+	}
+
+	return null;
+
 }

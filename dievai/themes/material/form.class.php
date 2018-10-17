@@ -34,18 +34,22 @@ class Form
             
 			foreach ($this->inputs as $pav => $input) {
 				if (! empty($input) && $pav != 'Form') {
-                    $return .= '<div class="row clearfix">';
-                    $return .= '<div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">';
-                    $return .= '<label for="' . (isset($input['name']) ? $input['name'] : '' ) . '">' . (!empty($pav) ? $pav : '&nbsp;') . '</label>';
-                    $return .= '</div>';
-                    $return .= '<div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">';
-                    $return .= '<div class="form-group">';
-                    $return .= '<div class="form-line">';
-                    $return .= $this->input($input);
-                    $return .= '</div>';
-                    $return .= '</div>';
-					$return .= '</div>';
-                    $return .= '</div>';
+                    if($input['type'] === 'hidden') {
+                        $return .= $this->input($input);
+                    } else {
+                        $return .= '<div class="row clearfix">';
+                        $return .= '<div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">';
+                        $return .= '<label for="' . (isset($input['name']) ? $input['name'] : '' ) . '">' . (!empty($pav) ? $pav : '&nbsp;') . '</label>';
+                        $return .= '</div>';
+                        $return .= '<div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">';
+                        $return .= '<div class="form-group">';
+                        $return .= '<div class="form-line">';
+                        $return .= $this->input($input);
+                        $return .= '</div>';
+                        $return .= '</div>';
+                        $return .= '</div>';
+                        $return .= '</div>';
+                    }
                 }
             }
             

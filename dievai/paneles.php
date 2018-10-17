@@ -19,6 +19,7 @@ if(BUTTONS_BLOCK) {
 }
 
 $text   = "";
+// user rights
 $lygiai = array_keys( $conf['level'] );
 
 foreach ( $lygiai as $key ) {
@@ -26,11 +27,12 @@ foreach ( $lygiai as $key ) {
 }
 
 $teises[0] = $lang['admin']['for_guests'];
+
 if ( isset( $_POST['Naujaa_pnl'] ) && $_POST['Naujaa_pnl'] == $lang['admin']['panel_create'] ) {
 	// Nurodote failo pavadinimą
 	//$failas  = ROOT . "blokai/" . preg_replace( "/[^a-z0-9-]/", "_", strtolower( $_POST['pav'] ) ) . ".php";
 
-	$failas = ROOT . "blokai/" . seo_url( basename( $_POST['pav'] ), '' ) . ".php";
+	$failas = ROOT . "blokai/" . seo_url(basename($_POST['pav']), '') . ".php";
 
 	$tekstas = str_replace( array( '$', 'HTML', '<br>' ), array( '&#36;', 'html', '<br/>' ), $_POST['pnl'] );
 
@@ -55,8 +57,30 @@ HTML;
 		redirect( url( "?id,{$_GET['id']};a,{$_GET['a']};n,1" ), "header" );
 	}
 }
+
 if ( isset( $url['n'] ) && $url['n'] == 2 ) {
-	$psl = array( "Form" => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "Naujaa_pnl" ), "{$lang['admin']['panel_name']}:" => array( "type" => "text", "value" => "Naujas blokas", "name" => "pav", "class" => "input" ), "{$lang['admin']['panel_text']}:" => array( "type" => "string", "value" => editor( 'spaw', 'standartinis', array( 'pnl' => 'pnl' ), FALSE ), "name" => "pnl", "class" => "input", "rows" => "8", "class" => "input" ), "" => array( "type" => "submit", "name" => "Naujaa_pnl", "value" => "{$lang['admin']['panel_create']}" ) );
+	$psl = array(
+		"Form" => array(
+			"action" => "",
+			"method" => "post",
+			"enctype" => "",
+			"id" => "",
+			"class" => "",
+			"name" => "Naujaa_pnl"
+		), 
+		"{$lang['admin']['panel_name']}:" => array(
+			"type" => "text", 
+			"value" => "Naujas blokas", 
+			"name" => "pav"
+		), 
+		"{$lang['admin']['panel_text']}:" => array(
+			"type" => "string",
+			"value" => editor('spaw', 'standartinis', array('pnl' => 'pnl'), FALSE), 
+			"name" => "pnl",
+			"rows" => "8"
+		),
+		"" => array(
+			"type" => "submit", "name" => "Naujaa_pnl", "value" => "{$lang['admin']['panel_create']}" ) );
 	
 	$formClass = new Form($psl);	
 	lentele($lang['admin']['panel_new'], $formClass->form());
@@ -342,17 +366,6 @@ HTML;
 			klaida( $lang['system']['warning'], $lang['admin']['panel_cantedit'] );
 		}
 	}
-}
-
-//atvaizduojam blokus
-function dragItem($id, $content)
-{
-	return '<li class="dd-item dd3-item" data-id="' . $id . '">
-	<div class="dd-handle dd3-handle"></div>
-	<div class="dd3-content">
-		' . $content . '
-	</div>
-	</li>';
 }
 
 function blockContent($data)

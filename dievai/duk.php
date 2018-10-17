@@ -104,11 +104,13 @@ if ( $_GET['v'] == 4 ) {
 	if (  $viso > 0 ) {
 		foreach ( $sql as $row ) {
 
-			$info[] = array(  "<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"articles_delete[]\" />",
-			                 $lang['faq']['order']             => $row['order'],
-			                 $lang['faq']['question']         => trimlink( $row['klausimas'], 55 ),
-			                 $lang['faq']['answer']           => trimlink( $row['atsakymas'], 55 ),
-			                 $lang['admin']['action']          => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>" );
+			$info[] = array(  
+				"<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"articles_delete[]\" />",
+					$lang['faq']['order']             => $row['order'],
+					$lang['faq']['question']         => trimlink( $row['klausimas'], 55 ),
+					$lang['faq']['answer']           => trimlink( $row['atsakymas'], 55 ),
+					$lang['admin']['action']          => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>"
+				);
 		}
 		$bla = new Table();
 		lentele( $lang['faq']['questions'], "<form id=\"arch\" method=\"post\">" . $bla->render( $info ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
@@ -133,18 +135,16 @@ if ( $_GET['v'] == 4 ) {
 		"{$lang['faq']['question']}:" => array(
 			"type"  => "text",
 			"value" => input( ( isset( $sql_ex ) ) ? $sql_ex['klausimas'] : '' ),
-			"name"  => "Klausimas",
-			"class" => "input"
+			"name"  => "Klausimas"
 		),
 		"{$lang['faq']['answer']}:"   => array(
 			"type"  => "string",
-			"value" => editorius( 'standartinis', 'mini', 'Atsakymas', ( isset( $sql_ex ) ? $sql_ex['atsakymas'] : '' ) )
+			"value" => editor('jquery', 'mini', 'Atsakymas', ( isset( $sql_ex ) ? $sql_ex['atsakymas'] : '' ))
 		),
 		"{$lang['faq']['order']}:"    => array(
 			"type"  => "text",
-			"value" => ( isset( $sql_ex ) ? (int)$sql_ex['order'] : '' ),
-			"name"  => "Order",
-			"class" => "input"
+			"value" => (isset( $sql_ex ) ? (int)$sql_ex['order'] : ''),
+			"name"  => "Order"
 		),
 		" "                           => array(
 			"type"  => "hidden",
