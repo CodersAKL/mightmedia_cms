@@ -11,7 +11,13 @@
 if ( !defined( "LEVEL" ) || LEVEL > 1 || !defined( "OK" ) ) {
 	redirect( 'location: http://' . $_SERVER["HTTP_HOST"] );
 }
-include_once ( ROOT . "priedai/class.php" );
+
+if(BUTTONS_BLOCK) {
+	lentele($lang['admin']['vartotojai'], buttonsMenu($buttons['users']));
+}
+
+unset($buttons);
+
 if ( !isset( $_GET['v'] ) ) {
 	$_GET['v'] = 1;
 }
@@ -21,13 +27,9 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 } else {
 	$p = 0;
 }
-$limit = 15;
-//
-if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['vartotojai'], buttonsMenu($buttons['users']));
-}
 
-unset($buttons);
+$limit = 15;
+
 
 include_once ( ROOT . "priedai/kategorijos.php" );
 kategorija( "vartotojai", TRUE );
@@ -75,6 +77,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['save'] && 
 	} else {
 		klaida( $lang['system']['error'], "" . mysqli_error($prisijungimas_prie_mysql) . "" );
 	}
+	
 	unset( $result, $info );
 }
 
@@ -84,6 +87,7 @@ if ( isset( $url['r'] ) && $url['r'] != "" && $url['r'] != 0 ) {
 	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $url['r'] . "'" . ( $_SESSION[SLAPTAS]['id'] == 1 ? '' : ' AND `levelis` > 1' ) . " LIMIT 1" );
 	if ( $info ) {
 		$lygiai2 = array_keys( $conf['level'] );
+		
 		foreach ( $lygiai2 as $key ) {
 			$lygiai[$key] = $conf['level'][$key]['pavadinimas'];
 		}
@@ -99,6 +103,7 @@ if ( isset( $url['r'] ) && $url['r'] != "" && $url['r'] != 0 ) {
 		
 		$formClass = new Form($text);
 		$title= '<strong>' . input( $info['nick'] ) . '</strong>';
+		
 		lentele($title, $formClass->form() . "<br /><small>*{$lang['admin']['user_canteditadmin']}</small>", $lang['admin']['user_details']);
 		
 		unset( $info, $text );
@@ -115,6 +120,7 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 	foreach ( $lygiai as $key ) {
 		$grupe .= "<img src='" . ROOT . "images/icons/" . $conf['level'][$key]['pav'] . "'> <a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";v," . $_GET['v'] . ";k," . $key ) . "'>" . $conf['level'][$key]['pavadinimas'] . "</a><br>";
 	}
+
 	lentele( $lang['admin']['user_groups'], $grupe );
 
 	if ( isset( $_GET['k'] ) ) {
@@ -148,11 +154,13 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 				     $lang['admin']['action']     => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "'title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a," . getAdminPagesbyId('banai') . ";b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
 				);
 			}
+
+			include_once (ROOT . "priedai/class.php");
 			$bla = new Table();
 
-
 			lentele( $conf['level'][$_GET['k']]['pavadinimas'] . " ({$viso})", "<form id=\"usersch\" method=\"post\">" . $bla->render( $info2 ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
-			if ( $viso > $limit ) {
+			
+			if ($viso > $limit) {
 				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 			}
 
@@ -162,10 +170,12 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 }
 if ( isset( $_GET['v'] ) && $_GET['v'] == 4 ) {
 	$text = "<form name='rasti' method='post' id='rasti' action=''>{$lang['admin']['user_name']}: <input type='text' name='vardas'> <input name='rasti' type='submit' value='{$lang['admin']['user_find']}'></form>";
-	lentele( "{$lang['admin']['user_find']}", $text );
+	
+	lentele($lang['admin']['user_find'], $text);
+	
 	if ( isset( $_POST['rasti'] ) && isset( $_POST['vardas'] ) ) {
 		$resultas = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick LIKE " . escape( "%" . $_POST['vardas'] . "%" ) . "LIMIT 0,100" );
-		if ( sizeof( $resultas ) > 0 ) {
+		if (! empty($resultas)) {
 			foreach ( $resultas as $row2 ) {
 				$info3[] = array(
 					$lang['admin']['user_name']      => user( $row2['nick'], $row2['id'], $row2['levelis'] ),
@@ -174,6 +184,8 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 4 ) {
 					" "                              => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a," . getAdminPagesbyId('banai') . ";b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
 				);
 			}
+
+			include_once ( ROOT . "priedai/class.php" );
 			$bla = new Table();
 			lentele( $lang['admin']['user_list'], $bla->render( $info3 ) );
 		} else {

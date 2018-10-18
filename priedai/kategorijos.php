@@ -10,7 +10,7 @@
  * @$Date$
  * */
 ?>
-<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<!-- <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="<?php echo ROOT;?>javascript/jquery/jquery.asmselect.js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
@@ -26,7 +26,7 @@
 	});
 </script>
 <script type="text/javascript" src="js/superfish.js"></script>
-<script src="js/jquery.treeview.js" type="text/javascript"></script>
+<script src="js/jquery.treeview.js" type="text/javascript"></script> -->
 <?php
 //kategoriju medis
 function cat( $kieno, $cat_id = 0, $space = 1, $x = '' ) {

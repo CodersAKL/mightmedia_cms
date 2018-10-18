@@ -13,6 +13,7 @@ class Form
             'input'     => 'form-control', // .input
             'select'    => 'form-control show-tick', // .select
             'radio'     => 'with-gap',
+            'checkbox'  => 'filled-in',
             'button'    => 'btn btn-primary waves-effect' //.submit
         ];
     }
@@ -39,11 +40,13 @@ class Form
                     } else {
                         $return .= '<div class="row clearfix">';
                         $return .= '<div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">';
-                        $return .= '<label for="' . (isset($input['name']) ? $input['name'] : '' ) . '">' . (!empty($pav) ? $pav : '&nbsp;') . '</label>';
+                        if(!empty($pav)) {
+                            $return .= '<label for="' . (isset($input['name']) ? $input['name'] : '' ) . '">' . $pav . '</label>';
+                        }
                         $return .= '</div>';
                         $return .= '<div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">';
                         $return .= '<div class="form-group">';
-                        $return .= '<div class="form-line">';
+                        $return .= '<div class="' . (! empty($input['form_line']) ? $input['form_line'] : 'form-line') . '">';
                         $return .= $this->input($input);
                         $return .= '</div>';
                         $return .= '</div>';
@@ -170,24 +173,41 @@ class Form
 					}
 				case "radio":
 					{
-                    return "<label for='" . $array['id'] . "'>Radio - With Gap</label>
-                    <input type=\"" . $array['type'] . "\" 
+                    return "<input type=\"" . $array['type'] . "\" 
                     class=\"" . $this->defaultClass['radio'] . (isset($array['class']) ? " " . $array['class'] : "" ) . "\"
                     " . ( isset( $array['id'] ) ? " id=\"" . $array['id'] . "\"" : "" ) . "
                     " . ( isset( $array['name'] ) ? " name=\"" . $array['name'] . "\"" : "" ) . "
                     " . ( isset( $array['value'] ) ? " value=\"" . $array['value'] . "\"" : "" ) . "
-                    " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . "/>";
+                    " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . "/>
+                    <label for='" . $array['id'] . "'></label>";
 					}
 				case "checkbox":
 					{
-                    return "<label for='" . $array['id'] . "'>Radio - With Gap</label>
-                    <input type=\"" . $array['type'] . "\" 
-                    " . ( isset( $array['class'] ) ? "class=\"" . $array['class'] . "\"" : "" ) . "
+                    return "<input type=\"" . $array['type'] . "\" 
+                    class=\"" . $this->defaultClass['checkbox'] . ( isset( $array['class'] ) ? " " . $array['class'] : "" ) . "\"
                     " . ( isset( $array['id'] ) ? " id=\"" . $array['id'] . "\"" : "" ) . "
                     " . ( isset( $array['name'] ) ? " name=\"" . $array['name'] . "\"" : "" ) . "
                     " . ( isset( $array['value'] ) ? " value=\"" . $array['value'] . "\"" : "" ) . "
-                    " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . "/>";
-					}
+                    " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . "/>
+                    <label for='" . $array['id'] . "'></label>";
+                    }
+                case "switch":
+                    {
+                        return '<div class="switch">
+                        <label>
+                        ' . (isset($array['label_on']) ? $array['label_on'] : '') . '
+                        <input 
+                        type="checkbox" 
+                        ' . (isset($array['checked']) && $array['checked'] ? ' checked' : '') . '
+                        ' . (isset($array['name']) ? ' name="' . $array['name'] . '"' : '') . '
+                        ' . (isset($array['value']) ? ' value="' . $array['value'] . '"' : '') . '
+                        ' . (isset($array['id']) ? ' id="' . $array['id'] . '"' : '') . '
+                        >
+                        <span class="lever switch-col-orange"></span>
+                        ' . (isset($array['label_off']) ? $array['label_off'] : '') . '
+                        </label>
+                        </div>';
+                    }
 				case "textarea":
 					{
                     return "<textarea
@@ -196,7 +216,9 @@ class Form
                     " . ( isset( $array['id'] ) ? " id=\"" . $array['id'] . "\"" : "" ) . "
                     " . ( isset( $array['name'] ) ? " name=\"" . $array['name'] . "\"" : "" ) . "
                     " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . ">" . ( isset( $array['value'] ) ? $array['value'] : "" ) . "</" . $array['type'] . ">";
-					}
+                    }
+                    
+                //todo: checkbox or radio list
 			}
 		}
 	}

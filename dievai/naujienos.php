@@ -13,7 +13,13 @@
 if ( !defined( "OK" ) || !ar_admin( basename( __file__ ) ) ) {
 	redirect( 'location: http://' . $_SERVER["HTTP_HOST"] );
 }
+
+if(BUTTONS_BLOCK) {
+	lentele($lang['admin']['naujienos'], buttonsMenu($buttons['news']));
+}
+
 unset( $extra );
+
 if ( !isset( $_GET['v'] ) ) {
 	$_GET['v'] = 1;
 }
@@ -25,14 +31,10 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 }
 $limit   = 15;
 
-if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['naujienos'], buttonsMenu($buttons['news']));
-}
-
 include_once ROOT . "priedai/kategorijos.php";
 kategorija( "naujienos", TRUE );
 $sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `path`=0 AND `lang` = " . escape( lang() ) . " ORDER BY `id` DESC" );
-if ( sizeof( $sql ) > 0 ) {
+if (! empty($sql)) {
 
 	$kategorijos = cat( 'naujienos', 0 );
 }
@@ -247,13 +249,6 @@ if ( isset( $_GET['v'] ) ) {
 				"class"    => "input",
 				"selected" => ( isset( $extra['kategorija'] ) ? input( $extra['kategorija'] ) : '0' )
 			),
-			//more
-			"<a href=\"javascript:rodyk('more')\">{$lang['admin']['news_moreoptions']}</a>" => array(
-				"type"  => "string",
-				"value" => '<div id="more" style="display: none;">
-				' . ( ( !isset( $extra ) && isset( $conf['puslapiai']['naujienlaiskiai.php']['id'] ) ) ? $lang['news']['newsletter?'] . " <input type=\"checkbox\" name=\"letter\" /><br />" : '' ) . "
-				" . $lang['admin']['news_sticky'] . ' <input type="checkbox" name="sticky" ' . ( ( isset( $extra ) && $extra['sticky'] == 1 ) ? 'checked' : '' ) . ' /></div>'
-			),
 
 			$lang['admin']['news_text'] => array(
 				"type"  => "string",
@@ -269,18 +264,48 @@ if ( isset( $_GET['v'] ) ) {
 					)
 				)
 			),
-			( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['news_create'] => array(
-				"type"  => "submit",
-				"name"  => "action",
-				"value" => ( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['news_create']
-			)
+			$lang['admin']['news_sticky'] => [
+				'type'		=> 'switch',
+				'value'		=> 1,
+				'name'		=> 'sticky',
+				'id'		=> 'sticky',
+				'form_line'	=> 'form-not-line',
+				'checked'	=> isset($extra) && $extra['sticky'] == 1
+			]
 		);
 
-		if ( isset( $extra ) ) {
+		$naujiena[$lang['news']['newsletter?']] = [
+			'type'		=> 'switch',
+			'value'		=> 1,
+			'name'		=> 'letter',
+			'id'		=> 'letter',
+			'form_line'	=> 'form-not-line',
+			'checked'	=> isset($extra) && $extra['letter'] == 1
+		];
+
+		$naujiena[''] = [
+			"type"  	=> "submit",
+			"name"  	=> "action",
+			'form_line'	=> 'form-not-line',
+			"value" 	=> (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['news_create']
+		];
+
+		if (isset($extra)) {
+			if(isset($conf['puslapiai']['naujienlaiskiai.php']['id'])) {
+				$naujiena[$lang['news']['newsletter?']] = [
+					'type'		=> 'switch',
+					'value'		=> 1,
+					'name'		=> 'letter',
+					'id'		=> 'letter',
+					'form_line'	=> 'form-not-line',
+					'checked'	=> isset($extra) && $extra['letter'] == 1
+				];
+			}
+
 			$naujiena[''] = array(
-				"type"  => "hidden",
-				"name"  => "news_id",
-				"value" => ( isset( $extra ) ? input( $extra['id'] ) : '' )
+				"type"  	=> "hidden",
+				"name"  	=> "news_id",
+				"value" 	=> (isset( $extra ) ? input( $extra['id']) : '')
 			);
 		}
 
