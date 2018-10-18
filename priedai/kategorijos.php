@@ -76,7 +76,9 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 		}
 	}
 
-	include_once (ROOTAS . 'priedai/class.php');
+	if(! class_exists('Table') && ! class_exists('forma')) {
+		include_once (ROOTAS . 'priedai/class.php');
+	}
 
 	$lygiai = array_keys( $conf['level'] );
 	if ( $kieno != 'vartotojai' ) {

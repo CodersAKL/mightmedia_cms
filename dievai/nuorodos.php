@@ -112,36 +112,41 @@ if ( isset( $_GET['c'] ) ) {
 } elseif ( $_GET['v'] == 1 ) {
 ///FILTRAVIMAS
 	$viso = kiek( "nuorodos", "WHERE `active`='NE' AND `lang` = " . escape( lang() ) . "" );
-	$q    = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "nuorodos` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pavadinimas'] ) ? "AND (`pavadinimas` LIKE " . escape( "%" . $_POST['pavadinimas'] . "%" ) . " " . ( !empty( $_POST['date'] ) ? " AND `date` <= " . strtotime( $_POST['date'] ) . "" : "" ) . " " . ( !empty( $_POST['apie'] ) ? " AND `apie` LIKE " . escape( "%" . $_POST['apie'] . "%" ) . "" : "" ) . ")" : "" ) . " AND active='NE' ORDER BY id LIMIT {$p},{$limit}" );
-//
-	include_once ( ROOT . "priedai/class.php" );
-	$bla  = new Table();
-	$info = array();
-	if ( sizeof( $q ) > 0 ) {
-//
+	$info = [];
+	$sqlQuery = "SELECT * FROM  `" . LENTELES_PRIESAGA . "nuorodos` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pavadinimas'] ) ? "AND (`pavadinimas` LIKE " . escape( "%" . $_POST['pavadinimas'] . "%" ) . " " . ( !empty( $_POST['date'] ) ? " AND `date` <= " . strtotime( $_POST['date'] ) . "" : "" ) . " " . ( !empty( $_POST['apie'] ) ? " AND `apie` LIKE " . escape( "%" . $_POST['apie'] . "%" ) . "" : "" ) . ")" : "" ) . " AND active='NE' ORDER BY id LIMIT {$p},{$limit}";
+
+	if ($q = mysql_query1($sqlQuery)) {
+
 		if ( isset( $_POST['pavadinimas'] ) && $_POST['date'] && $_POST['apie'] ) {
 			$val = array( $_POST['pavadinimas'], $_POST['date'], $_POST['apie'] );
 		} else {
 			$val = array( "", "", "" );
 		}
-		$info[] = array( "#"                           => "<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('linksch');\" />",
-		                 $lang['admin']['link']        => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pavadinimas\" />",
-		                 $lang['admin']['links_date']  => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"date\" />",
-		                 $lang['admin']['links_about'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"apie\" />",
-		                 $lang['admin']['action']      => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />" );
-//FILTRAVIMAS
 
-		foreach ( $q as $sql ) {
+		$info[] = array( 
+			"#"                           => "<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('linksch');\" />",
+			$lang['admin']['link']        => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pavadinimas\" />",
+			$lang['admin']['links_date']  => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"date\" />",
+			$lang['admin']['links_about'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"apie\" />",
+			$lang['admin']['action']      => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />"
+		);
+		//FILTRAVIMAS
+
+		foreach ($q as $sql) {
 			$nariui_l = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='{$sql['nick']}' LIMIT 1" );
 			$info[]   = array(
 				"#"                           => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"links_delete[]\" />",
-				$lang['admin']['link']        => '<a href="' . $sql['url'] . '" title="' . $lang['admin']['links_author'] . ': <b>' . $nariui_l['nick'] . '</b><br/>
-' . $lang['admin']['links_date'] . ': <b>' . date( 'Y-m-d H:i:s ', $sql['date'] ) . ' - ' . kada( date( 'Y-m-d H:i:s ', $sql['date'] ) ) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>',
+				$lang['admin']['link']        => '<a href="' . $sql['url'] . '" title="' . $lang['admin']['links_author'] . ': <b>' . $nariui_l['nick'] . '</b><br/>' . $lang['admin']['links_date'] . ': <b>' . date( 'Y-m-d H:i:s ', $sql['date'] ) . ' - ' . kada( date( 'Y-m-d H:i:s ', $sql['date'] ) ) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>',
 				$lang['admin']['links_date']  => date( 'Y-m-d', $sql['date'] ),
 				$lang['admin']['links_about'] => trimlink( strip_tags( $sql['apie'] ), 55 ),
-				$lang['admin']['action']      => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};c," . $sql['id'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' alt='a' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};m," . $sql['id'] ) . "'title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};r," . $sql['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>" );
+				$lang['admin']['action']      => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};c," . $sql['id'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' alt='a' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};m," . $sql['id'] ) . "'title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};r," . $sql['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>"
+			);
 		}
-		lentele( $lang['admin']['links_unpublished'], "<form id=\"linksch\" method=\"post\">" . $bla->render( $info ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
+
+		$tableClass = new Table($info);
+		$content = "<form id=\"linksch\" method=\"post\">" . $tableClass->render() . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>";
+		lentele( $lang['admin']['links_unpublished'], $content);
+		// if list is bigger than limit, then we show list with pagination
 		if ( $viso > $limit ) {
 			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 		}
@@ -152,35 +157,40 @@ if ( isset( $_GET['c'] ) ) {
 } elseif ( $_GET['v'] == 4 ) {
 ///FILTRAVIMAS
 	$viso = kiek( "nuorodos", "WHERE `active`='TAIP' AND `lang` = " . escape( lang() ) . "" );
-	$q    = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "nuorodos` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pavadinimas'] ) ? "AND (`pavadinimas` LIKE " . escape( "%" . $_POST['pavadinimas'] . "%" ) . " " . ( !empty( $_POST['date'] ) ? " AND `date` <= " . strtotime( $_POST['date'] ) . "" : "" ) . " " . ( !empty( $_POST['apie'] ) ? " AND `apie` LIKE " . escape( "%" . $_POST['apie'] . "%" ) . "" : "" ) . ")" : "" ) . " AND active='TAIP' ORDER BY id LIMIT {$p},{$limit}" );
-//
-	include_once ( ROOT . "priedai/class.php" );
-	$bla  = new Table();
-	$info = array();
-	if ( sizeof( $q ) > 0 ) {
-//
+	$info = [];
+	$sqlQuery = "SELECT * FROM  `" . LENTELES_PRIESAGA . "nuorodos` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pavadinimas'] ) ? "AND (`pavadinimas` LIKE " . escape( "%" . $_POST['pavadinimas'] . "%" ) . " " . ( !empty( $_POST['date'] ) ? " AND `date` <= " . strtotime( $_POST['date'] ) . "" : "" ) . " " . ( !empty( $_POST['apie'] ) ? " AND `apie` LIKE " . escape( "%" . $_POST['apie'] . "%" ) . "" : "" ) . ")" : "" ) . " AND active='TAIP' ORDER BY id LIMIT {$p},{$limit}";
+
+	if ($q = mysql_query1($sqlQuery)) {
+
 		if ( isset( $_POST['pavadinimas'] ) && $_POST['date'] && $_POST['apie'] ) {
 			$val = array( $_POST['pavadinimas'], $_POST['date'], $_POST['apie'] );
 		} else {
 			$val = array( "", "", "" );
 		}
-		$info[] = array( "#"                           => "<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('linksch');\" />",
-		                 $lang['admin']['link']        => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pavadinimas\" />",
-		                 $lang['admin']['links_date']  => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"date\" />",
-		                 $lang['admin']['links_about'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"apie\" />",
-		                 $lang['admin']['action']      => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />" );
-//FILTRAVIMAS
+
+		$info[] = array(
+			"#"                           => "<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('linksch');\" />",
+			$lang['admin']['link']        => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pavadinimas\" />",
+			$lang['admin']['links_date']  => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"date\" />",
+			$lang['admin']['links_about'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"apie\" />",
+			$lang['admin']['action']      => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />"
+		);
+		//FILTRAVIMAS
 		foreach ( $q as $sql ) {
 			$nariui_l = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $sql['nick'] . "' LIMIT 1" );
 			$info[]   = array(
 				"#"                           => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"links_delete[]\" />",
-				$lang['admin']['link']        => '<a href="' . $sql['url'] . '" title="' . $lang['admin']['links_author'] . ': <b>' . $nariui_l['nick'] . '</b><br/>
-' . $lang['admin']['links_date'] . ': <b>' . date( 'Y-m-d H:i:s ', $sql['date'] ) . ' - ' . kada( date( 'Y-m-d H:i:s ', $sql['date'] ) ) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>',
+				$lang['admin']['link']        => '<a href="' . $sql['url'] . '" title="' . $lang['admin']['links_author'] . ': <b>' . $nariui_l['nick'] . '</b><br/>' . $lang['admin']['links_date'] . ': <b>' . date( 'Y-m-d H:i:s ', $sql['date'] ) . ' - ' . kada( date( 'Y-m-d H:i:s ', $sql['date'] ) ) . '</b>" target="_blank">' . $sql['pavadinimas'] . '</a>',
 				$lang['admin']['links_date']  => date( 'Y-m-d', $sql['date'] ),
 				$lang['admin']['links_about'] => "<span style='cursor:pointer;' title='" . strip_tags( $sql['apie'] ) . "'>" . trimlink( strip_tags( $sql['apie'] ), 55 ) . "</span>",
-				$lang['admin']['action']      => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};m," . $sql['id'] ) . "'title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='" . ROOT . "images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};r," . $sql['id'] ) . "'title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>" );
+				$lang['admin']['action']      => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};m," . $sql['id'] ) . "'title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='" . ROOT . "images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};r," . $sql['id'] ) . "'title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>"
+			);
 		}
-		lentele( $lang['admin']['nuorodos'], "<form id=\"linksch\" method=\"post\">" . $bla->render( $info ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
+
+		$tableClass  = new Table($info);
+		$content = "<form id=\"linksch\" method=\"post\">" . $tableClass->render() . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>";
+		lentele( $lang['admin']['nuorodos'], $content);
+		// if list is bigger than limit, then we show list with pagination
 		if ( $viso > $limit ) {
 			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 		}
@@ -212,16 +222,17 @@ if ( isset( $_GET['c'] ) ) {
 			}
 		}
 	}
-	$nuorodos = array( "Form"                             => array( "action" => "", "method" => "post", "name" => "Submit_link" ),
-	                   "{$lang['system']['category']}:"   => array( "type" => "select", "value" => $kategorijos, "name" => "kat" ),
-	                   "{$lang['admin']['links_title']}:" => array( "type" => "text", "value" => "", "name" => "name" ),
-	                   "Url:"                             => array( "type" => "text", "value" => "http://", "name" => "url" ), $lang['admin']['links_active'] . ":" => array( "type" => "select", "value" => array( "TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}" ), "name" => "act" ),
-	                   "{$lang['admin']['links_about']}:" => array( "type" => "string", "value" => editor( 'jquery', 'mini', 'Aprasymas', '' ) ),
-	                   " "                                => array( "type" => "submit", "name" => "Submit_link", "value" => "{$lang['admin']['links_create']}" ) );
+	$nuorodos = array(
+		"Form"                             => array( "action" => "", "method" => "post", "name" => "Submit_link" ),
+		"{$lang['system']['category']}:"   => array( "type" => "select", "value" => $kategorijos, "name" => "kat" ),
+		"{$lang['admin']['links_title']}:" => array( "type" => "text", "value" => "", "name" => "name" ),
+		"Url:"                             => array( "type" => "text", "value" => "http://", "name" => "url" ), $lang['admin']['links_active'] . ":" => array( "type" => "select", "value" => array( "TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}" ), "name" => "act" ),
+		"{$lang['admin']['links_about']}:" => array( "type" => "string", "value" => editor( 'jquery', 'mini', 'Aprasymas', '' ) ),
+		" "                                => array( "type" => "submit", "name" => "Submit_link", "value" => "{$lang['admin']['links_create']}" )
+	);
 
-	lentele( $lang['admin']['links_create'], $bla->form( $nuorodos ) );
+	$formClass = new Form($nuorodos);
+	lentele($lang['admin']['links_create'], $formClass->form());
 }
-unset( $bla, $info, $sql, $sql2, $q, $result, $result2 );
-//unset($_POST);
 
-?>
+unset($info, $sql, $sql2, $q, $result, $result2);

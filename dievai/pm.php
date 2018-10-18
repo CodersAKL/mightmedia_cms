@@ -45,7 +45,6 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) ) {
 
 }
 
-
 //perziureti laiska
 if ( isset( $url['v'] ) ) {
 	if ( !empty( $url['v'] ) && (int)$url['v'] > 0 ) {
@@ -67,20 +66,16 @@ if ( isset( $url['v'] ) ) {
 	}
 }
 
-
-//paruosiam klase lenteliu paisymui
-include_once ( ROOT . "priedai/class.php" );
-
 //laisku sarasas
 unset( $info );
-$info = array();
-$sql  = mysql_query1( "
-			SELECT SUBSTRING(`msg`,1,50) AS `msg`,
-			(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id`,
-			(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`to`) AS `to_id`,
-			`" . LENTELES_PRIESAGA . "private_msg`.`id`, `" . LENTELES_PRIESAGA . "private_msg`.`from` AS `from_nick`, `" . LENTELES_PRIESAGA . "private_msg`.`to` AS `to_nick`, `" . LENTELES_PRIESAGA . "private_msg`.`title`, `" . LENTELES_PRIESAGA . "private_msg`.`read`, `" . LENTELES_PRIESAGA . "private_msg`.`date`
-			FROM `" . LENTELES_PRIESAGA . "private_msg` ORDER BY `id` DESC LIMIT " . escape( $p ) . "," . $limit );
-if ( sizeof( $sql ) > 0 ) {
+$info = [];
+$sqlQuery ="SELECT SUBSTRING(`msg`,1,50) AS `msg`,
+(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id`,
+(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`to`) AS `to_id`,
+`" . LENTELES_PRIESAGA . "private_msg`.`id`, `" . LENTELES_PRIESAGA . "private_msg`.`from` AS `from_nick`, `" . LENTELES_PRIESAGA . "private_msg`.`to` AS `to_nick`, `" . LENTELES_PRIESAGA . "private_msg`.`title`, `" . LENTELES_PRIESAGA . "private_msg`.`read`, `" . LENTELES_PRIESAGA . "private_msg`.`date`
+FROM `" . LENTELES_PRIESAGA . "private_msg` ORDER BY `id` DESC LIMIT " . escape( $p ) . "," . $limit;
+
+if ($sql = mysql_query1($sqlQuery)) {
 	foreach ( $sql as $row ) {
 		if ( $row['read'] == "NO" ) {
 			$extra = "<img src='" . ROOT . "images/pm/pm_new.png' />";
@@ -94,13 +89,15 @@ if ( sizeof( $sql ) > 0 ) {
 			"{$lang['admin']['pm_reciever']}" => user( $row['to_nick'], $row['to_id'] ),
 			"{$lang['admin']['pm_subject'] }" => "<a href=\"" . url( "?id,{$_GET['id']};a," . $_GET['a'] . ";v," . $row['id'] ) . "\" title=\"<b>Laiško ištrauka:</b> " . input( trim( strip_tags( str_replace( array( '[', ']' ), '', $row['msg'] ) ) ) ) . "...\" style=\"display:block\">" . ( isset( $row['title'] ) && !empty( $row['title'] ) ? trimlink( input( $row['title'] ), 10 ) : 'Be temos' ) . "</a>",
 			"{$lang['admin']['pm_date']}"     => date( 'Y-m-d H:i:s ', $row['date'] ), "{$lang['admin']['action']}" => "
-			<a href=\"" . url( "d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a>" );
+			<a href=\"" . url( "d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a>"
+		);
 	}
 }
 //nupiesiam laisku lentele
-$bla = new Table();
-lentele( $lang['admin']['pm_messages'], ( count( $info ) > 0 ? $bla->render( $info ) : $lang['sb']['empty'] ) );
-
+$formClass = new Table($info);
+$content = (count($info) > 0 ? $formClass->render() : $lang['sb']['empty']);
+lentele($lang['admin']['pm_messages'], $content);
+// if list is bigger than limit, then we show list with pagination
 if ( $viso > $limit ) {
 	lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 }
@@ -108,8 +105,9 @@ if ( $viso > $limit ) {
 unset( $info, $row, $viso, $limit, $p );
 
 //laisku trinimas "kam siustu laisku"
-$sql = mysql_query1( "SELECT count(*) AS 'viso', `to` AS 'nick' FROM `" . LENTELES_PRIESAGA . "private_msg` GROUP BY `to` ORDER BY `to`" );
-if ( sizeof( $sql ) > 0 ) {
+$sqlQuery = "SELECT count(*) AS 'viso', `to` AS 'nick' FROM `" . LENTELES_PRIESAGA . "private_msg` GROUP BY `to` ORDER BY `to`";
+
+if ($sql = mysql_query1($sqlQuery)) {
 	foreach ( $sql as $row ) {
 		$select[$row['nick']] = $row['nick'] . " - " . $row['viso'];
 	}

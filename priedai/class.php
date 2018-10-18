@@ -189,5 +189,3 @@ class Table
 		return "\n</table>\n";
 	}
 }
-
-?>

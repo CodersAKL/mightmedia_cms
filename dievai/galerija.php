@@ -395,72 +395,72 @@ if ( isset( $_GET['v'] ) ) {
 	} elseif ( $_GET['v'] == 7 ) {
 
 		$viso = kiek( 'galerija', "WHERE `rodoma` = 'NE' AND `lang` = " . escape( lang() ) . " AND `categorija`=" . escape( ( isset( $_GET['k'] ) ? $_GET['k'] : 0 ) ) . "" );
-		$q    = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "galerija` WHERE `rodoma` = 'NE' AND `lang` = " . escape( lang() ) . " AND `categorija`=" . escape( ( isset( $_GET['k'] ) ? $_GET['k'] : 0 ) ) . " ORDER BY `" . $conf['galorder'] . "` " . $conf['galorder_type'] . " LIMIT {$p},{$limit}" );
-		if ( $q ) {
-			include_once ( ROOT . "priedai/class.php" );
-			$bla  = new Table();
-			$info = array();
-			if ( sizeof( $q ) > 0 ) {
-				$text = $fancybox . "<table width=\"80%\" border=\"0\"><tr><td>";
-				foreach ( $q as $row ) {
-					$text .= "<div class=\"gallery img_left\" >
-<a class=\"fancybox-effects-d\" href=\"" . ROOT . "images/galerija/" . $row['file'] . "\" title=\"" . ( !empty( $row['pavadinimas'] ) ? $row['pavadinimas'] . "<br>" : '' ) . trimlink( strip_tags( $row['apie'] ), 50 ) . "\">
-<img src=\"" . ROOT . "images/galerija/mini/" . $row['file'] . "\" alt=\"\" />
-</a>
-<div class='gallery_menu'>
-<a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date( 'Y-m-d H:i:s ', $row['data'] ) . "\"><img src='" . ROOT . "images/icons/information.png' border='0' alt='info' /></a>
-<a href=\"" . url( "?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row['ID'] ) . "\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('" . url( "?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row['ID'] ) . "'); $(this).parent().parent().remove(); return false } else { return false }\" title=\"{$lang['admin']['delete']}\"><img src='" . ROOT . "images/icons/cross.png'  border='0'></a>
-<a href='" . url( "?id," . $url['id'] . ";a," . $url['a'] . ";priimti," . $row['ID'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' border='0'></a>
-<a href=\"" . url( "?id," . $url['id'] . ";a," . $url['a'] . ";h," . $row['ID'] ) . "\" title=\"{$lang['admin']['edit']}\"><img src='" . ROOT . "images/icons/picture_edit.png'  border='0'></a>";
-					$text .= "</div><div class='gallery_title'>
-" . trimlink( ( !empty( $ro2['pavadinimas'] ) ? $row['pavadinimas'] : '' ), 10 ) . "
-</div></div>";
-				}
-				$text .= '</td></tr></table>';
+		$sqlQuery = "SELECT * FROM  `" . LENTELES_PRIESAGA . "galerija` WHERE `rodoma` = 'NE' AND `lang` = " . escape( lang() ) . " AND `categorija`=" . escape( ( isset( $_GET['k'] ) ? $_GET['k'] : 0 ) ) . " ORDER BY `" . $conf['galorder'] . "` " . $conf['galorder_type'] . " LIMIT {$p},{$limit}";
+		if ($q = mysql_query1($sqlQuery)) {
+			
+			$info = [];
+			$text = $fancybox . "<table width=\"80%\" border=\"0\"><tr><td>";
+			foreach ( $q as $row ) {
+				$text .= "<div class=\"gallery img_left\" >
+				<a class=\"fancybox-effects-d\" href=\"" . ROOT . "images/galerija/" . $row['file'] . "\" title=\"" . ( !empty( $row['pavadinimas'] ) ? $row['pavadinimas'] . "<br>" : '' ) . trimlink( strip_tags( $row['apie'] ), 50 ) . "\">
+				<img src=\"" . ROOT . "images/galerija/mini/" . $row['file'] . "\" alt=\"\" />
+				</a>
+				<div class='gallery_menu'>
+				<a href=\"#\" title=\"{$lang['admin']['gallery_date']}: " . date( 'Y-m-d H:i:s ', $row['data'] ) . "\"><img src='" . ROOT . "images/icons/information.png' border='0' alt='info' /></a>
+				<a href=\"" . url( "?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row['ID'] ) . "\" onclick=\"if (confirm('{$lang['system']['delete_confirm']}')) { $.get('" . url( "?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row['ID'] ) . "'); $(this).parent().parent().remove(); return false } else { return false }\" title=\"{$lang['admin']['delete']}\"><img src='" . ROOT . "images/icons/cross.png'  border='0'></a>
+				<a href='" . url( "?id," . $url['id'] . ";a," . $url['a'] . ";priimti," . $row['ID'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' border='0'></a>
+				<a href=\"" . url( "?id," . $url['id'] . ";a," . $url['a'] . ";h," . $row['ID'] ) . "\" title=\"{$lang['admin']['edit']}\"><img src='" . ROOT . "images/icons/picture_edit.png'  border='0'></a>";
+									$text .= "</div><div class='gallery_title'>
+				" . trimlink( ( !empty( $ro2['pavadinimas'] ) ? $row['pavadinimas'] : '' ), 10 ) . "
+				</div></div>";
+			}
+			$text .= '</td></tr></table>';
 
-				lentele( $lang['admin']['gallery_unpublished'], $text );
-
-				if ( $viso > $limit ) {
-					lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
-				}
+			lentele( $lang['admin']['gallery_unpublished'], $text );
+			// if list is bigger than limit, then we show list with pagination
+			if ( $viso > $limit ) {
+				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 			}
 		} else {
 			klaida( $lang['system']['warning'], $lang['system']['no_items'] );
 		}
 	} elseif ( $_GET['v'] == 9 && $_SESSION[SLAPTAS]['level'] == 1 ) {
 		$text = "
-      <link href=\"uploadify/css/default.css\" rel=\"stylesheet\" type=\"text/css\" />
-<link href=\"uploadify/css/uploadify.css\" rel=\"stylesheet\" type=\"text/css\" />
-<script type=\"text/javascript\" src=\"uploadify/scripts/swfobject.js\"></script>
-<script type=\"text/javascript\" src=\"uploadify/scripts/jquery.uploadify.v2.1.0.min.js\"></script>
-<script type=\"text/javascript\">
-$(document).ready(function() {
-	$(\"#uploadify\").uploadify({
-		'uploader'       : 'uploadify/scripts/uploadify.swf',
-		'script'         : '" . adresas() . "/uploadify/scripts/uploadify.php',
-		'cancelImg'      : 'uploadify/cancel.png',
-		'folder'         : 'images/galerija',
-		'scriptData'     : {'PHPSESSID': '" . session_id() . "'},
-		'queueID'        : 'fileQueue',
-		'auto'           : true,
-		'multi'          : true,
-		'buttonText'     : '" . $lang['admin']['file_new'] . "'
-		  
-	});
-});
-</script>
-      <fieldset><legend>{$lang['gallery']['photoalbums']}:</legend><select id=\"cat\" onchange=\"$('#uploadify').uploadifySettings('scriptData', {'cat':$(this).val()});\" >";
-		foreach ( $kategorijos as $id => $kategorija ) {
+      	<link href=\"uploadify/css/default.css\" rel=\"stylesheet\" type=\"text/css\" />
+		<link href=\"uploadify/css/uploadify.css\" rel=\"stylesheet\" type=\"text/css\" />
+		<script type=\"text/javascript\" src=\"uploadify/scripts/swfobject.js\"></script>
+		<script type=\"text/javascript\" src=\"uploadify/scripts/jquery.uploadify.v2.1.0.min.js\"></script>
+		<script type=\"text/javascript\">
+		$(document).ready(function() {
+			$(\"#uploadify\").uploadify({
+				'uploader'       : 'uploadify/scripts/uploadify.swf',
+				'script'         : '" . adresas() . "/uploadify/scripts/uploadify.php',
+				'cancelImg'      : 'uploadify/cancel.png',
+				'folder'         : 'images/galerija',
+				'scriptData'     : {'PHPSESSID': '" . session_id() . "'},
+				'queueID'        : 'fileQueue',
+				'auto'           : true,
+				'multi'          : true,
+				'buttonText'     : '" . $lang['admin']['file_new'] . "'
+				
+			});
+		});
+		</script>
+      	<fieldset><legend>{$lang['gallery']['photoalbums']}:</legend><select id=\"cat\" onchange=\"$('#uploadify').uploadifySettings('scriptData', {'cat':$(this).val()});\" >";
+		
+		  foreach ( $kategorijos as $id => $kategorija ) {
 			$text .= "<option value=\"$id\" " . ( $id == 0 ? "selected" : "" ) . ">$kategorija";
 		}
+
 		$text .= "</select>
 			<div id=\"fileQueue\"></div>
 			<input type=\"file\" name=\"uploadify\" id=\"uploadify\" />
 			<p><a href=\"javascript:jQuery('#uploadify').uploadifyClearQueue()\">" . $lang['admin']['cancel'] . "</a></p>
 		</fieldset>";
+
 		lentele( $lang['admin']['gallery_group_add'], $text );
 	}
 
 }
+
 unset( $sql, $extra, $row );
-//unset($_POST);

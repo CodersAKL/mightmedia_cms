@@ -19,7 +19,9 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 } else {
 	$p = 0;
 }
+
 $limit = 15;
+
 //trinam irasa
 if ( isset( $url['d'] ) && isnum( $url['d'] ) && $_SESSION[SLAPTAS]['level'] == 1 ) {
 	if ( $url['d'] == "0" && isset( $_POST['ip'] ) && !empty( $_POST['ip'] ) && $_POST['del_all'] == $lang['admin']['delete'] && isnum( $_POST['ip'] ) ) {
@@ -43,11 +45,11 @@ if ( !empty( $url['t'] ) ) {
 //rodom zurnala
 } else {
 	$viso = kiek( "logai" );
-	$sql  = mysql_query1( "SELECT `" . LENTELES_PRIESAGA . "logai`.`id`, `" . LENTELES_PRIESAGA . "logai`.`ip` AS ip, `" . LENTELES_PRIESAGA . "logai`.`action`, `" . LENTELES_PRIESAGA . "logai`.`ip` AS ip1, `" . LENTELES_PRIESAGA . "logai`.`time`,	IF(`" . LENTELES_PRIESAGA . "users`.`nick` <> '', `" . LENTELES_PRIESAGA . "users`.`nick`, 'Svečias') AS nick, IF(`" . LENTELES_PRIESAGA . "users`.`id` <> '', `" . LENTELES_PRIESAGA . "users`.`id`, '0') AS nick_id, IF(`" . LENTELES_PRIESAGA . "users`.`levelis` <> '', `" . LENTELES_PRIESAGA . "users`.`levelis`, '0') AS levelis	FROM `" . LENTELES_PRIESAGA . "logai` Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "logai`.`ip` = `" . LENTELES_PRIESAGA . "users`.`ip`	ORDER BY `id` DESC LIMIT {$p}, {$limit}" );
+		
+	$info = [];
+	$sqlQuery = "SELECT `" . LENTELES_PRIESAGA . "logai`.`id`, `" . LENTELES_PRIESAGA . "logai`.`ip` AS ip, `" . LENTELES_PRIESAGA . "logai`.`action`, `" . LENTELES_PRIESAGA . "logai`.`ip` AS ip1, `" . LENTELES_PRIESAGA . "logai`.`time`,	IF(`" . LENTELES_PRIESAGA . "users`.`nick` <> '', `" . LENTELES_PRIESAGA . "users`.`nick`, 'Svečias') AS nick, IF(`" . LENTELES_PRIESAGA . "users`.`id` <> '', `" . LENTELES_PRIESAGA . "users`.`id`, '0') AS nick_id, IF(`" . LENTELES_PRIESAGA . "users`.`levelis` <> '', `" . LENTELES_PRIESAGA . "users`.`levelis`, '0') AS levelis	FROM `" . LENTELES_PRIESAGA . "logai` Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "logai`.`ip` = `" . LENTELES_PRIESAGA . "users`.`ip`	ORDER BY `id` DESC LIMIT {$p}, {$limit}";
 
-	$info = array();
-
-	if (! empty( $sql)) {
+	if ($sql  = mysql_query1($sqlQuery)) {
 		foreach ( $sql as $row ) {
 			if ( $row['nick'] == $lang['system']['guest'] ) {
 				$kas = $lang['system']['guest'];
@@ -57,20 +59,22 @@ if ( !empty( $url['t'] ) ) {
 			$info[] = array( $lang['admin']['logs_log'] => "<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v," . $row['id'] ) . "\" title=\"{$lang['admin']['logs_date']}: <b>" . date( 'Y-m-d H:i:s', $row['time'] ) . "</b><br/>IP: <b>" . $row['ip1'] . "</b><br/>{$lang['admin']['logs_log']}: <i>" . wrap1( input( $row['action'] ), 50 ) . "</i><br/>\">" . trimlink( input( strip_tags( $row['action'] ) ), 100 ) . "</a>", $lang['admin']['logs_user'] => $kas, $lang['admin']['action'] => "<a href=\"" . url( "d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a> <a href='" . url( "?id," . $url['id'] . ";a," . getAdminPagesbyId('banai') . ";b,1;ip," . $row['ip'] ) . "' title='{$lang['admin']['badip']}'><img src=\"" . ROOT . "images/icons/delete.png\" alt=\"[{$lang['admin']['badip']}]\" border=\"0\" class=\"middle\" /></a>" );
 		}
 		
-		include_once ( ROOT . 'priedai/class.php' );
+		$title = $lang['admin']['logai'] . ' - ' . $lang['admin']['logs_yourip'] . ': <span color="red">' . getip() . '</span>';
+		
+		$tableClass = new Table($info);
+		$tableClassla->width[$lang['admin']['action']]	= '50px';
+		$tableClass->width[$lang['admin']['logs_user']]	= '150px';
 
-		$bla = new Table();
-		$bla->width[$lang['admin']['action']]    = '50px';
-		$bla->width[$lang['admin']['logs_user']] = '150px';
-		lentele( "{$lang['admin']['logai']} - {$lang['admin']['logs_yourip']}: <font color='red'>" . getip() . "</font>", $bla->render( $info ) );
+		lentele($title, $tableClass->render());
+
 	} else {
 		msg( $lang['system']['warning'], $lang['admin']['logs_nologs'] );
 	}
 
+	// if list is bigger than limit, then we show list with pagination
 	if ( $viso > $limit ) {
 		lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 	}
-
 
 	$sql = mysql_query1("SELECT count(`id`) as `viso`, `ip` FROM `" . LENTELES_PRIESAGA . "logai` GROUP BY `ip`, `id` ORDER BY `time` DESC");
 	
@@ -91,4 +95,4 @@ if ( !empty( $url['t'] ) ) {
 	}
 }
 
-unset($row, $bla, $info, $sql, $select, $viso, $nustatymai);
+unset($row, $info, $sql, $select, $viso, $nustatymai);

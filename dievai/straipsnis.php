@@ -150,35 +150,43 @@ if ( isset( $_GET['v'] ) ) {
 
 	$kategorijos[0] = "--";
 }
-include_once ( ROOT . "priedai/class.php" );
 
 if ( $_GET['v'] == 4 ) {
-	$table = new Table();
-///FILTRAVIMAS
+	
+	///FILTRAVIMAS
 	$viso = kiek( "straipsniai", "WHERE `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . "" );
 	$sql2 = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "straipsniai` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pav'] ) ? "AND (`pav` LIKE " . escape( "%" . $_POST['pav'] . "%" ) . " " . ( !empty( $_POST['date'] ) ? " AND `date` <= " . strtotime( $_POST['date'] ) . "" : "" ) . " " . ( !empty( $_POST['t_text'] ) ? " AND `t_text` LIKE " . escape( "%" . $_POST['t_text'] . "%" ) . "" : "" ) . ")" : "" ) . " AND rodoma='TAIP' ORDER BY id LIMIT {$p},{$limit}" );
+	
 	if ( isset( $_POST['pav'] ) && $_POST['date'] && $_POST['t_text'] ) {
 		$val = array( $_POST['pav'], $_POST['date'], $_POST['t_text'] );
 	} else {
 		$val = array( "", "", "" );
 	}
-	$info[] = array( "#"                               => " <input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />",
-	                 $lang['admin']['article']         => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pav\" />",
-	                 $lang['admin']['article_date']    => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"date\" />",
-	                 $lang['admin']['article_preface'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"t_text\" />",
-	                 $lang['admin']['action']          => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />" );
-//FILTRAVIMAS
+
+	$info[] = array(
+		"#"                               => " <input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />",
+		$lang['admin']['article']         => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pav\" />",
+		$lang['admin']['article_date']    => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"date\" />",
+		$lang['admin']['article_preface'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"t_text\" />",
+		$lang['admin']['action']          => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />"
+	);
+	//FILTRAVIMAS
 	foreach ( $sql2 as $row ) {
-		$info[] = array( "#"                               => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"articles_delete[]\" />",
-		                 $lang['admin']['article']         => "<span style='cursor:pointer;' title='" . $lang['admin']['article_author'] . ": <b>" . $row['autorius'] . "</b>' >" . input( $row['pav'] ) . "</span>",
-		                 $lang['admin']['article_date']    => date( 'Y-m-d', $row['date'] ),
-		                 $lang['admin']['article_preface'] => "<span style='cursor:pointer;' title='" . strip_tags( $row['t_text'] ) . "'>" . trimlink( strip_tags( $row['t_text'] ), 55 ) . "</span>",
-		                 $lang['admin']['action']          => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "images/icons/cross.png\" border=\"0\"></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>" );
+		$info[] = array(
+			"#"                               => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"articles_delete[]\" />",
+			$lang['admin']['article']         => "<span style='cursor:pointer;' title='" . $lang['admin']['article_author'] . ": <b>" . $row['autorius'] . "</b>' >" . input( $row['pav'] ) . "</span>",
+			$lang['admin']['article_date']    => date( 'Y-m-d', $row['date'] ),
+			$lang['admin']['article_preface'] => "<span style='cursor:pointer;' title='" . strip_tags( $row['t_text'] ) . "'>" . trimlink( strip_tags( $row['t_text'] ), 55 ) . "</span>",
+			$lang['admin']['action']          => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "images/icons/cross.png\" border=\"0\"></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>"
+		);
 	}
 
 	if ( !empty( $info ) && count( $info ) ) {
-		lentele( $lang['admin']['article_edit'], "<form id=\"arch\" method=\"post\">" . $table->render( $info ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
+		$tableClass = new Table($info);
+		$content = "<form id=\"arch\" method=\"post\">" . $tableClass->render() . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>";
+		lentele($lang['admin']['article_edit'], $content);
 	}
+	// if list is bigger than limit, then we show list with pagination
 	if ( $viso > $limit ) {
 		lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 	}
@@ -186,31 +194,39 @@ if ( $_GET['v'] == 4 ) {
 
 if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
 	$ar         = array( "TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}" );
-	$straipsnis = array( "Form"                                                        => array( "action" => url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ), "method" => "post", "name" => "reg" ), "{$lang['admin']['article_title']}:" => array( "type" => "text", "value" => input( ( isset( $extra ) ) ? $extra['pav'] : '' ), "name" => "pav", "class" => "input" ), "" => array( "type" => "hidden", "name" => "idas", "value" => ( isset( $extra['id'] ) ? input( $extra['id'] ) : '' ) ), "{$lang['admin']['article_comments']}:" => array( "type" => "select", "value" => array( 'taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no'] ), "name" => "kom", "class" => "input", "class" => "input" ), "{$lang['system']['category']}:" => array( "type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => ( isset( $extra['kat'] ) ?
-		input( $extra['kat'] ) : '' ) ), "{$lang['admin']['article_shown']}:"          => array( "type" => "select", "value" => $ar, "name" => "rodoma", "class" => "input", "class" => "input", "selected" => ( isset( $extra['rodoma'] ) ? input( $extra['rodoma'] ) : '' ) ), "{$lang['admin']['article']}:" => array( "type" => "string", "value" =>
-	editor( 'jquery', 'standartinis', array( 'str' => $lang['admin']['article'] ), array( 'str' => ( isset( $extra ) ? $extra['t_text'] . ( empty( $extra['f_text'] ) ? '' : "\n===page===\n" . $extra['f_text'] ) : $lang['admin']['article'] ) ) )
-
-	), ( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['article_create'] => array( "type" => "submit", "name" => "action", "value" => ( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['article_create'] ) );
+	$editOrCreate = (isset($extra) ? $lang['admin']['edit'] : $lang['admin']['article_create']);
+	$straipsnis = array(
+		"Form"									=> array( "action" => url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ), "method" => "post", "name" => "reg" ), 
+		"{$lang['admin']['article_title']}:" 	=> array( "type" => "text", "value" => input( ( isset( $extra ) ) ? $extra['pav'] : '' ), "name" => "pav", "class" => "input" ), "" => array( "type" => "hidden", "name" => "idas", "value" => ( isset( $extra['id'] ) ? input( $extra['id'] ) : '' ) ), 
+		"{$lang['admin']['article_comments']}:" => array( "type" => "select", "value" => array( 'taip' => $lang['admin']['yes'], 'ne' => $lang['admin']['no'] ), "name" => "kom", "class" => "input", "class" => "input" ), 
+		"{$lang['system']['category']}:" 		=> array( "type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class" => "input", "selected" => ( isset( $extra['kat'] ) ? input( $extra['kat'] ) : '' ) ), 
+		"{$lang['admin']['article_shown']}:"	=> array( "type" => "select", "value" => $ar, "name" => "rodoma", "class" => "input", "class" => "input", "selected" => ( isset( $extra['rodoma'] ) ? input( $extra['rodoma'] ) : '' ) ), 
+		"{$lang['admin']['article']}:" 			=> array( "type" => "string", "value" => editor( 'jquery', 'standartinis', array( 'str' => $lang['admin']['article'] ), array( 'str' => ( isset( $extra ) ? $extra['t_text'] . ( empty( $extra['f_text'] ) ? '' : "\n===page===\n" . $extra['f_text'] ) : $lang['admin']['article'] ) ) ) ), 
+		$editOrCreate							=> array( "type" => "submit", "name" => "action", "value" => ( isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['article_create'] )
+	);
+	
 	if ( isset( $extra['id'] ) ) {
 		$naujiena[''] = array( "type" => "text", "name" => "idas", "value" => ( isset( $extra['id'] ) ? input( $extra['id'] ) : '' ) );
 	}
 
 	$formClass = new Form($straipsnis);	
 	lentele($lang['admin']['article_create'], $formClass->form());
+
 } elseif ( $_GET['v'] == 6 ) {
-///FILTRAVIMAS
-	$q = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "straipsniai` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pav'] ) ? "AND (`pav` LIKE " . escape( "%" . $_POST['pav'] . "%" ) . " " . ( !empty( $_POST['date'] ) ? " AND `date` <= " . strtotime( $_POST['date'] ) . "" : "" ) . " " . ( !empty( $_POST['t_text'] ) ? " AND `t_text` LIKE " . escape( "%" . $_POST['t_text'] . "%" ) . "" : "" ) . ")" : "" ) . " AND rodoma='NE' ORDER BY id DESC LIMIT {$p},{$limit}" );
-//
 	$viso = kiek( "straipsniai", "WHERE `rodoma`='NE' AND `lang` = " . escape( lang() ) . "" );
-	if ( $q ) {
-		$bla  = new Table();
-		$info = array();
-//
+	///FILTRAVIMAS
+	$sqlQuery = "SELECT * FROM  `" . LENTELES_PRIESAGA . "straipsniai` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pav'] ) ? "AND (`pav` LIKE " . escape( "%" . $_POST['pav'] . "%" ) . " " . ( !empty( $_POST['date'] ) ? " AND `date` <= " . strtotime( $_POST['date'] ) . "" : "" ) . " " . ( !empty( $_POST['t_text'] ) ? " AND `t_text` LIKE " . escape( "%" . $_POST['t_text'] . "%" ) . "" : "" ) . ")" : "" ) . " AND rodoma='NE' ORDER BY id DESC LIMIT {$p},{$limit}";
+	//
+	if ($q = mysql_query1($sqlQuery)) {
+		
+		$info =[];
+
 		if ( isset( $_POST['pav'] ) && $_POST['date'] && $_POST['t_text'] ) {
 			$val = array( $_POST['pav'], $_POST['date'], $_POST['t_text'] );
 		} else {
 			$val = array( "", "", "", );
 		}
+
 		$info[] = array( 
 			"#"                               => " <input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />",
 			$lang['admin']['article']         => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"pav\" />",
@@ -218,7 +234,7 @@ if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
 			$lang['admin']['article_preface'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"t_text\" />",
 			$lang['admin']['action']          => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />"
 		);
-//FILTRAVIMAS
+		//FILTRAVIMAS
 		foreach ( $q as $sql ) {
 			$info[] = array( 
 				"#"                               => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"articles_delete[]\" />",
@@ -229,13 +245,14 @@ if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
 			);
 		}
 
-		lentele( $lang['admin']['article_unpublished'], "<form id=\"arch\" method=\"post\">" . $bla->render( $info ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
-
+		$tableClass  = new Table($info);
+		$content = "<form id=\"arch\" method=\"post\">" . $tableClass->render() . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>";
+		lentele($lang['admin']['article_unpublished'], $content);
+		// if list is bigger than limit, then we show list with pagination
 		if ( $viso > $limit ) {
 			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 		}
 	} else {
 		klaida( $lang['system']['warning'], $lang['system']['no_items'] );
 	}
-
 }

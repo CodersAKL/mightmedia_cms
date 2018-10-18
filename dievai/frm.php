@@ -14,60 +14,17 @@
 if ( !defined( "OK" ) || !ar_admin( basename( __file__ ) ) ) {
 	redirect( 'location: http://' . $_SERVER["HTTP_HOST"] );
 }
-?>
-<script type="text/javascript">
-	$(document).ready(function () {
-		$("#test-list").sortable({
-			handle:'.handle',
-			axis:'y',
-			update:function () {
-				var order = $('#test-list').sortable('serialize');
-				$("#la").show("slow");
-				$("#la").hide("slow");
-				$.post("<?php echo url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ); ?>", {order:order});
-			}
-		});
-		$("#test-list2").sortable({
-			handle:'.handle',
-			axis:'y',
-			update:function () {
-				var order2 = $('#test-list2').sortable('serialize');
-				$("#la2").show("slow");
-				$("#la2").hide("slow");
-				$.post("<?php echo url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ); ?>", {order2:order2});
-			}
-		});
-	});
-</script>
-<?php
-$root = ROOT;
-echo <<< HTML
-<script type="text/javascript" src="{$root}javascript/jquery/jquery.asmselect.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("select[multiple]").asmSelect({
-			addItemTarget: 'bottom',
-			animate: true,
-			highlight: true,
-			removeLabel: '{$lang['system']['delete']}',
-			highlightAddedLabel: '{$lang['admin']['added']}: ',
-			highlightRemovedLabel: '{$lang['sb']['deleted']}: ',
-			sortable: true
-		});
-	});
-</script>
-HTML;
-include_once ( ROOT . 'priedai/class.php' );
-if ( !isset( $_GET['f'] ) && !isset( $_POST['f_forumas'] ) ) {
-	$_GET['f'] = 3;
-	$url['f']  = 3;
-}
 
 if(BUTTONS_BLOCK) {
 	lentele( $lang['admin']['frm'], buttonsMenu($buttons['forum']));
 }
 
 unset($buttons);
+
+if ( !isset( $_GET['f'] ) && !isset( $_POST['f_forumas'] ) ) {
+	$_GET['f'] = 3;
+	$url['f']  = 3;
+}
 
 //rikiuote
 if ( isset( $_POST['order'] ) ) {
@@ -92,11 +49,11 @@ if ( isset( $_POST['order2'] ) ) {
 	$array = str_replace( "listItem[]=", "", $array );
 	$array = explode( ",", $array );
 
-	foreach ( $array as $position => $item ):
-
+	foreach ( $array as $position => $item ){
 		$case_place .= "WHEN " . (int)$item . " THEN '" . (int)$position . "' ";
 		$where .= "$item,";
-	endforeach;
+	}
+	
 	$where = rtrim( $where, ", " );
 	$sqlas .= "UPDATE `" . LENTELES_PRIESAGA . "d_temos` SET `place`=  CASE id " . $case_place . " END WHERE id IN (" . $where . ")";
 	echo $sqlas;
@@ -151,12 +108,11 @@ if ( isset( $_GET['d'] ) ) {
 			}
 
 			$result3 = mysql_query1( "DELETE from `" . LENTELES_PRIESAGA . "d_straipsniai`  where `tid`=" . escape( $stridi['id'] ) . "" );
-
 		}
 	}
+
 	$result  = mysql_query1( "DELETE from `" . LENTELES_PRIESAGA . "d_forumai`  WHERE `id`=" . escape( $f_id ) . "" );
 	$result2 = mysql_query1( "DELETE from `" . LENTELES_PRIESAGA . "d_temos`  WHERE `fid`=" . escape( $f_id ) . "" );
-
 
 	if ( $result && $result2 ) {
 		msg( $lang['system']['done'], $lang['system']['categorydeleted'] );
@@ -164,6 +120,7 @@ if ( isset( $_GET['d'] ) ) {
 	} else {
 		klaida( $lang['system']['error'], ' <b>' . mysqli_error($prisijungimas_prie_mysql) . '</b>' );
 	}
+
 	unset( $f_info, $forumas, $result );
 }
 //subkategorijos trynimas
@@ -176,7 +133,6 @@ if ( isset( $_GET['t'] ) ) {
 	if ( sizeof( $sql12 ) > 0 ) {
 		foreach ( $sql12 as $sidas ) {
 			$result2 = mysql_query1( "DELETE from `" . LENTELES_PRIESAGA . "d_zinute`  WHERE sid=" . escape( $sidas['id'] ) . "" );
-
 		}
 	}
 	//istina temas is kategorijos
@@ -217,16 +173,18 @@ if ( isset( $_POST['subedit'] ) && $_POST['subedit'] == $lang['admin']['forum_se
 		$li = '';
 		foreach ( $sql as $record1 ) {
 			$li .= '<li id="listItem_' . $record1['id'] . '" class="drag_block"> 
-<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';t,' . $record1['id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
-<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] . ';f,' . $tema['id'] ) . '" style="align:right" ><img src="' . ROOT . 'images/icons/pencil.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
-<img src="' . ROOT . 'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" />
-' . $record1['pav'] . '
-</li> ';
+			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';t,' . $record1['id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
+			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $record1['id'] . ';f,' . $tema['id'] ) . '" style="align:right" ><img src="' . ROOT . 'images/icons/pencil.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
+			<img src="' . ROOT . 'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" />
+			' . $record1['pav'] . '
+			</li> ';
 		}
-		$tekstas = '
-<div id="la2" style="display:none"><b>' . $lang['system']['updated'] . '</b></div>
-			<ul id="test-list2">' . $li . '</ul>';
-		lentele( $lang['admin']['forum_editsub'], $tekstas );
+
+		$content = '
+		<div id="la2" style="display:none"><b>' . $lang['system']['updated'] . '</b></div>
+		<ul id="test-list2">' . $li . '</ul>';
+
+		lentele($lang['admin']['forum_editsub'], $content);
 	}
 }
 //subkategorijos redag. forma... gal :)
@@ -238,8 +196,12 @@ if ( isset( $_GET['r'] ) && isset( $_GET['f'] ) ) {
 	unset( $sql );
 	$t_info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`='" . $f_temos_id . "' limit 1" );
 	$form  = array(
-		"Form"	=> array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port" ), "{$lang['admin']['forum_category']}:" => array( "type" => "string", "value" => "<b>" . $f_forumas . "</b><input type=\"hidden\" name=\"forumo_id\"  value='" . $f_id . "' /><input type=\"hidden\" name=\"temos_id\"  value='" . $t_info['id'] . "' />" ), "{$lang['admin']['forum_subcategory']}:"=> array( "type"=> "text", "value"=> $t_info['pav'], "name"=> "temos_pav" ),
-		"{$lang['admin']['forum_subabout']}:" => array( "type" => "text", "value" => $t_info['aprasymas'], "name" => "temos_apr" ), "{$lang['system']['showfor']} :" => array( "type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "name" => "Teises[]", "id" => "punktai", "selected" => unserialize( $t_info['teises'] ) ), "" => array( "type" => "submit", "name" => "subred", "value" => $lang['admin']['edit'] )
+		"Form"	=> array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port" ), 
+		"{$lang['admin']['forum_category']}:" => array( "type" => "string", "value" => "<b>" . $f_forumas . "</b><input type=\"hidden\" name=\"forumo_id\"  value='" . $f_id . "' /><input type=\"hidden\" name=\"temos_id\"  value='" . $t_info['id'] . "' />" ), 
+		"{$lang['admin']['forum_subcategory']}:"=> array( "type"=> "text", "value"=> $t_info['pav'], "name"=> "temos_pav" ),
+		"{$lang['admin']['forum_subabout']}:" => array( "type" => "text", "value" => $t_info['aprasymas'], "name" => "temos_apr" ), 
+		"{$lang['system']['showfor']} :" => array( "type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "name" => "Teises[]", "id" => "punktai", "selected" => unserialize( $t_info['teises'] ) ), 
+		"" => array( "type" => "submit", "name" => "subred", "value" => $lang['admin']['edit'] )
 	);
 	
 	$formClass = new Form($form);
@@ -247,6 +209,7 @@ if ( isset( $_GET['r'] ) && isset( $_GET['f'] ) ) {
 		
 	unset( $t_info, $f_id, $f_temod_id, $sql, $f_forumas, $form );
 }
+
 if ( isset( $_POST['subred'] ) && $_POST['subred'] == $lang['admin']['edit'] ) {
 	$f_forumas      = (int)$_POST['forumo_id'];
 	$f_tema         = (int)$_POST['temos_id'];
@@ -258,7 +221,6 @@ if ( isset( $_POST['subred'] ) && $_POST['subred'] == $lang['admin']['edit'] ) {
 
 	} else {
 		klaida( $lang['system']['error'], '<b>' . mysqli_error($prisijungimas_prie_mysql) . '</b>' );
-
 	}
 
 }
@@ -267,7 +229,11 @@ if ( isset( $_POST['subred'] ) && $_POST['subred'] == $lang['admin']['edit'] ) {
 // ##############################################################
 if ( isset( $url['f'] ) ) {
 	if ( (int)$url['f'] == 1 ) {
-		$forma = array( "Form" => array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port" ), "{$lang['admin']['forum_category']}:" => array( "type" => "text", "name" => "f_pav" ), " " => array( "type" => "submit", "name" => "f_sukurimas", "value" => $lang['system']['createcategory'] ) );
+		$forma = array(
+			"Form" => array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port" ),
+			"{$lang['admin']['forum_category']}:" => array( "type" => "text", "name" => "f_pav" ),
+			" " => array( "type" => "submit", "name" => "f_sukurimas", "value" => $lang['system']['createcategory'] )
+		);
 		
 		$formClass = new Form($forma);
 		lentele($lang['system']['createcategory'], $formClass->form());
@@ -280,10 +246,10 @@ if ( isset( $url['f'] ) ) {
 			foreach ( $sql as $record1 ) {
 				$cats[$record1['id']] = $record1['pav'];
 				$li .= '<li id="listItem_' . $record1['id'] . '" class="drag_block"> 
-<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
-<img src="' . ROOT . 'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" />
-' . $record1['pav'] . '
-</li> ';
+				<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
+				<img src="' . ROOT . 'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" />
+				' . $record1['pav'] . '
+				</li> ';
 			}
 
 			$forma = array( "Form" => array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "" ), "{$lang['admin']['forum_category']}:" => array( "type" => "select", "name" => "f_edit", "value"=> $cats ), "{$lang['admin']['forum_cangeto']}:" => array( "type" => "text", "name" => "f_pav_keitimas" ), " " => array( "type" => "submit", "name" => "keisti", "value" => $lang['admin']['edit'] ) );
@@ -292,12 +258,14 @@ if ( isset( $url['f'] ) ) {
 			lentele($lang['system']['editcategory'], $formClass->form());
 
 			$tekstas = '
-<div id="la" style="display:none"><b>' . $lang['system']['updated'] . '</b></div>
+			<div id="la" style="display:none"><b>' . $lang['system']['updated'] . '</b></div>
 			<ul id="test-list">' . $li . '</ul>';
+
 			lentele( $lang['admin']['forum_order'], $tekstas );
 		} else {
 			klaida( $lang['system']['warning'], $lang['system']['nocategories'] );
 		}
+
 		unset( $f_text, $sql, $row );
 	}
 	//subkat. kūrimo forma

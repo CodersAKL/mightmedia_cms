@@ -61,12 +61,13 @@ if ( isset( $_POST['select'] ) || isset( $_GET['s'] ) ) {
 			}
 		}
 	}
+
 	$pg   = ( isset( $_POST['pg'] ) ? $_POST['pg'] : base64_decode( $_GET['s'] ) );
 	$viso = kiek( "kom", "WHERE `pid`=" . escape( $pg ) . "" );
-	$sql  = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`=" . escape( $pg ) . " ORDER BY `id` DESC LIMIT {$p}, {$limit}" );
-	if ( !empty( $sql ) ) {
-		include_once ( ROOT . "priedai/class.php" );
-		$tbl = new Table();
+
+	$sqlQuery = "SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`=" . escape( $pg ) . " ORDER BY `id` DESC LIMIT {$p}, {$limit}";
+	
+	if ($sql = mysql_query1($sqlQuery)) {
 		foreach ( $sql as $row ) {
 			if ( $row['nick_id'] == 0 ) {
 				$duom = @unserialize( $row['nick'] );
@@ -74,6 +75,7 @@ if ( isset( $_POST['select'] ) || isset( $_GET['s'] ) ) {
 			} else {
 				$nick = user( $row['nick'], $row['nick_id'] );
 			}
+
 			$info[] = array(
 				$lang['new']['author']      => $nick,
 				$lang['contact']['message'] => smile( bbchat( trimlink( input( $row['zinute'] ), 150 ) ) ),
@@ -81,7 +83,9 @@ if ( isset( $_POST['select'] ) || isset( $_GET['s'] ) ) {
 			);
 		}
 
-		lentele( "{$lang['admin']['adm_comments']}", '' . $tbl->render( $info ) . '' );
+		$tableClass = new Table($info);
+		lentele($lang['admin']['adm_comments'], $tableClass->render());
+		// if list is bigger than limit, then we show list with pagination
 		if ( $viso > $limit ) {
 			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 		}

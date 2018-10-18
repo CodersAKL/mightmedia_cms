@@ -208,4 +208,4 @@ if ( isset( $_POST['s'] ) ) {
 	}
 }
 
-unset( $kur, $ka, $link, $link2, $link3, $text, $row, $search, $kuriam, $iskur, $iskurdar, $sqlas, $bla, $forma );
+unset( $kur, $ka, $link, $link2, $link3, $text, $row, $search, $kuriam, $iskur, $iskurdar, $sqlas, $forma );

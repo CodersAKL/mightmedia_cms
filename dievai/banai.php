@@ -136,11 +136,8 @@ function deny_htaccess( $str ) {
 	return @$return;
 }
 
-//echo read_htaccess();
 $IPS = deny_htaccess( read_htaccess() );
-//$viso = count ($IPS);
-//print_r($IPS);
-if ( count( $IPS ) > 0 ) {
+if (! empty($IPS)) {
 	foreach ( $IPS as $key => $val ) {
 
 		$info[] = array(
@@ -151,10 +148,8 @@ if ( count( $IPS ) > 0 ) {
 }
 $title = $lang['admin']['bans'];
 //nupiesiam lenteles/sarasus
-if ( isset( $title ) && isset( $info ) ) {
-	include_once ( ROOT . 'priedai/class.php' );
-	$bla = new Table();
-	lentele( $title . " - " . count( $info ), $bla->render( $info ) );
+if (! empty($title) && ! empty($info) ) {
+	$tableClass = new Table($info);
 
+	lentele( $title . " - " . count( $info ), $tableClass->render() );
 }
-//unset($_POST['ip'],$_POST['priezastis']);

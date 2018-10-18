@@ -30,7 +30,6 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 
 $limit = 15;
 
-
 include_once ( ROOT . "priedai/kategorijos.php" );
 kategorija( "vartotojai", TRUE );
 //trinimas
@@ -123,27 +122,29 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 
 	lentele( $lang['admin']['user_groups'], $grupe );
 
-	if ( isset( $_GET['k'] ) ) {
-//vartotoju sarasas pagal esamą levelį
-///FILTRAVIMAS
-		$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=" . escape( (int)$_GET['k'] ) . " " . ( isset( $_POST['nick'] ) ? "AND (`nick` LIKE " . escape( "%" . $_POST['nick'] . "%" ) . " " . ( !empty( $_POST['ip'] ) ? " AND `ip` LIKE " . escape( sprintf( "%u", ip2long( $_POST['ip'] ) ) ) . "" : "" ) . "" . ( !empty( $_POST['email'] ) ? " AND `email` LIKE " . escape( "%" . $_POST['email'] . "%" ) . "" : "" ) . ")" : "" ) . " ORDER BY id DESC LIMIT {$p},{$limit}" );
-		if ( isset( $_POST['nick'] ) && $_POST['ip'] && $_POST['email'] ) {
-			$val = array( $_POST['nick'], $_POST['ip'], $_POST['email'] );
-		} else {
-			$val = array( "", "", "", );
-		}
-		$info2[] = array(
-			"#"                          => "<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('usersch');\" />",
-			$lang['admin']['user_name']  => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"nick\" />",
-			"IP <img src='../images/icons/help.png' title='<b>{$lang['system']['warning']}</b><br/>{$lang['admin']['user_ip_filter']}'>" => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"ip\" />",
-			$lang['admin']['user_email'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"email\" />",
-			$lang['admin']['action']     => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />"
-		);
-//FILTRAVIMAS
-		$i    = 0;
-		$viso = kiek( "users", "WHERE levelis=" . escape( $_GET['k'] ) );
+	if ( isset( $_GET['k'] ) ) {//vartotoju sarasas pagal esamą levelį
+	
+		///FILTRAVIMAS
+		$sqlQuery = "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=" . escape( (int)$_GET['k'] ) . " " . ( isset( $_POST['nick'] ) ? "AND (`nick` LIKE " . escape( "%" . $_POST['nick'] . "%" ) . " " . ( !empty( $_POST['ip'] ) ? " AND `ip` LIKE " . escape( sprintf( "%u", ip2long( $_POST['ip'] ) ) ) . "" : "" ) . "" . ( !empty( $_POST['email'] ) ? " AND `email` LIKE " . escape( "%" . $_POST['email'] . "%" ) . "" : "" ) . ")" : "" ) . " ORDER BY id DESC LIMIT {$p},{$limit}";
+		
+		if ($sql = mysql_query1($sqlQuery)) {
+			if ( isset( $_POST['nick'] ) && $_POST['ip'] && $_POST['email'] ) {
+				$val = array( $_POST['nick'], $_POST['ip'], $_POST['email'] );
+			} else {
+				$val = array( "", "", "", );
+			}
 
-		if ( sizeof( $sql ) > 0 ) {
+			$info2[] = array(
+				"#"                          => "<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('usersch');\" />",
+				$lang['admin']['user_name']  => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"nick\" />",
+				"IP <img src='../images/icons/help.png' title='<b>{$lang['system']['warning']}</b><br/>{$lang['admin']['user_ip_filter']}'>" => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"ip\" />",
+				$lang['admin']['user_email'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"email\" />",
+				$lang['admin']['action']     => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />"
+			);
+			//FILTRAVIMAS
+			$i    = 0;
+			$viso = kiek( "users", "WHERE levelis=" . escape( $_GET['k'] ) );
+
 			foreach ( $sql as $row2 ) {
 				$i++;
 				$info2[] = array(
@@ -155,16 +156,16 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 				);
 			}
 
-			include_once (ROOT . "priedai/class.php");
-			$bla = new Table();
-
-			lentele( $conf['level'][$_GET['k']]['pavadinimas'] . " ({$viso})", "<form id=\"usersch\" method=\"post\">" . $bla->render( $info2 ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
-			
+			$title = $conf['level'][$_GET['k']]['pavadinimas'] . " ({$viso})";
+			$tableClass = new Table($info2);
+			$content = "<form id=\"usersch\" method=\"post\">" . $tableClass->render() . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>";
+			lentele($title, $content);
+			// if list is bigger than limit, then we show list with pagination
 			if ($viso > $limit) {
 				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 			}
 
-			unset( $info2, $i, $bla );
+			unset($info2, $i);
 		}
 	}
 }
@@ -185,11 +186,10 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 4 ) {
 				);
 			}
 
-			include_once ( ROOT . "priedai/class.php" );
-			$bla = new Table();
-			lentele( $lang['admin']['user_list'], $bla->render( $info3 ) );
+			$tableClass = new Table($info3);
+			lentele($lang['admin']['user_list'], $tableClass->render());
 		} else {
-			klaida( $lang['system']['warning'], "{$lang['admin']['user_notfound']}." );
+			klaida($lang['system']['warning'], $lang['admin']['user_notfound']);
 		}
 	}
 }

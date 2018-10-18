@@ -36,7 +36,6 @@ if ( empty( $_GET['v'] ) ) {
 	$_GET['v'] = 0;
 }
 
-include_once ( ROOT . "priedai/class.php" );
 //trinimas
 if ( isset( $_POST['articles_delete'] ) ) {
 	foreach ( $_POST['articles_delete'] as $a=> $b ) {
@@ -112,9 +111,13 @@ if ( $_GET['v'] == 4 ) {
 					$lang['admin']['action']          => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>"
 				);
 		}
-		$bla = new Table();
-		lentele( $lang['faq']['questions'], "<form id=\"arch\" method=\"post\">" . $bla->render( $info ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
-		unset( $bla, $info );
+		
+		$tableClass = new Table($info);
+		$content = "<form id=\"arch\" method=\"post\">" . $tableClass->render() . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>";
+		lentele($lang['faq']['questions'], $content);
+		
+		unset($info);
+		// if list is bigger than limit, then we show list with pagination
 		if ( $viso > $limit ) {
 			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 		}

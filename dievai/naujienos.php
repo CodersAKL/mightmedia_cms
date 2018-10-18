@@ -172,21 +172,21 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 
 //print_r($sql_news);
 if ( isset( $_GET['v'] ) ) {
-	include_once ROOT . 'priedai/class.php';
 
 	if ( $_GET['v'] == 4 ) {
 		///FILTRAVIMAS
 		$viso     = kiek( 'naujienos', "WHERE `rodoma`='TAIP' AND `lang` = " . escape( lang() ) );
 		$sql_news = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "naujienos` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pavadinimas'] ) ? "AND (`pavadinimas` LIKE " . escape( "%" . $_POST['pavadinimas'] . "%" ) . " " . ( !empty( $_POST['data'] ) ? " AND `data` <= " . strtotime( $_POST['data'] ) . "" : "" ) . " " . ( !empty( $_POST['naujiena'] ) ? " AND `naujiena` LIKE " . escape( "%" . $_POST['naujiena'] . "%" ) . "" : "" ) . ")" : "" ) . " AND rodoma='TAIP' ORDER BY sticky DESC, id DESC LIMIT {$p},{$limit}" );
 
-		if ( count( $sql_news ) > 0 ) {
-			$table = new Table();
+		if (! empty($sql_news)) {
+			
 
 			if ( isset( $_POST['pavadinimas'] ) && $_POST['data'] && $_POST['naujiena'] ) {
 				$val = array( $_POST['pavadinimas'], $_POST['data'], $_POST['naujiena'] );
 			} else {
 				$val = array( "", "", "" );
 			}
+
 			$info[] = array(
 				"#"                         => '<input type="checkbox" name="visi" onclick="checkedAll(\'newsch\');" />',
 				$lang['admin']['news_name'] => '<input class="filtrui" type="text" value="' . $val[0] . '" name="pavadinimas" />',
@@ -204,8 +204,12 @@ if ( isset( $_GET['v'] ) ) {
 					$lang['admin']['action']    => '<a href="' . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . '" title="' . $lang['admin']['edit'] . '"><img src="' . ROOT . 'images/icons/pencil.png" border="0"></a> <a href="' . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . '" title="' . $lang['admin']['delete'] . '" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="' . ROOT . 'images/icons/cross.png" border="0"></a>'
 				);
 			}
-			lentele( $lang['admin']['edit'], '<form id="newsch" method="post">' . $table->render( $info ) . '<input type="submit" value="' . $lang['system']['delete'] . '" /></form>' );
 
+			$tableClass = new Table($info);
+			$content ='<form id="newsch" method="post">' . $tableClass->render() . '<input type="submit" value="' . $lang['system']['delete'] . '" /></form>';
+
+			lentele($lang['admin']['edit'], $content);
+			// if list is bigger than limit, then we show list with pagination
 			if ( $viso > $limit ) {
 				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 			}
@@ -319,10 +323,9 @@ if ( isset( $_GET['v'] ) ) {
 		$viso = kiek( "naujienos", "WHERE `rodoma`='NE' AND `lang` = " . escape( lang() ) . "" );
 		$q    = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "naujienos` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pavadinimas'] ) ? "AND (`pavadinimas` LIKE " . escape( "%" . $_POST['pavadinimas'] . "%" ) . " " . ( !empty( $_POST['data'] ) ? " AND `data` <= " . strtotime( $_POST['data'] ) . "" : "" ) . " " . ( !empty( $_POST['naujiena'] ) ? " AND `naujiena` LIKE " . escape( "%" . $_POST['naujiena'] . "%" ) . "" : "" ) . ")" : "" ) . " AND rodoma='NE' ORDER BY sticky DESC, id DESC LIMIT {$p},{$limit}" );
 		//
-		if ( sizeof( $q ) > 0 ) {
-			include_once ROOT . "priedai/class.php";
-			$bla  = new Table();
-			$info = array();
+		if (! empty($q)) {
+			
+			$info = [];
 			//
 			if ( isset( $_POST['pavadinimas'] ) && $_POST['data'] && $_POST['naujiena'] ) {
 				$val = array( $_POST['pavadinimas'], $_POST['data'], $_POST['naujiena'] );
@@ -338,7 +341,7 @@ if ( isset( $_GET['v'] ) ) {
 			);
 			//FILTRAVIMAS
 
-			foreach ( $q as $sql ) {
+			foreach ($q as $sql) {
 				$info[] = array(
 					"#"                         => "<input type=\"checkbox\" value=\"{$sql['id']}\" name=\"news_delete[]\" />",
 					$lang['admin']['news_name'] => '<span style="cursor:pointer;" title="<b>' . $sql['pavadinimas'] . '</b><br />' . $lang['admin']['news_author'] . ': <b>' . $sql['autorius'] . '</b>">' . trimlink( strip_tags( $sql['pavadinimas'] ), 55 ) . '<span/></a>',
@@ -347,7 +350,12 @@ if ( isset( $_GET['v'] ) ) {
 					$lang['admin']['action']    => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "images/icons/cross.png' border='0'></a>"
 				);
 			}
-			lentele( $lang['admin']['news_unpublished'], "<form id=\"newsch\" method=\"post\">" . $bla->render( $info ) . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>" );
+
+			$tableClass  = new Table($info);
+			$content = "<form id=\"newsch\" method=\"post\">" . $tableClass->render() . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>";
+			
+			lentele( $lang['admin']['news_unpublished'], $content);
+			// if list is bigger than limit, then we show list with pagination
 			if ( $viso > $limit ) {
 				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 			}
@@ -358,5 +366,3 @@ if ( isset( $_GET['v'] ) ) {
 	}
 }
 unset( $sql, $extra, $row );
-
-?>
