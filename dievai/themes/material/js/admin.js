@@ -503,8 +503,7 @@ $(function () {
 
     //Textare auto growth
     autosize($('textarea.auto-growth'));
-    //nestable
-    $('.dd').nestable();
+    
     // preloader
     setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
 });

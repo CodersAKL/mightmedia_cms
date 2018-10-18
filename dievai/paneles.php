@@ -467,17 +467,24 @@ HTML;
 	}
 }
 ?>
+
 <script type="text/javascript">
+	//nestable
+	$('.dd').nestable({
+		maxDepth: 1
+    });
 	$('.dd').on('change', function () {
         var $this = $(this);
-		var serializedData = window.JSON.stringify($($this).nestable('serialize')),
+		var serializedData = JSON.stringify($($this).nestable('serialize')),
 			data = {
 				action: 'blocksOrder',
 				order: serializedData
 			};
 
 		$.post("<?php echo url( "?id,999;a,ajax;" ); ?>", data, function(response) {
-			showNotification('alert-success', response);
+			if(response) {
+				showNotification('alert-success', response);
+			}
 		});
     });
 </script>

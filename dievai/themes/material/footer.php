@@ -33,9 +33,6 @@
     <!-- Sparkline Chart Plugin Js -->
     <script src="themes/material/plugins/jquery-sparkline/jquery.sparkline.js"></script>
 
-    <!-- Jquery Nestable -->
-    <script src="themes/material/plugins/nestable/jquery.nestable.js"></script>
-
     <!-- Custom Js -->
     <script src="themes/material/js/admin.js"></script>
     <script src="themes/material/js/pages/index.js"></script>

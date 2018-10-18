@@ -283,23 +283,23 @@ function pagesOrder($data)
 
 	if (isset($data['order'])) {
 		$array = json_decode($data['order'], true);
-		
 
 		foreach ($array as $position => $item) {
+			$case_place .= "WHEN " . (int)$item['id'] . " THEN '" . (int)$position . "' ";
+			$where .= $item['id'] . ",";
+			
 			if(! empty($item['children'])) {
 				foreach ($item['children'] as $childrenPosition => $childrenItem) {
 					$case_place .= "WHEN " . (int)$childrenItem['id'] . " THEN '" . (int)$childrenPosition . "' ";
 					$where .= $childrenItem['id'] . ",";
 				}
 			}
-			$case_place .= "WHEN " . (int)$item['id'] . " THEN '" . (int)$position . "' ";
-			$where .= $item['id'] . ",";
 		}
 
 		$where = rtrim($where, ", ");
 
-		$sqlas = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `place`=  CASE id " . $case_place . " END WHERE id IN (" . $where . ")";
-		// var_dump($sqlas); exit;
+		$sqlas = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `place`= (CASE id " . $case_place . " END) WHERE id IN (" . $where . ")";
+
 		if($result = mysql_query1($sqlas)) {
 			delete_cache( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
 		

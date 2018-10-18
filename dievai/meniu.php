@@ -369,7 +369,7 @@ lentele($page_pavadinimas,$text);
 
 	$sqlOtherPages = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'N' AND `lang` = " . escape( lang() ) . " order by id" );
 	
-	$otherPages = '<ul class="dd-list">';
+	$otherPages = '<ol class="dd-list">';
 	if (! empty($sqlOtherPages)) {
 		foreach ($sqlOtherPages as $otherPage) {
 			$otherPages .= '<li class="dd-handle">
@@ -386,7 +386,7 @@ lentele($page_pavadinimas,$text);
 			</li>';
 		}
 	}
-	$otherPages .= '</ul>';
+	$otherPages .= '</ol>';
 	?>
 		<div class="row clearfix">
 			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -402,7 +402,7 @@ lentele($page_pavadinimas,$text);
 function build_menu_admin($data, $id = 0) {
 
 	global $url, $lang;
-
+	
 	$liPage = '<ol class="dd-list">';
 
 	foreach ($data[$id] as $row) {
@@ -417,9 +417,7 @@ function build_menu_admin($data, $id = 0) {
 			$content .= $row['pavadinimas'];
 			$content .= '</a>';
 
-			$subMenu = '<ol class="dd-list">';
-			$subMenu .= build_menu_admin($data, $row['id']);
-			$subMenu .= '</ol>';
+			$subMenu = build_menu_admin($data, $row['id']);
 
 			$liPage .= dragItem($row['id'], $content, $subMenu);
 
@@ -440,16 +438,20 @@ function build_menu_admin($data, $id = 0) {
 
 ?>
 <script type="text/javascript">
+	//nestable
+	$('.dd').nestable();
 	$('.dd').on('change', function () {
         var $this = $(this);
-		var serializedData = window.JSON.stringify($($this).nestable('serialize')),
+		var serializedData = JSON.stringify($($this).nestable('serialize')),
 			data = {
 				action: 'pagesOrder',
 				order: serializedData
 			};
 
 		$.post("<?php echo url( "?id,999;a,ajax;" ); ?>", data, function(response) {
-			showNotification('alert-success', response);
+			if(response) {
+				showNotification('alert-success', response);
+			}
 		});
     });
 </script>
