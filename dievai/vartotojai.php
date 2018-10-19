@@ -124,31 +124,28 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 
 	if ( isset( $_GET['k'] ) ) {//vartotoju sarasas pagal esamą levelį
 	
-		///FILTRAVIMAS
+		//FILTER - query
 		$sqlQuery = "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=" . escape( (int)$_GET['k'] ) . " " . ( isset( $_POST['nick'] ) ? "AND (`nick` LIKE " . escape( "%" . $_POST['nick'] . "%" ) . " " . ( !empty( $_POST['ip'] ) ? " AND `ip` LIKE " . escape( sprintf( "%u", ip2long( $_POST['ip'] ) ) ) . "" : "" ) . "" . ( !empty( $_POST['email'] ) ? " AND `email` LIKE " . escape( "%" . $_POST['email'] . "%" ) . "" : "" ) . ")" : "" ) . " ORDER BY id DESC LIMIT {$p},{$limit}";
 		
 		if ($sql = mysql_query1($sqlQuery)) {
-			if ( isset( $_POST['nick'] ) && $_POST['ip'] && $_POST['email'] ) {
-				$val = array( $_POST['nick'], $_POST['ip'], $_POST['email'] );
-			} else {
-				$val = array( "", "", "", );
-			}
 
-			$info2[] = array(
-				"#"                          => "<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('usersch');\" />",
-				$lang['admin']['user_name']  => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"nick\" />",
-				"IP <img src='../images/icons/help.png' title='<b>{$lang['system']['warning']}</b><br/>{$lang['admin']['user_ip_filter']}'>" => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"ip\" />",
-				$lang['admin']['user_email'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"email\" />",
-				$lang['admin']['action']     => "<input type=\"submit\" value=\"{$lang['admin']['filtering']}\" name=\"\" />"
-			);
-			//FILTRAVIMAS
+			//FILTER - begin
+			$formData = [
+				'nick'	=> $lang['admin']['user_name'],
+				'ip '	=> 'IP <img src="../images/icons/help.png" title="<b>' . $lang['system']['warning'] . '</b><br/>'. $lang['admin']['user_ip_filter'] .'">',
+				'email'	=> $lang['admin']['user_email'],
+			];
+			
+			$info2[] = tableFilter($formData, $_POST);
+
+			//FILTER - end
 			$i    = 0;
 			$viso = kiek( "users", "WHERE levelis=" . escape( $_GET['k'] ) );
 
 			foreach ( $sql as $row2 ) {
 				$i++;
 				$info2[] = array(
-					"#"                           => "<input type=\"checkbox\" value=\"{$row2['id']}\" name=\"users_delete[]\" />",
+					"#"                           => '<input type="checkbox" value="' . $row2['id'] . '" name="users_delete[]" class="filled-in" id="users-delete-' . $row2['id'] . '"><label for="users-delete-' . $row2['id'] . '"></label>',
 				     $lang['admin']['user_name']  => user( $row2['nick'], $row2['id'], $row2['levelis'] ),
 				     "IP"                         => $row2['ip'],
 				     $lang['admin']['user_email'] => "" . $row2['email'] . "",
@@ -158,7 +155,7 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 
 			$title = $conf['level'][$_GET['k']]['pavadinimas'] . " ({$viso})";
 			$tableClass = new Table($info2);
-			$content = "<form id=\"usersch\" method=\"post\">" . $tableClass->render() . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>";
+			$content = "<form id=\"usersch\" method=\"post\">" . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . $lang['system']['delete'] . '</button></form>';
 			lentele($title, $content);
 			// if list is bigger than limit, then we show list with pagination
 			if ($viso > $limit) {
