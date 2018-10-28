@@ -7720,7 +7720,7 @@ fieldset[disabled] .form-control {
 
 /* Login Page ================================== */
 .login-page {
-  background-color: #00BCD4;
+  background-color: #bdbdbd;
   padding-left: 0;
   max-width: 360px;
   margin: 5% auto;
@@ -7732,7 +7732,7 @@ fieldset[disabled] .form-control {
   .login-page .login-box a {
     font-size: 14px;
     text-decoration: none;
-    color: #00BCD4; }
+    color: #bdbdbd; }
   .login-page .login-box .logo {
     margin-bottom: 20px; }
     .login-page .login-box .logo a {
@@ -8045,6 +8045,10 @@ html.ie11 .bs-searchbox .form-control {
   fill: #fff;
   width: 45px;
   height: 50px;
+}
+
+.admin-login-logo {
+  width: 65px;
 }
 
 .logo-text {
