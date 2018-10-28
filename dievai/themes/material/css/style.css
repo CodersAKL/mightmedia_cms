@@ -8040,3 +8040,20 @@ html.ie11 .dropdown-menu ul.menu li a {
 html.ie11 .bs-searchbox .form-control {
   width: 90%; }
 
+/* Added */
+.admin-logo {
+  fill: #fff;
+  width: 45px;
+  height: 50px;
+}
+
+.logo-text {
+  align-self: center;
+  padding-left: 15px;
+}
+
+.navbar-brand {
+  display: flex;
+  height: auto;
+  padding: 0 15px;
+}
