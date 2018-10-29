@@ -79,12 +79,3 @@ foreach($res as $row) {
 		<?php dashStats($lang['system']['visits'], $stats); ?>
 	</div>
 </div>
-
-
-
-<?php
-//table
-
-
-// lentele( $lang['system']['control'], $text );
-
