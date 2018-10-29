@@ -516,4 +516,9 @@ $(function () {
     //Popover
     $('[data-toggle="popover"]').popover();
 
+    $(".sparkline").each(function () {
+        var $this = $(this);
+        $this.sparkline('html', $this.data());
+    });
+
 });

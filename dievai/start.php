@@ -17,12 +17,6 @@ FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE `timestamp`>'" . $timeout . 
 $sql = $sqli[0];
 
 $progresas = procentai( ( !empty( $stats['uzvakar'] ) ? $stats['uzvakar'] : 1 ), ( !empty( $stats['vakar'] ) ? $stats['vakar'] : 1 ) );
-//chart
-$chartDates = [
-	'two_days_ago'	=> ((time() - 86400 * 2) * 1000),
-	'yesterday'		=> ((time() - 86400) * 1000),
-	'today'			=> time() * 1000
-];
 //tree
 $data2 = [];
 $res   = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=" . escape( lang() ) . " ORDER BY `place` ASC" );
@@ -82,7 +76,7 @@ foreach($res as $row) {
 				</div>
 			</div>
 		</div>
-		<?php dashStats($lang['system']['visits'], $stats, $chartDates); ?>
+		<?php dashStats($lang['system']['visits'], $stats); ?>
 	</div>
 </div>
 

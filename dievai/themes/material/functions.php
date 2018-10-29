@@ -437,35 +437,9 @@ function dashTree($title, $content)
 	<?php
 }
 
-function dashStats($title, $stats, $chartDates) 
+function dashStats($title, $stats) 
 {
 	?>
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-	google.load("visualization", "1", {packages:["corechart"]});
-	google.setOnLoadCallback(drawChart);
-	function drawChart() {
-		var data = google.visualization.arrayToDataTable([
-			['', '<?php echo $title; ?>'],
-			[<?php echo $chartDates['two_days_ago'];  ?>, <?php echo $stats['uzvakar']; ?>],
-			[<?php echo $chartDates['yesterday'];  ?>,  <?php echo $stats['vakar']; ?>],
-			[<?php echo $chartDates['today'];  ?>, <?php echo $stats['siandien']; ?>]
-		]);
-
-		var options = {
-			chartArea:{ width:'80%', height:'80%'},
-			title:'',
-			isStacked:true,
-			colors:['#FF7910'],
-			legend:{position:'none'},
-			vAxis:{gridlines:{count:2}, textPosition:'in', title:" "},
-			hAxis:{title:" "}
-		};
-
-		var chart = new google.visualization.AreaChart(document.getElementById('placeholder'));
-		chart.draw(data, options);
-	}
-</script>
 <div class="card">
 	<div class="header bg-orange">
 		<h2>
@@ -473,8 +447,24 @@ function dashStats($title, $stats, $chartDates)
 		</h2>
 	</div>
 	<div class="body">
-		<div id="chart">
-			<div id="placeholder" ></div>
+		<div class="sparkline" 
+			data-type="line" 
+			data-spot-Radius="4" 
+			data-highlight-Spot-Color="#FF9800" 
+			data-highlight-Line-Color="#FF9800" 			
+			data-min-Spot-Color="#FF9800" 
+			data-max-Spot-Color="#FF9800" 
+			data-spot-Color="#FF9800" 
+			data-offset="90" 
+			data-width="100%" 
+			data-height="92px" 
+			data-line-Width="2" 
+			data-line-Color="#FF9800" 
+			data-fill-Color="rgba(255, 152, 0, 0.5)"
+		>
+			<?php echo $stats['uzvakar']; ?>,
+			<?php echo $stats['vakar']; ?>,
+			<?php echo $stats['siandien']; ?>,
 		</div>
 	</div>
 </div>
