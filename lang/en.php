@@ -2,10 +2,14 @@
 $lang['admin']['menu_main'] = 'Main menu';
 $lang['admin']['menu_extensions'] = 'Extensions';
 $lang['admin']['page_url'] = 'External page?';
-$lang['admin']['post_updated'] = 'Post updated succesful!';
-$lang['admin']['post_created'] = 'Post created succesful!';
-$lang['admin']['post_deleted'] = 'Post deleted succesful!';
+$lang['admin']['post_updated'] = 'Post updated successful!';
+$lang['admin']['post_created'] = 'Post created successful!';
+$lang['admin']['post_deleted'] = 'Post deleted successful!';
 $lang['admin']['post_not_updated'] = 'Post update error!';
+$lang['admin']['configuration_updated'] = 'Settings updated successful!';
+$lang['admin']['configuration_main'] = 'Main settings';
+$lang['admin']['configuration_seo'] = 'SEO settings';
+$lang['admin']['configuration_maintenance'] = 'Maintenance settings';
 //Papildymas - antras
 $lang['user']['profile'] = 'My profile';
 $lang['admin']['poll_active_q'] = 'Active';

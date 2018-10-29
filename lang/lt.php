@@ -6,6 +6,10 @@ $lang['admin']['post_updated'] = 'Įrašas sėkmingai atnaujintas!';
 $lang['admin']['post_created'] = 'Įrašas sėkmingai sukurtas!';
 $lang['admin']['post_deleted'] = 'Įrašas sėkmingai ištrintas!';
 $lang['admin']['post_not_updated'] = 'Įrašo atnaujinti nepavyko!';
+$lang['admin']['configuration_updated'] = 'Nustatymai sėkmingai atnaujinti!';
+$lang['admin']['configuration_main'] = 'Pagrindiniai nustatymai';
+$lang['admin']['configuration_seo'] = 'SEO nustatymai';
+$lang['admin']['configuration_maintenance'] = 'Remonto nustatymai';
 //Papildymas - antras
 $lang['user']['profile'] = 'Mano profilis';
 $lang['admin']['poll_active_q'] = 'Aktyvumas';

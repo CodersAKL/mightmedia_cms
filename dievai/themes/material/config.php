@@ -69,6 +69,11 @@ $icons = [
         'create'    => 'images/icons/script__plus.png',
         'edit'      => 'images/icons/script__pencil.png',
     ],
+    'configuration' => [
+        'main'          => 'images/icons/script__pencil.png',
+        'seo'           => 'images/icons/script__pencil.png',
+        'maintenance'   => 'images/icons/script__pencil.png',
+    ],
     'menu'  =>  [
         'dashboard' => 'home', 
         'config'    => 'build', 

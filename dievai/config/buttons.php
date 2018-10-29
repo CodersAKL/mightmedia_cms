@@ -253,5 +253,22 @@ $buttons = [
             'value'	=> $lang['admin']['faq_edit'],
             'icon'	=> adminIcon('faq', 'edit')
         ]
+        ],
+    'configuration' => [
+        [
+            'url' 	=> url("?id,999;a,configuration;c,main"),
+            'value'	=> $lang['admin']['configuration_main'],
+            'icon'	=> adminIcon('configuration', 'main')
+        ],
+        [
+            'url' 	=> url("?id,999;a,configuration;c,seo"),
+            'value'	=> $lang['admin']['configuration_seo'],
+            'icon'	=> adminIcon('configuration', 'seo')
+        ],
+        [
+            'url' 	=> url("?id,999;a,configuration;c,maintenance"),
+            'value'	=> $lang['admin']['configuration_maintenance'],
+            'icon'	=> adminIcon('configuration', 'maintenance')
+        ]
     ]
 ];
