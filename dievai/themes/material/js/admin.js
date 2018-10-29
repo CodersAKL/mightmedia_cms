@@ -487,7 +487,7 @@ function showNotification(colorName, text, callback) {
             '</div>' +
             '<a href="{3}" target="{4}" data-notify="url"></a>' +
             '</div>',
-            onClose: callback
+            onShow: callback
         });
 }
 //==========================================================================================================================
