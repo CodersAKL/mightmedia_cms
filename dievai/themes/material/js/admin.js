@@ -454,11 +454,11 @@ $.AdminBSB.browser = {
     }
 }
 
-function showNotification(colorName, text, animateEnter, animateExit) {
+function showNotification(colorName, text, callback) {
     if (colorName === null || colorName === '') { colorName = 'bg-black'; }
     if (text === null || text === '') { text = 'Turning standard Bootstrap alerts'; }
-    if (animateEnter === null || animateEnter === '') { animateEnter = 'animated bounceInRight'; }
-    if (animateExit === null || animateExit === '') { animateExit = 'animated bounceOutRight'; }
+    var animateEnter = 'animated bounceInRight';
+    var animateExit = 'animated bounceOutRight';
     var allowDismiss = true;
 
     $.notify({
@@ -486,7 +486,8 @@ function showNotification(colorName, text, animateEnter, animateExit) {
             '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
             '</div>' +
             '<a href="{3}" target="{4}" data-notify="url"></a>' +
-            '</div>'
+            '</div>',
+            onClose: callback
         });
 }
 //==========================================================================================================================
@@ -506,4 +507,13 @@ $(function () {
     
     // preloader
     setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
+
+    //Tooltip
+    $('[data-toggle="tooltip"]').tooltip({
+        container: 'body'
+    });
+
+    //Popover
+    $('[data-toggle="popover"]').popover();
+
 });

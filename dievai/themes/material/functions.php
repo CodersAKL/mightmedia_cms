@@ -504,3 +504,27 @@ function infoBox($color, $icon, $text, $count)
 	</div>
 	<?php
 }
+
+function notifyMsg($data) {
+	?>
+	<script>
+		showNotification(
+			'alert-<?php echo $data['type']; ?>', 
+			'<?php echo $data['message']; ?>',
+			function () {
+				var data = {
+					action: 'deleteRedirectSession'
+				};
+				//delete session
+				$.post("<?php echo url( "?id,999;a,ajax;" ); ?>", data);
+			}
+		);
+	</script>
+	<?php
+}
+
+function infoIcon($message)
+{
+	// return "<img src=\"" . ROOT . "/images/icons/help.png\" title=\"{$message}\">";
+	return '<i data-toggle="tooltip" data-placement="top" title="' . $message . '" class="material-icons info-icon">info</i>';
+}

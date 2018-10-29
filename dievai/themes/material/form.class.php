@@ -38,7 +38,7 @@ class Form
                     if($input['type'] === 'hidden') {
                         $return .= $this->input($input);
                     } else {
-                        $return .= '<div class="row clearfix">';
+                        $return .= '<div class="row clearfix ' . (isset($input['row_class']) ? $input['row_class'] : '' ) . '">';
                         $return .= '<div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">';
                         if(!empty($pav)) {
                             $return .= '<label for="' . (isset($input['name']) ? $input['name'] : '' ) . '">' . $pav . '</label>';
@@ -105,6 +105,7 @@ class Form
                     " . ( isset( $array['id'] ) ? " id=\"" . $array['id'] . "\"" : "" ) . "
                     " . ( isset( $array['name'] ) ? " name=\"" . $array['name'] . "\"" : "" ) . "
                     " . ( isset( $array['value'] ) ? " value=\"" . $array['value'] . "\"" : "" ) . "
+                    " . ( isset( $array['placeholder'] ) ? " placeholder=\"" . $array['placeholder'] . "\"" : "" ) . "
                     " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . "/>";
 					}
 				case "reset":
@@ -114,6 +115,7 @@ class Form
                     " . ( isset( $array['id'] ) ? " id=\"" . $array['id'] . "\"" : "" ) . "
                     " . ( isset( $array['name'] ) ? " name=\"" . $array['name'] . "\"" : "" ) . "
                     " . ( isset( $array['value'] ) ? " value=\"" . $array['value'] . "\"" : "" ) . "
+                    " . ( isset( $array['placeholder'] ) ? " placeholder=\"" . $array['placeholder'] . "\"" : "" ) . "
                     " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . "/>";
 					}
 				case "password":
@@ -123,6 +125,7 @@ class Form
                     " . ( isset( $array['id'] ) ? " id=\"" . $array['id'] . "\"" : "" ) . "
                     " . ( isset( $array['name'] ) ? " name=\"" . $array['name'] . "\"" : "" ) . "
                     " . ( isset( $array['value'] ) ? " value=\"" . $array['value'] . "\"" : "" ) . "
+                    " . ( isset( $array['placeholder'] ) ? " placeholder=\"" . $array['placeholder'] . "\"" : "" ) . "
                     " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . "/>";
 					}
 				case "file":
@@ -132,6 +135,7 @@ class Form
                     " . ( isset( $array['id'] ) ? " id=\"" . $array['id'] . "\"" : "" ) . "
                     " . ( isset( $array['name'] ) ? " name=\"" . $array['name'] . "\"" : "" ) . "
                     " . ( isset( $array['value'] ) ? " value=\"" . $array['value'] . "\"" : "" ) . "
+                    " . ( isset( $array['placeholder'] ) ? " placeholder=\"" . $array['placeholder'] . "\"" : "" ) . "
                     " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . "/>";
 					}
 				case "image":
@@ -215,6 +219,7 @@ class Form
                     " . ( isset( $array['rows'] ) ? " rows=\"" . $array['rows'] . "\"" : "" ) . "
                     " . ( isset( $array['id'] ) ? " id=\"" . $array['id'] . "\"" : "" ) . "
                     " . ( isset( $array['name'] ) ? " name=\"" . $array['name'] . "\"" : "" ) . "
+                    " . ( isset( $array['placeholder'] ) ? " placeholder=\"" . $array['placeholder'] . "\"" : "" ) . "
                     " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . ">" . ( isset( $array['value'] ) ? $array['value'] : "" ) . "</" . $array['type'] . ">";
                     }
                     

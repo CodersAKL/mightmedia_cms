@@ -8061,3 +8061,9 @@ html.ie11 .bs-searchbox .form-control {
   height: auto;
   padding: 0 15px;
 }
+
+.info-icon {
+  color: #1858d0;
+  font-size: 22px;
+  vertical-align: middle;
+}

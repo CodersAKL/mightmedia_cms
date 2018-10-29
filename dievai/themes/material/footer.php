@@ -39,6 +39,11 @@
 
     <!-- Demo Js -->
     <script src="themes/material/js/demo.js"></script>
+    <?php
+        if(! empty($_SESSION[SLAPTAS]['redirect'])) {
+            notifyMsg($_SESSION[SLAPTAS]['redirect']);
+        }
+    ?>
 </body>
 
 </html>

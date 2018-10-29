@@ -1051,9 +1051,14 @@ if(! function_exists('seo_url')) {
  *
  * @param string $location
  * @param string $type
+ * @param array $sessions | null
  */
 if(! function_exists('redirect')) {
-	function redirect( $location, $type = "header" ) {
+	function redirect($location, $type = "header", $sessions = null) {
+
+		if(! empty($sessions)) {
+			$_SESSION[SLAPTAS]['redirect'] = $sessions;
+		}
 
 		if ( $type == "header" ) {
 			header( "Location: " . $location );

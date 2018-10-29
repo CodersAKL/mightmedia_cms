@@ -346,3 +346,9 @@ function tableFilter($formData, $data)
 
 	return $newFormData;
 }
+
+function deleteRedirectSession()
+{
+	unset($_SESSION[SLAPTAS]['redirect']);
+
+}

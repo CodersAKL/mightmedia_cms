@@ -1,6 +1,11 @@
 <?php
 $lang['admin']['menu_main'] = 'Pagrindinis meniu';
 $lang['admin']['menu_extensions'] = 'Plėtiniai';
+$lang['admin']['page_url'] = 'Išorinis puslapis?';
+$lang['admin']['post_updated'] = 'Įrašas sėkmingai atnaujintas!';
+$lang['admin']['post_created'] = 'Įrašas sėkmingai sukurtas!';
+$lang['admin']['post_deleted'] = 'Įrašas sėkmingai ištrintas!';
+$lang['admin']['post_not_updated'] = 'Įrašo atnaujinti nepavyko!';
 //Papildymas - antras
 $lang['user']['profile'] = 'Mano profilis';
 $lang['admin']['poll_active_q'] = 'Aktyvumas';
