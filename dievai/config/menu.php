@@ -12,10 +12,10 @@ $adminMenu = [
 ];
 
 $adminExtensionsMenu = [
-    'polls'     => 'balsavimas.php',
-    'faq'       => 'duk.php',
-    'comments'  => 'komentarai.php',
-    'forum'     => 'frm.php',
-    'gallery'   => 'galerija.php',
-    'downloads' => 'siustis.php', 
+    // 'polls'     => 'balsavimas.php',
+    // 'faq'       => 'duk.php',
+    // 'comments'  => 'komentarai.php',
+    // 'forum'     => 'frm.php',
+    // 'gallery'   => 'galerija.php',
+    // 'downloads' => 'siustis.php', 
 ];

@@ -7492,10 +7492,10 @@ fieldset[disabled] .form-control {
     bottom: 0;
     width: 100%;
     border-top: 1px solid #eee;
-    padding: 15px;
+    padding: 5px 15px;
     overflow: hidden; }
     .sidebar .legal .copyright {
-      font-size: 13px;
+      font-size: 10px;
       white-space: nowrap;
       -ms-text-overflow: ellipsis;
       -o-text-overflow: ellipsis;
@@ -7511,7 +7511,7 @@ fieldset[disabled] .form-control {
       text-overflow: ellipsis;
       overflow: hidden;
       margin-top: 5px;
-      font-size: 13px; }
+      font-size: 10px; }
   .sidebar .user-info {
     padding: 13px 15px 12px 15px;
     white-space: nowrap;

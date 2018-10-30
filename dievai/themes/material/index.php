@@ -67,33 +67,36 @@ $user = getUserMail($_SESSION[SLAPTAS]['id']);
                         <?php } ?>
                     </li>
                 <?php } ?>
-                <li class="header">
-                    <?php echo $lang['admin']['menu_extensions']; ?>
-                </li>
-                <?php foreach (getAdminExtensionsMenu() as $id => $file) { ?>
-                    <?php
-                        $linkValue = (isset( $lang['admin'][basename($file, '.php')] ) ? $lang['admin'][basename($file, '.php')] : nice_name($file));
-                    ?>
-                    <li <?php echo ( isset( $_GET['a'] ) && $_GET['a'] == $id ? 'class="active"' : '' ); ?>>
-                        <?php if(isset($buttons[$id]) && ! empty($buttons[$id])) { ?>
-                            <a href="javascript:void(0);" class="menu-toggle">
-                                <i class="material-icons"><?php echo adminMenuIcon($id); ?></i>
-                                <span><?php echo $linkValue; ?></span>
-                            </a>
-                            <ul class="ml-menu" id="sub-menu-admin">
-                                <?php foreach($buttons[$id] as $button) { ?>
-                                    <li>
-                                        <a href="<?php echo $button['url']; ?>"><?php echo $button['value']; ?></a>
-                                    </li>
-                                <?php } ?>
-                            </ul>
-                        <?php } else { ?>
-                            <a href="<?php echo url( '?id,999;a,' . $id ); ?>">
-                                <i class="material-icons"><?php echo adminMenuIcon($id); ?></i>
-                                <span><?php echo $linkValue; ?></span>
-                            </a>
-                        <?php } ?>
+                
+                <?php if(! empty(getAdminExtensionsMenu())) { ?>
+                    <li class="header">
+                        <?php echo $lang['admin']['menu_extensions']; ?>
                     </li>
+                    <?php foreach (getAdminExtensionsMenu() as $id => $file) { ?>
+                        <?php
+                            $linkValue = (isset( $lang['admin'][basename($file, '.php')] ) ? $lang['admin'][basename($file, '.php')] : nice_name($file));
+                        ?>
+                        <li <?php echo ( isset( $_GET['a'] ) && $_GET['a'] == $id ? 'class="active"' : '' ); ?>>
+                            <?php if(isset($buttons[$id]) && ! empty($buttons[$id])) { ?>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <i class="material-icons"><?php echo adminMenuIcon($id); ?></i>
+                                    <span><?php echo $linkValue; ?></span>
+                                </a>
+                                <ul class="ml-menu" id="sub-menu-admin">
+                                    <?php foreach($buttons[$id] as $button) { ?>
+                                        <li>
+                                            <a href="<?php echo $button['url']; ?>"><?php echo $button['value']; ?></a>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            <?php } else { ?>
+                                <a href="<?php echo url( '?id,999;a,' . $id ); ?>">
+                                    <i class="material-icons"><?php echo adminMenuIcon($id); ?></i>
+                                    <span><?php echo $linkValue; ?></span>
+                                </a>
+                            <?php } ?>
+                        </li>
+                    <?php } ?>
                 <?php } ?>
             </ul>
         </div>
@@ -114,13 +117,8 @@ $user = getUserMail($_SESSION[SLAPTAS]['id']);
 
 <section class="content">
     <div class="container-fluid">
-        <?php
-            adminPages();
-        ?>
-        <!-- CPU Usage -->
-        
-        <!-- #END# CPU Usage -->
-
+        <?php adminPages(); ?>
     </div>
 </section>
+
 <?php include 'footer.php'; ?>

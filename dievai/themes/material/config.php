@@ -1,6 +1,6 @@
 <?php
 
-define('BUTTONS_BLOCK', true);
+define('BUTTONS_BLOCK', false);
 
 $icons = [
     'gallery' => [
