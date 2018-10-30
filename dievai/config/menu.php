@@ -18,4 +18,7 @@ $adminExtensionsMenu = [
     // 'forum'     => 'frm.php',
     // 'gallery'   => 'galerija.php',
     // 'downloads' => 'siustis.php', 
+    // 'articles'  => 'straipsnis.php',
+    // 'pm'        => 'pm.php', 
+    // 'chat'      => 'pokalbiai.php', 
 ];

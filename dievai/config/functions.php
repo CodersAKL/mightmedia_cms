@@ -42,9 +42,10 @@ function editor( $tipas = 'jquery', $dydis = 'standartinis', $id = FALSE, $value
 	}
 
 	$root = ROOT;
+	$return = '';
 
 	if ( $conf['Editor'] == 'textarea' ) {
-		$return = '';
+		
 		if ( is_array( $id ) ) {
 			foreach ( $id as $key => $val ) {
 				$return .= <<<HTML
@@ -61,7 +62,7 @@ HTML;
 		}
 	} elseif ( $conf['Editor'] == 'tinymce' ) {
 		$dir    = adresas();
-		$return = <<<HTML
+		$return .= <<<HTML
       <!-- Load TinyMCE -->
 <script src="{$dir}htmlarea/tinymce/tinymce.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -81,8 +82,6 @@ HTML;
 		image_advtab: true,
 		// images_upload_url: 'postAcceptor.php', - images local upload
     });
-    // tinymce.suffix = ".min";
-    // tinyMCE.baseURL = '{$dir}tinymce';
 
 </script>
 <!-- /TinyMCE -->
@@ -104,7 +103,7 @@ HTML;
 	} elseif ( $conf['Editor'] == 'ckeditor' ) {
 		$dir = adresas();
 
-		$return = <<<HTML
+		$return .= <<<HTML
 	<script type="text/javascript" src="{$dir}htmlarea/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript">
 		//CKEditor
@@ -160,10 +159,10 @@ function adminPages()
 	global $url, $lang, $conf, $buttons, $adminMenu, $adminExtensionsMenu, $timeout;
 	
 	$mergedMenus = array_merge($adminMenu, $adminExtensionsMenu);
-	$pagesPath = '/pages/';
+	$pagesPath = 'pages/';
 	$fileName = (isset($url['a']) && isset($mergedMenus[$url['a']] ) ? $mergedMenus[$url['a']] : null);
 
-	if (! empty($fileName) && file_exists(dirname(__DIR__) . $pagesPath . $fileName) && isset($_SESSION[SLAPTAS]['username']) && $_SESSION[SLAPTAS]['level'] == 1 && defined( "OK" ) ) {
+	if (! empty($fileName) && file_exists(dirname(__DIR__) . DIRECTORY_SEPARATOR . $pagesPath . $fileName) && isset($_SESSION[SLAPTAS]['username']) && $_SESSION[SLAPTAS]['level'] == 1 && defined( "OK" ) ) {
 		if (count($_POST) > 0 && $conf['keshas'] == 1) {
 			notifyMsg(
 				[
