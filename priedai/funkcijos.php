@@ -1998,7 +1998,7 @@ if(! function_exists('site_tree')) {
 
 //Siunciam nurodyta faila i narsykle. Pratestavau ant visu operaciniu ir narsykliu.
 if(! function_exists('download')) {
-	function download( $file, $filter = ".htaccess|.|..|remontas.php|index.php|config.php|conf.php" ) {
+	function download( $file, $filter = ".htaccess|.|..|remontas.php|index.php|configuration.php|conf.php" ) {
 
 		global $sql, $lang;
 		$filter = explode( "|", $filter );

@@ -12,7 +12,7 @@ require 'themes/material/table.class.php';
 
 //todo: make it safe
 if(isset($_GET['a']) && $_GET['a'] === 'ajax') {
-	include 'ajax.php';
+	require 'ajax.php';
 	exit;
 }
 

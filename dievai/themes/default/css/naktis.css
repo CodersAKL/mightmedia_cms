@@ -1,0 +1,36 @@
+body {
+    background: #2c2c2c;
+}
+
+#virslogo {
+    background: #2c2c2c;
+}
+
+#admin_logo {
+    background: #2c2c2c url(../images/mm_logo2.png) no-repeat;
+}
+
+#left .nav ul li a {
+    color: #999;
+}
+
+#admin_lang.down, #admin_user.down {
+    background: #2c2c2c;
+    color: #999;
+}
+
+#admin_lang.up, #admin_user.up {
+    background: #2c2c2c url('../images/up.png') 99% 50% no-repeat;
+}
+
+#admin_lang ul li ul {
+    background: #2c2c2c;
+}
+
+#footer .copy {
+    background: #2c2c2c;
+}
+
+#footer .images {
+    background: #2c2c2c;
+}

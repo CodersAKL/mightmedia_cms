@@ -160,14 +160,20 @@ function adminPages()
 	global $url, $lang, $conf, $buttons, $adminMenu, $adminExtensionsMenu, $timeout;
 	
 	$mergedMenus = array_merge($adminMenu, $adminExtensionsMenu);
+	$pagesPath = '/pages/';
 	$fileName = (isset($url['a']) && isset($mergedMenus[$url['a']] ) ? $mergedMenus[$url['a']] : null);
 
-	if (! empty($fileName) && file_exists(dirname(__DIR__) . "/" . $fileName) && isset($_SESSION[SLAPTAS]['username']) && $_SESSION[SLAPTAS]['level'] == 1 && defined( "OK" ) ) {
+	if (! empty($fileName) && file_exists(dirname(__DIR__) . $pagesPath . $fileName) && isset($_SESSION[SLAPTAS]['username']) && $_SESSION[SLAPTAS]['level'] == 1 && defined( "OK" ) ) {
 		if (count($_POST) > 0 && $conf['keshas'] == 1) {
-			msg( $lang['system']['warning'], $lang['system']['cache_info'] );
+			notifyMsg(
+				[
+					'type'		=> 'warning',
+					'message' 	=> $lang['system']['cache_info']
+				]
+			);
 		}
 		
-		include_once("/" . $fileName);
+		include_once $pagesPath . $fileName;
 
 	} elseif ( isset( $_GET['m'] ) ) {
 
@@ -186,9 +192,9 @@ function adminPages()
 				break;
 		}
 
-		include_once("/" . $page);
+		include_once $pagesPath . $page;
 	} else {
-		include_once("/start.php");
+		include_once $pagesPath . 'dashboard.php';
 	}
 }
 

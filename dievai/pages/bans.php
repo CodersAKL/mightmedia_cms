@@ -14,11 +14,9 @@
 if ( !defined( "OK" ) || !ar_admin( basename( __file__ ) ) ) {
 	redirect( 'location: http://' . $_SERVER["HTTP_HOST"] );
 }
-//Puslapiavimui
-//if (isset($url['p']) && isnum($url['p']) && $url['p'] > 0) $p = (int)$url['p']; else $p = 0;
-//$limit = 15;
-//
+
 unset( $resultatai, $i, $temp, $lines );
+
 if ( !isset( $_GET['b'] ) ) {
 	$_GET['b'] = 1;
 }
@@ -38,31 +36,75 @@ if ( isset( $_GET['d'] ) ) {
 
 	delLineFromFile( ROOT . '.htaccess', $trint + 1 );
 	delLineFromFile( ROOT . '.htaccess', $trint );
-	//msg("ka trint?",( $trint)."ir". ($trint+1)."?");
-	msg( $lang['system']['done'], "IP {$lang['admin']['unbaned']}." );
-	redirect( $_SERVER['HTTP_REFERER'], 'meta' );
+
+	redirect(
+		url("?id," . $url['id'] . ";a," . $url['a']),
+		"header",
+		[
+			'type'		=> 'success',
+			'message' 	=> 'IP ' . $lang['admin']['unbaned']
+		]
+	);
 }
 //ip baninimas
 if ( isset( $_GET['b'] ) && $_GET['b'] == 1 ) {
-	$title = "IP {$lang['admin']['bans']}"; //Atvaizdavimo pavadinimas
-	//$viso = kiek("ban_portai");	//suskaiciuojam kiek isviso irasu
-	$form = array( "Form"                     => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port" ),
-	                "IP (xx.xxx.xxx.xx):"      => array( "type" => "text", "value" => "" . input( ( isset( $url['ip'] ) ) ? $url['ip'] : '' ) . "", "name" => "ip", ),
-		//"Veiksmas:"=>array("type"=>"select","value"=>array("1"=>"Baninti","0"=>"Peradresuoti"),"name"=>"veiksmas"),
-	                "{$lang['admin']['why']}:" => array( "type" => "text", "value" => "", "name" => "priezastis" ),
-	                " "                        => array( "type" => "submit", "name" => "Portai", "value" => "{$lang['admin']['save']}" ) );
+	$title = 'IP ' . $lang['admin']['bans'];
+	
+	$form = [
+		"Form"                     	=> [
+			"action"	=> "",
+			"method" 	=> "post", 
+			"name" 		=> "port"
+		],
+
+	    "IP (xx.xxx.xxx.xx):"      	=> [
+			"type" 	=> "text",
+			"value" => input( ( isset( $url['ip'] ) ) ? $url['ip'] : '' ),
+			"name" 	=> "ip"
+		],
+
+	    $lang['admin']['why'] 		=> [	
+			"type" => "text",
+			"name" => "priezastis"
+		],
+
+	    ""                        	=> [
+			"type" 		=> "submit",
+			"name" 		=> "Portai",
+			'form_line'	=> 'form-not-line',
+			"value" 	=> $lang['admin']['save']
+		]
+	];
+
 	if ( isset( $_POST['ip'] ) && isset( $_POST['priezastis'] ) ) {
 		if ( preg_match( "/^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])" . "(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$/", $_POST['ip'] ) ) {
 			$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE ip = '" . escape( $_POST['ip'] ) . "' AND levelis='1'" );
 			if ( count( $sql ) == 0 ) {
 				ban( $_POST['ip'], $_POST['priezastis'] );
-				msg( $lang['system']['done'], "IP {$_POST['ip']} {$lang['admin']['banned']}." );
-				redirect( $_SERVER['HTTP_REFERER'], 'meta' );
+
+				redirect(
+					url("?id," . $url['id'] . ";a," . $url['a']),
+					"header",
+					[
+						'type'		=> 'success',
+						'message' 	=> 'IP: ' . $_POST['ip'] . ' ' . $lang['admin']['banned']
+					]
+				);
 			} else {
-				klaida( $lang['system']['warning'], "{$lang['admin']['notallowed']}." );
+				notifyMsg(
+					[
+						'type'		=> 'error',
+						'message' 	=> $lang['admin']['notallowed']
+					]
+				);
 			}
 		} else {
-			klaida( $lang['system']['warning'], "{$lang['admin']['badip']}." );
+			notifyMsg(
+				[
+					'type'		=> 'error',
+					'message' 	=> $lang['admin']['badip']
+				]
+			);
 		}
 	}
 }

@@ -1,19 +1,19 @@
 <?php
 
 $adminMenu = [
-    'dashboard'     => 'start.php',
-    'configuration' => 'config.php', 
+    'dashboard'     => 'dashboard.php',
+    'configuration' => 'configuration.php', 
     'pages'         => 'meniu.php',
-    'blocks'        => 'paneles.php',
+    'blocks'        => 'blocks.php',
     'news'          => 'naujienos.php',
-    'faq'           => 'duk.php',
-    'polls'         => 'balsavimas.php',
-    'users'         => 'vartotojai.php', 
-    'bans'          => 'banai.php',
-    'logs'          => 'logai.php', 
+    'users'         => 'users.php', 
+    'bans'          => 'bans.php',
+    'logs'          => 'logs.php', 
 ];
 
 $adminExtensionsMenu = [
+    'polls'     => 'balsavimas.php',
+    'faq'       => 'duk.php',
     'comments'  => 'komentarai.php',
     'forum'     => 'frm.php',
     'gallery'   => 'galerija.php',

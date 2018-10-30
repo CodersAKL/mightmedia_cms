@@ -103,7 +103,7 @@ $buttons = [
     'blocks'    => [
         [
             'url' 	=> url( "?id,999;a,blocks;" ),
-            'value'	=> $lang['admin']['paneles'],
+            'value'	=> $lang['admin']['blocks'],
             'icon'	=> adminIcon('blocks', 'select')
         ],
         [

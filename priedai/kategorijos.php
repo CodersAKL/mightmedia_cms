@@ -249,7 +249,7 @@ function kategorija( $kieno, $leidimas = FALSE ) {
 		if ( $kieno == 'vartotojai' ) {
 			$textas = $lang['system']['grouplevel'];
 			//$puslapiai[""]="";
-			$failai = getFiles( ROOTAS . $conf['Admin_folder'], '.htaccess|index.php|index.html|index.htm|index.php3|conf.php|config.php|vartotojai.php|logai.php|upload.php|todo.php|paneles.php|meniu.php|komentarai.php|narsykle.php|main.php|sfunkcijos.php|pokalbiai.php|start.php|uncache.php|search.php|antivirus.php|sfunkcijos.php' );
+			$failai = getFiles( ROOTAS . $conf['Admin_folder'], '.htaccess|index.php|index.html|index.htm|index.php3|conf.php|configuration.php|users.php|logs.php|upload.php|todo.php|blocks.php|meniu.php|komentarai.php|narsykle.php|main.php|sfunkcijos.php|pokalbiai.php|dashboard.php|uncache.php|search.php|antivirus.php|sfunkcijos.php' );
 			foreach ( $failai as $file ) {
 				if ( $file['type'] == 'file' ) {
 
