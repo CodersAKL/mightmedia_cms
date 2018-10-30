@@ -560,7 +560,7 @@ function build_menu_admin($data, $id = 0) {
 
 		$.post("<?php echo url( "?id,999;a,ajax;" ); ?>", data, function(response) {
 			if(response) {
-				showNotification('alert-success', response);
+				showNotification('success', response);
 			}
 		});
     });

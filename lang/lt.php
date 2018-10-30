@@ -5,6 +5,7 @@ $lang['admin']['page_url'] = 'Išorinis puslapis?';
 $lang['admin']['post_updated'] = 'Įrašas sėkmingai atnaujintas!';
 $lang['admin']['post_created'] = 'Įrašas sėkmingai sukurtas!';
 $lang['admin']['post_deleted'] = 'Įrašas sėkmingai ištrintas!';
+$lang['admin']['posts_deleted'] = 'Įrašai sėkmingai ištrinti!';
 $lang['admin']['post_not_updated'] = 'Įrašo atnaujinti nepavyko!';
 $lang['admin']['configuration_updated'] = 'Nustatymai sėkmingai atnaujinti!';
 $lang['admin']['configuration_main'] = 'Pagrindiniai nustatymai';

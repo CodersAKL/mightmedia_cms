@@ -454,8 +454,16 @@ $.AdminBSB.browser = {
     }
 }
 
-function showNotification(colorName, text, callback) {
-    if (colorName === null || colorName === '') { colorName = 'bg-black'; }
+function showNotification(type, text, callback) {
+    if (type === null || type === '') {
+        type = 'bg-black';
+    } else {
+        if(type === 'error') {
+            type = 'alert-danger';
+        } else {
+            type = 'alert-' + type;
+        }
+    }
     if (text === null || text === '') { text = 'Turning standard Bootstrap alerts'; }
     var animateEnter = 'animated bounceInRight';
     var animateExit = 'animated bounceOutRight';
@@ -465,7 +473,7 @@ function showNotification(colorName, text, callback) {
         message: text
     },
         {
-            type: colorName,
+            type: type,
             allow_dismiss: allowDismiss,
             newest_on_top: true,
             timer: 800,
@@ -522,3 +530,19 @@ $(function () {
     });
 
 });
+
+
+var checked = false;
+function checkedAll(formEl) {
+    var form = document.querySelector(formEl);
+    
+    if (checked == false) {
+        checked = true
+    } else {
+        checked = false
+    }
+
+    for (var i = 0; i < form.elements.length; i++) {
+        form.elements[i].checked = checked;
+    }
+}

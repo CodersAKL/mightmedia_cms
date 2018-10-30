@@ -469,7 +469,7 @@ HTML;
 
 			$.post("<?php echo url( "?id,999;a,ajax;" ); ?>", data, function(response) {
 				if(response) {
-					showNotification('alert-success', response);
+					showNotification('success', response);
 				}
 			});
 		});

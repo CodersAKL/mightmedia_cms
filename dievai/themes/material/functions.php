@@ -498,17 +498,19 @@ function infoBox($color, $icon, $text, $count)
 function notifyMsg($data) {
 	?>
 	<script>
-		showNotification(
-			'alert-<?php echo $data['type']; ?>', 
-			'<?php echo $data['message']; ?>',
-			function () {
-				var data = {
-					action: 'deleteRedirectSession'
-				};
-				//delete session
-				$.post("<?php echo url( "?id,999;a,ajax;" ); ?>", data);
-			}
-		);
+		$(function () {
+			showNotification(
+				'<?php echo $data['type']; ?>', 
+				'<?php echo $data['message']; ?>',
+				function () {
+					var data = {
+						action: 'deleteRedirectSession'
+					};
+					//delete session
+					$.post("<?php echo url( "?id,999;a,ajax;" ); ?>", data);
+				}
+			);
+		});
 	</script>
 	<?php
 }

@@ -317,11 +317,11 @@ function pagesOrder($data)
 }
 
 //filtering
-function tableFilter($formData, $data)
+function tableFilter($formData, $data, $formId = '')
 {
 	global $lang;
 
-	$newFormData['#'] = '<input type="checkbox" id="visi" name="visi" onclick="checkedAll("usersch");" class="filled-in"><label for="visi"></label>';
+	$newFormData['#'] = '<input type="checkbox" id="visi" name="visi" onclick="checkedAll(\'' . $formId . '\');" class="filled-in"><label for="visi"></label>';
 
 	foreach($formData as $key => $value) {
 		$input = '<div class="form-group">';
@@ -334,15 +334,6 @@ function tableFilter($formData, $data)
 	}
 
 	$newFormData[$lang['admin']['action']] = '<button type="submit" class="btn btn-primary waves-effect">' . $lang['admin']['filtering'] . '</button>';
-
-	// var_dump($newFormData); exit;
-	// $formData = [
-	// 	"#"                          => "<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('usersch');\" />",
-	// 	$lang['admin']['user_name']  => "<input class=\"filtrui\" type=\"text\" value=\"{$val[0]}\" name=\"nick\" />",
-	// 	"" => "<input class=\"filtrui\" type=\"text\" value=\"{$val[1]}\" name=\"ip\" />",
-	// 	$lang['admin']['user_email'] => "<input class=\"filtrui\" type=\"text\" value=\"{$val[2]}\" name=\"email\" />",
-
-	// ];
 
 	return $newFormData;
 }

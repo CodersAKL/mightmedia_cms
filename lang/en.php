@@ -5,6 +5,7 @@ $lang['admin']['page_url'] = 'External page?';
 $lang['admin']['post_updated'] = 'Post updated successful!';
 $lang['admin']['post_created'] = 'Post created successful!';
 $lang['admin']['post_deleted'] = 'Post deleted successful!';
+$lang['admin']['posts_deleted'] = 'Posts deleted successful!';
 $lang['admin']['post_not_updated'] = 'Post update error!';
 $lang['admin']['configuration_updated'] = 'Settings updated successful!';
 $lang['admin']['configuration_main'] = 'Main settings';
