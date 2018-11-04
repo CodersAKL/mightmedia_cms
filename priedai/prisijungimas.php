@@ -89,7 +89,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'prisijungimas' ) {
 		}
 		unset( $linfo, $strUsername, $strPassword );
 	} else {
-		$strError = "{$lang['user']['cantlogin']}<span id='sekundes'>" . ( $_SESSION[SLAPTAS]['timeout_idle'] - time() ) . "</span></b><script>startCount();</script>s. ";
+		$strError = $lang['user']['cantlogin'] . ' ' . ( $_SESSION[SLAPTAS]['timeout_idle'] - time() ) . 's.';
 		//jeigu baigesi laikas
 		if ( $_SESSION[SLAPTAS]['timeout_idle'] - time() <= 0 ) {
 			unset( $_SESSION[SLAPTAS]['timeout_idle'], $_SESSION[SLAPTAS]['login_error'] );

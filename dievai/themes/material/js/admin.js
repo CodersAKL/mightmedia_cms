@@ -511,7 +511,9 @@ $(function () {
     $.AdminBSB.search.activate();
 
     //Textare auto growth
-    autosize($('textarea.auto-growth'));
+    if($('textarea.auto-growth')) {
+        autosize($('textarea.auto-growth'));
+    }
     
     // preloader
     setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);

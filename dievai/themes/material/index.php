@@ -29,7 +29,7 @@ $user = getUserMail($_SESSION[SLAPTAS]['id']);
                         </li>
                         <li role="separator" class="divider"></li>
                         <li>
-                            <a href="<?php echo $lang['user']['logout']; ?>"><i class="material-icons">input</i><?php echo $lang['user']['logout']; ?></a>
+                            <a href="/<?php echo $lang['user']['logout']; ?>"><i class="material-icons">input</i><?php echo $lang['user']['logout']; ?></a>
                         </li>
                     </ul>
                 </div>
