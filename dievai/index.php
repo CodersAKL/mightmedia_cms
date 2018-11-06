@@ -27,8 +27,6 @@ include_once ( "../priedai/prisijungimas.php" );
 
 require 'themes/material/config.php';
 require 'themes/material/functions.php';
-require 'config/buttons.php';
-require 'config/menu.php';
 
 include 'config/functions.php';
 include 'themes/material/login.php';
