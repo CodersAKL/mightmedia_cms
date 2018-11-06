@@ -82,13 +82,8 @@ $icons = [
         'blocks'        => 'view_column', 
         'users'         => 'supervisor_account', 
         'comments'      => 'comment', 
-        'bans'          => 'do_not_disturb_on', 
-        'polls'         => 'show_chart', 
-        'downloads'     => 'file_download', 
-        'faq'           => 'question_answer',
+        'bans'          => 'do_not_disturb_on',
         'news'          => 'fiber_new',
-        'forum'         => 'mode_comment',
-        'gallery'       => 'collections',
         'default'       => 'extension'
     ]
 ];

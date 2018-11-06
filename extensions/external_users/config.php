@@ -79,3 +79,13 @@ function externalUsersAdminMenu($adminExtensionsMenu)
     
     return array_merge($adminExtensionsMenu, $adminPages);
 }
+
+// add admin Menus
+addAction('adminMenuIcons', 'externalUsersAdminIcons');
+
+function externalUsersAdminIcons($icons)
+{
+    $adminIcons['pm']  = 'message';
+
+    return array_merge($icons, $adminIcons);
+}

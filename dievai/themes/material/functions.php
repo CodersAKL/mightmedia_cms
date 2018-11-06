@@ -399,16 +399,12 @@ function buttonsMenu($buttons)
 
 function adminIcon($group, $icon) 
 {
-	global $icons;
-
-	return '<img src="' . ROOT . $icons[$group][$icon] . '" alt="" class="middle">';
+	return '<img src="' . ROOT . icons($group, $icon) . '" alt="" class="middle">';
 }
 
-function adminMenuIcon($id) 
+function adminMenuIcon($icon) 
 {
-	global $icons;
-
-	return isset($icons['menu'][$id]) ? $icons['menu'][$id] : $icons['menu']['default'];
+	return ! empty(iconsMenu($icon)) ? iconsMenu($icon) : iconsMenu('default');
 }
 
 function dashTree($title, $content) 

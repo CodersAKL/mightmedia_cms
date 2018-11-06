@@ -87,3 +87,13 @@ function galleryAdminButtons($buttons)
     
     return array_merge($buttons, $adminButtons);
 }
+
+// add admin Menus
+addAction('adminMenuIcons', 'galleryUsersAdminIcons');
+
+function galleryUsersAdminIcons($icons)
+{
+    $adminIcons['gallery']  = 'collections';
+
+    return array_merge($icons, $adminIcons);
+}

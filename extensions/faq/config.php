@@ -57,3 +57,13 @@ function faqAdminButtons($buttons)
     
     return array_merge($buttons, $adminButtons);
 }
+
+// add admin Menus
+addAction('adminMenuIcons', 'faqUsersAdminIcons');
+
+function faqUsersAdminIcons($icons)
+{
+    $adminIcons['faq']  = 'question_answer';
+
+    return array_merge($icons, $adminIcons);
+}

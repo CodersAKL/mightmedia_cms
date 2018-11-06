@@ -34,7 +34,6 @@ function articlesAdminMenu($adminExtensionsMenu)
     return array_merge($adminExtensionsMenu, $adminPages);
 }
 
-
 // add admin Menus
 addAction('adminButtons', 'articlesAdminButtons');
 
@@ -75,4 +74,14 @@ function articlesAdminButtons($buttons)
     ];
     
     return array_merge($buttons, $adminButtons);
+}
+
+// add admin Menus
+addAction('adminMenuIcons', 'articlesAdminIcons');
+
+function articlesAdminIcons($icons)
+{
+    $adminIcons['articles']  = 'insert_drive_file';
+
+    return array_merge($icons, $adminIcons);
 }

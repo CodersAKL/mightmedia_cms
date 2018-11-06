@@ -366,5 +366,24 @@ function buttons($id = null)
 		return isset($buttons[$id]) && ! empty($buttons[$id]) ? $buttons[$id] : null;
 	} 
 	
-	return  $buttons;
+	return $buttons;
+}
+
+function icons($group, $icon)
+{
+	global $icons;
+
+	$icons = applyFilters('adminMenuIcons', $icons);
+	
+	return ! empty($icons[$group][$icon]) ? $icons[$group][$icon] : null;
+}
+
+function iconsMenu($icon)
+{
+	global $icons;
+
+	$iconsMenu = $icons['menu'];
+	$iconsMenu = applyFilters('adminMenuIcons', $iconsMenu);
+	
+	return ! empty($iconsMenu[$icon]) ? $iconsMenu[$icon] : null;
 }

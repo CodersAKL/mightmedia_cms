@@ -67,3 +67,13 @@ function forumAdminButtons($buttons)
     
     return array_merge($buttons, $adminButtons);
 }
+
+// add admin Menus
+addAction('adminMenuIcons', 'forumUsersAdminIcons');
+
+function forumUsersAdminIcons($icons)
+{
+    $adminIcons['forum']  = 'mode_comment';
+
+    return array_merge($icons, $adminIcons);
+}

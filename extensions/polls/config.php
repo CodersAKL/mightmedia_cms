@@ -74,3 +74,13 @@ function pollsAdminButtons($buttons)
     
     return array_merge($buttons, $adminButtons);
 }
+
+// add admin Menus
+addAction('adminMenuIcons', 'pollsUsersAdminIcons');
+
+function pollsUsersAdminIcons($icons)
+{
+    $adminIcons['polls']  = 'show_chart';
+
+    return array_merge($icons, $adminIcons);
+}

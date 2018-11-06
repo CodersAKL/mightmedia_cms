@@ -76,3 +76,13 @@ function linksAdminButtons($buttons)
     
     return array_merge($buttons, $adminButtons);
 }
+
+// add admin Menus
+addAction('adminMenuIcons', 'linksUsersAdminIcons');
+
+function linksUsersAdminIcons($icons)
+{
+    $adminIcons['links']  = 'link';
+
+    return array_merge($icons, $adminIcons);
+}

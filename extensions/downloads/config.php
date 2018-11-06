@@ -80,3 +80,13 @@ function downloadsAdminButtons($buttons)
     
     return array_merge($buttons, $adminButtons);
 }
+
+// add admin Menus
+addAction('adminMenuIcons', 'downloadsAdminIcons');
+
+function downloadsAdminIcons($icons)
+{
+    $adminIcons['downloads']  = 'file_download';
+
+    return array_merge($icons, $adminIcons);
+}
