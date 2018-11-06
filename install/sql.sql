@@ -405,7 +405,6 @@ CREATE TABLE `panel` (
 INSERT INTO `panel` VALUES(1, 'Kalendorius', 'lt', 'blokai/kalendorius.php', 1, 'R', 'Taip', 'Y', 'N;');
 INSERT INTO `panel` VALUES(2, 'Meniu', 'lt', 'blokai/meniu.php', 2, 'L', 'Taip', 'Y', 'N;');
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `private_msg`
 --
