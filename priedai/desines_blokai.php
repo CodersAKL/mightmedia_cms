@@ -14,8 +14,19 @@ $sql_p = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `al
 
 foreach ( $sql_p as $row_p ) {
 	if ( teises( $row_p['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
-		if ( is_file( "blokai/" . $row_p['file'] ) ) {
-			include_once ( "blokai/" . $row_p['file'] );
+		//todo: after v2 optimize it
+		if(is_file($row_p['file'])) {
+			$includeBlock = $row_p['file'];
+		} elseif(is_file("blokai/" . basename($row_p['file']))) {
+			$includeBlock = "blokai/" . basename($row_p['file']);
+		} else {
+			$includeBlock = null;
+		}
+
+		if (! empty($includeBlock)) {
+			
+			include_once $includeBlock;
+			
 			if ( !isset( $title ) ) {
 				$title = $row_p['panel'];
 			}

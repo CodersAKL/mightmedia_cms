@@ -17,6 +17,7 @@ siuntiniai/media/!index.html
 //for dev
 .history
 install-
-install
+install--
+# install
 .htaccess
 priedai/conf.php

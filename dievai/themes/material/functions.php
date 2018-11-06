@@ -411,16 +411,6 @@ function adminMenuIcon($id)
 	return isset($icons['menu'][$id]) ? $icons['menu'][$id] : $icons['menu']['default'];
 }
 
-
-event('adminExtensionsPages', NULL, function($menu) {
-
-	$themeMenu = [
-		'aaa' => 'bbbb'
-	];
-	
-	return array_merge($menu, $themeMenu);
-});
-
 function dashTree($title, $content) 
 {
 	?>

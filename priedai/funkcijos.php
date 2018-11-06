@@ -512,26 +512,28 @@ if(! function_exists('adresas')) {
  * @return bool|int
  */
 if(! function_exists('puslapis')) {
-	function puslapis( $puslapis, $extra = FALSE ) {
+	function puslapis($puslapis, $extra = false ) {
 
 		global $conf;
 		$teises = @unserialize( $conf['puslapiai'][$puslapis]['teises'] );
-
-		if ( isset( $conf['puslapiai'][$puslapis]['id'] ) && !empty( $conf['puslapiai'][$puslapis]['id'] ) && is_file( dirname( __file__ ) . '/../puslapiai/' . $puslapis ) ) {
+	
+		//todo: optimize after v2
+		$isFile = is_file($puslapis) || is_file(dirname( __FILE__ ) . '/../puslapiai/' . $puslapis);
+		
+		if (isset($conf['puslapiai'][$puslapis]['id']) && !empty( $conf['puslapiai'][$puslapis]['id']) && $isFile) {
 
 			if ( $_SESSION[SLAPTAS]['level'] == 1 || ( is_array( $teises ) && in_array( $_SESSION[SLAPTAS]['level'], $teises ) ) || empty( $teises ) ) {
-
-				if ( $extra && isset( $conf['puslapiai'][$puslapis][$extra] ) ) {
+// var_dump($conf['puslapiai'][$puslapis]['id']);
+				if ($extra && isset($conf['puslapiai'][$puslapis][$extra]) ) {
 					return $conf['puslapiai'][$puslapis][$extra];
-				} //Jei reikalinga kita informacija apie puslapi - grazinam ja.
-				else {
+				} else { //Jei reikalinga kita informacija apie puslapi - grazinam ja.
 					return (int)$conf['puslapiai'][$puslapis]['id'];
 				}
 			} else {
-				return FALSE;
+				return false;
 			}
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 }
@@ -1527,16 +1529,20 @@ if(! function_exists('menesis')) {
 
 // grąžina failus iš nurodytos direktorijos ir sukiša Ä¯ masyvą
 if(! function_exists('getFiles')) {
-	function getFiles( $path, $denny = '.htaccess|index.php|index.html|index.htm|index.php3|conf.php' ) {
-
+	function getFiles($path, $denny = null, $defaultDir = null) {
 		global $lang;
-		$denny     = explode( '|', $denny );
-		$path      = urldecode( $path );
-		$files     = array();
-		$fileNames = array();
-		$i         = 0;
-		//print_r(basename($path));
-		//&& !in_array(basename($path), $denny)
+
+		if(empty($denny)) {
+			$denny = '.htaccess|index.php|index.html|index.htm|index.php3|conf.php';
+		}
+
+		$denny     	= explode( '|', $denny );
+		$path      	= urldecode( $path );
+		$defaultDir = ! empty($defaultDir) ? $defaultDir : $defaultDir;
+		$files     	= array();
+		$fileNames 	= array();
+		$i         	= 0;
+
 		if ( is_dir( $path ) ) {
 			if ( $dh = opendir( $path ) ) {
 				while ( ( $file = readdir( $dh ) ) !== FALSE ) {
@@ -1550,8 +1556,11 @@ if(! function_exists('getFiles')) {
 						while ( array_key_exists( $fkey, $fileNames ) ) {
 							$fkey .= " ";
 						}
-						$a                    = stat( $fullpath );
+
+						$a = stat($fullpath);
+			
 						$files[$fkey]['size'] = $a['size'];
+
 						if ( $a['size'] == 0 ) {
 							$files[$fkey]['sizetext'] = "-";
 						} else if ( $a['size'] > 1024 && $a['size'] <= 1024 * 1024 ) {
@@ -1562,7 +1571,8 @@ if(! function_exists('getFiles')) {
 						} else {
 							$files[$fkey]['sizetext'] = $a['size'] . " bytes";
 						}
-						$files[$fkey]['name'] = $file;
+
+						$files[$fkey]['name'] = $defaultDir . $file;
 						$e                    = strip_ext( $file ); // $e failo pletinys - pvz: .gif
 						$files[$fkey]['type'] = filetype( $fullpath ); // failo tipas, dir, file ir pan
 						$k                    = $e . $file; // kad butu lengvau rusiuoti;
@@ -2268,6 +2278,51 @@ if(! function_exists('event')) {
 				$value = call_user_func($function, $value);
 			}
 			return $value;
+		}
+	}
+}
+/**
+ * HOOKS
+ */
+require 'class.hooks.php';
+
+function doAction($tag, $value)
+{
+	$hooks = Hooks::getInstance();
+
+	return $hooks->do_action($tag, $value);
+}
+
+function addAction($tag, $callback)
+{
+	$hooks = Hooks::getInstance();
+
+	return $hooks->add_action($tag, $callback);
+}
+
+function applyFilters($tag, $value)
+{
+	$hooks = Hooks::getInstance();
+
+	return $hooks->apply_filters($tag, $value);
+}
+
+
+/**
+ * TODO: add this somewhere else
+ */
+
+
+//getFiles
+$extPath = ROOT . 'extensions/';
+$extensions = getDirs($extPath);
+
+if(! empty($extensions)) {
+	foreach ($extensions as $extension) {
+		$fileExt = $extPath . $extension . '/config.php';
+
+		if(file_exists($fileExt)) {
+			require_once $fileExt;
 		}
 	}
 }

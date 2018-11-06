@@ -16,7 +16,7 @@ if ( !defined( "LEVEL" ) || LEVEL > 1 || !defined( "OK" ) ) {
 }
 
 if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['meniu'], buttonsMenu($buttons['pages']));
+	lentele($lang['admin']['meniu'], buttonsMenu(buttons('pages')));
 }
 
 $parent     = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent`='0' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
@@ -126,17 +126,19 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 		);
 	}
 
-	$failai = getFiles( ROOT . 'puslapiai/' );
+	$failai = getFiles(ROOT . 'puslapiai/', null, 'puslapiai/');
+	//extensions
+	$failai = applyFilters('cmsPages', $failai);
 
-	foreach ( $failai as $file ) {
-		if ( $file['type'] == 'file' ) {
-			if ( $file['name'] !== 'style-switcher.php' && $file['name'] !== 'klaida.php' && !isset( $conf['puslapiai'][$file['name']]['id'] ) ) {
-				$puslapiai[basename( $file['name'] )] = ( isset( $lang['pages'][$file['name']] ) ? $lang['pages'][$file['name']] : nice_name( basename( $file['name'], '.php' ) ) );
+	foreach ($failai as $file) {
+		if ($file['type'] == 'file' ) {
+			if ($file['name'] !== 'style-switcher.php' && $file['name'] !== 'klaida.php' && !isset($conf['puslapiai'][$file['name']]['id'])) {
+				$puslapiai[$file['name']] = (isset($lang['pages'][$file['name']]) ? $lang['pages'][$file['name']] : nice_name(basename($file['name'], '.php' )) );
 			}
 		}
 	}
 
-	if ( !isset( $puslapiai ) || count( $puslapiai ) < 1 ) {
+	if ( !isset($puslapiai) || count($puslapiai) < 1 ) {
 		klaida( $lang['system']['warning'], "<h3>{$lang['admin']['page_nounused']}</h3>" );
 	} else {
 		$info = infoIcon($lang['system']['about_allow_pg']);

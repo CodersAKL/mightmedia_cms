@@ -13,10 +13,8 @@ if ( !defined( "LEVEL" ) || LEVEL > 1 || !defined( "OK" ) ) {
 }
 
 if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['users'], buttonsMenu($buttons['users']));
+	lentele($lang['admin']['users'], buttonsMenu(buttons('users')));
 }
-
-unset($buttons);
 
 if ( !isset( $_GET['v'] ) ) {
 	$_GET['v'] = 1;

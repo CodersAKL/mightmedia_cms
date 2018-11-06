@@ -77,13 +77,13 @@ $user = getUserMail($_SESSION[SLAPTAS]['id']);
                             $linkValue = (isset( $lang['admin'][basename($file, '.php')] ) ? $lang['admin'][basename($file, '.php')] : nice_name($file));
                         ?>
                         <li <?php echo ( isset( $_GET['a'] ) && $_GET['a'] == $id ? 'class="active"' : '' ); ?>>
-                            <?php if(isset($buttons[$id]) && ! empty($buttons[$id])) { ?>
+                            <?php if(! empty(buttons($id))) { ?>
                                 <a href="javascript:void(0);" class="menu-toggle">
                                     <i class="material-icons"><?php echo adminMenuIcon($id); ?></i>
                                     <span><?php echo $linkValue; ?></span>
                                 </a>
                                 <ul class="ml-menu" id="sub-menu-admin">
-                                    <?php foreach($buttons[$id] as $button) { ?>
+                                    <?php foreach(buttons($id) as $button) { ?>
                                         <li>
                                             <a href="<?php echo $button['url']; ?>"><?php echo $button['value']; ?></a>
                                         </li>

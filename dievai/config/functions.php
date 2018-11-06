@@ -156,13 +156,11 @@ function defaultHead()
 
 function adminPages() 
 {
-	global $url, $lang, $conf, $buttons, $adminMenu, $adminExtensionsMenu, $timeout;
-	
-	$mergedMenus = array_merge($adminMenu, $adminExtensionsMenu);
-	$pagesPath = 'pages/';
-	$fileName = (isset($url['a']) && isset($mergedMenus[$url['a']] ) ? $mergedMenus[$url['a']] : null);
+	global $url, $lang, $conf, $buttons, $timeout;
 
-	if (! empty($fileName) && file_exists(dirname(__DIR__) . DIRECTORY_SEPARATOR . $pagesPath . $fileName) && isset($_SESSION[SLAPTAS]['username']) && $_SESSION[SLAPTAS]['level'] == 1 && defined( "OK" ) ) {
+	$fileName = (isset($url['a']) && ! empty(getAllAdminPages($url['a'])) ? getAllAdminPages($url['a']) : null);
+
+	if (! empty($fileName) && file_exists(ROOT . $fileName) && isset($_SESSION[SLAPTAS]['username']) && $_SESSION[SLAPTAS]['level'] == 1 && defined( "OK" ) ) {
 		if (count($_POST) > 0 && $conf['keshas'] == 1) {
 			notifyMsg(
 				[
@@ -172,7 +170,7 @@ function adminPages()
 			);
 		}
 		
-		include_once $pagesPath . $fileName;
+		include_once ROOT . $fileName;
 
 	} elseif ( isset( $_GET['m'] ) ) {
 
@@ -191,9 +189,9 @@ function adminPages()
 				break;
 		}
 
-		include_once $pagesPath . $page;
+		include_once 'pages/' . $page;
 	} else {
-		include_once $pagesPath . 'dashboard.php';
+		include_once 'pages/dashboard.php';
 	}
 }
 
@@ -201,40 +199,49 @@ function getAdminExtensionsMenu($page = null)
 {
 	global $adminExtensionsMenu;
 
-	$menu = event('adminExtensionsMenu', $adminExtensionsMenu);
+	$menu = applyFilters('adminExtensionsMenu', $adminExtensionsMenu);
 
 	return ! empty($page) ? $menu[$page] : $menu;
+}
+
+function getAllAdminPages($page = null)
+{
+	$adminMenu 				= getAdminPages();
+	$adminExtensionsMenu 	= getAdminExtensionsMenu();
+
+	$allPages = array_merge($adminMenu, $adminExtensionsMenu);
+	
+	return ! empty($page) ? $allPages[$page] : $allPages;
 }
 
 function getAdminPages($page = null) 
 {
 	global $adminMenu;
 
-	$menu = event('adminPages', $adminMenu);
+	$menu = $adminMenu; //todo: add hooks
 
 	return ! empty($page) ? $menu[$page] : $menu;
 }
-
-function getAdminPagesbyId($id = null) 
+//todo: optimise it
+function getAdminPagesbyId($id = null, $key = null) 
 {
-	global $adminMenu;
 
-	$menu = getAdminPages();
-	$menu = array_flip($menu);
+	$menu = getAllAdminPages();
+	$idArray = [];
 
-	return ! empty($id) ? $menu[$id . '.php'] : $menu;
+	foreach ($menu as $name => $file) {
+		$newKey = basename($file, '.php');
+
+		$idArray[$newKey] = [
+			'file'	=> $file,
+			'name'	=> $name,
+		];
+	}
+
+	$key = ! empty($key) ? $key : 'name';
+
+	return ! empty($id) ? $idArray[$id][$key] : $menu;
 }
-
-//default hooks
-event('adminPages', NULL, function($menu) {
-
-	return $menu;
-});
-
-event('adminExtensionsMenu', NULL, function($menu) {
-
-	return $menu;
-});
 
 function getFeedArray($feedUrl) 
 {
@@ -347,4 +354,17 @@ function deleteRedirectSession()
 {
 	unset($_SESSION[SLAPTAS]['redirect']);
 
+}
+
+function buttons($id = null)
+{
+	global $buttons;
+
+	$buttons = applyFilters('adminButtons', $buttons);
+
+	if(! empty($id)) {
+		return isset($buttons[$id]) && ! empty($buttons[$id]) ? $buttons[$id] : null;
+	} 
+	
+	return  $buttons;
 }

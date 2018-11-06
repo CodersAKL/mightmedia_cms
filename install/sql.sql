@@ -372,21 +372,11 @@ CREATE TABLE `page` (
 -- Dumping data for table `page`
 --
 
-INSERT INTO `page` VALUES(1, 'Forumas', 'lt', 'frm.php', 3, 'Y', 'N;', 0);
-INSERT INTO `page` VALUES(2, 'Naujienos', 'lt', 'naujienos.php', 1, 'Y', 'N;', 0);
-INSERT INTO `page` VALUES(3, 'Apie', 'lt', 'apie.php', 5, 'Y', 'N;', 0);
-INSERT INTO `page` VALUES(4, 'Registracija', 'lt', 'reg.php', 13, 'N', 'N;', 0);
-INSERT INTO `page` VALUES(5, 'Slaptažodis', 'lt', 'slaptazodzio_priminimas.php', 12, 'N', 'N;', 0);
-INSERT INTO `page` VALUES(6, 'Profilio redagavimas', 'lt', 'edit_user.php', 11, 'N', 'N;', 0);
-INSERT INTO `page` VALUES(7, 'Paieška', 'lt', 'search.php', 6, 'Y', 'N;', 0);
-INSERT INTO `page` VALUES(8, 'Kontaktai', 'lt', 'kontaktas.php', 6, 'Y', 'N;', 0);
-INSERT INTO `page` VALUES(9, 'Prisijungę', 'lt', 'online.php', 7, 'Y', 'N;', 0);
-INSERT INTO `page` VALUES(10, 'Archyvas', 'lt', 'deze.php', 8, 'N', 'N;', 0);
-INSERT INTO `page` VALUES(11, 'Asmeniniai pranešimai', 'lt', 'pm.php', 0, 'N', 'N;', 0);
-INSERT INTO `page` VALUES(12, 'Profilis', 'lt', 'view_user.php', 9, 'N', 'N;', 0);
-INSERT INTO `page` VALUES(13, 'Nariai', 'lt', 'nariai.php', 10, 'Y', 'N;', 0);
-INSERT INTO `page` VALUES(14, 'Galerija', 'lt', 'galerija.php', 4, 'Y', 'N;', 0);
-INSERT INTO `page` VALUES(15, 'Straipsniai', 'lt', 'straipsnis.php', 2, 'Y', 'N;', 0);
+INSERT INTO `page` VALUES(1, 'Naujienos', 'lt', 'puslapiai/naujienos.php', 1, 'Y', 'N;', 0);
+INSERT INTO `page` VALUES(2, 'Apie', 'lt', 'puslapiai/apie.php', 5, 'Y', 'N;', 0);
+INSERT INTO `page` VALUES(3, 'Paieška', 'lt', 'puslapiai/search.php', 6, 'Y', 'N;', 0);
+INSERT INTO `page` VALUES(4, 'Kontaktai', 'lt', 'puslapiai/kontaktas.php', 6, 'Y', 'N;', 0);
+INSERT INTO `page` VALUES(5, 'Archyvas', 'lt', 'puslapiai/deze.php', 8, 'N', 'N;', 0);
 
 -- --------------------------------------------------------
 
@@ -412,11 +402,8 @@ CREATE TABLE `panel` (
 -- Dumping data for table `panel`
 --
 
-INSERT INTO `panel` VALUES(1, 'Kas naujo?', 'lt', 'kas_naujo.php', 1, 'R', 'Taip', 'Y', 'N;');
-INSERT INTO `panel` VALUES(2, 'Narys', 'lt', 'vartotojas.php', 2, 'R', 'Taip', 'Y', 'N;');
-INSERT INTO `panel` VALUES(3, 'Rėksnių dėžė', 'lt', 'reksniu_deze.php', 3, 'R', 'Taip', 'Y', 'N;');
-INSERT INTO `panel` VALUES(4, 'Kalendorius', 'lt', 'kalendorius.php', 4, 'L', 'Taip', 'Y', 'N;');
-INSERT INTO `panel` VALUES(5, 'Meniu', 'lt', 'meniu.php', 5, 'L', 'Taip', 'Y', 'N;');
+INSERT INTO `panel` VALUES(1, 'Kalendorius', 'lt', 'blokai/kalendorius.php', 1, 'R', 'Taip', 'Y', 'N;');
+INSERT INTO `panel` VALUES(2, 'Meniu', 'lt', 'blokai/meniu.php', 2, 'L', 'Taip', 'Y', 'N;');
 -- --------------------------------------------------------
 
 --

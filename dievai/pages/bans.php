@@ -21,7 +21,7 @@ if ( !isset( $_GET['b'] ) ) {
 	$_GET['b'] = 1;
 }
 
-unset( $buttons, $extra, $text );
+unset($extra, $text);
 
 if ( isset( $_GET['d'] ) ) {
 

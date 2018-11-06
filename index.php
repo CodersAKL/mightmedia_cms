@@ -54,8 +54,15 @@ if ( isset( $pslid ) && isnum( $pslid ) && $pslid > 0 ) {
 			header( "Location:{$sql1['file']}" );
 			exit;
 		}
-		if ( puslapis( $sql1['file'] ) ) {
-			$page             = 'puslapiai/' . basename( $sql1['file'], '.php' );
+		
+		if (puslapis($sql1['file'])) {
+			//todo: optimize it after v2
+			if(is_file($sql1['file'])) {
+				$page = dirname($sql1['file']) . '/' . basename($sql1['file'], '.php');
+			} else {
+				$page = 'puslapiai/' . basename($sql1['file'], '.php');
+			}
+
 			$page_pavadinimas = $sql1['pavadinimas'];
 		} else {
 			$page             = "puslapiai/klaida";

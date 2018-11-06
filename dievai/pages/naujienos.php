@@ -15,7 +15,7 @@ if ( !defined( "OK" ) || !ar_admin( basename( __file__ ) ) ) {
 }
 
 if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['naujienos'], buttonsMenu($buttons['news']));
+	lentele($lang['admin']['naujienos'], buttonsMenu(buttons('news')));
 }
 
 unset( $extra );

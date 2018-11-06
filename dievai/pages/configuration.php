@@ -15,7 +15,7 @@ if ( !defined( "OK" ) ) {
 }
 
 if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['configuration'], buttonsMenu($buttons['configuration']));
+	lentele($lang['admin']['configuration'], buttonsMenu(buttons('configuration')));
 }
 
 if (isset($url['c'])) {
