@@ -501,6 +501,20 @@ function notifyMsg($data) {
 	<?php
 }
 
+function notifyUpdate($versionData)
+{
+	?>
+	<div class="alert alert-info">
+		<i class="material-icons">info</i>
+		<strong>Jau laikas atsinaujinti!</strong>
+		Atnaujinkite savo sistemą
+		<a href="javascript:void(0);" class="btn bg-orange">
+			Pradėti atnaujinimą
+		</a>
+	</div>
+	<?php
+}
+
 function infoIcon($message)
 {
 	// return "<img src=\"" . ROOT . "/images/icons/help.png\" title=\"{$message}\">";

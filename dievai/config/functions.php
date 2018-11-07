@@ -158,6 +158,10 @@ function adminPages()
 {
 	global $url, $lang, $conf, $buttons, $timeout;
 
+	if($versionData = checkVersion()) {
+		notifyUpdate($versionData);
+	}	
+
 	$fileName = (isset($url['a']) && ! empty(getAllAdminPages($url['a'])) ? getAllAdminPages($url['a']) : null);
 
 	if (! empty($fileName) && file_exists(ROOT . $fileName) && isset($_SESSION[SLAPTAS]['username']) && $_SESSION[SLAPTAS]['level'] == 1 && defined( "OK" ) ) {

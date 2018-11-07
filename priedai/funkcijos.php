@@ -847,12 +847,54 @@ if(! function_exists('user')) {
  * @param string $query
  */
 if(! function_exists('delete_cache')) {
-	function delete_cache( $query ) {
+	function delete_cache($key) {
 
-		$filename = realpath( dirname( __file__ ) . '/..' ) . '/sandeliukas/' . md5( $query ) . '.php';
-		if ( is_file( $filename ) ) {
-			unlink( $filename );
+		$fileName = realpath(dirname(__FILE__) . '/..') . '/sandeliukas/' . md5($key) . '.php';
+		if (is_file($fileName)) {
+			unlink($fileName);
 		}
+	}
+}
+
+if(! function_exists('cachePutData')) {
+	function cachePutData($key, $data, $lifeTime) {
+		$fileName = realpath(dirname(__FILE__) . '/..') . '/sandeliukas/' . md5($key) . '.php';
+		
+		if (is_file($fileName)) {
+			unlink($fileName);
+		}
+
+		$fh = fopen($fileName, 'wb') or die("Išvalyk <b>/sandeliukas</b> bylą");
+
+		if(! is_string($data)) {
+			$data = json_encode($data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+		}
+
+		// Reikia užrakinti failą, kad du kartus neįrašytų
+		if (flock($fh, LOCK_EX)) { // užrakinam
+			fwrite($fh, $data);
+			flock($fh, LOCK_UN); // atrakinam
+		} else {
+			echo "Negaliu užrakinti failo !";
+		}
+
+		// Baigiam failo įrašymą
+		fclose($fh);
+	}
+}
+
+
+if(! function_exists('cacheGetData')) {
+	function cacheGetData($key, $array = true) {
+		$fileName = realpath(dirname(__FILE__) . '/..') . '/sandeliukas/' . md5($key) . '.php';
+		
+		if (is_file($fileName)) {
+			// Užkraunam kešą
+			$content = file_get_contents($fileName);
+
+			return json_decode($content, $array);
+		}
+
 	}
 }
 /**
@@ -2248,65 +2290,99 @@ if(! function_exists('showCalendar')) {
 }
 
 /**
- * Attach (or remove) multiple callbacks to an event and trigger those callbacks when that event is called.
- *
- * @param string $event name
- * @param mixed $value the optional value to pass to each callback
- * @param mixed $callback the method or function to call - FALSE to remove all callbacks for event
- */
-if(! function_exists('event')) {
-	function event($event, $value = NULL, $callback = NULL)
-	{
-		static $events;
-		// Adding or removing a callback?
-		if($callback !== NULL)
-		{
-			if($callback)
-			{
-				$events[$event][] = $callback;
-			}
-			else
-			{
-				unset($events[$event]);
-			}
-		}
-		elseif(isset($events[$event])) // Fire a callback
-		{
-			foreach($events[$event] as $function)
-			{
-				$value = call_user_func($function, $value);
-			}
-			return $value;
-		}
-	}
-}
-/**
  * HOOKS
  */
 require 'class.hooks.php';
 
-function doAction($tag, $value)
-{
-	$hooks = Hooks::getInstance();
+if(! function_exists('doAction')) {
+	function doAction($tag, $value)
+	{
+		$hooks = Hooks::getInstance();
 
-	return $hooks->do_action($tag, $value);
+		return $hooks->do_action($tag, $value);
+	}
 }
 
-function addAction($tag, $callback)
-{
-	$hooks = Hooks::getInstance();
+if(! function_exists('addAction')) {
+	function addAction($tag, $callback)
+	{
+		$hooks = Hooks::getInstance();
 
-	return $hooks->add_action($tag, $callback);
+		return $hooks->add_action($tag, $callback);
+	}
 }
 
-function applyFilters($tag, $value)
-{
-	$hooks = Hooks::getInstance();
+if(! function_exists('applyFilters')) {
+	function applyFilters($tag, $value)
+	{
+		$hooks = Hooks::getInstance();
 
-	return $hooks->apply_filters($tag, $value);
+		return $hooks->apply_filters($tag, $value);
+	}
 }
 
+if(! function_exists('postRemote')) {
+	function postRemote($url, $data)
+	{
+		$dataString = '';
+		//url-ify the data
+		foreach($data as $key => $value) {
+			$dataString .= $key.'='.$value.'&';
+		}
 
+		rtrim($dataString, '&');
+
+		//open connection
+		$ch = curl_init();
+
+		$curlConfig = [
+			CURLOPT_URL            => $url,
+			CURLOPT_POST           => true,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_POSTFIELDS     => $data,
+			// not secure stuff
+			CURLOPT_SSL_VERIFYHOST => 0,
+			CURLOPT_SSL_VERIFYPEER => 0
+		];
+
+		curl_setopt_array($ch, $curlConfig);
+
+		// var_dump(curl_getinfo($ch));
+		if (! $result = curl_exec($ch)) {
+			echo curl_error($ch);
+		}
+		//close connection
+		curl_close($ch);
+
+		return $result;
+	}
+}
+
+if(! function_exists('checkVersion')) {
+	function checkVersion()
+	{
+		if($existData = cacheGetData('versionCheck')) {
+
+			return $existData;
+		}
+
+		$url = 'https://mightmedia.lt/api.php';
+		$data = [
+			'token' 	=> SLAPTAS,
+			'version' 	=> versija(),
+			'type'		=> 'versionCheck'
+		];
+
+		if($result = postRemote($url, $data)) {
+			$response = json_decode($result);
+
+			$time = (100 * 60 * 60);
+			cachePutData('versionCheck', $response, $time);
+
+			return $response;
+		}
+	}
+}
 /**
  * TODO: add this somewhere else
  */
