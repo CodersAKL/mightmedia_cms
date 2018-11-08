@@ -3,8 +3,18 @@
 if(! empty($_POST) && isset($_POST['upgrade']) && $_POST['upgrade'] == 1 && $versionData = checkVersion()) {
 
     $upgradeDir = ROOT . '/upgrade';
+    if(! is_dir($upgradeDir)) {
+        notifyMsg(
+            [
+                'type'      => 'error',
+                'message'   => 'Nėra.' . $upgradeDir . ' direktorijos'
+            ]
+        );
+    }
     //download file
     $file       = $versionData['download_link'];
+    $fileParts  = explode('/', $file);
+    $zipFolder  = $fileParts[4] . '-' . substr($fileParts[6], 0, -4); //mightmedia_cms-dev
     $newfile    = sys_get_temp_dir() . '/update_' . time() . '.zip';
 
     $updates[] = '1. Siunčiamas failas...';
@@ -24,12 +34,21 @@ if(! empty($_POST) && isset($_POST['upgrade']) && $_POST['upgrade'] == 1 && $ver
     $res = $zip->open($newfile);
 
     if ($res === TRUE) {
-        $zip->extractTo(ROOT);
+        $zip->extractTo($upgradeDir);
         $zip->close();
 
         $updates[] = '3. Vyksta atnaujinimas...';
 
-        if(is_dir($upgradeDir) && is_file($upgradeDir . '/upgrade.php')) {
+        if (! copy($zipFolder, ROOT)) {
+            notifyMsg(
+                [
+                    'type'      => 'error',
+                    'message'   => 'Nepavyko atnaujinti failų.'
+                ]
+            );
+        }
+
+        if(is_file($upgradeDir . '/upgrade.php')) {
             include $upgradeDir . '/upgrade.php';
         }
 
