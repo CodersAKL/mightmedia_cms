@@ -857,14 +857,19 @@ if(! function_exists('delete_cache')) {
 }
 
 if(! function_exists('cachePutData')) {
-	function cachePutData($key, $data, $lifeTime) {
-		$fileName = realpath(dirname(__FILE__) . '/..') . '/sandeliukas/' . md5($key) . '.php';
+	function cachePutData($key, $data, $lifeTime = []) {
+		$path = realpath(dirname(__FILE__) . '/..') . '/sandeliukas/';
+		$fileName = md5($key) . '.php';
+		$filePath = $path . $fileName;
 		
-		if (is_file($fileName)) {
-			unlink($fileName);
+		if (is_file($filePath)) {
+			unlink($filePath);
 		}
 
-		$fh = fopen($fileName, 'wb') or die("Išvalyk <b>/sandeliukas</b> bylą");
+		$fh = fopen($filePath, 'wb') or die("Išvalyk <b>/sandeliukas</b> bylą");
+
+		//insert data life time
+		$data['lifetime'] = $lifeTime;
 
 		if(! is_string($data)) {
 			$data = json_encode($data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
@@ -883,20 +888,27 @@ if(! function_exists('cachePutData')) {
 	}
 }
 
-
 if(! function_exists('cacheGetData')) {
 	function cacheGetData($key, $array = true) {
-		$fileName = realpath(dirname(__FILE__) . '/..') . '/sandeliukas/' . md5($key) . '.php';
+		$path = realpath(dirname(__FILE__) . '/..') . '/sandeliukas/';
+		$fileName = $path . md5($key) . '.php';
 		
 		if (is_file($fileName)) {
 			// Užkraunam kešą
-			$content = file_get_contents($fileName);
+			$content 	= file_get_contents($fileName);
+			$data 		= json_decode($content, $array);
 
-			return json_decode($content, $array);
+			if(filemtime($fileName) > time() - $data['lifetime']) {
+				unset($data['lifetime']); //we don't need this in data after check
+
+				return $data;
+			}
 		}
 
+		return false;
 	}
 }
+
 /**
  * Nuskaitom turinį iš adreso
  *
@@ -2362,7 +2374,6 @@ if(! function_exists('checkVersion')) {
 	function checkVersion()
 	{
 		if($existData = cacheGetData('versionCheck')) {
-			// var_dump($existData);
 			return $existData;
 		}
 
@@ -2374,7 +2385,7 @@ if(! function_exists('checkVersion')) {
 		];
 
 		if($result = postRemote($url, $data)) {
-			$response = json_decode($result);
+			$response = json_decode($result, true);
 
 			$time = (100 * 60 * 60);
 			cachePutData('versionCheck', $response, $time);
