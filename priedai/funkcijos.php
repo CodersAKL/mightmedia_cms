@@ -2362,7 +2362,7 @@ if(! function_exists('checkVersion')) {
 	function checkVersion()
 	{
 		if($existData = cacheGetData('versionCheck')) {
-
+			// var_dump($existData);
 			return $existData;
 		}
 
@@ -2381,6 +2381,8 @@ if(! function_exists('checkVersion')) {
 
 			return $response;
 		}
+
+		return false;
 	}
 }
 /**

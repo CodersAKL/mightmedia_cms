@@ -8067,3 +8067,26 @@ html.ie11 .bs-searchbox .form-control {
   font-size: 22px;
   vertical-align: middle;
 }
+
+.alert .material-icons {
+  vertical-align: middle;
+}
+
+.alert---with-cta {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 425px) {
+  .alert---with-cta {
+    display: block;
+  }
+  .alert--cta {
+    margin-top: 5px;
+  }
+}
+
+.alert--info,
+.alert--cta {
+  align-self: center;
+}

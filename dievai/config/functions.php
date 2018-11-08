@@ -176,9 +176,9 @@ function adminPages()
 		
 		include_once ROOT . $fileName;
 
-	} elseif ( isset( $_GET['m'] ) ) {
+	} elseif (isset($url['m'])) {
 
-		switch ( $_GET['m'] ) {
+		switch ($url['m']) {
 			case 1:
 				$page = 'uncache.php';
 				break;
@@ -190,6 +190,9 @@ function adminPages()
 				break;
 			case 4:
 				$page = 'search.php';
+				break;
+			case 'upgrade':
+				$page = 'upgrade.php';
 				break;
 		}
 
@@ -214,8 +217,12 @@ function getAllAdminPages($page = null)
 	$adminExtensionsMenu 	= getAdminExtensionsMenu();
 
 	$allPages = array_merge($adminMenu, $adminExtensionsMenu);
+
+	if(! empty($page)) {
+		return ! empty($allPages[$page]) ? $allPages[$page] : null;
+	}
 	
-	return ! empty($page) ? $allPages[$page] : $allPages;
+	return $allPages;
 }
 
 function getAdminPages($page = null) 

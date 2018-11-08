@@ -503,14 +503,23 @@ function notifyMsg($data) {
 
 function notifyUpdate($versionData)
 {
+	global $url;
+
+	if(isset($url['m']) && $url['m'] == 'upgrade') {
+		return;
+	}
 	?>
-	<div class="alert alert-info">
-		<i class="material-icons">info</i>
-		<strong>Jau laikas atsinaujinti!</strong>
-		Atnaujinkite savo sistemą
-		<a href="javascript:void(0);" class="btn bg-orange">
-			Pradėti atnaujinimą
-		</a>
+	<div class="alert alert-info alert---with-cta">
+		<div class="alert--info">
+			<i class="material-icons">info</i>
+			<strong>Jau laikas atsinaujinti!</strong>
+			Atnaujinkite savo sistemą iki <strong><?php echo $versionData['version']; ?></strong>
+		</div>
+		<div class="alert--cta">
+			<a href="<?php echo url("?id,999;m,upgrade"); ?>" class="btn btn-default waves-effect">
+				Atnaujinti
+			</a>
+		</div>
 	</div>
 	<?php
 }
