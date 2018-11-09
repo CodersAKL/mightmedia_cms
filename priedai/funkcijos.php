@@ -2336,14 +2336,6 @@ if(! function_exists('applyFilters')) {
 if(! function_exists('postRemote')) {
 	function postRemote($url, $data)
 	{
-		$dataString = '';
-		//url-ify the data
-		foreach($data as $key => $value) {
-			$dataString .= $key.'='.$value.'&';
-		}
-
-		rtrim($dataString, '&');
-
 		//open connection
 		$ch = curl_init();
 
