@@ -49,7 +49,8 @@ function upgradeInit($data)
             'step'      => '1. Siunčiamas failas...',
             'nextStep'  => 2,
             'data'      => [
-                'upgradeDir'   => $upgradeDir
+                'upgradeDir'    => $upgradeDir,
+                'versionData'   => $versionData
             ]
         ];
        
@@ -60,9 +61,11 @@ function upgradeInit($data)
 
 function upgrade2Step($data)
 {
-    if(! $data = upgradeData($data)) {
+    if(! isset($data['data'])) {
         return null;
     }
+
+    $data = $data['data'];
 
     $versionData    = $data['versionData'];
     $file           = $versionData['download_link'];
@@ -91,9 +94,11 @@ function upgrade2Step($data)
 
 function upgrade3Step($data)
 {
-    if(! $data = upgradeData($data)) {
+    if(! isset($data['data'])) {
         return null;
     }
+
+    $data = $data['data'];
     //unzip
     $zip = new ZipArchive;
     $res = $zip->open($data['newfile']);
@@ -122,13 +127,15 @@ function upgrade3Step($data)
 
 function upgrade4Step($data)
 {
-    if(! $data = upgradeData($data)) {
+    if(! isset($data['data'])) {
         return null;
     }
 
+    $data = $data['data'];
+
     try {
-        moveFiles($srcDir, ROOT);
-        unlink($srcDir);
+        moveFiles($data['srcDir'], ROOT);
+        rmdir($data['srcDir']);
 
         return [
             'type'      => 'success',
@@ -148,11 +155,13 @@ function upgrade4Step($data)
     }
 }
 
-function upgrade4Step($data)
+function upgrade5Step($data)
 {
-    if(! $data = upgradeData($data)) {
+    if(! isset($data['data'])) {
         return null;
     }
+
+    $data = $data['data'];
 
     if(is_file($data['upgradeDir'] . '/upgrade.php')) {
         include $data['upgradeDir'] . '/upgrade.php';

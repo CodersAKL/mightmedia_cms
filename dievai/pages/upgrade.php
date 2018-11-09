@@ -39,13 +39,13 @@
     stepActive = function(step){
         var lastStep = listUpdates.querySelector('.list-group-item:nth-child(' + step + ')');
 
-        lastStep.addClass('list-group-item-success');
+        lastStep.classList.add('list-group-item-success');
     },
-    callStep = function(data, step) {
+    callStep = function(postData, step) {
         data = {
             action: 'upgrade' + step + 'Step',
             action_functions: 'upgrade',
-            data: $('[name="upgrade-form"]').serializeArray()
+            data: postData
         };
         $.post("<?php echo url( "?id,999;a,ajax;" ); ?>", data, function(response) {
 			if(response) {
@@ -56,6 +56,7 @@
                 } else {
                     stepActive(step - 1);
                     setStep(data.step);
+                    callStep(data.data, step + 1);
                 }
                 
 			}
