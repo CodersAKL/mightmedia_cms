@@ -135,10 +135,6 @@ function upgrade4Step($data)
 
     try {
         moveFiles($data['srcDir'], ROOT);
-        chmod($data['srcDir'], 0777);
-        array_map('unlink', glob($data['srcDir'] . "/*.*"));
-        array_map('rmdir', glob($data['srcDir'] . "/*.*"));
-        rmdir($data['srcDir']);
         
         return [
             'type'      => 'success',

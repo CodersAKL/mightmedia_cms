@@ -23,4 +23,16 @@ if ( is_file( '../priedai/conf.php' ) && filesize( '../priedai/conf.php' ) > 1 )
 //     }
 // }
 
-$updates[] = '4. Atnaujinta';
+// chmod($data['srcDir'], 0777);
+// array_map('unlink', glob($data['srcDir'] . "/*.*"));
+// array_map('rmdir', glob($data['srcDir'] . "/*.*"));
+// rmdir($data['srcDir']);
+
+return [
+    'type'      => 'success',
+    'step'      => 'Atnaujinimas baigtas',
+    // 'nextStep'  => 5,
+    'data'      => [
+        // 'upgradeDir'    => $data['upgradeDir']
+    ]
+];
