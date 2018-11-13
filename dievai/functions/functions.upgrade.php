@@ -154,15 +154,6 @@ function upgrade4Step($data)
     }
 }
 
-function upgrade5Step($data)
-{
-    if(! isset($data['data'])) {
-        return null;
-    }
-
-    $data = $data['data'];
-
-    if(is_file($data['upgradeDir'] . '/upgrade.php')) {
-        include $data['upgradeDir'] . '/upgrade.php';
-    }
+if(is_file(ROOT . 'upgrade' . '/upgrade.php')) {
+    include ROOT . 'upgrade' . '/upgrade.php';
 }

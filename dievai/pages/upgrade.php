@@ -56,9 +56,14 @@
                 } else {
                     stepActive(step - 1);
                     setStep(data.step);
-                    callStep(data.data, step + 1);
+                    
+                    if(data.end && data.end == true) {
+                        stepActive(step);
+                        showNotification('success', data.step);
+                    } else {
+                        callStep(data.data, step + 1);
+                    }
                 }
-                
 			}
 		});
     };
