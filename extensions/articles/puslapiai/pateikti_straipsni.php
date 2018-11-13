@@ -28,7 +28,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti' ) {
 		}
 		if ( !isset( $error ) ) {
 			$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "straipsniai` SET
-	    `kat` = " . escape( $kategorija ) . ",
+	    	`kat` = " . escape( $kategorija ) . ",
 			`pav` = " . escape( $pavadinimas ) . ",
 			`t_text` = " . escape( $apr ) . ",
 			`f_text` = " . escape( $str ) . ",

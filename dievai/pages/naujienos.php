@@ -257,7 +257,6 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 	unset( $naujiena, $placiau, $rodymas, $komentaras, $pavadinimas, $result, $error, $_POST['action'] );
 }
 
-//print_r($sql_news);
 if ( isset( $_GET['v'] ) ) {
 
 	if ( $_GET['v'] == 4 ) {
