@@ -1,4 +1,18 @@
 <?php
+$galleryExtensionDir = 'extensions/' . basename(__DIR__);
+$big_img  = ROOT . "images/galerija/"; //Kur bus saugomi didesni paveiksliukai
+$mini_img = ROOT . "images/galerija/mini"; //Kur bus saugomos miniatiuros
+//Sarašas leidžiamų failų
+$limitedext = [
+    ".jpg", 
+    ".JPG", 
+    ".jpeg", 
+    ".JPEG", 
+    ".png", 
+    ".PNG", 
+    ".gif", 
+    ".GIF"
+];
 
 // add pages to CMS pages dropdown
 addAction('cmsPages', 'galleryPages');
@@ -62,12 +76,6 @@ function galleryAdminButtons($buttons)
                 'icon'	=> adminIcon('gallery', 'add')
             ],
             [
-                'url' 	=> url("?id,999;a,gallery;v,9"),
-                'value'	=> $lang['admin']['gallery_group_add'],
-                'icon'	=> adminIcon('gallery', 'group_add'),
-                'view'	=> $_SESSION[SLAPTAS]['level'] == 1
-            ],
-            [
                 'url' 	=> url("?id,999;a,gallery;v,8"),
                 'value'	=> $lang['admin']['gallery_edit'],
                 'icon'	=> adminIcon('gallery', 'edit')
@@ -96,4 +104,10 @@ function galleryUsersAdminIcons($icons)
     $adminIcons['gallery']  = 'collections';
 
     return array_merge($icons, $adminIcons);
+}
+//remove gallery photo album
+
+function galleryAlbumRemove($data)
+{
+    var_dump($data);
 }

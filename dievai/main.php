@@ -1,4 +1,5 @@
 <?php
+
 include 'config/head.php';
 
 require 'themes/material/config.php';
