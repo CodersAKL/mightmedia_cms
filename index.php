@@ -54,7 +54,7 @@ if ( isset( $pslid ) && isnum( $pslid ) && $pslid > 0 ) {
 			header( "Location:{$sql1['file']}" );
 			exit;
 		}
-		
+
 		if (puslapis($sql1['file'])) {
 			//todo: optimize it after v2
 			if(is_file($sql1['file'])) {

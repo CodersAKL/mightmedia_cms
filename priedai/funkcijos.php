@@ -517,16 +517,17 @@ if(! function_exists('puslapis')) {
 		$teises = @unserialize( $conf['puslapiai'][$puslapis]['teises'] );
 	
 		//todo: optimize after v2
-		$isFile = is_file($puslapis) || is_file(dirname( __FILE__ ) . '/../puslapiai/' . $puslapis);
-		
-		if (isset($conf['puslapiai'][$puslapis]['id']) && !empty( $conf['puslapiai'][$puslapis]['id']) && $isFile) {
+		$isFile 	= is_file($puslapis) || is_file(dirname( __FILE__ ) . '/../puslapiai/' . $puslapis);
+		$pageName 	= basename($puslapis);
+
+		if (isset($conf['puslapiai'][$pageName]['id']) && ! empty( $conf['puslapiai'][$pageName]['id']) && $isFile) {
 
 			if ( $_SESSION[SLAPTAS]['level'] == 1 || ( is_array( $teises ) && in_array( $_SESSION[SLAPTAS]['level'], $teises ) ) || empty( $teises ) ) {
-// var_dump($conf['puslapiai'][$puslapis]['id']);
-				if ($extra && isset($conf['puslapiai'][$puslapis][$extra]) ) {
-					return $conf['puslapiai'][$puslapis][$extra];
+
+				if ($extra && isset($conf['puslapiai'][$pageName][$extra]) ) {
+					return $conf['puslapiai'][$pageName][$extra];
 				} else { //Jei reikalinga kita informacija apie puslapi - grazinam ja.
-					return (int)$conf['puslapiai'][$puslapis]['id'];
+					return (int)$conf['puslapiai'][$pageName]['id'];
 				}
 			} else {
 				return false;
@@ -675,6 +676,149 @@ if(! function_exists('cleanurl')) {
 	}
 }
 
+/**
+ * Grąžiname failo plėtinį
+ *
+ * @param        $name
+ * @param string $ext
+ *
+ * @return string
+ */
+if(! function_exists('strip_ext')) {
+	function strip_ext( $name, $ext = '' ) {
+
+		$ext = utf8_substr( $name, strlen( $ext ) - 4, 4 );
+		if ( strpos( $ext, '.' ) === FALSE ) { // jeigu tai folderis
+			return "    "; // grąžinam truputį tarpų kad rusiavimas butu ciki, susirūšiuoja - folderiai viršuje
+		}
+
+		return $ext; // jei tai failas grąžinam jo plėtinį
+	}
+}
+
+// grąžina failus iš nurodytos direktorijos ir sukiša Ä¯ masyvą
+if(! function_exists('getFiles')) {
+	function getFiles($path, $denny = null, $defaultDir = null) {
+		global $lang;
+
+		if(empty($denny)) {
+			$denny = '.htaccess|index.php|index.html|index.htm|index.php3|conf.php';
+		}
+
+		$denny     	= explode( '|', $denny );
+		$path      	= urldecode( $path );
+		$defaultDir = ! empty($defaultDir) ? $defaultDir : $defaultDir;
+		$files     	= array();
+		$fileNames 	= array();
+		$i         	= 0;
+
+		if ( is_dir( $path ) ) {
+			if ( $dh = opendir( $path ) ) {
+				while ( ( $file = readdir( $dh ) ) !== FALSE ) {
+					if ( !in_array( $file, $denny ) ) {
+						if ( ( $file == "." ) || ( $file == ".." ) ) {
+							continue;
+						}
+						$fullpath = $path . "/" . $file;
+						//$fkey = strtolower($file);
+						$fkey = $file;
+						while ( array_key_exists( $fkey, $fileNames ) ) {
+							$fkey .= " ";
+						}
+
+						$a = stat($fullpath);
+			
+						$files[$fkey]['size'] = $a['size'];
+
+						if ( $a['size'] == 0 ) {
+							$files[$fkey]['sizetext'] = "-";
+						} else if ( $a['size'] > 1024 && $a['size'] <= 1024 * 1024 ) {
+							$files[$fkey]['sizetext'] = ( ceil( $a['size'] / 1024 * 100 ) / 100 ) . " K";
+						} //patvarkom failo dydziu atvaizdavima
+						else if ( $a['size'] > 1024 * 1024 ) {
+							$files[$fkey]['sizetext'] = ( ceil( $a['size'] / ( 1024 * 1024 ) * 100 ) / 100 ) . " Mb";
+						} else {
+							$files[$fkey]['sizetext'] = $a['size'] . " bytes";
+						}
+
+						$files[$fkey]['name'] = $defaultDir . $file;
+						$e                    = strip_ext( $file ); // $e failo pletinys - pvz: .gif
+						$files[$fkey]['type'] = filetype( $fullpath ); // failo tipas, dir, file ir pan
+						$k                    = $e . $file; // kad butu lengvau rusiuoti;
+						$fileNames[$i++]      = $k;
+					}
+				}
+				closedir( $dh );
+			} else {
+				die( klaida( $lang['system']['error'], "{$lang['system']['cantread']}:  $path" ) );
+			}
+		} else {
+			die( klaida( $lang['system']['error'], "{$lang['system']['notdir']}:  $path" ) );
+		}
+		sort( $fileNames, SORT_STRING ); // surusiuojam
+		$sortedFiles = array();
+		$i           = 0;
+		foreach ( $fileNames as $f ) {
+			$f = utf8_substr( $f, 4, strlen( $f ) - 4 ); //sutvarko failo pletinius
+			if ( $files[$f]['name'] != '' ) {
+				$sortedFiles[$i++] = $files[$f];
+			}
+		}
+
+		return $sortedFiles;
+	}
+}
+
+//Grazina direktorijų sarašą
+if(! function_exists('getDirs')) {
+	function getDirs( $dir, $skip = '' ) {
+
+		if ( $handle = opendir( $dir ) ) {
+			while ( FALSE !== ( $file = readdir( $handle ) ) ) {
+				if ( $file != "." && $file != ".." && $file != ".svn" && is_dir( $dir . $file ) && ( is_array( $skip ) ? !in_array( $file, $skip ) : TRUE ) && $skip != $file ) {
+					$return[$file] = $file;
+				}
+			}
+			closedir( $handle );
+		}
+
+		return $return;
+	}
+}
+
+
+/**
+ * HOOKS
+ */
+require 'class.hooks.php';
+
+if(! function_exists('doAction')) {
+	function doAction($tag, $value)
+	{
+		$hooks = Hooks::getInstance();
+
+		return $hooks->do_action($tag, $value);
+	}
+}
+
+if(! function_exists('addAction')) {
+	function addAction($tag, $callback)
+	{
+		$hooks = Hooks::getInstance();
+
+		return $hooks->add_action($tag, $callback);
+	}
+}
+
+if(! function_exists('applyFilters')) {
+	function applyFilters($tag, $value)
+	{
+		$hooks = Hooks::getInstance();
+
+		return $hooks->apply_filters($tag, $value);
+	}
+}
+
 // Tvarkom $_SERVER globalus.
 $_SERVER['PHP_SELF']     = cleanurl( $_SERVER['PHP_SELF'] );
 $_SERVER['QUERY_STRING'] = isset( $_SERVER['QUERY_STRING'] ) ? cleanurl( $_SERVER['QUERY_STRING'] ) : "";
@@ -686,12 +830,13 @@ $PHP_SELF                = cleanurl( $_SERVER['PHP_SELF'] );
  *
  * @return array
  */
-unset( $sql, $row );
-if ( basename( $_SERVER['PHP_SELF'] ) != 'upgrade.php' && basename( $_SERVER['PHP_SELF'] ) != 'setup.php' ) {
-	$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `lang`=" . escape( lang() ) . " ORDER BY `id` DESC" );
+//TODO: rewrite this shit
+unset($sql, $row);
+if (basename($_SERVER['PHP_SELF']) != 'upgrade.php' && basename($_SERVER['PHP_SELF']) != 'setup.php') {
+	$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno` = 'vartotojai' AND `lang`=" . escape(lang()) . " ORDER BY `id` DESC");
 
-	if ( sizeof( $sql ) > 0 ) {
-		foreach ( $sql as $row ) {
+	if (count($sql) > 0) {
+		foreach ($sql as $row) {
 			$levels[(int)$row['id']] = array(
 				'pavadinimas' => $row['pavadinimas'],
 				'aprasymas'   => $row['aprasymas'],
@@ -711,34 +856,27 @@ if ( basename( $_SERVER['PHP_SELF'] ) != 'upgrade.php' && basename( $_SERVER['PH
 	);
 
 	$conf['level'] = $levels;
-	unset( $levels, $sql, $row );
+	unset($levels, $sql, $row);
 
 	/**
 	 * Gaunam visus puslapius ir suformuojam masyvą
 	 */
 	$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=" . escape( lang() ) . " ORDER BY `place` ASC", 120 );
-	foreach ( $sql as $row ) {
-		$conf['puslapiai'][$row['file']] = array(
-			'id'          => $row['id'],
-			'pavadinimas' => input( $row['pavadinimas'] ),
-			'file'        => input( $row['file'] ),
-			'place'       => (int)$row['place'],
-			'show'        => $row['show'],
-			'teises'      => $row['teises']
-		);
-		$conf['titles'][$row['id']]      = (
-		isset( $lang['pages'][$row['file']] )
-			? $lang['pages'][$row['file']]
-			: nice_name( $row['file'] )
-		);
-		$conf['titles_id'][strtolower(
-			str_replace( ' ', '_', (
-				isset( $lang['pages'][$row['file']] )
-					? $lang['pages'][$row['file']]
-					: nice_name( $row['file'] )
-				)
-			)
-		)]                               = $row['id'];
+	foreach ($sql as $row) {
+		$keyName 	= basename($row['file']);
+		$niceName 	= (isset( $lang['pages'][$keyName]) ? $lang['pages'][$keyName] : nice_name($keyName));
+		
+		$conf['puslapiai'][$keyName] = [
+			'id'          	=> $row['id'],
+			'pavadinimas' 	=> input($row['pavadinimas']),
+			'file'        	=> input($row['file']),
+			'place'       	=> (int)$row['place'],
+			'show'        	=> $row['show'],
+			'teises'      	=> $row['teises'],
+		];
+
+		$conf['titles'][$row['id']]											= $niceName;
+		$conf['titles_id'][strtolower(str_replace( ' ', '_', $niceName))] 	= $row['id'];
 	}
 	// Nieko geresnio nesugalvojau
 	$dir                        = explode( '/', dirname( $_SERVER['PHP_SELF'] ) );
@@ -1580,116 +1718,6 @@ if(! function_exists('menesis')) {
 	}
 }
 
-// grąžina failus iš nurodytos direktorijos ir sukiša Ä¯ masyvą
-if(! function_exists('getFiles')) {
-	function getFiles($path, $denny = null, $defaultDir = null) {
-		global $lang;
-
-		if(empty($denny)) {
-			$denny = '.htaccess|index.php|index.html|index.htm|index.php3|conf.php';
-		}
-
-		$denny     	= explode( '|', $denny );
-		$path      	= urldecode( $path );
-		$defaultDir = ! empty($defaultDir) ? $defaultDir : $defaultDir;
-		$files     	= array();
-		$fileNames 	= array();
-		$i         	= 0;
-
-		if ( is_dir( $path ) ) {
-			if ( $dh = opendir( $path ) ) {
-				while ( ( $file = readdir( $dh ) ) !== FALSE ) {
-					if ( !in_array( $file, $denny ) ) {
-						if ( ( $file == "." ) || ( $file == ".." ) ) {
-							continue;
-						}
-						$fullpath = $path . "/" . $file;
-						//$fkey = strtolower($file);
-						$fkey = $file;
-						while ( array_key_exists( $fkey, $fileNames ) ) {
-							$fkey .= " ";
-						}
-
-						$a = stat($fullpath);
-			
-						$files[$fkey]['size'] = $a['size'];
-
-						if ( $a['size'] == 0 ) {
-							$files[$fkey]['sizetext'] = "-";
-						} else if ( $a['size'] > 1024 && $a['size'] <= 1024 * 1024 ) {
-							$files[$fkey]['sizetext'] = ( ceil( $a['size'] / 1024 * 100 ) / 100 ) . " K";
-						} //patvarkom failo dydziu atvaizdavima
-						else if ( $a['size'] > 1024 * 1024 ) {
-							$files[$fkey]['sizetext'] = ( ceil( $a['size'] / ( 1024 * 1024 ) * 100 ) / 100 ) . " Mb";
-						} else {
-							$files[$fkey]['sizetext'] = $a['size'] . " bytes";
-						}
-
-						$files[$fkey]['name'] = $defaultDir . $file;
-						$e                    = strip_ext( $file ); // $e failo pletinys - pvz: .gif
-						$files[$fkey]['type'] = filetype( $fullpath ); // failo tipas, dir, file ir pan
-						$k                    = $e . $file; // kad butu lengvau rusiuoti;
-						$fileNames[$i++]      = $k;
-					}
-				}
-				closedir( $dh );
-			} else {
-				die( klaida( $lang['system']['error'], "{$lang['system']['cantread']}:  $path" ) );
-			}
-		} else {
-			die( klaida( $lang['system']['error'], "{$lang['system']['notdir']}:  $path" ) );
-		}
-		sort( $fileNames, SORT_STRING ); // surusiuojam
-		$sortedFiles = array();
-		$i           = 0;
-		foreach ( $fileNames as $f ) {
-			$f = utf8_substr( $f, 4, strlen( $f ) - 4 ); //sutvarko failo pletinius
-			if ( $files[$f]['name'] != '' ) {
-				$sortedFiles[$i++] = $files[$f];
-			}
-		}
-
-		return $sortedFiles;
-	}
-}
-
-//Grazina direktorijų sarašą
-if(! function_exists('getDirs')) {
-	function getDirs( $dir, $skip = '' ) {
-
-		if ( $handle = opendir( $dir ) ) {
-			while ( FALSE !== ( $file = readdir( $handle ) ) ) {
-				if ( $file != "." && $file != ".." && $file != ".svn" && is_dir( $dir . $file ) && ( is_array( $skip ) ? !in_array( $file, $skip ) : TRUE ) && $skip != $file ) {
-					$return[$file] = $file;
-				}
-			}
-			closedir( $handle );
-		}
-
-		return $return;
-	}
-}
-
-/**
- * Grąžiname failo plėtinį
- *
- * @param        $name
- * @param string $ext
- *
- * @return string
- */
-if(! function_exists('strip_ext')) {
-	function strip_ext( $name, $ext = '' ) {
-
-		$ext = utf8_substr( $name, strlen( $ext ) - 4, 4 );
-		if ( strpos( $ext, '.' ) === FALSE ) { // jeigu tai folderis
-			return "    "; // grąžinam truputį tarpų kad rusiavimas butu ciki, susirūšiuoja - folderiai viršuje
-		}
-
-		return $ext; // jei tai failas grąžinam jo plėtinį
-	}
-}
-
 /**
  * El pašto validacija
  *
@@ -2236,7 +2264,7 @@ if(! function_exists('showCalendar')) {
 			if ( !empty( $svente ) ) {
 				$return .= "<td$class ><div style='color:red' title=\"<b>{$lang['calendar']['this']}</b><br/>" . $svente . "<br/>\">$actday</div></td>";
 			} else {
-				$return .= "<td$class>" . ( $actday <= $today['mday'] && puslapis( 'kas_naujo.php' ) ? "<a href='" . url( "?id," . puslapis( 'kas_naujo.php' ) . ';d,' . mktime( 23, 59, 59, $month, $actday, $year ) ) . "'>$actday</a>" : $actday ) . "</td>";
+				$return .= "<td$class>" . ( $actday <= $today['mday'] && puslapis('kas_naujo.php') ? "<a href='" . url( "?id," . puslapis( 'kas_naujo.php' ) . ';d,' . mktime( 23, 59, 59, $month, $actday, $year ) ) . "'>$actday</a>" : $actday ) . "</td>";
 			}
 		}
 
@@ -2301,38 +2329,6 @@ if(! function_exists('showCalendar')) {
 	}
 }
 
-/**
- * HOOKS
- */
-require 'class.hooks.php';
-
-if(! function_exists('doAction')) {
-	function doAction($tag, $value)
-	{
-		$hooks = Hooks::getInstance();
-
-		return $hooks->do_action($tag, $value);
-	}
-}
-
-if(! function_exists('addAction')) {
-	function addAction($tag, $callback)
-	{
-		$hooks = Hooks::getInstance();
-
-		return $hooks->add_action($tag, $callback);
-	}
-}
-
-if(! function_exists('applyFilters')) {
-	function applyFilters($tag, $value)
-	{
-		$hooks = Hooks::getInstance();
-
-		return $hooks->apply_filters($tag, $value);
-	}
-}
-
 if(! function_exists('postRemote')) {
 	function postRemote($url, $data)
 	{
@@ -2351,7 +2347,6 @@ if(! function_exists('postRemote')) {
 
 		curl_setopt_array($ch, $curlConfig);
 
-		// var_dump(curl_getinfo($ch));
 		if (! $result = curl_exec($ch)) {
 			echo curl_error($ch);
 		}

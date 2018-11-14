@@ -9,37 +9,73 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 } else {
 	$p = 0;
 }
+
 $limit = 15;
 $viso  = kiek( "private_msg" );
 //
 // Trinam laiska
-if ( isset( $url['d'] ) && isnum( $url['d'] ) ) {
-	if ( $url['d'] == "0" && isset( $_POST['to'] ) && !empty( $_POST['to'] ) && $_POST['del_all'] == $lang['admin']['delete'] ) {
-		$sql = mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape( $_POST['to'] ) . "" );
-		if ( $sql ) {
-			msg( $lang['system']['done'], "<b>" . input( $_POST['to'] ) . "</b> {$lang['admin']['pm_msgsdeleted']}." );
-			redirect( url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ), "meta" );
+if (isset($url['d']) && isnum($url['d'])) {
+	if ($url['d'] == "0" && isset( $_POST['to'] ) && !empty( $_POST['to'] ) && $_POST['del_all'] == $lang['admin']['delete'] ) {
+		$deleteQuery = "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_POST['to']);
+
+		if (mysql_query1($deleteQuery)) {
+			redirect(
+				url("?id," . $url['id'] . ";a," . $url['a']),
+				"header",
+				[
+					'type'		=> 'success',
+					'message' 	=> $lang['admin']['pm_msgsdeleted']
+				]
+			);
 		} else {
-			klaida( $lang['system']['error'], $lang['admin']['pm_deleteerror'] );
+			notifyMsg(
+				[
+					'type'		=> 'error',
+					'message' 	=> $lang['admin']['pm_deleteerror']
+				]
+			);
 		}
 	}
-	if ( $url['d'] == "0" && isset( $_POST['from'] ) && !empty( $_POST['from'] ) && $_POST['del_all'] == $lang['admin']['delete'] ) {
-		$sql = mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape( $_POST['from'] ) . "" );
-		//$i = mysqli_affected_rows($prisijungimas_prie_mysql);
-		if ( $sql ) {
-			msg( $lang['system']['done'], "<b>" . input( $_POST['from'] ) . "</b> {$lang['admin']['pm_msgsdeleted']}." );
-			redirect( url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ), "meta" );
+	if ($url['d'] == "0" && isset($_POST['from']) && ! empty($_POST['from']) && $_POST['del_all'] == $lang['admin']['delete']) {
+		$deleteQuery = "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape($_POST['from']);
+
+		if (mysql_query1($deleteQuery)) {
+			redirect(
+				url("?id," . $url['id'] . ";a," . $url['a']),
+				"header",
+				[
+					'type'		=> 'success',
+					'message' 	=> $lang['admin']['pm_msgsdeleted']
+				]
+			);
 		} else {
-			klaida( $lang['system']['error'], $lang['admin']['pm_deleteerror'] );
+			notifyMsg(
+				[
+					'type'		=> 'error',
+					'message' 	=> $lang['admin']['pm_deleteerror']
+				]
+			);
 		}
 	}
-	if ( !empty( $url['d'] ) && $url['d'] > 0 ) {
-		$sql = mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE id=" . escape( (int)$url['d'] ) );
-		if ( $sql ) {
-			msg( $lang['system']['done'], "{$lang['admin']['pm_deleted']}." );
-			redirect( url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ), "meta" );
+	if (! empty($url['d']) && $url['d'] > 0) {
+		$deleteQuery = "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE id=" . escape((int)$url['d']);
+
+		if (mysql_query1($deleteQuery)) {
+			redirect(
+				url("?id," . $url['id'] . ";a," . $url['a']),
+				"header",
+				[
+					'type'		=> 'success',
+					'message' 	=> $lang['admin']['pm_deleted']
+				]
+			);
 		} else {
-			klaida( $lang['system']['error'], $lang['admin']['pm_deleteerror'] );
+			notifyMsg(
+				[
+					'type'		=> 'error',
+					'message' 	=> $lang['admin']['pm_deleteerror']
+				]
+			);
 		}
 	}
 
@@ -48,26 +84,30 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) ) {
 //perziureti laiska
 if ( isset( $url['v'] ) ) {
 	if ( !empty( $url['v'] ) && (int)$url['v'] > 0 ) {
-		$sql = mysql_query1( "SELECT `msg`, `from`,`to`, `title` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `id`=" . escape( (int)$url['v'] ) . " LIMIT 1" );
-		if ( count( $sql ) > 0 ) {
+		$pmQuery = "SELECT `msg`, `from`,`to`, `title` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `id`=" . escape((int)$url['v']) . " LIMIT 1";
+
+		if ($sql = mysql_query1($pmQuery)) {
 			$laiskas = "
 				<b>{$lang['admin']['pm_sender']}:</b>  " . $sql['from'] . "<br />
 				<b>{$lang['admin']['pm_reciever']}:</b> " . $sql['to'] . "<br />
 				<b>{$lang['admin']['pm_subject']}:</b> " . ( isset( $sql['title'] ) && !empty( $sql['title'] ) ? input( trimlink( $sql['title'], 40 ) ) : $lang['admin']['pm_nosubject'] ) . "<br><br />
 				<b>{$lang['admin']['pm_message']}:</b><br />" . bbcode( $sql['msg'] ) . "<br /><br />
-				<form name=\"replay_pm\" action='' method=\"post\">
-					 <input class=\"submit\" type=\"button\" value=\"{$lang['admin']['delete']}\" onclick=\"location.href='" . url( "d," . $url['v'] . ";v,0" ) . "'\"/>
-				</form>
-				";
+				<a class='btn bg-red waves-effect' href='" . url( "d," . $url['v'] . ";v,0" ) . ">" . $lang['admin']['delete'] . "</a>";
+
 			lentele( $lang['admin']['pm_message'], $laiskas );
 		} else {
-			klaida( $lang['system']['error'], $lang['admin']['pm_nomessage'] );
+			notifyMsg(
+				[
+					'type'		=> 'error',
+					'message' 	=> $lang['admin']['pm_nomessage']
+				]
+			);
 		}
 	}
 }
 
 //laisku sarasas
-unset( $info );
+unset($info);
 $info = [];
 $sqlQuery ="SELECT SUBSTRING(`msg`,1,50) AS `msg`,
 (SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id`,
@@ -94,24 +134,51 @@ if ($sql = mysql_query1($sqlQuery)) {
 	}
 }
 //nupiesiam laisku lentele
-$formClass = new Table($info);
-$content = (count($info) > 0 ? $formClass->render() : $lang['sb']['empty']);
-lentele($lang['admin']['pm_messages'], $content);
-// if list is bigger than limit, then we show list with pagination
-if ( $viso > $limit ) {
-	lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+if(! empty($info)) {
+	$formClass = new Table($info);
+	lentele($lang['admin']['pm_messages'], $formClass->render());
+	// if list is bigger than limit, then we show list with pagination
+	if ( $viso > $limit ) {
+		lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+	}
+} else {
+	notifyMsg(
+		[
+			'type'		=> 'error',
+			'message' 	=> $lang['user']['pm_empty_msg']
+		]
+	);
 }
 
-unset( $info, $row, $viso, $limit, $p );
+unset($info, $row, $viso, $limit, $p);
 
 //laisku trinimas "kam siustu laisku"
 $sqlQuery = "SELECT count(*) AS 'viso', `to` AS 'nick' FROM `" . LENTELES_PRIESAGA . "private_msg` GROUP BY `to` ORDER BY `to`";
 
 if ($sql = mysql_query1($sqlQuery)) {
-	foreach ( $sql as $row ) {
+	foreach ($sql as $row) {
 		$select[$row['nick']] = $row['nick'] . " - " . $row['viso'];
 	}
-	$nustatymai = array( "Form" => array( "action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";d,0", "method" => "post", "name" => "reg" ), "{$lang['admin']['pm_deleteto']}:" => array( "type" => "select", "value" => $select, "selected" => $_SESSION[SLAPTAS]['username'], "name" => "to" ), "" => array( "type" => "submit", "name" => "del_all", "value" => $lang['admin']['delete'] ) );
+	$nustatymai = [
+		"Form" 							=> [
+			"action" 	=> "?id," . $url['id'] . ";a," . $url['a'] . ";d,0", 
+			"method" 	=> "post", 
+			"name" 		=> "reg"
+		], 
+
+		$lang['admin']['pm_deleteto'] 	=> [
+			"type" 		=> "select", 
+			"value" 	=> $select, 
+			"selected" 	=> $_SESSION[SLAPTAS]['username'], 
+			"name" 		=> "to"
+		], 
+
+		"" 								=> [
+			"type" 	=> "submit", 
+			"name" 	=> "del_all", 
+			"value" => $lang['admin']['delete']
+		]
+	];
 	
 	$formClass = new Form($nustatymai);	
 	lentele($lang['admin']['pm_deleteto'], $formClass->form());
@@ -125,11 +192,31 @@ if ( sizeof( $sql ) > 0 ) {
 	foreach ( $sql as $row ) {
 		$select[$row['nick']] = $row['nick'] . " - " . $row['viso'];
 	}
-	$nustatymai = array( "Form" => array( "action" => "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";d,0", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "reg" ), "{$lang['admin']['pm_deletefrom']}:" => array( "type" => "select", "value" => $select, "selected" => $_SESSION[SLAPTAS]['username'], "name" => "from" ), "" => array( "type" => "submit", "name" => "del_all", "value" => $lang['admin']['delete'] ) );
+	$nustatymai = [
+		"Form" 							=> [
+			"action" 	=> "?id," . $url['id'] . ";a," . $url['a'] . ";d,0", 
+			"method" 	=> "post", 
+			"name" 		=> "reg"
+		], 
+
+		$lang['admin']['pm_deletefrom'] => [
+			"type" 		=> "select", 
+			"value" 	=> $select, 
+			"selected" 	=> $_SESSION[SLAPTAS]['username'], 
+			"name" 		=> "from"
+		], 
+
+		"" 								=> [
+			"type" 	=> "submit", 
+			"name" 	=> "del_all", 
+			"value" => $lang['admin']['delete']
+		]
+	];
 	
 	$formClass = new Form($nustatymai);	
 	lentele($lang['admin']['pm_deletefrom'], $formClass->form());
 
-	unset( $nustatymai, $select, $sql );
+	unset($nustatymai, $select, $sql);
 }
-unset( $text );
+
+unset($text);
