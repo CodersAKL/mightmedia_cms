@@ -59,7 +59,7 @@ if ( isset( $_GET['priimti'] ) ) {
 			"header",
 			[
 				'type'		=> 'error',
-				'message' 	=> mysqli_error($prisijungimas_prie_mysql)
+				'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
 			]
 		);
 	}
@@ -241,7 +241,7 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> mysqli_error($prisijungimas_prie_mysql)
+					'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
 				]
 			);
 		}

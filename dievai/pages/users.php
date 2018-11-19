@@ -98,7 +98,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['save'] && 
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> mysqli_error($prisijungimas_prie_mysql)
+				'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
 			]
 		);
 	}

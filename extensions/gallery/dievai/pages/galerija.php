@@ -61,7 +61,7 @@ if (isset( $_GET['priimti'] )) {
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> mysqli_error($prisijungimas_prie_mysql)
+				'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
 			]
 		);
 	}
@@ -106,7 +106,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> mysqli_error($prisijungimas_prie_mysql)
+				'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
 			]
 		);
 	}
@@ -151,7 +151,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> mysqli_error($prisijungimas_prie_mysql)
+				'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
 			]
 		);
 	}
@@ -238,7 +238,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 						notifyMsg(
 							[
 								'type'		=> 'error',
-								'message' 	=> mysqli_error($prisijungimas_prie_mysql)
+								'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
 							]
 						);
 					}
