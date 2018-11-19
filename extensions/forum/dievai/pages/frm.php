@@ -1,16 +1,5 @@
 <?php
 
-/**
- * @Projektas: MightMedia TVS
- * @Puslapis: www.coders.lt
- * @$Author: FDisk $
- * @copyright CodeRS ©2008
- * @license GNU General Public License v2
- * @$Revision: 124 $
- * @$Date: 2009-05-24 14:14:40 +0300 (Sk, 24 Geg 2009) $
- **/
-
-
 if ( !defined( "OK" ) || !ar_admin( basename( __file__ ) ) ) {
 	redirect( 'location: http://' . $_SERVER["HTTP_HOST"] );
 }
@@ -30,18 +19,20 @@ if ( isset( $_POST['order'] ) ) {
 	$array = str_replace( "listItem[]=", "", $array );
 	$array = explode( ",", $array );
 
-	foreach ( $array as $position => $item ):
+	foreach ( $array as $position => $item ){
 
 		$case_place .= "WHEN " . (int)$item . " THEN '" . (int)$position . "' ";
 
 		$where .= "$item,";
-	endforeach;
+	}
+
 	$where = rtrim( $where, ", " );
 	$sqlas .= "UPDATE `" . LENTELES_PRIESAGA . "d_forumai` SET `place`=  CASE id " . $case_place . " END WHERE id IN (" . $where . ")";
 	echo $sqlas;
 	$result = mysql_query1( $sqlas );
 
 }
+
 if ( isset( $_POST['order2'] ) ) {
 	$array = str_replace( "&", ",", $_POST['order2'] );
 	$array = str_replace( "listItem[]=", "", $array );
@@ -64,34 +55,7 @@ foreach ( $lygiai as $key ) {
 	$teises[$key] = $conf['level'][$key]['pavadinimas'];
 }
 $teises[0] = $lang['admin']['for_guests'];
-// Paspaustas kazkoks mygtukas
-if ( isset( $_POST['f_sukurimas'] ) ) {
-	$forumas = input( $_POST['f_pav'] );
-	$result  = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "d_forumai` (`pav`, `lang`) VALUES (" . escape( $forumas ) . ", " . escape( lang() ) . ")" );
 
-	if ( $result ) {
-		msg( $lang['system']['done'], $lang['system']['categorycreated'] );
-	} else {
-		klaida( $lang['system']['error'], ' <b>' . mysqli_error($prisijungimas_prie_mysql) . '</b>' );
-	}
-
-	unset( $forumas, $result );
-}
-
-//Kategorijos redagavimas
-if ( isset( $_POST['keisti'] ) && $_POST['keisti'] == $lang['admin']['edit'] ) {
-	$f_id           = (int)$_POST['f_edit'];
-	$f_pav_keitimas = input( $_POST['f_pav_keitimas'] );
-	$result         = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "d_forumai` SET `pav`=" . escape( $f_pav_keitimas ) . " WHERE `id`=" . escape( $f_id ) . "" );
-	if ( $result ) {
-		msg( $lang['system']['done'], $lang['system']['categoryupdated'] );
-
-	} else {
-		klaida( $lang['system']['error'], ' <b>' . mysqli_error($prisijungimas_prie_mysql) . '</b>' );
-
-	}
-	unset( $f_info, $forumas, $result );
-}
 //Kategorijos trynimas (gali but problemu)
 if ( isset( $_GET['d'] ) ) {
 	$f_id  = (int)$_GET['d'];
@@ -125,24 +89,38 @@ if ( isset( $_GET['d'] ) ) {
 if ( isset( $_GET['t'] ) ) {
 	$f_id = (int)$_GET['t'];
 	//sita atlieka (istrina subkategorija)
-	$result = mysql_query1( "DELETE from `" . LENTELES_PRIESAGA . "d_temos`  WHERE `id`=" . escape( $f_id ) . "" );
-	//turetu istrint zinutes
-	$sql12 = mysql_query1( "SELECT id from `" . LENTELES_PRIESAGA . "d_straipsniai` where `tid`=" . escape( $f_id ) . "" );
-	if ( sizeof( $sql12 ) > 0 ) {
-		foreach ( $sql12 as $sidas ) {
-			$result2 = mysql_query1( "DELETE from `" . LENTELES_PRIESAGA . "d_zinute`  WHERE sid=" . escape( $sidas['id'] ) . "" );
+	$deleteCatQuery = "DELETE FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`=" . escape($f_id);
+	if(mysql_query1($deleteCatQuery)) {
+		//turetu istrint zinutes
+		$selectMessagesQuery = "SELECT `id` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`=" . escape($f_id);
+		if ($messages = mysql_query1($selectMessagesQuery)) {
+			foreach ($messages as $message) {
+				$deleteMessage = "DELETE FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `sid`=" . escape($message['id']);
+				mysql_query1($deleteMessage);
+			}
 		}
-	}
-	//istina temas is kategorijos
-	$result2 = mysql_query1( "DELETE from `" . LENTELES_PRIESAGA . "d_straipsniai`  WHERE `lang` = " . escape( lang() ) . " AND `tid`='" . $f_id . "'" );
+		//istina temas is kategorijos
+		$topicDeleteQuery = "DELETE FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `lang` = " . escape(lang()) . " AND `tid`='" . $f_id . "'";
+		mysql_query1($topicDeleteQuery);
 
-	if ( $result ) {
-		msg( $lang['system']['done'], $lang['admin']['forum_deletesub'] );
-
+		redirect(
+			url("?id," . $url['id'] . ";a," . $url['a']),
+			"header",
+			[
+				'type'		=> 'success',
+				'message' 	=> $lang['admin']['forum_deletesub']
+			]
+		);
 	} else {
-		klaida( $lang['system']['error'], ' <b>' . mysqli_error($prisijungimas_prie_mysql) . '</b>' );
+		notifyMsg(
+			[
+				'type'		=> 'error',
+				'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
+			]
+		);
 	}
-	unset( $f_id, $result2, $result );
+
+	unset($f_id);
 }
 //Subkategorijos kūrimas
 if ( isset( $_POST['kurk'] ) && $_POST['kurk'] == $lang['admin']['forum_createsub'] ) {
@@ -185,25 +163,81 @@ if ( isset( $_POST['subedit'] ) && $_POST['subedit'] == $lang['admin']['forum_se
 		lentele($lang['admin']['forum_editsub'], $content);
 	}
 }
-//subkategorijos redag. forma... gal :)
-if ( isset( $_GET['r'] ) && isset( $_GET['f'] ) ) {
-	$f_id       = (int)$_GET['f'];
-	$f_temos_id = (int)$_GET['r'];
-	$sql        = mysql_query1( "SELECT pav FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `id`='" . $f_id . "' limit 1" );
-	$f_forumas  = $sql['pav'];
-	unset( $sql );
-	$t_info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`='" . $f_temos_id . "' limit 1" );
-	$form  = array(
-		"Form"	=> array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port" ), 
-		"{$lang['admin']['forum_category']}:" => array( "type" => "string", "value" => "<b>" . $f_forumas . "</b><input type=\"hidden\" name=\"forumo_id\"  value='" . $f_id . "' /><input type=\"hidden\" name=\"temos_id\"  value='" . $t_info['id'] . "' />" ), 
-		"{$lang['admin']['forum_subcategory']}:"=> array( "type"=> "text", "value"=> $t_info['pav'], "name"=> "temos_pav" ),
-		"{$lang['admin']['forum_subabout']}:" => array( "type" => "text", "value" => $t_info['aprasymas'], "name" => "temos_apr" ), 
-		"{$lang['system']['showfor']} :" => array( "type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "name" => "Teises[]", "id" => "punktai", "selected" => unserialize( $t_info['teises'] ) ), 
-		"" => array( "type" => "submit", "name" => "subred", "value" => $lang['admin']['edit'] )
-	);
+//sub category create/edit
+if (isset($url['r']) && isset($url['f']) || (int)$url['f'] == 3 && ! isset($_GET['r'])) {
+	if(isset($url['r']) && isset($url['f'])) {
+		$f_id       = (int)$url['f'];
+		$f_temos_id = (int)$url['r'];
+		$categoryQuery = "SELECT `pav` FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `id`='" . $f_id . "' limit 1";
+		$category      = mysql_query1($categoryQuery);
+		$f_forumas  = $category['pav'];
+		$subCategoryQuery = "SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`='" . $f_temos_id . "' limit 1";
+		$extra = mysql_query1($subCategoryQuery);
+	} else {
+		$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `lang` = " . escape(lang()) . " ORDER BY `place` ASC" );
+		foreach ( $sql as $row ) {
+			$categories[$row['id']] = $row['pav'];
+		}
+	}
+
+	$editOrCreate 	= (isset($extra) ? $lang['admin']['forum_editsub'] : $lang['system']['createsubcategory']);
+
+	$forumForm  = [
+		"Form"	=> [
+			"action" 	=> url( "?id," . $url['id'] . ";a," . $url['a']), 
+			"method" 	=> "post", 
+			"name" 		=> "port"
+		],
+	]; 
+
+	if(isset($extra)) {
+		$forumForm[$lang['admin']['forum_category']] = [
+			"type" => "string", 
+			"value" => "<b>" . $f_forumas . "</b>
+			<input type=\"hidden\" name=\"forumo_id\"  value='" . $f_id . "' />
+			<input type=\"hidden\" name=\"temos_id\"  value='" . $extra['id'] . "' />",
+		];
+	} else {
+		$forumForm[$lang['admin']['forum_category']] = [
+			"type" 		=> "select", 
+			"value" 	=> $categories, 
+			"name"		=> "f_forumas"
+		];
+	}
+
+	$forumForm  += [
+		$lang['admin']['forum_subcategory']=> [
+			"type"=> "text", 
+			"value"=> (! empty($extra['pav']) ? $extra['pav'] : ''), 
+			"name"=> "temos_pav"
+		],
+
+		$lang['admin']['forum_subabout'] => [
+			"type" => "text", 
+			"value" => (! empty($extra['aprasymas']) ? $extra['aprasymas'] : ''), 
+			"name" => "temos_apr"
+		], 
+
+		$lang['system']['showfor'] => [
+			"type" 		=> "select", 
+			"extra" 	=> "multiple", 
+			"value" 	=> $teises, 
+			"name" 		=> "Teises[]", 
+			"id" 		=> "punktai", 
+			"selected" 	=> (! empty($extra['teises']) ? unserialize($extra['teises']) : '')
+		],
+
+		"" => [
+			"type" 		=> "submit", 
+			"name" 		=> "subred", 
+			'form_line'	=> 'form-not-line',
+			"value" 	=> $editOrCreate
+		]
+	];
 	
-	$formClass = new Form($form);
-	lentele($lang['admin']['forum_editsub'], $formClass->form());
+	$formClass = new Form($forumForm);
+	lentele($editOrCreate, $formClass->form());
+	
 		
 	unset( $t_info, $f_id, $f_temod_id, $sql, $f_forumas, $form );
 }
@@ -222,72 +256,131 @@ if ( isset( $_POST['subred'] ) && $_POST['subred'] == $lang['admin']['edit'] ) {
 	}
 
 }
-// #############################################################
-// Parodome pasirinktos funkcijos laukelius
-// ##############################################################
 if ( isset( $url['f'] ) ) {
-	if ( (int)$url['f'] == 1 ) {
-		$forma = array(
-			"Form" => array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "port" ),
-			"{$lang['admin']['forum_category']}:" => array( "type" => "text", "name" => "f_pav" ),
-			" " => array( "type" => "submit", "name" => "f_sukurimas", "value" => $lang['system']['createcategory'] )
-		);
+	// Category creation
+	if ((int)$url['f'] == 1) {
+		// Paspaustas kazkoks mygtukas
+		if (isset($_POST['action']) && $_POST['action'] == $lang['system']['createcategory']) {
+			$sqlInsert = "INSERT INTO `" . LENTELES_PRIESAGA . "d_forumai` (`pav`, `lang`) VALUES (" . escape(input($_POST['f_pav'])) . ", " . escape(lang()) . ")";
+
+			if (mysql_query1($sqlInsert)) {
+				redirect(
+					url("?id," . $url['id'] . ";a," . $url['a']),
+					"header",
+					[
+						'type'		=> 'success',
+						'message' 	=> $lang['system']['categorycreated']
+					]
+				);
+			} else {
+				notifyMsg(
+					[
+						'type'		=> 'error',
+						'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
+					]
+				);
+			}
+		}
+
+		$categoryForm = [
+			"Form" 								=> [
+				"action" 	=> '', 
+				"method" 	=> "post", 
+				"name" 		=> "port"
+			],
+
+			$lang['admin']['forum_category'] 	=> [
+				"type" => "text", 
+				"name" => "f_pav"
+			],
+
+			"" 									=> [
+				"type" 		=> "submit", 
+				"name" 		=> "action", 
+				'form_line'	=> 'form-not-line',
+				"value" 	=> $lang['system']['createcategory']
+			]
+		];
 		
-		$formClass = new Form($forma);
+		$formClass = new Form($categoryForm);
 		lentele($lang['system']['createcategory'], $formClass->form());
 	}
-	//Kategorijos redagavimas
+	//Categories list/edit
 	if ( (int)$url['f'] == 2 && !isset( $_GET['r'] ) ) {
-		$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
-		if ( sizeof( $sql ) > 0 ) {
-			$li = "";
-			foreach ( $sql as $record1 ) {
+		//Kategorijos redagavimas
+		if ( isset( $_POST['keisti'] ) && $_POST['keisti'] == $lang['admin']['edit'] ) {
+			$f_id           = (int)$_POST['f_edit'];
+			$f_pav_keitimas = input( $_POST['f_pav_keitimas'] );
+			$updateQuery = "UPDATE `" . LENTELES_PRIESAGA . "d_forumai` SET `pav`=" . escape($f_pav_keitimas) . " WHERE `id`=" . escape($f_id);
+
+			if (mysql_query1($updateQuery)) {
+				redirect(
+					url("?id," . $url['id'] . ";a," . $url['a']),
+					"header",
+					[
+						'type'		=> 'success',
+						'message' 	=> $lang['system']['categoryupdated']
+					]
+				);
+			} else {
+				notifyMsg(
+					[
+						'type'		=> 'error',
+						'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
+					]
+				);
+			}
+
+			unset( $f_info, $forumas, $result );
+		}
+
+		$catsQuery = "SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `lang` = " . escape(lang()) . " ORDER BY `place` ASC";
+		if ($sql = mysql_query1($catsQuery)) {
+			foreach ($sql as $record1) {
 				$cats[$record1['id']] = $record1['pav'];
-				$li .= '<li id="listItem_' . $record1['id'] . '" class="drag_block"> 
-				<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $record1['id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
-				<img src="' . ROOT . 'images/icons/arrow_inout.png" alt="move" width="16" height="16" class="handle" />
-				' . $record1['pav'] . '
-				</li> ';
 			}
+			$categoryForm = [
+				"Form" 								=> [
+					"action" => '', 
+					"method" => "post", 
+				], 
 
-			$forma = array( "Form" => array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "" ), "{$lang['admin']['forum_category']}:" => array( "type" => "select", "name" => "f_edit", "value"=> $cats ), "{$lang['admin']['forum_cangeto']}:" => array( "type" => "text", "name" => "f_pav_keitimas" ), " " => array( "type" => "submit", "name" => "keisti", "value" => $lang['admin']['edit'] ) );
+				$lang['admin']['forum_category'] 	=> [
+					"type" 	=> "select", 
+					"name" 	=> "f_edit", 
+					"value"	=> $cats
+				], 
+
+				$lang['admin']['forum_cangeto'] 	=> [
+					"type" => "text", 
+					"name" => "f_pav_keitimas"
+				],
+
+				"" 									=> [
+					"type" 		=> "submit", 
+					"name" 		=> "keisti", 
+					'form_line'	=> 'form-not-line',
+					"value"	 	=> $lang['admin']['edit']
+				]
+			];
 			
-			$formClass = new Form($forma);
+			$formClass = new Form($categoryForm);
 			lentele($lang['system']['editcategory'], $formClass->form());
+			
+			$li      	= ! empty($cats) ? buldForumMenu($cats) : '';
+			$pageMenu 	= '<div class="dd nestable-with-handle">' . $li . '</div>';
 
-			$tekstas = '
-			<div id="la" style="display:none"><b>' . $lang['system']['updated'] . '</b></div>
-			<ul id="test-list">' . $li . '</ul>';
-
-			lentele( $lang['admin']['forum_order'], $tekstas );
+			lentele($lang['admin']['forum_order'], $pageMenu);
 		} else {
-			klaida( $lang['system']['warning'], $lang['system']['nocategories'] );
-		}
-
-		unset( $f_text, $sql, $row );
-	}
-	//subkat. kūrimo forma
-	if ( (int)$url['f'] == 3 && !isset( $_GET['r'] ) ) {
-		$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
-		if ( sizeof( $sql ) > 0 ) {
-			foreach ( $sql as $row ) {
-				$categories[$row['id']] = $row['pav'];
-			}
-
-			$form = array( 
-				"Form"	=> array( "action" => url( "?id," . $url['id'] . ";a,{$_GET['a']}" ), "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "kurk" ), "{$lang['admin']['forum_category']}:" => array( "type" => "select", "value" => $categories, "name"=> "f_forumas" ), "{$lang['admin']['forum_subcategory']}:"=> array( "type"=> "text", "value"=> "", "name"=> "f_tema" ),
-				"{$lang['admin']['forum_subabout']}:" => array( "type" => "text", "name" => "f_aprasymas" ),
-				"{$lang['system']['showfor']} :"      => array( "type" => "select", "extra" => "multiple=multiple", "value" => $teises, "class" => "asmSelect", "name" => "Teises[]", "id" => "punktai" ),
-				""                                    => array( "type" => "submit", "name" => "kurk", "value" => $lang['admin']['forum_createsub'] )
+			notifyMsg(
+				[
+					'type'		=> 'error',
+					'message' 	=> $lang['system']['nocategories']
+				]
 			);
-
-			$formClass = new Form($form);
-			lentele($lang['admin']['forum_createsub'], $formClass->form());
-		} else {
-			klaida( $lang['system']['warning'], $lang['system']['nocategories'] );
 		}
-		unset( $f_text, $sql, $row );
 	}
+	
 	//subkat redag?
 	if ( (int)$url['f'] == 4 ) {
 		$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "d_forumai` WHERE `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );

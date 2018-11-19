@@ -77,3 +77,34 @@ function forumUsersAdminIcons($icons)
 
     return array_merge($icons, $adminIcons);
 }
+
+//functions
+function buldForumMenu($data) {
+
+	global $url, $lang;
+	
+	$liPage = '<ol class="dd-list">';
+
+	foreach ($data as $id => $name) {
+        $actions = '<span style="float:right;" class="clearfix">
+        <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';f,' . $id) . '" data-toggle="tooltip" title="' . $lang['admin']['edit'] . '">
+        <img src="' . ROOT . 'images/icons/wrench.png">
+        </a>
+        <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $id) . '" data-toggle="tooltip" title="' . $lang['admin']['delete'] . '" onclick="return confirm(\'' . $lang['admin']['delete'] . '?\')">
+        <img src="' . ROOT . 'images/icons/cross.png">
+        </a>
+        </span>';
+		$content =	'';
+        $content .= $actions;
+        $content .= '<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $id) . '">';
+        $content .= $name;
+        $content .= '</a>';
+
+        $liPage .= dragItem($id, $content);
+		
+	}
+
+	$liPage .= '</ol>';
+
+	return $liPage;
+}
