@@ -90,3 +90,51 @@ function downloadsAdminIcons($icons)
 
     return array_merge($icons, $adminIcons);
 }
+
+//functions
+function upload( $file, $file_types_array = ["BMP", "JPG", "PNG", "PSD", "ZIP", "RAR", "GIF"], $upload_dir = "../siuntiniai" ) {
+
+    global $lang;
+    
+    if ( $_FILES["$file"]["name"] != "" ) {
+        $origfilename = $_FILES["$file"]["name"];
+        $filename     = explode( ".", $_FILES["$file"]["name"] );
+        $filenameext  = strtolower( $filename[count( $filename ) - 1] );
+        unset( $filename[count( $filename ) - 1] );
+        $filename       = implode( ".", $filename );
+        $filename       = substr( $filename, 0, 60 ) . "." . $filenameext;
+        $file_ext_allow = FALSE;
+        for ( $x = 0; $x < count( $file_types_array ); $x++ ) {
+            if ( $filenameext == $file_types_array[$x] ) {
+                $file_ext_allow = TRUE;
+            }
+        } // for
+        if ( $file_ext_allow ) {
+            if ( $_FILES["$file"]["size"] < MFDYDIS ) {
+                $ieskom   = array( "?", "&", "=", " ", "+", "-", "#" );
+                $keiciam  = array( "", "", "", "_", "", "", "" );
+                $filename = str_replace( $ieskom, $keiciam, $filename );
+                if ( is_file( $upload_dir . $filename ) ) {
+                    $filename = time() . "_" . $filename;
+                }
+                move_uploaded_file( $_FILES["$file"]["tmp_name"], $upload_dir . $filename );
+                chmod( $upload_dir . $filename, 0777 );
+                if ( file_exists( $upload_dir . $filename ) ) {
+                    $result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $filename ) . ", " . escape( $_POST['Aprasymas'] ) . "," . escape( $_SESSION[SLAPTAS]['id'] ) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ", 'TAIP')" );
+
+                    if ( $result ) {
+                        msg( $lang['system']['done'], $lang['admin']['download_created'] );
+                    } else {
+                        klaida( $lang['system']['error'], $lang['system']['error'] );
+                    }
+                } else {
+                    klaida( $lang['system']['error'], '<font color="#FF0000">' . $filename . '</font>' );
+                }
+            } else {
+                klaida( $lang['system']['error'], '<font color="#FF0000">' . $filename . '</font> ' . $lang['admin']['download_toobig'] . '' );
+            }
+        } else {
+            klaida( $lang['system']['error'], '<font color="#FF0000">' . $filename . '</font> ' . $lang['admin']['download_badfile'] . '' );
+        }
+    }
+}
