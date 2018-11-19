@@ -35,32 +35,65 @@ if ( empty( $_GET['v'] ) ) {
 }
 
 //trinimas
-if ( isset( $_POST['articles_delete'] ) ) {
-	foreach ( $_POST['articles_delete'] as $a=> $b ) {
-		$trinti[] = escape( $b );
+if (isset($_POST['faq_delete'])) {
+	foreach ($_POST['faq_delete'] as $a => $b) {
+		$delete[] = escape( $b );
 	}
-	mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` IN(" . implode( ', ', $trinti ) . ")" );
-	header( "Location:" . $_SERVER['HTTP_REFERER'] );
-	exit;
+
+	$sqlDeleteFew = "DELETE FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` IN(" . implode(', ', $delete) . ")";
+	
+	if(mysql_query1($sqlDeleteFew)) {
+		redirect(
+			url("?id," . $url['id'] . ";a," . $url['a'] . ';v,4'),
+			"header",
+			[
+				'type'		=> 'success',
+				'message' 	=> $lang['admin']['posts_deleted']
+			]
+		);
+	} else {
+		redirect(
+			url("?id," . $url['id'] . ";a," . $url['a'] . ';v,4'),
+			"header",
+			[
+				'type'		=> 'error',
+				'message' 	=> $lang['system']['error']
+			]
+		);
+	}
 }
 
 if ( isset( $_GET['t'] ) ) {
-	$trinti = (int)$url['t'];
-	$ar     = mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "duk` WHERE id=" . escape( $trinti ) . " LIMIT 1" );
-	if ( $ar ) {
-		msg( $lang['system']['done'], "{$lang['admin']['faq_deleted']}" );
-	} else {
-		klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
-	}
-//	mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` = " . escape( (int)$_GET['t'] ) );
+	$delId = (int)$url['t'];
+	$deleteQuery = "DELETE FROM `" . LENTELES_PRIESAGA . "duk` WHERE id=" . escape($delId) . " LIMIT 1";
 
-} elseif ( ( ( isset( $_POST['edit_new'] ) && isNum( $_POST['edit_new'] ) && $_POST['edit_new'] > 0 ) ) || isset( $url['h'] ) ) {
-	if ( isset( $url['h'] ) ) {
-		$redaguoti = (int)$url['h'];
-	} elseif ( isset( $_POST['edit_new'] ) ) {
-		$redaguoti = (int)$_POST['edit_new'];
+	if (mysql_query1($deleteQuery)) {
+		redirect(
+			url("?id," . $url['id'] . ";a," . $url['a']),
+			"header",
+			[
+				'type'		=> 'success',
+				'message' 	=> $lang['admin']['faq_deleted']
+			]
+		);
+	} else {
+		notifyMsg(
+			[
+				'type'		=> 'error',
+				'message' 	=>  mysqli_error($prisijungimas_prie_mysql)
+			]
+		);
 	}
-	$sql_ex = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` = " . escape( $redaguoti ) . " LIMIT 1" );
+
+} elseif ( ((isset($_POST['edit_new']) && isNum($_POST['edit_new']) && $_POST['edit_new'] > 0)) || isset( $url['h'] ) ) {
+	if (isset($url['h'])) {
+		$editId = (int)$url['h'];
+	} elseif (isset($_POST['edit_new'])) {
+		$editId = (int)$_POST['edit_new'];
+	}
+
+	$selectQuery = "SELECT * FROM `" . LENTELES_PRIESAGA . "duk` WHERE `id` = " . escape($editId) . " LIMIT 1";
+	$faqItem = mysql_query1($selectQuery);
 
 
 } elseif ( isset( $_POST['action'] ) && isset( $_POST['Klausimas'] ) && $_POST['action'] == $lang['admin']['edit'] ) {
@@ -68,50 +101,89 @@ if ( isset( $_GET['t'] ) ) {
 	$atsakymas = $_POST['Atsakymas'];
 	$order     = (int)$_POST['Order'];
 	$id        = ceil( (int)$_POST['eid'] );
-	$q = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "duk` SET
-			`atsakymas` = " . escape( $atsakymas ) . ",
-			`klausimas` = " . escape( $klausimas ) . ",
-			`order` = " . escape( $order ) . " WHERE `id`=" . $id . ";
-			" ) or klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
-	if ( $q ) {
-		msg( $lang['system']['done'], "{$lang['admin']['faq_updated']}." );
+
+	$updateQuery = "UPDATE `" . LENTELES_PRIESAGA . "duk` SET
+	`atsakymas` = " . escape($atsakymas) . ",
+	`klausimas` = " . escape($klausimas) . ",
+	`order` = " . escape($order) . " WHERE `id`=" . $id . ";";
+
+	if (mysql_query1($updateQuery)) {
+		redirect(
+			url("?id," . $url['id'] . ";a," . $url['a']),
+			"header",
+			[
+				'type'		=> 'success',
+				'message' 	=> $lang['admin']['faq_updated']
+			]
+		);
 	} else {
-		klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
+		notifyMsg(
+			[
+				'type'		=> 'error',
+				'message' 	=>  mysqli_error($prisijungimas_prie_mysql)
+			]
+		);
 	}
 } elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['faq']['new'] ) {
-	$klausimas = $_POST['Klausimas'];
-	$atsakymas = $_POST['Atsakymas'];
-	$order     = (int)$_POST['Order'];
-	$q         = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "duk` (`klausimas`,`atsakymas`,`order`,`lang`) VALUES (
-		  " . escape( $klausimas ) . ",
-		  " . escape( $atsakymas ) . ",
-		  " . escape( $order ) . ",
-		  " . escape( lang() ) . ");" );
-	if ( $q ) {
-		msg( $lang['system']['done'], "{$lang['admin']['faq_created']}." );
+	$question 	= $_POST['Klausimas'];
+	$answer 	= $_POST['Atsakymas'];
+	$order     	= (int)$_POST['Order'];
+
+	$insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "duk` (`klausimas`,`atsakymas`,`order`,`lang`) VALUES (
+		" . escape($question) . ",
+		" . escape($answer) . ",
+		" . escape($order) . ",
+		" . escape(lang()) . ");";
+
+	if (mysql_query1($insertQuery)) {
+		redirect(
+			url("?id," . $url['id'] . ";a," . $url['a']),
+			"header",
+			[
+				'type'		=> 'success',
+				'message' 	=> $lang['admin']['faq_created']
+			]
+		);
 	} else {
-		klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
+		notifyMsg(
+			[
+				'type'		=> 'error',
+				'message' 	=> mysqli_error($prisijungimas_prie_mysql)
+			]
+		);
 	}
 }
 
 if ( $_GET['v'] == 4 ) {
-	$viso = kiek( "duk", " WHERE`lang` = " . escape( lang() ) . "" );
-	$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "duk` WHERE `lang` = " . escape( lang() ) . " ORDER by `order` ASC LIMIT {$p},{$limit}" );
+	$viso 	= kiek( "duk", " WHERE`lang` = " . escape(lang()));
+	$selectQuery = "SELECT * FROM `" . LENTELES_PRIESAGA . "duk` 
+	WHERE `lang` = " . escape(lang()) . " " . (! empty($_POST['order'] ) ? " AND `order` = " . escape($_POST['order']) . ' ' : "" ) . (! empty($_POST['klausimas'] ) ? " AND `klausimas` LIKE " . escape("%" . $_POST['klausimas'] . "%") . ' ' : "" ) . (! empty($_POST['atsakymas'] ) ? " AND `klausimas` LIKE " . escape("%" . $_POST['atsakymas'] . "%") . ' ' : "" ) . "
+	ORDER by `order` ASC LIMIT {$p},{$limit}";
 
-	if (  $viso > 0 ) {
-		foreach ( $sql as $row ) {
+	if ($questions = mysql_query1($selectQuery)) {
+		//FILTRAVIMAS
+		$formData = [
+			'order'			=> $lang['faq']['order'],
+			'klausimas'		=> $lang['faq']['question'],
+			'atsakymas'		=> $lang['faq']['answer'],
+		];
 
-			$info[] = array(  
-				"<input type=\"checkbox\" name=\"visi\" onclick=\"checkedAll('arch');\" />" => "<input type=\"checkbox\" value=\"{$row['id']}\" name=\"articles_delete[]\" />",
-					$lang['faq']['order']             => $row['order'],
-					$lang['faq']['question']         => trimlink( $row['klausimas'], 55 ),
-					$lang['faq']['answer']           => trimlink( $row['atsakymas'], 55 ),
-					$lang['admin']['action']          => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>"
-				);
+		$info[] = tableFilter($formData, $_POST, '#faq');
+		//FILTRAVIMAS - END
+		foreach ($questions as $question) {
+
+			$info[] = [  
+				"#"							=> '<input type="checkbox" value="' . $question['id'] . '" name="faq_delete[]" class="filled-in" id="faq-delete-' . $question['id'] . '"><label for="faq-delete-' . $question['id'] . '"></label>',
+				$lang['faq']['order']		=> $question['order'],
+				$lang['faq']['question']	=> trimlink($question['klausimas'], 55),
+				$lang['faq']['answer']		=> trimlink(strip_tags($question['atsakymas']), 55),
+				$lang['admin']['action']	=> "<a href='" . url("?id,{$url['id']};a,{$url['a']};t," . $question['id']) . "' title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png'></a> 
+				<a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $question['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png'></a>"
+			];
 		}
 		
 		$tableClass = new Table($info);
-		$content = "<form id=\"arch\" method=\"post\">" . $tableClass->render() . "<input type=\"submit\" value=\"{$lang['system']['delete']}\" /></form>";
+		$content = '<form id="faq" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . $lang['system']['delete'] . '</button></form>';
 		lentele($lang['faq']['questions'], $content);
 		
 		unset($info);
@@ -120,47 +192,55 @@ if ( $_GET['v'] == 4 ) {
 			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 		}
 	} else {
-		klaida( $lang['system']['error'], $lang['system']['no_items'] );
+		notifyMsg(
+			[
+				'type'		=> 'error',
+				'message' 	=> $lang['system']['no_items']
+			]
+		);
 	}
 
-} elseif ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
-	$duk = array(
-		"Form"                        => array(
-			"action"  => url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ),
+} elseif ($_GET['v'] == 7 || isset( $url['h'] ) ) {
+	$faqForm = [
+		"Form"						=> [
+			"action"  => url("?id," . $url['id'] . ";a," . $url['a']),
 			"method"  => "post",
-			"enctype" => "",
-			"id"      => "",
-			"class"   => "",
 			"name"    => "reg"
-		),
-		"{$lang['faq']['question']}:" => array(
+		],
+
+		$lang['faq']['question']	=> [
 			"type"  => "text",
-			"value" => input( ( isset( $sql_ex ) ) ? $sql_ex['klausimas'] : '' ),
+			"value" => input((isset($faqItem)) ? $faqItem['klausimas'] : ''),
 			"name"  => "Klausimas"
-		),
-		"{$lang['faq']['answer']}:"   => array(
+		],
+
+		$lang['faq']['answer']		=> [
 			"type"  => "string",
-			"value" => editor('jquery', 'mini', 'Atsakymas', ( isset( $sql_ex ) ? $sql_ex['atsakymas'] : '' ))
-		),
-		"{$lang['faq']['order']}:"    => array(
+			"value" => editor('jquery', 'mini', 'Atsakymas', (isset($faqItem ) ? $faqItem['atsakymas'] : ''))
+		],
+
+		$lang['faq']['order']		=> [
 			"type"  => "text",
-			"value" => (isset( $sql_ex ) ? (int)$sql_ex['order'] : ''),
+			"value" => (isset($faqItem ) ? (int)$faqItem['order'] : ''),
 			"name"  => "Order"
-		),
-		" "                           => array(
+		],
+
+		"id"						=> [
 			"type"  => "hidden",
-			"value" => ( isset( $sql_ex['id'] ) ? input( $sql_ex['id'] ) : '' ),
+			"value" => (isset($faqItem['id']) ? input($faqItem['id']) : ''),
 			"name"  => "eid",
 			"id"    => "id"
-		),
-		""                            => array(
-			"type"  => "submit",
-			"name"  => "action",
-			"value" => ( isset( $sql_ex ) ) ? $lang['admin']['edit'] : $lang['faq']['new']
-		)
-	);
+		],
+
+		""							=> [
+			"type"  	=> "submit",
+			"name"  	=> "action",
+			'form_line'	=> 'form-not-line',
+			"value" 	=> (isset($faqItem)) ? $lang['admin']['edit'] : $lang['faq']['new']
+		]
+	];
 
 	// Verčiam msayvą į formą
-	$formClass = new Form($duk);
+	$formClass = new Form($faqForm);
 	lentele($lang['faq']['edit'], $formClass->form());
 }
