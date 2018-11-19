@@ -1,15 +1,5 @@
 <?php
 
-/**
- * @Projektas: MightMedia TVS
- * @Puslapis: www.coders.lt
- * @$Author: p.dambrauskas $
- * @copyright CodeRS ©2008
- * @license GNU General Public License v2
- * @$Revision: 366 $
- * @$Date: 2009-12-03 20:46:01 +0200 (Thu, 03 Dec 2009) $
- **/
-
 if ( !defined( "OK" ) || !ar_admin( basename( __file__ ) ) ) {
 	redirect( 'location: http://' . $_SERVER["HTTP_HOST"] );
 }
@@ -46,68 +36,80 @@ if ( sizeof( $sql2 ) > 0 ) {
 		$nuorodos[$row2['id']] = $row2['pavadinimas'];
 	}
 }
-
-if ( isset( $_POST['edit'] ) && $_POST['edit'] == $lang['system']['edit'] ) {
-	$pavadinimas = strip_tags( $_POST['name'] );
-	$url         = strip_tags( $_POST['url'] );
-	$aktyvi      = strip_tags( $_POST['ar'] );
-	$aprasymas   = $_POST['Aprasymas'];
-	$kategorija  = ceil( (int)$_POST['Kategorijos_id'] );
-	$result      = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET
-			`pavadinimas` = " . escape( $pavadinimas ) . ",
-			`apie` = " . escape( $aprasymas ) . ",
-			`active` = " . escape( $aktyvi ) . ",
-			`url` = " . escape( $url ) . ",
-			`cat` = " . escape( $kategorija ) . "
-			WHERE `id`=" . escape( $_POST['nuorodos_id'] ) . ";
-			" );
-	if ( $result ) {
-		msg( $lang['system']['done'], "{$lang['admin']['links_updated']}" );
-	} else {
-		klaida( $lang['system']['error'], "<br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
-	}
-}
-if ( isset( $_GET['r'] ) ) {
-	$sql                  = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE id='" . $_GET['r'] . "' LIMIT 1" );
-	$argi                 = array( "TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}" );
-	$nuorodos_redagavimas = array( 
-		"Form"                              => array( "action" => url( "?id,{$_GET['id']};a,{$_GET['a']};v,1" ), "method" => "post", "name" => "edit" ), "{$lang['system']['category']}:" => array( "type" => "select", "value" => $kategorijos, "name" => "Kategorijos_id" ),
-		"{$lang['admin']['links_title']}:"  => array( "type" => "text", "value" => $sql['pavadinimas'], "name" => "name" ),
-		"{$lang['admin']['links_about']}:"  => array( "type" => "string", "value" => editor( 'jquery', 'mini', 'Aprasymas', ( isset( $sql['apie'] ) ) ? $sql['apie'] : '' ) ),
-		"{$lang['admin']['link']}:"         => array( "type" => "text", "value" => $sql['url'], "name" => "url" ),
-		"{$lang['admin']['links_active']}:" => array( "type" => "select", "value" => $argi, "name" => "ar" ), "" => array( "type" => "hidden", "name" => "nuorodos_id", "value" => $_GET['r'] ),
-		"{$lang['admin']['edit']}:"         => array( "type" => "submit", "name" => "edit", "value" => "{$lang['admin']['edit']}" )
-	);
-
-	$formClass = new Form($nuorodos_redagavimas);	
-	lentele($lang['admin']['links_edit'], $formClass->form());
-
-}
-//trinam linką
+//delete link
 if ( isset( $_GET['m'] ) ) {
-	$result = mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `id`=" . escape( $_GET['m'] ) . ";" );
-	if ( $result ) {
-		msg( $lang['system']['done'], "{$lang['admin']['links_Deleted']}" );
+	$deleteQuery = "DELETE FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `id`=" . escape( $_GET['m'] ) . ";";
+	if (mysql_query1($deleteQuery)) {
+		redirect(
+			url("?id," . $url['id'] . ";a," . $url['a']),
+			"header",
+			[
+				'type'		=> 'success',
+				'message' 	=> $lang['admin']['links_Deleted']
+			]
+		);
 	} else {
-		klaida( $lang['system']['error'], "<br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
+		redirect(
+			url("?id," . $url['id'] . ";a," . $url['a']),
+			"header",
+			[
+				'type'		=> 'error',
+				'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
+			]
+		);
 	}
 }
-if ( isset( $_POST['links_delete'] ) ) {
-	foreach ( $_POST['links_delete'] as $a=> $b ) {
+//delete few links
+if (isset($_POST['links_delete'])) {
+	foreach ($_POST['links_delete'] as $a => $b) {
 		$trinti[] = escape( $b );
 	}
-	mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `id` IN(" . implode( ", ", $trinti ) . ")" );
-	header( "Location:" . $_SERVER['HTTP_REFERER'] );
-	exit;
-}
-if ( isset( $_GET['c'] ) ) {
-	$result = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET active='TAIP' WHERE `id`=" . escape( $_GET['c'] ) . ";" );
-	if ( $result ) {
-		msg( $lang['system']['done'], "{$lang['admin']['links_activated']}." );
+
+	$sqlDeleteFew = "DELETE FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `id` IN(" . implode( ", ", $trinti ) . ")";
+	
+	if(mysql_query1($sqlDeleteFew)) {
+		redirect(
+			url("?id," . $url['id'] . ";a," . $url['a']),
+			"header",
+			[
+				'type'		=> 'success',
+				'message' 	=> $lang['admin']['posts_deleted']
+			]
+		);
 	} else {
-		klaida( $lang['system']['error'], "<br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
+		redirect(
+			url("?id," . $url['id'] . ";a," . $url['a']),
+			"header",
+			[
+				'type'		=> 'error',
+				'message' 	=> $lang['system']['error']
+			]
+		);
 	}
-} elseif ( $_GET['v'] == 1 ) {
+//activate post
+} elseif (isset($_GET['c'])) {
+	$updateQuery = "UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET active='TAIP' WHERE `id`=" . escape( $_GET['c'] ) . ";";
+
+	if (mysql_query1($updateQuery)) {
+		redirect(
+			url("?id," . $url['id'] . ";a," . $url['a']),
+			"header",
+			[
+				'type'		=> 'success',
+				'message' 	=> $lang['admin']['links_activated']
+			]
+		);
+	} else {
+		notifyMsg(
+			[
+				'type'		=> 'error',
+				'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
+			]
+		);
+	}
+}
+
+if ( $_GET['v'] == 1 ) {
 ///FILTRAVIMAS
 	$viso = kiek( "nuorodos", "WHERE `active`='NE' AND `lang` = " . escape( lang() ) . "" );
 	$info = [];
@@ -196,41 +198,164 @@ if ( isset( $_GET['c'] ) ) {
 	} else {
 		klaida( $lang['system']['warning'], $lang['system']['no_items'] );
 	}
-} elseif ( $_GET['v'] == 5 ) {
+} elseif ($_GET['v'] == 5 || isset($_GET['r'])) {
 
-	if ( isset( $_POST['Submit_link'] ) && !empty( $_POST['Submit_link'] ) ) {
+	// if ( isset( $_GET['r'] ) ) {
+		
+	// 	$argi                 = array( "TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}" );
+	// 	$nuorodos_redagavimas = array( 
+	// 		"Form"                              => array( "action" => url( "?id,{$_GET['id']};a,{$_GET['a']};v,1" ), "method" => "post", "name" => "edit" ), "{$lang['system']['category']}:" => array( "type" => "select", "value" => $kategorijos, "name" => "Kategorijos_id" ),
+	// 		"{$lang['admin']['links_title']}:"  => array( "type" => "text", "value" => $sql['pavadinimas'], "name" => "name" ),
+	// 		"{$lang['admin']['links_about']}:"  => array( "type" => "string", "value" => editor( 'jquery', 'mini', 'Aprasymas', ( isset( $sql['apie'] ) ) ? $sql['apie'] : '' ) ),
+	// 		"{$lang['admin']['link']}:"         => array( "type" => "text", "value" => $sql['url'], "name" => "url" ),
+	// 		"{$lang['admin']['links_active']}:" => array( "type" => "select", "value" => $argi, "name" => "ar" ), 
+	// "" => array( "type" => "hidden", "name" => "nuorodos_id", "value" => $_GET['r'] ),
+	// 		"{$lang['admin']['edit']}:"         => array( "type" => "submit", "name" => "edit", "value" => "{$lang['admin']['edit']}" )
+	// 	);
+	
+	// 	$formClass = new Form($nuorodos_redagavimas);	
+	// 	lentele($lang['admin']['links_edit'], $formClass->form());
+	// }
 
+
+	// Create post
+	if (isset($_POST['action']) && ! empty($_POST['action']) ) {
 		// Nustatom kintamuosius
-		$url         = strip_tags( $_POST['url'] );
-		$apie        = $_POST['Aprasymas'];
-		$pavadinimas = strip_tags( $_POST['name'] );
-		$cat         = strip_tags( $_POST['kat'] );
-		$active      = strip_tags( $_POST['act'] );
-		// Patikrinam
-		$pattern = "#([a-z]+?)://([a-z0-9\-\.,\?!%\*_\#:;~\\&$@\/=\+]+)#si";
-		if ( !preg_match( $pattern, $url ) ) {
-			klaida( $lang['system']['error'], "{$lang['admin']['links_bad']}" );
+		$url         	= strip_tags( $_POST['url'] );
+		$apie        	= $_POST['Aprasymas'];
+		$pavadinimas 	= strip_tags( $_POST['name'] );
+		$active      	= strip_tags( $_POST['active'] );
+		$cat  			= isset($_POST['cat']) ? ceil((int)$_POST['cat']) : 0;
+		$pattern 		= "#([a-z]+?)://([a-z0-9\-\.,\?!%\*_\#:;~\\&$@\/=\+]+)#si";
+		//url filter
+		if (! preg_match($pattern, $url)) {
+			notifyMsg(
+				[
+					'type'		=> 'error',
+					'message' 	=> $lang['admin']['links_bad']
+				]
+			);
 		} else {
-			$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie`, `active`) VALUES (" . escape( $cat ) . ", " . escape( $url ) . ", " . escape( $pavadinimas ) . ", " . escape( $_SESSION[SLAPTAS]['id'] ) . ", '" . time() . "', " . escape( $apie ) . ", " . escape( $active ) . ");" );
-			if ( $result ) {
-				msg( $lang['system']['done'], "{$lang['admin']['links_created']}." );
-				redirect( url( "?id,{$_GET['id']};a,{$_GET['a']};v,{$_GET['v']}" ), 'meta' );
-			} else {
-				klaida( $lang['system']['error'], "{$lang['admin']['links_allfields']}" );
+			if($_POST['action'] == $lang['admin']['links_create']) {
+	
+				$insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie`, `active`) VALUES (" . escape( $cat ) . ", " . escape( $url ) . ", " . escape( $pavadinimas ) . ", " . escape( $_SESSION[SLAPTAS]['id'] ) . ", '" . time() . "', " . escape( $apie ) . ", " . escape( $active ) . ");";
+
+				if (mysql_query1($insertQuery)) {
+					redirect(
+						url("?id," . $url['id'] . ";a," . $url['a']),
+						"header",
+						[
+							'type'		=> 'success',
+							'message' 	=> $lang['admin']['links_created']
+						]
+					);
+				} else {
+					notifyMsg(
+						[
+							'type'		=> 'error',
+							'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
+						]
+					);
+				}
+				
+			} elseif($_POST['action'] == $lang['system']['edit']) {
+		
+				$updateQuery = "UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET
+				`pavadinimas` = " . escape($pavadinimas) . ",
+				`apie` = " . escape($aprasymas) . ",
+				`active` = " . escape($active) . ",
+				`url` = " . escape($url) . ",
+				`cat` = " . escape($cat) . "
+				WHERE `id`=" . escape($_POST['nuorodos_id']) . ";";
+			
+				if(mysql_query1($updateQuery)) {
+					redirect(
+						url("?id," . $url['id'] . ";a," . $url['a']),
+						"header",
+						[
+							'type'		=> 'success',
+							'message' 	=> $lang['admin']['links_updated']
+						]
+					);
+				} else {
+					notifyMsg(
+						[
+							'type'		=> 'error',
+							'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
+						]
+					);
+				}
 			}
 		}
 	}
-	$nuorodos = array(
-		"Form"                             => array( "action" => "", "method" => "post", "name" => "Submit_link" ),
-		"{$lang['system']['category']}:"   => array( "type" => "select", "value" => $kategorijos, "name" => "kat" ),
-		"{$lang['admin']['links_title']}:" => array( "type" => "text", "value" => "", "name" => "name" ),
-		"Url:"                             => array( "type" => "text", "value" => "http://", "name" => "url" ), $lang['admin']['links_active'] . ":" => array( "type" => "select", "value" => array( "TAIP" => "{$lang['admin']['yes']}", "NE" => "{$lang['admin']['no']}" ), "name" => "act" ),
-		"{$lang['admin']['links_about']}:" => array( "type" => "string", "value" => editor( 'jquery', 'mini', 'Aprasymas', '' ) ),
-		" "                                => array( "type" => "submit", "name" => "Submit_link", "value" => "{$lang['admin']['links_create']}" )
-	);
+
+	$extra = null;
+	if (isset($_GET['r'])) {
+		$selectQuery 	= "SELECT * FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE id='" . escape($_GET['r']) . "' LIMIT 1";
+		$extra			= mysql_query1($selectQuery);
+	}
+
+	$editOrCreate 	= (isset($extra) ? $lang['admin']['links_edit'] : $lang['admin']['links_create']);
+
+	$nuorodos = [
+		"Form"							=> [
+			"action" 	=> "", 
+			"method" 	=> "post", 
+			"name" 		=> "Submit_link"
+		],
+
+		$lang['system']['category']  	=> [
+			"type" 		=> "select", 
+			"value" 	=> $kategorijos, 
+			"name" 		=> "cat",
+			"selected" => (isset($extra['cat']) ? input($extra['cat']) : '0')
+		],
+
+		$lang['admin']['links_title']	=> [
+			"type" 	=> "text", 
+			"value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', 
+			"name" 	=> "name"
+		],
+
+		"Url"							=> [
+			"type" 			=> "text", 
+			"placeholder" 	=> "http://", 
+			"name" 			=> "url",
+			'value'			=> (isset($extra['url'])) ? input($extra['url']) : ''
+		], 
+
+		$lang['admin']['links_about'] 	=> [
+			"type" => "string", 
+			"value" => editor('jquery', 'mini', 'Aprasymas', (isset($extra['apie'])) ? $extra['apie'] : '') 
+		],
+
+		$lang['admin']['links_active']	=> [
+			'type'		=> 'switch',
+			'value'		=> 1,
+			'name'		=> 'active',
+			'id'		=> 'active',
+			'form_line'	=> 'form-not-line',
+			'checked' 	=> (! empty($extra['active']) && $extra['active'] == 'TAIP' ? true : false),
+		],
+
+		""								=> [
+			"type" 		=> "submit", 
+			"name" 		=> "action", 
+			'form_line'	=> 'form-not-line',
+			"value" 	=> $editOrCreate
+		]
+	];
+
+	if(! empty($extra)) {
+		$nuorodos['nuorodos_id'] = [
+			"type" 	=> "hidden", 
+			"name" 	=> "nuorodos_id", 
+			"value" => $extra['id']
+		];
+	}
 
 	$formClass = new Form($nuorodos);
-	lentele($lang['admin']['links_create'], $formClass->form());
+	lentele($editOrCreate, $formClass->form());
 }
 
 unset($info, $sql, $sql2, $q, $result, $result2);

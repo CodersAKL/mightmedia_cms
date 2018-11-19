@@ -156,7 +156,7 @@ function defaultHead()
 
 function adminPages() 
 {
-	global $url, $lang, $conf, $buttons, $timeout;
+	global $url, $lang, $conf, $buttons, $timeout, $prisijungimas_prie_mysql;
 
 	if($versionData = checkVersion()) {
 		notifyUpdate($versionData);

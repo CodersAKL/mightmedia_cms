@@ -49,7 +49,7 @@ if (isset($_GET['p'])) {
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> mysqli_error($prisijungimas_prie_mysql)
+				'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
 			]
 		);
 	}
@@ -85,7 +85,7 @@ if (isset($url['t'])) {
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> mysqli_error($prisijungimas_prie_mysql)
+				'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
 			]
 		);
 	}
@@ -119,7 +119,7 @@ if (isset( $_POST['siunt_delete'])) {
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> mysqli_error($prisijungimas_prie_mysql)
+				'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
 			]
 		);
 	}
@@ -164,7 +164,7 @@ if (isset( $_POST['siunt_delete'])) {
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> mysqli_error($prisijungimas_prie_mysql)
+				'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
 			]
 		);
 	}
@@ -194,7 +194,7 @@ if (isset( $_POST['siunt_delete'])) {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> mysqli_error($prisijungimas_prie_mysql)
+					'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
 				]
 			);
 		}
