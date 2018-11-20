@@ -42,8 +42,11 @@ if (! empty($sql)) {
 $kategorijos[0] = "---";
 
 // New activating
-if ( isset( $_GET['priimti'] ) ) {
-	$sqlActivate = "UPDATE `" . LENTELES_PRIESAGA . "naujienos` SET rodoma='TAIP' WHERE `id`=" . escape( $_GET['priimti'] ) . ";";
+if (isset($url['p'])) {
+	$sqlActivate = "UPDATE `" . LENTELES_PRIESAGA . "naujienos` SET 
+	rodoma='TAIP' 
+	WHERE `id`=" . escape($url['p']) . ";";
+	
 	if (mysql_query1($sqlActivate)) {
 		redirect(
 			url("?id," . $url['id'] . ";a," . $url['a'] . ";v,6"),
@@ -142,9 +145,9 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['edit']
 	$naujiena = explode( '===page===', $_POST['naujiena'] );
 	//$placiau =  explode('===page===',$_POST['naujiena']);
 	$izanga      = $naujiena[0];
-	$placiau     = ( empty( $naujiena[1] ) ? '' : $naujiena[1] );
-	$komentaras  = ( isset( $_POST['kom'] ) ? $_POST['kom'] : 'taip' );
-	$rodymas     = ( isset( $_POST['rodoma'] ) ? $_POST['rodoma'] : 'TAIP' );
+	$placiau     = (empty($naujiena[1]) ? '' : $naujiena[1] );
+	$komentaras  = (isset($_POST['kom']) ? 'taip' : 'ne' );
+	$rodymas     = (isset($_POST['rodoma']) ? 'TAIP' : 'NE' );
 	$kategorija  = (int)$_POST['kategorija'];
 	$pavadinimas = strip_tags( $_POST['pav'] );
 	$id          = ceil( (int)$_POST['news_id'] );
@@ -180,8 +183,8 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 	$naujiena    = explode( '===page===', $_POST['naujiena'] );
 	$izanga      = $naujiena[0];
 	$placiau     = empty( $naujiena[1] ) ? '' : $naujiena[1];
-	$komentaras  = (isset($_POST['kom']) && $_POST['kom'] === '1' ? 'taip' : 'ne');
-	$rodymas     = (isset($_POST['rodoma']) && $_POST['rodoma'] === '1' ? 'TAIP' : 'NE');
+	$komentaras  = (isset($_POST['kom']) ? 'taip' : 'ne' );
+	$rodymas     = (isset($_POST['rodoma']) ? 'TAIP' : 'NE' );
 	$pavadinimas = strip_tags( $_POST['pav'] );
 	$kategorija  = (int)$_POST['kategorija'];
 	$sticky      = ( isset( $_POST['sticky'] ) ? 1 : 0 );
@@ -412,9 +415,8 @@ if ( isset( $_GET['v'] ) ) {
 
 		///FILTRAVIMAS
 		$viso = kiek( "naujienos", "WHERE `rodoma`='NE' AND `lang` = " . escape( lang() ) . "" );
-		$q    = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "naujienos` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pavadinimas'] ) ? "AND (`pavadinimas` LIKE " . escape( "%" . $_POST['pavadinimas'] . "%" ) . " " . ( !empty( $_POST['data'] ) ? " AND `data` <= " . strtotime( $_POST['data'] ) . "" : "" ) . " " . ( !empty( $_POST['naujiena'] ) ? " AND `naujiena` LIKE " . escape( "%" . $_POST['naujiena'] . "%" ) . "" : "" ) . ")" : "" ) . " AND rodoma='NE' ORDER BY sticky DESC, id DESC LIMIT {$p},{$limit}" );
-		//
-		if (! empty($q)) {
+		$selectQuery = "SELECT * FROM  `" . LENTELES_PRIESAGA . "naujienos` WHERE `lang` = " . escape( lang() ) . " " . ( isset( $_POST['pavadinimas'] ) ? "AND (`pavadinimas` LIKE " . escape( "%" . $_POST['pavadinimas'] . "%" ) . " " . ( !empty( $_POST['data'] ) ? " AND `data` <= " . strtotime( $_POST['data'] ) . "" : "" ) . " " . ( !empty( $_POST['naujiena'] ) ? " AND `naujiena` LIKE " . escape( "%" . $_POST['naujiena'] . "%" ) . "" : "" ) . ")" : "" ) . " AND rodoma='NE' ORDER BY sticky DESC, id DESC LIMIT {$p},{$limit}";
+		if ($unpublishedNews = mysql_query1($selectQuery)) {
 			
 			$info = [];
 			//
@@ -428,14 +430,16 @@ if ( isset( $_GET['v'] ) ) {
 			$info[] = tableFilter($formData, $_POST, '#newsch');
 			//FILTRAVIMAS
 
-			foreach ($q as $sql) {
-				$info[] = array(
-					"#"                         => '<input type="checkbox" value="' . $row['id'] . '" name="news_delete[]" class="filled-in" id="news-delete-' . $sql['id'] . '"><label for="news-delete-' . $sql['id'] . '"></label>',
-					$lang['admin']['news_name'] => '<span style="cursor:pointer;" title="<b>' . $sql['pavadinimas'] . '</b><br />' . $lang['admin']['news_author'] . ': <b>' . $sql['autorius'] . '</b>">' . trimlink( strip_tags( $sql['pavadinimas'] ), 55 ) . '<span/></a>',
-					$lang['admin']['news_date'] => date( 'Y-m-d', $sql['data'] ),
-					$lang['admin']['news_more'] => trimlink( strip_tags( $sql['naujiena'] ), 55 ),
-					$lang['admin']['action']    => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};p," . $sql['id'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $sql['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $sql['id'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "images/icons/cross.png' border='0'></a>"
-				);
+			foreach ($unpublishedNews as $new) {
+				$info[] =[
+					"#"                         => '<input type="checkbox" value="' . $new['id'] . '" name="news_delete[]" class="filled-in" id="news-delete-' . $new['id'] . '"><label for="news-delete-' . $new['id'] . '"></label>',
+					$lang['admin']['news_name'] => '<span style="cursor:pointer;" data-toggle="tooltip" title="' . $new['pavadinimas'] . '">' . trimlink( strip_tags( $new['pavadinimas'] ), 55 ) . '</span></a>',
+					$lang['admin']['news_date'] => date( 'Y-m-d', $new['data'] ),
+					$lang['admin']['news_more'] => trimlink( strip_tags( $new['naujiena'] ), 55 ),
+					$lang['admin']['action']    => "<a href='" . url( "?id,{$url['id']};a,{$url['a']};p," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png'></a> 
+					<a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png'></a> 
+					<a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['delete']}' onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "images/icons/cross.png'></a>"
+				];
 			}
 
 			$tableClass  = new Table($info);
