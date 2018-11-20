@@ -79,26 +79,24 @@ function forumUsersAdminIcons($icons)
 }
 
 //functions
-function buldForumMenu($data) {
-
-	global $url, $lang;
+function buldForumMenu($data)
+{
+	global $lang;
 	
 	$liPage = '<ol class="dd-list">';
 
-	foreach ($data as $id => $name) {
+	foreach ($data as $id => $item) {
         $actions = '<span style="float:right;" class="clearfix">
-        <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';f,' . $id) . '" data-toggle="tooltip" title="' . $lang['admin']['edit'] . '">
+        <a href="' . $item['edit'] . '" data-toggle="tooltip" title="' . $lang['admin']['edit'] . '">
         <img src="' . ROOT . 'images/icons/wrench.png">
         </a>
-        <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $id) . '" data-toggle="tooltip" title="' . $lang['admin']['delete'] . '" onclick="return confirm(\'' . $lang['admin']['delete'] . '?\')">
+        <a href="' . $item['delete'] . '" data-toggle="tooltip" title="' . $lang['admin']['delete'] . '" onclick="return confirm(\'' . $lang['admin']['delete'] . '?\')">
         <img src="' . ROOT . 'images/icons/cross.png">
         </a>
         </span>';
 		$content =	'';
         $content .= $actions;
-        $content .= '<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $id) . '">';
-        $content .= $name;
-        $content .= '</a>';
+        $content .= $item['title'];
 
         $liPage .= dragItem($id, $content);
 		
@@ -107,4 +105,54 @@ function buldForumMenu($data) {
 	$liPage .= '</ol>';
 
 	return $liPage;
+}
+
+function forumCatsOrder($data)
+{
+    global $lang;
+
+	if (isset($data['order'])) {
+		$array = json_decode($data['order'], true);
+		$case_place = '';
+		$where = '';
+		foreach ($array as $position => $item) {
+			$case_place .= "WHEN " . (int)$item['id'] . " THEN '" . (int)$position . "' ";
+	
+			$where .= $item['id'] . ",";
+		}
+		$where = rtrim($where, ", ");
+		$sqlas = "UPDATE `" . LENTELES_PRIESAGA . "d_forumai` SET `place`= (CASE id " . $case_place . " END) WHERE id IN (" . $where . ")";
+
+		if($result = mysql_query1($sqlas)) {
+
+			return $lang['system']['updated'];
+		}
+	}
+
+	return null;
+}
+
+function forumSubCatsOrder($data)
+{
+    global $lang;
+
+	if (isset($data['order'])) {
+		$array = json_decode($data['order'], true);
+		$case_place = '';
+		$where = '';
+		foreach ($array as $position => $item) {
+			$case_place .= "WHEN " . (int)$item['id'] . " THEN '" . (int)$position . "' ";
+	
+			$where .= $item['id'] . ",";
+		}
+		$where = rtrim($where, ", ");
+		$sqlas = "UPDATE `" . LENTELES_PRIESAGA . "d_temos` SET `place`= (CASE id " . $case_place . " END) WHERE id IN (" . $where . ")";
+
+		if($result = mysql_query1($sqlas)) {
+
+			return $lang['system']['updated'];
+		}
+	}
+
+	return null;
 }

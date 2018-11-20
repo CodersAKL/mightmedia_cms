@@ -223,6 +223,16 @@ class Form
                     " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . ">" . ( isset( $array['value'] ) ? $array['value'] : "" ) . "</" . $array['type'] . ">";
                     }
                     
+                default:
+                {
+                    return "<input type=\"" . $array['type'] . "\" 
+                    class=\"" . $this->defaultClass['input'] . (isset($array['class']) ? " " . $array['class'] : "" ) . "\"
+                    " . ( isset( $array['id'] ) ? " id=\"" . $array['id'] . "\"" : "" ) . "
+                    " . ( isset( $array['name'] ) ? " name=\"" . $array['name'] . "\"" : "" ) . "
+                    " . ( isset( $array['value'] ) ? " value=\"" . $array['value'] . "\"" : "" ) . "
+                    " . ( isset( $array['placeholder'] ) ? " placeholder=\"" . $array['placeholder'] . "\"" : "" ) . "
+                    " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . "/>";
+                }
                 //todo: checkbox or radio list
 			}
 		}
