@@ -464,7 +464,7 @@ function showNotification(type, text, callback) {
             type = 'alert-' + type;
         }
     }
-    if (text === null || text === '') { text = 'Turning standard Bootstrap alerts'; }
+    if (text === null || text === '') { text = 'Error!'; }
     var animateEnter = 'animated bounceInRight';
     var animateExit = 'animated bounceOutRight';
     var allowDismiss = true;
