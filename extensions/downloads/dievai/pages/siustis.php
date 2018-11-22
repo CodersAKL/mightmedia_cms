@@ -92,29 +92,42 @@ if (isset($url['t'])) {
 
 }
 // trinam siuntinius
-if (isset( $_POST['siunt_delete'])) {
-	foreach ($_POST['siunt_delete'] as $a => $b ) {
+if (isset( $_POST['downloads_delete'])) {
+	foreach ($_POST['downloads_delete'] as $a => $b ) {
 		$trinti[] = escape($b);
 	}
 	
-	$sqlDeleteFew = "SELECT `file` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` IN (" . implode(",", $trinti) . ")";
-	if($sql = mysql_query1($sqlDeleteFew)) {
+	$sqlSelectDeleteFew = "SELECT `file` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` IN (" . implode(",", $trinti) . ")";
+	
+	if($sql = mysql_query1($sqlSelectDeleteFew)) {
 		foreach ( $sql as $row ) {
 			if ( isset( $row['file'] ) && !empty( $row['file'] ) ) {
 				@unlink( ROOT . "siuntiniai/" . $row['file'] );
 			}
 		}
-		//comments delete
-		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/siustis' AND kid IN (" . implode(",", $trinti) . ")");
-	
-		redirect(
-			url("?id," . $url['id'] . ";a," . $url['a'] . ';v,7'),
-			"header",
-			[
-				'type'		=> 'success',
-				'message' 	=> $lang['admin']['posts_deleted']
-			]
-		);
+		//item delete
+		$sqlDeleteFew = "DELETE FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` IN (" . implode(",", $trinti) . ")";
+		if(mysql_query1($sqlDeleteFew)) {
+			//comments delete
+			mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/siustis' AND kid IN (" . implode(",", $trinti) . ")");
+				
+			redirect(
+				url("?id," . $url['id'] . ";a," . $url['a'] . ';v,7'),
+				"header",
+				[
+					'type'		=> 'success',
+					'message' 	=> $lang['admin']['posts_deleted']
+				]
+			);
+		} else {
+			notifyMsg(
+				[
+					'type'		=> 'error',
+					'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
+				]
+			);
+		}
+		
 	} else {
 		notifyMsg(
 			[
