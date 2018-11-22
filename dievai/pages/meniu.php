@@ -103,7 +103,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 			$file   = input($_POST['File']);
 		}
 
-		if ( empty( $psl ) || $psl == '' ) {
+		if (empty($psl) || $psl == '') {
 			$psl = basename( $file, ".php" );
 		}
 
@@ -114,18 +114,26 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 		}
 
 		$sql = "INSERT INTO `" . LENTELES_PRIESAGA . "page` (`pavadinimas`, `file`, `place`, `show`, `teises`,`parent`, `lang`) VALUES (" . escape( $psl ) . ", " . escape( $file ) . ", '0', " . escape( $show ) . ", " . escape( $teises ) . "," . escape( (int)$_POST['parent'] ) . ", " . escape( lang() ) . ")";
-		mysql_query1($sql);
+
+		if(mysql_query1($sql)) {
+			delete_cache( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
 		
-		delete_cache( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
-		
-		redirect(
-			url("?id," . $url['id'] . ";a," . $url['a']),
-			"header",
-			[
-				'type'		=> 'success',
-				'message' 	=> $lang['admin']['post_created']
-			]
-		);
+			redirect(
+				url("?id," . $url['id'] . ";a," . $url['a']),
+				"header",
+				[
+					'type'		=> 'success',
+					'message' 	=> $lang['admin']['post_created']
+				]
+			);
+		} else {
+			notifyMsg(
+				[
+					'type'		=> 'error',
+					'message' 	=> input(mysqli_error($prisijungimas_prie_mysql))
+				]
+			);
+		}
 	}
 
 	$pageFiles = getFiles(ROOT . 'puslapiai/', null, 'puslapiai/');
@@ -137,7 +145,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 			$fileName 	= $file['name'];
 			$fileTitle	= (isset($lang['pages'][$file['name']]) ? $lang['pages'][$file['name']] : nice_name(basename($file['name'], '.php')));
 
-			if ($file['name'] !== 'klaida.php' && ! isset($conf['puslapiai'][$fileName]['id'])) {
+			if ($file['name'] !== 'klaida.php' && ! isset($conf['puslapiai'][basename($fileName)]['id'])) {
 				$pages[$fileName] = $fileTitle;
 			}
 		}
