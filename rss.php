@@ -2,7 +2,9 @@
 header( "content-type: application/xml; charset=UTF-8" );
 echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
 require_once( 'priedai/conf.php' );
-define( 'ROOT', '/../' );
+if(! defined('ROOT')) {
+	define('ROOT', '');
+}
 if ( isset( $conf['puslapiai']['rss.php'] ) ) {
 	if ( empty( $_GET['lang'] ) ) {
 		$_GET['lang'] = 'lt';
