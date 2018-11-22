@@ -24,7 +24,10 @@ $upload_mb    = min( $max_upload, $max_post, $memory_limit );
 define( "MFDYDIS", $upload_mb * 1024 * 1024 );
 //ini_set("memory_limit", MFDYDIS);
 define( "OK", TRUE );
-define( 'ROOTAS', dirname( realpath( __FILE__ ) ) . '/../' );
+define('ROOTAS', dirname( realpath( __FILE__ ) ) . '/../' );
+if(! defined('ROOT')) {
+	define('ROOT', dirname( realpath( __FILE__ ) ) . '/../' );
+}
 //Isvalom POST'us nuo xss
 if ( !empty( $_POST ) ) {
 	include_once ( ROOTAS . 'priedai/safe_html.php' );
@@ -280,7 +283,6 @@ if(! function_exists('header_info')) {
 		<meta name="description" content="' . input( strip_tags( $conf['Pavadinimas'] ) . ' - ' . trimlink( trim( str_replace( "\n\r", "", strip_tags( $conf['Apie'] ) ) ), 120 ) ) . '" />
 		<meta name="keywords" content="' . input( strip_tags( $conf['Keywords'] ) ) . '" />
 		<meta name="author" content="' . input( strip_tags( $conf['Copyright'] ) ) . '" />
-		<link rel="stylesheet" type="text/css" href="stiliai/system.css" />
 		<link rel="stylesheet" type="text/css" href="stiliai/rating.css" />
 		<link rel="stylesheet" type="text/css" href="stiliai/' . input( strip_tags( $conf['Stilius'] ) ) . '/default.css" />
 		<!-- favicon -->
@@ -300,51 +302,15 @@ if(! function_exists('header_info')) {
 		<title>' . input( strip_tags( $conf['Pavadinimas'] ) . ' - ' . $page_pavadinimas ) . '</title>
 		<script type="text/javascript" src="javascript/jquery/jquery-1.3.2.min.js"></script>
 		<script type="text/javascript" src="javascript/pagrindinis.js"></script>
-		<!-- Add jQuery library -->
-		<script type="text/javascript" src="javascript/jquery/fancybox/jquery-1.7.2.min.js"></script>
-		<!-- Add mousewheel plugin (this is optional) -->
-		<script type="text/javascript" src="javascript/jquery/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
-		<!-- Add fancyBox main JS and CSS files -->
-		<script type="text/javascript" src="javascript/jquery/fancybox/jquery.fancybox.js?v=2.0.6"></script>
-		<link rel="stylesheet" type="text/css" href="stiliai/jquery.fancybox.css?v=2.0.6" media="screen" />
-		<script type="text/javascript">
-			$(document).ready(function() {
-				$(".fancybox").fancybox();
-				// Remove padding, set opening and closing animations, close if clicked and disable overlay
-				$(".fancybox-effects-d").fancybox({
-					padding: 0,
-					openEffect : "elastic",
-					openSpeed  : 150,
-					closeEffect : "elastic",
-					closeSpeed  : 150,
-					closeClick : true,
-					helpers : {
-						overlay : {
-							css : {
-								"background" : "#fff"
-							}
-						}
-					}
-				});
-			});
-		</script>
 		<script type="text/javascript" src="javascript/jquery/rating.js"></script>
-		<script type="text/javascript" src="javascript/jquery/tooltip.js"></script>
 		<script type="text/javascript" src="javascript/jquery/jquery.hint.js"></script>
-
-
-		<!--[if lt IE 7]>
-		<script type="text/javascript" src="javascript/jquery/jquery.pngFix.pack.js"></script>
-		<script type="text/javascript">$(document).ready(function(){$(document).pngFix();});</script>
-		<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
-		<![endif]-->
 		
 		<script type="text/javascript">
 		//Active mygtukas
 		$(function(){
 		var path = location.pathname.substring(1);
 		if ( path )
-			$(\'ul li a[href$="\' + path + \'"]\').attr(\'class\', \'active\');
+			$(\'ul li a[href$="\' + path + \'"]\').addClass(\'active\');
 		});
 
 		</script>';
@@ -359,14 +325,20 @@ if(! function_exists('header_info')) {
  */
 if(! function_exists('addtotitle')) {
 function addtotitle($add) {
+?>
+<script type="text/javascript" data-append-script>
+	var cur_title = new String(document.title);
+	document.title = cur_title + " - <?php echo $add; ?>";
 
-	//$add = input($add);
-	echo <<<HTML
-		<script type="text/javascript">
-		var cur_title = new String(document.title);
-      document.title = cur_title+" - {$add}";
-    </script>
-HTML;
+	var code = document.querySelector('[data-append-script]');
+	if(code) {
+		var script = code.cloneNode(true);
+		document.body.appendChild(script);
+		code.parentNode.removeChild(code);
+		script.removeAttribute('data-append-script');
+	}
+</script>
+<?php
 }
 }
 
@@ -394,10 +366,11 @@ if(! function_exists('avatar')) {
 		} else {
 			$avatardir = (
 			file_exists( ROOT . 'stiliai/' . $conf['Stilius'] . '/no_avatar.png' )
-				? 'stiliai/' . $conf['Stilius'] . '/no_avatar.png'
-				: 'images/avatars/no_avatar.png'
+				? adresas() . 'stiliai/' . $conf['Stilius'] . '/no_avatar.png'
+				: adresas() . 'images/avatars/no_avatar.png'
 			);
-			$result    = '<img src="//www.gravatar.com/avatar/' . md5( strtolower( $mail ) ) . '?s=' . htmlentities( $size . '&r=any&default=' . urlencode( adresas() . $avatardir ) . '&time=' . time() ) . '"  width="' . $size . '" alt="avataras" />';
+			$avatarUrl = 'https://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . $size . '&r=g&d=' . $avatardir . '&time=' . time();
+			$result    = '<img src="' . $avatarUrl . '"  width="' . $size . '" alt="avataras" />';
 		}
 
 		return $result;
@@ -2255,6 +2228,11 @@ if(! function_exists('postRemote')) {
 }
 
 if(! function_exists('checkVersion')) {
+	/**
+	 * Version check function
+	 *
+	 * @return void
+	 */
 	function checkVersion()
 	{
 		if($existData = cacheGetData('versionCheck')) {
