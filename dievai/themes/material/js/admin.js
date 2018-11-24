@@ -511,7 +511,7 @@ $(function () {
     $.AdminBSB.search.activate();
 
     //Textare auto growth
-    if($('textarea.auto-growth')) {
+    if($('textarea.auto-growth').length) {
         autosize($('textarea.auto-growth'));
     }
     
