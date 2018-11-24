@@ -126,159 +126,125 @@ function th_meniu( $array, $start = '', $end = '' ) {
 }
 
 //BB Kodai
-function bbk( $forma ) {
-
+function bbk($forma) {
 	$return = "
-<button onclick=\"addText('$forma', '[b]', '[/b]'); return false;\" title=\"B\"><img src=\"images/icons/edit-bold.png\"></button>
-<button onclick=\"addText('$forma', '[i]', '[/i]'); return false;\" title=\"I\"><img src=\"images/icons/edit-italic.png\"></button>
-<button onclick=\"addText('$forma', '[u]', '[/u]'); return false;\" title=\"U\"><img src=\"images/icons/edit-underline.png\"></button>
-<button onclick=\"addText('$forma', '[big]', '[/big]'); return false;\" title=\"BIG\"><img src=\"images/icons/edit-heading-1.png\"></button>
-<button onclick=\"addText('$forma', '[sm]', '[/sm]'); return false;\" title=\"SM\"><img src=\"images/icons/edit-heading-5.png\"></button>
-<button onclick=\"addText('$forma', '[quote]', '[/quote]'); return false;\" title=\"QUOTE\"><img src=\"images/icons/edit-quotation.png\"></button> 
-<button onclick=\"addText('$forma', '[left]', '[/left]'); return false;\" title=\"LEFT\"><img src=\"images/icons/edit-alignment.png\"></button> 
-<button onclick=\"addText('$forma', '[center]', '[/center]'); return false;\" title=\"CENTER\"><img src=\"images/icons/edit-alignment-center.png\"></button> 
-<button onclick=\"addText('$forma', '[justify]', '[/justify]'); return false;\" title=\"JUSTIFY\"><img src=\"images/icons/edit-alignment-justify.png\"></button> 
-<button onclick=\"addText('$forma', '[right]', '[/right]'); return false;\" title=\"RIGHT\"><img src=\"images/icons/edit-alignment-right.png\"></button> 
-<button onclick=\"addText('$forma', '[code]', '[/code]'); return false;\" title=\"Code\"><img src=\"images/icons/edit-code.png\"></button> 
+<button onclick=\"addText('$forma', '[b]', '[/b]'); return false;\" title=\"B\"><img src=\"images/icons/text_bold.png\"></button>
+<button onclick=\"addText('$forma', '[i]', '[/i]'); return false;\" title=\"I\"><img src=\"images/icons/text_italic.png\"></button>
+<button onclick=\"addText('$forma', '[u]', '[/u]'); return false;\" title=\"U\"><img src=\"images/icons/text_underline.png\"></button>
 <button onclick=\"addText('$forma', '[url]', '[/url]'); return false;\" title=\"URL\"><img src=\"images/icons/link.png\"></button>
+<button onclick=\"addText('$forma', '[big]', '[/big]'); return false;\" title=\"BIG\"><img src=\"images/icons/text_heading_1.png\"></button>
+<button onclick=\"addText('$forma', '[sm]', '[/sm]'); return false;\" title=\"SM\"><img src=\"images/icons/text_heading_6.png\"></button>
 <button onclick=\"addText('$forma', '[img]', '[/img]'); return false;\" title=\"IMG\"><img src=\"images/icons/picture.png\"></button>
+<button onclick=\"addText('$forma', '[quote]', '[/quote]'); return false;\" title=\"QUOTE\"><img src=\"images/icons/comment.png\"></button> <button style='padding-top:6px;' onclick=\"addText('$forma', '[php]', '[/php]'); return false;\" title=\"KODAS\"><b>KODAS</b></button> 
 ";
-	if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
-		$return .= "
-<button onclick=\"addText('$forma', '[hide=Tik registruotiems]', '[/hide]'); return false;\" title=\"HIDE\"><img src=\"images/icons/eye.png\"></button>
+
+if ($_SESSION[SLAPTAS]['level'] == 1) {
+$return .= "
+<button onclick=\"addText('$forma', '[hide=Tik registruotiems]', '[/hide]'); return false;\" title=\"HIDE\"><img src=\"images/icons/shield.png\"></button>
 ";
-	}
+}
 	return $return . "<br />";
 }
 
-function bbs( $forma ) {
-
-	return smile( "
-		:)
-		(angel)
-		:S
-		 B)
-		(draw)
-		(eek)
-		(evil)
-		;(
-		(green)
-		:D
-		xD
-		:3
-		:*
-		(angry)
-		$)
-		8)
-		:|
-		:P
-		(blush)
+function bbs($forma) {
+	return smile("
+		:-)
+		;-)
+		:-]
+		:-D
+		:-o
 		:(
-		(zzz)
-		:O
-		(snowman)
-		", $forma ) . "<br/>";
+		B-)
+		:-|
+		:P
+		|)
+		:-/
+		", $forma) . "<br/>";
 }
 
-//Šypsenėlės
-function smile( $data, $bb = FALSE ) {
-
-	$smilies = array(
-		':)'        => 'smiley.png',
-		'(angel)'   => 'smiley-angel.png',
-		':S'        => 'smiley-confuse.png',
-		'B)'        => 'smiley-cool.png',
-		'(draw)'    => 'smiley-draw.png',
-		'(eek)'     => 'smiley-eek.png',
-		'(evil)'    => 'smiley-evil.png',
-		';('        => 'smiley-cry.png',
-		':D'        => 'smiley-grin.png',
-		'xD'        => 'smiley-lol.png',
-		':3'        => 'smiley-kitty.png',
-		':*'        => 'smiley-kiss.png',
-		'(angry)'   => 'smiley-mad.png',
-		'$)'        => 'smiley-money.png',
-		'8)'        => 'smiley-nerd.png',
-		':|'        => 'smiley-neutral.png',
-		':P'        => 'smiley-razz.png',
-		'(blush)'   => 'smiley-red.png',
-		':('        => 'smiley-sad.png',
-		'(zzz)'     => 'smiley-sleep.png',
-		'(green)'   => 'smiley-mr-green.png',
-		'(snowman)' => 'snowman-hat.png',
-		':O'        => 'smiley-surprise.png', );
-	foreach ( $smilies as $smile => $image ) {
+//SYPSENOS
+function smile($data, $bb = false) {
+  global $conf; 
+	$smilies = array(':)' => 'square_smile.png', ':]' => 'square_smug.png', ':-)' => 'square_smile.png', ';-)' => 'square_wink.png', ';)' => 'square_wink.png', ':-]' => 'square_smug.png', ':-D' => 'square_biggrin.png', ':D' => 'square_biggrin.png', ':o' => 'square_eek.png', ':-o' => 'square_eek.png', ':O' => 'square_eek.png', ':(' => 'square_frown.png', 'B-)' => 'square_cool.png', 'B)' => 'square_cool.png', '%-)' => 'square_cool.png', ':-|' => 'square_unsure.png', ':|' => 'square_unsure.png', ':P' => 'square_tongue.png', ':p' => 'square_tongue.png', '|)' => 'square_mad.png', '0_o' => 'square_eek.png', 'o_0' => 'square_eek.png', ':-/'=>'square_confused.png');
+	foreach ($smilies as $smile => $image) {
 		//$data = str_replace($smile,"<img src='images/smiles/$image' alt='".$smile."' class='middle' ".(($bb)?"onclick=\"addText('".$bb."','".$smile."',' ');\" style='cursor: pointer;'":"")." />",$data);
-		$data = str_replace( $smile, "<img title='{$smile}' src='images/smiles/{$image}' alt='" . $smile . "' class='middle' onclick=\"addText('" . $bb . "','" . $smile . "',' ');\" style='cursor: pointer;' />", $data );
+		$data = str_replace($smile, "<img src='stiliai/{$conf['Stilius']}/smilies/$image' alt='" . $smile . "' class='middle' onclick=\"addText('" . $bb . "','" . $smile . "',' ');\" style='cursor: pointer;' />", $data);
 	}
 	return $data;
 }
 
 //bbcodo varijantas 1
-function bb2html( $Input ) {
-
-	$Bbcode = array( '/\[b\](.+?)\[\/b\]/i', '/\[i\](.+?)\[\/i\]/i', '/\[quote\](.+?)\[\/quote\]/i', '/\[url=(.+?)\](.+?)\[\/url\]/i' );
-	$Html   = array( '<strong>$1</strong>', '<em>$1</em>', '<blockquote>$1</blockquote>', '<a href="$1">$2</a>' );
-	return preg_replace( $Bbcode, $Html, $Input );
+function bb2html($Input) {
+	$Bbcode = array('/\[b\](.+?)\[\/b\]/i', '/\[i\](.+?)\[\/i\]/i', '/\[quote\](.+?)\[\/quote\]/i', '/\[url=(.+?)\](.+?)\[\/url\]/i');
+	$Html = array('<strong>$1</strong>', '<em>$1</em>', '<blockquote>$1</blockquote>', '<a href="$1">$2</a>');
+	return preg_replace_callback($Bbcode, function($matches) {
+		return str_replace('$1', $Html[$matches[1]]);
+	}, $Input);
 }
 
 
 // bbcode
 
-function nl2br2( $text ) {
-
-	return str_replace( '<br />', '', $text );
+function nl2br2($text) {
+	return str_replace('<br />', '', $text);
 }
-
-function htmlspecialchars2( $text ) {
-
+function htmlspecialchars2($text) {
 	static $patterns, $replaces;
-	if ( !$patterns ) {
-		$patterns = array( '#&lt;#', '#&gt;#', '#&amp;#', '#&quot;#' );
-		$replaces = array( '<', '>', '&', '"' );
+	if (!$patterns) {
+		$patterns = array('#&lt;#', '#&gt;#', '#&amp;#', '#&quot;#');
+		$replaces = array('<', '>', '&', '"');
 	}
-	return preg_replace( $patterns, $replaces, $text );
+	return preg_replace_callback($patterns, function($matches) {
+		return $replaces[$matches[1]];
+	}, $text);
 }
-
-function bbchat( $str ) {
+function bbchat($str) {
 
 	//$str=htmlspecialchars(trim($str));
-	$str = descript( $str );
+	$chatMessage = descript($str);
 	// paryskinam teksta
-	$str = preg_replace( "#\[b\](.*?)\[/b\]#si", "<b>\\1</b>", $str );
+	$chatMessage = preg_replace_callback("#\[b\](.*?)\[/b\]#si", function($m) {
+		return "<b>" . $m[1] . "</b>";
+	}, $chatMessage);
 	// Paverciam teksta
-	$str = preg_replace( "#\[i\](.*?)\[/i\]#si", "<i>\\1</i>", $str );
+	$chatMessage = preg_replace_callback("#\[i\](.*?)\[/i\]#si", function($m) {
+		return "<i>" . $m[1] . "</i>";
+	}, $chatMessage);
+	
 	// Pabraukiam teksta
-	$str = preg_replace( "#\[u\](.*?)\[/u\]#si", "<u>\\1</u>", $str );
+	$str = preg_replace_callback("#\[u\](.*?)\[/u\]#si", function($m) {
+		return "<u>" . $m[1] . "</u>";
+	}, $str);
 	// Mazas sriftas
-	$str = preg_replace( "#\[sm\](.*?)\[/sm\]#si", "<small>\\1</small>", $str );
+	$str = preg_replace_callback("#\[sm\](.*?)\[/sm\]#si", function($m) {
+		return "<small>" . $m[1] . "</small>";
+	}, $str);
 	// Specialus simboliai
-	$str = str_replace( '&amp;plusmn;', '&plusmn;', $str );
-	$str = str_replace( '&amp;trade;', '&trade;', $str );
-	$str = str_replace( '&amp;bull;', '&bull;', $str );
-	$str = str_replace( '&amp;deg;', '&deg;', $str );
-	$str = str_replace( '&amp;copy;', '&copy;', $str );
-	$str = str_replace( '&amp;reg;', '&reg;', $str );
-	$str = str_replace( '&amp;hellip;', '&hellip;', $str );
-	$str = str_replace( '&amp;#8230;', '&hellip;', $str );
+	$chatMessage = str_replace('&amp;plusmn;', '&plusmn;', $chatMessage);
+	$chatMessage = str_replace('&amp;trade;', '&trade;', $chatMessage);
+	$chatMessage = str_replace('&amp;bull;', '&bull;', $chatMessage);
+	$chatMessage = str_replace('&amp;deg;', '&deg;', $chatMessage);
+	$chatMessage = str_replace('&amp;copy;', '&copy;', $chatMessage);
+	$chatMessage = str_replace('&amp;reg;', '&reg;', $chatMessage);
+	$chatMessage = str_replace('&amp;hellip;', '&hellip;', $chatMessage);
+	$chatMessage = str_replace('&amp;#8230;', '&hellip;', $chatMessage);
 	// Konvertuojam naujas eilutes i <br/>
-	$str = nl2br( $str );
+	$chatMessage = nl2br($chatMessage);
 	//padarom grazias kabutes
-	$str = preg_replace( "#\&quot;(.+?)\&quot;#si", "<q>\\1</q>", $str );
-	//$str = preg_replace("/\"(.+?)\"/i", "<q>\\1</q>", $str);
+	$chatMessage = preg_replace_callback("#\&quot;(.+?)\&quot;#si", function($m) {
+		return "<q>" . $m[1] . "</q>";
+	}, $chatMessage);
 
 	// js
-	$str = preg_replace_callback( "#\<(.*?)javascript(.*?)\>#si", "bbcode_js", $str );
+	$chatMessage = preg_replace_callback("#\<(.*?)javascript(.*?)\>#si", "bbcode_js", $chatMessage);
 
-	return $str;
+	return $chatMessage;
 }
 
 function bbcode( $str ) {
 
 	global $lang;
 	// Problemos su \ slashais
-	//$str=str_replace("\\","&#92;",$str);
-	//$str = preg_replace('&','#&amp;#',$str);
 	$str = input( $str );
 	$str = preg_replace_callback ( "#\[code\](.*?)\[\/code\]#si", function(){ return base64encode('<textarea name=\"code\" class=\"code\">\\1</textarea>');}, $str );
 	$str = preg_replace_callback ( "#\[php\](.*?)\[\/php\]#si", function(){ return base64encode('<textarea name=\"code\" class=\"php\" rows=\"15\" cols=\"100\">\\1</textarea>');}, $str );
@@ -289,77 +255,131 @@ function bbcode( $str ) {
 	$str = preg_replace_callback ( "#\[sql\](.*?)\[\/sql\]#si", function(){ return base64encode('<textarea name=\"code\" class=\"sql\" rows=\"15\" cols=\"100\">\\1</textarea>');}, $str );
 
 	// Atverciam linka naujame lange
-	$str = preg_replace( "#\[url\](.*?)?(.*?)\[/url\]#si", "<A HREF=\"\\1\\2\" TARGET=\"_blank\" rel=\"nofollow\" >\\1\\2</A>", $str );
-	$str = preg_replace( "#\[url=(.*?)?(.*?)\](.*?)\[/url\]#si", "<A HREF=\"\\2\" TARGET=\"_blank\"  rel=\"nofollow\" >\\3</A>", $str );
+	$str = preg_replace_callback("#\[url\](.*?)?(.*?)\[/url\]#si", function($m) {
+		return '<a target="_blank" href="' . $m[1] . '' . $m[2] . '">' . $m[1] . '' . $m[2] . '</a>';
+	}, $str);
+	$str = preg_replace_callback("#\[url=(.*?)?(.*?)\](.*?)\[/url\]#si", function($m) {
+		return '<a target="_blank" href="' . $m[2] . '">' . $m[3] . '</a>';
+	}, $str);
 
 	// Atverciam linka tame paciame lange
-	$str = preg_replace( "#\[url2\](.*?)?(.*?)\[/url2\]#si", "<A HREF=\"\\1\\2\" rel=\"nofollow\">\\1\\2</A>", $str );
-	$str = preg_replace( "#\[url2=(.*?)?(.*?)\](.*?)\[/url2\]#si", "<A HREF=\"\\2\" rel=\"nofollow\">\\3</A>", $str );
+	$str = preg_replace_callback("#\[url\](.*?)?(.*?)\[/url\]#si", function($m) {
+		return '<a href="' . $m[1] . '' . $m[2] . '">' . $m[1] . '' . $m[2] . '</a>';
+	}, $str);
+	$str = preg_replace_callback("#\[url=(.*?)?(.*?)\](.*?)\[/url\]#si", function($m) {
+		return '<a href="' . $m[2] . '">' . $m[3] . '</a>';
+	}, $str);
 
 	// Automatiskai konvertuojam nuorodas
 	$str = preg_replace_callback( "#([\n ])([a-z]+?)://([a-z0-9\-\.,\?!%\*_\#:;~\\&$@\/=\+]+)#si", "bbcode_autolink", $str );
-	//$str = preg_replace("#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[a-z0-9\-\.,\?!%\*_\#:;~\\&$@\/=\+]*)?)#i", " <a href=\"http://www.\\2.\\3\\4\" target=\"_blank\">www.\\2.\\3\\4</a>", $str);
-	$str = preg_replace( "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)#i", "\\1<a href=\"javascript:mailto:mail('\\2','\\3');\">\\2_(at)_\\3</a>", $str );
+	$str = preg_replace_callback("#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)#i", function($m) {
+		return $m[1] . '<a href="javascript:mailto:mail(\'' . $m[2] . ', ' . $m[3] . '\');">' . $m[3] . '</a>';
+	}, $str);
 
 	// Slepti tekstui - rodomas tik registruotiems vartotojams
-	$str = preg_replace_callback( "#\[hide=\"?(.*?)\"?\](.*?)\[/hide]#si", 'ukryj', $str );
+	$str = preg_replace_callback("#\[hide=\"?(.*?)\"?\](.*?)\[/hide]#si", function($m) {
+		return 'ukryj';
+	}, $str);
 
 	// Paryskinam teksta
-	$str = preg_replace( "#\[b\](.*?)\[/b\]#si", "<b>\\1</b>", $str );
+	$str = preg_replace_callback("#\[b\](.*?)\[/b\]#si", function($m) {
+		return '<b>' . $m[1] . '</b>';
+	}, $str);
 
 	// Paverciam teksta
-	$str = preg_replace( "#\[i\](.*?)\[/i\]#si", "<i>\\1</i>", $str );
+	$str = preg_replace_callback("#\[i\](.*?)\[/i\]#si", function($m) {
+		return '<i>' . $m[1] . '</i>';
+	}, $str);
 
 	// Pabraukiam teksta
-	$str = preg_replace( "#\[u\](.*?)\[/u\]#si", "<u>\\1</u>", $str );
+	$str = preg_replace_callback("#\[u\](.*?)\[/u\]#si", function($m) {
+		return '<u>' . $m[1] . '</u>';
+	}, $str);
 
 	// Mazas tekstas
-	$str = preg_replace( "#\[sm\](.*?)\[/sm\]#si", "<small>\\1</small>", $str );
+	$str = preg_replace_callback("#\[sm\](.*?)\[/sm\]#si", function($m) {
+		return '<small>' . $m[1] . '</small>';
+	}, $str);
 
 	// Didelis tekstas
-	$str = preg_replace( "#\[big\](.*?)\[/big\]#si", "<big>\\1</big>", $str );
+	//todo: dont use <big> tag at all
+	$str = preg_replace_callback("#\[big\](.*?)\[/big\]#si", function($m) {
+		return '<big>' . $m[1] . '</big>';
+	}, $str);
 
 	// Centruojam
-	$str = preg_replace( "/\[center\](.*?)\[\/center\]/si", "<div style=\"text-align:center;\">\\1</div>", $str );
+	$str = preg_replace_callback("/\[center\](.*?)\[\/center\]/si", function($m) {
+		return '<div style="text-align:center;">' . $m[1] . '</div>';
+	}, $str);
 
 	// Kaire
-	$str = preg_replace( "/\[left\](.*?)\[\/left\]/si", "<div style=\"text-align:left;\">\\1</div>", $str );
+	$str = preg_replace_callback("/\[left\](.*?)\[\/left\]/si", function($m) {
+		return '<div style="text-align:left;">' . $m[1] . '</div>';
+	}, $str);
 
 	// Desine
-	$str = preg_replace( "/\[right\](.*?)\[\/right\]/si", "<div style=\"text-align:right;\">\\1</div>", $str );
+	$str = preg_replace_callback("/\[right\](.*?)\[\/right\]/si", function($m) {
+		return '<div style="text-align:right;">' . $m[1] . '</div>';
+	}, $str);
 
 	// Lygiuojam
-	$str = preg_replace( "/\[justify\](.*?)\[\/justify\]/si", "<div style=\"text-align:justify;\">\\1</div>", $str );
+	$str = preg_replace_callback("/\[justify\](.*?)\[\/justify\]/si", function($m) {
+		return '<div style="text-align:justify;">' . $m[1] . '</div>';
+	}, $str);
 
 	// Spalvojam teksta
-	$str = preg_replace( "#\[color=(http://)?(.*?)\](.*?)\[/color\]#si", "<span style=\"color:\\2\">\\3</span>", $str );
+	$str = preg_replace_callback("#\[color=(http://)?(.*?)\](.*?)\[/color\]#si", function($m) {
+		return '<span style="color: ' . $m[2] . ';">' . $m[3] . '</span>';
+	}, $str);
 
 	// Rodom paveiksliuka
-	$str = preg_replace( "/\[img\](http:\/\/[^\s'\"<>]+(\.gif|\.jpeg|\.jpg|\.png))\[\/img\]/", "<a class=\"fancybox-effects-d\" title=\"{$lang['admin']['preview']}\" href=\"\\1\"><img border=0 class=\"forum_img\" src=\"\\1\" alt=\"pic\" onError=\"this.src='images/icons/nopic.png';this.style.border='1px dashed red';this.style.margin='5px';this.style.padding='5px'\"></a>", $str );
-	$str = preg_replace( "/\[img\](http:\/\/[^\s'\"<>]+(\.GIF|\.JPEG|\.JPG|\.PNG))\[\/img\]/", "<a class=\"fancybox-effects-d\" title=\"{$lang['admin']['preview']}\" href=\"\\1\"><img border=0 class=\"forum_img\" src=\"\\1\" alt=\"pic\" onError=\"this.src='images/icons/nopic.png';this.style.border='1px dashed red';this.style.margin='5px';this.style.padding='5px'\"></a>", $str );
+	$str = preg_replace_callback("/\[img\](http:\/\/[^\s'\"<>]+(\.gif|\.jpeg|\.jpg|\.png))\[\/img\]/", function($m) {
+		return '<a title=" '. $lang['admin']['preview'] .' " href="' . $m[1] . '">
+			<img class="forum_img" src="' . $m[1] . '" alt="pc" onerror="this.src=\'images/icons/nopic.png\';this.style.border=\'1px dashed red\';this.style.margin=\'5px\';this.style.padding=\'5px\'">
+		</a>';
+	}, $str);
+	$str = preg_replace_callback( "/\[img\](http:\/\/[^\s'\"<>]+(\.GIF|\.JPEG|\.JPG|\.PNG))\[\/img\]/", function($m) {
+		return "<a class=\"fancybox-effects-d\" title=\"{$lang['admin']['preview']}\" href=\"\\1\"><img border=0 class=\"forum_img\" src='" . $m[1] . "' alt=\"pic\" onerror=\"this.src='images/icons/nopic.png';this.style.border='1px dashed red';this.style.margin='5px';this.style.padding='5px'\"></a>";
+	}, $str);
 
 	// [img=http://www/image.gif]
-	$str = preg_replace( "/\[img=(http:\/\/[^\s'\"<>]+(\.gif|\.jpg|\.png))\]/", "<img border=0 src=\"\\1\">", $str );
-	$str = preg_replace( "/\[img=(http:\/\/[^\s'\"<>]+(\.GIF|\.JPG|\.PNG))\]/", "<img border=0 src=\"\\1\">", $str );
+	$str = preg_replace_callback("/\[img=(http:\/\/[^\s'\"<>]+(\.gif|\.jpg|\.png))\]/", function($m) {
+		return '<img src="' . $m[1] . '">';
+	}, $str);
+	
+	$str = preg_replace_callback("/\[img=(http:\/\/[^\s'\"<>]+(\.GIF|\.JPG|\.PNG))\]/", function($m) {
+		return '<img src="' . $m[1] . '">';
+	}, $str);
 
 	// Cituojam
-	//$str = preg_replace("#\[quote\](.*?)\[/quote]#si", "<p class=\"cytat\"><u><b>Citata:</b></u><br/>\\1</p>", $str);
-	if ( preg_match( '#\[quote\](.*?)\[/quote]#si', $str ) ) {
-		$str = preg_replace( '#\[quote=(&quot;|"|\'|)(.*)\\1\]#seU', '"<div class=\"cytat\"><u><b>".str_replace(\'[\', \'&#91;\', \'$2\')." rašė:</b></u><br/>"', $str );
+	if (preg_match( '#\[quote\](.*?)\[/quote]#si', $str) ) {
+		$str = preg_replace_callback( '#\[quote=(&quot;|"|\'|)(.*)\\1\]#sU', function($m) {
+			return '<div class="cytat"><u><b>'. str_replace('[', '&#91;', $m['2']) .' rašė:</b></u><br/>';
+		}, $str);
 		$str = str_replace( '[quote]', "<p class=\"cytat\"><u><b>Citata:</b></u><br/>", $str );
 		$str = str_replace( '[/quote]', '</p>', $str );
 	}
 
 	// Cituojam autoriu
-	$str = preg_replace( "#\[quote=(http://)?(.*?)\](.*?)\[/quote]#si", "<p class=\"cytat\"><u><b>\\2 rašė:</b></u><br/>\\3</p>", $str );
+	$str = preg_replace_callback("#\[quote=(http://)?(.*?)\](.*?)\[/quote]#si", function($m) {
+		return '<p class="cytat" <u><b>' . $m[2] . 'rašė:</b></u><br/>' . $m[3] . '</p>';
+	}, $str);
 
 	// Sarašas
-	$str = preg_replace( "#\[list\](.*?)\[/list\]#si", "<ul>\\1</ul>", $str );
-	$str = preg_replace( "#\[list=(http://)?(.*?)\](.*?)\[/list\]#si", "<ol type=\"\\2\">\\3</ol>", $str );
-	$str = preg_replace( "#\[\*\](.*?)\\s#si", "<li>\\1</li>", $str );
+	$str = preg_replace_callback("#\[list\](.*?)\[/list\]#si", function($m) {
+		return '<ul>' . $m[1] . '</ul>';
+	}, $str);
+	$str = preg_replace_callback("#\[list=(http://)?(.*?)\](.*?)\[/list\]#si", function($m) {
+		return '<ol type="' . $m[2] . '">' . $m[3] . '</ol>';
+	}, $str);
+	$str = preg_replace_callback("#\[\*\](.*?)\\s#si", function($m) {
+		return '<lo>' . $m[1] . '</li>';
+	}, $str);
 
 	// Atvaizduojam emailą
-	$str = preg_replace( "#\[email\]([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)\[/email\]#i", "<a href=\"mailto:\\1@\\2\">\\1@\\2</a>", $str );
+	$str = preg_replace_callback("#\[email\]([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)\[/email\]#i", function($m) {
+		return '<a href="mailto:' . $m[1] . '@' . $m[2] . '>' . $m[1] . '@' . $m[2] . '</a>';
+	}, $str);
 
 	// HTML formavimas
 	$str = nl2br( $str );
@@ -373,22 +393,19 @@ function bbcode( $str ) {
 }
 
 // Atkoduojam koda
-function base64decode( $str ) {
-
-	return base64_decode( $str[1] );
+function base64decode($str) {
+	return base64_decode($str[1]);
 }
 
 // Užkoduojam kodą
-function base64encode( $str ) {
-
-	return "<base64>" . base64_encode( $str ) . "</base64>";
+function base64encode($str) {
+	return "<base64>" . base64_encode($str) . "</base64>";
 }
 
 // Teksto slepimui
-function ukryj( $match ) {
-
-	$id     = uniqid( '' );
-	$return = ( defined( "LEVEL" ) && LEVEL > 0 ) ? $match[2] : 'Tik registruotiems vartotojams';
+function ukryj($match) {
+	$id = uniqid('');
+	$return = (defined("LEVEL")&& LEVEL>0) ? $match[2] : 'Tik registruotiems vartotojams';
 	return '<font color="red">▲</font> <a href="#" onclick="flip(\'' . $id . '\'); return false;"><b>' . $match[1] . '</b> <font color="red">▼</font></a><div id="' . $id . '" class="ukryj" style="display: none;">' . $return . '</div>';
 }
 
@@ -403,23 +420,20 @@ function bbcode_js( $str ) {
 }
 
 // nuorodos kode
-function bbcode_autolink( $str ) {
-
+function bbcode_autolink($str) {
 	$lnk = $str[3];
-	if ( strlen( $lnk ) > 30 ) {
-		if ( substr( $lnk, 0, 3 ) == 'www' ) {
+	if (strlen($lnk) > 30) {
+		if (substr($lnk, 0, 3) == 'www') {
 			$l = 9;
 		} else {
 			$l = 5;
 		}
-		$lnk = substr( $lnk, 0, $l ) . '...' . substr( $lnk, strlen( $lnk ) - 8 );
+		$lnk = substr($lnk, 0, $l) . '...' . substr($lnk, strlen($lnk) - 8);
 	}
-	return ' <a href="' . $str[2] . '://' . $str[3] . '" target="_blank" class="link"> ' . $str[2] . '://' . $lnk . ' </a>';
+	return ' <a href="' . $str[2] . '://' . $str[3] . '" target="_blank" class="link" rel="nofollow"> ' . $str[2] . '://' . $lnk . ' </a>';
 }
 
 // Jei zmogus perkele teksta i kita eilute tai taip ir atvaizduojam
-function lauzymas( $txt ) {
+function lauzymas($txt) {
 	//return str_replace("\r\n", "<br>", $txt);
 }
-
-?>
