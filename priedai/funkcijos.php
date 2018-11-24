@@ -283,38 +283,30 @@ if(! function_exists('header_info')) {
 		<meta name="description" content="' . input( strip_tags( $conf['Pavadinimas'] ) . ' - ' . trimlink( trim( str_replace( "\n\r", "", strip_tags( $conf['Apie'] ) ) ), 120 ) ) . '" />
 		<meta name="keywords" content="' . input( strip_tags( $conf['Keywords'] ) ) . '" />
 		<meta name="author" content="' . input( strip_tags( $conf['Copyright'] ) ) . '" />
-		<link rel="stylesheet" type="text/css" href="stiliai/rating.css" />
-		<link rel="stylesheet" type="text/css" href="stiliai/' . input( strip_tags( $conf['Stilius'] ) ) . '/default.css" />
-		<!-- favicon -->
-		<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
-		<link rel="manifest" href="/images/favicon/site.webmanifest">
-		<link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#db7300">
-		<meta name="msapplication-TileColor" content="#ff440e">
-		<meta name="theme-color" content="#ffffff">
-		
-		<link rel="icon" href="stiliai/' . input( strip_tags( $conf['Stilius'] ) ) . '/favicon.ico" type="image/x-icon" />
 
 		' . ( isset( $conf['puslapiai']['rss.php'] ) ? '<link rel="alternate" type="application/rss+xml" title="' . input( strip_tags( $conf['Pavadinimas'] ) ) . '" href="rss.php" />' : '' ) . '
 		' . ( isset( $conf['puslapiai']['galerija.php'] ) ? '<link rel="alternate" href="gallery.php" type="application/rss+xml" title="" id="gallery" />' : '' ) . '
 		
 		<title>' . input( strip_tags( $conf['Pavadinimas'] ) . ' - ' . $page_pavadinimas ) . '</title>
-		<script type="text/javascript" src="javascript/jquery/jquery-1.3.2.min.js"></script>
 		<script type="text/javascript" src="javascript/pagrindinis.js"></script>
-		<script type="text/javascript" src="javascript/jquery/rating.js"></script>
-		<script type="text/javascript" src="javascript/jquery/jquery.hint.js"></script>
 		
 		<script type="text/javascript">
-		//Active mygtukas
-		$(function(){
-		var path = location.pathname.substring(1);
-		if ( path )
-			$(\'ul li a[href$="\' + path + \'"]\').addClass(\'active\');
-		});
-
+			//Active mygtukas
+			//todo: this stuff need to be in backend
+			var mmPath = location.pathname.substring(1);
+			if (mmPath) {
+				var mmPathItems = document.querySelectorAll(\'ul li a[href$="\' + mmPath + \'"\');
+				if(mmPathItems.length) {
+					for (var mmI = 0; mmPathItems.length > mmI; mmI++) {
+						mmPathItems[mmI].classList.add(\'active\');
+					}
+				}
+			}
 		</script>';
-		//<script type="text/javascript" src="javascript/jquery/jquery.tablesorter.js"></script>
+
+		if(file_exists(ROOT . 'stiliai/' . input( strip_tags( $conf['Stilius'] ) ) . '/default.css')) {
+			echo '<link rel="stylesheet" type="text/css" href="stiliai/' . input( strip_tags( $conf['Stilius'] ) ) . '/default.css" />';
+		}
 	}
 }
 

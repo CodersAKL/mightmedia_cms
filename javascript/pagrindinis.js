@@ -120,14 +120,3 @@ function checkedAll(frm1) {
         aa.elements[i].checked = checked;
     }
 }
-
-$(document).ready(function () {
-    $('form').submit(function () {
-        $(':submit, :button', this).click(function () {
-            this.disabled = true;
-            return false;
-        })
-    });
-
-});
-
