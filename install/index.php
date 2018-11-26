@@ -1,7 +1,7 @@
 
 <?php
 if (! defined('ROOT')) {
-	define('ROOT', '../');
+	define('ROOT', dirname(__DIR__) . '/');
 }
 //main functions
 require ROOT . 'install/functions.php';

@@ -56,3 +56,31 @@ $chmod_files[]  = ROOT . "images/nuorodu";
 $chmod_files[]  = ROOT . "images/galerija";
 $chmod_files[]  = ROOT . "images/galerija/originalai";
 $chmod_files[]  = ROOT . "images/galerija/mini";
+
+// Sugeneruojam atsitiktinį duomenų bazės prieždėlį
+function random( $return = '' ) {
+
+	$simboliai = "abcdefghijkmnopqrstuvwxyz0123456789";
+	for ( $i = 1; $i < 3; ++$i ) {
+		$num = rand() % 33;
+		$return .= substr( $simboliai, $num, 1 );
+	}
+	return $return . '_';
+}
+
+function notifyMsg($data) {
+	?>
+	<script>
+		$(function () {
+			showNotification(
+				'<?php echo $data['type']; ?>', 
+				'<?php echo $data['message']; ?>'
+			);
+		});
+	</script>
+	<?php
+}
+
+function koduoju( $pass ) {
+	return md5( sha1( md5( $pass ) ) );
+}

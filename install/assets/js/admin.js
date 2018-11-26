@@ -27,27 +27,11 @@ $.AdminBSB.options = {
         black: '#000000',
         white: '#ffffff'
     },
-    leftSideBar: {
-        scrollColor: 'rgba(0,0,0,0.5)',
-        scrollWidth: '4px',
-        scrollAlwaysVisible: false,
-        scrollBorderRadius: '0',
-        scrollRailBorderRadius: '0',
-        scrollActiveItemWhenPageLoad: true,
-        breakpointWidth: 1170
-    },
     dropdownMenu: {
         effectIn: 'fadeIn',
         effectOut: 'fadeOut'
     }
 }
-
-//==========================================================================================================================
-
-/* Navbar - Function =======================================================================================================
-*  You can manage the navbar
-*  
-*/
 
 //==========================================================================================================================
 
