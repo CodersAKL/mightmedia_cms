@@ -1,66 +1,71 @@
-<?php echo $lang['setup']['mysql_info']; ?>
+<?php echo $lang['setup']['file_check_info1']; ?><br />
 <h2 class="card-inside-title">
-	<?php echo $lang['setup']['mysql_connect']; ?>
+    <?php echo $lang['setup']['file_check_legend']; ?>
 </h2>
-
-<form name="mysql" method="post" action="">
-	<div class="form-group form-float">
-		<div class="form-line">
-			<input name="host" type="text" class="form-control" value="<?php echo (isset($_SESSION['mysql']['host']) ? $_SESSION['mysql']['host'] : 'localhost'); ?>">
-			<label class="form-label">
-				<?php echo $lang['setup']['mysql_host']; ?>
-			</label>
-		</div>
-	</div>
-	<div class="form-group form-float">
-		<div class="form-line">
-			<input name="user" type="text" class="form-control" value="<?php echo (isset($_SESSION['mysql']['user']) ? $_SESSION['mysql']['user'] : 'root'); ?>">
-			<label class="form-label">
-				<?php echo $lang['setup']['mysql_user']; ?>
-			</label>
-		</div>
-	</div>
-	<div class="form-group form-float">
-		<div class="form-line">
-			<input name="pass" type="password" class="form-control" value="<?php echo (isset($_SESSION['mysql']['pass']) ? $_SESSION['mysql']['pass'] : ''); ?>">
-			<label class="form-label">
-				<?php echo $lang['setup']['mysql_pass']; ?>
-			</label>
-		</div>
-	</div>
-	<div class="form-group form-float">
-		<div class="form-line">
-			<input name="db" type="text" class="form-control" value="<?php echo (isset($_SESSION['mysql']['db']) ? $_SESSION['mysql']['db'] : 'mightmedia'); ?>">
-			<label class="form-label">
-				<?php echo $lang['setup']['mysql_db']; ?>
-			</label>
-		</div>
-	</div>
-	<div class="form-group form-float">
-		<div class="form-line">
-			<input name="prefix" type="text" class="form-control" value="<?php echo (isset($_SESSION['mysql']['prefix']) ? $_SESSION['mysql']['prefix'] : random()); ?>">
-			<label class="form-label">
-				<?php echo $lang['setup']['mysql_prfx']; ?>
-			</label>
-		</div>
-	</div>
-	<div class="card--bottom">
-		<?php if(! empty($next_mysql)) { ?>
-			<button <?php echo isset($next_mysql['name']) ? 'name="' . $next_mysql['name'] . '"' : ''; ?> 
-			type="<?php echo isset($next_mysql['type']) ? $next_mysql['type'] : 'button'; ?>" 
-			class="btn bg-deep-orange waves-effect" 
-			<?php echo isset($next_mysql['go']) ? 'onclick="Go(' . $next_mysql['go'] . ');"' : ''; ?>>
-				<span>
-					<?php echo isset($next_mysql['value']) ? $next_mysql['value'] : 'Submit'; ?>
-				</span>    
-				<i class="material-icons">keyboard_arrow_right</i> 
-			</button>
-		<?php } ?>
-	</div>
-	<?php if (isset($mysql_info)){ ?>
-		<h2 class="card-inside-title">
-			<?php echo $lang['user']['user_info']; ?>
-		</h2>
-		<?php echo $mysql_info; ?>
-	<?php } ?>
-</form>
+<i class="material-icons error-icon">cancel</i>
+<?php echo $lang['setup']['file_check_info2']; ?>
+<br />
+<i class="material-icons tick-icon">check_circle</i>
+<?php echo sprintf($lang['setup']['file_check_info3'], '<i class="material-icons error-icon">cancel</i>'); ?>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th width="10%"><?php echo $lang['setup']['file'];?></th>
+                <th width="10%"><?php echo $lang['setup']['point'];?></th>
+                <th width="30%"><?php echo $lang['setup']['about_error'];?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($chmodFiles as $key => $file) { ?>
+                <?php
+                    $filePath = ROOT . $file;
+                    $file = '../' . $file;
+                    $permissions = substr(sprintf('%o', fileperms($filePath)), -4);
+                    if ($permissions != 777 && $permissions != 666 && ! is_writable($filePath)) {
+                        $file_error = 'Y';
+                    }
+                ?>
+                <tr>
+                    <td>
+                        <?php echo $file; ?>
+                    </td>
+                    <td>
+                        <?php if(($permissions == 777) || ($permissions == 666) || is_writable($filePath)) { ?>
+                            <i class="material-icons tick-icon">check_circle</i>
+                        <?php } else { ?>
+                            <i class="material-icons error-icon">cancel</i>
+                        <?php } ?>
+                    </td>
+                    <td>
+                        <?php if(($permissions == 777) || ($permissions == 666) || is_writable($filePath)) { ?>
+                            --
+                        <?php } else { ?>
+                            <?php echo $lang['setup']['chmod_777']; ?>
+                            <strong><?php echo $file; ?></strong> 
+                            <?php echo $lang['setup']['chmod_777_2']; ?>
+                            <strong><?php echo $permissions; ?></strong>
+                        <?php } ?>
+                    </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</div>
+<div class="card--bottom">
+    <?php if (isset($file_error ) && $file_error == 'Y') { ?>
+        <button name="agree"  type="reset" class="btn bg-deep-orange waves-effect">
+            <span>
+                <?php echo $lang['setup']['reload']; ?>
+            </span>    
+            <i class="material-icons">refresh</i> 
+        </button>
+    <?php } else { ?>
+        <button name="agree" type="button" class="btn bg-deep-orange waves-effect" onclick="Go(3);">
+            <span>
+                <?php echo $lang['setup']['next']; ?>
+            </span>    
+            <i class="material-icons">keyboard_arrow_right</i> 
+        </button>
+    <?php } ?>
+</div>

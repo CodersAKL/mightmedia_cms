@@ -11,6 +11,7 @@ $db     = '{{db}}';	//Duomenu baze
 
 define('LENTELES_PRIESAGA', '{{prefix}}');	//Lenteliu pavadinimu priesaga	
 define('SLAPTAS', '{{secret}}'); //Sausainiams ir kitai informacijai
+define('MAIN_URL', '{{main_url}}');
 
 //Admin paneles vartotojas ir slaptazodis
 $admin_name="Admin"; //useris

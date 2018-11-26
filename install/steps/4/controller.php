@@ -1,32 +1,109 @@
 <?php
+// Duomenų bazės prisijungimo tikrinimo ir lentelių sukūrimo dalis
+if ( isset( $_POST['next_msyql'] ) ) {
+	$host   = strip_tags( $_POST['host'] );
+	$user   = strip_tags( $_POST['user'] );
+	$pass   = strip_tags( $_POST['pass'] );
+	$db     = strip_tags( $_POST['db'] );
+	$prefix = ( isset( $_POST['prefix'] ) ? strip_tags( $_POST['prefix'] ) : random() );
 
-if (! empty($_POST) && isset($_POST['acc_create'])) {
-	$user                       = htmlspecialchars( $_POST['user'] );
-	$pass                       = ( !empty( $_POST['pass'] ) ? koduoju( $_POST['pass'] ) : "" );
-	$pass2                      = ( !empty( $_POST['pass2'] ) ? koduoju( $_POST['pass2'] ) : "" );
-    $email                      = htmlspecialchars( $_POST['email'] );
-    
-	$_SESSION['admin']['email'] = $email;
-	if ($pass != $pass2) {
-        $error = [
-            'type'      => 'error',
-            'message'   => $lang['user']['edit_badconfirm']
+	$_SESSION['mysql']['host']   = $host;
+	$_SESSION['mysql']['user']   = $user;
+	$_SESSION['mysql']['pass']   = $pass;
+	$_SESSION['mysql']['db']     = $db;
+	$_SESSION['mysql']['prefix'] = $prefix;
+
+	/**
+	 * Reikalinga papildomai patikrinti (TODO:)
+	 * 1. Ar tinkamas hostas
+	 * 2. Ar useris ir pass veikia
+	 * 3. Reikalinga funkcija kuri nuskaitytų sql.sql failą tiek local tiek remote. TUri būti universalus ir veikti ant SAFE_MODE režimo
+	 */  
+	
+	if (! $mysql_con = mysqli_connect($host, $user, $pass)) {
+        $mysql_info = '<b>' . $lang['system']['error'] . '</b> ' . mysqli_connect_error() . '<br/>
+        <b> #</b>' . mysqli_connect_errno();
+
+        $next_mysql = [
+            'name'  => 'next_msyql',
+            'value' => $lang['setup']['try_again'],
+            'type'  => 'submit'
         ];
+
+        return;
+    }
+    
+    mysqli_select_db($mysql_con, $db);
+
+	if (mysqli_errno($mysql_con) == 1049) {
+        $next_mysql = [
+            'name'  => 'next_msyql',
+            'value' => $lang['setup']['crete_db'],
+            'type'  => 'submit'
+        ];
+        
+        $mysql_con2 = mysqli_connect( $host, $user, $pass );
+		mysqli_query( $mysql_con2, "CREATE DATABASE `$db` DEFAULT CHARACTER SET utf8 COLLATE utf8_lithuanian_ci" );
+		mysqli_select_db( $mysql_con2, $db );
 	} else {
-		if (! empty($user) && ! empty($pass) && ! empty($pass2) && !empty($email) ) {
-			$mysql_con4 = mysqli_connect( $_SESSION['mysql']['host'], $_SESSION['mysql']['user'], $_SESSION['mysql']['pass'] );
-			mysqli_query( $mysql_con4, "SET NAMES utf8mb4" );
-			mysqli_select_db( $mysql_con4, $_SESSION['mysql']['db'] );
-			mysqli_query( $mysql_con4, "UPDATE `" . $_SESSION['mysql']['prefix'] . "users` SET `nick`='" . $user . "', `pass`='" . $pass . "', `email`='" . $email . "', `reg_data`='" . time() . "', `ip`='" . $_SERVER['REMOTE_ADDR'] . "' WHERE `nick`='Admin'" ) or die( mysqli_error($mysql_con4) );
-			
-			mysqli_query( $mysql_con4, "INSERT INTO `" . $_SESSION['mysql']['prefix'] . "nustatymai` (`key`, `val`) VALUES ('Pastas', '" . $email . "');" ) or die( mysqli_error($mysql_con4) );
-			mysqli_query( $mysql_con4, "INSERT INTO `" . $_SESSION['mysql']['prefix'] . "nustatymai` (`key`, `val`) VALUES ('kalba', '" . $_SESSION['language'] . "');" ) or die( mysqli_error($mysql_con4) );
-			header( "Location: index.php?step=5" );
+		$mysql_info = '<strong>' . $lang['setup']['mysql_connected'] . '</strong><br />';
+
+		if (is_file(ROOT . 'install/sql.sql')) {
+            $suffix = ($_SESSION['language'] == 'en.php' ? '.en' : '');
+			$sql    = file_get_contents( 'sql' . $suffix . '.sql' );
 		} else {
-            $error = [
-                'type'      => 'error',
-                'message'   => $lang['admin']['news_required']
+            die('No SQL file: ' . ROOT . 'install/sql.sql');
+        }
+
+		// Paruošiam užklausas
+		$sql = str_replace( "CREATE TABLE IF NOT EXISTS `", "CREATE TABLE IF NOT EXISTS `" . $prefix, $sql );
+		$sql = str_replace( "CREATE TABLE `", "CREATE TABLE IF NOT EXISTS `" . $prefix, $sql );
+		$sql = str_replace( "INSERT INTO `", "INSERT INTO `" . $prefix, $sql );
+		$sql = str_replace( "UPDATE `", "UPDATE `" . $prefix, $sql );
+		$sql = str_replace( "ALTER TABLE `", "ALTER TABLE `" . $prefix, $sql );
+
+		// Prisijungiam prie duombazės
+		$mysql_con3 = mysqli_connect( $host, $user, $pass );
+		mysqli_select_db( $mysql_con3, $db );
+		mysqli_query( $mysql_con3, "SET NAMES utf8mb4" );
+
+		// Atliekam SQL apvalymą
+		$match = '';
+		preg_match_all( "/(?:CREATE|UPDATE|INSERT|ALTER).*?;[\r\n]/s", $sql, $match );
+
+		$mysql_info  = "<ol>";
+		$mysql_error = 0;
+		foreach ( $match[0] as $key => $val ) {
+			if ( !empty( $val ) ) {
+				$query = mysqli_query( $mysql_con3, $val );
+				if ( !$query ) {
+					$mysql_info .= "<li><b>" . $lang['system']['error'] . " " . mysqli_errno($mysql_con3) . "</b> " . mysqli_error($mysql_con3) . "<hr><b>{$lang['setup']['query']}:</b><br/>" . $val . "</li><hr>";
+					$mysql_error++;
+				}
+			}
+		}
+		$mysql_info .= "</ol>";
+
+		if ( $mysql_error == 0 ) {
+            $mysql_info = $lang['setup']['mysql_created'];
+            $next_mysql = [
+                'value' => $lang['setup']['next'],
+                'type'  => 'reset',
+                'go'    => 4
+            ];
+		} else {
+            $next_mysql = [
+                'value' => $lang['setup']['try_again'],
+                'type'  => 'reset',
+                'go'    => 3
             ];
 		}
+
 	}
+} else {
+    $next_mysql = [
+        'name'  => 'next_msyql',
+        'value' => $lang['setup']['create_tables'],
+        'type'  => 'submit'
+    ];
 }

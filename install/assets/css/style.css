@@ -2582,24 +2582,17 @@ section.content {
 }
 .page--logo {
   margin: 20px auto;
+  text-align: center;
 }
 .page--logo small {
   display: block;
   width: 100%;
-  text-align: center;
   color: #555;
 }
-.page--logo a {
-  font-size: 36px;
-  display: block;
-  width: 100%;
-  text-align: center;
-  color: #fff;
-}
-.page a {
-  font-size: 14px;
-  text-decoration: none;
-  color: #bdbdbd;
+.page--logo-svg {
+  display: inline-block;
+  width: 65px;
+  height: 70px;
 }
 .card--bottom {
   text-align: right;
@@ -6457,4 +6450,10 @@ fieldset[disabled] .form-control {
 }
 .error-icon {
   color: red;
+}
+.setup-info {
+  margin-bottom: 20px;
+}
+.list-group-item a {
+  color: inherit;
 }

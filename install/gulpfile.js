@@ -14,37 +14,10 @@ gulp.task('browser-sync', function() {
         proxy: "mightmedia.test/install"
     });
 });
-//
-// gulp.task('browser-sync-reload', ['webpack'], function () {
-//     browserSync.reload();
-// });
 
 // gulp.task('watch', ['browser-sync'], function() {
 gulp.task('watch', function() {
     gulp.watch('./assets/less/**/**/**/**/*.less', gulp.series('css'));
-    gulp.watch('./assets/js/src/**/**/**/*.js', gulp.series('webpack'));
-    // gulp.watch('./js/*.js', ['browser-sync-reload']);
-    gulp.watch('./assets/js/**/**/**/*.js');
-});
-
-gulp.task('webpack', function (callback) {
-    webpack(require('./webpack.config.js'), function (err, stats) {
-        if (err) throw new gulpUtil.PluginError("webpack", err);
-        gulpUtil.log("[webpack]", stats.toString({}));
-        callback();
-    });
-});
-
-gulp.task('js-compress', function() {
-    return gulp.src('./assets/js/*.bundle.js')
-        .on('error', function(err) {
-            gulpUtil.log(err.message);
-        })
-        .pipe(gulpRename({
-            suffix: '.min'
-        }))
-        .pipe(gulpUglify())
-        .pipe(gulp.dest('./assets/js/'));
 });
 
 gulp.task('css', function() {
@@ -64,6 +37,6 @@ gulp.task('css', function() {
         }));
 });
 
-gulp.task('build', gulp.series('css', 'webpack'));
+gulp.task('build', gulp.series('css'));
 
-gulp.task('default', gulp.series('css', 'webpack', gulp.parallel('watch', 'browser-sync')));
+gulp.task('default', gulp.series('css', gulp.parallel('watch', 'browser-sync')));

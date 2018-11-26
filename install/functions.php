@@ -41,22 +41,6 @@ function stepClass($currentStep, $key)
     return $return;
 }
 
-// Sarašas failų kurių teisės turi suteikti svetainei įrašymo galimybę
-$chmod_files[0] = ROOT . "priedai/conf.php";
-$chmod_files[]  = ROOT . "install/index.php";
-$chmod_files[]  = ROOT . ".htaccess";
-$chmod_files[]  = ROOT . "siuntiniai/failai";
-$chmod_files[]  = ROOT . "siuntiniai/images";
-$chmod_files[]  = ROOT . "siuntiniai/media";
-$chmod_files[]  = ROOT . "sandeliukas";
-$chmod_files[]  = ROOT . "puslapiai";
-$chmod_files[]  = ROOT . "blokai";
-$chmod_files[]  = ROOT . "images/avatars";
-$chmod_files[]  = ROOT . "images/nuorodu";
-$chmod_files[]  = ROOT . "images/galerija";
-$chmod_files[]  = ROOT . "images/galerija/originalai";
-$chmod_files[]  = ROOT . "images/galerija/mini";
-
 // Sugeneruojam atsitiktinį duomenų bazės prieždėlį
 function random( $return = '' ) {
 

@@ -1,13 +1,7 @@
-<?php echo $lang['setup']['time_zone_info']; ?>
-<br /><br />
-<form name="tz" method="post" action="">
-    <select name="time_zone" class="form-control show-tick" name="language">
-        <?php foreach ( $timezone as $tz )
-            echo '<option ' . ( $tz == 'Europe/Vilnius' ? 'selected' : '' ) . ' value="' . $tz . '">' . $tz;
-        ?>
-    </select>
+<?php echo $lang['setup']['admin_dir_info']; ?>
+<form name="admin_dir" method="post" action="">
     <div class="card--bottom">
-        <button name="tzone" type="submit" class="btn bg-deep-orange waves-effect">
+        <button name="admin_dir" type="submit" class="btn bg-deep-orange waves-effect">
             <span>
                 <?php echo $lang['setup']['next']; ?>
             </span>    

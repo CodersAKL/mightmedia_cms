@@ -1,16 +1,32 @@
-<form name="setup" action="" class="form-license">
-	<h2 class="card-inside-title">
-		<?php echo $lang['setup']['liceanse']; ?>
-    </h2>
-	<div class="form-group">
-		<div class="form-line">
-			<textarea name="copy" rows="15" class="form-control no-resize" readonly="readonly"><?php include 'license.txt'; ?></textarea>
-		</div>
-	</div>
-	<input name="agree_check" type="checkbox" id="agree_check" class="filled-in" value="ON" checked>
-	<label for="agree_check"><?php echo $lang['setup']['agree']; ?></label>
+<form name="lang" method="post" action="">
+    <label for="language">
+        <?php echo $lang['setup']['lang']; ?>
+    </label>
+    <div class="form-group">
+        <div class="form-line">
+            <select class="form-control show-tick" name="language" id="language">
+                <option value="lt.php">Lietuvių</option>
+                <option value="en.php">English</option>
+            </select>
+        </div>
+    </div>
+
+    <label for="time_zone">
+        <?php echo $lang['setup']['time_zone']; ?>
+    </label>
+    <div class="form-group">
+        <div class="form-line">
+            <select class="form-control show-tick" name="time_zone" id="time_zone">
+                <?php foreach ( $timezone as $tz )
+                    echo '<option ' . ( $tz == 'Europe/Vilnius' ? 'selected' : '' ) . ' value="' . $tz . '">' . $tz;
+                ?>
+            </select>
+        </div>
+    </div>
+    <?php echo $lang['setup']['time_zone_info']; ?>
+
     <div class="card--bottom">
-        <button name="agree" type="submit" class="btn bg-deep-orange waves-effect">
+        <button name="go" type="submit" class="btn bg-deep-orange waves-effect">
             <span>
                 <?php echo $lang['setup']['next']; ?>
             </span>    
@@ -18,15 +34,3 @@
         </button>
     </div>
 </form>
-<script type="text/javascript">
-	var form = document.querySelector('.form-license');
-
-	form.addEventListener('submit', function(e) {
-		e.preventDefault();
-		if (form.agree_check.checked == true) {
-			Go(2);
-		} else {
-			alert('<?php echo $lang['setup']['agree_please'];?>');
-		}
-	});
-</script>

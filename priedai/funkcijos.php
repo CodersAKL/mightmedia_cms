@@ -456,6 +456,10 @@ if(! function_exists('utf8_substr')) {
  */
 if(! function_exists('adresas')) {
 	function adresas() {
+		if(defined('MAIN_URL')) {
+			return MAIN_URL;
+		}
+		
 		if ( isset( $_SERVER['HTTP_HOST'] ) ) {
 			$adresas = isset( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) !== 'off' ? 'https' : 'http';
 			$adresas .= '://' . $_SERVER['HTTP_HOST'];
