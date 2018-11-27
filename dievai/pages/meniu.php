@@ -284,7 +284,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 	lentele($lang['admin']['page_create'], $formClass->form());
 } elseif (isset($url['n']) && $url['n'] == 3) {
 	//tree
-	$treeData = '';
+	$treeData = [];
 	$res   = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=" . escape( lang() ) . " ORDER BY `place` ASC" );
 	foreach ($res as $row) {
 		if (teises($row['teises'], $_SESSION[SLAPTAS]['level'])) {
