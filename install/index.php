@@ -9,9 +9,9 @@ require ROOT . 'install/functions.php';
 $out_page = TRUE;
 
 // Diegimo stadijų registravimas
-if (! isset($_GET['step']) || empty($_GET['step']) || (isset($_GET['step']) && $_GET['step'] == 1)) {
+if (! isset($_GET['step']) || empty($_GET['step'])) {
 	$_SESSION['step']   = 1;
-	$currentStep        = 1;
+    $currentStep        = 1;
 } else {
 	if ($_GET['step'] != 1) {
 		$currentStep = (int)$_GET['step'];

@@ -24,7 +24,7 @@
 	form.addEventListener('submit', function(e) {
 		e.preventDefault();
 		if (form.agree_check.checked == true) {
-			Go(2);
+			Go(3);
 		} else {
 			alert('<?php echo $lang['setup']['agree_please'];?>');
 		}

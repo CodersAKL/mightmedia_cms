@@ -69,5 +69,5 @@ if (!empty($_POST) && isset($_POST['main_url'])) {
     
 	fclose($newConfigFile);
 
-	header("Location: index.php?step=7");
+	header("Location: index.php?step=8");
 }

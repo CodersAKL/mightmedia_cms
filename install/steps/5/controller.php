@@ -21,7 +21,7 @@ if (! empty($_POST) && isset($_POST['acc_create'])) {
 			
 			mysqli_query( $mysql_con4, "INSERT INTO `" . $_SESSION['mysql']['prefix'] . "nustatymai` (`key`, `val`) VALUES ('Pastas', '" . $email . "');" ) or die( mysqli_error($mysql_con4) );
 			mysqli_query( $mysql_con4, "INSERT INTO `" . $_SESSION['mysql']['prefix'] . "nustatymai` (`key`, `val`) VALUES ('kalba', '" . $_SESSION['language'] . "');" ) or die( mysqli_error($mysql_con4) );
-			header( "Location: index.php?step=5" );
+			header( "Location: index.php?step=6" );
 		} else {
             $error = [
                 'type'      => 'error',

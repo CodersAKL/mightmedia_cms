@@ -415,5 +415,5 @@ if (! empty($_POST) && isset($_POST['language']) && isset($_POST['time_zone'])) 
     $_SESSION['language']   = $_POST['language'];
     $_SESSION['time_zone']  = $_POST['time_zone'];
 
-    header('Location: index.php?step=1');
+    header('Location: index.php?step=2');
 }

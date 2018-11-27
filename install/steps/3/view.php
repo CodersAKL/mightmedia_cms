@@ -61,7 +61,7 @@
             <i class="material-icons">refresh</i> 
         </button>
     <?php } else { ?>
-        <button name="agree" type="button" class="btn bg-deep-orange waves-effect" onclick="Go(3);">
+        <button name="agree" type="button" class="btn bg-deep-orange waves-effect" onclick="Go(4);">
             <span>
                 <?php echo $lang['setup']['next']; ?>
             </span>    

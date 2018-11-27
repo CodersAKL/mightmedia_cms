@@ -89,13 +89,13 @@ if ( isset( $_POST['next_msyql'] ) ) {
             $next_mysql = [
                 'value' => $lang['setup']['next'],
                 'type'  => 'reset',
-                'go'    => 4
+                'go'    => 5
             ];
 		} else {
             $next_mysql = [
                 'value' => $lang['setup']['try_again'],
                 'type'  => 'reset',
-                'go'    => 3
+                'go'    => 4
             ];
 		}
 
