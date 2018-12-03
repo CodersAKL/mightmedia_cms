@@ -17,7 +17,6 @@ siuntiniai/media/!index.html
 //for dev
 .history
 install-
-install--
 install/node_modules
-.htaccess
+# .htaccess
 priedai/conf.php
