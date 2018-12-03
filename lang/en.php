@@ -41,6 +41,7 @@ $lang['admin']['panel_center'] = 'Centre';
 $lang['admin']['panel_do_show'] = 'Showing';
 $lang['admin']['panel_do_all'] = 'In all pages';
 $lang['admin']['panel_do_one'] = 'Just in first page';
+$lang['admin']['ga'] = 'Google Analytics<br>Tracking ID';
 $lang['system']['file_exists'] = 'This file name already exists';
 $lang['system']['rate'] = 'Rate';
 $lang['system']['info'] = 'Information';

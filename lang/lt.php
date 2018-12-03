@@ -285,6 +285,7 @@ $lang['admin']['comments_kid'] = 'id';
 $lang['admin']['configuration'] = 'Konfigūracija';
 $lang['admin']['cache'] = 'Kešavimas';
 $lang['admin']['use_hyphenator'] = 'Naudoti „hyphenator“ teksto lygiuoklį?';
+$lang['admin']['ga'] = 'Google Analytics<br>Tracking ID';
 $lang['admin']['nuorodos'] = 'Nuorodos';
 $lang['admin']['komentarai'] = 'Komentarai';
 $lang['admin']['straipsnis'] = 'Straipsniai';
