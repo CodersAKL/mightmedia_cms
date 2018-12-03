@@ -114,7 +114,7 @@ if ( empty( $url['m'] ) ) {
 
 
 	if ( teises( $sqlas['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
-		$text .= "<table border=\"0\"><tr><td>";
+		$text .= "<table border=\"0\" class='table'><tr><td>";
 
 		foreach ( $sql as $row ) {
 

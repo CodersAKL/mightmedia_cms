@@ -106,7 +106,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'pm_send' && isset( $_SESS
 $text   = "
 <fieldset>
 <legend>{$lang['user']['pm_freespace']}</legend>
-<table border=0>
+<table class='table' border=0>
 	<tr>
 		<td>
 		{$lang['user']['pm_left']}: <b>" . ( $uzeris['pm_viso'] - $pm_sk ) . " {$lang['user']['pm_of']} <b>" . $uzeris['pm_viso'] . "</b></b><br />

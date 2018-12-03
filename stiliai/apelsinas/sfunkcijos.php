@@ -39,11 +39,18 @@ function lentele_r( $pavadinimas, $tekstas, $label = FALSE ) {
 
 //Kairės pozicijos blokai
 function lentele_l( $pavadinimas, $tekstas, $label = FALSE ) {
-
-	echo "	<div class='pavadinimas'>{$pavadinimas}</div>
-	<div class='vidus'>
-	<div class='text'>{$tekstas}</div>
-	</div>";
+?>
+	<div class="card card-nav-tabs card-block">
+		<div class="card-header card-header-warning">
+			<?php echo $pavadinimas; ?>
+		</div>
+		<div class="card-body">
+			<div class="card-text">
+				<?php echo $tekstas; ?>
+			</div>
+		</div>
+	</div>
+<?php
 }
 
 //Naujienų, straipsnių lentelė
@@ -56,49 +63,82 @@ function lentele_c( $pavadinimas, $tekstas, $n_nuoroda, $kom_kiekis = FALSE, $da
 	$data = date( 'Y-m-d', $datai );
 //Naujienų
 	if ( 'naujienos' == str_replace( 'puslapiai/', '', $page ) ) {
-		$skaitom = "<a href='{$n_nuoroda}'>{$lang['news']['read']} • {$lang['news']['comments']}({$kom_kiekis})</a>";
+		$skaitom = "{$lang['news']['read']} • {$lang['news']['comments']}({$kom_kiekis})";
 //Straipsnių
 	} else {
-		$skaitom = "<a href='{$n_nuoroda}'>{$lang['article']['read']}({$kom_kiekis})</a>";
+		$skaitom = "{$lang['article']['read']}({$kom_kiekis})";
 	}
 //Atvaizduojame
-	echo "<div class='pavadinimas2' title='{$pavadinimas}'>" . trimlink( $pavadinimas, 65 ) . "</div>
-    <div class='vidus'>
-	<div class='text'>
-	<div style='float:left;'>{$reitingai}</div>{$tekstas}
-	<div class='line'></div>
-	<b>{$lang['article']['author']}:</b> {$autorius}
-	<b>{$lang['article']['date']}:</b> {$data}
-	<span class='read_more' style='float:right;display:block;'>{$skaitom}</span>
+	?>
+
+	<div class="section">
+		<h2 class="title">
+			<?php echo $pavadinimas; ?>
+		</h2>
+		<div class="description">
+			<?php echo $tekstas; ?>
+			<div class="btn btn-info btn-link">
+				<?php echo $data; ?>
+			</div>
+			
+			<div class="btn btn-link">
+				<?php echo $autorius; ?>
+			</div>
+			<a href="<?php echo $n_nuoroda; ?>" class="btn btn-primary">
+				<?php echo $skaitom; ?>
+			</a>
+		</div>	
 	</div>
-	</div>";
+	<?php
 }
 
 //Centrinės pozicijos blokai
 function lentele( $pavadinimas, $tekstas, $reitingai = FALSE ) {
 
-	echo "<div class='pavadinimas'>{$pavadinimas}</div>
-    <div class='vidus'>
-	<div class='text'>{$reitingai}{$tekstas}</div>
-	</div>";
+	?>
+	<div class="section">
+		<h2 class="title">
+			<?php echo $pavadinimas; ?>
+		</h2>
+		<div class="description">
+			<?php echo $tekstas; ?>
+		</div>	
+	</div>
+	<?php
 }
 
 //Atvaizduojame klaidos pranešimą
 function klaida( $pavadinimas, $tekstas, $label = FALSE ) {
-
-	echo "<div class='klaida'><div class='info_ikona'></div>
-    <div class='info_pavadinimas'>" . ucfirst( $pavadinimas ) . " <blink>!</blink></div>
-    <div class='info_tekstas'>{$tekstas}</div>
-    </div>";
+	?>
+	<div class="alert alert-warning">
+        <div class="container">
+          <div class="alert-icon">
+            <i class="material-icons">warning</i>
+          </div>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true"><i class="material-icons">clear</i></span>
+          </button>
+          <b><?php echo ucfirst($pavadinimas); ?></b> <?php echo $tekstas; ?>
+        </div>
+      </div>
+	<?php
 }
 
 //Atvaizduojame įvykdymo pranešimą
 function msg( $pavadinimas, $tekstas, $label = FALSE ) {
-
-	echo "<div class='msg'><div class='info_ikona'></div>
-    <div class='info_pavadinimas'>" . ucfirst( $pavadinimas ) . "</div>
-    <div class='info_tekstas'>{$tekstas}</div>
-    </div>";
+	?>
+	<div class="alert alert-success">
+        <div class="container">
+          <div class="alert-icon">
+            <i class="material-icons">success</i>
+          </div>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true"><i class="material-icons">clear</i></span>
+          </button>
+          <b><?php echo ucfirst($pavadinimas); ?></b> <?php echo $tekstas; ?>
+        </div>
+      </div>
+	<?php
 }
 
 //Atvaizduojame Copyright

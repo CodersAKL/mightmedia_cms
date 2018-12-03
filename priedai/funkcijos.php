@@ -2118,7 +2118,7 @@ if(! function_exists('showCalendar')) {
 		$month                 = $referenceDay['mon'];
 		$year                  = $referenceDay['year'];
 		// Create a table with the necessary header informations
-		$return = '<div class="kalendorius"><table width="100%" >
+		$return = '<div class="kalendorius"><table class="table" width="100%" >
 		<tr><th colspan="7">' . $referenceDay['month'] . ' - ' . $referenceDay['year'] . '</th></tr>
 		<tr class="dienos"><td>' . $lang['calendar']['Mon'] . '</td><td>' . $lang['calendar']['Tue'] . '</td><td>' . $lang['calendar']['Wed'] . '</td><td>' . $lang['calendar']['Thu'] . '</td><td>' . $lang['calendar']['Fri'] . '</td><td>' . $lang['calendar']['Sat'] . '</td><td>' . $lang['calendar']['Sun'] . '</td></tr>';
 
