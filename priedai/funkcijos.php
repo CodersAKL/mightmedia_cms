@@ -275,6 +275,18 @@ if(! function_exists('header_info')) {
 	function header_info() {
 
 		global $conf, $page_pavadinimas, $lang;
+		if (isset($conf['googleanalytics'])) { ?>
+			<!--START Global site tag (gtag.js) - Google Analytics -->
+			<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $conf['googleanalytics'];?>"></script>
+			<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', '<?php echo $conf['googleanalytics'];?>');
+			</script>
+			<!-- END Global site tag (gtag.js) - Google Analytics -->
+		<?php };
 		echo '
 		<base href="' . adresas() . '"></base>
 		<meta name="generator" content="MightMedia TVS" />

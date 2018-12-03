@@ -32,11 +32,12 @@ if (isset($url['c'])) {
 			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['Editor'] ) . ",'Editor')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['Editor'] );
 			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( (int)$_POST['galbalsuot'] ) . ",'galbalsuot')  ON DUPLICATE KEY UPDATE `val`=" . escape( (int)$_POST['galbalsuot'] );
 			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( (int)$_POST['hyphenator'] ) . ",'hyphenator')  ON DUPLICATE KEY UPDATE `val`=" . escape( (int)$_POST['hyphenator'] );
+			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['googleanalytics'] ) . ",'googleanalytics')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['googleanalytics'] );
 		
 			foreach ($q as $sql) {
 				mysql_query1($sql);
 			}
-			
+
 			delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
 			
 			redirect(
@@ -152,7 +153,13 @@ if (isset($url['c'])) {
 				'form_line'	=> 'form-not-line',
 				'checked'	=> (input($conf['hyphenator']) == 1 ? true : false)
 			],
-			
+
+			$lang['admin']['ga']  => [
+				"type"  	=> "textarea",
+				"value" 	=> input($conf['googleanalytics']),
+				"name"  	=> "googleanalytics"
+			],
+		
 			""                                     => [
 				"type" 		=> "submit", 
 				"name" 		=> "Konfiguracija", 
