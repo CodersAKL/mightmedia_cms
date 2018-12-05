@@ -334,3 +334,43 @@ function iconsMenu($icon)
 	
 	return ! empty($iconsMenu[$icon]) ? $iconsMenu[$icon] : null;
 }
+
+function getConfValue($key)
+{
+	global $prisijungimas_prie_mysql;
+
+	$request = "SELECT `val` FROM `" . LENTELES_PRIESAGA . "nustatymai` WHERE `key` = '$key'";
+	$result = mysqli_query($prisijungimas_prie_mysql, $request)->fetch_assoc();
+
+	return $result['val'];
+}
+
+function setConfValue($val, $key)
+{
+	global $prisijungimas_prie_mysql;
+
+	$request = "SELECT * FROM `" . LENTELES_PRIESAGA . "nustatymai` WHERE `key` = '$key'";
+	if ($result = mysqli_query($prisijungimas_prie_mysql, $request)){
+		if ($result->fetch_assoc()){
+			//DataSet for given key is found. We can update value
+			$updateRequest = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val`= $val WHERE `key` = '$key'";
+			if ($result = mysqli_query($prisijungimas_prie_mysql, $updateRequest)){
+				return $result;
+			}
+		} else {
+			//DataSet for given key is NOT found. Inserting new key with value
+			$insertRequest = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`key`,`val`) VALUES ('$key','$val')";
+			if ($result = mysqli_query($prisijungimas_prie_mysql, $insertRequest)){
+				return $result;
+			}
+		}
+		if ( mysqli_error($prisijungimas_prie_mysql) ) {
+			mysqli_query( $prisijungimas_prie_mysql, "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "MySql error:  " . mysqli_error($prisijungimas_prie_mysql) . " query: " . $updateRequest ) . ",'" . time() . "', '" . escape( getip() ) . "');" );
+		}		
+	} 
+	if ( mysqli_error($prisijungimas_prie_mysql) ) {
+		mysqli_query( $prisijungimas_prie_mysql, "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "MySql error:  " . mysqli_error($prisijungimas_prie_mysql) . " query: " . $request ) . ",'" . time() . "', '" . escape( getip() ) . "');" );
+	}
+
+	return $result;
+}
