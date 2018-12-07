@@ -824,3 +824,39 @@
 	  padding-top: 0;
 	  padding-bottom: 30px;
   }
+  .navbar-brand {
+    display: inline-block;
+  }
+
+  .navbar-brand--logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navbar-transparent .navbar-brand--logo path,
+  .navbar-transparent .navbar-brand--logo ellipse {
+    fill: #fff;
+  }
+  
+  .navbar-brand--logo-circle {
+    fill: #F5A31C;
+  }
+  .navbar-brand--logo-first {
+    fill: #F16622;
+  }
+  .navbar-brand--logo-second {
+    fill: #EF512E;
+  }
+  .navbar-brand--logo-text {
+    fill: #4F4F4F;
+  }
+
+  .card .card-header.card-header---bg {
+    background: #F16622;
+  }
+
+  .card .title {
+    margin: 0;
+    text-transform: uppercase;
+    min-height: 0;
+  }

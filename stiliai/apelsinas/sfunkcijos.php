@@ -41,8 +41,10 @@ function lentele_r( $pavadinimas, $tekstas, $label = FALSE ) {
 function lentele_l( $pavadinimas, $tekstas, $label = FALSE ) {
 ?>
 	<div class="card card-nav-tabs card-block">
-		<div class="card-header card-header-warning">
-			<?php echo $pavadinimas; ?>
+		<div class="card-header card-header---bg">
+			<h4 class="title">
+				<?php echo $pavadinimas; ?>
+			</h4>
 		</div>
 		<div class="card-body">
 			<div class="card-text">
