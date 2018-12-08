@@ -442,19 +442,13 @@ if ( isset( $_GET['v'] ) ) {
 		//gallery settings
 	} elseif ( $_GET['v'] == 6 ) {
 		if (! empty($_POST) && isset($_POST['Konfiguracija'])) {
-			$q   = [];
-			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape( (int)$_POST['fotodyd'] ) . " WHERE `key` = 'fotodyd' LIMIT 1 ; ";
-			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape( (int)$_POST['minidyd'] ) . " WHERE `key` = 'minidyd' LIMIT 1 ; ";
-			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape( (int)$_POST['fotoperpsl'] ) . " WHERE `key` = 'fotoperpsl' LIMIT 1 ; ";
-			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape( (int)$_POST['galkom'] ) . " WHERE `key` = 'galkom' LIMIT 1 ; ";
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['order'] ) . ",'galorder')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['order'] );
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['order_type'] ) . ",'galorder_type')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['order_type'] );
+			setSettingsValue((int)$_POST['fotodyd'],'fotodyd', ['LIMIT'=>1]);
+			setSettingsValue((int)$_POST['minidyd'],'minidyd', ['LIMIT'=>1]);
+			setSettingsValue((int)$_POST['fotoperpsl'],'fotoperpsl', ['LIMIT'=>1]);
+			setSettingsValue((int)$_POST['galkom'],'galkom', ['LIMIT'=>1]);
+			setSettingsValue($_POST['order'],'galorder');
+			setSettingsValue($_POST['order_type'],'galorder_type');
 			
-			foreach ($q as $sql) {
-				mysql_query1($sql);
-			
-			}
-
 			redirect(
 				url( '?id,' . $_GET['id'] . ';a,' . $url['a'] . ';v,6'),
 				"header",

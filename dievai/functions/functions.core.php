@@ -335,42 +335,53 @@ function iconsMenu($icon)
 	return ! empty($iconsMenu[$icon]) ? $iconsMenu[$icon] : null;
 }
 
-function getConfValue($key)
+function getSettingsValue($key, $options = null)
 {
-	global $prisijungimas_prie_mysql;
-
-	$request = "SELECT `val` FROM `" . LENTELES_PRIESAGA . "nustatymai` WHERE `key` = '$key'";
-	$result = mysqli_query($prisijungimas_prie_mysql, $request)->fetch_assoc();
-
-	return $result['val'];
+	global $conf;
+	if (isset($conf[$key])){
+		return $conf[$key];
+	}
+	
+	$request = "SELECT `val` FROM `" . LENTELES_PRIESAGA . "nustatymai` WHERE `key` = " . escape($key);
+	//Adding additional info to the querry i.e. LIKE, LIMIT, ORDER BY and etc.
+	if (is_array($options)){
+		foreach ($options as $optionKey => $optionValue) {
+			$sqlStatement =  str_replace("'", '', escape($optionKey)). " " . escape($optionValue);
+			$request .= " " . $sqlStatement;
+		}
+	}
+	$result =  mysql_query1($request);
+	if (sizeof($result) > 0) {
+		return $result[0]['val'];
+	} else {
+		return null;
+	}
 }
 
-function setConfValue($val, $key)
+function setSettingsValue($val, $key, $options = null)
 {
-	global $prisijungimas_prie_mysql;
-
-	$request = "SELECT * FROM `" . LENTELES_PRIESAGA . "nustatymai` WHERE `key` = '$key'";
-	if ($result = mysqli_query($prisijungimas_prie_mysql, $request)){
-		if ($result->fetch_assoc()){
-			//DataSet for given key is found. We can update value
-			$updateRequest = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val`= $val WHERE `key` = '$key'";
-			if ($result = mysqli_query($prisijungimas_prie_mysql, $updateRequest)){
-				return $result;
-			}
-		} else {
-			//DataSet for given key is NOT found. Inserting new key with value
-			$insertRequest = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`key`,`val`) VALUES ('$key','$val')";
-			if ($result = mysqli_query($prisijungimas_prie_mysql, $insertRequest)){
-				return $result;
+	$request = "SELECT * FROM `" . LENTELES_PRIESAGA . "nustatymai` WHERE `key` = " . escape($key);
+	if (sizeof(mysql_query1($request)) > 0) {
+		
+		//DataSet for given key is found. We can update the value
+		$updateRequest = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val`= " . escape($val) . " WHERE `key` = " . escape($key);
+		//Adding additional info to the querry i.e. LIKE, LIMIT, ORDER BY and etc.
+		if (is_array($options)){
+			foreach ($options as $optionKey => $optionValue) {
+				$sqlStatement =  str_replace("'", '', escape($optionKey)). " " . escape($optionValue);
+				$updateRequest .= " " . $sqlStatement;
 			}
 		}
-		if ( mysqli_error($prisijungimas_prie_mysql) ) {
-			mysqli_query( $prisijungimas_prie_mysql, "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "MySql error:  " . mysqli_error($prisijungimas_prie_mysql) . " query: " . $updateRequest ) . ",'" . time() . "', '" . escape( getip() ) . "');" );
-		}		
-	} 
-	if ( mysqli_error($prisijungimas_prie_mysql) ) {
-		mysqli_query( $prisijungimas_prie_mysql, "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "MySql error:  " . mysqli_error($prisijungimas_prie_mysql) . " query: " . $request ) . ",'" . time() . "', '" . escape( getip() ) . "');" );
+		if ($result = mysql_query1($updateRequest)){
+			return $result;
+		}
+	} else {
+		//DataSet for given key is NOT found. Inserting new key with a given value
+		$insertRequest = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`key`,`val`) VALUES (" . escape($key) . "," . escape($val) . ")";
+		if ($result = mysql_query1($insertRequest)){
+			return $result;
+		}
 	}
-
+	
 	return $result;
 }

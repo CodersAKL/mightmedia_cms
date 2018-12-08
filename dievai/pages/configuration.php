@@ -21,17 +21,17 @@ if(BUTTONS_BLOCK) {
 if (isset($url['c'])) {
 	if ($url['c'] == 'main') {
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['Konfiguracija'] ) ) {
-			setConfValue(escape( $_POST['Copyright'] ), 'Copyright');
-			setConfValue(escape( input( strip_tags( $_POST['Pastas'] ) ) ), 'Pastas');
-			setConfValue(escape( (int)$_POST['News_limit'] ), 'News_limit');
-			setConfValue(escape( input( strip_tags( $_POST['Stilius'] ) ) ), 'Stilius');
-			setConfValue(escape( basename( $_POST['pirminis'], '.php' ) ), 'pirminis');
-			setConfValue(escape( basename( $_POST['kalba'] ) ), 'kalba');
-			setConfValue(escape( (int)$_POST['koment'] ), 'kmomentarai_sveciams');
-			setConfValue(escape( $_POST['Editor'] ), 'Editor');
-			setConfValue(escape( (int)$_POST['galbalsuot'] ), 'galbalsuot');
-			setConfValue(escape( (int)$_POST['hyphenator'] ), 'hyphenator');
-			setConfValue(escape( $_POST['googleanalytics'] ), 'googleanalytics');
+			setSettingsValue( $_POST['Copyright'], 'Copyright');
+			setSettingsValue( input( strip_tags( $_POST['Pastas'] ) ), 'Pastas');
+			setSettingsValue( (int)$_POST['News_limit'] , 'News_limit');
+			setSettingsValue( input( strip_tags( $_POST['Stilius'] ) ) , 'Stilius');
+			setSettingsValue( basename( $_POST['pirminis'], '.php' ) , 'pirminis');
+			setSettingsValue( basename( $_POST['kalba'] ) , 'kalba');
+			setSettingsValue( (int)$_POST['koment'] , 'kmomentarai_sveciams');
+			setSettingsValue( $_POST['Editor'] , 'Editor');
+			setSettingsValue( (int)$_POST['galbalsuot'] , 'galbalsuot');
+			setSettingsValue( (int)$_POST['hyphenator'] , 'hyphenator');
+			setSettingsValue( $_POST['googleanalytics'] , 'googleanalytics');
 			
 			delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
 			
@@ -42,7 +42,7 @@ if (isset($url['c'])) {
 					'type'		=> 'success',
 					'message' 	=> $lang['admin']['configuration_updated']
 				]
-			);
+			);	
 		}
 		
 		$stiliai             = getDirs(ROOT . 'stiliai/', 'remontas');
@@ -78,19 +78,19 @@ if (isset($url['c'])) {
 			$lang['admin']['homepage']        => [
 				"type" 		=> "select", 
 				"value" 	=> $psl, 
-				"selected" 	=> (getConfValue('pirminis') . '.php'), 
+				"selected" 	=> (getSettingsValue('pirminis') . '.php'), 
 				"name" 		=> "pirminis"
 			],
 
 			$lang['admin']['copyright']       => [
 				"type" 	=> "text", 
-				"value" => input(getConfValue('Copyright')), 
+				"value" => input(getSettingsValue('Copyright')), 
 				"name" 	=> "Copyright"
 			],
 
 			$lang['admin']['email']           => [
 				"type" 	=> "text", 
-				"value" => input(getConfValue('Pastas')), 
+				"value" => input(getSettingsValue('Pastas')), 
 				"name" 	=> "Pastas"
 			],
 
@@ -101,7 +101,7 @@ if (isset($url['c'])) {
 					"0" => "{$lang['admin']['no']}", 
 					"3"	=> "{$lang['admin']['comments_off']}"
 				],
-				"selected" 	=> input(@getConfValue('kmomentarai_sveciams')),
+				"selected" 	=> input(@getSettingsValue('kmomentarai_sveciams')),
 				"name" 		=> "koment"
 			],
 
@@ -110,12 +110,12 @@ if (isset($url['c'])) {
 				"value" 	=> '1',
 				"name"  	=> "galbalsuot",
 				'form_line'	=> 'form-not-line',
-				'checked'	=> (input(getConfValue('galbalsuot')) == 1 ? true : false)
+				'checked'	=> (input(getSettingsValue('galbalsuot')) == 1 ? true : false)
 			],
 
 			$lang['admin']['newsperpage']     => [
 				"type" 	=> "text", 
-				"value" => input(getConfValue('News_limit')), 
+				"value" => input(getSettingsValue('News_limit')), 
 				"name" 	=> "News_limit", 
 				'extra' => "onkeyup=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\""
 			],
@@ -123,21 +123,21 @@ if (isset($url['c'])) {
 			$lang['admin']['theme']           => [
 				"type" 		=> "select", 
 				"value" 	=> $stiliai, 
-				"selected" 	=> input(getConfValue('Stilius')), 
+				"selected" 	=> input(getSettingsValue('Stilius')), 
 				"name" 		=> "Stilius"
 			],
 
 			$lang['admin']['lang']            => [
 				"type" 		=> "select", 
 				"value" 	=> $kalba, 
-				"selected" 	=> input(getConfValue('kalba')), 
+				"selected" 	=> input(getSettingsValue('kalba')), 
 				"name" 		=> "kalba"
 			],
 
 			$lang['admin']['editor']          => [
 				"type" 		=> "select", 
 				"value" 	=> $editors, 
-				"selected" 	=> input(getConfValue('Editor')), 
+				"selected" 	=> input(getSettingsValue('Editor')), 
 				"name" 		=> "Editor"
 			],
 
@@ -146,11 +146,11 @@ if (isset($url['c'])) {
 				"value" 	=> '1',
 				"name"  	=> "hyphenator",
 				'form_line'	=> 'form-not-line',
-				'checked'	=> (input(getConfValue('hyphenator')) == 1 ? true : false)
+				'checked'	=> (input(getSettingsValue('hyphenator')) == 1 ? true : false)
 			],
 			$lang['admin']['ga']  => [
 				"type"  	=> "textarea",
-				"value" 	=> input(getConfValue('googleanalytics')),
+				"value" 	=> input(getSettingsValue('googleanalytics')),
 				"name"  	=> "googleanalytics"
 			],
 			
@@ -169,8 +169,8 @@ if (isset($url['c'])) {
 
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['Konfiguracija'] ) ) {
 			
-			setConfValue(escape( (int)$_POST['Palaikymas'] ), 'Palaikymas');
-			setConfValue(escape( $_POST['Maintenance'] ), 'Maintenance');
+			setSettingsValue( (int)$_POST['Palaikymas'] , 'Palaikymas');
+			setSettingsValue( $_POST['Maintenance'] , 'Maintenance');
 
 			delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
 			
@@ -198,11 +198,11 @@ if (isset($url['c'])) {
 				"value" 	=> '1',
 				"name"  	=> "Palaikymas",
 				'form_line'	=> 'form-not-line',
-				'checked'	=> (input(getConfValue('Palaikymas')) == 1 ? true : false)
+				'checked'	=> (input(getSettingsValue('Palaikymas')) == 1 ? true : false)
 			],
 			$lang['admin']['maintenancetext'] => [
 				"type" => "string", 
-				"value" => editor( 'jquery', 'mini', 'Maintenance', getConfValue('Maintenance'))
+				"value" => editor( 'jquery', 'mini', 'Maintenance', getSettingsValue('Maintenance'))
 			],
 			""                                     => [
 				"type" 		=> "submit", 
@@ -218,10 +218,10 @@ if (isset($url['c'])) {
 	} else if($url['c'] == 'seo') {
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['Konfiguracija'] ) ) {
 
-			setConfValue(escape( $_POST['Apie'] ), 'Apie');
-			setConfValue(escape( input( strip_tags( $_POST['keywords'] ) ) ), 'keywords');
-			setConfValue(escape( input( strip_tags( $_POST['Pavadinimas'] ) ) ), 'Pavadinimas');
-			setConfValue(escape( $_POST['F_urls'] ), 'F_urls');
+			setSettingsValue( $_POST['Apie'] , 'Apie');
+			setSettingsValue( input( strip_tags( $_POST['keywords'] ) ) , 'keywords');
+			setSettingsValue( input( strip_tags( $_POST['Pavadinimas'] ) ) , 'Pavadinimas');
+			setSettingsValue( $_POST['F_urls'] , 'F_urls');
 
 			delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
 			
@@ -246,19 +246,19 @@ if (isset($url['c'])) {
 
 			$lang['admin']['sitename']	=> [
 				"type" 	=> "text", 
-				"value" => input( getConfValue('Pavadinimas')), 
+				"value" => input( getSettingsValue('Pavadinimas')), 
 				"name" 	=> "Pavadinimas"
 			],
 
 			$lang['admin']['about']		=> [
 				"type" 	=> "textarea", 
 				"name" 	=> "Apie", 
-				"value" => getConfValue('Apie')
+				"value" => getSettingsValue('Apie')
 			],
 
 			$lang['admin']['keywords']	=> [
 				"type" 	=> "text", 
-				"value" => input( getConfValue('Keywords') ), 
+				"value" => input( getSettingsValue('Keywords') ), 
 				"name" 	=> "keywords"
 			],
 			
@@ -269,7 +269,7 @@ if (isset($url['c'])) {
 					';'=> ';', 
 					'0'=> $lang['admin']['off']
 				], 
-				"selected"	=> getConfValue('F_urls'), 
+				"selected"	=> getSettingsValue('F_urls'), 
 				"name"		=> "F_urls"
 			],
 
