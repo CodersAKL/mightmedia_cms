@@ -33,7 +33,7 @@ if ( is_file( $root . 'priedai/conf.php' ) && filesize( $root . 'priedai/conf.ph
 	$folder = $base[count( $base ) - 1];
 	//echo $folder;
 	if ( !isset( $conf['Admin_folder'] ) || $conf['Admin_folder'] != $folder ) {
-		mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $folder ) . ",'Admin_folder')  ON DUPLICATE KEY UPDATE `val`=" . escape( $folder ) );
+		setSettingsValue($folder, 'Admin_folder');
 	}
 
 	//Inkludinam tai ko mums reikia

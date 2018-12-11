@@ -442,18 +442,43 @@ if ( isset( $_GET['v'] ) ) {
 		//gallery settings
 	} elseif ( $_GET['v'] == 6 ) {
 		if (! empty($_POST) && isset($_POST['Konfiguracija'])) {
-			$q   = [];
-			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape( (int)$_POST['fotodyd'] ) . " WHERE `key` = 'fotodyd' LIMIT 1 ; ";
-			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape( (int)$_POST['minidyd'] ) . " WHERE `key` = 'minidyd' LIMIT 1 ; ";
-			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape( (int)$_POST['fotoperpsl'] ) . " WHERE `key` = 'fotoperpsl' LIMIT 1 ; ";
-			$q[] = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val` = " . escape( (int)$_POST['galkom'] ) . " WHERE `key` = 'galkom' LIMIT 1 ; ";
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['order'] ) . ",'galorder')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['order'] );
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['order_type'] ) . ",'galorder_type')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['order_type'] );
 			
-			foreach ($q as $sql) {
-				mysql_query1($sql);
+			$req = array();
+			$req[] = [
+				'val' 		=> (int)$_POST['fotodyd'],
+				'key' 		=> 'fotodyd',
+				'options' 	=> ['LIMIT'=>1]
+			];
+			$req[] = [
+				'val' 		=> (int)$_POST['minidyd'],
+				'key' 		=> 'minidyd',
+				'options' 	=> ['LIMIT'=>1]
+			];
+			$req[] = [
+				'val' 		=> (int)$_POST['fotoperpsl'],
+				'key' 		=> 'fotoperpsl',
+				'options' 	=> ['LIMIT'=>1]
+			];
+			$req[] = [
+				'val' 		=> (int)$_POST['galkom'],
+				'key' 		=> 'galkom',
+				'options' 	=> ['LIMIT'=>1]
+			];
+			$req[] = [
+				'val' 		=> $_POST['order'],
+				'key' 		=> 'galorder',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> $_POST['order_type'],
+				'key' 		=> 'galorder_type',
+				'options' 	=> null
+			];
 			
+			foreach ($req as $row) {
+				setSettingsValue( $row['val'], $row['key'], $row['options'] );
 			}
+
 
 			redirect(
 				url( '?id,' . $_GET['id'] . ';a,' . $url['a'] . ';v,6'),
