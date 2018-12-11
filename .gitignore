@@ -13,11 +13,15 @@ siuntiniai/images/*
 siuntiniai/images/!index.html
 siuntiniai/media/*
 siuntiniai/media/!index.html
+puslapiai/*
 
 //for dev
 .history
-install-
+install/assets/*
+install/plugins/*
+install/steps/*
 install--
+install-
 install/node_modules
 .htaccess
 priedai/conf.php
