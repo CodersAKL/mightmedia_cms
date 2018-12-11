@@ -295,6 +295,11 @@ if(! function_exists('header_info')) {
 		<meta name="description" content="' . input( strip_tags( $conf['Pavadinimas'] ) . ' - ' . trimlink( trim( str_replace( "\n\r", "", strip_tags( $conf['Apie'] ) ) ), 120 ) ) . '" />
 		<meta name="keywords" content="' . input( strip_tags( $conf['Keywords'] ) ) . '" />
 		<meta name="author" content="' . input( strip_tags( $conf['Copyright'] ) ) . '" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="' . input( strip_tags( $conf['Pavadinimas'] ) . ' - ' . $page_pavadinimas ) . '" />
+		<meta property="og:description" content="' . trimlink( trim( str_replace( "\n\r", "", strip_tags( $conf['Apie'] ) ) ), 120 ) . '" />
+		<meta property="og:url" content="' . adresas() . '" />
+		<meta property="og:image" content="' . adresas() . 'stiliai/' . input( strip_tags( $conf['Stilius'] ) ) . '/paveiksleliai/mm_logo.png" />
 
 		' . ( isset( $conf['puslapiai']['rss.php'] ) ? '<link rel="alternate" type="application/rss+xml" title="' . input( strip_tags( $conf['Pavadinimas'] ) ) . '" href="rss.php" />' : '' ) . '
 		' . ( isset( $conf['puslapiai']['galerija.php'] ) ? '<link rel="alternate" href="gallery.php" type="application/rss+xml" title="" id="gallery" />' : '' ) . '
