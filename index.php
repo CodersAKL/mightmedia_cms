@@ -64,6 +64,11 @@ if ( isset( $pslid ) && isnum( $pslid ) && $pslid > 0 ) {
 			}
 
 			$page_pavadinimas = $sql1['pavadinimas'];
+			$pageMetaData = [
+				"title"			=> $sql1['metatitle'],
+				"description" 	=> $sql1['metadesc'],
+				"keywords" 		=> $sql1['metakeywords']
+			];
 		} else {
 			$page             = "puslapiai/klaida";
 			$page_pavadinimas = '404 - ' . $lang['system']['pagenotfounfd'] . '';
