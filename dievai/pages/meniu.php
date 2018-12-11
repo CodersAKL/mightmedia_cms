@@ -458,6 +458,7 @@ $text =
 HTML;
 lentele($page_pavadinimas,$text);
 ?>';
+
 		// check if `file` field has path
 		if(is_file(ROOT . $sql['file'])) {
 			$filePath = ROOT . $sql['file'];
@@ -466,12 +467,14 @@ lentele($page_pavadinimas,$text);
 		}
 		// writing into file
 		$fp = fopen($filePath, "w+");
+    
 		fwrite($fp, $irasas);
 		fclose($fp);
 		chmod($filePath, 0777);
 	} else {
 
 		$sql = "SELECT `id`, `pavadinimas`, `file` FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape( $psl_id ) . " LIMIT 1";
+
 		$sql = mysql_query1($sql);		
 		// check if `file` field has path
 		if(is_file(ROOT . $sql['file'])) {
