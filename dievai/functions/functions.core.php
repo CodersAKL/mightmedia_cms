@@ -345,13 +345,16 @@ function getSettingsValue($key, $options = null)
 	$request = "SELECT `val` FROM `" . LENTELES_PRIESAGA . "nustatymai` WHERE `key` = " . escape($key);
 	//Adding additional info to the querry i.e. LIKE, LIMIT, ORDER BY and etc.
 	if (is_array($options)){
+		$mysqliOptions = ['LIKE', 'LIMIT', 'ORDER BY', 'OFFSET'];
 		foreach ($options as $optionKey => $optionValue) {
-			$sqlStatement =  str_replace("'", '', escape($optionKey)). " " . escape($optionValue);
-			$request .= " " . $sqlStatement;
+			if (in_array($optionKey,$mysqliOptions)){
+				$sqlStatement =  str_replace("'", '', escape($optionKey)). " " . escape($optionValue);
+				$updateRequest .= " " . $sqlStatement;
+			}
 		}
 	}
 	$result =  mysql_query1($request);
-	if (sizeof($result) > 0) {
+	if (count($result) > 0) {
 		return $result[0]['val'];
 	} else {
 		return null;
@@ -366,10 +369,13 @@ function setSettingsValue($val, $key, $options = null)
 		//DataSet for given key is found. We can update the value
 		$updateRequest = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val`= " . escape($val) . " WHERE `key` = " . escape($key);
 		//Adding additional info to the querry i.e. LIKE, LIMIT, ORDER BY and etc.
-		if (is_array($options)){
+		if (in_array($options)){
+			$mysqliOptions = ['LIKE', 'LIMIT', 'ORDER BY', 'OFFSET'];
 			foreach ($options as $optionKey => $optionValue) {
-				$sqlStatement =  str_replace("'", '', escape($optionKey)). " " . escape($optionValue);
-				$updateRequest .= " " . $sqlStatement;
+				if (in_array($optionKey,$mysqliOptions)){
+					$sqlStatement =  str_replace("'", '', escape($optionKey)). " " . escape($optionValue);
+					$updateRequest .= " " . $sqlStatement;
+				}
 			}
 		}
 		if ($result = mysql_query1($updateRequest)){
