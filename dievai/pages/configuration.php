@@ -21,18 +21,67 @@ if(BUTTONS_BLOCK) {
 if (isset($url['c'])) {
 	if ($url['c'] == 'main') {
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['Konfiguracija'] ) ) {
-			setSettingsValue( $_POST['Copyright'], 'Copyright');
-			setSettingsValue( input( strip_tags( $_POST['Pastas'] ) ), 'Pastas');
-			setSettingsValue( (int)$_POST['News_limit'] , 'News_limit');
-			setSettingsValue( input( strip_tags( $_POST['Stilius'] ) ) , 'Stilius');
-			setSettingsValue( basename( $_POST['pirminis'], '.php' ) , 'pirminis');
-			setSettingsValue( basename( $_POST['kalba'] ) , 'kalba');
-			setSettingsValue( (int)$_POST['koment'] , 'kmomentarai_sveciams');
-			setSettingsValue( $_POST['Editor'] , 'Editor');
-			setSettingsValue( (int)$_POST['galbalsuot'] , 'galbalsuot');
-			setSettingsValue( (int)$_POST['hyphenator'] , 'hyphenator');
-			setSettingsValue( $_POST['googleanalytics'] , 'googleanalytics');
-			
+			$req = array();
+			$req[] = [
+				'val' 		=> $_POST['Copyright'],
+				'key' 		=> 'Copyright',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> input( strip_tags( $_POST['Pastas'] ) ),
+				'key' 		=> 'Pastas',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> (int)$_POST['News_limit'],
+				'key' 		=> 'News_limit',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> input( strip_tags( $_POST['Stilius'] ) ),
+				'key' 		=> 'Stilius',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> basename( $_POST['pirminis'], '.php' ),
+				'key' 		=> 'pirminis',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> basename( $_POST['kalba'] ),
+				'key' 		=> 'kalba',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> (int)$_POST['koment'],
+				'key' 		=> 'kmomentarai_sveciams',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> $_POST['Editor'],
+				'key' 		=> 'Editor',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> (int)$_POST['galbalsuot'],
+				'key' 		=> 'galbalsuot',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> (int)$_POST['hyphenator'],
+				'key' 		=> 'hyphenator',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> $_POST['googleanalytics'],
+				'key' 		=> 'googleanalytics',
+				'options' 	=> null
+			];
+
+			foreach ($req as $row) {
+				setSettingsValue( $row['val'], $row['key'], $row['options'] );
+			}
+
 			delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
 			
 			redirect(
@@ -168,9 +217,21 @@ if (isset($url['c'])) {
 	} else if($url['c'] == 'maintenance') {
 
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['Konfiguracija'] ) ) {
-			
-			setSettingsValue( (int)$_POST['Palaikymas'] , 'Palaikymas');
-			setSettingsValue( $_POST['Maintenance'] , 'Maintenance');
+
+			$req = array();
+			$req[] = [
+				'val' 		=> (int)$_POST['Palaikymas'],
+				'key' 		=> 'Palaikymas',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> $_POST['Maintenance'],
+				'key' 		=> 'Maintenance',
+				'options' 	=> null
+			];
+			foreach ($req as $row) {
+				setSettingsValue( $row['val'], $row['key'], $row['options'] );
+			}
 
 			delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
 			
@@ -218,11 +279,30 @@ if (isset($url['c'])) {
 	} else if($url['c'] == 'seo') {
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['Konfiguracija'] ) ) {
 
-			setSettingsValue( $_POST['Apie'] , 'Apie');
-			setSettingsValue( input( strip_tags( $_POST['keywords'] ) ) , 'keywords');
-			setSettingsValue( input( strip_tags( $_POST['Pavadinimas'] ) ) , 'Pavadinimas');
-			setSettingsValue( $_POST['F_urls'] , 'F_urls');
-
+			$req = array();
+			$req[] = [
+				'val' 		=> $_POST['Apie'],
+				'key' 		=> 'Apie',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> input( strip_tags( $_POST['keywords'] ) ),
+				'key' 		=> 'keywords',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> input( strip_tags( $_POST['Pavadinimas'] ) ),
+				'key' 		=> 'Pavadinimas',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> $_POST['F_urls'],
+				'key' 		=> 'F_urls',
+				'options' 	=> null
+			];
+			foreach ($req as $row) {
+				setSettingsValue( $row['val'], $row['key'], $row['options'] );
+			}
 			delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
 			
 			redirect(

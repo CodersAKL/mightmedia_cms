@@ -442,13 +442,44 @@ if ( isset( $_GET['v'] ) ) {
 		//gallery settings
 	} elseif ( $_GET['v'] == 6 ) {
 		if (! empty($_POST) && isset($_POST['Konfiguracija'])) {
-			setSettingsValue((int)$_POST['fotodyd'],'fotodyd', ['LIMIT'=>1]);
-			setSettingsValue((int)$_POST['minidyd'],'minidyd', ['LIMIT'=>1]);
-			setSettingsValue((int)$_POST['fotoperpsl'],'fotoperpsl', ['LIMIT'=>1]);
-			setSettingsValue((int)$_POST['galkom'],'galkom', ['LIMIT'=>1]);
-			setSettingsValue($_POST['order'],'galorder');
-			setSettingsValue($_POST['order_type'],'galorder_type');
 			
+			$req = array();
+			$req[] = [
+				'val' 		=> (int)$_POST['fotodyd'],
+				'key' 		=> 'fotodyd',
+				'options' 	=> ['LIMIT'=>1]
+			];
+			$req[] = [
+				'val' 		=> (int)$_POST['minidyd'],
+				'key' 		=> 'minidyd',
+				'options' 	=> ['LIMIT'=>1]
+			];
+			$req[] = [
+				'val' 		=> (int)$_POST['fotoperpsl'],
+				'key' 		=> 'fotoperpsl',
+				'options' 	=> ['LIMIT'=>1]
+			];
+			$req[] = [
+				'val' 		=> (int)$_POST['galkom'],
+				'key' 		=> 'galkom',
+				'options' 	=> ['LIMIT'=>1]
+			];
+			$req[] = [
+				'val' 		=> $_POST['order'],
+				'key' 		=> 'galorder',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> $_POST['order_type'],
+				'key' 		=> 'galorder_type',
+				'options' 	=> null
+			];
+			
+			foreach ($req as $row) {
+				setSettingsValue( $row['val'], $row['key'], $row['options'] );
+			}
+
+
 			redirect(
 				url( '?id,' . $_GET['id'] . ';a,' . $url['a'] . ';v,6'),
 				"header",
