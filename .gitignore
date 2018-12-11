@@ -18,6 +18,6 @@ siuntiniai/media/!index.html
 //for dev
 .history
 install-
-install/node_modules
+node_modules
 # .htaccess
 priedai/conf.php

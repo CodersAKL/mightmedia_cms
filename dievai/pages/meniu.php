@@ -415,7 +415,7 @@ HTML;
 lentele($page_pavadinimas,$text);
 ?>';
 
-		// Irasom faila
+		// write content to file
 		$fp = fopen(ROOT . 'puslapiai/' . $sql['file'], "w+");
 		fwrite($fp, $irasas);
 		fclose($fp);
@@ -423,10 +423,17 @@ lentele($page_pavadinimas,$text);
 	} else {
 
 		$sql = "SELECT `id`, `pavadinimas`, `file` FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape( $psl_id ) . " LIMIT 1";
-		$sql = mysql_query1( $sql );
-		//tikrinam failo struktura
+		$sql = mysql_query1($sql);
+		
+		// check if `file` field has path
+		if(is_file(ROOT . $sql['file'])) {
+			$filePath = ROOT . $sql['file'];
+		} else {
+			$filePath = ROOT . 'puslapiai/' . $sql['file'];
+		}
 
-		$lines      = file( ROOT . 'puslapiai/' . $sql['file'] );
+		//checking file structure
+		$lines      = file($filePath);
 		$resultatai = [];
 
 		$zodiz = '$text =';
@@ -438,11 +445,11 @@ lentele($page_pavadinimas,$text);
 			}
 		}
 
-		//tikrinimo pabaiga
+		//end of check
 		if (isset($nr) && $nr == 2) {
 			$page_pavadinimas = $sql['pavadinimas'];
 
-			include ROOT . 'puslapiai/' . $sql['file'];
+			include $filePath;
 
 			$puslapio_txt = $text;
 
