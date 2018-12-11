@@ -274,7 +274,7 @@ if(! function_exists('koduoju')) {
 if(! function_exists('header_info')) {
 	function header_info() {
 
-		global $conf, $page_pavadinimas, $lang;
+		global $conf, $page_pavadinimas, $lang, $pageMetaData;
 		if (isset($conf['googleanalytics'])) { ?>
 			<!--START Global site tag (gtag.js) - Google Analytics -->
 			<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $conf['googleanalytics'];?>"></script>
@@ -287,14 +287,33 @@ if(! function_exists('header_info')) {
 			</script>
 			<!-- END Global site tag (gtag.js) - Google Analytics -->
 		<?php };
+		if ( isset($pageMetaData['title']) && !empty($pageMetaData['title']) ){ 
+			$pageTitle = $pageMetaData['title'] . ' - ' . input( strip_tags( $conf['Pavadinimas'] ) ); 
+		} else { 
+			$pageTitle = input( strip_tags( $conf['Pavadinimas'] ) . ' - ' . $page_pavadinimas );
+		}
+		if ( isset($pageMetaData['description']) && !empty($pageMetaData['description']) ){ 
+			$pageDescription = $pageMetaData['description']; 
+		} else { 
+			$pageDescription = trimlink( trim( str_replace( "\n\r", "", strip_tags( $conf['Apie'] ) ) ), 120 );
+		}
+		if ( isset($pageMetaData['keywords'])  && !empty($pageMetaData['keywords']) ){ 
+			$pageKeywords = $pageMetaData['keywords']; 
+		} else { 
+			$pageKeywords = input( strip_tags( $conf['Keywords'] ) );}
 		echo '
 		<base href="' . adresas() . '"></base>
 		<meta name="generator" content="MightMedia TVS" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="content-language" content="' . lang() . '" />
-		<meta name="description" content="' . input( strip_tags( $conf['Pavadinimas'] ) . ' - ' . trimlink( trim( str_replace( "\n\r", "", strip_tags( $conf['Apie'] ) ) ), 120 ) ) . '" />
-		<meta name="keywords" content="' . input( strip_tags( $conf['Keywords'] ) ) . '" />
+		<meta name="description" content="' . $pageDescription . '" />
+		<meta name="keywords" content="' . $pageKeywords . '" />
 		<meta name="author" content="' . input( strip_tags( $conf['Copyright'] ) ) . '" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="' . $pageTitle . '" />
+		<meta property="og:description" content="' . $pageDescription . '" />
+		<meta property="og:url" content="' . adresas() . '" />
+		<meta property="og:image" content="' . adresas() . 'stiliai/' . input( strip_tags( $conf['Stilius'] ) ) . '/paveiksleliai/mm_logo.png" />
 
 		' . ( isset( $conf['puslapiai']['rss.php'] ) ? '<link rel="alternate" type="application/rss+xml" title="' . input( strip_tags( $conf['Pavadinimas'] ) ) . '" href="rss.php" />' : '' ) . '
 		' . ( isset( $conf['puslapiai']['galerija.php'] ) ? '<link rel="alternate" href="gallery.php" type="application/rss+xml" title="" id="gallery" />' : '' ) . '

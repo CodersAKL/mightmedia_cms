@@ -64,7 +64,6 @@ lentele($page_pavadinimas,$text);
 		fwrite( $fp, $irasas );
 		fclose( $fp );
 		chmod( $failas, 0777 );
-		
 		redirect(
 			url("?id,{$_GET['id']};a,{$_GET['a']};n,1"),
 			"header",
@@ -113,7 +112,12 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 			$show = 'N';
 		}
 
-		$sql = "INSERT INTO `" . LENTELES_PRIESAGA . "page` (`pavadinimas`, `file`, `place`, `show`, `teises`,`parent`, `lang`) VALUES (" . escape( $psl ) . ", " . escape( $file ) . ", '0', " . escape( $show ) . ", " . escape( $teises ) . "," . escape( (int)$_POST['parent'] ) . ", " . escape( lang() ) . ")";
+		$metaTitle = escape($_POST['metatitle']);
+		$metaDesc =  escape($_POST['metadesc']);
+		$metaKeywords = escape($_POST['metakeywords']);
+
+		$sql = "INSERT INTO `" . LENTELES_PRIESAGA . "page` (`pavadinimas`, `file`, `place`, `show`, `teises`,`parent`, `lang`,`metatitle`,`metadesc`,`metakeywords`) 
+				VALUES (" . escape( $psl ) . ", " . escape( $file ) . ", '0', " . escape( $show ) . ", " . escape( $teises ) . "," . escape( (int)$_POST['parent'] ) . ", " . escape( lang() ) . "," . escape( $_POST['metatitle'] ) . "," . escape( $_POST['metadesc'] ) . "," . escape( $_POST['metakeywords'] ) . ")";
 
 		if(mysql_query1($sql)) {
 			delete_cache( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
@@ -220,6 +224,24 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 				"name"  => "Teises[]",
 				"id"    => "punktai"
 			],
+			$lang['admin']['page_metatitle'] => [
+				"type"  		=> "text",
+				"placeholder" 	=> $lang['admin']['page_metatitle'],
+				"id"			=> "metatitle",
+				"name"  		=> "metatitle"
+			],
+			$lang['admin']['page_metadesc'] => [
+				"type"  		=> "text",
+				"placeholder" 	=> $lang['admin']['page_metadesc'],
+				"id"			=> "metadesc",
+				"name"  		=> "metadesc"
+			],
+			$lang['admin']['page_metakeywords'] => [
+				"type"  		=> "text",
+				"placeholder" 	=> $lang['admin']['page_metakeywords'],
+				"id"			=> "metakeywords",
+				"name"  		=> "metakeywords"
+			],
 			""										=> [
 				"type" 		=> "submit",
 				"name" 		=> "Naujas_puslapis",
@@ -311,8 +333,9 @@ elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
 		} else {
 			$show = 'N';
 		}
-
-		$sql = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `pavadinimas`=" . escape( $psl ) . ", `show`=" . escape( $show ) . ",`teises`=" . escape( $teises ) . ",`parent`= " . escape( (int)$_POST['parent'] ) . "  WHERE `id`=" . escape( (int)$url['r'] );
+		$sql = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `pavadinimas`=" . escape( $psl ) . ", `show`=" . escape( $show ) . ",`teises`=" . escape( $teises ) . ",`parent`= " . escape( (int)$_POST['parent'] ) . "
+				,`metatitle`= " . escape( $_POST['metatitle'] ) . ",`metadesc`= " . escape( $_POST['metadesc'] ) . ",`metakeywords`= " . escape( $_POST['metakeywords'] ) . "
+				WHERE `id`=" . escape( (int)$url['r'] );
 		if(mysql_query1($sql)) {
 			delete_cache( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
 
@@ -380,6 +403,27 @@ elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
 				"name"  => "Teises[]",
 				"id"    => "punktai"
 			],
+			$lang['admin']['page_metatitle'] => [
+				"type"  		=> "text",
+				"placeholder" 	=> $lang['admin']['page_metatitle'],
+				"id"			=> "metatitle",
+				"value" 		=> $sql['metatitle'],
+				"name"  		=> "metatitle"
+			],
+			$lang['admin']['page_metadesc'] => [
+				"type"  		=> "text",
+				"placeholder" 	=> $lang['admin']['page_metadesc'],
+				"id"			=> "metadesc",
+				"value" 		=> $sql['metadesc'],
+				"name"  		=> "metadesc"
+			],
+			$lang['admin']['page_metakeywords'] => [
+				"type"  		=> "text",
+				"placeholder" 	=> $lang['admin']['page_metakeywords'],
+				"id"			=> "metakeywords",
+				"value" 		=> $sql['metakeywords'],
+				"name"  		=> "metakeywords"
+			],
 
 			""                                     => [
 				"type"  	=> "submit",
@@ -415,16 +459,23 @@ HTML;
 lentele($page_pavadinimas,$text);
 ?>';
 
-		// write content to file
-		$fp = fopen(ROOT . 'puslapiai/' . $sql['file'], "w+");
+		// check if `file` field has path
+		if(is_file(ROOT . $sql['file'])) {
+			$filePath = ROOT . $sql['file'];
+		} else {
+			$filePath = ROOT . 'puslapiai/' . $sql['file'];
+		}
+		// writing into file
+		$fp = fopen($filePath, "w+");
+    
 		fwrite($fp, $irasas);
 		fclose($fp);
-		chmod(ROOT . 'puslapiai/' . $sql['file'], 0777);
+		chmod($filePath, 0777);
 	} else {
 
 		$sql = "SELECT `id`, `pavadinimas`, `file` FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape( $psl_id ) . " LIMIT 1";
-		$sql = mysql_query1($sql);
-		
+
+		$sql = mysql_query1($sql);		
 		// check if `file` field has path
 		if(is_file(ROOT . $sql['file'])) {
 			$filePath = ROOT . $sql['file'];
