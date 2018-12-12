@@ -21,21 +21,65 @@ if(BUTTONS_BLOCK) {
 if (isset($url['c'])) {
 	if ($url['c'] == 'main') {
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['Konfiguracija'] ) ) {
-			$q   = array();
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['Copyright'] ) . ",'Copyright')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['Copyright'] );
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( input( strip_tags( $_POST['Pastas'] ) ) ) . ",'Pastas')  ON DUPLICATE KEY UPDATE `val`=" . escape( input( strip_tags( $_POST['Pastas'] ) ) );
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( (int)$_POST['News_limit'] ) . ",'News_limit')  ON DUPLICATE KEY UPDATE `val`=" . escape( (int)$_POST['News_limit'] );
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( input( strip_tags( $_POST['Stilius'] ) ) ) . ",'Stilius')  ON DUPLICATE KEY UPDATE `val`=" . escape( input( strip_tags( $_POST['Stilius'] ) ) );
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( basename( $_POST['pirminis'], '.php' ) ) . ",'pirminis')  ON DUPLICATE KEY UPDATE `val`=" . escape( basename( $_POST['pirminis'], '.php' ) );
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( basename( $_POST['kalba'] ) ) . ",'kalba')  ON DUPLICATE KEY UPDATE `val`=" . escape( basename( $_POST['kalba'] ) );
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( (int)$_POST['koment'] ) . ",'kmomentarai_sveciams')  ON DUPLICATE KEY UPDATE `val`=" . escape( (int)$_POST['koment'] );
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['Editor'] ) . ",'Editor')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['Editor'] );
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( (int)$_POST['galbalsuot'] ) . ",'galbalsuot')  ON DUPLICATE KEY UPDATE `val`=" . escape( (int)$_POST['galbalsuot'] );
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( (int)$_POST['hyphenator'] ) . ",'hyphenator')  ON DUPLICATE KEY UPDATE `val`=" . escape( (int)$_POST['hyphenator'] );
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['googleanalytics'] ) . ",'googleanalytics')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['googleanalytics'] );
-		
-			foreach ($q as $sql) {
-				mysql_query1($sql);
+			$req = array();
+			$req[] = [
+				'val' 		=> $_POST['Copyright'],
+				'key' 		=> 'Copyright',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> input( strip_tags( $_POST['Pastas'] ) ),
+				'key' 		=> 'Pastas',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> (int)$_POST['News_limit'],
+				'key' 		=> 'News_limit',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> input( strip_tags( $_POST['Stilius'] ) ),
+				'key' 		=> 'Stilius',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> basename( $_POST['pirminis'], '.php' ),
+				'key' 		=> 'pirminis',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> basename( $_POST['kalba'] ),
+				'key' 		=> 'kalba',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> (int)$_POST['koment'],
+				'key' 		=> 'kmomentarai_sveciams',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> $_POST['Editor'],
+				'key' 		=> 'Editor',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> (int)$_POST['galbalsuot'],
+				'key' 		=> 'galbalsuot',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> (int)$_POST['hyphenator'],
+				'key' 		=> 'hyphenator',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> $_POST['googleanalytics'],
+				'key' 		=> 'googleanalytics',
+				'options' 	=> null
+			];
+
+			foreach ($req as $row) {
+				setSettingsValue( $row['val'], $row['key'], $row['options'] );
 			}
 
 			delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
@@ -47,7 +91,7 @@ if (isset($url['c'])) {
 					'type'		=> 'success',
 					'message' 	=> $lang['admin']['configuration_updated']
 				]
-			);
+			);	
 		}
 		
 		$stiliai             = getDirs(ROOT . 'stiliai/', 'remontas');
@@ -83,19 +127,19 @@ if (isset($url['c'])) {
 			$lang['admin']['homepage']        => [
 				"type" 		=> "select", 
 				"value" 	=> $psl, 
-				"selected" 	=> (isset( $conf['pirminis'] ) ? $conf['pirminis'] . '.php' : ''), 
+				"selected" 	=> (getSettingsValue('pirminis') . '.php'), 
 				"name" 		=> "pirminis"
 			],
 
 			$lang['admin']['copyright']       => [
 				"type" 	=> "text", 
-				"value" => input($conf['Copyright']), 
+				"value" => input(getSettingsValue('Copyright')), 
 				"name" 	=> "Copyright"
 			],
 
 			$lang['admin']['email']           => [
 				"type" 	=> "text", 
-				"value" => input($conf['Pastas']), 
+				"value" => input(getSettingsValue('Pastas')), 
 				"name" 	=> "Pastas"
 			],
 
@@ -106,7 +150,7 @@ if (isset($url['c'])) {
 					"0" => "{$lang['admin']['no']}", 
 					"3"	=> "{$lang['admin']['comments_off']}"
 				],
-				"selected" 	=> input(@$conf['kmomentarai_sveciams']),
+				"selected" 	=> input(@getSettingsValue('kmomentarai_sveciams')),
 				"name" 		=> "koment"
 			],
 
@@ -115,12 +159,12 @@ if (isset($url['c'])) {
 				"value" 	=> '1',
 				"name"  	=> "galbalsuot",
 				'form_line'	=> 'form-not-line',
-				'checked'	=> (input($conf['galbalsuot']) == 1 ? true : false)
+				'checked'	=> (input(getSettingsValue('galbalsuot')) == 1 ? true : false)
 			],
 
 			$lang['admin']['newsperpage']     => [
 				"type" 	=> "text", 
-				"value" => input($conf['News_limit']), 
+				"value" => input(getSettingsValue('News_limit')), 
 				"name" 	=> "News_limit", 
 				'extra' => "onkeyup=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\""
 			],
@@ -128,21 +172,21 @@ if (isset($url['c'])) {
 			$lang['admin']['theme']           => [
 				"type" 		=> "select", 
 				"value" 	=> $stiliai, 
-				"selected" 	=> input($conf['Stilius']), 
+				"selected" 	=> input(getSettingsValue('Stilius')), 
 				"name" 		=> "Stilius"
 			],
 
 			$lang['admin']['lang']            => [
 				"type" 		=> "select", 
 				"value" 	=> $kalba, 
-				"selected" 	=> input($conf['kalba']), 
+				"selected" 	=> input(getSettingsValue('kalba')), 
 				"name" 		=> "kalba"
 			],
 
 			$lang['admin']['editor']          => [
 				"type" 		=> "select", 
 				"value" 	=> $editors, 
-				"selected" 	=> input($conf['Editor']), 
+				"selected" 	=> input(getSettingsValue('Editor')), 
 				"name" 		=> "Editor"
 			],
 
@@ -151,15 +195,14 @@ if (isset($url['c'])) {
 				"value" 	=> '1',
 				"name"  	=> "hyphenator",
 				'form_line'	=> 'form-not-line',
-				'checked'	=> (input($conf['hyphenator']) == 1 ? true : false)
+				'checked'	=> (input(getSettingsValue('hyphenator')) == 1 ? true : false)
 			],
-
 			$lang['admin']['ga']  => [
 				"type"  	=> "textarea",
-				"value" 	=> input($conf['googleanalytics']),
+				"value" 	=> input(getSettingsValue('googleanalytics')),
 				"name"  	=> "googleanalytics"
 			],
-		
+			
 			""                                     => [
 				"type" 		=> "submit", 
 				"name" 		=> "Konfiguracija", 
@@ -174,12 +217,20 @@ if (isset($url['c'])) {
 	} else if($url['c'] == 'maintenance') {
 
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['Konfiguracija'] ) ) {
-			$q = [];
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( (int)$_POST['Palaikymas'] ) . ",'Palaikymas')  ON DUPLICATE KEY UPDATE `val`=" . escape( (int)$_POST['Palaikymas'] );
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['Maintenance'] ) . ",'Maintenance')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['Maintenance'] );
-			
-			foreach ($q as $sql) {
-				mysql_query1($sql);
+
+			$req = array();
+			$req[] = [
+				'val' 		=> (int)$_POST['Palaikymas'],
+				'key' 		=> 'Palaikymas',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> $_POST['Maintenance'],
+				'key' 		=> 'Maintenance',
+				'options' 	=> null
+			];
+			foreach ($req as $row) {
+				setSettingsValue( $row['val'], $row['key'], $row['options'] );
 			}
 
 			delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
@@ -208,11 +259,11 @@ if (isset($url['c'])) {
 				"value" 	=> '1',
 				"name"  	=> "Palaikymas",
 				'form_line'	=> 'form-not-line',
-				'checked'	=> (input($conf['Palaikymas']) == 1 ? true : false)
+				'checked'	=> (input(getSettingsValue('Palaikymas')) == 1 ? true : false)
 			],
 			$lang['admin']['maintenancetext'] => [
 				"type" => "string", 
-				"value" => editor( 'jquery', 'mini', 'Maintenance', isset( $conf['Maintenance'] ) ? $conf['Maintenance'] : '' )
+				"value" => editor( 'jquery', 'mini', 'Maintenance', getSettingsValue('Maintenance'))
 			],
 			""                                     => [
 				"type" 		=> "submit", 
@@ -227,16 +278,31 @@ if (isset($url['c'])) {
 
 	} else if($url['c'] == 'seo') {
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['Konfiguracija'] ) ) {
-			$q = [];
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['Apie'] ) . ",'Apie')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['Apie'] ) . "";
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( input( strip_tags( $_POST['keywords'] ) ) ) . ",'keywords')  ON DUPLICATE KEY UPDATE `val`=" . escape( input( strip_tags( $_POST['keywords'] ) ) ) . "";
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( input( strip_tags( $_POST['Pavadinimas'] ) ) ) . ",'Pavadinimas')  ON DUPLICATE KEY UPDATE `val`=" . escape( input( strip_tags( $_POST['Pavadinimas'] ) ) );
-			$q[] = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`val`,`key`) VALUES (" . escape( $_POST['F_urls'] ) . ",'F_urls')  ON DUPLICATE KEY UPDATE `val`=" . escape( $_POST['F_urls'] );
 
-			foreach ($q as $sql) {
-				mysql_query1($sql);
+			$req = array();
+			$req[] = [
+				'val' 		=> $_POST['Apie'],
+				'key' 		=> 'Apie',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> input( strip_tags( $_POST['keywords'] ) ),
+				'key' 		=> 'keywords',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> input( strip_tags( $_POST['Pavadinimas'] ) ),
+				'key' 		=> 'Pavadinimas',
+				'options' 	=> null
+			];
+			$req[] = [
+				'val' 		=> $_POST['F_urls'],
+				'key' 		=> 'F_urls',
+				'options' 	=> null
+			];
+			foreach ($req as $row) {
+				setSettingsValue( $row['val'], $row['key'], $row['options'] );
 			}
-
 			delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
 			
 			redirect(
@@ -260,19 +326,19 @@ if (isset($url['c'])) {
 
 			$lang['admin']['sitename']	=> [
 				"type" 	=> "text", 
-				"value" => input( $conf['Pavadinimas'] ), 
+				"value" => input( getSettingsValue('Pavadinimas')), 
 				"name" 	=> "Pavadinimas"
 			],
 
 			$lang['admin']['about']		=> [
 				"type" 	=> "textarea", 
 				"name" 	=> "Apie", 
-				"value" => ( isset( $conf['Apie'] ) ? $conf['Apie'] : '' )
+				"value" => getSettingsValue('Apie')
 			],
 
 			$lang['admin']['keywords']	=> [
 				"type" 	=> "text", 
-				"value" => input( $conf['Keywords'] ), 
+				"value" => input( getSettingsValue('Keywords') ), 
 				"name" 	=> "keywords"
 			],
 			
@@ -283,7 +349,7 @@ if (isset($url['c'])) {
 					';'=> ';', 
 					'0'=> $lang['admin']['off']
 				], 
-				"selected"	=> $conf['F_urls'], 
+				"selected"	=> getSettingsValue('F_urls'), 
 				"name"		=> "F_urls"
 			],
 

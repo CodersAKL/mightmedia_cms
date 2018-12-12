@@ -461,6 +461,9 @@ $lang['admin']['logs_deletebyip'] = 'Delete by ip';
 $lang['admin']['logs_clear'] = 'Delete all logs';
 //pages admin
 $lang['admin']['page_text'] = 'Page text';
+$lang['admin']['page_metatitle'] = 'Meta title';
+$lang['admin']['page_metadesc'] = 'Meta description';
+$lang['admin']['page_metakeywords'] = 'Keywords';
 $lang['admin']['page_create'] = 'Create page';
 $lang['admin']['page_link'] = 'Use link';
 $lang['admin']['page_select'] = 'Select page';
