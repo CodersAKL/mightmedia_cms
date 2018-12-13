@@ -19,7 +19,8 @@ if ( !isset( $_SESSION[SLAPTAS]['username'] ) || empty( $_SESSION[SLAPTAS]['user
 			<script type="text/javascript">document.write(unescape(unescape('%3C')+'input name="vartotojas" class="input" id="vartotojas" type="text" value="" maxlength="50" /'+unescape('%3E')));</script></label><br />
 			<label for="slaptazodis">{$lang['user']['password']}:</label><br/>
 			<input name="slaptazodis" class="input" id="slaptazodis" type="password" value="" maxlength="50" /><br/>
-			<label>{$lang['user']['login_remember']}:<input type="checkbox" class="checkbox" style="background-color:transparent;border:0" name="Prisiminti" id="Prisiminti"/></label><br /> <input type="submit" class="submit" name="Submit" value="{$lang['user']['login']}" />
+			<label>{$lang['user']['login_remember']}:<input type="checkbox" class="checkbox" style="background-color:transparent;border:0" name="Prisiminti" id="Prisiminti"/></label><br /> 
+			<button class="btn btn-primary" type="submit" name="Submit">{$lang['user']['login']}</button>
 			<input type="hidden" name="action" value="prisijungimas" />
 		</form>
 	</center>

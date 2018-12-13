@@ -2,14 +2,14 @@
 <html lang="en">
 
 <head>
-  <?php header_info(); ?>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-  <!--     Fonts and icons     -->
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">  <!-- CSS Files -->
-  <link href="stiliai/<?php echo $conf['Stilius']; ?>/assets/css/material-kit.css?v=2.0.5" rel="stylesheet" />
+	<?php header_info(); ?>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/brands.css" integrity="sha384-oT8S/zsbHtHRVSs2Weo00ensyC4I8kyMsMhqTD4XrWxyi8NHHxnS0Hy+QEtgeKUE" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/fontawesome.css" integrity="sha384-J4287OME5B0yzlP80TtfccOBwJJt6xiO2KS14V7z0mVCRwpz+71z7lwP4yoFbTnD" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+	<link href="stiliai/<?php echo $conf['Stilius']; ?>/assets/css/material-kit.css?v=2.0.5" rel="stylesheet" />
 </head>
 
 <body class="landing-page sidebar-collapse">
@@ -91,8 +91,8 @@
 					<?php echo strip_tags($conf['Apie']); ?>
 				</h4>
 				<br>
-				<a href="http://mightmedia.lt" target="_blank" class="btn btn-danger btn-raised btn-lg">
-					<i class="fas fa-play"></i> Mightmedia svetainė
+				<a href="http://mightmedia.lt" target="_blank" class="btn btn---orange btn-raised btn-lg">
+					<i class="material-icons">link</i> Mightmedia svetainė
 				</a>
 			</div>
 		</div>

@@ -51,7 +51,7 @@ if ( isset( $quest['question'] ) ) {
 			$text .= "<label><input type=\"" . ( $quest['radio'] == 1 ? 'radio' : 'checkbox' ) . "\" name=\"answer[]\" class=\"middle\" value=\"{$row['id']}\" /> " . input( $row['answer'] ) . "</label><br />";
 		}
 		if ( $quest['only_guests'] == 0 || ( $quest['only_guests'] == 1 && isset( $_SESSION[SLAPTAS]['username'] ) ) ) {
-			$text .= '<div style="text-align: center;"><input name="vote" type="submit" value="' . $lang['poll']['vote'] . '" /></div>';
+			$text .= '<div style="text-align: center;"><button class="btn btn-primary" name="vote" type="submit">' . $lang['poll']['vote'] . '</button></div>';
 		} else {
 			$text .= $lang['poll']['cant'];
 		}

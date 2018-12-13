@@ -45,9 +45,9 @@ $box .= "<label><input type='checkbox' name='vis' onclick='checkedAll(\"search\"
 //Paieškos forma
 $search = array(
 	"Form"                      => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "enctype" => "", "id" => "search", "name" => "search" ),
-	" "                         => array( "type" => "text", "value" => ( isset( $_POST['s'] ) ? input( $_POST['s'] ) : '' ), "name" => "s", "class"=> "input", "extra"=> "title='{$lang['search']['for']}'" ),
-	"{$lang['search']['for']}:" => array( "type" => "string", "value" => $box ),
-	""                          => array( "type" => "submit", "class" => "submit", "name" => "subsearch", "value" => $lang['search']['search'] )
+	$lang['search']['for']		=> array( "type" => "text", "class" => "form-control", "value" => ( isset( $_POST['s'] ) ? input( $_POST['s'] ) : '' ), "name" => "s" ),
+	" "							=> array( "type" => "string", "value" => $box ),
+	""                          => array( "type" => "submit", "class" => "btn btn-primary", "name" => "subsearch", "value" => $lang['search']['search'] )
 );
 
 //Nupiešiam paieškos formą
