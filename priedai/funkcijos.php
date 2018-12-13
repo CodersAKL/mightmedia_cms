@@ -1808,12 +1808,17 @@ HTML;
 
 /** Gražina versijos numerį */
 if(! function_exists('versija')) {
-	function versija() {
-		$scid  	= file( ROOTAS . '/version.txt' );
-		$values = array_values($scid);
-		$scid 	= trim(array_shift($values));
+	// function versija() {
+	// 	$scid  	= file( ROOTAS . '/version.txt' );
+	// 	$values = array_values($scid);
+	// 	$scid 	= trim(array_shift($values));
 
-		return apvalinti( ( intval( $scid ) / 5000 ) + '1.28', 2 );
+	// 	return apvalinti( ( intval( $scid ) / 5000 ) + '1.28', 2 );
+	// }
+	function versija() {
+		$content  	= file_get_contents(ROOTAS . '/version.txt');
+
+		return $content;
 	}
 }
 
