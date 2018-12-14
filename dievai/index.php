@@ -23,7 +23,12 @@ if ( is_file( '../priedai/conf.php' ) && filesize( '../priedai/conf.php' ) > 1 )
 	die( klaida( 'Sistemos klaida / System error', 'Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.' ) );
 }
 
-include_once ( "../priedai/prisijungimas.php" );
+/**
+ * BOOT
+ */
+include_once ROOT . 'core/boot.php';
+
+include_once ROOT . 'priedai/prisijungimas.php';
 
 require 'themes/material/config.php';
 require 'themes/material/functions.php';

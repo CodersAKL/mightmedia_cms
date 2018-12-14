@@ -39,11 +39,11 @@ if(BUTTONS_BLOCK) {
 }
 
 unset( $buttons, $extra, $text );
-include_once ( ROOT . "priedai/kategorijos.php" );
-kategorija( "galerija", TRUE );
-//kategorijos
-$kategorijos    = cat( 'galerija', 0 );
-$kategorijos[0] = "--";
+include_once config('functions', 'dir') . 'functions.categories.php';
+category( "galerija", TRUE );
+//categories
+$categories    = cat( 'galerija', 0 );
+$categories[0] = "--";
 //foto aktyvavimas
 if (isset( $_GET['priimti'] )) {
 	$activateQuery = "UPDATE `" . LENTELES_PRIESAGA . "galerija` SET rodoma='TAIP' WHERE `id`=" . escape( $_GET['priimti'] ) . ";";
@@ -125,7 +125,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 
 	$apie        = strip_tags( $_POST['Aprasymas'] );
 	$pavadinimas = strip_tags( $_POST['Pavadinimas'] );
-	$kategorija  = (int)$_POST['cat'];
+	$category  = (int)$_POST['cat'];
 	$id          = ceil( (int)$_POST['news_id'] );
 	$komentaras  = (isset($_POST['kom']) && $_POST['kom'] === '1' ? 'taip' : 'ne');
 	$rodoma     = (isset($_POST['rodoma']) && $_POST['rodoma'] === '1' ? 'TAIP' : 'NE');
@@ -134,7 +134,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 	`pavadinimas` = " . escape( $pavadinimas ) . ",
 	`kom` = " . escape( $komentaras ) . ",
 	`rodoma` = " . escape( $rodoma ) . ",
-	`categorija` = " . escape( $kategorija ) . ",
+	`categorija` = " . escape( $category ) . ",
 	`apie` = " . escape( $apie ) . "
 	WHERE `id`=" . escape( $id ) . ";";
 
@@ -277,7 +277,7 @@ if ( isset( $_GET['v'] ) ) {
 				</div>
 				<div class="body">
 					<div class="row">
-					<?php foreach ($kategorijos as $id => $kategorija) { ?>
+					<?php foreach ($categories as $id => $category) { ?>
 						<div class="col-sm-6 col-md-3">
 							<div class="thumbnail">
 								<!-- <img src="<?php //echo  ROOT . 'images/galerija/' . $row2['file']; ?>"> -->
@@ -285,10 +285,10 @@ if ( isset( $_GET['v'] ) ) {
 									<h3>
 										<a href="<?php echo url( '?id,' . $_GET['id'] . ';a,' . $_GET['a'] . ';v,8;k,' . $id ); ?>">
 											<?php
-												if($kategorija == '--') {
+												if($category == '--') {
 													echo 'Uncategorized';
 												} else {
-													echo str_replace('-', '',  $kategorija);
+													echo str_replace('-', '',  $category);
 												}
 											?>
 										</a>
@@ -387,7 +387,7 @@ if ( isset( $_GET['v'] ) ) {
 
 			$lang['gallery']['photoalbum']		=> [
 				"type" 		=> "select", 
-				"value" 	=> $kategorijos, 
+				"value" 	=> $categories, 
 				"name" 		=> "cat", 
 				"selected" 	=> (isset($extra['categorija']) ? input($extra['categorija']) : '0')
 			],

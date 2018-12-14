@@ -19,7 +19,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti' ) {
 		$str        = empty( $straipsnis[1] ) ? '' : $straipsnis[1];
 		// $komentaras = (isset($_POST['kom']) && $_POST['kom'] == 'taip' ? 'taip' : 'ne');
 		$komentaras  = 'taip';
-		$kategorija  = (int)$_POST['kategorija'];
+		$category  = (int)$_POST['category'];
 		$pavadinimas = strip_tags( $_POST['pav'] );
 		$autorius    = ( isset( $_SESSION[SLAPTAS]['username'] ) ? $_SESSION[SLAPTAS]['username'] : '-' );
 		$autoriusid  = ( isset( $_SESSION[SLAPTAS]['id'] ) ? $_SESSION[SLAPTAS]['id'] : 0 );
@@ -28,7 +28,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti' ) {
 		}
 		if ( !isset( $error ) ) {
 			$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "straipsniai` SET
-	    	`kat` = " . escape( $kategorija ) . ",
+	    	`kat` = " . escape( $category ) . ",
 			`pav` = " . escape( $pavadinimas ) . ",
 			`t_text` = " . escape( $apr ) . ",
 			`f_text` = " . escape( $str ) . ",
@@ -52,18 +52,18 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti' ) {
 	}
 }
 $sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `lang` = " . escape( lang() ) . " AND `path`=0 ORDER BY `id` DESC" );
-include_once ( ROOTAS . "priedai/kategorijos.php" );
-kategorija( "straipsniai", TRUE );
+include_once config('functions', 'dir') . 'functions.categories.php';
+category( "straipsniai", TRUE );
 if ( sizeof( $sql ) > 0 ) {
-	$kategorijos = cat( 'straipsniai', 0 );
+	$categories = cat( 'straipsniai', 0 );
 }
-$kategorijos[0] = "--";
-include_once ( "priedai/class.php" );
-$bla        = new forma();
+$categories[0] = "--";
+include_once config('class', 'dir') . 'class.form.php';
+$bla        = new Form();
 $straipsnis = array( "Form"                           => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "reg" ),
                      "{$lang['system']['name']}:"     => array( "type" => "text", "value" => "", "name" => "pav", "class"=> "input" ),
 	//"{$lang['comments']['comments']}:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"), 
-                     "{$lang['system']['category']}:" => array( "type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class"=> "input" ),
+                     "{$lang['system']['category']}:" => array( "type" => "select", "value" => $categories, "name" => "category", "class" => "input", "class"=> "input" ),
                      "{$lang['admin']['article']}:"   => array( "type" => "string", "value" => editorius( 'jquery', 'standartinis', 'str' ) ),
                      ""                               => array( "type" => "submit", "name" => "action", "value" => "{$lang['article']['submit']}" ), );
 lentele( "{$lang['article']['submiting']}", $bla->form( $straipsnis ) );

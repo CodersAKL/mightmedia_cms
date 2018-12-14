@@ -10,8 +10,8 @@
  * @$Date: 2009-05-25 20:56:43 +0300 (Pr, 25 Geg 2009) $
  **/
 
-include_once( 'priedai/class.php' );
-$forma = new forma();
+include_once config('class', 'dir') . 'class.form.php';
+$formClass = new Form();
 //jeigu prisijunges narys
 if ( isset( $_SESSION[SLAPTAS]['username'] ) ) {
 	$el    = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " LIMIT 1" );
@@ -45,4 +45,4 @@ $form = array( "Form"                     => array( "action" => url( "?id," . $c
                "{$lang['reg']['email']}:" => array( "type" => "text", "value" => ( isset( $email ) ? input( $email ) : "" ), "name" => "email", "class" => "input" ),
                kodas()                    => array( "type"=> "text", "name"=> "kode", "class"=> "chapter" ),
                " "                        => array( "type" => "submit", "name" => "submit", "value" => $lang['news']['Order/Unorder'] ) );
-lentele( $page_pavadinimas, $forma->form( $form ) );
+lentele( $page_pavadinimas, $formClass->form( $form ) );

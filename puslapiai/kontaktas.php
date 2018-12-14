@@ -41,8 +41,8 @@ if ( isset( $_POST['kontaktas'] ) && $_POST['kontaktas'] == 'Siųsti' && strtoup
 	}
 }
 
-include_once ( "priedai/class.php" );
-$bla  = new forma();
+include_once config('class', 'dir') . 'class.form.php';
+$bla  = new Form();
 $form = array(
 	"Form"                           => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "kontaktas" ),
 	"{$lang['contact']['subject']}:" => array( "type" => "text", "class"=> "input", "value" => ( isset( $title ) && !empty( $title ) ? input( $title ) : '' ), "name" => "pavadinimas", "class"=> "input" ),
@@ -53,5 +53,5 @@ $form = array(
 	" "                              => array( "type" => "submit", "name" => "kontaktas", "value" => "{$lang['contact']['submit']}" )
 );
 lentele( $lang['contact']['form'], $bla->form( $form ) );
-unset( $forma, $result, $from, $forma, $error, $to, $msg, $email, $title );
+unset( $form, $result, $from, $error, $to, $msg, $email, $title );
 //PABAIGA - atvaizdavimo

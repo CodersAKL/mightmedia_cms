@@ -19,7 +19,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['links_crea
 	$url         = strip_tags( $_POST['url'] );
 	$apie        = strip_tags( $_POST['apie'] );
 	$pavadinimas = strip_tags( $_POST['name'] );
-	$kategorija  = strip_tags( $_POST['kat'] );
+	$category  = strip_tags( $_POST['kat'] );
 	$autoriusid  = ( isset( $_SESSION[SLAPTAS]['id'] ) ? $_SESSION[SLAPTAS]['id'] : 0 );
 	/*  if (empty($url) || empty($pavadinimas)) {
 		  $error = "{$lang['admin']['links_allfields']}.";
@@ -29,7 +29,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['links_crea
 		klaida( $lang['system']['error'], $lang['admin']['links_bad'] );
 	} else {
 		$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` SET
-	`cat` = " . escape( $kategorija ) . ",
+	`cat` = " . escape( $category ) . ",
 	`url` = " . escape( $url ) . ",
 	`pavadinimas` = " . escape( $pavadinimas ) . ",
 	`nick` = " . escape( $autoriusid ) . ",
@@ -61,16 +61,16 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['links_crea
 	}*/
 }
 $sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `lang` = " . escape( lang() ) . " AND `path`=0 ORDER BY `id` DESC" );
-include_once ( ROOTAS . "priedai/kategorijos.php" );
-kategorija( "nuorodos", TRUE );
+include_once config('functions', 'dir') . 'functions.categories.php';
+categories( "nuorodos", TRUE );
 if ( sizeof( $sql ) > 0 ) {
-	$kategorijos = cat( 'nuorodos', 0 );
+	$categories = cat( 'nuorodos', 0 );
 }
-$kategorijos[0] = "--";
-include_once ( "priedai/class.php" );
-$bla      = new forma();
-$nuorodos = array( "Form"                        => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "reg" ),
-                   $lang['system']['category']   => array( "type" => "select", "value" => $kategorijos, "name" => "kat" ),
+$categories[0] = "--";
+include_once config('class', 'dir') . 'class.form.php';
+$bla      = new Form();
+$links = array( "Form"                        => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "reg" ),
+                   $lang['system']['category']   => array( "type" => "select", "value" => $categories, "name" => "kat" ),
                    $lang['admin']['links_title'] => array( "type" => "text", "value" => "", "name" => "name" ),
 	//"Url" => array("type" => "text", "extra" => "title=\"http://\" onchange=\"$.post('".url("?id,{$_GET['id']};ajax,1")."',{ tikrink: $(this).val() }, function(data) { $('#temp').html(data); $('#apie').val($('#temp').html())});\"", "name" => "url"),
                    "Url"                         => array( "type" => "text", "value" => "http://", "name" => "url" ),
@@ -78,4 +78,4 @@ $nuorodos = array( "Form"                        => array( "action" => url( "?id
                    $lang['admin']['links_about'] => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'apie' ) ),
                    " "                           => array( "type" => "submit", "name" => "action", "value" => $lang['admin']['links_create'] ) );
 
-lentele( $lang['admin']['links_create'], $bla->form( $nuorodos ) );
+lentele( $lang['admin']['links_create'], $bla->form( $links ) );

@@ -55,8 +55,8 @@ if ( ar_admin( 'com' ) ) {
 				)
 			);
 
-			include_once ( "priedai/class.php" ); // Formu iš masyvo generavimas
-			$form = new forma(); // Sukuriam formos objektą
+			include_once config('class', 'dir') . 'class.form.php'; // Formu iš masyvo generavimas
+			$form = new Form(); // Sukuriam formos objektą
 			lentele( $lang['sb']['edit'], $form->form( $form_array ) );
 
 		} else {

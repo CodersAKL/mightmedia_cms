@@ -28,8 +28,8 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 
 $limit = 15;
 
-include_once ( ROOT . "priedai/kategorijos.php" );
-kategorija( "vartotojai", TRUE );
+include_once config('functions', 'dir') . 'functions.categories.php';
+category( "vartotojai", TRUE );
 //trinimas
 if ( isset( $_POST['users_delete'] ) ) {
 	foreach ( $_POST['userss_delete'] as $a=> $b ) {

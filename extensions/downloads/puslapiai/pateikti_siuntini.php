@@ -85,19 +85,19 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 		}
 	}
 	$sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `lang` = " . escape( lang() ) . " AND `path`=0 ORDER BY `id` DESC" );
-	include_once ( "priedai/kategorijos.php" );
-	kategorija( "siuntiniai", TRUE );
+	include_once config('functions', 'dir') . 'functions.categories.php';
+	category( "siuntiniai", TRUE );
 	if ( sizeof( $sql ) > 0 ) {
-		$kategorijos = cat( 'siuntiniai', 0 );
+		$categories = cat( 'siuntiniai', 0 );
 	}
-	$kategorijos[0] = "--";
-	include_once ( "priedai/class.php" );
-	$bla = new forma();
+	$categories[0] = "--";
+	include_once config('class', 'dir') . 'class.form.php';
+	$bla = new Form();
 
 	$forma = array( "Form"                               => array( "enctype" => "multipart/form-data", "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "action" ),
 	                "{$lang['admin']['download_file']}:" => array( "name" => "failas", "type" => "file", "value" => "", "class"=> "input" ),
 	                "{$lang['system']['name']}:"         => array( "type" => "text", "value" => '', "name" => "Pavadinimas", "class"=> "input" ),
-	                "{$lang['system']['category']}:"     => array( "type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "class"=> "input" ),
+	                "{$lang['system']['category']}:"     => array( "type" => "select", "value" => $categories, "name" => "cat", "class" => "input", "class"=> "input" ),
 	                "{$lang['system']['about']}:"        => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
 	                ""                                   => array( "type" => "submit", "name" => "action", "value" => "{$lang['admin']['download_Create']}" ), );
 

@@ -33,8 +33,8 @@ if ( empty( $_GET['v'] ) ) {
 	$_GET['v'] = 0;
 }
 
-include_once ( ROOT . "priedai/kategorijos.php" );
-kategorija( "straipsniai", TRUE );
+include_once config('functions', 'dir') . 'functions.categories.php';
+category( "straipsniai", TRUE );
 
 if (isset($_GET['priimti'])) {
 	$sqlActivate = "UPDATE `" . LENTELES_PRIESAGA . "straipsniai` SET rodoma='TAIP' WHERE `id`=" . escape( $_GET['priimti'] ) . ";";
@@ -121,7 +121,7 @@ if (isset($url['t'])) {
 	$str         	= empty( $straipsnis[1] ) ? '' : $straipsnis[1];
 	$komentaras  	= (isset($_POST['kom']) && $_POST['kom'] === '1' ? 'taip' : 'ne');
 	$rodoma			= (isset($_POST['rodoma']) && $_POST['rodoma'] === '1' ? 'TAIP' : 'NE');
-	$kategorija  	= (int)$_POST['kategorija'];
+	$category  	= (int)$_POST['category'];
 	$pavadinimas 	= strip_tags( $_POST['pav'] );
 	$id          	= ceil( (int)$_POST['idas'] );
 
@@ -130,7 +130,7 @@ if (isset($url['t'])) {
 	}
 
 	$updateQuery = "UPDATE `" . LENTELES_PRIESAGA . "straipsniai` SET
-	    `kat` = " . escape( $kategorija ) . ",
+	    `kat` = " . escape( $category ) . ",
 		`pav` = " . escape( $pavadinimas ) . ",
 		`t_text` = " . escape( $apr ) . ",
 		`f_text` = " . escape( $str ) . ",
@@ -162,7 +162,7 @@ if (isset($url['t'])) {
 	$straipsnis  = explode( '===page===', $_POST['str'] );
 	$apr         = $straipsnis[0];
 	$str         = empty( $straipsnis[1] ) ? '' : $straipsnis[1];
-	$kategorija  = (int)$_POST['kategorija'];
+	$category  = (int)$_POST['category'];
 	$pavadinimas = strip_tags( $_POST['pav'] );
 	$komentaras  = (isset($_POST['kom']) && $_POST['kom'] === '1' ? 'taip' : 'ne');
 	$rodoma     = (isset($_POST['rodoma']) && $_POST['rodoma'] === '1' ? 'TAIP' : 'NE');
@@ -173,7 +173,7 @@ if (isset($url['t'])) {
 	}
 	if (! isset($error)) {
 		$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "straipsniai` SET
-	    	`kat` = " . escape( $kategorija ) . ",
+	    	`kat` = " . escape( $category ) . ",
 			`pav` = " . escape( $pavadinimas ) . ",
 			`t_text` = " . escape( $apr ) . ",
 			`f_text` = " . escape( $str ) . ",
@@ -209,7 +209,7 @@ if (isset($url['t'])) {
 			]
 		);
 	}
-	unset( $rodoma, $pavadinimas, $kategorija, $komentaras, $str, $apr, $_POST['action'], $result );
+	unset( $rodoma, $pavadinimas, $category, $komentaras, $str, $apr, $_POST['action'], $result );
 
 }
 //straipsnio redagavimas
@@ -226,10 +226,10 @@ if ( isset( $_GET['v'] ) ) {
 	$sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `path`=0 AND `lang` = " . escape( lang() ) . " ORDER BY `id` DESC" );
 	if ( sizeof( $sql ) > 0 ) {
 
-		$kategorijos = cat( 'straipsniai', 0 );
+		$categories = cat( 'straipsniai', 0 );
 	}
 
-	$kategorijos[0] = "--";
+	$categories[0] = "--";
 }
 
 if ( $_GET['v'] == 4 ) {
@@ -291,8 +291,8 @@ if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
 
 		$lang['system']['category']			=> [
 			"type" 		=> "select", 
-			"value" 	=> $kategorijos, 
-			"name" 		=> "kategorija", 
+			"value" 	=> $categories, 
+			"name" 		=> "category", 
 			"selected" 	=> (isset($extra['kat']) ? input($extra['kat']) : '')
 		], 
 

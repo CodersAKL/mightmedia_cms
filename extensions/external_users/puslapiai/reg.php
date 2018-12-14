@@ -10,12 +10,13 @@
  * @$Date$
  **/
 
-function registracijos_forma() {
-
+function registracijos_forma()
+{
 	global $vardas, $pass, $pass2, $email, $lang, $conf;
-	include_once ( "priedai/class.php" );
+	
+	include_once config('class', 'dir') . 'class.form.php';
 
-	$bla   = new forma();
+	$bla   = new Form();
 	$forma = array(
 		"Form"                               => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "reg", "extra"=> "onSubmit=\"return checkMail('reg','email')\"" ),
 		"{$lang['reg']['username']}:"        => array( "type" => "text", "value" => ( isset( $vardas ) ? input( $vardas ) : "" ), "name" => "nick", "class" => "input", "extra"=> "title='{$lang['reg']['username']}'" ),

@@ -25,13 +25,13 @@ if ( empty( $url['v'] ) ) {
 	$url['v'] = 0;
 }
 
-include_once ( ROOT . "priedai/kategorijos.php" );
-kategorija( "siuntiniai", TRUE );
+include_once config('functions', 'dir') . 'functions.categories.php';
+category( "siuntiniai", TRUE );
 $sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `path`=0 ORDER BY `id` DESC" );
 if ( sizeof( $sql ) > 0 ) {
-	$kategorijos = cat( 'siuntiniai', 0 );
+	$categories = cat( 'siuntiniai', 0 );
 }
-$kategorijos[0] = "--";
+$categories[0] = "--";
 //item activate
 if (isset($_GET['p'])) {
 	$activateQuery = "UPDATE `" . LENTELES_PRIESAGA . "siuntiniai` SET rodoma='TAIP' WHERE `id`=" . escape($_GET['p']) . ";";
@@ -151,14 +151,14 @@ if (isset( $_POST['downloads_delete'])) {
 } elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['edit'] ) {
 	$apie        	= $_POST['Aprasymas'];
 	$pavadinimas 	= strip_tags( $_POST['Pavadinimas'] );
-	$kategorija 	 = (int)$_POST['cat'];
+	$category 	 = (int)$_POST['cat'];
 	$file        	= strip_tags( $_POST['failas2'] );
 	$id				= ceil( (int)$_POST['news_id'] );
 	$rodoma			= (isset($_POST['rodoma']) && $_POST['rodoma'] === '1' ? 'TAIP' : 'NE');
 
 	$updateQuery = "UPDATE `" . LENTELES_PRIESAGA . "siuntiniai` SET
 	`pavadinimas` = " . escape( $pavadinimas ) . ",
-	`categorija` = " . escape( $kategorija ) . ",
+	`categorija` = " . escape( $category ) . ",
 	`apie` = " . escape( $apie ) . ",
 	`file` = " . escape( $file ) . ",
 	`rodoma` = " . escape( $rodoma ) . "
@@ -330,7 +330,7 @@ if ( isset( $_GET['v'] ) ) {
 
 					$lang['system']['category']			=> [
 						"type"     => "select",
-						"value"    => $kategorijos,
+						"value"    => $categories,
 						"name"     => "cat",
 						"selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '0')
 					],

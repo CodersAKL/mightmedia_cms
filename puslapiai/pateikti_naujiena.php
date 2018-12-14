@@ -22,8 +22,8 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti' ) {
 		//$komentaras = (isset($_POST['kom']) ? $_POST['kom'] : 'taip');
 		$komentaras  = 'taip';
 		$pavadinimas = strip_tags( $_POST['pav'] );
-		$kategorija  = (int)$_POST['kategorija'];
-		$result      = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija, rodoma, lang) VALUES (" . escape( $pavadinimas ) . ", " . escape( $izanga ) . ", " . escape( $placiau ) . ",  '" . time() . "', '" . ( isset( $_SESSION[SLAPTAS]['username'] ) ? $_SESSION[SLAPTAS]['username'] : 'Svečias' ) . "', " . escape( $komentaras ) . ", " . escape( $kategorija ) . ", 'NE', " . escape( lang() ) . ")" );
+		$category  = (int)$_POST['category'];
+		$result      = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija, rodoma, lang) VALUES (" . escape( $pavadinimas ) . ", " . escape( $izanga ) . ", " . escape( $placiau ) . ",  '" . time() . "', '" . ( isset( $_SESSION[SLAPTAS]['username'] ) ? $_SESSION[SLAPTAS]['username'] : 'Svečias' ) . "', " . escape( $komentaras ) . ", " . escape( $category ) . ", 'NE', " . escape( lang() ) . ")" );
 		if ( $result ) {
 			msg( "{$lang['system']['done']}", "{$lang['news']['sumbit_scc']}." );
 		} else {
@@ -35,20 +35,20 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti' ) {
 	}
 }
 $sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `lang` = " . escape( lang() ) . " AND `path`=0 ORDER BY `id` DESC" );
-include_once ( "priedai/kategorijos.php" );
-kategorija( "naujienos", TRUE );
+include_once config('functions', 'dir') . 'functions.categories.php';
+category( "naujienos", TRUE );
 if ( sizeof( $sql ) > 0 ) {
-	$kategorijos = cat( 'naujienos', 0 );
+	$categories = cat( 'naujienos', 0 );
 }
-$kategorijos[0] = "--";
-include_once ( ROOTAS . "priedai/class.php" );
-$bla      = new forma();
-$naujiena = array(
+$categories[0] = "--";
+include_once config('class', 'dir') . 'class.form.php';
+$bla      = new Form();
+$new = array(
 	"Form"                           => array( "action" => "", "method" => "post", "name" => "reg" ),
 	"{$lang['system']['name']}:"     => array( "type" => "text", "value" => '', "name" => "pav", "class"=> "input" ),
 	//"{$lang['comments']['comments']}:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"),
-	"{$lang['system']['category']}:" => array( "type" => "select", "value" => $kategorijos, "name" => "kategorija", "class" => "input", "class"=> "input" ),
+	"{$lang['system']['category']}:" => array( "type" => "select", "value" => $categories, "name" => "category", "class" => "input", "class"=> "input" ),
 	"{$lang['admin']['news_more']}:" => array( "type" => "string", "value" => editorius( 'tiny_mce', 'standartinis', 'naujiena' ) ),
 	""                               => array( "type" => "submit", "name" => "action", "value" => "{$lang['news']['submit']}" )
 );
-lentele( "{$lang['news']['submiting']}", $bla->form( $naujiena ) );
+lentele($lang['news']['submiting'], $bla->form( $new ) );

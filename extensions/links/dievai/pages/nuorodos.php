@@ -25,14 +25,14 @@ if(BUTTONS_BLOCK) {
 if (empty($_GET['v'])) {
 	$_GET['v'] = 0;
 }
-include_once ( ROOT . "priedai/kategorijos.php" );
-kategorija( "nuorodos" );
+include_once config('functions', 'dir') . 'functions.categories.php';
+category( "nuorodos" );
 
 $sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `path`=0 AND `lang` = " . escape( lang() ) . " ORDER BY `id` DESC" );
 if ( sizeof( $sql ) > 0 ) {
-	$kategorijos = cat( 'nuorodos', 0 );
+	$categories = cat( 'nuorodos', 0 );
 }
-$kategorijos[0] = "--";
+$categories[0] = "--";
 $sql2           = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "nuorodos` WHERE `lang` = " . escape( lang() ) . " ORDER BY `pavadinimas` DESC" );
 if ( sizeof( $sql2 ) > 0 ) {
 	foreach ( $sql2 as $row2 ) {
@@ -281,7 +281,7 @@ if ( $_GET['v'] == 1 ) {
 
 		$lang['system']['category']  	=> [
 			"type" 		=> "select", 
-			"value" 	=> $kategorijos, 
+			"value" 	=> $categories, 
 			"name" 		=> "cat",
 			"selected" => (isset($extra['cat']) ? input($extra['cat']) : '0')
 		],

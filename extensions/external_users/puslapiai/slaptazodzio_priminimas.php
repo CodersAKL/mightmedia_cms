@@ -54,7 +54,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'siusti' ) {
 			mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "{$lang['pass']['wrongemail']}({$lang['pass']['remain']}) : " . $email ) . ", '" . time() . "', '" . escape( getip() ) . "')" );
 		} else {
 			$slaptas = random_name();
-			require_once( 'priedai/class.phpmailer-lite.php' );
+			require_once config('class', 'dir') . 'class.phpmailer-lite.php';
 			$mail = new PHPMailerLite();
 			$mail->IsMail();
 			$mail->CharSet = 'UTF-8';
@@ -84,9 +84,9 @@ if ( isset( $error ) ) {
 		klaida( $lang['system']['sorry'], $error );
 	}
 } elseif ( !isset( $_POST['action'] ) && !isset( $url['c'] ) ) {
-	include_once ( ROOTAS . "priedai/class.php" );
+	include_once config('class', 'dir') . 'class.form.php';
 
-	$bla   = new forma();
+	$bla   = new Form();
 	$forma = array(
 		"Form"                       => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "siusti", "extra"=> "onSubmit=\"return checkMail('reg','email')\"" ),
 		"{$lang['pass']['email']}:"  => array( "type" => "text", "name" => "email", "extra"=> "title='{$lang['pass']['email']}'" ),

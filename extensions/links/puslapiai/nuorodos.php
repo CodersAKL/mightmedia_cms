@@ -40,12 +40,12 @@ if ( isset( $link ) && strlen( $link ) > 0 && $link > 0 ) {
 	$link = mysql_query1( "SELECT `url` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `id`=" . escape( $link ) . " AND  `lang` = " . escape( lang() ) . " LIMIT 1", 86400 );
 	redirect( $link['url'] );
 }
-include_once( ROOT . 'priedai/kategorijos.php' );
+include_once config('functions', 'dir') . 'functions.categories.php';
 
-//kategorijos
+//categories
 $sqlas          = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='nuorodos' AND `lang` = " . escape( lang() ) . " ORDER BY `pavadinimas`", 3600 );
-$kategorijos    = cat( 'nuorodos', 0 );
-$kategorijos[0] = "--";
+$categories    = cat( 'nuorodos', 0 );
+$categories[0] = "--";
 if ( sizeof( $sqlas ) > 0 ) {
 	foreach ( $sqlas as $sql ) {
 		//TODO: skaiciavimas is neriboto gylio.. dabar tik kategorija + sub kategorija skaiciuoja
@@ -59,7 +59,7 @@ if ( sizeof( $sqlas ) > 0 ) {
 		}
 	}
 }
-include_once ( ROOTAS . "priedai/class.php" );
+include_once config('class', 'dir') . 'class.table.php';
 $bla = new Table();
 if ( isset( $info ) ) {
 	lentele( $lang['system']['categories'], $bla->render( $info ), FALSE );
@@ -80,14 +80,11 @@ FROM `" . LENTELES_PRIESAGA . "nuorodos`
 Left Join `" . LENTELES_PRIESAGA . "users` ON `" . LENTELES_PRIESAGA . "nuorodos`.`nick` = `" . LENTELES_PRIESAGA . "users`.`id` WHERE `" . LENTELES_PRIESAGA . "nuorodos`.`cat`='" . $k . "' AND `" . LENTELES_PRIESAGA . "nuorodos`.`active`='TAIP' AND `" . LENTELES_PRIESAGA . "nuorodos`.`lang` = " . escape( lang() ) . "
 ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400 );
 		if ( count( $q ) > 0 ) {
-			include_once ( "priedai/class.php" );
-
 			$bla  = new Table();
 			$info = array();
 
 			foreach ( $q as $sql ) {
 				$extra = '';
-				include_once ( "priedai/class.php" );
 				include_once ( "rating.php" );
 
 				$info[] = array(

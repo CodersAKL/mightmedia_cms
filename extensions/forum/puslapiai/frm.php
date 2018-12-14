@@ -9,7 +9,7 @@
  * @$Revision$
  * @$Date$
  * */
-//subkategorijos
+//subcategories
 $sid = isset( $url['s'] ) ? (int)$url['s'] : 0;
 //temos
 $tid = isset( $url['t'] ) ? (int)$url['t'] : 0;
@@ -30,7 +30,8 @@ $rid = isset( $url['r'] ) ? (int)$url['r'] : 0;
 //citatos
 $qid = isset( $url['q'] ) ? (int)$url['q'] : 0;
 
-include_once ( "priedai/class.php" );
+include_once config('class', 'dir') . 'class.form.php';
+
 $imagedir = ( file_exists( "stiliai/{$conf['Stilius']}/forum/" ) ? "stiliai/{$conf['Stilius']}/forum/" : "images/forum/" );
 //kur tu?
 $kur = mysql_query1( "SELECT pav, (SELECT pav FROM " . LENTELES_PRIESAGA . "d_straipsniai Where id={$tid} AND `lang` = " . escape( lang() ) . ")AS tema,(SELECT count(id) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE sid={$tid} AND tid={$sid}  AND `lang` = " . escape( lang() ) . ")AS zinute,(SELECT count(id) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE tid={$sid} AND `lang` = " . escape( lang() ) . ")AS subzinute,(SELECT count(id) FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`={$sid} AND `lang` = " . escape( lang() ) . ")AS temos FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`={$sid} AND `lang` = " . escape( lang() ) . " LIMIT 1", 120 );
@@ -322,8 +323,8 @@ $(\"#perveiza\").empty().append($(data));
 });
 });
 </script>";
-				$bla   = new forma();
-				$forma = array(
+				$bla   = new Form();
+				$form = array(
 					"Form"                    => array( "action" => "", "method" => "post", "name" => "msg" ),
 					"    "                    => array( "type" => "string", "value" => "<div id='perveiza'></div>" ),
 					" "                       => array( "type" => "string", "value" => bbs( 'msg' ) ),
@@ -332,7 +333,7 @@ $(\"#perveiza\").empty().append($(data));
 					"     "                   => array( "type" => "hidden", "name" => "action", "value" => ( ( !empty( $extra ) ) ? "f_update" : "f_send" ) ),
 					""                        => array( "type" => "string", "value"=> "<input type=\"button\" class=\"perveiza\" value=\"{$lang['forum']['perview']}\" /> <input type=\"submit\" class=\"submit\" value=\"" . ( ( !empty( $extra ) ) ? $lang['admin']['edit'] : $lang['forum']['submit'] ) . "\" />" ) );
 
-				lentele( $lang['forum']['newpost'], $bla->form( $forma ) );
+				lentele( $lang['forum']['newpost'], $bla->form( $form ) );
 			}
 		}
 	} else {
@@ -381,10 +382,10 @@ elseif ( (int)$kid && (int)$kid && (int)$kid > 0 ) {
 	if ( isset( $tsql['pav'] ) ) {
 		$sub_kategr = mysql_query1( "SELECT * FROM " . LENTELES_PRIESAGA . "d_temos ORDER BY `pav` AND `lang` = " . escape( lang() ) . " DESC" );
 		foreach ( $sub_kategr as $row ) {
-			$kategorijos[$row['id']] = $row['pav'];
+			$categories[$row['id']] = $row['pav'];
 		}
 
-		$bla  = new forma();
+		$bla  = new Form();
 		$form = array(
 			"Form"                                   => array(
 				"action" => "",
@@ -394,7 +395,7 @@ elseif ( (int)$kid && (int)$kid && (int)$kid > 0 ) {
 			"{$lang['admin']['forum_subcategory']}:" => array(
 				"type"     => "select",
 				"class"    => "select",
-				"value"    => $kategorijos,
+				"value"    => $categories,
 				"name"     => "keliam",
 				"selected" => $tsql['tid'] ),
 
@@ -500,8 +501,8 @@ echo "<script type=\"text/javascript\">$(document).ready(function() {
         });
      });
   </script>";
-		$bla   = new forma();
-		$forma = array(
+		$bla   = new Form();
+		$form = array(
 			"Form"                      => array(
 				"action" => "",
 				"method" => "post",
@@ -539,6 +540,6 @@ echo "<script type=\"text/javascript\">$(document).ready(function() {
 		);
 
 		addtotitle( $lang['forum']['newtopic'] );
-		lentele( $lang['forum']['newtopic'], $bla->form( $forma ) );
+		lentele( $lang['forum']['newtopic'], $bla->form( $form ) );
 	}
 }

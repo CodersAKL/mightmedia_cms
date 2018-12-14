@@ -43,7 +43,7 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 $subs  = 0;
 $limit = $conf['News_limit'];
 //$sqlkiek = '';
-//kategorijos
+//categories
 if ( $vid == 0 ) {
 	$sqlas = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `lang` = " . escape( lang() ) . " ORDER BY `pavadinimas`", 86400 );
 	if ( $sqlas && sizeof( $sqlas ) > 0 ) {
@@ -62,10 +62,10 @@ if ( $vid == 0 ) {
 
 		}
 	}
-	include_once ( "priedai/class.php" );
+	include_once config('class', 'dir') . 'class.table.php';
 	$bla = new Table();
 	if ( isset( $info ) ) {
-		lentele( "{$lang['system']['categories']}", $bla->render( $info ), FALSE );
+		lentele($lang['system']['categories'], $bla->render( $info ), FALSE );
 	}
 }
 //pabaiga
@@ -107,7 +107,7 @@ if ( $vid > 0 ) {
 				$autorius = $lang['system']['guest'];
 			}
 
-			include_once ( "priedai/class.php" );
+			include_once config('class', 'dir') . 'class.table.php';
 			$ble = new Table();
 			addtotitle( $sql['pavadinimas'] );
 			if ( isset( $sql['Kategorija'] ) ) {
@@ -188,7 +188,7 @@ else {
     LIMIT {$p},{$limit}", 86400 );
 	}
 	if ( sizeof( $sql_s ) > 0 ) {
-		include_once ( "priedai/class.php" );
+		include_once config('class', 'dir') . 'class.table.php';
 		$bla  = new Table();
 		$info = array();
 		foreach ( $sql_s as $sql ) {

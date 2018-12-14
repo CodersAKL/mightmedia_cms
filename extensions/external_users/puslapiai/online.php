@@ -48,7 +48,7 @@ foreach ( $result as $row ) {
 	$i++;
 }
 
-include_once 'priedai/class.php';
+include_once config('class', 'dir') . 'class.table.php';
 $bla = new Table();
 lentele( $lang['online']['users'] . ' - ' . $u, $bla->render( $info ) );
 

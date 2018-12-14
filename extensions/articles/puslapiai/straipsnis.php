@@ -29,7 +29,7 @@ if ( $sqlas && sizeof( $sqlas ) > 0 && !isset( $url['m'] ) ) {
 			);
 		}
 	}
-	include_once ( "priedai/class.php" );
+	include_once config('class', 'dir') . 'class.table.php';
 	$bla = new Table();
 	if ( isset( $info ) ) {
 		lentele( $page_pavadinimas, $bla->render( $info ), FALSE );

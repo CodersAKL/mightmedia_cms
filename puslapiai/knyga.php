@@ -16,8 +16,8 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 }
 $limit = 10;
 $viso  = kiek( "knyga" );
-include_once ( "priedai/class.php" );
-$bla = new forma();
+include_once config('class', 'dir') . 'class.form.php';
+$bla = new Form();
 //jei tai moderatorius
 if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
 	//jei adminas paspaude trinti
@@ -122,6 +122,4 @@ lentele( $lang['guestbook']['guestbook'], $text );
 if ( $viso > $limit ) {
 	lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
 }
-unset( $extra, $text, $forma );
-//PABAIGA - atvaizdavimo
-?>
+unset( $extra, $text, $form );

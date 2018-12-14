@@ -26,7 +26,7 @@ if ( isset( $url['k'] ) && isnum( $url['k'] ) && $url['k'] > 0 ) {
 	$k = 0;
 }
 $subs = 0;
-//kategorijos
+//categories
 if ( !isset( $url['m'] ) ) {
 	$sqlas = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `lang` = " . escape( lang() ) . " ORDER BY `pavadinimas`", 86400 );
 	if ( $sqlas && sizeof( $sqlas ) > 0 ) {

@@ -51,9 +51,10 @@ $search = array(
 );
 
 //Nupiešiam paieškos formą
-include_once ( ROOT . "priedai/class.php" );
-$bla = new forma();
-lentele( $lang['search']['search'], $bla->form( $search ) );
+include_once config('class', 'dir') . 'class.form.php';
+
+$bla = new Form();
+lentele($lang['search']['search'], $bla->form($search));
 $i = 0;
 //Atliekam paiešką
 //print_r($_POST);

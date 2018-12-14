@@ -39,10 +39,10 @@ if ( $sqlas && sizeof( $sqlas ) > 0 ) {
 		}
 	}
 }
-include_once ( "priedai/class.php" );
+include_once config('class', 'dir') . 'class.table.php';
 $bla = new Table();
 if ( isset( $info ) ) {
-	lentele( "{$lang['system']['categories']}", $bla->render( $info ), FALSE );
+	lentele($lang['system']['categories'], $bla->render( $info ), FALSE );
 }
 //Rodom naujienas esancias kategorijoj
 

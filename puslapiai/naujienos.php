@@ -58,19 +58,19 @@ if ( $kid == 0 ) {
 			$sql_autr        = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= '" . $row['autorius'] . "' LIMIT 1" );
 			$data            = $row['data'];
 			$autorius        = user( $row['autorius'], $sql_autr['id'], $sql_autr['levelis'] );
-			$kategorijos_pav = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape( $row['kategorija'] ) . " AND `lang` = " . escape( lang() ) . " limit 1" );
+			$categories_pav = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape( $row['kategorija'] ) . " AND `lang` = " . escape( lang() ) . " limit 1" );
 			$pav             = "";
-			if ( isset( $kategorijos_pav['pav'] ) ) {
+			if ( isset( $categories_pav['pav'] ) ) {
 				if ( isset( $conf['puslapiai']['naujkat.php']['id'] ) ) {
-					$pav .= "<div title='<b>{$lang['system']['category']}: </b>" . input( $kategorijos_pav['pavadinimas'] ) . "' class='kat'><a href='" . url( "?id," . $conf['puslapiai']['naujkat.php']['id'] . ";k," . (int)$kategorijos_pav['id'] ) . "'><img src='images/naujienu_kat/" . input( $kategorijos_pav['pav'] ) . "' alt='img' border='0' /></a></div>";
+					$pav .= "<div title='<b>{$lang['system']['category']}: </b>" . input( $categories_pav['pavadinimas'] ) . "' class='kat'><a href='" . url( "?id," . $conf['puslapiai']['naujkat.php']['id'] . ";k," . (int)$categories_pav['id'] ) . "'><img src='images/naujienu_kat/" . input( $categories_pav['pav'] ) . "' alt='img' border='0' /></a></div>";
 				} else {
-					$pav .= "<div title='<b>{$lang['system']['category']}: </b>" . input( $kategorijos_pav['pavadinimas'] ) . "' class='kat'><img src='images/naujienu_kat/" . input( $kategorijos_pav['pav'] ) . "' alt='img' border='0' /></div>";
+					$pav .= "<div title='<b>{$lang['system']['category']}: </b>" . input( $categories_pav['pavadinimas'] ) . "' class='kat'><img src='images/naujienu_kat/" . input( $categories_pav['pav'] ) . "' alt='img' border='0' /></div>";
 				}
 
 			}
 			$pav .= "";
 
-			if ( !isset( $kategorijos_pav['pav'] ) || teises( $kategorijos_pav['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
+			if ( !isset( $categories_pav['pav'] ) || teises( $categories_pav['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
 				if ( $row['sticky'] != 0 ) {
 					echo '<div class="sticky" id="news_' . $row['id'] . '">';
 				}

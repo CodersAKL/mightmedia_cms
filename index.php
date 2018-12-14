@@ -32,10 +32,20 @@ if ( is_file( 'priedai/conf.php' ) && filesize( 'priedai/conf.php' ) > 10 ) {
 } else {
 	die( '<h1>Sistemos klaida / System error</h1>Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.' );
 }
+
+/**
+ * BOOT
+ */
+include_once 'core/boot.php';
+
+
+
 include_once ( 'priedai/prisijungimas.php' );
+
 if ( !isset( $conf ) ) {
 	include_once 'priedai/funkcijos.php';
 }
+
 /* Puslapiu aprasymas */
 if ( isset( $url['id'] ) && !empty( $url['id'] ) && isnum( $url['id'] ) ) {
 	$pslid = (int)$url['id'];
@@ -46,6 +56,8 @@ if ( isset( $url['id'] ) && !empty( $url['id'] ) && isnum( $url['id'] ) ) {
 	$_GET['id']       = $pslid;
 	$url['id']        = $pslid;
 }
+
+
 if ( isset( $pslid ) && isnum( $pslid ) && $pslid > 0 ) {
 	$sql1 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape( (int)$pslid ) . " and `lang` = " . escape( lang() ) . " LIMIT 1", 259200 ); //keshas  3dienos.
 

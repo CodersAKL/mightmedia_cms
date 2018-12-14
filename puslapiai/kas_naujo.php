@@ -1,15 +1,19 @@
 <?php
-require_once ( "priedai/class.php" );
-$bla    = new forma();
+
+include_once config('class', 'dir') . 'class.form.php';
+$bla    = new Form();
+
 $dienos = array();
-for ( $i = 0; $i < 101; $i++ )
+for ( $i = 0; $i < 101; $i++ ) {
 	$dienos[$i] = $i;
-$forma = array(
+}
+	
+$form = array(
 	"Form"                                          => array( "action" => "", "method" => "post", "name" => "naujienos" ),
 	"Kelių dienų naujienas norėtumėte peržvelgti?:" => array( "type" => "select", "value" => $dienos, "name" => "dienos", "class" => "input", "selected" => ( isset( $_POST['dienos'] ) ? (int)$_POST['dienos'] : 7 ) ),
 	" "                                             => array( "type" => "submit", "name" => "ziureti", "value" => "Žiūrėti" )
 );
-lentele( 'Kas naujo?', $bla->form( $forma ) );
+lentele( 'Kas naujo?', $bla->form( $form ) );
 /*if (isset($_POST['dienos'])) {*/
 if ( isset( $_POST['dienos'] ) ) {
 	$nuo = time() - 24 * 3600 * (int)$_POST['dienos'];

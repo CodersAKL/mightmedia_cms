@@ -14,7 +14,7 @@ if ( !defined( "OK" ) || !isset( $_SESSION[SLAPTAS]['username'] ) ) {
 	header( "Location: " . url( "?id,{$conf['puslapiai'][$conf['pirminis'] . '.php']['id']}" ) );
 	exit;
 }
-include_once ( "priedai/class.php" );
+
 $mid = isset( $url['m'] ) ? $url['m'] : 0;
 $id  = $url['id'];
 // ############ Apdorojomi duomenys kurie buvo pateikti is tam tikros redagavimo lenteles #####################
@@ -105,7 +105,8 @@ lentele( $lang['user']['edit_settings'], $text );
 // Pakeisti slaptazodi
 if ( $mid == 1 ) {
 	$form_array = array( "Form" => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "change_password" ), "{$lang['user']['edit_pass']}:" => array( "type" => "password", "value" => "", "name" => "old_pass" ), "{$lang['user']['edit_newpass']}:" => array( "type" => "password", "value" => "", "name" => "new_pass" ), "{$lang['user']['edit_confirmnewpass']}:" => array( "type" => "password", "value" => "", "name" => "new_pass2" ), "" => array( "type" => "hidden", "name" => "action", "value" => "pass_change" ), "" => array( "type" => "submit", "value" => "{$lang['user']['edit_update']}" ) );
-	$form       = new forma();
+	include_once config('class', 'dir') . 'class.form.php';
+	$form       = new Form();
 	lentele( $lang['user']['edit_pass'], $form->form( $form_array ) );
 } // Pakeisti kontaktinius duomenis
 elseif ( $mid == 2 ) {
@@ -123,7 +124,8 @@ elseif ( $mid == 2 ) {
 		"\r\r\r"                         => array( "type" => "hidden", "name" => "action", "value" => "contacts_change" ),
 		""                               => array( "type" => "submit", "value" => $lang['user']['edit_update'] )
 	);
-	$form       = new forma();
+	include_once config('class', 'dir') . 'class.form.php';
+	$form       = new Form();
 	lentele( $lang['user']['edit_contacts'], $form->form( $form_array ) );
 }
 // Pakeisti sali, miesta
@@ -138,7 +140,8 @@ elseif ( $mid == 3 ) {
 
 	$form_array = array( "Form" => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] . ";m," . $_GET['m'] ), "method" => "post", "name" => "change_country" ), "{$lang['user']['edit_country']}:" => array( "type" => "select", "value" => $salis, "name" => "salis", "selected" => input( $info['salis'] ) ), "{$lang['user']['edit_city']}:" => array( "type" => "text", "value" => input( $info['miestas'] ), "name" => "miestas" ), " \r " => array( "type" => "hidden", "name" => "action", "value" => "country_change" ), "" => array( "type" => "submit", "value" => $lang['user']['edit_update'] ) );
 
-	$form = new forma();
+	include_once config('class', 'dir') . 'class.form.php';
+	$form = new Form();
 	lentele( $lang['user']['edit_locality'], $form->form( $form_array ) );
 }
 
@@ -222,7 +225,8 @@ elseif ( $mid == 5 ) {
 		""                                     => array( "type" => "submit", "value" => $lang['user']['edit_update'] )
 	);
 
-	$form = new forma();
+	include_once config('class', 'dir') . 'class.form.php';
+	$form = new Form();
 	lentele( $lang['user']['edit_mainsettings'], $form->form( $form_array ) );
 	unset( $data, $viso, $day, $month, $year );
 }

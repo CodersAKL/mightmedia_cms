@@ -12,8 +12,8 @@
 
 if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 	//ini_set("memory_limit", "50M");
-	include_once ( "priedai/class.php" );
-	$bla = new forma();
+	include_once config('class', 'dir') . 'class.form.php';
+	$bla = new Form();
 	if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti nuotrauką' ) {
 		if ( isset( $_POST['Aprasymas'] ) && isset( $_POST['Pavadinimas'] ) ) {
 			//Tasku pridejimas uz siuntini nutrinkite // noredami kad veiktu
@@ -274,20 +274,20 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 	}
 
 	$sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='galerija' AND `lang` = " . escape( lang() ) . " AND `path`=0 ORDER BY `id` DESC" );
-	include_once ( ROOTAS . "priedai/kategorijos.php" );
-	kategorija( "galerija", TRUE );
+	include_once config('functions', 'dir') . 'functions.categories.php';
+	category( "galerija", TRUE );
 	if ( sizeof( $sql ) > 0 ) {
-		$kategorijos = cat( 'galerija', 0 );
+		$categories = cat( 'galerija', 0 );
 	}
-	$kategorijos[0] = "--";
-	$forma          = array( "Form"                              => array( "enctype" => "multipart/form-data", "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "action" ),
+	$categories[0] = "--";
+	$form          = array( "Form"                              => array( "enctype" => "multipart/form-data", "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "action" ),
 	                         "{$lang['admin']['gallery_file']}:" => array( "name" => "failas", "type" => "file", "value" => "", "class"=> "input" ),
 	                         "{$lang['system']['name']}:"        => array( "type" => "text", "value" => '', "name" => "Pavadinimas", "class"=> "input" ),
-	                         "{$lang['gallery']['photoalbum']}:"    => array( "type" => "select", "value" => $kategorijos, "name" => "cat", "class" => "input", "class"=> "input" ),
+	                         "{$lang['gallery']['photoalbum']}:"    => array( "type" => "select", "value" => $categories, "name" => "cat", "class" => "input", "class"=> "input" ),
 	                         "{$lang['system']['about']}:"       => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
 		//"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","class"=>"input"),
 	                         ""                                  => array( "type" => "submit", "name" => "action", "value" => "{$lang['gallery']['submit']}" ) );
-	lentele( $lang['gallery']['submiting'], $bla->form( $forma ) );
+	lentele($lang['gallery']['submiting'], $bla->form($form));
 } else {
-	klaida( $lang['system']['warning'], $lang['system']['pleaselogin'] );
+	klaida($lang['system']['warning'], $lang['system']['pleaselogin']);
 }

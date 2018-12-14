@@ -323,10 +323,7 @@ INSERT INTO `nustatymai` (`id`, `key`, `val`) VALUES
 (20, 'galorder', 'data'),
 (21, 'galorder_type', 'DESC'),
 (22, 'Editor', 'markitup'),
-(23, 'hyphenator', '1'),
-(24, 'Pastas', ''),
-(25, 'kalba', 'lt.php'),
-(26, 'googleanalytics', '');
+(23, 'hyphenator', '1');
 
 -- --------------------------------------------------------
 
@@ -342,11 +339,7 @@ CREATE TABLE `page` (
   `place` int(11) DEFAULT NULL,
   `show` enum('Y','N') NOT NULL DEFAULT 'Y',
   `teises` varchar(255) NOT NULL DEFAULT 'N;',
-  `parent` int(150) NOT NULL DEFAULT '0',
-  `metatitle` text DEFAULT NULL,
-  `metadesc` text DEFAULT NULL,
-  `metakeywords` text DEFAULT NULL
-  
+  `parent` int(150) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --

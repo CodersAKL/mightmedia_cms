@@ -15,7 +15,7 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 	$p = 0;
 }
 
-include_once ( "priedai/class.php" );
+
 $limit = 30;
 $viso  = kiek( "users" );
 //vartotojų sarašas
@@ -36,6 +36,7 @@ if ( sizeof( $sql ) > 0 ) {
 		}
 	}
 	//nupiesiam adminu lentele
+	include_once config('class', 'dir') . 'class.table.php';
 	$bla = new Table();
 	lentele( "{$lang['ulist']['list']} - $viso", $bla->render( $info ), FALSE );
 	if ( $viso > $limit ) {
@@ -44,5 +45,3 @@ if ( sizeof( $sql ) > 0 ) {
 
 }
 unset( $info, $bla, $i, $sql );
-
-?>

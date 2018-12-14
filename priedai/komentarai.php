@@ -19,8 +19,8 @@ function komentarai( $id, $hide = FALSE ) {
 	if ( $conf['kmomentarai_sveciams'] != 3 ) {
 		if ( isset( $url['id'] ) && $id > 0 ) {
 			if ( isset( $_SESSION[SLAPTAS]['id'] ) || ( isset( $conf['kmomentarai_sveciams'] ) && $conf['kmomentarai_sveciams'] == 1 ) ) {
-				include_once ( "priedai/class.php" );
-				$bla  = new forma();
+				include_once config('class', 'dir') . 'class.form.php';
+				$bla  = new Form();
 				$form = array(
 					"Form"                     => array( "action" => "", "method" => "post", "name" => "n_kom" ),
 					$lang['guestbook']['name'] => (

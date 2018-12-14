@@ -207,7 +207,7 @@ if ( isset( $url['v'] ) ) {
 	}
 }
 if ( $_SESSION[SLAPTAS]['level'] > 0 && $a == 1 && !isset( $s ) ) {
-	include_once ( ROOTAS . "priedai/class.php" );
+	include_once config('class', 'dir') . 'class.table.php';
 	$sql = mysql_query1( "SELECT `id`, `read`,`from`, IF(`from` = '', 'Sve�?ias',`from`) AS `Nuo`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`date` DESC LIMIT $p,$limit" );
 	if ( sizeof( $sql ) > 0 ) {
 
@@ -222,13 +222,13 @@ if ( $_SESSION[SLAPTAS]['level'] > 0 && $a == 1 && !isset( $s ) ) {
 			}
 			$info[] = array( "<input type=\"checkbox\" name='visi' onclick='checkedAll(\"pm\");'/>"=> "<input type=\"checkbox\" name=\"pm_s[]\" value=\"{$row['id']}\" />", "" => $extra, "{$lang['user']['pm_subject']}:" => "<a href='" . url( "?id," . $url['id'] . ";v," . $row['id'] ) . "' style=\"display: block\">" . ( isset( $row['Pavadinimas'] ) && !empty( $row['Pavadinimas'] ) ? input( trimlink( $row['Pavadinimas'], 40 ) ) : "{$lang['user']['pm_nosubject']}" ) . "</a></div>", "{$lang['user']['pm_from']}:" => user( $row['Nuo'], $row['from_id'] ), "{$lang['user']['pm_time']}:" => kada( date( 'Y-m-d H:i:s ', $row['Data'] ) ), " " => "<a href='" . url( "?id," . $url['id'] . ";n,1;u," . str_replace( "=", "", input( base64_encode( $row['from'] ) ) ) . ";i," . $row['id'] ) . "'><img src='images/pm/replay.png' border=0 alt=\"{$lang['user']['pm_reply']}\" title=\"{$lang['user']['pm_reply']}\"/></a><a href='" . url( 'd,' . $row['id'] . '' ) . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='images/pm/delete.png' border=0 alt=\"{$lang['user']['pm_delete']}\" title=\"{$lang['user']['pm_delete']}\"/></a>" );
 		}
-		lentele( "{$lang['user']['pm_inbox']}", puslapiai( $p, $limit, $pm_sk, 10 ) . "<br/><form method=\"post\" id=\"pm\" astion=\"\">" . $bla->render( $info ) . "<input type=\"submit\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" value=\"{$lang['system']['delete']}\" /></form><br/>" . puslapiai( $p, $limit, $pm_sk, 10 ) );
+		lentele($lang['user']['pm_inbox'], puslapiai( $p, $limit, $pm_sk, 10 ) . "<br/><form method=\"post\" id=\"pm\" astion=\"\">" . $bla->render( $info ) . "<input type=\"submit\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" value=\"{$lang['system']['delete']}\" /></form><br/>" . puslapiai( $p, $limit, $pm_sk, 10 ) );
 	} else {
-		lentele( $lang['user']['pm_inbox'], "{$lang['user']['pm_empty_msg']}" );
+		lentele($lang['user']['pm_inbox'], $lang['user']['pm_empty_msg']);
 	}
 }
 if ( $_SESSION[SLAPTAS]['level'] > 0 && $a == 2 && !isset( $s ) ) {
-	include_once ( ROOTAS . "priedai/class.php" );
+	include_once config('class', 'dir') . 'class.table.php';
 	$sql = mysql_query1( "SELECT `id`, `read`, IF(`to` = '', 'Svečias',`to`) AS `to`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`to`) AS `to_id`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`date` DESC LIMIT $p,$limit" );
 	if ( count( $sql ) > 0 ) {
 		$bla  = new Table();
