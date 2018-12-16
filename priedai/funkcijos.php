@@ -2309,7 +2309,16 @@ if(! function_exists('getExtensionStatus')) {
 		}
 	}
 }
+if(! function_exists('getActiveExtensions')) {
+	function getActiveExtensions(){
 
+		$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "extensions` WHERE `status` = '1'";
+		$result =  mysql_query1($sql);
+		if ($result){
+			return $result;
+		}
+	}
+}
 
 /**
  * TODO: add this somewhere else
