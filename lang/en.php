@@ -11,6 +11,7 @@ $lang['admin']['configuration_updated'] = 'Settings updated successful!';
 $lang['admin']['configuration_main'] = 'Main settings';
 $lang['admin']['configuration_seo'] = 'SEO settings';
 $lang['admin']['configuration_maintenance'] = 'Maintenance settings';
+$lang['admin']['configuration_extensions'] = 'Extensions settings';
 $lang['setup']['lang'] = 'Language';
 $lang['setup']['url'] = 'Website url address';
 $lang['setup']['url_info'] = 'Please write your website main url address';

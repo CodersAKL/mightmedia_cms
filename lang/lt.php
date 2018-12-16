@@ -11,6 +11,7 @@ $lang['admin']['configuration_updated'] = 'Nustatymai sėkmingai atnaujinti!';
 $lang['admin']['configuration_main'] = 'Pagrindiniai nustatymai';
 $lang['admin']['configuration_seo'] = 'SEO nustatymai';
 $lang['admin']['configuration_maintenance'] = 'Remonto nustatymai';
+$lang['admin']['configuration_extensions'] = 'Plėtynių nustatymai';
 $lang['setup']['lang'] = 'Kalba';
 $lang['setup']['url'] = 'Tinklapio url adresas';
 $lang['setup']['url_info'] = 'Įveskite pagrindinį tinklapio adresą';
