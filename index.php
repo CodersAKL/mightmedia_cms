@@ -24,8 +24,8 @@ $stime = $m1[1] + $m1[0];
 //Iterpiam nustatymu faila jei ne perkialiam i instaliacija
 clearstatcache();
 
-if ( is_file( 'priedai/conf.php' ) && filesize( 'priedai/conf.php' ) > 10 ) {
-	include_once 'priedai/conf.php';
+if ( is_file( 'config.php' ) && filesize( 'config.php' ) > 10 ) {
+	include_once 'config.php';
 } elseif ( is_file( 'install/index.php' ) && !isset( $conf['Palaikymas'] ) ) {
 	header( 'location: install/index.php' );
 	exit();
@@ -41,7 +41,7 @@ include_once 'core/boot.php';
 include_once 'core/inc/inc.auth.php';
 
 // if ( !isset( $conf ) ) {
-// 	include_once 'priedai/funkcijos.php';
+// 	include_once 'funkcijos.php';
 // }
 
 /* Puslapiu aprasymas */

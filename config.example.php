@@ -1,5 +1,5 @@
 <?php
-if (basename($_SERVER['PHP_SELF']) == 'conf.php') { die("Tiesioginis kreipimąsis į failą draudžiamas"); }
+if (basename($_SERVER['PHP_SELF']) == 'config.php') { die("Tiesioginis kreipimąsis į failą draudžiamas"); }
 define('SETUP', true);
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 'Off');	//Klaidu pranesimai On/Off
@@ -27,12 +27,9 @@ unset($row,$sql,$user,$host,$pass,$db);
 //kalba
 $lang = [];
 if (isset($conf['kalba'])) {
-    require_once (realpath(dirname(__file__)) . '/../lang/' . (empty($_SESSION[SLAPTAS]['lang'])?basename($conf['kalba'],'.php'):$_SESSION[SLAPTAS]['lang']). '.php');
+    require_once (realpath(dirname(__file__)) . '/lang/' . (empty($_SESSION[SLAPTAS]['lang'])?basename($conf['kalba'],'.php'):$_SESSION[SLAPTAS]['lang']). '.php');
 } else {
-    require_once (realpath(dirname(__file__)) . '/../lang/lt.php');
+    require_once (realpath(dirname(__file__)) . '/lang/lt.php');
 }
 //Jeigu nepavyko nuskaityti nustatymų
 if (!isset($conf) || empty($conf)) die("<center><h1>Klaida 3</h1><br/>Svetainė laikinai neveikia. <h4>Prašome užsukti vėliau</h4></center>");
-
-// Inkludinam tai ko mums reikia
-require_once(realpath(dirname(__file__))."/funkcijos.php");

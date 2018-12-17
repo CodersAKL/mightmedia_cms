@@ -1,7 +1,7 @@
 <?php
 
-if ( is_file( '../priedai/conf.php' ) && filesize( '../priedai/conf.php' ) > 1 ) {
-	include_once ( "../priedai/conf.php" );
+if ( is_file( '../config.php' ) && filesize( '../config.php' ) > 1 ) {
+	include_once ( "../config.php" );
 } elseif ( is_file( '../install/index.php' ) ) {
 	header( 'location: ../install/index.php' );
 	exit;

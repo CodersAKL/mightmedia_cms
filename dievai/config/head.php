@@ -15,9 +15,9 @@ if ( !defined( 'ROOT' ) ) {
 	define( 'ROOT', $root );
 }
 
-if ( is_file( ROOT . 'priedai/conf.php' ) && filesize( ROOT . 'priedai/conf.php' ) > 1 ) {
+if ( is_file( ROOT . 'config.php' ) && filesize( ROOT . 'config.php' ) > 1 ) {
 
-	include_once ROOT . 'priedai/conf.php';
+	include_once ROOT . 'config.php';
 
 	$base   = explode( '/', dirname( $_SERVER['PHP_SELF'] ) );
 	$folder = $base[count( $base ) - 1];

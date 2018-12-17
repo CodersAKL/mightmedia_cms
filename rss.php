@@ -1,7 +1,7 @@
 <?php
 header( "content-type: application/xml; charset=UTF-8" );
 echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
-require_once( 'priedai/conf.php' );
+require_once( 'config.php' );
 if(! defined('ROOT')) {
 	define('ROOT', '');
 }

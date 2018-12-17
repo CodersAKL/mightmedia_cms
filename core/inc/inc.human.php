@@ -1,7 +1,7 @@
 <?php
 //todo: delete or fix;
-if (is_file( 'conf.php' ) && filesize( 'conf.php' ) > 10) {
-	include_once 'conf.php';
+if (is_file( 'config.php' ) && filesize( 'config.php' ) > 10) {
+	include_once 'config.php';
 } else {
 	die();
 }

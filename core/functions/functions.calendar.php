@@ -3,7 +3,7 @@
 
 //Siunciam nurodyta faila i narsykle. Pratestavau ant visu operaciniu ir narsykliu.
 if(! function_exists('download')) {
-	function download( $file, $filter = ".htaccess|.|..|remontas.php|index.php|configuration.php|conf.php" ) {
+	function download( $file, $filter = ".htaccess|.|..|remontas.php|index.php|configuration.php|config.php" ) {
 
 		global $sql, $lang;
 		$filter = explode( "|", $filter );

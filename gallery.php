@@ -3,7 +3,7 @@
 header( 'Content-type: text/xml' );
 define( 'ROOT', '' );
 
-require_once( 'priedai/conf.php' );
+require_once( 'config.php' );
 
 if ( isset( $conf['puslapiai']['galerija.php'] ) ) {
 

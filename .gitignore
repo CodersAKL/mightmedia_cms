@@ -1,6 +1,6 @@
 .idea
 .project
-priedai/conf.php
+config.php
 sandeliukas/*
 sandeliukas/!.htaccess
 images/galerija/*
@@ -21,4 +21,3 @@ siuntiniai/media/!index.html
 install-
 node_modules
 # .htaccess
-priedai/conf.php

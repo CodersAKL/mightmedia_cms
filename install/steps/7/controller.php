@@ -45,7 +45,7 @@ if (!empty($_POST) && isset($_POST['main_url'])) {
 
 	//finish setup
 	$zone    = (isset($_SESSION['time_zone']) ? $_SESSION['time_zone'] : 'Europe/Vilnius');
-    $configFile = file_get_contents(ROOT . 'priedai/conf.example.php');
+    $configFile = file_get_contents(ROOT . 'config.example.php');
     // Unique code to CMS sessions and identifications
     $secret = md5(uniqid(rand(), true));
     
@@ -59,7 +59,7 @@ if (!empty($_POST) && isset($_POST['main_url'])) {
     $configFile = str_replace('{{main_url}}', $_SESSION['main_url'], $configFile);
     $configFile = str_replace('{{email}}', $_SESSION['admin']['email'], $configFile);
   
-    $newConfig = ROOT . 'priedai/conf.php';
+    $newConfig = ROOT . 'config.php';
     if (! $newConfigFile = fopen($newConfig, 'w')) {
 		die($lang['setup']['cant_open'] . " (" . $newConfig . ")");
 	}

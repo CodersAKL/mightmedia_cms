@@ -86,7 +86,7 @@ if(! function_exists('getFiles')) {
 		global $lang;
 
 		if(empty($denny)) {
-			$denny = '.htaccess|index.php|index.html|index.htm|index.php3|conf.php';
+			$denny = '.htaccess|index.php|index.html|index.htm|index.php3|config.php';
 		}
 
 		$denny     	= explode( '|', $denny );
