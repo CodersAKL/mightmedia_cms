@@ -2291,6 +2291,39 @@ if(! function_exists('checkVersion')) {
 		return false;
 	}
 }
+if(! function_exists('isExtensionInstalled')) {
+	function isExtensionInstalled($name){
+
+		$sql = "SELECT EXISTS( SELECT * FROM `" . LENTELES_PRIESAGA . "extensions` WHERE `name` = " . escape($name) . ") AS 'status'";
+		$result =  mysql_query1($sql);
+		if ($result){
+			return ($result[0]['status'] == 1) ? true : false;
+		}
+	}
+
+}
+if(! function_exists('getExtensionStatus')) {
+	function getExtensionStatus($name)
+	{
+		$sql = "SELECT `status` FROM `" . LENTELES_PRIESAGA . "extensions` WHERE `name` = " . escape($name);
+		$result =  mysql_query1($sql);
+		if ($result){
+			return ($result[0]['status'] == 1) ? true : false;
+		} else {
+			return false;
+		}
+	}
+}
+if(! function_exists('getActiveExtensions')) {
+	function getActiveExtensions(){
+
+		$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "extensions` WHERE `status` = '1'";
+		$result =  mysql_query1($sql);
+		if ($result){
+			return $result;
+		}
+	}
+}
 
 /**
  * TODO: add this somewhere else
@@ -2302,8 +2335,7 @@ $extensions = getDirs($extPath);
 if(! empty($extensions)) {
 	foreach ($extensions as $extension) {
 		$fileExt = $extPath . $extension . '/config.php';
-
-		if(file_exists($fileExt)) {
+		if(file_exists($fileExt) && getExtensionStatus($extension)) {
 			require_once $fileExt;
 		}
 	}

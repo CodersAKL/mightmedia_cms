@@ -323,7 +323,10 @@ INSERT INTO `nustatymai` (`id`, `key`, `val`) VALUES
 (20, 'galorder', 'data'),
 (21, 'galorder_type', 'DESC'),
 (22, 'Editor', 'markitup'),
-(23, 'hyphenator', '1');
+(23, 'hyphenator', '1'),
+(24, 'Pastas', ''),
+(25, 'kalba', 'lt.php'),
+(26, 'googleanalytics', '');
 
 -- --------------------------------------------------------
 
@@ -339,7 +342,11 @@ CREATE TABLE `page` (
   `place` int(11) DEFAULT NULL,
   `show` enum('Y','N') NOT NULL DEFAULT 'Y',
   `teises` varchar(255) NOT NULL DEFAULT 'N;',
-  `parent` int(150) NOT NULL DEFAULT '0'
+  `parent` int(150) NOT NULL DEFAULT '0',
+  `metatitle` text DEFAULT NULL,
+  `metadesc` text DEFAULT NULL,
+  `metakeywords` text DEFAULT NULL
+  
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
@@ -518,6 +525,34 @@ CREATE TABLE `straipsniai` (
   `rodoma` varchar(4) NOT NULL DEFAULT 'NE',
   `kat` int(125) DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `extensions`
+--
+
+CREATE TABLE `extensions` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `status` varchar(3) DEFAULT 0,
+  `options` varchar(255) DEFAULT NULL
+  
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `extensions`
+--
+
+INSERT INTO `extensions` (`id`, `name`, `status`, `options`) VALUES
+(1, 'articles', '1', ''),
+(2, 'downloads', '1', ''),
+(3, 'external_users', '1', ''),
+(4, 'faq', '1', ''),
+(5, 'forum', '1', ''),
+(6, 'gallery', '1', ''),
+(7, 'links', '1', ''),
+(8, 'polls', '1', '')
 
 -- --------------------------------------------------------
 
@@ -756,6 +791,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indexes for table `extensions`
+--
+ALTER TABLE `extensions`
+  ADD PRIMARY KEY (`id`),
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -892,3 +933,8 @@ ALTER TABLE `users`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+--
+-- AUTO_INCREMENT for table `extensions`
+--
+ALTER TABLE `extensions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;

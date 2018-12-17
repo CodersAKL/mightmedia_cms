@@ -63,6 +63,12 @@ if ( !empty( $_GET['lang'] ) ) {
 }
 if ( !empty( $_SESSION[SLAPTAS]['lang'] ) && is_file( ROOT . 'lang/' . basename( $_SESSION[SLAPTAS]['lang'] ) . '.php' ) ) {
 	require( ROOT . 'lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' );
+	$extensions = getActiveExtensions();
+	foreach ($extensions as $extension) {
+		if (is_file( ROOT . 'extensions/' . $extension['name'] . '\/lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' )){
+			require( ROOT . 'extensions/' . $extension['name'] . '\/lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' );
+		}
+	}
 }
 if ( empty( $_SESSION[SLAPTAS]['username'] ) || $_SESSION[SLAPTAS]['level'] != 1 ) {
 	redirect( ROOT . 'index.php' );

@@ -363,6 +363,71 @@ if (isset($url['c'])) {
 
 		$formClass = new Form($settings);
 		lentele($lang['admin']['configuration_seo'], $formClass->form());
+	} 
+	
+	else if($url['c'] == 'extensions') {
+		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['saveExtensionsSettings']) && (isset($_POST['extension'])) ) {
+			
+			$extensionsSettings = $_POST['extension'];
+			foreach ($extensionsSettings as $extension => $settings) {
+				$status = (isset($settings) && $settings == '1') ? 1 : 0;
+				if (isExtensionInstalled($extension)){
+					$extensionsRequest = "UPDATE `" . LENTELES_PRIESAGA . "extensions` SET `status`= " . escape($status) . " WHERE `name` = " . escape($extension);
+				} else if ($status == 1 ) {
+					$extensionsRequest = "INSERT INTO `" . LENTELES_PRIESAGA . "extensions` (`name`, `status`, `options`) VALUES (" . escape($extension) . ", " . escape($status) . ", '')";
+				}
+				if (isset($extensionsRequest)){
+					mysql_query1($extensionsRequest);
+				}
+			}
+			unset($settings);
+			
+			delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
+			redirect(
+				url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
+				"header",
+				[
+					'type'		=> 'success',
+					'message' 	=> $lang['admin']['configuration_updated']
+				]
+			);
+		}
+		$settings = array();
+		$settings["Form"]   = [
+			"action" 	=> "", 
+			"method" 	=> "post", 
+			"enctype" 	=> "", 
+			"id" 		=> "", 
+			"class" 	=> "", 
+			"name" 		=> "reg"
+		];
+
+			$extPath = ROOT . 'extensions/';
+			$extensions = getDirs($extPath);
+			
+			if(! empty($extensions)) {
+				foreach ($extensions as $extension) {
+					$fileExt = $extPath . $extension . '/config.php';
+					if(file_exists($fileExt)) {
+						$settings[$extension] = [ 	
+							"type"  	=> "switch",
+							"value" 	=> '1',
+							"name"  	=> "extension[" . $extension . "]",
+							'form_line'	=> 'form-not-line',
+							'checked'	=> getExtensionStatus($extension)
+						];
+					}
+				}
+			}
+
+			$settings[""] = [ 
+				"type" 		=> "submit", 
+				"name" 		=> "saveExtensionsSettings", 
+				"value" 	=> $lang['admin']['save'], 
+				'form_line'	=> 'form-not-line',
+			];
+		$formClass = new Form($settings);
+		lentele($lang['admin']['configuration_extensions'], $formClass->form());
 	}
 
 }
