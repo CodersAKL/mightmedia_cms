@@ -55,17 +55,24 @@ foreach ( $kalbos as $file ) {
 }
 $language .= '</ul></li></ul>';
 
-// if ( !empty( $_GET['lang'] ) ) {
-// 	$_SESSION[SLAPTAS]['lang'] = basename( $_GET['lang'], '.php' );
-// 	redirect( url( "?id," . $_GET['id'] ) );
-// }
-// if ( !empty( $_SESSION[SLAPTAS]['lang'] ) && is_file( ROOT . 'lang/' . basename( $_SESSION[SLAPTAS]['lang'] ) . '.php' ) ) {
-// 	require( ROOT . 'lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' );
-// }
-// if ( empty( $_SESSION[SLAPTAS]['username'] ) || $_SESSION[SLAPTAS]['level'] != 1 ) {
-// 	redirect( ROOT . 'index.php' );
-// }
-// if ( isset( $_GET['do'] ) ) {
-// 	unset( $_SESSION[SLAPTAS]['username'], $_SESSION[SLAPTAS]['level'], $_SESSION[SLAPTAS]['password'], $_SESSION[SLAPTAS]['id'] );
-// 	redirect( ROOT . 'index.php' );
-// }
+if ( !empty( $_GET['lang'] ) ) {
+	$_SESSION[SLAPTAS]['lang'] = basename( $_GET['lang'], '.php' );
+	redirect( url( "?id," . $_GET['id'] ) );
+}
+
+if ( !empty( $_SESSION[SLAPTAS]['lang'] ) && is_file( ROOT . 'lang/' . basename( $_SESSION[SLAPTAS]['lang'] ) . '.php' ) ) {
+	require( ROOT . 'lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' );
+	$extensions = getActiveExtensions();
+	foreach ($extensions as $extension) {
+		if (is_file( ROOT . 'extensions/' . $extension['name'] . '\/lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' )){
+			require( ROOT . 'extensions/' . $extension['name'] . '\/lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' );
+		}
+	}
+}
+if ( empty( $_SESSION[SLAPTAS]['username'] ) || $_SESSION[SLAPTAS]['level'] != 1 ) {
+	redirect( ROOT . 'index.php' );
+}
+if ( isset( $_GET['do'] ) ) {
+	unset( $_SESSION[SLAPTAS]['username'], $_SESSION[SLAPTAS]['level'], $_SESSION[SLAPTAS]['password'], $_SESSION[SLAPTAS]['id'] );
+	redirect( ROOT . 'index.php' );
+}

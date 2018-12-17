@@ -46,7 +46,8 @@ $loadCoreFunctionsArray = [
     'pages',
     'string',
     'url',
-    'users',
+	'users',
+	'extensions',
 ];
 
 foreach ($loadCoreFunctionsArray as $loadCoreFunctionSlug) {
@@ -151,7 +152,7 @@ if(! empty($extensions)) {
 	foreach ($extensions as $extension) {
 		$fileExt = $extPath . $extension . '/config.php';
 
-		if(file_exists($fileExt)) {
+		if(file_exists($fileExt) && getExtensionStatus($extension)) {
 			require_once $fileExt;
 		}
 	}

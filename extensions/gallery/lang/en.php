@@ -1,0 +1,33 @@
+<?php
+//gallery admin
+$lang['admin']['gallery_conf'] = 'Configuration';
+$lang['admin']['gallery_unpublished'] = 'Unpublished images';
+$lang['admin']['gallery_add'] = 'Add image';
+$lang['admin']['gallery_group_add'] = 'Add images';
+$lang['admin']['gallery_edit'] = 'Edit image';
+$lang['admin']['gallery_activated'] = 'Image activated';
+$lang['admin']['gallery_deleted'] = 'Image deleted';
+$lang['admin']['gallery_updated'] = 'Image updated';
+$lang['admin']['gallery_added'] = 'Image added';
+$lang['admin']['gallery_notimg'] = 'Not image file';
+$lang['admin']['gallery_nofile'] = 'Choose file';
+$lang['admin']['gallery_noimages'] = 'No images';
+$lang['admin']['gallery_images'] = 'Image';
+$lang['admin']['gallery_file'] = 'File';
+$lang['admin']['gallery_title'] = 'Title';
+$lang['admin']['gallery_about'] = 'About';
+$lang['admin']['gallery_maxwidth'] = 'Max. width';
+$lang['admin']['gallery_minwidth'] = 'Min. width';
+$lang['admin']['gallery_comments'] = 'Comments';
+$lang['admin']['gallery_rate'] = 'Rate';
+$lang['admin']['gallery_images_per_page'] = 'Images per page';
+$lang['admin']['gallery_author'] = 'Author';
+$lang['admin']['gallery_date'] = 'Date';
+$lang['admin']['gallery_image'] = 'Image';
+$lang['admin']['gallery_next'] = 'Next';
+$lang['admin']['gallery_prev'] = 'Previous';
+$lang['admin']['gallery_cant'] = 'You can not view this image';
+$lang['admin']['gallery_order'] = 'Order by';
+$lang['admin']['gallery_order_type'] = 'Order type';
+$lang['admin']['gallery_from_biggest'] = 'From newest';
+$lang['admin']['gallery_from_smallest'] = 'From oldest';

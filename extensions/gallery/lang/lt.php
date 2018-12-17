@@ -1,0 +1,33 @@
+<?php
+//gallery admin
+$lang['admin']['gallery_conf'] = 'Konfigūracija';
+$lang['admin']['gallery_unpublished'] = 'Nerodomos nuotraukos';
+$lang['admin']['gallery_add'] = 'Pridėti nuotrauką';
+$lang['admin']['gallery_group_add'] = 'Pridėti nuotraukas';
+$lang['admin']['gallery_edit'] = 'Redaguoti nuotrauką';
+$lang['admin']['gallery_activated'] = 'Nuotrauka aktyvuota';
+$lang['admin']['gallery_deleted'] = 'Nuotrauka ištrinta';
+$lang['admin']['gallery_updated'] = 'Nuotrauka atnaujinta';
+$lang['admin']['gallery_added'] = 'Nuotrauka pridėta';
+$lang['admin']['gallery_notimg'] = 'Ne paveikslėlio failas';
+$lang['admin']['gallery_nofile'] = 'Pasirinkite failą';
+$lang['admin']['gallery_noimages'] = 'Nėra nuotraukų';
+$lang['admin']['gallery_images'] = 'Nuotrauka';
+$lang['admin']['gallery_file'] = 'Failas';
+$lang['admin']['gallery_title'] = 'Pavadinimas';
+$lang['admin']['gallery_about'] = 'Apie';
+$lang['admin']['gallery_maxwidth'] = 'Maksimalus plotis';
+$lang['admin']['gallery_minwidth'] = 'Minimalus plotis';
+$lang['admin']['gallery_comments'] = 'Komentarai';
+$lang['admin']['gallery_rate'] = 'Įrašų vertinimo galimybė';
+$lang['admin']['gallery_images_per_page'] = 'Kiek nuotraukų puslapyje?';
+$lang['admin']['gallery_author'] = 'Autorius';
+$lang['admin']['gallery_date'] = 'Data';
+$lang['admin']['gallery_image'] = 'Nuotrauka';
+$lang['admin']['gallery_next'] = 'Kita';
+$lang['admin']['gallery_prev'] = 'Buvusi';
+$lang['admin']['gallery_cant'] = 'Jūs negalite žiūrėti šios nuotraukos';
+$lang['admin']['gallery_order'] = 'Rikiuoti pagal';
+$lang['admin']['gallery_order_type'] = 'Rikiavimo pobūdis';
+$lang['admin']['gallery_from_biggest'] = 'Nuo naujausios';
+$lang['admin']['gallery_from_smallest'] = 'Nuo seniausios';
