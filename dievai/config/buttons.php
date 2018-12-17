@@ -109,6 +109,11 @@ $buttons = [
             'url' 	=> url("?id,999;a,configuration;c,extensions"),
             'value'	=> $lang['admin']['configuration_extensions'],
             'icon'	=> adminIcon('configuration', 'extensions')
+        ],
+        [
+            'url' 	=> url("?id,999;a,configuration;c,translation"),
+            'value'	=> $lang['admin']['configuration_translations'],
+            'icon'	=> adminIcon('configuration', 'translation')
         ]
     ]
 ];

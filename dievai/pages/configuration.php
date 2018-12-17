@@ -363,9 +363,7 @@ if (isset($url['c'])) {
 
 		$formClass = new Form($settings);
 		lentele($lang['admin']['configuration_seo'], $formClass->form());
-	} 
-	
-	else if($url['c'] == 'extensions') {
+	} else if($url['c'] == 'extensions') {
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['saveExtensionsSettings']) && (isset($_POST['extension'])) ) {
 			
 			$extensionsSettings = $_POST['extension'];
@@ -428,6 +426,69 @@ if (isset($url['c'])) {
 			];
 		$formClass = new Form($settings);
 		lentele($lang['admin']['configuration_extensions'], $formClass->form());
+	} else if($url['c'] == 'translation') {
+		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['saveTranslationOptions']))  {
+			$req = array();
+			
+			$req[] = [
+				'val' 		=> (str_replace(',','.', $_POST['ip'])),
+				'key' 		=> 'translator',
+				'options' 	=> null
+			];
+			
+			$req[] = [
+				'val' 		=> $_POST['status'],
+				'key' 		=> 'translation_status',
+				'options' 	=> null
+			];
+			
+			foreach ($req as $row) {
+				setSettingsValue( $row['val'], $row['key'], $row['options'] );
+			}
+			
+			delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
+			
+			redirect(
+				url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
+				"header",
+				[
+					'type'		=> 'success',
+					'message' 	=> $lang['admin']['configuration_updated']
+				]
+			);
+			
+		}
+		$settings = array();
+		$settings["Form"]   = [
+			"action" 	=> "", 
+			"method" 	=> "post", 
+			"enctype" 	=> "", 
+			"id" 		=> "", 
+			"class" 	=> "", 
+			"name" 		=> "reg"
+		];
+		$settings[$lang['admin']['configuration_translations_status']]= [
+			"type"  	=> "switch",
+			"value" 	=> '1',
+			"name"  	=> "status",
+			'form_line'	=> 'form-not-line',
+			'checked'	=> (input(getSettingsValue('translation_status')) == 1 ? true : false)
+		];
+		$settings["IP (xx.xxx.xxx.xx)"] =  [
+			"type" 	=> "text",
+			"value" => input( (getSettingsValue('translator') ) ? getSettingsValue('translator') : '' ),
+			"name" 	=> "ip"
+		];			
+		
+		$settings[""] = [ 
+			"type" 		=> "submit", 
+			"name" 		=> "saveTranslationOptions", 
+			"value" 	=> $lang['admin']['save'], 
+			'form_line'	=> 'form-not-line',
+		];
+		$formClass = new Form($settings);
+		lentele($lang['admin']['configuration_translations'], $formClass->form());
 	}
+
 
 }
