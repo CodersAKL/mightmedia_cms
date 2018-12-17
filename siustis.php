@@ -12,8 +12,12 @@
 
 session_start();
 
-include_once ( "priedai/conf.php" );
-include_once ( "priedai/header.php" );
+/**
+ * BOOT
+ */
+include_once 'core/boot.php';
+
+include_once 'core/inc/inc.header.php';
 
 ob_start();
 header( "Content-type: text/html; charset=utf-8" );

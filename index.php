@@ -106,7 +106,7 @@ if ( !empty( $_GET['lang'] ) ) {
 	require(ROOT . 'lang/' . basename($_SESSION['lang'], '.php') . '.php');
 }*/
 
-include_once 'priedai/header.php';
+include_once 'core/inc/inc.header.php';
 //Tikrinam ar setup.php failas paљalintas. Saugumo sumetimais
 if ( is_dir( 'install/' ) && $_SESSION[SLAPTAS]['level'] == 1 && !@unlink( 'install/index.php' ) ) {
 	die( '<h1>Demesio / Warning</h1><h3>Neištrintas install aplankalas.</h3> Tai saugumo spraga. Prašome pašalinkite šį aplankalą iš serverio arba pakeiskite jo pavadinimą. /Please, remove install folder from server.</h3>' );

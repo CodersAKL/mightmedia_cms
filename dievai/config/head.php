@@ -35,7 +35,7 @@ if ( is_file( ROOT . 'priedai/conf.php' ) && filesize( ROOT . 'priedai/conf.php'
 
 	define( 'LEVEL', $_SESSION[SLAPTAS]['level'] );
 
-	include_once ROOT . 'priedai/header.php';
+	include_once ROOT . 'core/inc/inc.header.php';
 
 } elseif (is_file(ROOT . 'install/index.php')) {
 	// header('location: ' . ROOT . 'install/index.php');
