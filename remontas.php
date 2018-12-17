@@ -12,8 +12,13 @@
 ob_start();
 session_start();
 $out_page = TRUE;
-include_once ( dirname( __file__ ) . "/priedai/conf.php" );
-include_once ( dirname( __file__ ) . "/priedai/prisijungimas.php" );
+/**
+ * BOOT
+ */
+include_once 'core/boot.php';
+
+include_once 'core/inc/inc.auth.php';
+
 include_once ( dirname( __file__ ) . "/stiliai/" . $conf['Stilius'] . "/sfunkcijos.php" );
 if ( $conf['Palaikymas'] == 0 ) {
 	header( 'location: index.php' );

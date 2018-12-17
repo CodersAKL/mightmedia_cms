@@ -1,8 +1,15 @@
 <?php
 ob_start();
 session_start();
-include_once( "priedai/conf.php" );
-include_once( "priedai/prisijungimas.php" );
+
+/**
+ * BOOT
+ */
+include_once 'core/boot.php';
+
+include_once 'core/inc/inc.auth.php';
+
+
 if ( isset( $_SESSION[SLAPTAS]['level'] ) && $_SESSION[SLAPTAS]['level'] > 0 && isset( $_FILES['userfile']['type'] ) ) {
 
 

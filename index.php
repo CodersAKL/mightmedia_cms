@@ -38,13 +38,11 @@ if ( is_file( 'priedai/conf.php' ) && filesize( 'priedai/conf.php' ) > 10 ) {
  */
 include_once 'core/boot.php';
 
+include_once 'core/inc/inc.auth.php';
 
-
-include_once ( 'priedai/prisijungimas.php' );
-
-if ( !isset( $conf ) ) {
-	include_once 'priedai/funkcijos.php';
-}
+// if ( !isset( $conf ) ) {
+// 	include_once 'priedai/funkcijos.php';
+// }
 
 /* Puslapiu aprasymas */
 if ( isset( $url['id'] ) && !empty( $url['id'] ) && isnum( $url['id'] ) ) {

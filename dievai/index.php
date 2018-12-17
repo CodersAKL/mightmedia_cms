@@ -28,7 +28,7 @@ if ( is_file( '../priedai/conf.php' ) && filesize( '../priedai/conf.php' ) > 1 )
  */
 include_once ROOT . 'core/boot.php';
 
-include_once ROOT . 'priedai/prisijungimas.php';
+include_once ROOT . 'core/inc/inc.auth.php';
 
 require 'themes/material/config.php';
 require 'themes/material/functions.php';
