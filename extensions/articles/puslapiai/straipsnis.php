@@ -102,9 +102,11 @@ if ( $k >= 0 && empty( $url['m'] ) ) {
 			<!-- AddThis Button END -->
 			";
 		lentele( input( $row['pav'] ), $text, rating_form( $page, $row['id'] ) );
-		include ( ROOTAS . "priedai/komentarai.php" );
-
-		komentarai( $url['m'], TRUE );
+		/**
+		 * Comments
+		 */
+		include_once config('functions', 'dir') . 'functions.comments.php';
+		comments($url['m'], true);
 	} else {
 		klaida( $lang['system']['warning'], "{$lang['article']['cant']}." );
 	}

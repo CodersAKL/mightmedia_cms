@@ -126,8 +126,11 @@ if ( $vid > 0 ) {
 
 			lentele( "{$lang['download']['downloads']} >> " . ( isset( $sql['Kategorija'] ) ? input( $sql['Kategorija'] ) . " >> " : "" ) . input( $sql['pavadinimas'] ) . "", $ble->render( $info2 ) . "<a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>" );
 
-			include_once ( "priedai/komentarai.php" );
-			komentarai( $vid );
+			/**
+			 * Comments
+			 */
+			include_once config('functions', 'dir') . 'functions.comments.php';
+			comments($vid);
 		} else {
 			klaida( $lang['system']['error'], $lang['download']['notallowed'] );
 		}

@@ -49,31 +49,31 @@ if ( isset( $memb[1] ) ) {
 			</tr>
 			<tr class="tr">
 				<td height="14" class="td" width="140">
-          <center>
-            ' . avatar( $sql['email'], '80' ) . '<br style="clear:both" />
-            <small>' . $grupe . '<br />' . $admin . '</small>
-          </center>
-        </td>
+		  <center>
+			' . avatar( $sql['email'], '80' ) . '<br style="clear:both" />
+			<small>' . $grupe . '<br />' . $admin . '</small>
+		  </center>
+		</td>
 				<td height="58" valign="top" class="td" width="190">
-          <small>
-            <b>' . $lang['user']['user_name'] . ':</b> ' . $sql['vardas'] . '<br />
-            <b>' . $lang['user']['user_secondname'] . ':</b> ' . $sql['pavarde'] . '<br />
-            <b>' . $lang['user']['user_age'] . ':</b> ' . ( amzius( $sql['gim_data'] ) > 0 ? amzius( $sql['gim_data'] ) : "-" ) . '<br />
-            <b>' . $lang['user']['user_city'] . ':</b> ' . input( $sql['miestas'] ) . '<br />
-            <b>' . $lang['user']['user_registered'] . ': </b> ' . date( 'Y-m-d H:i:s ', $sql['reg_data'] ) . '<br />
-            <b>' . $lang['user']['user_lastvisit'] . ': </b> ' . kada( date( 'Y-m-d H:i:s ', $sql['login_data'] ) ) . '<br />
-            <b>' . $lang['user']['user_points'] . ': </b> ' . $sql['taskai'] . '<br />
-          </small>
-        </td>
+		  <small>
+			<b>' . $lang['user']['user_name'] . ':</b> ' . $sql['vardas'] . '<br />
+			<b>' . $lang['user']['user_secondname'] . ':</b> ' . $sql['pavarde'] . '<br />
+			<b>' . $lang['user']['user_age'] . ':</b> ' . ( amzius( $sql['gim_data'] ) > 0 ? amzius( $sql['gim_data'] ) : "-" ) . '<br />
+			<b>' . $lang['user']['user_city'] . ':</b> ' . input( $sql['miestas'] ) . '<br />
+			<b>' . $lang['user']['user_registered'] . ': </b> ' . date( 'Y-m-d H:i:s ', $sql['reg_data'] ) . '<br />
+			<b>' . $lang['user']['user_lastvisit'] . ': </b> ' . kada( date( 'Y-m-d H:i:s ', $sql['login_data'] ) ) . '<br />
+			<b>' . $lang['user']['user_points'] . ': </b> ' . $sql['taskai'] . '<br />
+		  </small>
+		</td>
 				<td height="58" valign="top" class="td" width="140">
-          <small>
-            <b>ICQ:</b> ' . input( $sql['icq'] ) . '<br />
-            <b>MSN:</b> ' . input( $sql['msn'] ) . '<br />
-            <b>Skype:</b> ' . input( $sql['skype'] ) . '<br />
-            <b>Yahoo:</b> ' . input( $sql['yahoo'] ) . '<br />
-            <b>AIM:</b> ' . input( $sql['aim'] ) . '<br />
-            <b>WWW:</b> ' . linkas( $sql['url'] ) . '
-          </small>
+		  <small>
+			<b>ICQ:</b> ' . input( $sql['icq'] ) . '<br />
+			<b>MSN:</b> ' . input( $sql['msn'] ) . '<br />
+			<b>Skype:</b> ' . input( $sql['skype'] ) . '<br />
+			<b>Yahoo:</b> ' . input( $sql['yahoo'] ) . '<br />
+			<b>AIM:</b> ' . input( $sql['aim'] ) . '<br />
+			<b>WWW:</b> ' . linkas( $sql['url'] ) . '
+		  </small>
 				</td>
 			</tr>
 			<tr class="th">
@@ -84,17 +84,17 @@ if ( isset( $memb[1] ) ) {
 				' . ( puslapis( 'frm.php' ) ? '<td class="td" rowspan="1" height="87" valign="top" width="140"><small>
 					<b>' . $lang['user']['topics'] . ':</b> ' . $sql['forum_temos'] . '<br />
 					<b>' . $lang['forum']['messages'] . ':</b>	' . $sql['forum_atsakyta'] . '<br /></small>
-        </td>' : '' ) . '
+		</td>' : '' ) . '
 				<td class="td" colspan="' . ( puslapis( 'frm.php' ) ? '2' : '3' ) . '" height="18" width="280">' . bbcode( $sql['parasas'] ) . '</td>
 			</tr>		
 			' . ( $conf['galbalsuot'] == 1 ? '<tr class="th">
 				<th class="th" height="14" colspan="3" >' . $lang['user']['user_rate'] . '</th>
 			</tr>
-      <tr class="tr">
-        <td class="td" colspan="3"> 
-          ' . $vote . '
-        </td>
-      </tr>' : '' ) . '
+	  <tr class="tr">
+		<td class="td" colspan="3"> 
+		  ' . $vote . '
+		</td>
+	  </tr>' : '' ) . '
 		</table>
 		
 ';
@@ -118,9 +118,12 @@ if ( isset( $memb[1] ) ) {
 
 		// Jeigu perziurima TIK informacija, o vartotojas SAVES NEZIURI per nustatyta puslapi
 		//komentarų nereikės
-		if ( isset( $_SESSION[SLAPTAS]['id'] ) ) {
-			include( ROOTAS . "priedai/komentarai.php" );
-			komentarai( $sql['id'], TRUE );
+		if (isset($_SESSION[SLAPTAS]['id'])) {
+			/**
+			 * Comments
+			 */
+			include_once config('functions', 'dir') . 'functions.comments.php';
+			comments($sql['id'], true);
 		}
 	} else {
 		klaida( $lang['system']['error'], "{$lang['system']['pagenotfounfd']}." );

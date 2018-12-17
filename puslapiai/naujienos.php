@@ -138,12 +138,15 @@ if ( $kid != 0 ) {
 					$naujienos .= "<li><a href=\"" . url( "?id," . $_GET['id'] . ";".seo_url($susijusios['pavadinimas'],";k,".$susijusios['id']) ) . "\" title=\"{$susijusios['pavadinimas']}\">" . trimlink( $susijusios['pavadinimas'], 55 ) . "</a> (" . date( 'Y-m-d H:i:s', $susijusios['data'] ) . ")</li>";
 				}
 				$naujienos .= "</ul>";
-				lentele( $lang['news']['related'], $naujienos );
+				lentele($lang['news']['related'], $naujienos);
 			}
 			//Rodom komentarus
-			if ( $sql['kom'] == 'taip' ) {
-				include ( "priedai/komentarai.php" );
-				komentarai( $kid, TRUE );
+			if ($sql['kom'] == 'taip') {
+				/**
+				 * Comments
+				 */
+				include_once config('functions', 'dir') . 'functions.comments.php';
+				comments($kid, true);
 			}
 			unset( $text, $title, $data, $kalba );
 		} else {

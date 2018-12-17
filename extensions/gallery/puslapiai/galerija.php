@@ -272,11 +272,13 @@ if ( !empty( $url['m'] ) ) {
 			lentele( $row['pavadinimas'], $text );
 
 			if ( (int)$conf['galkom'] == 1 && $row['kom'] == 'taip' ) {
-				include_once( "priedai/komentarai.php" );
-				komentarai( $url['m'] );
+				/**
+				 * Comments
+				 */
+				include_once config('functions', 'dir') . 'functions.comments.php';
+				comments($url['m']);
 			}
-		}
-		else {
+		} else {
 			klaida( $lang['system']['warning'], $lang['admin']['gallery_cant'] );
 		}
 	}

@@ -54,8 +54,12 @@ if ( !isset( $_GET['m'] ) ) {
 		}
 		$text .= '<br />	' . $lang['poll']['author'] . ': ' . user( $quest['author_name'], $quest['author_id'] ) . '';
 		lentele( input( $quest['question'] ), $text );
-		include( "priedai/komentarai.php" );
-		komentarai( $url['m'], TRUE );
+		
+		/**
+		 * Comments
+		 */
+		include_once config('functions', 'dir') . 'functions.comments.php';
+		comments($url['m'], true);
 	} else {
 		klaida( $lang['system']['error'], "{$lang['system']['pagenotfounfd']}." );
 	}

@@ -1,18 +1,11 @@
 <?php
 
-/**
- * @Projektas: MightMedia TVS
- * @Puslapis: www.coders.lt
- * @$Author$
- * @copyright CodeRS ©2008
- * @license GNU General Public License v2
- * @$Revision$
- * @$Date$
- **/
 if ( !defined( "OK" ) ) {
 	header( "location: ?" );
 }
-function komentarai( $id, $hide = FALSE ) {
+
+
+function comments($id, $hide = false) {
 
 	global $url, $page, $lang, $conf, $_GET;
 	//tikrinam ar komentarai neišjungti
@@ -112,5 +105,3 @@ function komentarai( $id, $hide = FALSE ) {
 		}
 	}
 }
-
-?>
