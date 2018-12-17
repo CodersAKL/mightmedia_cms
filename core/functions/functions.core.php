@@ -242,10 +242,10 @@ function kodas() {
 	$return = <<<HTML
 	<script type="text/javascript">
 	var \$human = document.createElement('img');
-	\$human.setAttribute('src','priedai/human.php');
+	\$human.setAttribute('src','core/inc/inc.human.php');
 	\$human.setAttribute('style','cursor: pointer');
 	\$human.setAttribute('title','{$lang['system']['refresh']}');
-	\$human.setAttribute('onclick','this.src="priedai/human.php?"+Math.random();');
+	\$human.setAttribute('onclick','this.src="core/inc/inc.human.php?"+Math.random();');
 	\$human.setAttribute('alt','code');
 	\$human.setAttribute('id','captcha');
 

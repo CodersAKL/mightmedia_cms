@@ -73,7 +73,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'siusti' ) {
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET `slaptas` = " . escape( $slaptas ) . " WHERE nick=" . escape( $sql['nick'] ) . " LIMIT 1" );
 			mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "{$lang['pass']['remain']}: Nick: " . $sql['nick'] . " Email: " . input( $sql['email'] ) ) . ", '" . time() . "', '" . escape( getip() ) . "')" );
 
-			echo "<img src='priedai/human.php' style='display:none' />";
+			echo "<img src='core/inc/inc.human.php' style='display:none' />";
 		}
 	} else {
 		$error .= "{$lang['pass']['notmatch']}<br />";
