@@ -300,7 +300,8 @@ if(! function_exists('header_info')) {
 		if ( isset($pageMetaData['keywords'])  && !empty($pageMetaData['keywords']) ){ 
 			$pageKeywords = $pageMetaData['keywords']; 
 		} else { 
-			$pageKeywords = input( strip_tags( $conf['Keywords'] ) );}
+			$pageKeywords = input( strip_tags( $conf['Keywords'] ) );
+		}
 		echo '
 		<base href="' . adresas() . '"></base>
 		<meta name="generator" content="MightMedia TVS" />
@@ -319,9 +320,36 @@ if(! function_exists('header_info')) {
 		' . ( isset( $conf['puslapiai']['galerija.php'] ) ? '<link rel="alternate" href="gallery.php" type="application/rss+xml" title="" id="gallery" />' : '' ) . '
 		
 		<title>' . input( strip_tags( $conf['Pavadinimas'] ) . ' - ' . $page_pavadinimas ) . '</title>
-		<script type="text/javascript" src="javascript/pagrindinis.js"></script>
-		
-		<script type="text/javascript">
+		<script type="text/javascript" src="javascript/pagrindinis.js"></script>';
+		if  (getSettingsValue('translation_status') == 1){?>
+				<script>
+					function addListener(obj, eventName, listener) { //function to add event
+						if (obj.addEventListener) {
+							obj.addEventListener(eventName, listener, false);
+						} else {
+							obj.attachEvent("on" + eventName, listener);
+						}
+					}
+
+					addListener(document, "DOMContentLoaded", finishedDCL); //add event DOMContentLoaded
+					function finishedDCL() {
+						var theParent = document.body;
+						var theKid = document.createElement("div");
+						theKid.id = 'translationDiv';
+						var style = document.createElement('style');
+						style.type = 'text/css';
+						style.innerHTML = '.translationDivCss {height: 20px;z-index: 10; background: green;color: white;text-align: center;font-size: 20px;padding: 10px; }';
+						document.getElementsByTagName('head')[0].appendChild(style);
+						theKid.innerHTML = 'Translation is ON';
+						theKid.className = 'translationDivCss';
+						// append theKid to the end of theParent
+						theParent.appendChild(theKid);
+						// prepend theKid to the beginning of theParent
+						theParent.insertBefore(theKid, theParent.firstChild);
+					}
+				</script>
+		<?php }
+		echo '<script type="text/javascript">
 			//Active mygtukas
 			//todo: this stuff need to be in backend
 			var mmPath = location.pathname.substring(1);
@@ -2333,5 +2361,64 @@ if(! empty($extensions)) {
 		if(file_exists($fileExt) && getExtensionStatus($extension)) {
 			require_once $fileExt;
 		}
+	}
+}
+if(! function_exists('getSettingsValue')) {
+	function getSettingsValue($key, $options = null)
+	{
+		global $conf;
+		if (isset($conf[$key])){
+			return $conf[$key];
+		}
+		
+		$request = "SELECT `val` FROM `" . LENTELES_PRIESAGA . "nustatymai` WHERE `key` = " . escape($key);
+		//Adding additional info to the querry i.e. LIKE, LIMIT, ORDER BY and etc.
+		if (is_array($options)){
+			$mysqliOptions = ['LIKE', 'LIMIT', 'ORDER BY', 'OFFSET'];
+			foreach ($options as $optionKey => $optionValue) {
+				if (in_array($optionKey,$mysqliOptions)){
+					$sqlStatement =  str_replace("'", '', escape($optionKey)). " " . escape($optionValue);
+					$updateRequest .= " " . $sqlStatement;
+				}
+			}
+		}
+		$result =  mysql_query1($request);
+		if (count($result) > 0) {
+			return $result[0]['val'];
+		} else {
+			return null;
+		}
+	}
+}
+if(! function_exists('setSettingsValue')) {
+	function setSettingsValue($val, $key, $options = null)
+	{
+		$request = "SELECT * FROM `" . LENTELES_PRIESAGA . "nustatymai` WHERE `key` = " . escape($key);
+		if (sizeof(mysql_query1($request)) > 0) {
+			
+			//DataSet for given key is found. We can update the value
+			$updateRequest = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val`= " . escape($val) . " WHERE `key` = " . escape($key);
+			//Adding additional info to the querry i.e. LIKE, LIMIT, ORDER BY and etc.
+			if (is_array($options)){
+				$mysqliOptions = ['LIKE', 'LIMIT', 'ORDER BY', 'OFFSET'];
+				foreach ($options as $optionKey => $optionValue) {
+					if (in_array($optionKey,$mysqliOptions)){
+						$sqlStatement =  str_replace("'", '', escape($optionKey)). " " . escape($optionValue);
+						$updateRequest .= " " . $sqlStatement;
+					}
+				}
+			}
+			if ($result = mysql_query1($updateRequest)){
+				return $result;
+			}
+		} else {
+			//DataSet for given key is NOT found. Inserting new key with a given value
+			$insertRequest = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`key`,`val`) VALUES (" . escape($key) . "," . escape($val) . ")";
+			if ($result = mysql_query1($insertRequest)){
+				return $result;
+			}
+		}
+		
+		return $result;
 	}
 }
