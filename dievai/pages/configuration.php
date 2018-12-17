@@ -97,7 +97,7 @@ if (isset($url['c'])) {
 		$stiliai             = getDirs(ROOT . 'content/themes/', 'remontas');
 		$editors             = getDirs('htmlarea/');
 		$editors['textarea'] = 'textarea';
-		$kalbos              = getFiles( ROOT . 'lang/' );
+		$kalbos              = getFiles( ROOT . 'content/lang/' );
 
 		foreach ($kalbos as $file) {
 			if ($file['type'] == 'file') {

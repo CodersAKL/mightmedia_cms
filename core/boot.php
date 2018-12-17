@@ -145,7 +145,7 @@ if (basename($_SERVER['PHP_SELF']) != 'upgrade.php' && basename($_SERVER['PHP_SE
 }
 
 //Extensions configs include
-$extPath = ROOT . 'extensions/';
+$extPath = ROOT . 'content/extensions/';
 $extensions = getDirs($extPath);
 
 if(! empty($extensions)) {

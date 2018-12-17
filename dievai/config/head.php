@@ -60,12 +60,12 @@ if ( !empty( $_GET['lang'] ) ) {
 	redirect( url( "?id," . $_GET['id'] ) );
 }
 
-if ( !empty( $_SESSION[SLAPTAS]['lang'] ) && is_file( ROOT . 'lang/' . basename( $_SESSION[SLAPTAS]['lang'] ) . '.php' ) ) {
-	require( ROOT . 'lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' );
+if ( !empty( $_SESSION[SLAPTAS]['lang'] ) && is_file( ROOT . 'content/lang/' . basename( $_SESSION[SLAPTAS]['lang'] ) . '.php' ) ) {
+	require( ROOT . 'content/lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' );
 	$extensions = getActiveExtensions();
 	foreach ($extensions as $extension) {
-		if (is_file( ROOT . 'extensions/' . $extension['name'] . '\/lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' )){
-			require( ROOT . 'extensions/' . $extension['name'] . '\/lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' );
+		if (is_file( ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' )){
+			require( ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' );
 		}
 	}
 }

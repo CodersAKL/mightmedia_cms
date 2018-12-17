@@ -10,7 +10,7 @@
  * @$Date: 2010-03-11 15:32:24 +0200 (Thu, 11 Mar 2010) $
  **/
 
-$kalbos = getFiles( ROOTAS . 'lang/' );
+$kalbos = getFiles( ROOTAS . 'content/lang/' );
 $text   = '';
 foreach ( $kalbos as $file ) {
 	if ( $file['type'] == 'file' && basename( $file['name'], '.php' ) != lang() ) {

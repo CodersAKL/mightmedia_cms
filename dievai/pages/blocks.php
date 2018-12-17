@@ -49,9 +49,9 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 	if ( isset($_POST['file_action']) && $_POST['file_action'] == $lang['admin']['panel_create']) {
 		// Nurodote failo pavadinimą
-		//$failas  = ROOT . "blokai/" . preg_replace( "/[^a-z0-9-]/", "_", strtolower( $_POST['pav'] ) ) . ".php";
+		//$failas  = ROOT . "content/blocks/" . preg_replace( "/[^a-z0-9-]/", "_", strtolower( $_POST['pav'] ) ) . ".php";
 
-		$failas = ROOT . "blokai/" . seo_url(basename($_POST['pav']), '') . ".php";
+		$failas = ROOT . "content/blocks/" . seo_url(basename($_POST['pav']), '') . ".php";
 
 		$tekstas = str_replace( array( '$', 'HTML', '<br>' ), array( '&#36;', 'html', '<br/>' ), $_POST['pnl'] );
 
@@ -185,7 +185,7 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 		}
 	}
 
-	$failai = getFiles(ROOT . 'blokai/');
+	$failai = getFiles(ROOT . 'content/blocks/');
 	//extensions
 	$failai = applyFilters('cmsBlocks', $failai);
 
@@ -193,12 +193,12 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 		if ($file['type'] == 'file' ) {
 			$sql = mysql_query1( "SELECT `file` FROM `" . LENTELES_PRIESAGA . "panel` WHERE `file`=" . escape( basename( $file['name'] ) ) . " AND `lang` = " . escape( lang() ) . " LIMIT 1" );
 			if ($sql['file'] != $file['name']) {
-				$blokai[$file['name']] = (isset( $lang['blocks'][$file['name']] ) ? $lang['blocks'][$file['name']] : nice_name( basename( $file['name'], '.php' ) ) );
+				$blocks[$file['name']] = (isset( $lang['blocks'][$file['name']] ) ? $lang['blocks'][$file['name']] : nice_name( basename( $file['name'], '.php' ) ) );
 			}
 		}
 	}
 
-	if ( !isset( $blokai ) || count( $blokai ) < 1 ) {
+	if ( !isset( $blocks ) || count( $blocks ) < 1 ) {
 		notifyMsg(
 			[
 				'type'		=> 'error',
@@ -236,7 +236,7 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 		if(empty($block)) {
 			$blockForm[$lang['admin']['panel_name']]	= [
 				"type"  => "select",
-				"value" => $blokai,
+				"value" => $blocks,
 				"name"  => "File"
 			];
 		}
@@ -303,7 +303,7 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 		$sql = "SELECT `file` FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`=" . escape( $panel_id ) . " LIMIT 1";
 		$sql = mysql_query1( $sql );
 
-		if ( !is_writable( ROOT . 'blokai/' . $sql['file'] ) ) {
+		if ( !is_writable( ROOT . 'content/blocks/' . $sql['file'] ) ) {
 			notifyMsg(
 				[
 					'type'		=> 'error',
@@ -311,7 +311,7 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 				]
 			);
 		} else {
-			$failas  = ROOT . "blokai/" . $sql['file'];
+			$failas  = ROOT . "content/blocks/" . $sql['file'];
 			$tekstas = str_replace( array( '$', '<br>', 'HTML' ), array( '&#36;', '<br/>', 'html' ), $_POST['Turinys'] );
 			$irasas  = '<?php
 $text =
@@ -339,7 +339,7 @@ HTML;
 		$sql = mysql_query1( $sql );
 		//tikrinam failo struktura
 
-		$lines      = file( ROOT . 'blokai/' . $sql['file'] );
+		$lines      = file( ROOT . 'content/blocks/' . $sql['file'] );
 		$resultatai = array();
 
 		$zodiz = '$text ='; // "http" - žodis kurio ieškoma
@@ -354,10 +354,10 @@ HTML;
 		//tikrinimo pabaiga
 		if ( isset( $nr ) && $nr == 2 ) {
 
-			include ROOT . 'blokai/' . $sql['file'];
+			include ROOT . 'content/blocks/' . $sql['file'];
 
-			if ( isset( $text ) && is_writable( ROOT . 'blokai/' . $sql['file'] ) ) {
-				$blokai_txt = $text;
+			if ( isset( $text ) && is_writable( ROOT . 'content/blocks/' . $sql['file'] ) ) {
+				$blocks_txt = $text;
 				$panele = array(
 					"Form"                       => array(
 						"action"  => "",
@@ -370,7 +370,7 @@ HTML;
 
 					$lang['admin']['panel_text'] => array(
 						"type"  => "string",
-						"value" => editor( 'spaw', 'standartinis', array( 'Turinys' => 'Bloko turinys' ), array( 'Turinys' => ( isset( $blokai_txt ) ) ? $blokai_txt : '' ) )
+						"value" => editor( 'spaw', 'standartinis', array( 'Turinys' => 'Bloko turinys' ), array( 'Turinys' => ( isset( $blocks_txt ) ) ? $blocks_txt : '' ) )
 					),
 
 					""                           => array(

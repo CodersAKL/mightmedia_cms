@@ -9,8 +9,8 @@ foreach ( $sql_p as $row_p ) {
 		//todo: after v2 optimize it
 		if(is_file($row_p['file'])) {
 			$includeBlock = $row_p['file'];
-		} elseif(is_file("blokai/" . basename($row_p['file']))) {
-			$includeBlock = "blokai/" . basename($row_p['file']);
+		} elseif(is_file("content/blocks/" . basename($row_p['file']))) {
+			$includeBlock = "content/blocks/" . basename($row_p['file']);
 		} else {
 			$includeBlock = null;
 		}

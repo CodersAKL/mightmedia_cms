@@ -8,7 +8,7 @@ $chmodFiles = [
 	'siuntiniai/media',
 	'sandeliukas',
 	'puslapiai',
-	'blokai',
+	'content/blocks',
 	'images/avatars',
 	'images/nuorodu',
 	'images/galerija',

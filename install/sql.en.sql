@@ -375,8 +375,8 @@ CREATE TABLE `panel` (
 --
 
 INSERT INTO `panel` (`id`, `panel`, `lang`, `file`, `place`, `align`, `rodyti`, `show`, `teises`) VALUES
-(1, 'Kalendorius', 'lt', 'blokai/kalendorius.php', 1, 'R', 'Taip', 'Y', 'N;'),
-(2, 'Meniu', 'lt', 'blokai/meniu.php', 2, 'L', 'Taip', 'Y', 'N;');
+(1, 'Kalendorius', 'lt', 'content/blocks/kalendorius.php', 1, 'R', 'Taip', 'Y', 'N;'),
+(2, 'Meniu', 'lt', 'content/blocks/meniu.php', 2, 'L', 'Taip', 'Y', 'N;');
 
 -- --------------------------------------------------------
 

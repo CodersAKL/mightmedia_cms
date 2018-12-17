@@ -5,9 +5,9 @@ session_start();
 @ini_set( 'display_errors', 'On' );
 
 if (isset($_SESSION['language'])) {
-	include_once(ROOT . "lang/" . $_SESSION['language']);
+	include_once(ROOT . "content/lang/" . $_SESSION['language']);
 } else {
-	include_once(ROOT . "lang/lt.php");
+	include_once(ROOT . "content/lang/lt.php");
 }
 /**
  * Svetainės adresui gauti

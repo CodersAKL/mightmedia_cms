@@ -102,8 +102,8 @@ if ( !empty( $_GET['lang'] ) ) {
 	$_SESSION[SLAPTAS]['lang'] = basename( $_GET['lang'], '.php' );
 	redirect( url( "?id," . $_GET['id'] ) );
 }
-/*if (!empty($_SESSION['lang']) && is_file(ROOT . 'lang/' . basename($_SESSION['lang']) . '.php')) {
-	require(ROOT . 'lang/' . basename($_SESSION['lang'], '.php') . '.php');
+/*if (!empty($_SESSION['lang']) && is_file(ROOT . 'content/lang/' . basename($_SESSION['lang']) . '.php')) {
+	require(ROOT . 'content/lang/' . basename($_SESSION['lang'], '.php') . '.php');
 }*/
 
 include_once 'core/inc/inc.header.php';
