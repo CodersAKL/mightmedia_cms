@@ -109,7 +109,7 @@
 				<div class="col-md-8">
 					<div class="main main-raised">
 						<?php
-							include "priedai/centro_blokai.php";
+							include 'core/inc/inc.center_blocks.php';
 							include $page . ".php";
 						?>
 					</div>
@@ -117,8 +117,8 @@
 				</div>
 				<div class="col-md-4">
 					<div class="">
-						<?php include "priedai/kaires_blokai.php"; ?>
-						<?php include "priedai/desines_blokai.php"; ?>
+						<?php include 'core/inc/inc.left_blocks.php'; ?>
+						<?php include 'core/inc/inc.right_blocks.php'; ?>
 					</div>
 				</div>
 			</div>
