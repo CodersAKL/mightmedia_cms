@@ -55,9 +55,9 @@ foreach ($loadCoreFunctionsArray as $loadCoreFunctionSlug) {
 }
 
 //Isvalom POST'us nuo xss
-if ( !empty( $_POST ) ) {
-	include_once ( ROOTAS . 'priedai/safe_html.php' );
-	foreach ( $_POST as $key => $value ) {
+if (! empty($_POST)) {
+	include_once ROOT . 'core/functions/functions.safe_html.php';
+	foreach ($_POST as $key => $value) {
 		if ( !is_array( $value ) ) {
 			$post[$key] = safe_html( $value );
 		} else {
