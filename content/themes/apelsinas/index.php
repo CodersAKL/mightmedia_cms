@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/brands.css" integrity="sha384-oT8S/zsbHtHRVSs2Weo00ensyC4I8kyMsMhqTD4XrWxyi8NHHxnS0Hy+QEtgeKUE" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/fontawesome.css" integrity="sha384-J4287OME5B0yzlP80TtfccOBwJJt6xiO2KS14V7z0mVCRwpz+71z7lwP4yoFbTnD" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-	<link href="stiliai/<?php echo $conf['Stilius']; ?>/assets/css/material-kit.css?v=2.0.5" rel="stylesheet" />
+	<link href="content/themes/<?php echo $conf['Stilius']; ?>/assets/css/material-kit.css?v=2.0.5" rel="stylesheet" />
 </head>
 
 <body class="landing-page sidebar-collapse">
@@ -151,16 +151,16 @@
 	</div>
   </footer>
   <!--   Core JS Files   -->
-  <script src="stiliai/<?php echo $conf['Stilius']; ?>/assets/js/core/jquery.min.js" type="text/javascript"></script>
-  <script src="stiliai/<?php echo $conf['Stilius']; ?>/assets/js/core/popper.min.js" type="text/javascript"></script>
-  <script src="stiliai/<?php echo $conf['Stilius']; ?>/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-  <script src="stiliai/<?php echo $conf['Stilius']; ?>/assets/js/plugins/moment.min.js"></script>
+  <script src="content/themes/<?php echo $conf['Stilius']; ?>/assets/js/core/jquery.min.js" type="text/javascript"></script>
+  <script src="content/themes/<?php echo $conf['Stilius']; ?>/assets/js/core/popper.min.js" type="text/javascript"></script>
+  <script src="content/themes/<?php echo $conf['Stilius']; ?>/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+  <script src="content/themes/<?php echo $conf['Stilius']; ?>/assets/js/plugins/moment.min.js"></script>
   <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-  <script src="stiliai/<?php echo $conf['Stilius']; ?>/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+  <script src="content/themes/<?php echo $conf['Stilius']; ?>/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
   <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-  <script src="stiliai/<?php echo $conf['Stilius']; ?>/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+  <script src="content/themes/<?php echo $conf['Stilius']; ?>/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
   <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-  <script src="stiliai/<?php echo $conf['Stilius']; ?>/assets/js/material-kit.js?v=2.0.5" type="text/javascript"></script>
+  <script src="content/themes/<?php echo $conf['Stilius']; ?>/assets/js/material-kit.js?v=2.0.5" type="text/javascript"></script>
 </body>
 
 </html>

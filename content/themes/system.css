@@ -1,0 +1,517 @@
+/* Mightmedia pagrindinės stiliaus funkcijos */
+img {
+    border: 0;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+hr, fieldset {
+    margin: 2px;
+    border: 1px dotted #CCC;
+}
+
+input, textarea, button, select {
+    outline: none;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #6b655c;
+    background: #f8f8f8;
+    border: 1px solid #6b655c;
+    padding-left: 5px;
+}
+
+textarea .input, .input, .select {
+    width: 95%;
+}
+
+input, button, select {
+    height: 20px
+}
+
+/* Apsaugos kodas */
+input.chapter {
+    font-size: 20px;
+    font-weight: bold;
+    height: 30px;
+    padding-top: 5px;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    width: 100px;
+}
+
+/* Mygtukai */
+input[type="submit"], .submit, .perveiza {
+    cursor: pointer;
+    padding: 2px;
+    background: #e6e6e6;
+    border: 1px solid #6b655c;
+    color: #6b655c;
+}
+
+button {
+    cursor: pointer;
+    padding: 2px;
+}
+
+/* BB Kodo [code] forume laukas */
+.code {
+    margin: 10px;
+    height: auto;
+    width: 90%;
+    background: #ccc;
+}
+
+/*Bloko meniu*/
+/*
+#navigation {
+    width: 100%;
+    font-size: 12px;
+}
+
+#navigation ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+#navigation ul li a {
+    display: block;
+    border-bottom: 1px solid #f2f2f2;
+    padding: 5px 0px 2px 4px;
+    text-decoration: none;
+    color: #666666;
+    width: 188px;
+}
+
+#navigation ul li:hover, #navigation ul li .active {
+    color: #000000;
+    background-color: #f2f2f2;
+    position: relative;
+}
+*/
+/*Sub Meniu*/
+/*
+#navigation ul ul {
+    border: 0;
+    background: #f8f8f8;
+    display: none;
+    position: absolute;
+    left: 188px;
+    top: 0;
+    z-index: 100;
+}
+
+#navigation ul li:hover ul {
+    display: block;
+}
+
+#navigation ul ul li {
+    font-size: 12px;
+    display: block;
+    padding: 0 0 2px 4px;
+    text-decoration: none;
+    color: #666666;
+    width: 188px;
+}
+
+#navigation ul ul li:hover {
+
+}
+
+#navigation li:hover ul li ul {
+    display: none;
+}
+
+#navigation ul ul li ul {
+    left: 110px;
+}
+
+#navigation ul ul li:hover ul {
+    display: block;
+}
+*/
+
+/* Mygtukai profilio redagavimui bei moderatorių puslapiui */
+.blokas {
+    width: 77px;
+    text-align: center;
+    float: left;
+    cursor: pointer;
+    background: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 3px;
+    margin: 3px;
+    height: auto;
+    /*clear: both;*/
+}
+
+div.blokas a {
+    font-size: 11px;
+    display: block;
+    margin: 3px;
+}
+
+div.blokas a:active, div.blokas a:hover {
+    /* margin-left: 4px;
+        margin-top: 4px;
+        margin-right: 2px;
+        margin-bottom: 2px;*/
+}
+
+div.blokas img {
+    display: block;
+    border: 0;
+}
+
+div.blokas img:hover {
+    display: block;
+    border: 0;
+}
+
+a.btn {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    /*float: left;*/
+    cursor: pointer;
+    background: #f2f2f2;
+    border: 1px solid #CCCCCC;
+    padding: 3px;
+    margin: 3px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a.btn:active, a.btn:hover {
+    /*  margin-left: 4px;
+        margin-top: 4px;
+        margin-right: 2px;
+        margin-bottom: 2px;*/
+}
+
+/* Lentelėms */
+.table {
+    border-bottom: 2px solid #d1d1d1;
+    border-right: 2px solid #d1d1d1;
+}
+
+.th {
+    text-align: center;
+    color: #6b655c;
+    background: #d1d1d1;
+    height: 22px;
+    padding-top: 5px;
+    padding-left: 5px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.tr2 {
+    padding: 5px;
+    background: #e5e5e5;
+    vertical-align: middle;
+    overflow: hidden
+}
+
+.tr {
+    padding: 5px;
+    vertical-align: middle;
+    overflow: hidden
+}
+
+.td {
+    padding-left: 5px;
+    border-left: 1px solid #d1d1d1;
+    vertical-align: middle
+}
+
+.td2 {
+    padding-left: 5px;
+    border-left: 1px solid #d1d1d1;
+    vertical-align: middle
+}
+
+table tr td {
+    padding: 1px;
+}
+
+/* Kalendoriui */
+.kalendorius table tr td {
+    border-bottom: 1px dashed #d6d6d6;
+    text-align: center;
+}
+
+.kalendorius .siandien {
+    background: #d6d6d6;
+    font-weight: bold;
+    color: #fff
+}
+
+/* Linija, po naujiena, straipsniu, siuntiniu ir t.t */
+.line {
+    border-top: 1px dashed #d6d6d6;
+    margin: 5px
+}
+
+/* Title lentelė iššokanti pele užvedus ant nuorodos su pavadinimu (title="") */
+.tooltip {
+    padding: 3px;
+    border: 1px solid #666;
+    display: none;
+    background: #d6d6d6;
+    color: #666;
+    font: 11px Arial, Helvetica, sans-serif;
+    text-align: left;
+    position: absolute;
+    z-index: 1000;
+}
+
+/* Informaciniai pranešimai */
+.klaida {
+    margin-bottom: 5px;
+    height: auto;
+    width: 100%;
+    background: #f7e66c;
+    border: 1px solid #c8bb45;
+    color: #afa233;
+}
+
+.info_tekstas {
+    color: #3d403d;
+    padding-left: 40px;
+    padding-bottom: 3px;
+}
+
+.info_pavadinimas {
+    padding-top: 3px;
+    padding-left: 40px;
+}
+
+.msg {
+    margin-bottom: 5px;
+    height: auto;
+    width: 100%;
+    background: #c3ea86;
+    border: 1px solid #a2cd5e;
+    color: #769b3d;
+}
+
+.klaida .info_ikona {
+    margin-top: 3px;
+    margin-left: 5px;
+    float: left;
+    height: 32px;
+    width: 32px;
+    background: url(../images/warrning.png) no-repeat;
+}
+
+.msg .info_ikona {
+    margin-top: 3px;
+    margin-left: 5px;
+    float: left;
+    height: 32px;
+    width: 32px;
+    background: url(../images/tick.png) no-repeat;
+}
+
+/* Nario avataro paveikslėlis */
+.avataras img {
+    background: #fff;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 2px 10px 2px 2px;
+    padding: 2px;
+    float: left;
+}
+
+/* Kategorijų paveikslėlis */
+.kat img {
+    height: 40px;
+    width: 40px;
+    background: #fff;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 2px;
+    padding: 2px;
+    float: left;
+    clear: left;
+}
+
+/* Forume tarp [IMG] tag'ų padėtas paveikslėlis */
+.forum_img {
+    max-width: 400px;
+    max-height: 400px;
+    background: #fff;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 2px;
+    padding: 2px;
+}
+
+/* Nario parašui */
+.signature {
+    border-top: 1px dashed #fff;
+}
+
+/* Puslapiavimui */
+.puslapiavimas {
+    text-align: center;
+}
+
+.puslapiavimas a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.puslapiavimas .nuoroda {
+    vertical-align: middle;
+    background: #f2f2f2;
+    padding: 2px;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+.puslapiavimas .nuoroda:hover {
+    background: #f09c1b;
+}
+
+.puslapiavimas .paspaustas {
+    color: #fff;
+    vertical-align: middle;
+    font-weight: bold;
+    background: #f09c1b;
+    padding: 2px;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+/* Siustis.php puslapio siuntimosi mygtukas */
+a.siust {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    cursor: pointer;
+    background: #f2f2f2;
+    border: 1px solid #CCCCCC;
+    padding: 3px;
+    margin: 3px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Galerijai */
+#gallery {
+    position: relative;
+}
+
+.gallery_title, .gallery_menu {
+    background: black;
+    color: #fff;
+    font-weight: bold;
+    opacity: 0.7;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+.gallery_title {
+    top: 0;
+}
+
+.gallery_menu {
+    bottom: 5px;
+}
+
+.gallery_menu img {
+    vertical-align: middle;
+}
+
+/* Apsaugos kodui */
+#captcha {
+    background: #f8f8f8;
+}
+
+/* Galerijos fotoalbumams */
+.albumas {
+    text-align: center;
+    float: left;
+    padding: 5px;
+    background: #f2f2f2;
+    border: 1px solid #ccc;
+    width: 133px;
+    height: 140px;
+    margin: 5px;
+}
+
+.albumas .foto {
+    background: #d5d5d5;
+    height: 100px;
+    margin-bottom: 4px;
+}
+
+.albumas .foto:hover {
+
+}
+
+.albumas small {
+    font-size: 10px;
+}
+
+/* Mightmedia pagrindinės stiliaus funkcijos */
+
+/* Papildomai */
+.clear {
+    clear: both;
+}
+
+.middle {
+    vertical-align: middle;
+}
+
+td#line {
+    padding-right: 5px;
+    padding-left: 5px;
+    border-right: 1px solid;
+    text-align: right;
+    background: #cccccc;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    width: 20px;
+}
+
+td#code {
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+}
+
+.img_left {
+    float: left;
+    margin-right: 5px;
+    position: relative;
+}
+
+.tr, .tr2, .td, .td2, .th {
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+/* Moderavimui ir t.t. */
+.drag_block {
+    display: block;
+    width: 95%;
+    padding: 3px;
+    margin: 3px;
+    background-color: #dddddd;
+}
+
+li.drag_block > img {
+    cursor: move;
+    vertical-align: middle;
+}

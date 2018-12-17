@@ -19,7 +19,7 @@ include_once 'core/boot.php';
 
 include_once 'core/inc/inc.auth.php';
 
-include_once ( dirname( __file__ ) . "/stiliai/" . $conf['Stilius'] . "/sfunkcijos.php" );
+include_once ( dirname( __file__ ) . "/content/themes/" . $conf['Stilius'] . "/sfunkcijos.php" );
 if ( $conf['Palaikymas'] == 0 ) {
 	header( 'location: index.php' );
 	exit;

@@ -71,7 +71,7 @@ if(! function_exists('header_info')) {
 		<meta property="og:title" content="' . $pageTitle . '" />
 		<meta property="og:description" content="' . $pageDescription . '" />
 		<meta property="og:url" content="' . adresas() . '" />
-		<meta property="og:image" content="' . adresas() . 'stiliai/' . input( strip_tags( $conf['Stilius'] ) ) . '/paveiksleliai/mm_logo.png" />
+		<meta property="og:image" content="' . adresas() . 'content/themes/' . input( strip_tags( $conf['Stilius'] ) ) . '/paveiksleliai/mm_logo.png" />
 
 		' . ( isset( $conf['puslapiai']['rss.php'] ) ? '<link rel="alternate" type="application/rss+xml" title="' . input( strip_tags( $conf['Pavadinimas'] ) ) . '" href="rss.php" />' : '' ) . '
 		' . ( isset( $conf['puslapiai']['galerija.php'] ) ? '<link rel="alternate" href="gallery.php" type="application/rss+xml" title="" id="gallery" />' : '' ) . '
@@ -93,8 +93,8 @@ if(! function_exists('header_info')) {
 			}
 		</script>';
 
-		if(file_exists(ROOT . 'stiliai/' . input( strip_tags( $conf['Stilius'] ) ) . '/default.css')) {
-			echo '<link rel="stylesheet" type="text/css" href="stiliai/' . input( strip_tags( $conf['Stilius'] ) ) . '/default.css" />';
+		if(file_exists(ROOT . 'content/themes/' . input( strip_tags( $conf['Stilius'] ) ) . '/default.css')) {
+			echo '<link rel="stylesheet" type="text/css" href="content/themes/' . input( strip_tags( $conf['Stilius'] ) ) . '/default.css" />';
 		}
 	}
 }

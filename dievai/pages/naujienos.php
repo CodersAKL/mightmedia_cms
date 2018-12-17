@@ -199,8 +199,8 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 		if ( isset( $_POST['letter'] ) ) {
 
 			require_once config('class', 'dir') . 'class.phpmailer-lite.php';
-			include_once ROOT . 'stiliai/' . $conf['Stilius'] . '/sfunkcijos.php';
-			include_once ROOT . 'stiliai/' . $conf['Stilius'] . '/naujienlaiskiui.php';
+			include_once ROOT . 'content/themes/' . $conf['Stilius'] . '/sfunkcijos.php';
+			include_once ROOT . 'content/themes/' . $conf['Stilius'] . '/naujienlaiskiui.php';
 
 			$mail = new PHPMailerLite();
 			$mail->IsMail();

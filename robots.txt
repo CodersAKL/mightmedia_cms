@@ -4,6 +4,6 @@ Disallow: /siuntiniai
 Disallow: /priedai
 Disallow: /puslapiai
 Disallow: /sandeliukas
-Disallow: /stiliai
+Disallow: /content/themes
 Disallow: /install
 Disallow: /dievai

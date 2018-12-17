@@ -111,9 +111,9 @@ include_once 'core/inc/inc.header.php';
 if ( is_dir( 'install/' ) && $_SESSION[SLAPTAS]['level'] == 1 && !@unlink( 'install/index.php' ) ) {
 	die( '<h1>Demesio / Warning</h1><h3>Neištrintas install aplankalas.</h3> Tai saugumo spraga. Prašome pašalinkite šį aplankalą iš serverio arba pakeiskite jo pavadinimą. /Please, remove install folder from server.</h3>' );
 }
-include_once 'stiliai/' . $conf['Stilius'] . '/sfunkcijos.php';
+include_once 'content/themes/' . $conf['Stilius'] . '/sfunkcijos.php';
 if ( empty( $_GET['ajax'] ) ) {
-	include_once 'stiliai/' . $conf['Stilius'] . '/index.php';
+	include_once 'content/themes/' . $conf['Stilius'] . '/index.php';
 } else {
 	include_once $page . '.php';
 }
