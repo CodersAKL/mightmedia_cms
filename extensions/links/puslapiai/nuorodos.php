@@ -85,7 +85,6 @@ ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400 );
 
 			foreach ( $q as $sql ) {
 				$extra = '';
-				include_once ( "rating.php" );
 
 				$info[] = array(
 					$lang['admin']['link']  => '' . $extra . ' <a href="' . url( '?id,' . $url['id'] . ';k,' . $k . ';w,' . $sql['id'] ) . '"
@@ -97,7 +96,7 @@ ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400 );
 					<center><img width="50" src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /><br />' . input( $sql['pavadinimas'] ) . '</a></center>',
 					$lang['system']['info'] => '<b>' . $lang['admin']['links_about'] . ': </b><br />' . $sql['apie'] . '<br />
 					<div style="float:left;"><b>' . $lang['admin']['links_clicks'] . ': </b><br />' . input( $sql['click'] ) . '</div>
-					<div style="float:right;"><b>' . $lang['admin']['links_rate'] . ':</b>' . rating_form( $page, $sql['id'] ) . '</div>' );
+					' );
 
 
 			}

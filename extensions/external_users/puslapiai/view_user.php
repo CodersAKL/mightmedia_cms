@@ -16,12 +16,7 @@ if ( isset( $memb[1] ) ) {
 	$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape( $memb[1] ) . " LIMIT 1", 86400 );
 	if ( isset( $sql['nick'] ) ) {
 		addtotitle( $sql['nick'] );
-		include_once ( "rating.php" );
-		if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] != $sql['id'] ) {
-			$vote = rating_form( $page, (int)$sql['id'] );
-		} else {
-			$vote = rating_form( $page, (int)$sql['id'], FALSE );
-		}
+
 		//$sql2 = mysql_query1("SELECT * FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE user='" . $sql['nick'] . "' AND `timestamp`>'" . $timeout . "' LIMIT 1");
 		if ( isset( $user_online[(int)$sql['id']] ) && $user_online[(int)$sql['id']] == TRUE ) {
 			$prisijunges = 'images/icons/status_online.png';
@@ -89,12 +84,7 @@ if ( isset( $memb[1] ) ) {
 			</tr>		
 			' . ( $conf['galbalsuot'] == 1 ? '<tr class="th">
 				<th class="th" height="14" colspan="3" >' . $lang['user']['user_rate'] . '</th>
-			</tr>
-	  <tr class="tr">
-		<td class="td" colspan="3"> 
-		  ' . $vote . '
-		</td>
-	  </tr>' : '' ) . '
+			</tr>' : '' ) . '
 		</table>
 		
 ';

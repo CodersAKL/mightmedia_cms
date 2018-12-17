@@ -26,7 +26,7 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 if ( $conf['Palaikymas'] == 1 ) {
 	klaida( "{$lang['admin']['maintenance']}", $conf['Maintenance'] );
 }
-include_once ( "rating.php" );
+
 $limit = $conf['News_limit'];
 $viso  = kiek( "naujienos", "WHERE `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . "" );
 $text  = '';
@@ -74,7 +74,7 @@ if ( $kid == 0 ) {
 				if ( $row['sticky'] != 0 ) {
 					echo '<div class="sticky" id="news_' . $row['id'] . '">';
 				}
-				lentele_c( $row['pavadinimas'], '' . $pav . $row['naujiena'] . '', $n_nuoroda, $kiekis, $data, $autorius, rating_form( $page, $row['id'] ) );
+				lentele_c( $row['pavadinimas'], '' . $pav . $row['naujiena'] . '', $n_nuoroda, $kiekis, $data, $autorius);
 				if ( $row['sticky'] != 0 ) {
 					echo '</div>';
 				}
@@ -125,7 +125,7 @@ if ( $kid != 0 ) {
 			";
 
 			//Atvaizduojam naujieną
-			lentele( $title, $text, rating_form( $page, $sql['id'] ) . '' );
+			lentele( $title, $text);
 			//Susijusios naujienos
 			$susijus = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija`=" . escape( $sql['kategorija'] ) . " AND `id`!=" . escape( $_GET['k'] ) . " AND `lang` = " . escape( lang() ) . " AND `rodoma`= 'TAIP' ORDER by `data` DESC LIMIT 5", 30000 );
 			if ( sizeof( $susijus ) > 0 ) {

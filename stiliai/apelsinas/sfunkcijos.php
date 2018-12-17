@@ -56,7 +56,7 @@ function lentele_l( $pavadinimas, $tekstas, $label = FALSE ) {
 }
 
 //Naujienų, straipsnių lentelė
-function lentele_c( $pavadinimas, $tekstas, $n_nuoroda, $kom_kiekis = FALSE, $datai = FALSE, $autorius = FALSE, $reitingai = FALSE ) {
+function lentele_c( $pavadinimas, $tekstas, $n_nuoroda, $kom_kiekis = FALSE, $datai = FALSE, $autorius = FALSE) {
 
 //Jei naudosim kalbystę ištraukiam $lang, jei ne ištrinam.
 	global $lang, $page;

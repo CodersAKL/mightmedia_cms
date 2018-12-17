@@ -14,7 +14,7 @@ $p     = isset( $url['p'] ) ? (int)$url['p'] : 0;
 $k     = isset( $url['k'] ) ? (int)$url['k'] : 0;
 $limit = $conf['News_limit'];
 $text  = '';
-include_once ( "rating.php" );
+
 //Kategorijų sąrašas
 $sqlas = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `lang` = " . escape( lang() ) . " ORDER BY `pavadinimas`", 86400 );
 if ( $sqlas && sizeof( $sqlas ) > 0 && !isset( $url['m'] ) ) {
@@ -65,7 +65,7 @@ if ( $k >= 0 && empty( $url['m'] ) ) {
 						$kiekis = $row['viso'];
 					}
 					$nuoroda = "" . url( "?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] . ";" . seo_url( $row['pav'], $row['id'] ) ) . "";
-					lentele_c( $row['pav'], $row['t_text'], $nuoroda, $kiekis, $data, $autorius, rating_form( $page, $row['id'] ) );
+					lentele_c( $row['pav'], $row['t_text'], $nuoroda, $kiekis, $data, $autorius);
 				}
 			}
 		} else {
@@ -101,7 +101,7 @@ if ( $k >= 0 && empty( $url['m'] ) ) {
 			<div class='addthis_toolbox addthis_default_style '><a href='http://www.addthis.com/bookmark.php?v=250&amp;pubid=xa-4e7a05051d3cf281' class='addthis_button_compact'>" . $lang['news']['share'] . "</a><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a05051d3cf281'></script><a class='addthis_button_facebook_like' fb:like:layout='button_count'></a><a class='addthis_button_tweet'></a><a class='addthis_button_google_plusone' g:plusone:size='medium'></a></div><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a03fc44b95268'></script>
 			<!-- AddThis Button END -->
 			";
-		lentele( input( $row['pav'] ), $text, rating_form( $page, $row['id'] ) );
+		lentele( input( $row['pav'] ), $text);
 		/**
 		 * Comments
 		 */

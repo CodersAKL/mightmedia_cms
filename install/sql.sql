@@ -447,18 +447,6 @@ CREATE TABLE `private_msg` (
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `ratings`
---
-
-CREATE TABLE `ratings` (
-  `id` int(11) NOT NULL,
-  `rating_id` varchar(255) DEFAULT NULL,
-  `rating_num` int(11) DEFAULT NULL,
-  `IP` varchar(255) DEFAULT NULL,
-  `psl` varchar(255) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
 -- --------------------------------------------------------
 
 --
@@ -757,12 +745,6 @@ ALTER TABLE `private_msg`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ratings`
---
-ALTER TABLE `ratings`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `salis`
 --
 ALTER TABLE `salis`
@@ -909,11 +891,6 @@ ALTER TABLE `poll_votes`
 -- AUTO_INCREMENT for table `private_msg`
 --
 ALTER TABLE `private_msg`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `ratings`
---
-ALTER TABLE `ratings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `siuntiniai`

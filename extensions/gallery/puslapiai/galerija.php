@@ -10,8 +10,6 @@
  * @$Date$
  **/
 
-include_once ( "rating.php" );
-
 $text  = "";
 $limit = $conf['fotoperpsl'];
 
@@ -228,7 +226,6 @@ if ( !empty( $url['m'] ) ) {
 				$autorius = $lang['system']['guest'];
 			}
 
-			$balsavimas = rating_form( $page, $row['nid'] );
 			$text .= '<center>';
 			if ( !empty( $nuoroda2['id'] ) ) {
 				$text .= "<a href=\"" . url( "?id," . $url['id'] . ";m," . $nuoroda2['id'] )
@@ -248,9 +245,6 @@ if ( !empty( $url['m'] ) ) {
 	      </a>
 	    </center>
 	  </div>
-		<br />
-		<div style='float:left;'><b>{$lang['system']['rate']}: </b></div>
-		<div style='float:left;'>" . $balsavimas . "</div>
 		<div style='clear:left;'></div>
 		<b>{$lang['admin']['gallery_author']}:</b> " . $autorius . "<br />
 		<b>{$lang['admin']['gallery_date']}:</b> " . date( 'Y-m-d H:i:s ', $row['data'] ) . "<br />\n";
