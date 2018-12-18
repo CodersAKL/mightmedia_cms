@@ -52,8 +52,8 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'contacts_change' ) {
 		$ep    = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE email=" . escape( $email ) . " LIMIT 1" );
 		$sql   = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape( $_SESSION[SLAPTAS]['username'] ) . " LIMIT 1" );
 		if ( !isset( $ep['email'] ) || ( isset( $ep['email'] ) && $ep['email'] == $sql['email'] ) ) {
-			if ( file_exists( 'images/avatars/' . md5( $sql['email'] ) . '.jpeg' ) ) {
-				rename( 'images/avatars/' . md5( $sql['email'] ) . '.jpeg', 'images/avatars/' . md5( $email ) . '.jpeg' );
+			if ( file_exists('content/uploads/avatars/' . md5( $sql['email'] ) . '.jpeg') ) {
+				rename('content/uploads/avatars/' . md5( $sql['email'] ) . '.jpeg', 'content/uploads/avatars/' . md5( $email ) . '.jpeg');
 			}
 
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET icq=" . escape( $icq ) . ", msn=" . escape( $msn ) . ", skype=" . escape( $skype ) . ", yahoo=" . escape( $yahoo ) . ", aim=" . escape( $aim ) . ", url=" . escape( $url ) . ", email=" . escape( $email ) . " WHERE nick=" . escape( $_SESSION[SLAPTAS]['username'] ) . "" );
@@ -149,7 +149,7 @@ elseif ( $mid == 3 ) {
 elseif ( $mid == 4 ) {
 	$sql = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " LIMIT 1" );
 	if ( isset( $_GET['a'] ) && $_GET['a'] == 1 ) {
-		@unlink( 'images/avatars/' . md5( $sql['email'] ) . '.jpeg' );
+		unlink('content/uploads/avatars/' . md5( $sql['email'] ) . '.jpeg');
 	}
 	$avataras = avatar( $sql['email'] );
 	$name     = md5( $sql['email'] );
@@ -178,7 +178,7 @@ elseif ( $mid == 4 ) {
                      onComplete: function(file, response){
                         button.html('<img src="images/icons/picture__plus.png" alt="" class="middle"/>{$lang['user']['edit_upload']}');
                         this.enable();
-                        $('#example1 .files').replaceWith('<div class="files"><img id="ikeltas_avataras" src="images/avatars/{$name}.jpeg?'+file+'" alt="" /></div>');
+                        $('#example1 .files').replaceWith('<div class="files"><img id="ikeltas_avataras" src="content/uploads/avatars/{$name}.jpeg?'+file+'" alt="" /></div>');
                      }
                });
            });

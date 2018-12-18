@@ -11,16 +11,16 @@
 if(! function_exists('avatar')) {
 	function avatar($mail, $size = 80) {
 		global $conf;
-		if ( file_exists( ROOT . 'images/avatars/' . md5( $mail ) . '.jpeg' ) ) {
-			$result = '<img src="' . ROOT . 'images/avatars/' . md5( $mail ) . '.jpeg?' . time() . '" width="' . $size . '" height="' . $size . '" alt="avataras" />';
+		if ( file_exists( ROOT . 'content/uploads/avatars/' . md5( $mail ) . '.jpeg' ) ) {
+			$result = '<img src="' . ROOT . 'content/uploads/avatars/' . md5( $mail ) . '.jpeg?' . time() . '" width="' . $size . '" height="' . $size . '" alt="avataras" />';
 		} else {
 			$avatardir = (
 			file_exists( ROOT . 'stiliai/' . $conf['Stilius'] . '/no_avatar.png' )
 				? adresas() . 'stiliai/' . $conf['Stilius'] . '/no_avatar.png'
-				: adresas() . 'images/avatars/no_avatar.png'
+				: adresas() . 'content/uploads/avatars/no_avatar.png'
 			);
 			$avatarUrl = 'https://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . $size . '&r=g&d=' . $avatardir . '&time=' . time();
-			$result    = '<img src="' . $avatarUrl . '"  width="' . $size . '" alt="avataras" />';
+			$result    = '<img src="' . $avatarUrl . '"  width="' . $size . '" alt="avatar" />';
 		}
 
 		return $result;

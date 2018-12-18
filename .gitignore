@@ -6,9 +6,10 @@ content/cache/!.htaccess
 images/galerija/*
 images/nuorodu/*
 images/nuorodu/!index.html
-images/avatars/*
-images/avatars/!no_avatar.png
-uploads/*
+
+content/uploads/*
+content/uploads/avatars/!no_avatar.png
+content/uploads/!.htaccess
 
 //for dev
 .history
