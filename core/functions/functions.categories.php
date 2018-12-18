@@ -11,7 +11,7 @@
  * */
 ?>
 <!-- <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="<?php echo ROOT;?>javascript/jquery/jquery.asmselect.js"></script>
+<script type="text/javascript" src="<?php echo ROOT;?>core/assets/javascript/jquery/jquery.asmselect.js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
 		$("select[multiple]").asmSelect({

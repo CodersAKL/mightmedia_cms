@@ -77,7 +77,7 @@ if(! function_exists('header_info')) {
 		' . ( isset( $conf['pages']['galerija.php'] ) ? '<link rel="alternate" href="gallery.php" type="application/rss+xml" title="" id="gallery" />' : '' ) . '
 		
 		<title>' . input( strip_tags( $conf['Pavadinimas'] ) . ' - ' . $page_pavadinimas ) . '</title>
-		<script type="text/javascript" src="javascript/main.js"></script>
+		<script type="text/javascript" src="core/assets/javascript/main.js"></script>
 		
 		<script type="text/javascript">
 			//Active mygtukas
@@ -305,7 +305,7 @@ if(! function_exists('editorius')) {
         }
         $root   = ROOT;
         $return = <<<HTML
-<script type="text/javascript" src="{$root}javascript/htmlarea/nicedit/nicEdit.js"></script>
+<script type="text/javascript" src="{$root}core/assets/javascript/htmlarea/nicedit/nicEdit.js"></script>
 HTML;
 
     if ( is_array( $id ) ) {
@@ -315,7 +315,7 @@ HTML;
             
 <script type="text/javascript">
 bkLib.onDomLoaded(function() {
-    new nicEditor({fullPanel : true, iconsPath : '{$root}javascript/htmlarea/nicedit/nicEditorIcons.gif', width: '100%'}).panelInstance('{$key}');
+    new nicEditor({fullPanel : true, iconsPath : '{$root}core/assets/javascript/htmlarea/nicedit/nicEditorIcons.gif', width: '100%'}).panelInstance('{$key}');
 });
 </script>
 <textarea class="editorius" id="{$key}" name="{$key}">{$value[$key]}</textarea>
@@ -325,7 +325,7 @@ HTML;
         $return .= <<< HTML
 <script type="text/javascript">
 bkLib.onDomLoaded(function() {
-    new nicEditor({fullPanel : true, iconsPath : '{$root}javascript/htmlarea/nicedit/nicEditorIcons.gif', width: '100%'}).panelInstance('{$id}');
+    new nicEditor({fullPanel : true, iconsPath : '{$root}core/assets/javascript/htmlarea/nicedit/nicEditorIcons.gif', width: '100%'}).panelInstance('{$id}');
 });
 </script>
 

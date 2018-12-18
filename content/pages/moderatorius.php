@@ -19,7 +19,7 @@ if ( !empty( $_SESSION[SLAPTAS]['mod'] ) ) {
 
 	$failai = unserialize( $_SESSION[SLAPTAS]['mod'] );
 	$text   = "
-	<script type=\"text/javascript\" src=\"javascript/jquery/jquery-ui-1.7.2.custom.min.js\"></script>
+	<script type=\"text/javascript\" src=\"core/assets/javascript/jquery/jquery-ui-1.7.2.custom.min.js\"></script>
 	<table border=\"0\">
 	<tr>
 		<td >
