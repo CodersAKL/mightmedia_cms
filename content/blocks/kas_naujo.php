@@ -85,7 +85,7 @@ if ( isset( $_SESSION[SLAPTAS]['lankesi'] ) && $_SESSION[SLAPTAS]['lankesi'] > 0
 			//Naujienos
 			if ( $row['pid'] == 'content/pages/naujienos' && isset( $conf['pages']['naujienos.php']['id'] ) ) {
 				$link = "k," . $row['kid'];
-				//Siuntiniai
+				//Uploads
 			} elseif ( $row['pid'] == 'content/pages/siustis' && isset( $conf['pages']['siustis.php']['id'] ) ) {
 				$linkas = mysql_query1( "SELECT categorija FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID`='" . $row['kid'] . "'LIMIT 1", 60 );
 				$link   = "k," . $linkas['categorija'] . ";v," . $row['kid'] . "";

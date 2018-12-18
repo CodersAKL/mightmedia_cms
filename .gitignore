@@ -8,12 +8,7 @@ images/nuorodu/*
 images/nuorodu/!index.html
 images/avatars/*
 images/avatars/!no_avatar.png
-siuntiniai/failai/*
-siuntiniai/failai/!index.html
-siuntiniai/images/*
-siuntiniai/images/!index.html
-siuntiniai/media/*
-siuntiniai/media/!index.html
+uploads/*
 
 //for dev
 .history

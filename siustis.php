@@ -38,19 +38,17 @@ if ( isset( $d ) && $d > 0 ) {
 		$row = mysql_query1( "SELECT `teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape( $sql['categorija'] ) . " LIMIT 1" );
 		if ( !$row || teises( $row['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "siuntiniai` SET paspaudimai = paspaudimai + 1 WHERE `ID`=" . escape( $d ) . "" );
-			download( "siuntiniai/" . $sql['file'] );
+			download( "content/uploads/" . $sql['file'] );
 		} else {
 			die( klaida( $lang['system']['sorry'], $lang['download']['cant'] ) );
 		}
 	} else {
 		header( "Content-type: text/html; charset=utf-8" );
 		header( "HTTP/1.0 404 Not Found" );
-		die( klaida( $lang['system']['error'], $lang['download']['notfound'] ) );
+		die($lang['system']['error'] . ': ' . $lang['download']['notfound']);
 	}
 } else {
 	header( "Content-type: text/html; charset=utf-8" );
 	header( "HTTP/1.0 404 Not Found" );
-	die( klaida( $lang['system']['error'], $lang['download']['notfound'] ) );
+	ie($lang['system']['error'] . ': ' . $lang['download']['notfound']);
 }
-
-?>

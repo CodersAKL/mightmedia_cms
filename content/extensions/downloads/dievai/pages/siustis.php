@@ -63,7 +63,7 @@ if (isset($url['t'])) {
 	
 	if($downloadItem = mysql_query1($selectQuery)) {
 		if (isset($downloadItem['file'] ) && ! empty($downloadItem['file'])) {
-			@unlink(ROOT . "siuntiniai/" . $downloadItem['file']);
+			@unlink(ROOT . "contnent/uploads/" . $downloadItem['file']);
 		}
 	}
 
@@ -102,7 +102,7 @@ if (isset( $_POST['downloads_delete'])) {
 	if($sql = mysql_query1($sqlSelectDeleteFew)) {
 		foreach ( $sql as $row ) {
 			if ( isset( $row['file'] ) && !empty( $row['file'] ) ) {
-				@unlink( ROOT . "siuntiniai/" . $row['file'] );
+				@unlink( ROOT . "contnent/uploads/" . $row['file'] );
 			}
 		}
 		//item delete
@@ -186,7 +186,7 @@ if (isset( $_POST['downloads_delete'])) {
 
 	if ( isset( $_FILES['failas'] ) && !empty( $_FILES['failas'] ) ) {
 		if ( is_uploaded_file( $_FILES['failas']['tmp_name'] ) ) {
-			upload( "failas", ["jpg", "bmp", "png", "psd", "zip", "rar", "mrc", "dll", "doc", "ppt", "pdf", "bmp"], ROOT . "siuntiniai/" );
+			upload( "failas", ["jpg", "bmp", "png", "psd", "zip", "rar", "mrc", "dll", "doc", "ppt", "pdf", "bmp"], ROOT . "contnent/uploads/" );
 		}
 	}
 

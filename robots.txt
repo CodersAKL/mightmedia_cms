@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Disallow: /siuntiniai
+Disallow: /content/uploads
 Disallow: /priedai
 Disallow: /content/pages
 Disallow: /content/cache

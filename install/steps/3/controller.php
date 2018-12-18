@@ -3,9 +3,7 @@
 $chmodFiles = [
 	'install/index.php',
 	'.htaccess',
-	'siuntiniai/failai',
-	'siuntiniai/images',
-	'siuntiniai/media',
+	'contnent/uploads',
 	'sandeliukas',
 	'content/pages',
 	'content/blocks',

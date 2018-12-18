@@ -73,9 +73,8 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 
 			if ( isset( $_FILES ) ) {
 				if ( is_uploaded_file( $_FILES['failas']['tmp_name'] ) ) {
-					if (isset( $_FILES['failas'] ) && !empty( $_FILES['failas'] ) ) {
-						$uploadPath = 'content/uploads/';
-						upload("failas", ["jpg", "bmp", "png", "psd", "zip", "rar", "mrc", "dll"], $uploadPath);
+					if ( isset( $_FILES['failas'] ) && !empty( $_FILES['failas'] ) ) {
+						upload( "failas", array( "jpg", "bmp", "png", "psd", "zip", "rar", "mrc", "dll" ), "content/uploads/" );
 					}
 				}
 			}

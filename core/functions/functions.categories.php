@@ -195,8 +195,8 @@ function category( $kieno, $leidimas = FALSE ) {
 
 				if ( isset( $row['file'] ) && !empty( $row['file'] ) ) {
 					mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'kom` WHERE pid = \'content/pages/siustis\' AND kid = ' . escape( $row['ID'] ) );
-					@copy( ROOTAS . 'siuntiniai/' . $row['file'], ROOTAS . 'content/cache/' . $row['file'] ); //backup
-					@unlink( ROOTAS . 'siuntiniai/' . $row['file'] );
+					@copy( ROOTAS . 'content/uploads/' . $row['file'], ROOTAS . 'content/cache/' . $row['file'] ); //backup
+					@unlink( ROOTAS . 'content/uploads/' . $row['file'] );
 				}
 			}
 
