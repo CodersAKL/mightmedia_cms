@@ -38,7 +38,7 @@ if ( !isset( $url['m'] ) ) {
 				$sqlkiek = $kiek['kiek'];
 				$subs++;
 				if ( isset( $paskut['file'] ) ) {
-					$fotke = "content/uploads/gallery/thumb/" . input( $paskut['file'] ) . "";
+					$fotke = "content/uploads/gallery/thumbs/" . input( $paskut['file'] ) . "";
 				} else {
 					$fotke = "images/naujienu_kat/camera_48.png";
 				}
@@ -125,7 +125,7 @@ if ( empty( $url['m'] ) ) {
 			$text .= "
 			<div class=\"gallery img_left\" >
 				<a href=\"" . url( "?id," . $conf['pages']['galerija.php']['id'] . ";m," . $row['id'] ) . "\" title=\"" . ( !empty( $row['pavadinimas'] ) ? input( $row['pavadinimas'] ) . "<br />" : '' ) . trimlink( strip_tags( $row['apie'] ), 50 ) . "\">
-					<img src=\"images/content/uploads/gallery/thumb/thumbs/" . input( $row['file'] ) . "\" alt=\"\" />
+					<img src=\"content/uploads/gallery/thumbs/" . input( $row['file'] ) . "\" alt=\"\" />
 				</a>
 				<div class='gallery_title'>
 					" . trimlink( ( !empty( $row['pavadinimas'] ) ? input( $row['pavadinimas'] ) : '' ), 15 ) . "
@@ -239,9 +239,9 @@ if ( !empty( $url['m'] ) ) {
 				.= "</center>
 			<div id=\"gallery\" >
 	    <center>
-	      <a href=\"content/uploads/gallery/originals/" . input( $row['file'] ) . "\" title=\"sss"
+	      <a href=\"content/uploads/gallery/thumbs/" . input( $row['file'] ) . "\" title=\"sss"
 				. input( $row['pavadinimas'] ) . ": " . trimlink( strip_tags( $row['apie'] ), 50 ) . "\">
-	        <img src=\"content/uploads/gallery/thumb/" . input( $row['file'] ) . "\" alt=\"\" />
+	        <img src=\"content/uploads/gallery/" . input( $row['file'] ) . "\" alt=\"\" />
 	      </a>
 	    </center>
 	  </div>

@@ -79,9 +79,9 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 		
 	if($sql = mysql_query1($fileQuery)) {
 		if ( isset( $sql['file'] ) && !empty( $sql['file'] ) ) {
-			@unlink( ROOT . "images/galerija/" . $sql['file'] );
-			@unlink( ROOT . "images/galerija/mini/" . $sql['file'] );
-			@unlink( ROOT . "images/galerija/originalai/" . $sql['file'] );
+			unlink( ROOT . "content/uploads/gallery/" . $sql['file'] );
+			unlink( ROOT . "content/uploads/gallery/thumbs/" . $sql['file'] );
+			unlink( ROOT . "content/uploads/gallery/originals/" . $sql['file'] );
 		}
 	}
 
@@ -199,9 +199,9 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 					//save original
 					\Gregwar\Image\Image::open($file_tmp)
 					->fixOrientation()
-					->save($big_img . "originalai/" . $rand_name . $ext);
+					->save($big_img . "originals/" . $rand_name . $ext);
 
-					chmod($big_img . "originalai/" . $rand_name . $ext, 0755);
+					chmod($big_img . "originals/" . $rand_name . $ext, 0755);
 					
 					//make big thumbnail
 					\Gregwar\Image\Image::open($file_tmp)
@@ -280,7 +280,7 @@ if ( isset( $_GET['v'] ) ) {
 					<?php foreach ($categories as $id => $category) { ?>
 						<div class="col-sm-6 col-md-3">
 							<div class="thumbnail">
-								<!-- <img src="<?php //echo  ROOT . 'images/galerija/' . $row2['file']; ?>"> -->
+								<!-- <img src="<?php //echo  ROOT . 'content/uploads/gallery/' . $row2['file']; ?>"> -->
 								<div class="caption">
 									<h3>
 										<a href="<?php echo url( '?id,' . $_GET['id'] . ';a,' . $_GET['a'] . ';v,8;k,' . $id ); ?>">
@@ -319,7 +319,7 @@ if ( isset( $_GET['v'] ) ) {
 						<?php foreach ( $sql2 as $row2 ) { ?>
 							<div class="col-sm-6 col-md-3">
 								<div class="thumbnail">
-									<img src="<?php echo  ROOT . 'images/galerija/' . $row2['file']; ?>">
+									<img src="<?php echo  ROOT . 'content/uploads/gallery/' . $row2['file']; ?>">
 									<div class="caption">
 										<h3>
 											<?php echo $row2['pavadinimas']; ?>
@@ -435,7 +435,7 @@ if ( isset( $_GET['v'] ) ) {
 
 		$formClass = new Form($photoForm);
 		$title = ((isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add']);
-		$content = '<a name="edit"></a>' . ( ( isset( $extra['file'] ) ) ? '<center><img src="' . ROOT . 'images/galerija/' . input( $extra['file'] ) . '"></center>' : '' );
+		$content = '<a name="edit"></a>' . ( ( isset( $extra['file'] ) ) ? '<center><img src="' . ROOT . 'content/uploads/gallery/' . input( $extra['file'] ) . '"></center>' : '' );
 
 		lentele($title, $content . $formClass->form());
 
@@ -573,7 +573,7 @@ if ( isset( $_GET['v'] ) ) {
 						<?php foreach ($unpublishedPhotos as $unpublishedPhoto) { ?>
 							<div class="col-sm-6 col-md-3">
 								<div class="thumbnail">
-									<img src="<?php echo  ROOT . 'images/galerija/' . $unpublishedPhoto['file']; ?>">
+									<img src="<?php echo  ROOT . 'content/uploads/gallery/' . $unpublishedPhoto['file']; ?>">
 									<div class="caption">
 										<h3>
 											<?php echo $unpublishedPhoto['pavadinimas']; ?>

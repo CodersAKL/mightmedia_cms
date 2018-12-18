@@ -23,7 +23,7 @@ if(! function_exists('isImage1')) {
 }
 
 if(! function_exists('pic')) {
-	function pic( $off_site, $size = FALSE, $url = 'images/nuorodu/', $sub = 'url' ) {
+	function pic( $off_site, $size = FALSE, $url = 'content/uploads/', $sub = 'url' ) {
 
 		$pic_name = md5( $off_site );
 		$pic_name = $url . $sub . "_" . $pic_name . ".png";
@@ -46,7 +46,7 @@ if(! function_exists('pic')) {
 }
 
 if(! function_exists('pic1')) {
-	function pic1( $off_site, $size = FALSE, $url = 'images/nuorodu/', $sub = 'url' ) {
+	function pic1( $off_site, $size = FALSE, $url = 'content/uploads/', $sub = 'url' ) {
 
 		$fp  = @fopen( $off_site, 'rb' );
 		$buf = '';

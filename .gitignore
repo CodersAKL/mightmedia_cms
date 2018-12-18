@@ -3,13 +3,20 @@
 config.php
 content/cache/*
 content/cache/!.htaccess
-images/galerija/*
+
 images/nuorodu/*
 images/nuorodu/!index.html
 
 content/uploads/*
 content/uploads/avatars/!no_avatar.png
 content/uploads/!.htaccess
+content/uploads/!gallery
+content/uploads/gallery/!.htaccess
+content/uploads/gallery/!thumbs
+content/uploads/gallery/thumbs/!index.html
+content/uploads/gallery/!originals
+content/uploads/gallery/originals/!.htaccess
+
 
 //for dev
 .history

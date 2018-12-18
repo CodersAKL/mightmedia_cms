@@ -9,7 +9,7 @@ $chmodFiles = [
 	'content/blocks',
 	'images/avatars',
 	'images/nuorodu',
-	'images/galerija',
-	'images/galerija/originalai',
-	'images/galerija/mini'
+	'content/uploads/gallery',
+	'content/uploads/gallery/originals',
+	'content/uploads/gallery/thumbs'
 ];

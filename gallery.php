@@ -62,8 +62,8 @@ class RssGallery
 			$rssItems .= "    <item>
       <title>" . $title . "</title>
       <link>" . url( "?id," . $conf['pages']['galerija.php']['id'] . ";m," . $id ) . "</link>
-      <media:thumbnail url=\"" . adresas() . "images/galerija/" . $img_id . " \"/>
-      <media:content url=\"" . adresas() . "images/galerija/originalai/" . $img_id . " \"/>
+      <media:thumbnail url=\"" . adresas() . "content/uploads/gallery/" . $img_id . " \"/>
+      <media:content url=\"" . adresas() . "content/uploads/gallery/originals/" . $img_id . " \"/>
       <guid isPermaLink=\"false\">" . $img_id . "</guid>
     </item>\r\n";
 		}
