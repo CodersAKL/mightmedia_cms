@@ -62,9 +62,9 @@ if ( $kid == 0 ) {
 			$pav             = "";
 			if ( isset( $categories_pav['pav'] ) ) {
 				if ( isset( $conf['pages']['naujkat.php']['id'] ) ) {
-					$pav .= "<div title='<b>{$lang['system']['category']}: </b>" . input( $categories_pav['pavadinimas'] ) . "' class='kat'><a href='" . url( "?id," . $conf['pages']['naujkat.php']['id'] . ";k," . (int)$categories_pav['id'] ) . "'><img src='images/naujienu_kat/" . input( $categories_pav['pav'] ) . "' alt='img' border='0' /></a></div>";
+					$pav .= "<div title='<b>{$lang['system']['category']}: </b>" . input( $categories_pav['pavadinimas'] ) . "' class='kat'><a href='" . url( "?id," . $conf['pages']['naujkat.php']['id'] . ";k," . (int)$categories_pav['id'] ) . "'><img src='core/assets/images/naujienu_kat/" . input( $categories_pav['pav'] ) . "' alt='img' border='0' /></a></div>";
 				} else {
-					$pav .= "<div title='<b>{$lang['system']['category']}: </b>" . input( $categories_pav['pavadinimas'] ) . "' class='kat'><img src='images/naujienu_kat/" . input( $categories_pav['pav'] ) . "' alt='img' border='0' /></div>";
+					$pav .= "<div title='<b>{$lang['system']['category']}: </b>" . input( $categories_pav['pavadinimas'] ) . "' class='kat'><img src='core/assets/images/naujienu_kat/" . input( $categories_pav['pav'] ) . "' alt='img' border='0' /></div>";
 				}
 
 			}

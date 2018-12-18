@@ -89,11 +89,11 @@ $text = "
  <table width=100% border=0>
 	<tr>
 		<td>
-			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,1" ) . "'><img src=\"images/user/user-auth.png\" alt=\"slaptazodis\" />{$lang['user']['edit_pass']}</a></center></div>
-			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,2" ) . "'><img src=\"images/user/user-contact.png\" alt=\"kontaktai\" />{$lang['user']['edit_contacts']}</a></center></div>
-			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,3" ) . "'><img src=\"images/user/user-place.png\" alt=\"vietove\" />{$lang['user']['edit_locality']}</a></center></div>
-<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,4" ) . "'><img src=\"images/user/user-avatar.png\" alt=\"avataras\" />{$lang['user']['edit_avatar']}</a></center></div>
-			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,5" ) . "'><img src=\"images/user/user-settings.png\" alt=\"nustatymai\" />{$lang['user']['edit_mainsettings']}</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,1" ) . "'><img src=\"core/assets/images/user/user-auth.png\" alt=\"slaptazodis\" />{$lang['user']['edit_pass']}</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,2" ) . "'><img src=\"core/assets/images/user/user-contact.png\" alt=\"kontaktai\" />{$lang['user']['edit_contacts']}</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,3" ) . "'><img src=\"core/assets/images/user/user-place.png\" alt=\"vietove\" />{$lang['user']['edit_locality']}</a></center></div>
+<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,4" ) . "'><img src=\"core/assets/images/user/user-avatar.png\" alt=\"avataras\" />{$lang['user']['edit_avatar']}</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,5" ) . "'><img src=\"core/assets/images/user/user-settings.png\" alt=\"nustatymai\" />{$lang['user']['edit_mainsettings']}</a></center></div>
 			
 		</td>
 	</tr>
@@ -171,12 +171,12 @@ elseif ( $mid == 4 ) {
                            alert('{$lang['admin']['download_badfile']}');
                            return false;
                          } else {
-                            button.html('<img src="images/icons/Loading.gif" />{$lang['user']['edit_uploading']}...');
+                            button.html('<img src="core/assets/images/icons/Loading.gif" />{$lang['user']['edit_uploading']}...');
                             this.disable();
                          }
                      },
                      onComplete: function(file, response){
-                        button.html('<img src="images/icons/picture__plus.png" alt="" class="middle"/>{$lang['user']['edit_upload']}');
+                        button.html('<img src="core/assets/images/icons/picture__plus.png" alt="" class="middle"/>{$lang['user']['edit_upload']}');
                         this.enable();
                         $('#example1 .files').replaceWith('<div class="files"><img id="ikeltas_avataras" src="content/uploads/avatars/{$name}.jpeg?'+file+'" alt="" /></div>');
                      }
@@ -187,12 +187,12 @@ elseif ( $mid == 4 ) {
          	<span id="example1" class="example">
 		        <a class="btn" onclick="return false">
 		           <span id="button1">
-		              <img src="images/icons/picture__plus.png" alt="" class="middle"/> {$lang['user']['edit_upload']}
+		              <img src="core/assets/images/icons/picture__plus.png" alt="" class="middle"/> {$lang['user']['edit_upload']}
 		            </span>
 		        </a>
                 <a class="btn" href="{$gravatar}">
                    <span>
-                      <img src="images/icons/picture__plus.png" alt="" class="middle"/> {$lang['user']['edit_gravatar']}
+                      <img src="core/assets/images/icons/picture__plus.png" alt="" class="middle"/> {$lang['user']['edit_gravatar']}
                    </span>
                 </a>
              	<p>{$lang['user']['edit_avatar']}:</p>

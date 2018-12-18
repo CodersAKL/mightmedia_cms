@@ -43,32 +43,32 @@ HTML;
 			$bruksniukxs = ";";
 		}
 
-		$text .= "<li><a href=\"" . url( "?id," . $conf['pages']['view_user.php']['id'] ) . $bruksniukxs . $_SESSION[SLAPTAS]['username'] . "\"><img src=\"images/icons/user-white.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['profile']}</a></li>";
+		$text .= "<li><a href=\"" . url( "?id," . $conf['pages']['view_user.php']['id'] ) . $bruksniukxs . $_SESSION[SLAPTAS]['username'] . "\"><img src=\"core/assets/images/icons/user-white.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['profile']}</a></li>";
 	}
 	//profilio redagavimo nuoroda
 	if ( isset( $conf['pages']['edit_user.php']['id'] ) ) {
-		$text .= "<li><a href=\"" . url( "?id," . $conf['pages']['edit_user.php']['id'] ) . "\"><img src=\"images/icons/user_edit.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['edit_profile']}</a></li>";
+		$text .= "<li><a href=\"" . url( "?id," . $conf['pages']['edit_user.php']['id'] ) . "\"><img src=\"core/assets/images/icons/user_edit.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['edit_profile']}</a></li>";
 	}
 	//Pm nuoroda
 	if ( puslapis( 'pm.php' ) ) {
 		$pm = kiek( 'private_msg', "WHERE `to`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " AND `read`='NO'", 'total' );
 
 		if ( $pm != 0 ) {
-			$img = "<img src='images/icons/email_error.gif' alt='new' border='0' style=\"vertical-align: middle;\"/>";
+			$img = "<img src='core/assets/images/icons/email_error.gif' alt='new' border='0' style=\"vertical-align: middle;\"/>";
 		} else {
-			$img = "<img src='images/icons/email.png' alt='@' border='0' style=\"vertical-align: middle;\" />";
+			$img = "<img src='core/assets/images/icons/email.png' alt='@' border='0' style=\"vertical-align: middle;\" />";
 		}
 		$text .= "<li><a href=\"" . url( "?id," . $conf['pages']['pm.php']['id'] . ";a,1" ) . "\">$img {$lang['user']['messages']} ({$pm})</a></li>";
 	}
 	//moderatoriaus puslapio nuoroda
 	if ( puslapis( 'moderatorius.php' ) && !empty( $_SESSION[SLAPTAS]['mod'] ) ) {
 		$text .= "
-			<li><a href=\"" . url( "?id,{$conf['pages']['moderatorius.php']['id']}" ) . "\"><img src=\"images/icons/book__pencil.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['system']['mod']}</a></li>";
+			<li><a href=\"" . url( "?id,{$conf['pages']['moderatorius.php']['id']}" ) . "\"><img src=\"core/assets/images/icons/book__pencil.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['system']['mod']}</a></li>";
 	}
 
 	//atsijungimo nuoroda
 	$text .= "
-			<li><a href=\"{$lang['user']['logout']}\"><img src=\"images/icons/key_go.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['logout']}</a></li>
+			<li><a href=\"{$lang['user']['logout']}\"><img src=\"core/assets/images/icons/key_go.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> {$lang['user']['logout']}</a></li>
 		</ul>
 	";
 	$title = sprintf( $lang['user']['hello'], $_SESSION[SLAPTAS]['username'] );

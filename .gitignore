@@ -4,9 +4,6 @@ config.php
 content/cache/*
 content/cache/!.htaccess
 
-images/nuorodu/*
-images/nuorodu/!index.html
-
 content/uploads/*
 content/uploads/avatars/!no_avatar.png
 content/uploads/!.htaccess

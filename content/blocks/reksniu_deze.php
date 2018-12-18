@@ -66,8 +66,8 @@ if ( sizeof( $chat ) > 0 ) {
 		$tr = $i % 2 ? '2' : '';
 		if ( ar_admin( 'com' ) && puslapis( 'deze.php' ) ) {
 			$extras = "<span style='display: none;' id='irankiai{$i}'>
-			<a style=\"float: right;\" title=\"{$lang['admin']['delete']}\" href=\"" . url( "?id,{$conf['pages']['deze.php']['id']};d,{$row['id']}" ) . "\" onclick=\"return confirm('{$lang['system']['delete_confirm']}')\"><img height=\"12\" src=\"images/icons/cross.png\" alt=\"[d]\" class=\"middle\" border=\"0\" /></a>
-			<a style=\"float: right;\" title=\"{$lang['admin']['edit']}\" href=\"" . url( "?id,{$conf['pages']['deze.php']['id']};r,{$row['id']}" ) . "\"><img height=\"12\" src=\"images/icons/pencil.png\" alt=\"[r]\" class=\"middle\" border=\"0\" /></a>
+			<a style=\"float: right;\" title=\"{$lang['admin']['delete']}\" href=\"" . url( "?id,{$conf['pages']['deze.php']['id']};d,{$row['id']}" ) . "\" onclick=\"return confirm('{$lang['system']['delete_confirm']}')\"><img height=\"12\" src=\"core/assets/images/icons/cross.png\" alt=\"[d]\" class=\"middle\" border=\"0\" /></a>
+			<a style=\"float: right;\" title=\"{$lang['admin']['edit']}\" href=\"" . url( "?id,{$conf['pages']['deze.php']['id']};r,{$row['id']}" ) . "\"><img height=\"12\" src=\"core/assets/images/icons/pencil.png\" alt=\"[r]\" class=\"middle\" border=\"0\" /></a>
 			</span>
 			";
 		}

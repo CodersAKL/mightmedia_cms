@@ -44,9 +44,9 @@ function build_menu_admin($data, $id = 0) {
 	$liPage = '<ol class="dd-list">';
 
 	foreach ($data[$id] as $row) {
-		$actions = '<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $row['id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
-		<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $row['id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
-		<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $row['id'] ) . '" style="align:right"><img src="' . ROOT . 'images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '" align="right" /></a>';
+		$actions = '<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $row['id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="' . ROOT . 'core/assets/images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
+		<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $row['id'] ) . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
+		<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $row['id'] ) . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '" align="right" /></a>';
 		$content =	'';
 
 		if (isset($data[$row['id']])) {

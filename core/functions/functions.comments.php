@@ -53,9 +53,9 @@ function comments($id, $hide = false) {
 			foreach ( $sql as $row ) {
 				$i++;
 				$tr = $i % 2 ? '2' : '';
-				$text .= "<div class=\"tr{$tr}\"><em><a href=\"" . $_SERVER['REQUEST_URI'] . "#k:" . $row['id'] . "\" id=\"k:" . $row['id'] . "\"> <img src=\"images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /> </a> ";
+				$text .= "<div class=\"tr{$tr}\"><em><a href=\"" . $_SERVER['REQUEST_URI'] . "#k:" . $row['id'] . "\" id=\"k:" . $row['id'] . "\"> <img src=\"core/assets/images/icons/bullet_black.png\" alt=\"#\" class=\"middle\" border=\"0\" /> </a> ";
 				if ( ar_admin( 'com' ) ) {
-					$text .= "<a style=\"float: right;\" href='" . url( "dk," . $row['id'] . "" ) . "' onclick=\"return confirm('{$lang['system']['delete_confirm']}') \"><img height=\"15\" src='images/icons/cross.png' class='middle' alt='" . $lang['faq']['delete'] . "' border='0' title='" . $lang['admin']['delete'] . "' /></a> ";
+					$text .= "<a style=\"float: right;\" href='" . url( "dk," . $row['id'] . "" ) . "' onclick=\"return confirm('{$lang['system']['delete_confirm']}') \"><img height=\"15\" src='core/assets/images/icons/cross.png' class='middle' alt='" . $lang['faq']['delete'] . "' border='0' title='" . $lang['admin']['delete'] . "' /></a> ";
 				}
 				if ( $row['nick_id'] == 0 ) {
 					$duom = @unserialize( $row['nick'] );

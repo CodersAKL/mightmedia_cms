@@ -14,7 +14,7 @@ if ( isset( $_SESSION[SLAPTAS]['lankesi'] ) && $_SESSION[SLAPTAS]['lankesi'] > 0
 	$text    = '';
 	$extra   = '';
 	$link    = '';
-	$ikonele = "<img src=\"images/icons/status-away.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
+	$ikonele = "<img src=\"core/assets/images/icons/status-away.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
 	//Forume
 	if ( isset( $conf['pages']['frm.php']['id'] ) ) {
 		$q = mysql_query1( "SELECT `id`,`id` AS strid,`tid`,`tid` as `temosid`,`pav`,`autorius`,`last_data`,`last_nick`, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=`temosid` AND`sid`=strid AND `lang` = " . escape( lang() ) . " ) AS viso	 FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `last_data` >= " . escape( $_SESSION[SLAPTAS]['lankesi'] ) . " AND `lang` = " . escape( lang() ) . " ORDER BY `last_data` DESC LIMIT 5" );

@@ -14,7 +14,7 @@ $kalbos = getFiles( ROOTAS . 'content/lang/' );
 $text   = '';
 foreach ( $kalbos as $file ) {
 	if ( $file['type'] == 'file' && basename( $file['name'], '.php' ) != lang() ) {
-		$text .= '<a href="' . url( '?id,' . $_GET['id'] . ';lang,' . basename( $file['name'], '.php' ) ) . '"><img src="images/icons/flags/' . basename( $file['name'], '.php' ) . '.png" alt="' . basename( $file['name'], '.php' ) . '" class="language flag ' . basename( $file['name'], '.php' ) . '" /></a>';
+		$text .= '<a href="' . url( '?id,' . $_GET['id'] . ';lang,' . basename( $file['name'], '.php' ) ) . '"><img src="core/assets/images/icons/flags/' . basename( $file['name'], '.php' ) . '.png" alt="' . basename( $file['name'], '.php' ) . '" class="language flag ' . basename( $file['name'], '.php' ) . '" /></a>';
 	}
 }
 ?>

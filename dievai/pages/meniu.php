@@ -554,13 +554,13 @@ lentele($page_pavadinimas,$text);
 		foreach ($sqlOtherPages as $otherPage) {
 			$otherPages .= '<li class="dd-handle">
 			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $otherPage['id'] ) . '" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')">
-			<img src="' . ROOT . 'images/icons/cross.png" title="' . $lang['admin']['delete'] . '" />
+			<img src="' . ROOT . 'core/assets/images/icons/cross.png" title="' . $lang['admin']['delete'] . '" />
 			</a>
 			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $otherPage['id'] ) . '" >
-			<img src="' . ROOT . 'images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" />
+			<img src="' . ROOT . 'core/assets/images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" />
 			</a>
 			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $otherPage['id'] ) . '">
-			<img src="' . ROOT . 'images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '"/>
+			<img src="' . ROOT . 'core/assets/images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '"/>
 			</a>
 			' . $otherPage['pavadinimas'] . '
 			</li>';

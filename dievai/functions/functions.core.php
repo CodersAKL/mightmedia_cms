@@ -7,16 +7,16 @@ function build_tree( $data, $id = 0, $active_class = 'active' ) {
 		$re = "";
 		foreach ( $data[$id] as $row ) {
 			if ( isset( $data[$row['id']] ) ) {
-				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><span style=\"display: inline; width: 100px;margin:0; padding:0; height: 16px;\"><a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\"  onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"" . ROOT . "images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"  /></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\"/></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\"><img src=\"" . ROOT . "images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span><ul>";
+				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><span style=\"display: inline; width: 100px;margin:0; padding:0; height: 16px;\"><a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\"  onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"  /></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\"/></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span><ul>";
 				$re .= build_tree( $data, $row['id'], $active_class );
 				$re .= "</ul></li>";
 			} else {
 				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><span style=\"display: inline; width: 100px; margin:0; padding:0; height: 16px;\">
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"" . ROOT . "images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"/></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\" /></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\" ><img src=\"" . ROOT . "images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"/></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\" /></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\" ><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span>
 </li>";
 			}
 		}
@@ -144,11 +144,11 @@ function defaultHead()
 	<meta name="robots" content="index,follow" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<!-- favicon -->
-	<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
-	<link rel="manifest" href="/images/favicon/site.webmanifest">
-	<link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#db7300">
+	<link rel="apple-touch-icon" sizes="180x180" href="/core/assets/images/favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/core/assets/images/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/core/assets/images/favicon/favicon-16x16.png">
+	<link rel="manifest" href="/core/assets/images/favicon/site.webmanifest">
+	<link rel="mask-icon" href="/core/assets/images/favicon/safari-pinned-tab.svg" color="#db7300">
 	<meta name="msapplication-TileColor" content="#ff440e">
 	<meta name="theme-color" content="#ffffff">
 	<?php

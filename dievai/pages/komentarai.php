@@ -79,7 +79,7 @@ if ( isset( $_POST['select'] ) || isset( $_GET['s'] ) ) {
 			$info[] = array(
 				$lang['new']['author']      => $nick,
 				$lang['contact']['message'] => smile( bbchat( trimlink( input( $row['zinute'] ), 150 ) ) ),
-				" "                         => "<a href=\"" . url( "s," . str_replace( '=', '', base64_encode( $pg ) ) . ";d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a><a href=\"" . url( "s," . str_replace( '=', '', base64_encode( $pg ) ) . ";e," . $row['id'] . "" ) . "\" title='{$lang['admin']['edit']}'><img src=\"" . ROOT . "images/icons/pencil.png\" alt=\"[{$lang['admin']['edit']}]\" border=\"0\" class=\"middle\" /></a>"
+				" "                         => "<a href=\"" . url( "s," . str_replace( '=', '', base64_encode( $pg ) ) . ";d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a><a href=\"" . url( "s," . str_replace( '=', '', base64_encode( $pg ) ) . ";e," . $row['id'] . "" ) . "\" title='{$lang['admin']['edit']}'><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" alt=\"[{$lang['admin']['edit']}]\" border=\"0\" class=\"middle\" /></a>"
 			);
 		}
 

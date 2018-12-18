@@ -52,8 +52,8 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'contacts_change' ) {
 		$ep    = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE email=" . escape( $email ) . " LIMIT 1" );
 		$sql   = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape( $_SESSION[SLAPTAS]['username'] ) . " LIMIT 1" );
 		if ( !isset( $ep['email'] ) || ( isset( $ep['email'] ) && $ep['email'] == $sql['email'] ) ) {
-			if ( file_exists( 'images/avatars/' . md5( $sql['email'] ) . '.jpeg' ) ) {
-				rename( 'images/avatars/' . md5( $sql['email'] ) . '.jpeg', 'images/avatars/' . md5( $email ) . '.jpeg' );
+			if ( file_exists( 'content/uploads/avatars/' . md5( $sql['email'] ) . '.jpeg' ) ) {
+				rename( 'content/uploads/avatars/' . md5( $sql['email'] ) . '.jpeg', 'content//uploads/avatars/' . md5( $email ) . '.jpeg' );
 			}
 
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET icq=" . escape( $icq ) . ", msn=" . escape( $msn ) . ", skype=" . escape( $skype ) . ", yahoo=" . escape( $yahoo ) . ", aim=" . escape( $aim ) . ", url=" . escape( $url ) . ", email=" . escape( $email ) . " WHERE nick=" . escape( $_SESSION[SLAPTAS]['username'] ) . "" );
@@ -89,11 +89,11 @@ $text = "
  <table width=100% border=0>
 	<tr>
 		<td>
-			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,1" ) . "'><img src=\"images/user/user-auth.png\" alt=\"slaptazodis\" />{$lang['user']['edit_pass']}</a></center></div>
-			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,2" ) . "'><img src=\"images/user/user-contact.png\" alt=\"kontaktai\" />{$lang['user']['edit_contacts']}</a></center></div>
-			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,3" ) . "'><img src=\"images/user/user-place.png\" alt=\"vietove\" />{$lang['user']['edit_locality']}</a></center></div>
-<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,4" ) . "'><img src=\"images/user/user-avatar.png\" alt=\"avataras\" />{$lang['user']['edit_avatar']}</a></center></div>
-			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,5" ) . "'><img src=\"images/user/user-settings.png\" alt=\"nustatymai\" />{$lang['user']['edit_mainsettings']}</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,1" ) . "'><img src=\"core/assets/images/user/user-auth.png\" alt=\"slaptazodis\" />{$lang['user']['edit_pass']}</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,2" ) . "'><img src=\"core/assets/images/user/user-contact.png\" alt=\"kontaktai\" />{$lang['user']['edit_contacts']}</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,3" ) . "'><img src=\"core/assets/images/user/user-place.png\" alt=\"vietove\" />{$lang['user']['edit_locality']}</a></center></div>
+<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,4" ) . "'><img src=\"core/assets/images/user/user-avatar.png\" alt=\"avataras\" />{$lang['user']['edit_avatar']}</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,5" ) . "'><img src=\"core/assets/images/user/user-settings.png\" alt=\"nustatymai\" />{$lang['user']['edit_mainsettings']}</a></center></div>
 			
 		</td>
 	</tr>
@@ -149,7 +149,7 @@ elseif ( $mid == 3 ) {
 elseif ( $mid == 4 ) {
 	$sql = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " LIMIT 1" );
 	if ( isset( $_GET['a'] ) && $_GET['a'] == 1 ) {
-		@unlink( 'images/avatars/' . md5( $sql['email'] ) . '.jpeg' );
+		unlink( 'content/uploads/avatars/' . md5( $sql['email'] ) . '.jpeg' );
 	}
 	$avataras = avatar( $sql['email'] );
 	$name     = md5( $sql['email'] );
@@ -171,14 +171,14 @@ elseif ( $mid == 4 ) {
                            alert('{$lang['admin']['download_badfile']}');
                            return false;
                          } else {
-                            button.html('<img src="images/icons/Loading.gif" />{$lang['user']['edit_uploading']}...');
+                            button.html('<img src="core/assets/images/icons/Loading.gif" />{$lang['user']['edit_uploading']}...');
                             this.disable();
                          }
                      },
                      onComplete: function(file, response){
-                        button.html('<img src="images/icons/picture__plus.png" alt="" class="middle"/>{$lang['user']['edit_upload']}');
+                        button.html('<img src="core/assets/images/icons/picture__plus.png" alt="" class="middle"/>{$lang['user']['edit_upload']}');
                         this.enable();
-                        $('#example1 .files').replaceWith('<div class="files"><img id="ikeltas_avataras" src="images/avatars/{$name}.jpeg?'+file+'" alt="" /></div>');
+                        $('#example1 .files').replaceWith('<div class="files"><img id="ikeltas_avataras" src="content/uploads/avatars/{$name}.jpeg?'+file+'" alt="" /></div>');
                      }
                });
            });
@@ -187,12 +187,12 @@ elseif ( $mid == 4 ) {
          	<span id="example1" class="example">
 		        <a class="btn" onclick="return false">
 		           <span id="button1">
-		              <img src="images/icons/picture__plus.png" alt="" class="middle"/> {$lang['user']['edit_upload']}
+		              <img src="core/assets/images/icons/picture__plus.png" alt="" class="middle"/> {$lang['user']['edit_upload']}
 		            </span>
 		        </a>
                 <a class="btn" href="{$gravatar}">
                    <span>
-                      <img src="images/icons/picture__plus.png" alt="" class="middle"/> {$lang['user']['edit_gravatar']}
+                      <img src="core/assets/images/icons/picture__plus.png" alt="" class="middle"/> {$lang['user']['edit_gravatar']}
                    </span>
                 </a>
              	<p>{$lang['user']['edit_avatar']}:</p>

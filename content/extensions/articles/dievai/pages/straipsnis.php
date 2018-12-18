@@ -252,7 +252,7 @@ if ( $_GET['v'] == 4 ) {
 				$lang['admin']['article']         	=> "<span style='cursor:pointer;' title='" . $lang['admin']['article_author'] . ": <b>" . $row['autorius'] . "</b>' >" . input( $row['pav'] ) . "</span>",
 				$lang['admin']['article_date']    	=> date( 'Y-m-d', $row['date'] ),
 				$lang['admin']['article_preface'] 	=> "<span style='cursor:pointer;' title='" . strip_tags( $row['t_text'] ) . "'>" . trimlink( strip_tags( $row['t_text'] ), 55 ) . "</span>",
-				$lang['admin']['action']          	=> "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "images/icons/cross.png\" border=\"0\"></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>"
+				$lang['admin']['action']          	=> "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" border=\"0\"></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png' border='0'></a>"
 			];
 		}
 
@@ -363,7 +363,7 @@ if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
 				$lang['admin']['article']         	=> "<span style='cursor:pointer;' title='" . $lang['admin']['article_author'] . ": <b>" . $row['autorius'] . "</b>' >" . input( $row['pav'] ) . "</span>",
 				$lang['admin']['article_date']    	=> date( 'Y-m-d', $row['date'] ),
 				$lang['admin']['article_preface'] 	=> "<span style='cursor:pointer;' title='" . strip_tags( $row['t_text'] ) . "'>" . trimlink( strip_tags( $row['t_text'] ), 55 ) . "</span>",
-				$lang['admin']['action']          => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};priimti," . $row['id'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0'></a>"
+				$lang['admin']['action']          => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};priimti," . $row['id'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "core/assets/images/icons/tick_circle.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}'><img src='" . ROOT . "core/assets/images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png' border='0'></a>"
 			];
 		}
 

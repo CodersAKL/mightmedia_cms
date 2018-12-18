@@ -221,9 +221,9 @@ if(! function_exists('procentai')) {
 
 		$return = (int)round( ( 100 * $yra ) / $reikia );
 		if ( $return > 100 && $zenklas ) {
-			$return = "<img src='" . ROOT . "images/icons/accept.png' class='middle' alt='100%' title='100%' borders='0' />";
+			$return = "<img src='" . ROOT . "core/assets/images/icons/accept.png' class='middle' alt='100%' title='100%' borders='0' />";
 		} elseif ( $return > 0 && $zenklas ) {
-			$return = "<img src='" . ROOT . "images/icons/cross.png' class='middle' alt='" . $return . "%' title='" . $reikia . "/" . $yra . " - " . $return . "%' borders='0' />";
+			$return = "<img src='" . ROOT . "core/assets/images/icons/cross.png' class='middle' alt='" . $return . "%' title='" . $reikia . "/" . $yra . " - " . $return . "%' borders='0' />";
 		}
 
 		return $return;

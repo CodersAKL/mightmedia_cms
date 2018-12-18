@@ -330,11 +330,11 @@ if ( isset( $_GET['v'] ) ) {
 											</span>
 											<a href="<?php echo url( "?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row2['ID'] ); ?>"
 											onclick="return confirm('<?php echo $lang['system']['delete_confirm']; ?>');">
-												<img src="<?php echo ROOT . 'images/icons/cross.png'; ?>">
+												<img src="<?php echo ROOT . 'core/assets/images/icons/cross.png'; ?>">
 											</a>
 											<a href="<?php echo url( "?id," . $url['id'] . ";a," . $url['a'] . ";h," . $row2['ID'] ); ?>" 
 											title="<?php echo $lang['admin']['edit']; ?>">
-												<img src="<?php echo ROOT . 'images/icons/picture_edit.png'; ?>">
+												<img src="<?php echo ROOT . 'core/assets/images/icons/picture_edit.png'; ?>">
 											</a>
 										</p>
 									</div>
@@ -584,14 +584,14 @@ if ( isset( $_GET['v'] ) ) {
 											</span>
 											<a href="<?php echo url( "?id," . $url['id'] . ";a," . $url['a'] . ";t," . $unpublishedPhoto['ID'] ); ?>"
 											onclick="return confirm('<?php echo $lang['system']['delete_confirm']; ?>');">
-												<img src="<?php echo ROOT . 'images/icons/cross.png'; ?>">
+												<img src="<?php echo ROOT . 'core/assets/images/icons/cross.png'; ?>">
 											</a>
 											<a href="<?php echo url( "?id," . $url['id'] . ";a," . $url['a'] . ";h," . $unpublishedPhoto['ID'] ); ?>" 
 											title="<?php echo $lang['admin']['edit']; ?>">
-												<img src="<?php echo ROOT . 'images/icons/picture_edit.png'; ?>">
+												<img src="<?php echo ROOT . 'core/assets/images/icons/picture_edit.png'; ?>">
 											</a>
 											<a href="<?php echo url( "?id," . $url['id'] . ";a," . $url['a'] . ";priimti," . $unpublishedPhoto['ID']); ?>" title="<?php echo $lang['admin']['acept']; ?>">
-												<img src="<?php echo ROOT . 'images/icons/tick_circle.png'; ?>">
+												<img src="<?php echo ROOT . 'core/assets/images/icons/tick_circle.png'; ?>">
 											</a>
 										</p>
 									</div>

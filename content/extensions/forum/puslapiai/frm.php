@@ -32,7 +32,7 @@ $qid = isset( $url['q'] ) ? (int)$url['q'] : 0;
 
 include_once config('class', 'dir') . 'class.form.php';
 
-$imagedir = ( file_exists( "content/themes/{$conf['Stilius']}/forum/" ) ? "content/themes/{$conf['Stilius']}/forum/" : "images/forum/" );
+$imagedir = ( file_exists( "content/themes/{$conf['Stilius']}/forum/" ) ? "content/themes/{$conf['Stilius']}/forum/" : "core/assets/images/forum/" );
 //kur tu?
 $kur = mysql_query1( "SELECT pav, (SELECT pav FROM " . LENTELES_PRIESAGA . "d_straipsniai Where id={$tid} AND `lang` = " . escape( lang() ) . ")AS tema,(SELECT count(id) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE sid={$tid} AND tid={$sid}  AND `lang` = " . escape( lang() ) . ")AS zinute,(SELECT count(id) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE tid={$sid} AND `lang` = " . escape( lang() ) . ")AS subzinute,(SELECT count(id) FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `tid`={$sid} AND `lang` = " . escape( lang() ) . ")AS temos FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`={$sid} AND `lang` = " . escape( lang() ) . " LIMIT 1", 120 );
 //Sausainiai naujiems fiksuoti

@@ -23,7 +23,7 @@ if ( isset( $_SESSION[SLAPTAS]['level'] ) && $_SESSION[SLAPTAS]['level'] > 0 && 
 
 		global $_POST;
 		//$big_img = "tmp/"; //Kur bus saugomi didesni paveiksliukai
-		$mini_img = "images/avatars"; //Kur bus saugomos miniatiuros
+		$mini_img = "content/uploads/avatars"; //Kur bus saugomos miniatiuros
 
 		$img_thumb_width = 250; //Mini paveiksliuku dydis
 

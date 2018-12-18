@@ -241,7 +241,7 @@ if ( isset( $_GET['v'] ) ) {
 					$lang['download']['title'] 	=> input($download['pavadinimas']),
 					$lang['download']['date']  	=> date('Y-m-d', $download['data']),
 					$lang['download']['about'] 	=> trimlink(strip_tags($download['apie']), 55),
-					$lang['admin']['action']   	=> "<a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $download['ID'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "images/icons/cross.png\"></a> <a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $download['ID'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png'></a>"
+					$lang['admin']['action']   	=> "<a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $download['ID'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\"></a> <a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $download['ID'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a>"
 				];
 			}
 
@@ -400,7 +400,7 @@ if ( isset( $_GET['v'] ) ) {
 					$lang['download']['title'] 	=> input($download['pavadinimas']),
 					$lang['download']['date']  	=> date('Y-m-d', $download['data']),
 					$lang['download']['about'] 	=> trimlink(strip_tags($download['apie']), 55),
-					$lang['admin']['action']   	=> "<a href='" . url( "?id,{$url['id']};a,{$url['a']};p," . $download['ID'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png' alt='a'></a><a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $download['ID'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "images/icons/cross.png\"></a> <a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $download['ID'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png'></a>"
+					$lang['admin']['action']   	=> "<a href='" . url( "?id,{$url['id']};a,{$url['a']};p," . $download['ID'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "core/assets/images/icons/tick_circle.png' alt='a'></a><a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $download['ID'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\"></a> <a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $download['ID'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a>"
 				];
 			}
 

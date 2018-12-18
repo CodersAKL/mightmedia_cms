@@ -170,19 +170,19 @@ function th_meniu( $array, $start = '', $end = '' ) {
 //BB Kodai
 function bbk($forma) {
 	$return = "
-<button onclick=\"addText('$forma', '[b]', '[/b]'); return false;\" title=\"B\"><img src=\"images/icons/text_bold.png\"></button>
-<button onclick=\"addText('$forma', '[i]', '[/i]'); return false;\" title=\"I\"><img src=\"images/icons/text_italic.png\"></button>
-<button onclick=\"addText('$forma', '[u]', '[/u]'); return false;\" title=\"U\"><img src=\"images/icons/text_underline.png\"></button>
-<button onclick=\"addText('$forma', '[url]', '[/url]'); return false;\" title=\"URL\"><img src=\"images/icons/link.png\"></button>
-<button onclick=\"addText('$forma', '[big]', '[/big]'); return false;\" title=\"BIG\"><img src=\"images/icons/text_heading_1.png\"></button>
-<button onclick=\"addText('$forma', '[sm]', '[/sm]'); return false;\" title=\"SM\"><img src=\"images/icons/text_heading_6.png\"></button>
-<button onclick=\"addText('$forma', '[img]', '[/img]'); return false;\" title=\"IMG\"><img src=\"images/icons/picture.png\"></button>
-<button onclick=\"addText('$forma', '[quote]', '[/quote]'); return false;\" title=\"QUOTE\"><img src=\"images/icons/comment.png\"></button> <button style='padding-top:6px;' onclick=\"addText('$forma', '[php]', '[/php]'); return false;\" title=\"KODAS\"><b>KODAS</b></button> 
+<button onclick=\"addText('$forma', '[b]', '[/b]'); return false;\" title=\"B\"><img src=\"core/assets/images/icons/text_bold.png\"></button>
+<button onclick=\"addText('$forma', '[i]', '[/i]'); return false;\" title=\"I\"><img src=\"core/assets/images/icons/text_italic.png\"></button>
+<button onclick=\"addText('$forma', '[u]', '[/u]'); return false;\" title=\"U\"><img src=\"core/assets/images/icons/text_underline.png\"></button>
+<button onclick=\"addText('$forma', '[url]', '[/url]'); return false;\" title=\"URL\"><img src=\"core/assets/images/icons/link.png\"></button>
+<button onclick=\"addText('$forma', '[big]', '[/big]'); return false;\" title=\"BIG\"><img src=\"core/assets/images/icons/text_heading_1.png\"></button>
+<button onclick=\"addText('$forma', '[sm]', '[/sm]'); return false;\" title=\"SM\"><img src=\"core/assets/images/icons/text_heading_6.png\"></button>
+<button onclick=\"addText('$forma', '[img]', '[/img]'); return false;\" title=\"IMG\"><img src=\"core/assets/images/icons/picture.png\"></button>
+<button onclick=\"addText('$forma', '[quote]', '[/quote]'); return false;\" title=\"QUOTE\"><img src=\"core/assets/images/icons/comment.png\"></button> <button style='padding-top:6px;' onclick=\"addText('$forma', '[php]', '[/php]'); return false;\" title=\"KODAS\"><b>KODAS</b></button> 
 ";
 
 if ($_SESSION[SLAPTAS]['level'] == 1) {
 $return .= "
-<button onclick=\"addText('$forma', '[hide=Tik registruotiems]', '[/hide]'); return false;\" title=\"HIDE\"><img src=\"images/icons/shield.png\"></button>
+<button onclick=\"addText('$forma', '[hide=Tik registruotiems]', '[/hide]'); return false;\" title=\"HIDE\"><img src=\"core/assets/images/icons/shield.png\"></button>
 ";
 }
 	return $return . "<br />";
@@ -209,7 +209,7 @@ function smile($data, $bb = false) {
   global $conf; 
 	$smilies = array(':)' => 'square_smile.png', ':]' => 'square_smug.png', ':-)' => 'square_smile.png', ';-)' => 'square_wink.png', ';)' => 'square_wink.png', ':-]' => 'square_smug.png', ':-D' => 'square_biggrin.png', ':D' => 'square_biggrin.png', ':o' => 'square_eek.png', ':-o' => 'square_eek.png', ':O' => 'square_eek.png', ':(' => 'square_frown.png', 'B-)' => 'square_cool.png', 'B)' => 'square_cool.png', '%-)' => 'square_cool.png', ':-|' => 'square_unsure.png', ':|' => 'square_unsure.png', ':P' => 'square_tongue.png', ':p' => 'square_tongue.png', '|)' => 'square_mad.png', '0_o' => 'square_eek.png', 'o_0' => 'square_eek.png', ':-/'=>'square_confused.png');
 	foreach ($smilies as $smile => $image) {
-		//$data = str_replace($smile,"<img src='images/smiles/$image' alt='".$smile."' class='middle' ".(($bb)?"onclick=\"addText('".$bb."','".$smile."',' ');\" style='cursor: pointer;'":"")." />",$data);
+		//$data = str_replace($smile,"<img src='core/assets/images/smiles/$image' alt='".$smile."' class='middle' ".(($bb)?"onclick=\"addText('".$bb."','".$smile."',' ');\" style='cursor: pointer;'":"")." />",$data);
 		$data = str_replace($smile, "<img src='content/themes/{$conf['Stilius']}/smilies/$image' alt='" . $smile . "' class='middle' onclick=\"addText('" . $bb . "','" . $smile . "',' ');\" style='cursor: pointer;' />", $data);
 	}
 	return $data;
@@ -377,11 +377,11 @@ function bbcode( $str ) {
 	// Rodom paveiksliuka
 	$str = preg_replace_callback("/\[img\](http:\/\/[^\s'\"<>]+(\.gif|\.jpeg|\.jpg|\.png))\[\/img\]/", function($m) {
 		return '<a title=" '. $lang['admin']['preview'] .' " href="' . $m[1] . '">
-			<img class="forum_img" src="' . $m[1] . '" alt="pc" onerror="this.src=\'images/icons/nopic.png\';this.style.border=\'1px dashed red\';this.style.margin=\'5px\';this.style.padding=\'5px\'">
+			<img class="forum_img" src="' . $m[1] . '" alt="pc" onerror="this.src=\'core/assets/images/icons/nopic.png\';this.style.border=\'1px dashed red\';this.style.margin=\'5px\';this.style.padding=\'5px\'">
 		</a>';
 	}, $str);
 	$str = preg_replace_callback( "/\[img\](http:\/\/[^\s'\"<>]+(\.GIF|\.JPEG|\.JPG|\.PNG))\[\/img\]/", function($m) {
-		return "<a title=\"{$lang['admin']['preview']}\" href=\"\\1\"><img border=0 class=\"forum_img\" src='" . $m[1] . "' alt=\"pic\" onerror=\"this.src='images/icons/nopic.png';this.style.border='1px dashed red';this.style.margin='5px';this.style.padding='5px'\"></a>";
+		return "<a title=\"{$lang['admin']['preview']}\" href=\"\\1\"><img border=0 class=\"forum_img\" src='" . $m[1] . "' alt=\"pic\" onerror=\"this.src='core/assets/images/icons/nopic.png';this.style.border='1px dashed red';this.style.margin='5px';this.style.padding='5px'\"></a>";
 	}, $str);
 
 	// [img=http://www/image.gif]

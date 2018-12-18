@@ -40,7 +40,7 @@ if ( !isset( $url['m'] ) ) {
 				if ( isset( $paskut['file'] ) ) {
 					$fotke = "content/uploads/gallery/thumb/" . input( $paskut['file'] ) . "";
 				} else {
-					$fotke = "images/naujienu_kat/camera_48.png";
+					$fotke = "core/assets/images/naujienu_kat/camera_48.png";
 				}
 
 				$info .= "<div class='albumas'>
@@ -125,7 +125,7 @@ if ( empty( $url['m'] ) ) {
 			$text .= "
 			<div class=\"gallery img_left\" >
 				<a href=\"" . url( "?id," . $conf['pages']['galerija.php']['id'] . ";m," . $row['id'] ) . "\" title=\"" . ( !empty( $row['pavadinimas'] ) ? input( $row['pavadinimas'] ) . "<br />" : '' ) . trimlink( strip_tags( $row['apie'] ), 50 ) . "\">
-					<img src=\"images/content/uploads/gallery/thumb/thumbs/" . input( $row['file'] ) . "\" alt=\"\" />
+					<img src=\"content/uploads/gallery/thumb/thumbs/" . input( $row['file'] ) . "\" alt=\"\" />
 				</a>
 				<div class='gallery_title'>
 					" . trimlink( ( !empty( $row['pavadinimas'] ) ? input( $row['pavadinimas'] ) : '' ), 15 ) . "

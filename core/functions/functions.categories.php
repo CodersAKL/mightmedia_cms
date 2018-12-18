@@ -64,9 +64,9 @@ function category( $kieno, $leidimas = FALSE ) {
 		$kategorijoss = cat( $kieno );
 	}
 	if ( $kieno != 'vartotojai' ) {
-		$dir = 'images/naujienu_kat';
+		$dir = 'core/assets/images/naujienu_kat';
 	} else {
-		$dir = 'images/icons';
+		$dir = 'core/assets/images/icons';
 	}
 
 	$array = getFiles( ROOTAS . $dir );
@@ -263,7 +263,7 @@ function category( $kieno, $leidimas = FALSE ) {
 
 
 		} else {
-			$textas     = $lang['system']['showfor'] . ' <img src="' . ROOT . 'images/icons/help.png" title="' . $lang['system']['about_allow_cat'] . '" />:';
+			$textas     = $lang['system']['showfor'] . ' <img src="' . ROOT . 'core/assets/images/icons/help.png" title="' . $lang['system']['about_allow_cat'] . '" />:';
 		}
 
 		//if (count($teises) > 0) {

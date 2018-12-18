@@ -46,11 +46,11 @@ if ( is_file( ROOT . 'config.php' ) && filesize( ROOT . 'config.php' ) > 1 ) {
 }
 //kalbos
 $kalbos   = getFiles( ROOT . 'content/lang/' );
-$language = '<ul class="sf-menu" id="lang"><li><a href=""><img src="' . ROOT . 'images/icons/flags/' . lang() . '.png" alt="' . lang() . '"/></a><ul>';
+$language = '<ul class="sf-menu" id="lang"><li><a href=""><img src="' . ROOT . 'core/assets/images/icons/flags/' . lang() . '.png" alt="' . lang() . '"/></a><ul>';
 
 foreach ( $kalbos as $file ) {
 	if ( $file['type'] == 'file' && basename( $file['name'], '.php' ) != lang() ) {
-		$language .= '<li><a href="' . url( '?id,999;lang,' . basename( $file['name'], '.php' ) ) . '"><img src="' . ROOT . 'images/icons/flags/' . basename( $file['name'], '.php' ) . '.png" alt="' . basename( $file['name'], '.php' ) . '" class="language flag ' . basename( $file['name'], '.php' ) . '" /></a></li>';
+		$language .= '<li><a href="' . url( '?id,999;lang,' . basename( $file['name'], '.php' ) ) . '"><img src="' . ROOT . 'core/assets/images/icons/flags/' . basename( $file['name'], '.php' ) . '.png" alt="' . basename( $file['name'], '.php' ) . '" class="language flag ' . basename( $file['name'], '.php' ) . '" /></a></li>';
 	}
 }
 $language .= '</ul></li></ul>';

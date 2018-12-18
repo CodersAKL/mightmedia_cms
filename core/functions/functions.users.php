@@ -98,12 +98,12 @@ if(! function_exists('user')) {
 			return $lang['system']['guest'];
 		} else {
 			if ( isset( $conf['pages']['pm.php'] ) && $id != 0 && isset( $_SESSION[SLAPTAS]['id'] ) && $id != $_SESSION[SLAPTAS]['id'] ) {
-				$pm = "<a href=\"" . url( "?id," . $conf['pages']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $user ) ) ) . "\"><img src=\"" . ROOT . "images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>";
+				$pm = "<a href=\"" . url( "?id," . $conf['pages']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $user ) ) ) . "\"><img src=\"" . ROOT . "core/assets/images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>";
 			} else {
 				$pm = '';
 			}
 			if ( isset( $conf['level'][$level]['pav'] ) ) {
-				$img = '<img src="' . ROOT . 'images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ';
+				$img = '<img src="' . ROOT . 'core/assets/images/icons/' . $conf['level'][$level]['pav'] . '" border="0" class="middle" alt="" /> ';
 			} else {
 				$img = '';
 			}

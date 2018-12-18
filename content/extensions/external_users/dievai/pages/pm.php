@@ -118,9 +118,9 @@ FROM `" . LENTELES_PRIESAGA . "private_msg` ORDER BY `id` DESC LIMIT " . escape(
 if ($sql = mysql_query1($sqlQuery)) {
 	foreach ( $sql as $row ) {
 		if ( $row['read'] == "NO" ) {
-			$extra = "<img src='" . ROOT . "images/pm/pm_new.png' />";
+			$extra = "<img src='" . ROOT . "core/assets/images/pm/pm_new.png' />";
 		} else {
-			$extra = "<img src='" . ROOT . "images/pm/pm_read.png' />";
+			$extra = "<img src='" . ROOT . "core/assets/images/pm/pm_read.png' />";
 		}
 
 		$info[] = array(
@@ -129,7 +129,7 @@ if ($sql = mysql_query1($sqlQuery)) {
 			"{$lang['admin']['pm_reciever']}" => user( $row['to_nick'], $row['to_id'] ),
 			"{$lang['admin']['pm_subject'] }" => "<a href=\"" . url( "?id,{$_GET['id']};a," . $_GET['a'] . ";v," . $row['id'] ) . "\" title=\"<b>Laiško ištrauka:</b> " . input( trim( strip_tags( str_replace( array( '[', ']' ), '', $row['msg'] ) ) ) ) . "...\" style=\"display:block\">" . ( isset( $row['title'] ) && !empty( $row['title'] ) ? trimlink( input( $row['title'] ), 10 ) : 'Be temos' ) . "</a>",
 			"{$lang['admin']['pm_date']}"     => date( 'Y-m-d H:i:s ', $row['date'] ), "{$lang['admin']['action']}" => "
-			<a href=\"" . url( "d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a>"
+			<a href=\"" . url( "d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a>"
 		);
 	}
 }

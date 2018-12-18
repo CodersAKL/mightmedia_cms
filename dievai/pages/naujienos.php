@@ -283,7 +283,7 @@ if ( isset( $_GET['v'] ) ) {
 					$lang['admin']['news_name'] => '<span style="cursor:pointer;" title="<b>' . $row['pavadinimas'] . '</b><br />' . $lang['admin']['news_author'] . ': <b>' . $row['autorius'] . '</b>">' . trimlink( strip_tags( $row['pavadinimas'] ), 55 ) . '<span/></a>',
 					$lang['admin']['news_date'] => date( 'Y-m-d', $row['data'] ),
 					$lang['admin']['news_more'] => trimlink( strip_tags( $row['naujiena'] ), 55 ),
-					$lang['admin']['action']    => '<a href="' . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . '" title="' . $lang['admin']['edit'] . '"><img src="' . ROOT . 'images/icons/pencil.png" border="0"></a> <a href="' . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . '" title="' . $lang['admin']['delete'] . '" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="' . ROOT . 'images/icons/cross.png" border="0"></a>'
+					$lang['admin']['action']    => '<a href="' . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . '" title="' . $lang['admin']['edit'] . '"><img src="' . ROOT . 'core/assets/images/icons/pencil.png" border="0"></a> <a href="' . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . '" title="' . $lang['admin']['delete'] . '" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="' . ROOT . 'core/assets/images/icons/cross.png" border="0"></a>'
 				];
 			}
 
@@ -436,9 +436,9 @@ if ( isset( $_GET['v'] ) ) {
 					$lang['admin']['news_name'] => '<span style="cursor:pointer;" data-toggle="tooltip" title="' . $new['pavadinimas'] . '">' . trimlink( strip_tags( $new['pavadinimas'] ), 55 ) . '</span></a>',
 					$lang['admin']['news_date'] => date( 'Y-m-d', $new['data'] ),
 					$lang['admin']['news_more'] => trimlink( strip_tags( $new['naujiena'] ), 55 ),
-					$lang['admin']['action']    => "<a href='" . url( "?id,{$url['id']};a,{$url['a']};p," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png'></a> 
-					<a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png'></a> 
-					<a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['delete']}' onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "images/icons/cross.png'></a>"
+					$lang['admin']['action']    => "<a href='" . url( "?id,{$url['id']};a,{$url['a']};p," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['acept']}'><img src='" . ROOT . "core/assets/images/icons/tick_circle.png'></a> 
+					<a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a> 
+					<a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['delete']}' onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "core/assets/images/icons/cross.png'></a>"
 				];
 			}
 

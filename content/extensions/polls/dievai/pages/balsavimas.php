@@ -113,9 +113,9 @@ if ($url['v'] == 1) {
 		$lang['admin']['poll_answers']  => [
 			"type" 	=> "string", 
 			"value" => "<a href=\"#\" onclick=\"return false;\" id=\"add\">
-			<img src=\"" . ROOT . "images/icons/plus.png\" alt=\"[+]\" /></a> 
+			<img src=\"" . ROOT . "core/assets/images/icons/plus.png\" alt=\"[+]\" /></a> 
 			<a href=\"#\" onclick=\"return false;\" id=\"remove\">
-			<img src=\"" . ROOT . "images/icons/minus.png\" alt=\"[-]\" /></a>
+			<img src=\"" . ROOT . "core/assets/images/icons/minus.png\" alt=\"[-]\" /></a>
 			<div id=\"inputs\">
 			<div class='form-line'>
 			<input type=\"text\" name=\"answers[]\" class=\"form-control\" placeholder='" . $lang['admin']['poll_question'] . "' />
@@ -253,10 +253,10 @@ if ($url['v'] == 1) {
 	$quest = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "poll_questions` WHERE `lang` = " . escape( lang() ) . " ORDER BY `id` DESC LIMIT {$p},{$limit}", 3600 );
 	foreach ( $quest as $row ) {
 		$info[] = [
-			$lang['admin']['poll_active_q'] => ( $row['shown'] == 1 ? '<img src="' . ROOT . '/images/icons/status_online.png" alt="" />' : '<img src="' . ROOT . '/images/icons/status_offline.png" alt="" />' ),
+			$lang['admin']['poll_active_q'] => ( $row['shown'] == 1 ? '<img src="' . ROOT . '/core/assets/images/icons/status_online.png" alt="" />' : '<img src="' . ROOT . '/core/assets/images/icons/status_offline.png" alt="" />' ),
 			$lang['admin']['poll']          => input( $row['question'] ),
-			$lang['system']['edit']         => " <a href='" . url( "?id,{$url['id']};a,{$url['a']};v,{$url['v']};e," . $row['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png'></a> 
-			<a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $row['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['delete']}' onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "images/icons/cross.png'></a>" 
+			$lang['system']['edit']         => " <a href='" . url( "?id,{$url['id']};a,{$url['a']};v,{$url['v']};e," . $row['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a> 
+			<a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $row['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['delete']}' onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "core/assets/images/icons/cross.png'></a>" 
 		];
 	}
 	if (! empty($info)) {

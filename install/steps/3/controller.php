@@ -4,11 +4,9 @@ $chmodFiles = [
 	'install/index.php',
 	'.htaccess',
 	'contnent/uploads',
-	'sandeliukas',
+	'content/cache',
 	'content/pages',
 	'content/blocks',
-	'images/avatars',
-	'images/nuorodu',
 	'content/uploads/gallery',
 	'content/uploads/gallery/originals',
 	'content/uploads/gallery/thumbs'

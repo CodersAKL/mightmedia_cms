@@ -38,13 +38,13 @@ function lentele( $pavadinimas, $tekstas, $label = FALSE ) {
 
 function klaida( $pavadinimas, $tekstas, $label = FALSE ) {
 
-	echo "<div class=\"error\"><img src=\"../images/icons/emblem-important.png\" title=\"$pavadinimas\" align=\"left\" hspace=\"10\" alt=\"\"/>&nbsp;&nbsp;$tekstas</div>";
+	echo "<div class=\"error\"><img src=\"../core/assets/images/icons/emblem-important.png\" title=\"$pavadinimas\" align=\"left\" hspace=\"10\" alt=\"\"/>&nbsp;&nbsp;$tekstas</div>";
 
 }
 
 function msg( $pavadinimas, $tekstas, $label = FALSE ) {
 
-	echo "<div class=\"success\"><img src=\"../images/icons/tick.png\" title=\"$pavadinimas\" align=\"left\" hspace=\"10\" alt=\"\"/>&nbsp;&nbsp;$tekstas</div>";
+	echo "<div class=\"success\"><img src=\"../core/assets/images/icons/tick.png\" title=\"$pavadinimas\" align=\"left\" hspace=\"10\" alt=\"\"/>&nbsp;&nbsp;$tekstas</div>";
 
 }
 
@@ -90,23 +90,23 @@ function th_meniu( $array, $start = '', $end = '' ) {
 function bbk( $forma ) {
 
 	$return = "
-<button onclick=\"addText('$forma', '[b]', '[/b]'); return false;\" title=\"B\"><img src=\"" . ROOT . "images/icons/edit-bold.png\"></button>
-<button onclick=\"addText('$forma', '[i]', '[/i]'); return false;\" title=\"I\"><img src=\"" . ROOT . "images/icons/edit-italic.png\"></button>
-<button onclick=\"addText('$forma', '[u]', '[/u]'); return false;\" title=\"U\"><img src=\"" . ROOT . "images/icons/edit-underline.png\"></button>
-<button onclick=\"addText('$forma', '[big]', '[/big]'); return false;\" title=\"BIG\"><img src=\"" . ROOT . "images/icons/edit-heading-1.png\"></button>
-<button onclick=\"addText('$forma', '[sm]', '[/sm]'); return false;\" title=\"SM\"><img src=\"" . ROOT . "images/icons/edit-heading-5.png\"></button>
-<button onclick=\"addText('$forma', '[quote]', '[/quote]'); return false;\" title=\"QUOTE\"><img src=\"" . ROOT . "images/icons/edit-quotation.png\"></button>
-<button onclick=\"addText('$forma', '[left]', '[/left]'); return false;\" title=\"LEFT\"><img src=\"" . ROOT . "images/icons/edit-alignment.png\"></button>
-<button onclick=\"addText('$forma', '[center]', '[/center]'); return false;\" title=\"CENTER\"><img src=\"" . ROOT . "images/icons/edit-alignment-center.png\"></button>
-<button onclick=\"addText('$forma', '[justify]', '[/justify]'); return false;\" title=\"JUSTIFY\"><img src=\"" . ROOT . "images/icons/edit-alignment-justify.png\"></button>
-<button onclick=\"addText('$forma', '[right]', '[/right]'); return false;\" title=\"RIGHT\"><img src=\"" . ROOT . "images/icons/edit-alignment-right.png\"></button>
-<button onclick=\"addText('$forma', '[code]', '[/code]'); return false;\" title=\"Code\"><img src=\"" . ROOT . "images/icons/edit-code.png\"></button>
-<button onclick=\"addText('$forma', '[url]', '[/url]'); return false;\" title=\"URL\"><img src=\"" . ROOT . "images/icons/link.png\"></button>
-<button onclick=\"addText('$forma', '[img]', '[/img]'); return false;\" title=\"IMG\"><img src=\"" . ROOT . "images/icons/picture.png\"></button>
+<button onclick=\"addText('$forma', '[b]', '[/b]'); return false;\" title=\"B\"><img src=\"" . ROOT . "core/assets/images/icons/edit-bold.png\"></button>
+<button onclick=\"addText('$forma', '[i]', '[/i]'); return false;\" title=\"I\"><img src=\"" . ROOT . "core/assets/images/icons/edit-italic.png\"></button>
+<button onclick=\"addText('$forma', '[u]', '[/u]'); return false;\" title=\"U\"><img src=\"" . ROOT . "core/assets/images/icons/edit-underline.png\"></button>
+<button onclick=\"addText('$forma', '[big]', '[/big]'); return false;\" title=\"BIG\"><img src=\"" . ROOT . "core/assets/images/icons/edit-heading-1.png\"></button>
+<button onclick=\"addText('$forma', '[sm]', '[/sm]'); return false;\" title=\"SM\"><img src=\"" . ROOT . "core/assets/images/icons/edit-heading-5.png\"></button>
+<button onclick=\"addText('$forma', '[quote]', '[/quote]'); return false;\" title=\"QUOTE\"><img src=\"" . ROOT . "core/assets/images/icons/edit-quotation.png\"></button>
+<button onclick=\"addText('$forma', '[left]', '[/left]'); return false;\" title=\"LEFT\"><img src=\"" . ROOT . "core/assets/images/icons/edit-alignment.png\"></button>
+<button onclick=\"addText('$forma', '[center]', '[/center]'); return false;\" title=\"CENTER\"><img src=\"" . ROOT . "core/assets/images/icons/edit-alignment-center.png\"></button>
+<button onclick=\"addText('$forma', '[justify]', '[/justify]'); return false;\" title=\"JUSTIFY\"><img src=\"" . ROOT . "core/assets/images/icons/edit-alignment-justify.png\"></button>
+<button onclick=\"addText('$forma', '[right]', '[/right]'); return false;\" title=\"RIGHT\"><img src=\"" . ROOT . "core/assets/images/icons/edit-alignment-right.png\"></button>
+<button onclick=\"addText('$forma', '[code]', '[/code]'); return false;\" title=\"Code\"><img src=\"" . ROOT . "core/assets/images/icons/edit-code.png\"></button>
+<button onclick=\"addText('$forma', '[url]', '[/url]'); return false;\" title=\"URL\"><img src=\"" . ROOT . "core/assets/images/icons/link.png\"></button>
+<button onclick=\"addText('$forma', '[img]', '[/img]'); return false;\" title=\"IMG\"><img src=\"" . ROOT . "core/assets/images/icons/picture.png\"></button>
 ";
 	if ( LEVEL == 1 ) {
 		$return .= "
-<button onclick=\"addText('$forma', '[hide=Tik registruotiems]', '[/hide]'); return false;\" title=\"HIDE\"><img src=\"" . ROOT . "images/icons/shield.png\"></button>
+<button onclick=\"addText('$forma', '[hide=Tik registruotiems]', '[/hide]'); return false;\" title=\"HIDE\"><img src=\"" . ROOT . "core/assets/images/icons/shield.png\"></button>
 ";
 	}
 	return $return . "<br />";
@@ -169,8 +169,8 @@ function smile( $data, $bb = FALSE ) {
 		'(snowman)' => 'snowman-hat.png',
 		':O'        => 'smiley-surprise.png', );
 	foreach ( $smilies as $smile => $image ) {
-		//$data = str_replace($smile,"<img src='images/smiles/$image' alt='".$smile."' class='middle' ".(($bb)?"onclick=\"addText('".$bb."','".$smile."',' ');\" style='cursor: pointer;'":"")." />",$data);
-		$data = str_replace( $smile, "<img title='{$smile}' src='../images/smiles/{$image}' alt='" . $smile . "' class='middle' onclick=\"addText('" . $bb . "','" . $smile . "',' ');\" style='cursor: pointer;' />", $data );
+		//$data = str_replace($smile,"<img src='core/assets/images/smiles/$image' alt='".$smile."' class='middle' ".(($bb)?"onclick=\"addText('".$bb."','".$smile."',' ');\" style='cursor: pointer;'":"")." />",$data);
+		$data = str_replace( $smile, "<img title='{$smile}' src='../core/assets/images/smiles/{$image}' alt='" . $smile . "' class='middle' onclick=\"addText('" . $bb . "','" . $smile . "',' ');\" style='cursor: pointer;' />", $data );
 	}
 	return $data;
 }
@@ -295,8 +295,8 @@ function bbcode( $str ) {
 	$str = preg_replace( "#\[color=(http://)?(.*?)\](.*?)\[/color\]#si", "<span style=\"color:\\2\">\\3</span>", $str );
 
 	// Rodom paveiksliuka
-	$str = preg_replace( "/\[img\](http:\/\/[^\s'\"<>]+(\.gif|\.jpg|\.png))\[\/img\]/", "<img border=0 src=\"\\1\" alt=\"pic\" onError=\"this.src='images/icons/nopic.png';this.style.border='1px dashed red';this.style.margin='5px';this.style.padding='5px'\">", $str );
-	$str = preg_replace( "/\[img\](http:\/\/[^\s'\"<>]+(\.GIF|\.JPG|\.PNG))\[\/img\]/", "<img border=0 src=\"\\1\" alt=\"pic\" onError=\"this.src='images/icons/nopic.png';this.style.border='1px dashed red';this.style.margin='5px';this.style.padding='5px'\">", $str );
+	$str = preg_replace( "/\[img\](http:\/\/[^\s'\"<>]+(\.gif|\.jpg|\.png))\[\/img\]/", "<img border=0 src=\"\\1\" alt=\"pic\" onError=\"this.src='core/assets/images/icons/nopic.png';this.style.border='1px dashed red';this.style.margin='5px';this.style.padding='5px'\">", $str );
+	$str = preg_replace( "/\[img\](http:\/\/[^\s'\"<>]+(\.GIF|\.JPG|\.PNG))\[\/img\]/", "<img border=0 src=\"\\1\" alt=\"pic\" onError=\"this.src='core/assets/images/icons/nopic.png';this.style.border='1px dashed red';this.style.margin='5px';this.style.padding='5px'\">", $str );
 
 	// [img=http://www/image.gif]
 	$str = preg_replace( "/\[img=(http:\/\/[^\s'\"<>]+(\.gif|\.jpg|\.png))\]/", "<img border=0 src=\"\\1\">", $str );
@@ -526,6 +526,6 @@ function notifyUpdate($versionData)
 
 function infoIcon($message)
 {
-	// return "<img src=\"" . ROOT . "/images/icons/help.png\" title=\"{$message}\">";
+	// return "<img src=\"" . ROOT . "/core/assets/images/icons/help.png\" title=\"{$message}\">";
 	return '<i data-toggle="tooltip" data-placement="top" title="' . $message . '" class="material-icons info-icon">info</i>';
 }

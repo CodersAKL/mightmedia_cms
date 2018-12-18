@@ -19,22 +19,22 @@ if ( sizeof( $duomenys ) > 0 ) {
 		switch ( $i ) {
 			case 1 :
 				{
-				$img = "<img src=\"images/icons/trophy.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
+				$img = "<img src=\"core/assets/images/icons/trophy.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
 				break;
 				}
 			case 2 :
 				{
-				$img = "<img src=\"images/icons/trophy_silver.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
+				$img = "<img src=\"core/assets/images/icons/trophy_silver.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
 				break;
 				}
 			case 3 :
 				{
-				$img = "<img src=\"images/icons/trophy_bronze.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
+				$img = "<img src=\"core/assets/images/icons/trophy_bronze.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
 				break;
 				}
 			default :
 				{
-				$img = "<img src=\"images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
+				$img = "<img src=\"core/assets/images/icons/brightness_small_low.png\" alt=\"o\" class=\"middle\" border=\"0\"/>";
 				}
 		}
 
@@ -46,5 +46,3 @@ if ( sizeof( $duomenys ) > 0 ) {
 	$row_p['show'] = 'N';
 }
 unset( $img, $duomenys, $i );
-
-?>

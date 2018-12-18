@@ -40,7 +40,7 @@ if ( !isset( $url['m'] ) ) {
 				if ( isset( $paskut['file'] ) ) {
 					$fotke = "content/uploads/gallery/thumbs/" . input( $paskut['file'] ) . "";
 				} else {
-					$fotke = "images/naujienu_kat/camera_48.png";
+					$fotke = "core/assets/images/naujienu_kat/camera_48.png";
 				}
 
 				$info .= "<div class='albumas'>

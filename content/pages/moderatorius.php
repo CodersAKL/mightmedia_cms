@@ -26,7 +26,7 @@ if ( !empty( $_SESSION[SLAPTAS]['mod'] ) ) {
 <div>";
 	foreach ( $failai as $id => $failas ) {
 		if ( $failas != 'com' && $failas != 'frm' ) {
-			$text .= "<div class=\"blokas\"><center><a href=\"" . url( "?id," . $url['id'] . ";a," . ( $id + 1 ) ) . "\"><img src=\"images/mod/" . basename( $failas, ".php" ) . ".png\" />" . ( isset( $lang['admin'][basename( $failas, ".php" )] ) ? $lang['admin'][basename( $failas, ".php" )] : nice_name( $failas ) ) . "</a></center></div>";
+			$text .= "<div class=\"blokas\"><center><a href=\"" . url( "?id," . $url['id'] . ";a," . ( $id + 1 ) ) . "\"><img src=\"core/assets/images/mod/" . basename( $failas, ".php" ) . ".png\" />" . ( isset( $lang['admin'][basename( $failas, ".php" )] ) ? $lang['admin'][basename( $failas, ".php" )] : nice_name( $failas ) ) . "</a></center></div>";
 		}
 	}
 	$text .= "</div><br style=\"clear:left\"/></td>
