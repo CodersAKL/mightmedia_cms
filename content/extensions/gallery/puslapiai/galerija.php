@@ -239,7 +239,7 @@ if ( !empty( $url['m'] ) ) {
 				.= "</center>
 			<div id=\"gallery\" >
 	    <center>
-	      <a class='fancybox-effects-d' href=\"images/galerija/originalai/" . input( $row['file'] ) . "\" title=\"sss"
+	      <a href=\"images/galerija/originalai/" . input( $row['file'] ) . "\" title=\"sss"
 				. input( $row['pavadinimas'] ) . ": " . trimlink( strip_tags( $row['apie'] ), 50 ) . "\">
 	        <img src=\"images/galerija/" . input( $row['file'] ) . "\" alt=\"\" />
 	      </a>

@@ -77,7 +77,7 @@ if(! function_exists('header_info')) {
 		' . ( isset( $conf['puslapiai']['galerija.php'] ) ? '<link rel="alternate" href="gallery.php" type="application/rss+xml" title="" id="gallery" />' : '' ) . '
 		
 		<title>' . input( strip_tags( $conf['Pavadinimas'] ) . ' - ' . $page_pavadinimas ) . '</title>
-		<script type="text/javascript" src="javascript/pagrindinis.js"></script>
+		<script type="text/javascript" src="javascript/main.js"></script>
 		
 		<script type="text/javascript">
 			//Active mygtukas
