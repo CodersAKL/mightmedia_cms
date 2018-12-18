@@ -1,6 +1,8 @@
 ﻿<?php
 include 'header.php';
 $user = getUserMail($_SESSION[SLAPTAS]['id']);
+
+var_dump($conf['pages']);
 ?>
 <section>
     <!-- Left Sidebar -->

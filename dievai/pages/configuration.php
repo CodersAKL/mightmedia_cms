@@ -402,7 +402,7 @@ if (isset($url['c'])) {
 			"name" 		=> "reg"
 		];
 
-			$extPath = ROOT . 'extensions/';
+			$extPath = ROOT . 'content/extensions/';
 			$extensions = getDirs($extPath);
 			
 			if(! empty($extensions)) {
