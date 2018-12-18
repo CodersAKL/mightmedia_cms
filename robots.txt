@@ -3,7 +3,7 @@ Allow: /
 Disallow: /siuntiniai
 Disallow: /priedai
 Disallow: /puslapiai
-Disallow: /sandeliukas
+Disallow: /content/cache
 Disallow: /content/themes
 Disallow: /install
 Disallow: /dievai

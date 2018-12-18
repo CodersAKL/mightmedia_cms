@@ -195,7 +195,7 @@ function category( $kieno, $leidimas = FALSE ) {
 
 				if ( isset( $row['file'] ) && !empty( $row['file'] ) ) {
 					mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'kom` WHERE pid = \'puslapiai/siustis\' AND kid = ' . escape( $row['ID'] ) );
-					@copy( ROOTAS . 'siuntiniai/' . $row['file'], ROOTAS . 'sandeliukas/' . $row['file'] ); //backup
+					@copy( ROOTAS . 'siuntiniai/' . $row['file'], ROOTAS . 'content/cache/' . $row['file'] ); //backup
 					@unlink( ROOTAS . 'siuntiniai/' . $row['file'] );
 				}
 			}
@@ -208,7 +208,7 @@ function category( $kieno, $leidimas = FALSE ) {
 			$sql = mysql_query1( 'SELECT `ID`,`file` FROM `' . LENTELES_PRIESAGA . 'galerija` WHERE `categorija` = ' . escape( $id ) );
 			foreach ( $sql as $row ) {
 				if ( isset( $row['file'] ) && !empty( $row['file'] ) ) {
-					@copy( ROOTAS . 'galerija/originalai/' . $row['file'], ROOTAS . 'sandeliukas/' . $row['file'] ); //backup
+					@copy( ROOTAS . 'galerija/originalai/' . $row['file'], ROOTAS . 'content/cache/' . $row['file'] ); //backup
 					@unlink( ROOTAS . 'galerija/' . $row['file'] );
 					@unlink( ROOTAS . 'galerija/mini/' . $row['file'] );
 					@unlink( ROOTAS . 'galerija/originalai/' . $row['file'] );

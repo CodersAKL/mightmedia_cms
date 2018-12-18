@@ -39,7 +39,7 @@ if(! function_exists('mysql_query1')) {
 		global $mysql_num, $prisijungimas_prie_mysql, $conf;
 
 		// Sugeneruojam kešo pavadinimą
-		$keshas = realpath( dirname( __file__ ) . '/..' ) . '/sandeliukas/' . md5( $query ) . '.php'; //kešo failas
+		$keshas = realpath( dirname( __file__ ) . '/..' ) . '/content/cache/' . md5( $query ) . '.php'; //kešo failas
 		$return = array();
 
 		if ( !empty( $conf['keshas'] ) && $lifetime > 0 && !in_array( strtolower( substr( $query, 0, 6 ) ), array(
@@ -71,7 +71,7 @@ if(! function_exists('mysql_query1')) {
 					}
 				}
 
-				$fh = fopen( $keshas, 'wb' ) or die( "Išvalyk <b>/sandeliukas</b> bylą" );
+				$fh = fopen( $keshas, 'wb' ) or die( "Išvalyk <b>/content/cache</b> bylą" );
 
 				// Reikia užrakinti failą, kad du kartus neįrašytų
 				if ( flock( $fh, LOCK_EX ) ) { // užrakinam
