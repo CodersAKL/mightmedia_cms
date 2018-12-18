@@ -18,7 +18,7 @@ function registracijos_forma()
 
 	$bla   = new Form();
 	$forma = array(
-		"Form"                               => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "reg", "extra"=> "onSubmit=\"return checkMail('reg','email')\"" ),
+		"Form"                               => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] ), "method" => "post", "name" => "reg", "extra"=> "onSubmit=\"return checkMail('reg','email')\"" ),
 		"{$lang['reg']['username']}:"        => array( "type" => "text", "value" => ( isset( $vardas ) ? input( $vardas ) : "" ), "name" => "nick", "class" => "input", "extra"=> "title='{$lang['reg']['username']}'" ),
 		"{$lang['reg']['password']}:"        => array( "type" => "password", "value" => input( $pass ), "name" => "pass", "class" => "input" ),
 		"{$lang['reg']['confirmpassword']}:" => array( "type" => "password", "value" => input( $pass2 ), "name" => "pass2", "class" => "input" ),
@@ -32,7 +32,7 @@ function registracijos_forma()
 }
 
 if ( isset( $_SESSION[SLAPTAS]['username'] ) ) {
-	header( "Location: " . url( "?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}" ) );
+	header( "Location: " . url( "?id,{$conf['pages'][$conf['pirminis'].'.php']['id']}" ) );
 }
 $error = '';
 $sekme = FALSE;

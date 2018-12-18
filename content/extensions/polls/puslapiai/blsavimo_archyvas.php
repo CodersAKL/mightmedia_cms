@@ -23,7 +23,7 @@ if ( !isset( $_GET['m'] ) ) {
 		$text .= '</ul>';
 		lentele( $lang['poll']['archive'], $text );
 		if ( $viso > $limit ) {
-			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+			lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 		}
 	} else {
 		klaida( $lang['system']['warning'], $lang['system']['no_content'] );

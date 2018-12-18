@@ -90,10 +90,10 @@ if ( isset( $memb[1] ) ) {
 ';
 		// Jei kitas vartotojas perziuri kita vartotoja BET ne SAVE
 		if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] != $sql['id'] ) {
-			if ( isset( $conf['puslapiai']['pm.php']['id'] ) ) {
+			if ( isset( $conf['pages']['pm.php']['id'] ) ) {
 				$text .= "
 				<center>
-				<form name=\"send_pm\" action='" . url( "?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $sql['nick'] ) ) ) . "' method=\"post\">
+				<form name=\"send_pm\" action='" . url( "?id," . $conf['pages']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $sql['nick'] ) ) ) . "' method=\"post\">
 				<input type=\"submit\" value=\"{$lang['user']['user_pm']}\" />
 				</form>
 				</center>

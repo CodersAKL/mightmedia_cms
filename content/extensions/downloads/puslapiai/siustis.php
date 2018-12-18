@@ -11,7 +11,7 @@
  **/
 //patikrinam ar teisingai uzkrautas puslapis
 if ( !defined( "OK" ) ) {
-	header( 'location: ' . url( "?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}" ) );
+	header( 'location: ' . url( "?id,{$conf['pages'][$conf['pirminis'].'.php']['id']}" ) );
 	exit;
 }
 
@@ -213,7 +213,7 @@ else {
 		$name = mysql_query1( "SELECT `pavadinimas` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE id= " . escape( $k ) . " LIMIT 1", 86400 );
 		lentele( "{$lang['download']['downloads']} >> " . input( $name['pavadinimas'] ), $bla->render( $info ) . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>" );
 		if ( $viso > $limit ) {
-			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+			lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 		}
 	}
 

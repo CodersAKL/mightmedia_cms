@@ -45,7 +45,7 @@ if ( $k >= 0 && empty( $url['m'] ) ) {
 	if ( $viso > 0 ) {
 		//$sql = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `rodoma`='TAIP' AND `kat`='" . $k . "' AND `lang` = ".escape(lang())." ORDER BY `date` DESC LIMIT $p, $limit", 86400);
 		$sql = mysql_query1( "
-			SELECT *, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='puslapiai/straipsnis' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "straipsniai`.`id`) AS `viso`
+			SELECT *, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "kom` WHERE `pid`='content/pages/straipsnis' AND `" . LENTELES_PRIESAGA . "kom`.`kid` = `" . LENTELES_PRIESAGA . "straipsniai`.`id`) AS `viso`
 			FROM `" . LENTELES_PRIESAGA . "straipsniai`
 			WHERE `rodoma`= 'TAIP'
 			AND `kat`='" . $k . "'
@@ -60,11 +60,11 @@ if ( $k >= 0 && empty( $url['m'] ) ) {
 				$data     = $row['date'];
 				$autorius = user( $row['autorius'], $sql_autr['id'], $sql_autr['levelis'] );
 
-				if ( isset( $conf['puslapiai']['straipsnis.php']['id'] ) ) {
+				if ( isset( $conf['pages']['straipsnis.php']['id'] ) ) {
 					if ( $row['kom'] == 'taip' && isset( $conf['kmomentarai_sveciams'] ) && $conf['kmomentarai_sveciams'] != 3 ) {
 						$kiekis = $row['viso'];
 					}
-					$nuoroda = "" . url( "?id," . $conf['puslapiai']['straipsnis.php']['id'] . ";m," . $row['id'] . ";" . seo_url( $row['pav'], $row['id'] ) ) . "";
+					$nuoroda = "" . url( "?id," . $conf['pages']['straipsnis.php']['id'] . ";m," . $row['id'] . ";" . seo_url( $row['pav'], $row['id'] ) ) . "";
 					lentele_c( $row['pav'], $row['t_text'], $nuoroda, $kiekis, $data, $autorius);
 				}
 			}
@@ -72,7 +72,7 @@ if ( $k >= 0 && empty( $url['m'] ) ) {
 			klaida( $lang['system']['warning'], "{$lang['article']['cant']}." );
 		}
 		if ( $viso > $limit ) {
-			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+			lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 		}
 		unset( $text, $row, $sql );
 

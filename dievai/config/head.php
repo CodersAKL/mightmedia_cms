@@ -45,7 +45,7 @@ if ( is_file( ROOT . 'config.php' ) && filesize( ROOT . 'config.php' ) > 1 ) {
 	die( klaida( 'Sistemos klaida / System error', 'Atsiprašome svetaine neidiegta. Truksta sisteminiu failu. / CMS is not installed.' ) );
 }
 //kalbos
-$kalbos   = getFiles( ROOT . 'lang/' );
+$kalbos   = getFiles( ROOT . 'content/lang/' );
 $language = '<ul class="sf-menu" id="lang"><li><a href=""><img src="' . ROOT . 'images/icons/flags/' . lang() . '.png" alt="' . lang() . '"/></a><ul>';
 
 foreach ( $kalbos as $file ) {

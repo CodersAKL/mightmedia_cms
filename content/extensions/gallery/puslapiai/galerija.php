@@ -124,7 +124,7 @@ if ( empty( $url['m'] ) ) {
 
 			$text .= "
 			<div class=\"gallery img_left\" >
-				<a href=\"" . url( "?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $row['id'] ) . "\" title=\"" . ( !empty( $row['pavadinimas'] ) ? input( $row['pavadinimas'] ) . "<br />" : '' ) . trimlink( strip_tags( $row['apie'] ), 50 ) . "\">
+				<a href=\"" . url( "?id," . $conf['pages']['galerija.php']['id'] . ";m," . $row['id'] ) . "\" title=\"" . ( !empty( $row['pavadinimas'] ) ? input( $row['pavadinimas'] ) . "<br />" : '' ) . trimlink( strip_tags( $row['apie'] ), 50 ) . "\">
 					<img src=\"images/galerija/mini/" . input( $row['file'] ) . "\" alt=\"\" />
 				</a>
 				<div class='gallery_title'>
@@ -146,7 +146,7 @@ if ( empty( $url['m'] ) ) {
 			$pav = $page_pavadinimas;
 		}
 		if ( isset( $foto ) ) {
-			lentele( $pav, ( $visos > $limit ? puslapiai( $p, $limit, $visos, 10 ) : '' ) . $text . ( $visos > $limit ? puslapiai( $p, $limit, $visos, 10 ) : '' ) );
+			lentele( $pav, ( $visos > $limit ? pages( $p, $limit, $visos, 10 ) : '' ) . $text . ( $visos > $limit ? pages( $p, $limit, $visos, 10 ) : '' ) );
 		}
 		unset( $row, $text, $sql );
 	} else {

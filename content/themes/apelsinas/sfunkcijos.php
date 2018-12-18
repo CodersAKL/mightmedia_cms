@@ -64,7 +64,7 @@ function lentele_c( $pavadinimas, $tekstas, $n_nuoroda, $kom_kiekis = FALSE, $da
 //$kom_kiekis - komentarų skaičius, $n_nuoroda - nuoroda skaitymui
 	$data = date( 'Y-m-d', $datai );
 //Naujienų
-	if ( 'naujienos' == str_replace( 'puslapiai/', '', $page ) ) {
+	if ( 'naujienos' == str_replace( 'content/pages/', '', $page ) ) {
 		$skaitom = "{$lang['news']['read']} • {$lang['news']['comments']}({$kom_kiekis})";
 //Straipsnių
 	} else {

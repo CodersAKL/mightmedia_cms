@@ -5,7 +5,7 @@ define( 'ROOT', '' );
 
 require_once( 'config.php' );
 
-if ( isset( $conf['puslapiai']['galerija.php'] ) ) {
+if ( isset( $conf['pages']['galerija.php'] ) ) {
 
 	$rss = new RssGallery;
 	//$rss->display(adresas());
@@ -61,7 +61,7 @@ class RssGallery
 
 			$rssItems .= "    <item>
       <title>" . $title . "</title>
-      <link>" . url( "?id," . $conf['puslapiai']['galerija.php']['id'] . ";m," . $id ) . "</link>
+      <link>" . url( "?id," . $conf['pages']['galerija.php']['id'] . ";m," . $id ) . "</link>
       <media:thumbnail url=\"" . adresas() . "images/galerija/" . $img_id . " \"/>
       <media:content url=\"" . adresas() . "images/galerija/originalai/" . $img_id . " \"/>
       <guid isPermaLink=\"false\">" . $img_id . "</guid>

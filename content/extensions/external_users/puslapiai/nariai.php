@@ -40,7 +40,7 @@ if ( sizeof( $sql ) > 0 ) {
 	$bla = new Table();
 	lentele( "{$lang['ulist']['list']} - $viso", $bla->render( $info ), FALSE );
 	if ( $viso > $limit ) {
-		lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+		lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 	}
 
 }

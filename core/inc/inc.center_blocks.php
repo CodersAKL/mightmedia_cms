@@ -24,7 +24,7 @@ foreach ( $sql_p as $row_p ) {
 			}
 			if ( $row_p['show'] == 'Y' && isset( $text ) && !empty( $text ) && isset( $_SESSION[SLAPTAS]['level'] ) && teises( $row_p['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
 				//Rodyti visuose ar tik pirminiame puslapyje	
-				if ( $row_p['rodyti'] == 'Ne' && $conf['pirminis'] == str_replace( 'puslapiai/', '', $page ) ) {
+				if ( $row_p['rodyti'] == 'Ne' && $conf['pirminis'] == str_replace( 'content/pages/', '', $page ) ) {
 					lentele( $title, $text );
 					unset( $title, $text );
 				} elseif ( $row_p['rodyti'] == 'Taip' ) {

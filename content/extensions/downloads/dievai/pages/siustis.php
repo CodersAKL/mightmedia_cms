@@ -71,7 +71,7 @@ if (isset($url['t'])) {
 
 	if (mysql_query1($deleteQuery)) {
 		//comments delete
-		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/siustis' AND kid=" . escape($delId));
+		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='content/pages/siustis' AND kid=" . escape($delId));
 
 		redirect(
 			url("?id," . $url['id'] . ";a," . $url['a'] . ';v,7'),
@@ -109,7 +109,7 @@ if (isset( $_POST['downloads_delete'])) {
 		$sqlDeleteFew = "DELETE FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID` IN (" . implode(",", $trinti) . ")";
 		if(mysql_query1($sqlDeleteFew)) {
 			//comments delete
-			mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/siustis' AND kid IN (" . implode(",", $trinti) . ")");
+			mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='content/pages/siustis' AND kid IN (" . implode(",", $trinti) . ")");
 				
 			redirect(
 				url("?id," . $url['id'] . ";a," . $url['a'] . ';v,7'),
@@ -250,7 +250,7 @@ if ( isset( $_GET['v'] ) ) {
 			lentele( $lang['admin']['edit'], $content);
 			// if list is bigger than limit, then we show list with pagination
 			if ( $viso > $limit ) {
-				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+				lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 			}
 		} else {
 			notifyMsg(
@@ -409,7 +409,7 @@ if ( isset( $_GET['v'] ) ) {
 			lentele( $lang['admin']['download_unpublished'], $content);
 			// if list is bigger than limit, then we show list with pagination
 			if ( $viso > $limit ) {
-				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+				lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 			}
 
 		} else {

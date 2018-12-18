@@ -97,8 +97,8 @@ if(! function_exists('user')) {
 
 			return $lang['system']['guest'];
 		} else {
-			if ( isset( $conf['puslapiai']['pm.php'] ) && $id != 0 && isset( $_SESSION[SLAPTAS]['id'] ) && $id != $_SESSION[SLAPTAS]['id'] ) {
-				$pm = "<a href=\"" . url( "?id," . $conf['puslapiai']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $user ) ) ) . "\"><img src=\"" . ROOT . "images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>";
+			if ( isset( $conf['pages']['pm.php'] ) && $id != 0 && isset( $_SESSION[SLAPTAS]['id'] ) && $id != $_SESSION[SLAPTAS]['id'] ) {
+				$pm = "<a href=\"" . url( "?id," . $conf['pages']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $user ) ) ) . "\"><img src=\"" . ROOT . "images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>";
 			} else {
 				$pm = '';
 			}
@@ -107,8 +107,8 @@ if(! function_exists('user')) {
 			} else {
 				$img = '';
 			}
-			if ( isset( $conf['puslapiai']['view_user.php']['id'] ) && $id != 0 ) {
-				return $img . '<a href="' . url( '?id,' . $conf['puslapiai']['view_user.php']['id'] . ';' . $user ) . '" title="' . input( $user ) . " " . $extra . '">' . trimlink( $user, 10 ) . '</a> ' . $pm;
+			if ( isset( $conf['pages']['view_user.php']['id'] ) && $id != 0 ) {
+				return $img . '<a href="' . url( '?id,' . $conf['pages']['view_user.php']['id'] . ';' . $user ) . '" title="' . input( $user ) . " " . $extra . '">' . trimlink( $user, 10 ) . '</a> ' . $pm;
 			} else {
 				return '<div style="display:inline;" title="' . input( $user ) . '" "' . $extra . '">' . $img . ' ' . trimlink( $user, 10 ) . ' ' . $pm . '</div>';
 			}

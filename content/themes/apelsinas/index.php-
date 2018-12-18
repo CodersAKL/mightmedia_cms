@@ -44,7 +44,7 @@
 			</ul>
 		</div>
 
-		<div id="centras" <?php if ( $page == 'puslapiai/frm' ) {
+		<div id="centras" <?php if ( $page == 'content/pages/frm' ) {
 			echo 'style="width: 675px;"';
 		}?>>
 			<?php
@@ -56,7 +56,7 @@
 			?>
 		</div>
 
-		<?php if ( $page != 'puslapiai/frm' ) { ?>
+		<?php if ( $page != 'content/pages/frm' ) { ?>
 		<div id="desine">
 			<?php include ( "priedai/desines_blokai.php" ); ?>
 		</div>

@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /siuntiniai
 Disallow: /priedai
-Disallow: /puslapiai
+Disallow: /content/pages
 Disallow: /content/cache
 Disallow: /content/themes
 Disallow: /install

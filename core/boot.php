@@ -115,7 +115,7 @@ if (basename($_SERVER['PHP_SELF']) != 'upgrade.php' && basename($_SERVER['PHP_SE
 		$keyName 	= basename($row['file']);
 		$niceName 	= (isset( $lang['pages'][$keyName]) ? $lang['pages'][$keyName] : nice_name($keyName));
 		
-		$conf['puslapiai'][$keyName] = [
+		$conf['pages'][$keyName] = [
 			'id'          	=> $row['id'],
 			'pavadinimas' 	=> input($row['pavadinimas']),
 			'file'        	=> input($row['file']),

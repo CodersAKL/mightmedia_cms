@@ -5,7 +5,7 @@ require_once( 'config.php' );
 if(! defined('ROOT')) {
 	define('ROOT', '');
 }
-if ( isset( $conf['puslapiai']['rss.php'] ) ) {
+if ( isset( $conf['pages']['rss.php'] ) ) {
 	if ( empty( $_GET['lang'] ) ) {
 		$_GET['lang'] = 'lt';
 	}
@@ -38,13 +38,13 @@ if ( isset( $conf['puslapiai']['rss.php'] ) ) {
 			if ( ( isset( $category['teises'] ) && teises( $category['teises'], 0 ) ) || !isset( $category['teises'] ) ) {
 				echo '<item>
                    <title><![CDATA[' . $row['pavadinimas'] . ']]></title>
-                  <link>' . url( '?id,' . $conf['puslapiai']['naujienos.php']['id'] . ';k,' . $row['id'] . '' ) . '</link>
+                  <link>' . url( '?id,' . $conf['pages']['naujienos.php']['id'] . ';k,' . $row['id'] . '' ) . '</link>
                   <description><![CDATA[ ' . $row['naujiena'] . ' <br />' . $row['daugiau'] . ' ]]></description>
                   <author><![CDATA[' . $nickas['email'] . ' (' . $row['autorius'] . ')]]></author>
                   ' . ( isset( $category['pavadinimas'] ) ? '<category>' . $category['pavadinimas'] . '</category>' : '' ) . '
                   <pubDate>' . date( 'D, d M Y H:i:s O', $row['data'] ) . '</pubDate>
                   <source url="' . adresas() . '">' . $conf['Pavadinimas'] . ' RSS</source>
-                  <guid>' . url( '?id,' . $conf['puslapiai']['naujienos.php']['id'] . ';k,' . $row['id'] . '' ) . '</guid>
+                  <guid>' . url( '?id,' . $conf['pages']['naujienos.php']['id'] . ';k,' . $row['id'] . '' ) . '</guid>
               </item>';
 			}
 		}

@@ -37,20 +37,20 @@ if(! function_exists('puslapis')) {
 	function puslapis($puslapis, $extra = false ) {
 
 		global $conf;
-		$teises = @unserialize( $conf['puslapiai'][$puslapis]['teises'] );
+		$teises = @unserialize( $conf['pages'][$puslapis]['teises'] );
 	
 		//todo: optimize after v2
-		$isFile 	= is_file($puslapis) || is_file(dirname( __FILE__ ) . '/../puslapiai/' . $puslapis);
+		$isFile 	= is_file($puslapis) || is_file(dirname( __FILE__ ) . '/../content/pages/' . $puslapis);
 		$pageName 	= basename($puslapis);
 
-		if (isset($conf['puslapiai'][$pageName]['id']) && ! empty( $conf['puslapiai'][$pageName]['id']) && $isFile) {
+		if (isset($conf['pages'][$pageName]['id']) && ! empty( $conf['pages'][$pageName]['id']) && $isFile) {
 
 			if ( $_SESSION[SLAPTAS]['level'] == 1 || ( is_array( $teises ) && in_array( $_SESSION[SLAPTAS]['level'], $teises ) ) || empty( $teises ) ) {
 
-				if ($extra && isset($conf['puslapiai'][$pageName][$extra]) ) {
-					return $conf['puslapiai'][$pageName][$extra];
+				if ($extra && isset($conf['pages'][$pageName][$extra]) ) {
+					return $conf['pages'][$pageName][$extra];
 				} else { //Jei reikalinga kita informacija apie puslapi - grazinam ja.
-					return (int)$conf['puslapiai'][$pageName]['id'];
+					return (int)$conf['pages'][$pageName]['id'];
 				}
 			} else {
 				return false;
@@ -71,8 +71,8 @@ if(! function_exists('puslapis')) {
  *
  * @return string
  */
-if(! function_exists('puslapiai')) {
-	function puslapiai( $start, $count, $total, $range = 0 ) {
+if(! function_exists('pages')) {
+	function pages( $start, $count, $total, $range = 0 ) {
 
 		$res    = "";
 		$pg_cnt = ceil( $total / $count );

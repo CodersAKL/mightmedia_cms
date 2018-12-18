@@ -280,7 +280,7 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 		$categories = cat( 'galerija', 0 );
 	}
 	$categories[0] = "--";
-	$form          = array( "Form"                              => array( "enctype" => "multipart/form-data", "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "action" ),
+	$form          = array( "Form"                              => array( "enctype" => "multipart/form-data", "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] ), "method" => "post", "name" => "action" ),
 	                         "{$lang['admin']['gallery_file']}:" => array( "name" => "failas", "type" => "file", "value" => "", "class"=> "input" ),
 	                         "{$lang['system']['name']}:"        => array( "type" => "text", "value" => '', "name" => "Pavadinimas", "class"=> "input" ),
 	                         "{$lang['gallery']['photoalbum']}:"    => array( "type" => "select", "value" => $categories, "name" => "cat", "class" => "input", "class"=> "input" ),

@@ -105,9 +105,9 @@ if (isset($url['c'])) {
 			}
 		}
 		
-		if ( isset( $conf['puslapiai'] ) && count( $conf['puslapiai'] ) > 0 ) {
-			$puslapiai = array_keys( $conf['puslapiai'] );
-			foreach ( $puslapiai as $key ) {
+		if ( isset( $conf['pages'] ) && count( $conf['pages'] ) > 0 ) {
+			$pages = array_keys( $conf['pages'] );
+			foreach ( $pages as $key ) {
 				$psl[$key] = ( isset( $lang['pages'][$key] ) ? $lang['pages'][$key] : nice_name( basename( $key, '.php' ) ) );
 			}
 		} else {

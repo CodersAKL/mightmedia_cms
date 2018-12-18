@@ -101,7 +101,7 @@ if ( !empty( $url['t'] ) ) {
 
 	// if list is bigger than limit, then we show list with pagination
 	if ( $viso > $limit ) {
-		lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+		lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 	}
 
 	$sql = mysql_query1("SELECT count(`id`) as `viso`, `ip` FROM `" . LENTELES_PRIESAGA . "logai` GROUP BY `ip`, `id` ORDER BY `time` DESC");

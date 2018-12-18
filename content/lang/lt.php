@@ -653,7 +653,7 @@ $lang['setup']['admin_dir'] = 'Pervadink direktoriją';
 $lang['setup']['admin_dir_info'] = '"dievai" - šios direktorijos pavadinimas turi būti tik administratoriams žinomas. Pervadinkite ją į labiau sudėtingą.';
 $lang['setup']['time_zone'] = 'Laiko zona';
 $lang['setup']['time_zone_info'] = 'Pasirinkite savo laiko zoną, jeigu tinklalapį talpinate Lietuviškame serveryje, ji turėtų būti „Europe/Vilnius“.';
-//puslapiai
+//pages
 $lang['pages']['view_user.php'] = 'Nario profilis';
 $lang['pages']['user_gal.php'] = 'Nario galerija';
 $lang['pages']['straipsnis.php'] = 'Straipsniai';

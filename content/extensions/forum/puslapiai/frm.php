@@ -17,7 +17,7 @@ $tid = isset( $url['t'] ) ? (int)$url['t'] : 0;
 $aid = isset( $url['a'] ) ? (int)$url['a'] : 0;
 //edit
 $eid = isset( $url['e'] ) ? (int)$url['e'] : 0;
-//puslapiai
+//pages
 $pid = isset( $url['p'] ) ? (int)$url['p'] : 0;
 //trinti msg
 $did = isset( $url['d'] ) ? (int)$url['d'] : 0;
@@ -154,7 +154,7 @@ if ( $sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0 )
 	}
 	lentele( $lang['forum']['topics'], $temos );
 	if ( isset( $visos ) && $visos > 20 ) {
-		lentele( $lang['system']['pages'], puslapiai( $pid, $limit, $visos, 10 ) );
+		lentele( $lang['system']['pages'], pages( $pid, $limit, $visos, 10 ) );
 	}
 }
 //RODOM tema
@@ -232,7 +232,7 @@ if ( $tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0 ) 
 				unset( $extra );
 			}
 			addtotitle( $straipsnis );
-			lentele( $straipsnis, puslapiai( $pid, $limit, $viso, 10 ) . $turinys . puslapiai( $pid, $limit, $viso, 10 ) . "<a name='end' id='end'></a>" );
+			lentele( $straipsnis, pages( $pid, $limit, $viso, 10 ) . $turinys . pages( $pid, $limit, $viso, 10 ) . "<a name='end' id='end'></a>" );
 
 			$tikrinam = mysql_query1( "SELECT `uzrakinta` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `id`=" . escape( $tid ) . " AND `tid`=" . escape( $sid ) . " limit 1" );
 
@@ -262,15 +262,15 @@ if ( $tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0 ) 
 			//  Siunciam zinute
 			if ( isset( $_POST['action'] ) && $_POST['action'] == 'f_send' && isset( $_POST['msg'] ) && $tikrinam['uzrakinta'] == "ne" ) {
 				if ( !isset( $_SESSION[SLAPTAS]['username'] ) ) {
-					redirect( url( "?id,{$conf['puslapiai'][$conf['pirminis'] . '.php']['id']}" ) );
+					redirect( url( "?id,{$conf['pages'][$conf['pirminis'] . '.php']['id']}" ) );
 				}
 				if ( strlen( str_replace( " ", "", $_POST['msg'] ) ) > 0 ) {
 					$zinute = $_POST['msg'];
 					if ( $tid == 0 ) {
-						redirect( url( "?id,{$conf['puslapiai'][$conf['pirminis'] . '.php']['id']}" ) );
+						redirect( url( "?id,{$conf['pages'][$conf['pirminis'] . '.php']['id']}" ) );
 					}
 					if ( $sid == 0 ) {
-						redirect( url( "?id,{$conf['puslapiai'][$conf['pirminis'] . '.php']['id']}" ) );
+						redirect( url( "?id,{$conf['pages'][$conf['pirminis'] . '.php']['id']}" ) );
 					}
 					if ( $tikrinam['uzrakinta'] == "taip" ) {
 						redirect( url( "?id," . $url['id'] . ";t," . $tid . ";s," . $sid ) );
@@ -436,7 +436,7 @@ elseif ( $aid == 1 && $kid == 0 && $lid == 0 && $rid == 0 ) {
 	if ( teises( unserialize( $teise['teises'] ), $_SESSION[SLAPTAS]['level'] ) ) {
 		if ( isset( $_POST['post_msg'] ) ) {
 			if ( !isset( $_SESSION[SLAPTAS]['username'] ) ) {
-				redirect( url( "?id,{$conf['puslapiai'][$conf['pirminis'] . '.php']['id']}" ) );
+				redirect( url( "?id,{$conf['pages'][$conf['pirminis'] . '.php']['id']}" ) );
 			}
 			if ( isset( $_POST['post_uid'] ) && $_POST['post_uid'] > 0 ) {
 				$uid = (int)$_POST['post_uid'];

@@ -3,15 +3,15 @@
 /**
  * @Projektas: MightMedia TVS
  * @Puslapis: www.coders.lt
- * @$Author: p.dambrauskas $
- * @copyright CodeRS �2008
+ * @$Author$
+ * @copyright CodeRS ©2008
  * @license GNU General Public License v2
- * @$Revision: 492 $
- * @$Date: 2010-04-01 13:22:10 +0300 (Kt, 01 Bal 2010) $
+ * @$Revision$
+ * @$Date$
  **/
 
 
-//Sarasas kur ieskoti
+//Sarašas kur ieškoti
 $kur = array();
 if ( isset( $conf['pages']['naujienos.php']['id'] ) ) {
 	$kur['naujienos'] = $lang['search']['news'];
@@ -42,25 +42,26 @@ foreach ( $kur as $name => $check ) {
 	$box .= "<label><input type=\"checkbox\" name=\"$name\" value=\"$name\" " . ( ( isset( $_POST[$name] ) && !empty( $_POST[$name] ) ) || ( isset( $_POST['vis'] ) && !empty( $_POST['vis'] ) ) ? 'checked="yes"' : '' ) . "/> $check</label><br /> ";
 }
 $box .= "<label><input type='checkbox' name='vis' onclick='checkedAll(\"search\");'/> {$lang['search']['everything']}</label>";
-//Paieskos forma
+//Paieškos forma
 $search = array(
-	"Form"                      => array( "action" => url( "?id,999;m,4" ), "method" => "post", "enctype" => "", "id" => "search", "name" => "search" ),
-	" "                         => array( "type" => "text", "value" => ( isset( $_POST['s'] ) ? input( $_POST['s'] ) : '' ), "name" => "s", "class"=> "input", "extra"=> "title='{$lang['search']['for']}'" ),
-	"{$lang['search']['for']}:" => array( "type" => "string", "value" => $box ),
-	""                          => array( "type" => "submit", "class" => "submit", "name" => "subsearch", "value" => $lang['search']['search'] )
+	"Form"                      => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] ), "method" => "post", "enctype" => "", "id" => "search", "name" => "search" ),
+	$lang['search']['for']		=> array( "type" => "text", "class" => "form-control", "value" => ( isset( $_POST['s'] ) ? input( $_POST['s'] ) : '' ), "name" => "s" ),
+	" "							=> array( "type" => "string", "value" => $box ),
+	""                          => array( "type" => "submit", "class" => "btn btn-primary", "name" => "subsearch", "value" => $lang['search']['search'] )
 );
 
-//Nupiesiam paieskos forma
-$formClass = new Form($search);	
-lentele($lang['admin']['pm_deletefrom'], $formClass->form());
+//Nupiešiam paieškos formą
+include_once config('class', 'dir') . 'class.form.php';
 
+$bla = new Form();
+lentele($lang['search']['search'], $bla->form($search));
 $i = 0;
-//Atliekam paieska
+//Atliekam paiešką
 //print_r($_POST);
 if ( isset( $_POST['s'] ) ) {
 	if ( strlen( str_replace( array( " ", "\r", "\n", "<", ">", "\"", "'", "." ), "", $_POST['s'] ) ) >= 3 ) {
 		if ( ( isset( $_POST['naujienos'] ) || isset( $_POST['vis'] ) ) && isset( $conf['pages']['naujienos.php']['id'] ) ) {
-			$sqlas3 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `pavadinimas` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' OR `naujiena` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " LIMIT 0,100" );
+			$sqlas3 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `pavadinimas` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' OR `naujiena` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " LIMIT 0,100", 120 );
 
 			$text = "";
 			if ( sizeof( $sqlas3 ) > 0 ) {
@@ -72,7 +73,7 @@ if ( isset( $_POST['s'] ) ) {
 			}
 		}
 		if ( ( isset( $_POST['frmt'] ) || isset( $_POST['vis'] ) ) && isset( $conf['pages']['frm.php']['id'] ) ) {
-			$sqlas4 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `pav` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `lang` = " . escape( lang() ) . " LIMIT 0,100" );
+			$sqlas4 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `pav` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `lang` = " . escape( lang() ) . " LIMIT 0,100", 120 );
 
 			$text = "";
 			if ( sizeof( $sqlas4 ) > 0 ) {
@@ -97,7 +98,7 @@ if ( isset( $_POST['s'] ) ) {
 
 		}
 		if ( ( isset( $_POST['str'] ) || isset( $_POST['vis'] ) ) && isset( $conf['pages']['straipsnis.php']['id'] ) ) {
-			$sqlas6 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `t_text` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' or `f_text` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' or `pav` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " LIMIT 0,100" );
+			$sqlas6 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `t_text` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' or `f_text` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' or `pav` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " LIMIT 0,100", 120 );
 
 			$text = "";
 			if ( sizeof( $sqlas6 ) > 0 ) {
@@ -110,7 +111,7 @@ if ( isset( $_POST['s'] ) ) {
 
 		}
 		if ( ( isset( $_POST['siunt'] ) || isset( $_POST['vis'] ) ) && isset( $conf['pages']['siustis.php']['id'] ) ) {
-			$sqlas7 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE  `pavadinimas` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' or `apie` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " LIMIT 0,100" );
+			$sqlas7 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE  `pavadinimas` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' or `apie` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " LIMIT 0,100", 120 );
 
 			$text = "";
 			if ( sizeof( $sqlas7 ) > 0 ) {
@@ -123,7 +124,7 @@ if ( isset( $_POST['s'] ) ) {
 
 		}
 		if ( ( isset( $_POST['galerija'] ) || isset( $_POST['vis'] ) ) && isset( $conf['pages']['galerija.php']['id'] ) ) {
-			$sqlas7 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `pavadinimas` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' or `apie` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " LIMIT 0,100" );
+			$sqlas7 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `pavadinimas` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' or `apie` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " LIMIT 0,100", 120 );
 
 			$text = "";
 			if ( sizeof( $sqlas7 ) > 0 ) {
@@ -136,7 +137,7 @@ if ( isset( $_POST['s'] ) ) {
 
 		}
 		if ( ( isset( $_POST['memb'] ) || isset( $_POST['vis'] ) ) && isset( $conf['pages']['reg.php']['id'] ) ) {
-			$sqlas9 = mysql_query1( "SELECT id,nick,levelis FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick` LIKE " . escape( "%" . $_POST['s'] . "%" ) . "" );
+			$sqlas9 = mysql_query1( "SELECT id,nick,levelis FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick` LIKE " . escape( "%" . $_POST['s'] . "%" ) . "", 120 );
 
 			$text = "";
 			if ( sizeof( $sqlas9 ) > 0 ) {
@@ -150,7 +151,7 @@ if ( isset( $_POST['s'] ) ) {
 
 		}
 		if ( isset( $_POST['page'] ) || isset( $_POST['vis'] ) ) {
-			$sqlas10 = mysql_query1( "SELECT id,pavadinimas FROM `" . LENTELES_PRIESAGA . "page` WHERE `pavadinimas` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `lang` = " . escape( lang() ) );
+			$sqlas10 = mysql_query1( "SELECT id,pavadinimas FROM `" . LENTELES_PRIESAGA . "page` WHERE `pavadinimas` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " AND `lang` = " . escape( lang() ), 120 );
 
 			$text = "";
 			if ( sizeof( $sqlas10 ) > 0 ) {
@@ -165,7 +166,7 @@ if ( isset( $_POST['s'] ) ) {
 		}
 
 		if ( isset( $_POST['kom'] ) || isset( $_POST['vis'] ) ) {
-			$sqlas2 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `zinute` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " LIMIT 0,100" );
+			$sqlas2 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `zinute` LIKE " . escape( "%" . $_POST['s'] . "%" ) . " LIMIT 0,100", 120 );
 
 			$text = "";
 			if ( sizeof( $sqlas2 ) > 0 ) {
@@ -180,7 +181,7 @@ if ( isset( $_POST['s'] ) ) {
 						$link = "m," . $row2['kid'] . "";
 					} elseif ( $row2['pid'] == 'content/pages/siustis' && isset( $conf['pages']['siustis.php']['id'] ) ) {
 
-						$linkas = mysqli_fetch_assoc( $prisijungimas_prie_mysql, mysql_query1( "SELECT categorija FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID`='" . $row2['kid'] . "' AND `lang` = " . escape( lang() ) . "LIMIT 1" ) );
+						$linkas = mysql_fetch_assoc( mysql_query1( "SELECT categorija FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `ID`='" . $row2['kid'] . "' AND `lang` = " . escape( lang() ) . "LIMIT 1" ) );
 						$link   = "k," . $linkas['categorija'] . "v," . $row2['kid'] . "";
 					} else {
 						$link = "";
@@ -198,7 +199,7 @@ if ( isset( $_POST['s'] ) ) {
 		}
 		if ( $i > 0 ) {
 			//$kiek = mysql_num_rows($sqlas);
-			//msg($lang['system']['done'],"<b>".input(str_replace("%"," ",$_POST['s']))."</b><br/>Rasta atikmenu: ".$i);
+			//msg($lang['system']['done'],"<b>".input(str_replace("%"," ",$_POST['s']))."</b><br/>Rasta atikmenų: ".$i);
 			//msg($lang['search']['results'], $text);
 		} else {
 			klaida( $lang['system']['sorry'], "<b>" . input( str_replace( "%", " ", $_POST['s'] ) ) . "</b> {$lang['search']['notfound']}" );
@@ -208,4 +209,4 @@ if ( isset( $_POST['s'] ) ) {
 	}
 }
 
-unset( $kur, $ka, $link, $link2, $link3, $text, $row, $search, $kuriam, $iskur, $iskurdar, $sqlas, $forma );
+unset( $kur, $ka, $link, $link2, $link3, $text, $row, $search, $kuriam, $iskur, $iskurdar, $sqlas, $bla, $forma );

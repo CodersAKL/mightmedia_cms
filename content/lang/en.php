@@ -801,7 +801,7 @@ $lang['setup']['admin_dir'] = 'Rename directory';
 $lang['setup']['admin_dir_info'] = '"dievai" - the directory name must be known only to administrators. Rename it to the more difficult.';
 $lang['setup']['time_zone'] = 'Time zone';
 $lang['setup']['time_zone_info'] = 'Choose your Time zone.';
-//puslapiai
+//pages
 $lang['pages']['view_user.php'] = 'Profile';
 $lang['pages']['user_gal.php'] = 'User gallery';
 $lang['pages']['straipsnis.php'] = 'Articles';

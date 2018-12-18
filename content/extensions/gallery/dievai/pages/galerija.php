@@ -89,7 +89,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 	$deleteQuery = "DELETE FROM `" . LENTELES_PRIESAGA . "galerija` WHERE id=" . escape( $trinti ) . " LIMIT 1";
 
 	if (mysql_query1($deleteQuery)) {
-		$commentsQuery = "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/galerija' AND kid=" . escape( $trinti );
+		$commentsQuery = "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='content/pages/galerija' AND kid=" . escape( $trinti );
 		
 		mysql_query1($commentsQuery);
 		
@@ -355,7 +355,7 @@ if ( isset( $_GET['v'] ) ) {
 		}
 
 		if ($viso > $limit) {
-			lentele($lang['system']['pages'], puslapiai($p, $limit, $viso, 10));
+			lentele($lang['system']['pages'], pages($p, $limit, $viso, 10));
 		}
 
 	} elseif ( $_GET['v'] == 1 || isset( $url['h'] ) ) {
@@ -604,7 +604,7 @@ if ( isset( $_GET['v'] ) ) {
 			<?php
 			// if list is bigger than limit, then we show list with pagination
 			if ( $viso > $limit ) {
-				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+				lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 			}
 		} else {
 			notifyMsg(

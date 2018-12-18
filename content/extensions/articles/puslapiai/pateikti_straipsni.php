@@ -60,7 +60,7 @@ if ( sizeof( $sql ) > 0 ) {
 $categories[0] = "--";
 include_once config('class', 'dir') . 'class.form.php';
 $bla        = new Form();
-$straipsnis = array( "Form"                           => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "reg" ),
+$straipsnis = array( "Form"                           => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] ), "method" => "post", "name" => "reg" ),
                      "{$lang['system']['name']}:"     => array( "type" => "text", "value" => "", "name" => "pav", "class"=> "input" ),
 	//"{$lang['comments']['comments']}:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"), 
                      "{$lang['system']['category']}:" => array( "type" => "select", "value" => $categories, "name" => "category", "class" => "input", "class"=> "input" ),

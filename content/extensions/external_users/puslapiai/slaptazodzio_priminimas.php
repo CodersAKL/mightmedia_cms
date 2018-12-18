@@ -12,7 +12,7 @@
 
 //paziurim ar vartotojas neprisijunges, jei prisijunges tai jam nera cia ka veikti
 if ( isset( $_SESSION[SLAPTAS]['username'] ) ) {
-	header( "Location: " . url( "?id,{$conf['puslapiai'][$conf['pirminis'].'.php']['id']}" ) );
+	header( "Location: " . url( "?id,{$conf['pages'][$conf['pirminis'].'.php']['id']}" ) );
 }
 
 //nuskaitom saugos koda is nuorodos - jeigu toks egzistuoja patikrinam ar tinka ir vydom slaptazodzio atstatyma
@@ -88,7 +88,7 @@ if ( isset( $error ) ) {
 
 	$bla   = new Form();
 	$forma = array(
-		"Form"                       => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "siusti", "extra"=> "onSubmit=\"return checkMail('reg','email')\"" ),
+		"Form"                       => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] ), "method" => "post", "name" => "siusti", "extra"=> "onSubmit=\"return checkMail('reg','email')\"" ),
 		"{$lang['pass']['email']}:"  => array( "type" => "text", "name" => "email", "extra"=> "title='{$lang['pass']['email']}'" ),
 		"{$lang['pass']['email2']}:" => array( "type" => "text", "name" => "email1", "extra"=> "title='{$lang['pass']['email']}'" ),
 		kodas()                      => array( "type"=> "text", "name"=> "kode", "class"=> "chapter" ),

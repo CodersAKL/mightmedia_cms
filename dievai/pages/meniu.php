@@ -37,8 +37,8 @@ $teises[0] = $lang['admin']['for_guests'];
 
 if ( isset( $_POST['Naujas_puslapis2'] ) && $_POST['Naujas_puslapis2'] == $lang['admin']['page_create'] ) {
 	// Nurodote failo pavadinimą:
-	//$failas = ROOT . "puslapiai/" . preg_replace( "/[^a-z0-9-]/", "_", strtolower( $_POST['pav'] ) ) . ".php";
-	$failas = ROOT . "puslapiai/" . seo_url( basename( $_POST['pav'] ), '' ) . ".php";
+	//$failas = ROOT . "content/pages/" . preg_replace( "/[^a-z0-9-]/", "_", strtolower( $_POST['pav'] ) ) . ".php";
+	$failas = ROOT . "content/pages/" . seo_url( basename( $_POST['pav'] ), '' ) . ".php";
 
 	// Nurodote įrašą kuris bus faile kai jį sukurs:
 	$tekstas = str_replace( array( '$', 'HTML' ), array( '&#36;', 'html' ), $_POST['Page'] );
@@ -140,7 +140,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 		}
 	}
 
-	$pageFiles = getFiles(ROOT . 'puslapiai/', null, 'puslapiai/');
+	$pageFiles = getFiles(ROOT . 'content/pages/', null, 'content/pages/');
 	//extensions
 	$pageFiles = applyFilters('cmsPages', $pageFiles);
 
@@ -149,7 +149,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 			$fileName 	= $file['name'];
 			$fileTitle	= (isset($lang['pages'][$file['name']]) ? $lang['pages'][$file['name']] : nice_name(basename($file['name'], '.php')));
 
-			if ($file['name'] !== 'klaida.php' && ! isset($conf['puslapiai'][basename($fileName)]['id'])) {
+			if ($file['name'] !== 'klaida.php' && ! isset($conf['pages'][basename($fileName)]['id'])) {
 				$pages[$fileName] = $fileTitle;
 			}
 		}
@@ -318,7 +318,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 
 	lentele($lang['system']['tree'], $text);
 }
-//puslapiai redagavimas
+//pages redagavimas
 elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
 	if (isset($_POST['Redaguoti_psl']) && $_POST['Redaguoti_psl'] == $lang['admin']['edit'] ) {
 		$psl    = input($_POST['pslp']);
@@ -445,7 +445,7 @@ elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
 
 //Redaguojam puslapiai turini
 elseif ( isset( $url['e'] ) && isnum( $url['e'] ) && $url['e'] > 0 ) {
-	$psl_id = (int)$url['e']; //puslapiai ID
+	$psl_id = (int)$url['e']; //pages ID
 
 	if ( isset( $_POST['Redaguoti_txt'] ) && $_POST['Redaguoti_txt'] == $lang['admin']['edit'] ) {
 		$sql     	= "SELECT `file`,`pavadinimas` FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape( $psl_id ) . " LIMIT 1";
@@ -463,7 +463,7 @@ lentele($page_pavadinimas,$text);
 		if(is_file(ROOT . $sql['file'])) {
 			$filePath = ROOT . $sql['file'];
 		} else {
-			$filePath = ROOT . 'puslapiai/' . $sql['file'];
+			$filePath = ROOT . 'content/pages/' . $sql['file'];
 		}
 		// writing into file
 		$fp = fopen($filePath, "w+");
@@ -480,7 +480,7 @@ lentele($page_pavadinimas,$text);
 		if(is_file(ROOT . $sql['file'])) {
 			$filePath = ROOT . $sql['file'];
 		} else {
-			$filePath = ROOT . 'puslapiai/' . $sql['file'];
+			$filePath = ROOT . 'content/pages/' . $sql['file'];
 		}
 
 		//checking file structure

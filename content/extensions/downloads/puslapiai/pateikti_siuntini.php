@@ -94,7 +94,7 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 	include_once config('class', 'dir') . 'class.form.php';
 	$bla = new Form();
 
-	$forma = array( "Form"                               => array( "enctype" => "multipart/form-data", "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "action" ),
+	$forma = array( "Form"                               => array( "enctype" => "multipart/form-data", "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] ), "method" => "post", "name" => "action" ),
 	                "{$lang['admin']['download_file']}:" => array( "name" => "failas", "type" => "file", "value" => "", "class"=> "input" ),
 	                "{$lang['system']['name']}:"         => array( "type" => "text", "value" => '', "name" => "Pavadinimas", "class"=> "input" ),
 	                "{$lang['system']['category']}:"     => array( "type" => "select", "value" => $categories, "name" => "cat", "class" => "input", "class"=> "input" ),

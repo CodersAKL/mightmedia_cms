@@ -11,7 +11,7 @@
  * */
 
 if ( !defined( "OK" ) || !isset( $_SESSION[SLAPTAS]['username'] ) ) {
-	header( "Location: " . url( "?id,{$conf['puslapiai'][$conf['pirminis'] . '.php']['id']}" ) );
+	header( "Location: " . url( "?id,{$conf['pages'][$conf['pirminis'] . '.php']['id']}" ) );
 	exit;
 }
 
@@ -113,7 +113,7 @@ elseif ( $mid == 2 ) {
 	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . "LIMIT 1" );
 
 	$form_array = array(
-		"Form"                           => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] . ";m," . $_GET['m'] ), "method" => "post", "enctype" => "", "id" => "", "extra" => "onSubmit=\"return checkMail('change_contacts','email')\"", "name" => "change_contacts" ),
+		"Form"                           => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] . ";m," . $_GET['m'] ), "method" => "post", "enctype" => "", "id" => "", "extra" => "onSubmit=\"return checkMail('change_contacts','email')\"", "name" => "change_contacts" ),
 		"ICQ:"                           => array( "type" => "text", "value" => input( $info['icq'] ), "name" => "icq", "class" => "input" ),
 		"MSN:"                           => array( "type" => "text", "value" => input( $info['msn'] ), "name" => "msn", "class" => "input" ),
 		"Skype:"                         => array( "type" => "text", "value" => input( $info['skype'] ), "name" => "skype", "class" => "input" ),
@@ -138,7 +138,7 @@ elseif ( $mid == 3 ) {
 		$salis[$row['iso']] = $row['printable_name'];
 	}
 
-	$form_array = array( "Form" => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] . ";m," . $_GET['m'] ), "method" => "post", "name" => "change_country" ), "{$lang['user']['edit_country']}:" => array( "type" => "select", "value" => $salis, "name" => "salis", "selected" => input( $info['salis'] ) ), "{$lang['user']['edit_city']}:" => array( "type" => "text", "value" => input( $info['miestas'] ), "name" => "miestas" ), " \r " => array( "type" => "hidden", "name" => "action", "value" => "country_change" ), "" => array( "type" => "submit", "value" => $lang['user']['edit_update'] ) );
+	$form_array = array( "Form" => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] . ";m," . $_GET['m'] ), "method" => "post", "name" => "change_country" ), "{$lang['user']['edit_country']}:" => array( "type" => "select", "value" => $salis, "name" => "salis", "selected" => input( $info['salis'] ) ), "{$lang['user']['edit_city']}:" => array( "type" => "text", "value" => input( $info['miestas'] ), "name" => "miestas" ), " \r " => array( "type" => "hidden", "name" => "action", "value" => "country_change" ), "" => array( "type" => "submit", "value" => $lang['user']['edit_update'] ) );
 
 	include_once config('class', 'dir') . 'class.form.php';
 	$form = new Form();
@@ -215,7 +215,7 @@ elseif ( $mid == 5 ) {
           });
           </script>';
 	$form_array = array(
-		"Form"                                 => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] . ";m," . $_GET['m'] ), "method" => "post", "name" => "parasas" ),
+		"Form"                                 => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] . ";m," . $_GET['m'] ), "method" => "post", "name" => "parasas" ),
 		"{$lang['user']['edit_name']}:"        => array( "type" => "text", "value" => input( $sql['vardas'] ), "name" => "vardas", "class" => "input" ),
 		"{$lang['user']['edit_secondname']}:"  => array( "type" => "text", "value" => input( $sql['pavarde'] ), "name" => "pavarde", "class" => "input" ),
 		"{$lang['user']['edit_dateOfbirth']}:" => array( "type" => "text", "value" => input( $sql['gim_data'] ), "extra" => "title='0000-00-00' size='10' maxlength='10' style='width:inherit'", "class" => "input", "name" => "gimimas", "id" => "date" ),

@@ -48,9 +48,9 @@ include_once 'core/inc/inc.auth.php';
 if ( isset( $url['id'] ) && !empty( $url['id'] ) && isnum( $url['id'] ) ) {
 	$pslid = (int)$url['id'];
 } else {
-	$pslid            = $conf['puslapiai'][$conf['pirminis'] . '.php']['id'];
-	$page             = 'puslapiai/' . $conf['pirminis'];
-	$page_pavadinimas = $conf['puslapiai'][$conf['pirminis'] . '.php']['pavadinimas'];
+	$pslid            = $conf['pages'][$conf['pirminis'] . '.php']['id'];
+	$page             = 'content/pages/' . $conf['pirminis'];
+	$page_pavadinimas = $conf['pages'][$conf['pirminis'] . '.php']['pavadinimas'];
 	$_GET['id']       = $pslid;
 	$url['id']        = $pslid;
 }
@@ -70,7 +70,7 @@ if ( isset( $pslid ) && isnum( $pslid ) && $pslid > 0 ) {
 			if(is_file($sql1['file'])) {
 				$page = dirname($sql1['file']) . '/' . basename($sql1['file'], '.php');
 			} else {
-				$page = 'puslapiai/' . basename($sql1['file'], '.php');
+				$page = 'content/pages/' . basename($sql1['file'], '.php');
 			}
 
 			$page_pavadinimas = $sql1['pavadinimas'];
@@ -80,15 +80,15 @@ if ( isset( $pslid ) && isnum( $pslid ) && $pslid > 0 ) {
 				"keywords" 		=> $sql1['metakeywords']
 			];
 		} else {
-			$page             = "puslapiai/klaida";
+			$page             = "content/pages/klaida";
 			$page_pavadinimas = '404 - ' . $lang['system']['pagenotfounfd'] . '';
 		}
 		if ( !file_exists( $page . '.php' ) ) {
-			$page             = "puslapiai/klaida";
+			$page             = "content/pages/klaida";
 			$page_pavadinimas = '404 - ' . $lang['system']['pagenotfounfd'] . '';
 		}
 	} else {
-		$page             = "puslapiai/klaida";
+		$page             = "content/pages/klaida";
 		$page_pavadinimas = '404 - ' . $lang['system']['pagenotfounfd'] . '';
 	}
 }
@@ -108,10 +108,12 @@ if ( !empty( $_GET['lang'] ) ) {
 
 include_once 'core/inc/inc.header.php';
 //Tikrinam ar setup.php failas paљalintas. Saugumo sumetimais
-if ( is_dir( 'install/' ) && $_SESSION[SLAPTAS]['level'] == 1 && !@unlink( 'install/index.php' ) ) {
-	die( '<h1>Demesio / Warning</h1><h3>Neištrintas install aplankalas.</h3> Tai saugumo spraga. Prašome pašalinkite šį aplankalą iš serverio arba pakeiskite jo pavadinimą. /Please, remove install folder from server.</h3>' );
-}
+// if ( is_dir( 'install/' ) && $_SESSION[SLAPTAS]['level'] == 1 && !@unlink( 'install/index.php' ) ) {
+// 	die( '<h1>Demesio / Warning</h1><h3>Neištrintas install aplankalas.</h3> Tai saugumo spraga. Prašome pašalinkite šį aplankalą iš serverio arba pakeiskite jo pavadinimą. /Please, remove install folder from server.</h3>' );
+// }
+
 include_once 'content/themes/' . $conf['Stilius'] . '/sfunkcijos.php';
+
 if ( empty( $_GET['ajax'] ) ) {
 	include_once 'content/themes/' . $conf['Stilius'] . '/index.php';
 } else {

@@ -80,7 +80,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 	$sqlDelete = "DELETE FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE id=" . escape( $trinti ) . " LIMIT 1";
 
 	if (mysql_query1($sqlDelete)) {
-		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/naujienos' AND kid=" . escape( $trinti ) . "" );
+		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='content/pages/naujienos' AND kid=" . escape( $trinti ) . "" );
 
 		redirect(
 			url("?id," . $url['id'] . ";a," . $url['a']),
@@ -206,8 +206,8 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 			$mail->IsMail();
 			$mail->CharSet  = 'UTF-8';
 			$mail->SingleTo = TRUE;
-			$nuoroda_i_naujiena     = "" . url( "?id,{$conf['puslapiai']['naujienos.php']['id']};k,{$last_news['id']}" ) . "";
-			$nuoroda_atsisakyti  = "" . url( "?id," . $conf['puslapiai']['naujienlaiskiai.php']['id'] ) . "";
+			$nuoroda_i_naujiena     = "" . url( "?id,{$conf['pages']['naujienos.php']['id']};k,{$last_news['id']}" ) . "";
+			$nuoroda_atsisakyti  = "" . url( "?id," . $conf['pages']['naujienlaiskiai.php']['id'] ) . "";
 			$mail->SetFrom( $admin_email, $conf['Pavadinimas'] );
 			$mail->Subject = strip_tags( $conf['Pavadinimas'] ) . " " . $pavadinimas;
 			$body           = naujienlaiskis($pavadinimas, $izanga, $nuoroda_i_naujiena, $nuoroda_atsisakyti);
@@ -293,7 +293,7 @@ if ( isset( $_GET['v'] ) ) {
 			lentele($lang['admin']['edit'], $content);
 			// if list is bigger than limit, then we show list with pagination
 			if ( $viso > $limit ) {
-				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+				lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 			}
 
 		} else {
@@ -388,7 +388,7 @@ if ( isset( $_GET['v'] ) ) {
 		];
 
 		if (isset($extra)) {
-			if(isset($conf['puslapiai']['naujienlaiskiai.php']['id'])) {
+			if(isset($conf['pages']['naujienlaiskiai.php']['id'])) {
 				$newForm[$lang['news']['newsletter?']] = [
 					'type'		=> 'switch',
 					'value'		=> 1,
@@ -448,7 +448,7 @@ if ( isset( $_GET['v'] ) ) {
 			lentele( $lang['admin']['news_unpublished'], $content);
 			// if list is bigger than limit, then we show list with pagination
 			if ( $viso > $limit ) {
-				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+				lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 			}
 
 		} else {

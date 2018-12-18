@@ -20,7 +20,7 @@ function upgrade5Step($data)
     // example:
     // $deleteFiles = [
     //     '../upgrade/is_zip',
-    //     '../puslapiai/is_zip.php'
+    //     '../content/pages/is_zip.php'
     // ];
     // //files delete
 

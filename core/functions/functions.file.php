@@ -134,10 +134,10 @@ if(! function_exists('getFiles')) {
 				}
 				closedir( $dh );
 			} else {
-				die( klaida( $lang['system']['error'], "{$lang['system']['cantread']}:  $path" ) );
+				die($lang['system']['error'] . ' ' . $lang['system']['cantread'] . ': ' . $path);
 			}
 		} else {
-			die( klaida( $lang['system']['error'], "{$lang['system']['notdir']}:  $path" ) );
+			die($lang['system']['error'] . ': ' . $lang['system']['notdir'] . ': ' . $path);
 		}
 		sort( $fileNames, SORT_STRING ); // surusiuojam
 		$sortedFiles = array();

@@ -11,7 +11,7 @@
  * */
 
 if ( !defined( "OK" ) ) {
-	header( 'location: ' . url( '?id,' . $conf['puslapiai'][$conf['pirminis'] . '.php']['id'] ) );
+	header( 'location: ' . url( '?id,' . $conf['pages'][$conf['pirminis'] . '.php']['id'] ) );
 	exit;
 }
 unset( $extra );

@@ -347,10 +347,10 @@ CREATE TABLE `page` (
 --
 
 INSERT INTO `page` (`id`, `pavadinimas`, `lang`, `file`, `place`, `show`, `teises`, `parent`) VALUES
-(1, 'Naujienos', 'lt', 'puslapiai/naujienos.php', 1, 'Y', 'N;', 0),
-(2, 'Apie', 'lt', 'puslapiai/apie.php', 5, 'Y', 'N;', 0),
-(3, 'Paieška', 'lt', 'puslapiai/search.php', 6, 'Y', 'N;', 0),
-(4, 'Kontaktai', 'lt', 'puslapiai/kontaktas.php', 6, 'Y', 'N;', 0);
+(1, 'Naujienos', 'lt', 'content/pages/naujienos.php', 1, 'Y', 'N;', 0),
+(2, 'Apie', 'lt', 'content/pages/apie.php', 5, 'Y', 'N;', 0),
+(3, 'Paieška', 'lt', 'content/pages/search.php', 6, 'Y', 'N;', 0),
+(4, 'Kontaktai', 'lt', 'content/pages/kontaktas.php', 6, 'Y', 'N;', 0);
 
 -- --------------------------------------------------------
 

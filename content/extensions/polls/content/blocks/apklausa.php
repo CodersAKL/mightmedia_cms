@@ -68,7 +68,7 @@ if ( isset( $quest['question'] ) ) {
 		}
 		$text .= '<br />	' . $lang['poll']['author'] . ': ' . user( $quest['author_name'], $quest['author_id'] ) . '';
 		if ( puslapis( 'blsavimo_archyvas.php' ) ) {
-			$text .= "<br /><a href=\"" . url( '?id,' . $conf['puslapiai']['blsavimo_archyvas.php']['id'] . ';m,' . $quest['id'] ) . "\">{$lang['news']['comments']}</a><br /><a href=\"" . url( '?id,' . $conf['puslapiai']['blsavimo_archyvas.php']['id'] ) . "\"> {$lang['poll']['archive']}</a>";
+			$text .= "<br /><a href=\"" . url( '?id,' . $conf['pages']['blsavimo_archyvas.php']['id'] . ';m,' . $quest['id'] ) . "\">{$lang['news']['comments']}</a><br /><a href=\"" . url( '?id,' . $conf['pages']['blsavimo_archyvas.php']['id'] ) . "\"> {$lang['poll']['archive']}</a>";
 		}
 	}
 } else {

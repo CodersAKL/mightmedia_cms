@@ -182,7 +182,7 @@ function category( $kieno, $leidimas = FALSE ) {
 			$sql = mysql_query1( 'SELECT `id` FROM `' . LENTELES_PRIESAGA . 'straipsniai` WHERE `kat` = ' . escape( $_POST['Kategorijos_id'] ) );
 			foreach ( $sql as $row ) {
 
-				mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'kom` WHERE pid = \'puslapiai/straipsnis\' AND kid = ' . escape( $row['id'] ) );
+				mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'kom` WHERE pid = \'content/pages/straipsnis\' AND kid = ' . escape( $row['id'] ) );
 			}
 
 			$result = mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'straipsniai` WHERE `kat` = ' . escape( $_POST['Kategorijos_id'] ) );
@@ -194,7 +194,7 @@ function category( $kieno, $leidimas = FALSE ) {
 			foreach ( $sql as $row ) {
 
 				if ( isset( $row['file'] ) && !empty( $row['file'] ) ) {
-					mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'kom` WHERE pid = \'puslapiai/siustis\' AND kid = ' . escape( $row['ID'] ) );
+					mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'kom` WHERE pid = \'content/pages/siustis\' AND kid = ' . escape( $row['ID'] ) );
 					@copy( ROOTAS . 'siuntiniai/' . $row['file'], ROOTAS . 'content/cache/' . $row['file'] ); //backup
 					@unlink( ROOTAS . 'siuntiniai/' . $row['file'] );
 				}
@@ -212,7 +212,7 @@ function category( $kieno, $leidimas = FALSE ) {
 					@unlink( ROOTAS . 'galerija/' . $row['file'] );
 					@unlink( ROOTAS . 'galerija/mini/' . $row['file'] );
 					@unlink( ROOTAS . 'galerija/originalai/' . $row['file'] );
-					mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'kom` WHERE pid = \'puslapiai/galerija\' AND kid = ' . escape( $row['ID'] ) );
+					mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'kom` WHERE pid = \'content/pages/galerija\' AND kid = ' . escape( $row['ID'] ) );
 				}
 			}
 			mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'galerija` WHERE `categorija` = ' . escape( $id ) );
@@ -222,7 +222,7 @@ function category( $kieno, $leidimas = FALSE ) {
 			$id  = ceil( (int)$_POST['Kategorijos_id'] );
 			$sql = mysql_query1( 'SELECT `id` FROM `' . LENTELES_PRIESAGA . 'naujienos` WHERE `kategorija` = ' . escape( $_POST['Kategorijos_id'] ) );
 			foreach ( $sql as $row ) {
-				mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'kom` WHERE pid = \'puslapiai/naujienos\' AND kid = ' . escape( $row['id'] ) );
+				mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'kom` WHERE pid = \'content/pages/naujienos\' AND kid = ' . escape( $row['id'] ) );
 			}
 			mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'naujienos` WHERE `kategorija` = ' . escape( $id ) ) or klaida( $lang['system']['error'], $lang['system']['error'] );
 		}
@@ -249,16 +249,16 @@ function category( $kieno, $leidimas = FALSE ) {
 		//Jei kuriama vartotoju kategorija
 		if ( $kieno == 'vartotojai' ) {
 			$textas = $lang['system']['grouplevel'];
-			//$puslapiai[""]="";
+			//$pages[""]="";
 			$failai = getFiles( ROOTAS . $conf['Admin_folder'], '.htaccess|index.php|index.html|index.htm|index.php3|config.php|configuration.php|users.php|logs.php|upload.php|todo.php|blocks.php|meniu.php|komentarai.php|narsykle.php|main.php|sfunkcijos.php|pokalbiai.php|dashboard.php|uncache.php|search.php|antivirus.php|sfunkcijos.php' );
 			foreach ( $failai as $file ) {
 				if ( $file['type'] == 'file' ) {
 
-					$puslapiai[basename( $file['name'] )] = ( isset( $lang['admin'][basename( $file['name'], '.php' )] ) ? $lang['admin'][basename( $file['name'], '.php' )] : nice_name( basename( $file['name'], '.php' ) ) );
+					$pages[basename( $file['name'] )] = ( isset( $lang['admin'][basename( $file['name'], '.php' )] ) ? $lang['admin'][basename( $file['name'], '.php' )] : nice_name( basename( $file['name'], '.php' ) ) );
 				}
 			}
-			$puslapiai['com'] = '<b>' . $lang['admin']['komentarai'] . '(mod)</b>';
-			$puslapiai['frm'] = '<b>' . $lang['admin']['frm'] . '(mod)</b>';
+			$pages['com'] = '<b>' . $lang['admin']['komentarai'] . '(mod)</b>';
+			$pages['frm'] = '<b>' . $lang['admin']['frm'] . '(mod)</b>';
 
 
 		} else {
@@ -272,7 +272,7 @@ function category( $kieno, $leidimas = FALSE ) {
 			$ser = '';
 		}
 
-		//print_r($puslapiai);
+		//print_r($pages);
 		$kategorijoss[0] = '';
 		$kategorijos     = array(
 			'Form'                                                                                    => array( 'action' => url( "?id,{$_GET['id']};a,{$_GET['a']};v,{$_GET['v']}" ), 'method' => 'post', 'name' => 'reg' ),
@@ -286,7 +286,7 @@ function category( $kieno, $leidimas = FALSE ) {
 		);
 		if ( $kieno == 'vartotojai' ) {
 			//	echo $mod;
-			$kategorijos[$lang['admin']['what_moderate']] = array( 'type' => 'select', 'extra' => 'multiple="multiple"', 'value' => $puslapiai, 'class' => 'asmSelect', 'name' => 'punktai[]', 'id' => 'punktai', 'selected' => ( isset( $extra['mod'] ) ) ? $ser : '' );
+			$kategorijos[$lang['admin']['what_moderate']] = array( 'type' => 'select', 'extra' => 'multiple="multiple"', 'value' => $pages, 'class' => 'asmSelect', 'name' => 'punktai[]', 'id' => 'punktai', 'selected' => ( isset( $extra['mod'] ) ) ? $ser : '' );
 		}
 		if ( /* $leidimas == true && */
 			$kieno != 'vartotojai' && $_GET['v'] == 2

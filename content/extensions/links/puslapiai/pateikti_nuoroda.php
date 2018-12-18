@@ -69,7 +69,7 @@ if ( sizeof( $sql ) > 0 ) {
 $categories[0] = "--";
 include_once config('class', 'dir') . 'class.form.php';
 $bla      = new Form();
-$links = array( "Form"                        => array( "action" => url( "?id," . $conf['puslapiai'][basename( __file__ )]['id'] ), "method" => "post", "name" => "reg" ),
+$links = array( "Form"                        => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] ), "method" => "post", "name" => "reg" ),
                    $lang['system']['category']   => array( "type" => "select", "value" => $categories, "name" => "kat" ),
                    $lang['admin']['links_title'] => array( "type" => "text", "value" => "", "name" => "name" ),
 	//"Url" => array("type" => "text", "extra" => "title=\"http://\" onchange=\"$.post('".url("?id,{$_GET['id']};ajax,1")."',{ tikrink: $(this).val() }, function(data) { $('#temp').html(data); $('#apie').val($('#temp').html())});\"", "name" => "url"),

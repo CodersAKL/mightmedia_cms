@@ -18,7 +18,7 @@ if ( is_file( '../config.php' ) && filesize( '../config.php' ) > 1 ) {
 	include_once ( "../config.php" );
 } elseif ( is_file( '../install/index.php' ) ) {
 	header( 'location: ../install/index.php' );
-	exit();
+	exit;
 } else {
 	die( klaida( 'Sistemos klaida / System error', 'Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.' ) );
 }

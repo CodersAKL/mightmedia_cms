@@ -228,7 +228,7 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 			lentele($title, $content);
 			// if list is bigger than limit, then we show list with pagination
 			if ($viso > $limit) {
-				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+				lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 			}
 
 			unset($info2, $i);
