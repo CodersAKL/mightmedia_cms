@@ -1,6 +1,6 @@
 .idea
 .project
-config.php
+/config.php
 content/cache/*
 content/cache/!.htaccess
 
