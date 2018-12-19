@@ -322,7 +322,7 @@ INSERT INTO `nustatymai` (`id`, `key`, `val`) VALUES
 (19, 'F_urls', ';'),
 (20, 'galorder', 'data'),
 (21, 'galorder_type', 'DESC'),
-(22, 'Editor', 'markitup'),
+(22, 'Editor', 'tinymce'),
 (23, 'hyphenator', '1'),
 (24, 'Pastas', ''),
 (25, 'kalba', 'lt.php'),
