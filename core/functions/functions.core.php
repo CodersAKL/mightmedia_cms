@@ -74,7 +74,6 @@ if(! function_exists('header_info')) {
 		<meta property="og:image" content="' . adresas() . 'content/themes/' . input( strip_tags( $conf['Stilius'] ) ) . '/paveiksleliai/mm_logo.png" />
 
 		' . ( isset( $conf['pages']['rss.php'] ) ? '<link rel="alternate" type="application/rss+xml" title="' . input( strip_tags( $conf['Pavadinimas'] ) ) . '" href="rss.php" />' : '' ) . '
-		' . ( isset( $conf['pages']['galerija.php'] ) ? '<link rel="alternate" href="gallery.php" type="application/rss+xml" title="" id="gallery" />' : '' ) . '
 		
 		<title>' . input( strip_tags( $conf['Pavadinimas'] ) . ' - ' . $page_pavadinimas ) . '</title>
 		<script type="text/javascript" src="core/assets/javascript/main.js"></script>
