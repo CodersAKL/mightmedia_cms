@@ -40,7 +40,7 @@ if ( isset( $d ) && $d > 0 ) {
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "siuntiniai` SET paspaudimai = paspaudimai + 1 WHERE `ID`=" . escape( $d ) . "" );
 			download( "content/uploads/" . $sql['file'] );
 		} else {
-			die( klaida( $lang['system']['sorry'], $lang['download']['cant'] ) );
+			die($lang['system']['sorry'] . ': ' . $lang['download']['cant']);
 		}
 	} else {
 		header( "Content-type: text/html; charset=utf-8" );
@@ -50,5 +50,5 @@ if ( isset( $d ) && $d > 0 ) {
 } else {
 	header( "Content-type: text/html; charset=utf-8" );
 	header( "HTTP/1.0 404 Not Found" );
-	ie($lang['system']['error'] . ': ' . $lang['download']['notfound']);
+	die($lang['system']['error'] . ': ' . $lang['download']['notfound']);
 }
