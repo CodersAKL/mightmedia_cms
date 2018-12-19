@@ -94,7 +94,7 @@ if (isset($url['c'])) {
 			);	
 		}
 		
-		$stiliai             = getDirs(ROOT . 'content/themes/', 'remontas');
+		$stiliai             = getDirs(ROOT . 'content/themes/', 'maintenance');
 		$editors             = getDirs('htmlarea/');
 		$editors['textarea'] = 'textarea';
 		$kalbos              = getFiles( ROOT . 'content/lang/' );

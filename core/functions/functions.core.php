@@ -275,7 +275,7 @@ if(! function_exists('versija')) {
 /**
  * Editorius skirtas vaizdžiai redaguoti html
  *
- * @example echo editorius('tiny_mce','mini');
+ * @example echo editorius('tinymce','mini');
  * @example echo editorius('spaw','standartinis',array('Glaustai'=>'Glaustai','Placiau'=>'Plačiau'),array('Glaustai'=>'Naujiena glaustai','Placiau'=>'Naujiena plačiau'));
  *
  * @param string $tipas

@@ -1,33 +1,23 @@
 <?php
 //Atvaizduojame remonto pranešimą
-function remontas( $pavadinimas, $tekstas ) {
+function maintenance($pavadinimas, $tekstas) {
 
 	global $conf, $lang;
-	echo "<div id='plotis'>
-    <div id='kaire'><div class='skalpas'>
-    <a href='" . adresas() . "' title='" . adresas() . "'>
-    <div class='logo'></div>
-    </a>
-    <div class='sonas2'></div>
-    </div>
+
+	?>
+	<div class="card card-nav-tabs card-block">
+		<div class="card-header card-header---bg">
+			<h4 class="title">
+				<?php echo $pavadinimas; ?>
+			</h4>
+		</div>
+		<div class="card-body">
+			<div class="card-text">
+				<?php echo $tekstas; ?>
+			</div>
+		</div>
 	</div>
-    <div id='kunas'>
-    <div id='meniu_juosta'></div>
-    <div id='centras' style='width: 675px;min-height:300px;'>
-    <div class='pavadinimas'>{$pavadinimas}</div>
-    <div class='vidus'>
-    <div class='text'>{$tekstas}</div>
-    </div>
-    </div>
-    <div class='sonas'></div>
-    <div id='kojos'>
-    <div class='tekstas'>" . $conf['Copyright'] . "</div>
-    <a href='http://mightmedia.lt' target='_blank' title='Mightmedia'><div class='logo'></div></a>
-    </div>
-    </div>
-    </div>
-    <div id='another' class='clear'><div class='lygiuojam'><div class='taisom'></div></div></div>
-	";
+	<?php
 }
 
 //Dešinės pozicijos blokai

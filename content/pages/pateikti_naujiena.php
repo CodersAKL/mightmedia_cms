@@ -48,7 +48,7 @@ $new = array(
 	"{$lang['system']['name']}:"     => array( "type" => "text", "value" => '', "name" => "pav", "class"=> "input" ),
 	//"{$lang['comments']['comments']}:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"),
 	"{$lang['system']['category']}:" => array( "type" => "select", "value" => $categories, "name" => "category", "class" => "input", "class"=> "input" ),
-	"{$lang['admin']['news_more']}:" => array( "type" => "string", "value" => editorius( 'tiny_mce', 'standartinis', 'naujiena' ) ),
+	"{$lang['admin']['news_more']}:" => array( "type" => "string", "value" => editorius( 'tinymce', 'standartinis', 'naujiena' ) ),
 	""                               => array( "type" => "submit", "name" => "action", "value" => "{$lang['news']['submit']}" )
 );
 lentele($lang['news']['submiting'], $bla->form( $new ) );

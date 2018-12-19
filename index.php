@@ -93,12 +93,16 @@ if ( isset( $pslid ) && isnum( $pslid ) && $pslid > 0 ) {
 	}
 }
 //Jei svetaine uzdaryta remontui ir jei jungiasi ne administratorius
-if ( $conf['Palaikymas'] == 1 ) {
-	if ( !isset( $_SESSION[SLAPTAS]['id'] ) || $_SESSION[SLAPTAS]['level'] != 1 ) {
-		redirect( "remontas.php" );
+if ($conf['Palaikymas'] == 1 ) {
+	if (! isset($_SESSION[SLAPTAS]['id']) || $_SESSION[SLAPTAS]['level'] != 1) {
+		include_once ROOT . "/content/themes/" . $conf['Stilius'] . "/sfunkcijos.php";
+
+		maintenance($lang['admin']['maintenance'], $conf['Maintenance']);
+		exit;
 	}
 }
-if ( !empty( $_GET['lang'] ) ) {
+
+if (! empty($_GET['lang'])) {
 	$_SESSION[SLAPTAS]['lang'] = basename( $_GET['lang'], '.php' );
 	redirect( url( "?id," . $_GET['id'] ) );
 }
@@ -114,18 +118,21 @@ include_once 'core/inc/inc.header.php';
 
 include_once 'content/themes/' . $conf['Stilius'] . '/sfunkcijos.php';
 
-if ( empty( $_GET['ajax'] ) ) {
+if (empty($_GET['ajax'])) {
 	include_once 'content/themes/' . $conf['Stilius'] . '/index.php';
 } else {
 	include_once $page . '.php';
 }
 
-mysqli_close( $prisijungimas_prie_mysql );
+mysqli_close($prisijungimas_prie_mysql);
+
 $m2    = explode( " ", microtime() );
 $etime = $m2[1] + $m2[0];
 $ttime = ( $etime - $stime );
 $ttime = number_format( $ttime, 7 );
-if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
+
+if ($_SESSION[SLAPTAS]['level'] == 1) {
 	echo '<!-- Generated ' . apvalinti( $ttime, 2 ) . 's. -->';
 }
+
 ob_end_flush();

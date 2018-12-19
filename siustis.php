@@ -23,7 +23,7 @@ ob_start();
 header( "Content-type: text/html; charset=utf-8" );
 // Jei svetaine uzdaryta remontui ir jei kreipiasi ne administratorius
 if ( $conf['Palaikymas'] == 1 && $_SESSION[SLAPTAS]['level'] > 1 ) {
-	redirect( "remontas.php" );
+	redirect('index.php');
 	exit;
 }
 // Nustatome atsisiuntimo ID

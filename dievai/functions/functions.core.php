@@ -28,8 +28,8 @@ function editor( $tipas = 'jquery', $dydis = 'standartinis', $id = FALSE, $value
 
 	global $conf, $lang;
 
-	if ( !$id ) {
-		$id = md5( uniqid() );
+	if (! $id) {
+		$id = md5(uniqid());
 	}
 
 	if ( is_array( $id ) ) {
@@ -60,7 +60,7 @@ HTML;
 HTML;
 
 		}
-	} elseif ( $conf['Editor'] == 'tinymce' ) {
+	} elseif ($conf['Editor'] == 'tinymce') {
 		$dir    = adresas();
 		$return .= <<<HTML
       <!-- Load TinyMCE -->
