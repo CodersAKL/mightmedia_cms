@@ -185,7 +185,7 @@ if (! empty($IPS)) {
 		$info[] = array(
 			'IP'                     => $key,
 			$lang['admin']['why']    => trimlink( $val, 150 ),
-			$lang['admin']['action'] => "<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};d,{$key}" ) . "\" title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "images/icons/cross.png\" alt=\"delete\" border=\"0\"></a> " );
+			$lang['admin']['action'] => "<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};d,{$key}" ) . "\" title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" alt=\"delete\" border=\"0\"></a> " );
 	}
 }
 $title = $lang['admin']['bans'];

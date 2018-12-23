@@ -1,9 +1,9 @@
 User-agent: *
 Allow: /
-Disallow: /siuntiniai
+Disallow: /content/uploads
 Disallow: /priedai
-Disallow: /puslapiai
-Disallow: /sandeliukas
-Disallow: /stiliai
+Disallow: /content/pages
+Disallow: /content/cache
+Disallow: /content/themes
 Disallow: /install
 Disallow: /dievai

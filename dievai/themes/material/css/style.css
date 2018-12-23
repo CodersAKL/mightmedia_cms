@@ -7563,7 +7563,7 @@ fieldset[disabled] .form-control {
         color: #fff; }
   .sidebar .menu {
     position: relative;
-    overflow-y: auto;
+    overflow-y: hidden;
     height: 90vh; }
     .sidebar .menu .list {
       list-style: none;

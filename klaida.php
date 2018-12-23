@@ -12,7 +12,7 @@
 ob_start();
 header( "Cache-control: public" );
 header( "Content-type: text/html; charset=utf-8" );
-include_once( "priedai/conf.php" );
+include_once( "config.php" );
 $status = isset( $_SERVER['REDIRECT_STATUS'] ) ? $_SERVER['REDIRECT_STATUS'] : 500;
 switch ( $status ) {
 	case 403:

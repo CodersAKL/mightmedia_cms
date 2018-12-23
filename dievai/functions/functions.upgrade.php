@@ -154,6 +154,6 @@ function upgrade4Step($data)
     }
 }
 
-if(is_file(ROOT . 'upgrade' . '/upgrade.php')) {
-    include ROOT . 'upgrade' . '/upgrade.php';
+if(is_file(ROOT . 'content/upgrade' . '/upgrade.php')) {
+    include ROOT . 'content/upgrade' . '/upgrade.php';
 }

@@ -24,28 +24,38 @@ $stime = $m1[1] + $m1[0];
 //Iterpiam nustatymu faila jei ne perkialiam i instaliacija
 clearstatcache();
 
-if ( is_file( 'priedai/conf.php' ) && filesize( 'priedai/conf.php' ) > 10 ) {
-	include_once 'priedai/conf.php';
+if ( is_file( 'config.php' ) && filesize( 'config.php' ) > 10 ) {
+	include_once 'config.php';
 } elseif ( is_file( 'install/index.php' ) && !isset( $conf['Palaikymas'] ) ) {
 	header( 'location: install/index.php' );
 	exit();
 } else {
 	die( '<h1>Sistemos klaida / System error</h1>Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.' );
 }
-include_once ( 'priedai/prisijungimas.php' );
-if ( !isset( $conf ) ) {
-	include_once 'priedai/funkcijos.php';
-}
+
+/**
+ * BOOT
+ */
+include_once 'core/boot.php';
+
+include_once 'core/inc/inc.auth.php';
+
+// if ( !isset( $conf ) ) {
+// 	include_once 'funkcijos.php';
+// }
+
 /* Puslapiu aprasymas */
 if ( isset( $url['id'] ) && !empty( $url['id'] ) && isnum( $url['id'] ) ) {
 	$pslid = (int)$url['id'];
 } else {
-	$pslid            = $conf['puslapiai'][$conf['pirminis'] . '.php']['id'];
-	$page             = 'puslapiai/' . $conf['pirminis'];
-	$page_pavadinimas = $conf['puslapiai'][$conf['pirminis'] . '.php']['pavadinimas'];
+	$pslid            = $conf['pages'][$conf['pirminis'] . '.php']['id'];
+	$page             = 'content/pages/' . $conf['pirminis'];
+	$page_pavadinimas = $conf['pages'][$conf['pirminis'] . '.php']['pavadinimas'];
 	$_GET['id']       = $pslid;
 	$url['id']        = $pslid;
 }
+
+
 if ( isset( $pslid ) && isnum( $pslid ) && $pslid > 0 ) {
 	$sql1 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape( (int)$pslid ) . " and `lang` = " . escape( lang() ) . " LIMIT 1", 259200 ); //keshas  3dienos.
 
@@ -60,55 +70,69 @@ if ( isset( $pslid ) && isnum( $pslid ) && $pslid > 0 ) {
 			if(is_file($sql1['file'])) {
 				$page = dirname($sql1['file']) . '/' . basename($sql1['file'], '.php');
 			} else {
-				$page = 'puslapiai/' . basename($sql1['file'], '.php');
+				$page = 'content/pages/' . basename($sql1['file'], '.php');
 			}
 
 			$page_pavadinimas = $sql1['pavadinimas'];
+			$pageMetaData = [
+				"title"			=> $sql1['metatitle'],
+				"description" 	=> $sql1['metadesc'],
+				"keywords" 		=> $sql1['metakeywords']
+			];
 		} else {
-			$page             = "puslapiai/klaida";
+			$page             = "content/pages/klaida";
 			$page_pavadinimas = '404 - ' . $lang['system']['pagenotfounfd'] . '';
 		}
 		if ( !file_exists( $page . '.php' ) ) {
-			$page             = "puslapiai/klaida";
+			$page             = "content/pages/klaida";
 			$page_pavadinimas = '404 - ' . $lang['system']['pagenotfounfd'] . '';
 		}
 	} else {
-		$page             = "puslapiai/klaida";
+		$page             = "content/pages/klaida";
 		$page_pavadinimas = '404 - ' . $lang['system']['pagenotfounfd'] . '';
 	}
 }
 //Jei svetaine uzdaryta remontui ir jei jungiasi ne administratorius
-if ( $conf['Palaikymas'] == 1 ) {
-	if ( !isset( $_SESSION[SLAPTAS]['id'] ) || $_SESSION[SLAPTAS]['level'] != 1 ) {
-		redirect( "remontas.php" );
+if ($conf['Palaikymas'] == 1 ) {
+	if (! isset($_SESSION[SLAPTAS]['id']) || $_SESSION[SLAPTAS]['level'] != 1) {
+		include_once ROOT . "/content/themes/" . $conf['Stilius'] . "/sfunkcijos.php";
+
+		maintenance($lang['admin']['maintenance'], $conf['Maintenance']);
+		exit;
 	}
 }
-if ( !empty( $_GET['lang'] ) ) {
+
+if (! empty($_GET['lang'])) {
 	$_SESSION[SLAPTAS]['lang'] = basename( $_GET['lang'], '.php' );
 	redirect( url( "?id," . $_GET['id'] ) );
 }
-/*if (!empty($_SESSION['lang']) && is_file(ROOT . 'lang/' . basename($_SESSION['lang']) . '.php')) {
-	require(ROOT . 'lang/' . basename($_SESSION['lang'], '.php') . '.php');
+/*if (!empty($_SESSION['lang']) && is_file(ROOT . 'content/lang/' . basename($_SESSION['lang']) . '.php')) {
+	require(ROOT . 'content/lang/' . basename($_SESSION['lang'], '.php') . '.php');
 }*/
 
-include_once 'priedai/header.php';
+include_once 'core/inc/inc.header.php';
 //Tikrinam ar setup.php failas paљalintas. Saugumo sumetimais
-if ( is_dir( 'install/' ) && $_SESSION[SLAPTAS]['level'] == 1 && !@unlink( 'install/index.php' ) ) {
-	die( '<h1>Demesio / Warning</h1><h3>Neištrintas install aplankalas.</h3> Tai saugumo spraga. Prašome pašalinkite šį aplankalą iš serverio arba pakeiskite jo pavadinimą. /Please, remove install folder from server.</h3>' );
-}
-include_once 'stiliai/' . $conf['Stilius'] . '/sfunkcijos.php';
-if ( empty( $_GET['ajax'] ) ) {
-	include_once 'stiliai/' . $conf['Stilius'] . '/index.php';
+// if ( is_dir( 'install/' ) && $_SESSION[SLAPTAS]['level'] == 1 && !@unlink( 'install/index.php' ) ) {
+// 	die( '<h1>Demesio / Warning</h1><h3>Neištrintas install aplankalas.</h3> Tai saugumo spraga. Prašome pašalinkite šį aplankalą iš serverio arba pakeiskite jo pavadinimą. /Please, remove install folder from server.</h3>' );
+// }
+
+include_once 'content/themes/' . $conf['Stilius'] . '/sfunkcijos.php';
+
+if (empty($_GET['ajax'])) {
+	include_once 'content/themes/' . $conf['Stilius'] . '/index.php';
 } else {
 	include_once $page . '.php';
 }
 
-mysqli_close( $prisijungimas_prie_mysql );
+mysqli_close($prisijungimas_prie_mysql);
+
 $m2    = explode( " ", microtime() );
 $etime = $m2[1] + $m2[0];
 $ttime = ( $etime - $stime );
 $ttime = number_format( $ttime, 7 );
-if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
+
+if ($_SESSION[SLAPTAS]['level'] == 1) {
 	echo '<!-- Generated ' . apvalinti( $ttime, 2 ) . 's. -->';
 }
+
 ob_end_flush();

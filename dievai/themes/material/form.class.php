@@ -199,7 +199,8 @@ class Form
                     {
                         return '<div class="switch">
                         <label>
-                        ' . (isset($array['label_on']) ? $array['label_on'] : '') . '
+                        ' . (isset($array['label_on']) ? $array['label_on'] : '') .
+                        (isset($array['name']) ? '  <input type="hidden"  name="' . $array['name'] . '" /> ' : '') . '
                         <input 
                         type="checkbox" 
                         ' . (isset($array['checked']) && $array['checked'] ? ' checked' : '') . '

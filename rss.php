@@ -1,11 +1,11 @@
 <?php
 header( "content-type: application/xml; charset=UTF-8" );
 echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
-require_once( 'priedai/conf.php' );
+require_once( 'config.php' );
 if(! defined('ROOT')) {
 	define('ROOT', '');
 }
-if ( isset( $conf['puslapiai']['rss.php'] ) ) {
+if ( isset( $conf['pages']['rss.php'] ) ) {
 	if ( empty( $_GET['lang'] ) ) {
 		$_GET['lang'] = 'lt';
 	}
@@ -33,18 +33,18 @@ if ( isset( $conf['puslapiai']['rss.php'] ) ) {
 
 		//naujienu sarasas
 		foreach ( $result as $row ) {
-			$kategorija = mysql_query1( "SELECT  SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` where `id`=" . escape( $row['kategorija'] ) . " AND `lang` = " . escape( basename( $_GET['lang'], '.php' ) ) . " LIMIT 1", 360 );
+			$category = mysql_query1( "SELECT  SQL_CACHE * FROM `" . LENTELES_PRIESAGA . "grupes` where `id`=" . escape( $row['kategorija'] ) . " AND `lang` = " . escape( basename( $_GET['lang'], '.php' ) ) . " LIMIT 1", 360 );
 			$nickas     = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick` = " . escape( $row['autorius'] ) . " LIMIT 1", 360 );
-			if ( ( isset( $kategorija['teises'] ) && teises( $kategorija['teises'], 0 ) ) || !isset( $kategorija['teises'] ) ) {
+			if ( ( isset( $category['teises'] ) && teises( $category['teises'], 0 ) ) || !isset( $category['teises'] ) ) {
 				echo '<item>
                    <title><![CDATA[' . $row['pavadinimas'] . ']]></title>
-                  <link>' . url( '?id,' . $conf['puslapiai']['naujienos.php']['id'] . ';k,' . $row['id'] . '' ) . '</link>
+                  <link>' . url( '?id,' . $conf['pages']['naujienos.php']['id'] . ';k,' . $row['id'] . '' ) . '</link>
                   <description><![CDATA[ ' . $row['naujiena'] . ' <br />' . $row['daugiau'] . ' ]]></description>
                   <author><![CDATA[' . $nickas['email'] . ' (' . $row['autorius'] . ')]]></author>
-                  ' . ( isset( $kategorija['pavadinimas'] ) ? '<category>' . $kategorija['pavadinimas'] . '</category>' : '' ) . '
+                  ' . ( isset( $category['pavadinimas'] ) ? '<category>' . $category['pavadinimas'] . '</category>' : '' ) . '
                   <pubDate>' . date( 'D, d M Y H:i:s O', $row['data'] ) . '</pubDate>
                   <source url="' . adresas() . '">' . $conf['Pavadinimas'] . ' RSS</source>
-                  <guid>' . url( '?id,' . $conf['puslapiai']['naujienos.php']['id'] . ';k,' . $row['id'] . '' ) . '</guid>
+                  <guid>' . url( '?id,' . $conf['pages']['naujienos.php']['id'] . ';k,' . $row['id'] . '' ) . '</guid>
               </item>';
 			}
 		}

@@ -28,8 +28,8 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 
 $limit = 15;
 
-include_once ( ROOT . "priedai/kategorijos.php" );
-kategorija( "vartotojai", TRUE );
+include_once config('functions', 'dir') . 'functions.categories.php';
+category( "vartotojai", TRUE );
 //trinimas
 if ( isset( $_POST['users_delete'] ) ) {
 	foreach ( $_POST['userss_delete'] as $a=> $b ) {
@@ -186,7 +186,7 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 	$grupe  = "";
 	//Užsukam ciklą tiek kartų kiek yra lygių
 	foreach ( $lygiai as $key ) {
-		$grupe .= "<img src='" . ROOT . "images/icons/" . $conf['level'][$key]['pav'] . "'> <a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";v," . $_GET['v'] . ";k," . $key ) . "'>" . $conf['level'][$key]['pavadinimas'] . "</a><br>";
+		$grupe .= "<img src='" . ROOT . "core/assets/images/icons/" . $conf['level'][$key]['pav'] . "'> <a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";v," . $_GET['v'] . ";k," . $key ) . "'>" . $conf['level'][$key]['pavadinimas'] . "</a><br>";
 	}
 
 	lentele( $lang['admin']['user_groups'], $grupe );
@@ -218,7 +218,7 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 				     $lang['admin']['user_name']  => user( $row2['nick'], $row2['id'], $row2['levelis'] ),
 				     "IP"                         => $row2['ip'],
 				     $lang['admin']['user_email'] => "" . $row2['email'] . "",
-				     $lang['admin']['action']     => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "'title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a," . getAdminPagesbyId('bans') . ";b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
+				     $lang['admin']['action']     => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "'title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "core/assets/images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a," . getAdminPagesbyId('bans') . ";b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "core/assets/images/icons/delete.png' border='0' class='middle' /></a>"
 				);
 			}
 
@@ -228,7 +228,7 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 			lentele($title, $content);
 			// if list is bigger than limit, then we show list with pagination
 			if ($viso > $limit) {
-				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+				lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 			}
 
 			unset($info2, $i);
@@ -248,7 +248,7 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 4 ) {
 					$lang['admin']['user_name']      => user( $row2['nick'], $row2['id'], $row2['levelis'] ),
 					"IP"                             => $row2['ip'],
 					$lang['admin']['user_email']	 => "" . $row2['email'] . "",
-					" "                              => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a," . getAdminPagesbyId('bans') . ";b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "images/icons/delete.png' border='0' class='middle' /></a>"
+					" "                              => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "core/assets/images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a," . getAdminPagesbyId('bans') . ";b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "core/assets/images/icons/delete.png' border='0' class='middle' /></a>"
 				);
 			}
 

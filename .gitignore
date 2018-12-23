@@ -1,23 +1,23 @@
 .idea
 .project
-priedai/conf.php
-sandeliukas/*
-sandeliukas/!.htaccess
-images/nuorodu/*
-images/nuorodu/!index.html
-images/avatars/*
-images/avatars/!no_avatar.png
-siuntiniai/failai/*
-siuntiniai/failai/!index.html
-siuntiniai/images/*
-siuntiniai/images/!index.html
-siuntiniai/media/*
-siuntiniai/media/!index.html
+/config.php
+content/cache/*
+content/cache/!.htaccess
+
+content/uploads/*
+content/uploads/avatars/!no_avatar.png
+content/uploads/!.htaccess
+content/uploads/!gallery
+content/uploads/gallery/!.htaccess
+content/uploads/gallery/!thumbs
+content/uploads/gallery/thumbs/!index.html
+content/uploads/gallery/!originals
+content/uploads/gallery/originals/!.htaccess
+
 
 //for dev
 .history
+.vscode
 install-
-install--
-install/node_modules
-.htaccess
-priedai/conf.php
+node_modules
+# .htaccess

@@ -1,8 +1,15 @@
 <?php
 ob_start();
 session_start();
-include_once( "priedai/conf.php" );
-include_once( "priedai/prisijungimas.php" );
+
+/**
+ * BOOT
+ */
+include_once 'core/boot.php';
+
+include_once 'core/inc/inc.auth.php';
+
+
 if ( isset( $_SESSION[SLAPTAS]['level'] ) && $_SESSION[SLAPTAS]['level'] > 0 && isset( $_FILES['userfile']['type'] ) ) {
 
 
@@ -16,7 +23,7 @@ if ( isset( $_SESSION[SLAPTAS]['level'] ) && $_SESSION[SLAPTAS]['level'] > 0 && 
 
 		global $_POST;
 		//$big_img = "tmp/"; //Kur bus saugomi didesni paveiksliukai
-		$mini_img = "images/avatars"; //Kur bus saugomos miniatiuros
+		$mini_img = "content/uploads/avatars"; //Kur bus saugomos miniatiuros
 
 		$img_thumb_width = 250; //Mini paveiksliuku dydis
 

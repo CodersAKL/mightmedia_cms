@@ -26,7 +26,7 @@ if ( !isset( $_POST['pg'] ) && !isset( $_GET['s'] ) ) {
 	$sql = mysql_query1( "SELECT `pid` FROM `" . LENTELES_PRIESAGA . "kom` GROUP BY `pid` ORDER BY `pid` DESC" );
 	if ( !empty( $sql ) ) {
 		foreach ( $sql as $row ) {
-			$pgs[$row['pid']] = ( isset( $lang['pages'][str_replace( 'puslapiai/', '', $row['pid'] ) . '.php'] ) ? $lang['pages'][str_replace( 'puslapiai/', '', $row['pid'] ) . '.php'] : str_replace( 'puslapiai/', '', $row['pid'] ) );
+			$pgs[$row['pid']] = ( isset( $lang['pages'][str_replace( 'content/content/pages/', '', $row['pid'] ) . '.php'] ) ? $lang['pages'][str_replace( 'content/pages/', '', $row['pid'] ) . '.php'] : str_replace( 'content/pages/', '', $row['pid'] ) );
 		}
 
 		$form = array( "Form" => array( "action" => "", "method" => "post", "name" => "com" ), "{$lang['online']['page']}:" => array( "type" => "select", "value" => $pgs, "name" => "pg" ), " " => array( "type" => "submit", "name" => "select", "value" => "{$lang['admin']['page_select']}" ), "  " => array( "type" => "submit", "name" => "del", "value" => "{$lang['admin']['del_comments']}" ) );
@@ -79,7 +79,7 @@ if ( isset( $_POST['select'] ) || isset( $_GET['s'] ) ) {
 			$info[] = array(
 				$lang['new']['author']      => $nick,
 				$lang['contact']['message'] => smile( bbchat( trimlink( input( $row['zinute'] ), 150 ) ) ),
-				" "                         => "<a href=\"" . url( "s," . str_replace( '=', '', base64_encode( $pg ) ) . ";d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a><a href=\"" . url( "s," . str_replace( '=', '', base64_encode( $pg ) ) . ";e," . $row['id'] . "" ) . "\" title='{$lang['admin']['edit']}'><img src=\"" . ROOT . "images/icons/pencil.png\" alt=\"[{$lang['admin']['edit']}]\" border=\"0\" class=\"middle\" /></a>"
+				" "                         => "<a href=\"" . url( "s," . str_replace( '=', '', base64_encode( $pg ) ) . ";d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a><a href=\"" . url( "s," . str_replace( '=', '', base64_encode( $pg ) ) . ";e," . $row['id'] . "" ) . "\" title='{$lang['admin']['edit']}'><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" alt=\"[{$lang['admin']['edit']}]\" border=\"0\" class=\"middle\" /></a>"
 			);
 		}
 
@@ -87,7 +87,7 @@ if ( isset( $_POST['select'] ) || isset( $_GET['s'] ) ) {
 		lentele($lang['admin']['adm_comments'], $tableClass->render());
 		// if list is bigger than limit, then we show list with pagination
 		if ( $viso > $limit ) {
-			lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+			lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 		}
 
 	} else {

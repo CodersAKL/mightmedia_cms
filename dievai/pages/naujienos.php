@@ -31,15 +31,15 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 }
 $limit   = 15;
 
-include_once ROOT . "priedai/kategorijos.php";
-kategorija( "naujienos", TRUE );
+include_once config('functions', 'dir') . 'functions.categories.php';
+category("naujienos", TRUE);
 $sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='naujienos' AND `path`=0 AND `lang` = " . escape( lang() ) . " ORDER BY `id` DESC" );
 if (! empty($sql)) {
 
-	$kategorijos = cat( 'naujienos', 0 );
+	$categories = cat( 'naujienos', 0 );
 }
 
-$kategorijos[0] = "---";
+$categories[0] = "---";
 
 // New activating
 if (isset($url['p'])) {
@@ -80,7 +80,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 	$sqlDelete = "DELETE FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE id=" . escape( $trinti ) . " LIMIT 1";
 
 	if (mysql_query1($sqlDelete)) {
-		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='puslapiai/naujienos' AND kid=" . escape( $trinti ) . "" );
+		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "kom` WHERE pid='content/pages/naujienos' AND kid=" . escape( $trinti ) . "" );
 
 		redirect(
 			url("?id," . $url['id'] . ";a," . $url['a']),
@@ -138,8 +138,8 @@ if ( isset( $url['h'] ) ) {
 	}
 
 	$extra = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `id`=" . escape( $redaguoti ) . " LIMIT 1" );
-} elseif ( isset( $_POST['Kategorijos_id'] ) && isNum( $_POST['Kategorijos_id'] ) && $_POST['Kategorijos_id'] > 0 && isset( $_POST['Kategorija'] ) && $_POST['Kategorija'] == $lang['admin']['edit'] ) {
-	$extra = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape( (int)$_POST['Kategorijos_id'] ) . " LIMIT 1" );
+} elseif ( isset( $_POST['categories_id'] ) && isNum( $_POST['categories_id'] ) && $_POST['categories_id'] > 0 && isset( $_POST['category'] ) && $_POST['category'] == $lang['admin']['edit'] ) {
+	$extra = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape( (int)$_POST['categories_id'] ) . " LIMIT 1" );
 } // Išsaugojam redaguojamą naujieną
 elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['edit'] ) {
 	$naujiena = explode( '===page===', $_POST['naujiena'] );
@@ -148,7 +148,7 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['edit']
 	$placiau     = (empty($naujiena[1]) ? '' : $naujiena[1] );
 	$komentaras  = (isset($_POST['kom']) ? 'taip' : 'ne' );
 	$rodymas     = (isset($_POST['rodoma']) ? 'TAIP' : 'NE' );
-	$kategorija  = (int)$_POST['kategorija'];
+	$category  = (int)$_POST['category'];
 	$pavadinimas = strip_tags( $_POST['pav'] );
 	$id          = ceil( (int)$_POST['news_id'] );
 	$sticky      = ( isset( $_POST['sticky'] ) ? 1 : 0 );
@@ -158,7 +158,7 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['edit']
 	
 	$updateQuery = "UPDATE `" . LENTELES_PRIESAGA . "naujienos` SET
 	`pavadinimas` = " . escape( $pavadinimas ) . ",
-	`kategorija` = " . escape( $kategorija ) . ",
+	`kategorija` = " . escape( $category ) . ",
 	`naujiena` = " . escape( $izanga ) . ",
 	`daugiau` = " . escape( $placiau ) . ",
 	`kom` = " . escape( $komentaras ) . ",
@@ -186,7 +186,7 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 	$komentaras  = (isset($_POST['kom']) ? 'taip' : 'ne' );
 	$rodymas     = (isset($_POST['rodoma']) ? 'TAIP' : 'NE' );
 	$pavadinimas = strip_tags( $_POST['pav'] );
-	$kategorija  = (int)$_POST['kategorija'];
+	$category  = (int)$_POST['category'];
 	$sticky      = ( isset( $_POST['sticky'] ) ? 1 : 0 );
 
 	if ( empty( $naujiena ) || empty( $pavadinimas ) ) {
@@ -194,20 +194,20 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['news_c
 	}
 
 	if ( !isset( $error ) ) {
-		$result    = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, rodoma, kategorija, lang, sticky) VALUES (" . escape( $pavadinimas ) . ", " . escape( $izanga ) . ", " . escape( $placiau ) . ",  '" . time() . "', '" . $_SESSION[SLAPTAS]['username'] . "', " . escape( $komentaras ) . ", " . escape( $rodymas ) . ", " . escape( $kategorija ) . ",  " . escape( lang() ) . ", " . escape( $sticky ) . ")" );
+		$result    = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, rodoma, kategorija, lang, sticky) VALUES (" . escape( $pavadinimas ) . ", " . escape( $izanga ) . ", " . escape( $placiau ) . ",  '" . time() . "', '" . $_SESSION[SLAPTAS]['username'] . "', " . escape( $komentaras ) . ", " . escape( $rodymas ) . ", " . escape( $category ) . ",  " . escape( lang() ) . ", " . escape( $sticky ) . ")" );
 		$last_news = mysql_query1( "SELECT `id` FROM `" . LENTELES_PRIESAGA . "naujienos` ORDER BY `id` DESC LIMIT 1" );
 		if ( isset( $_POST['letter'] ) ) {
 
-			require_once ROOT . 'priedai/class.phpmailer-lite.php';
-			include_once ROOT . 'stiliai/' . $conf['Stilius'] . '/sfunkcijos.php';
-			include_once ROOT . 'stiliai/' . $conf['Stilius'] . '/naujienlaiskiui.php';
+			require_once config('class', 'dir') . 'class.phpmailer-lite.php';
+			include_once ROOT . 'content/themes/' . $conf['Stilius'] . '/sfunkcijos.php';
+			include_once ROOT . 'content/themes/' . $conf['Stilius'] . '/naujienlaiskiui.php';
 
 			$mail = new PHPMailerLite();
 			$mail->IsMail();
 			$mail->CharSet  = 'UTF-8';
 			$mail->SingleTo = TRUE;
-			$nuoroda_i_naujiena     = "" . url( "?id,{$conf['puslapiai']['naujienos.php']['id']};k,{$last_news['id']}" ) . "";
-			$nuoroda_atsisakyti  = "" . url( "?id," . $conf['puslapiai']['naujienlaiskiai.php']['id'] ) . "";
+			$nuoroda_i_naujiena     = "" . url( "?id,{$conf['pages']['naujienos.php']['id']};k,{$last_news['id']}" ) . "";
+			$nuoroda_atsisakyti  = "" . url( "?id," . $conf['pages']['naujienlaiskiai.php']['id'] ) . "";
 			$mail->SetFrom( $admin_email, $conf['Pavadinimas'] );
 			$mail->Subject = strip_tags( $conf['Pavadinimas'] ) . " " . $pavadinimas;
 			$body           = naujienlaiskis($pavadinimas, $izanga, $nuoroda_i_naujiena, $nuoroda_atsisakyti);
@@ -283,7 +283,7 @@ if ( isset( $_GET['v'] ) ) {
 					$lang['admin']['news_name'] => '<span style="cursor:pointer;" title="<b>' . $row['pavadinimas'] . '</b><br />' . $lang['admin']['news_author'] . ': <b>' . $row['autorius'] . '</b>">' . trimlink( strip_tags( $row['pavadinimas'] ), 55 ) . '<span/></a>',
 					$lang['admin']['news_date'] => date( 'Y-m-d', $row['data'] ),
 					$lang['admin']['news_more'] => trimlink( strip_tags( $row['naujiena'] ), 55 ),
-					$lang['admin']['action']    => '<a href="' . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . '" title="' . $lang['admin']['edit'] . '"><img src="' . ROOT . 'images/icons/pencil.png" border="0"></a> <a href="' . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . '" title="' . $lang['admin']['delete'] . '" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="' . ROOT . 'images/icons/cross.png" border="0"></a>'
+					$lang['admin']['action']    => '<a href="' . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . '" title="' . $lang['admin']['edit'] . '"><img src="' . ROOT . 'core/assets/images/icons/pencil.png" border="0"></a> <a href="' . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . '" title="' . $lang['admin']['delete'] . '" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')"><img src="' . ROOT . 'core/assets/images/icons/cross.png" border="0"></a>'
 				];
 			}
 
@@ -293,7 +293,7 @@ if ( isset( $_GET['v'] ) ) {
 			lentele($lang['admin']['edit'], $content);
 			// if list is bigger than limit, then we show list with pagination
 			if ( $viso > $limit ) {
-				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+				lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 			}
 
 		} else {
@@ -322,8 +322,8 @@ if ( isset( $_GET['v'] ) ) {
 
 			$lang['admin']['news_category'] => [
 				"type"     => "select",
-				"value"    => $kategorijos,
-				"name"     => "kategorija",
+				"value"    => $categories,
+				"name"     => "category",
 				"class"    => "input",
 				"selected" => ( isset( $extra['kategorija'] ) ? input( $extra['kategorija'] ) : '0' )
 			],
@@ -388,7 +388,7 @@ if ( isset( $_GET['v'] ) ) {
 		];
 
 		if (isset($extra)) {
-			if(isset($conf['puslapiai']['naujienlaiskiai.php']['id'])) {
+			if(isset($conf['pages']['naujienlaiskiai.php']['id'])) {
 				$newForm[$lang['news']['newsletter?']] = [
 					'type'		=> 'switch',
 					'value'		=> 1,
@@ -436,9 +436,9 @@ if ( isset( $_GET['v'] ) ) {
 					$lang['admin']['news_name'] => '<span style="cursor:pointer;" data-toggle="tooltip" title="' . $new['pavadinimas'] . '">' . trimlink( strip_tags( $new['pavadinimas'] ), 55 ) . '</span></a>',
 					$lang['admin']['news_date'] => date( 'Y-m-d', $new['data'] ),
 					$lang['admin']['news_more'] => trimlink( strip_tags( $new['naujiena'] ), 55 ),
-					$lang['admin']['action']    => "<a href='" . url( "?id,{$url['id']};a,{$url['a']};p," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['acept']}'><img src='" . ROOT . "images/icons/tick_circle.png'></a> 
-					<a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png'></a> 
-					<a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['delete']}' onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "images/icons/cross.png'></a>"
+					$lang['admin']['action']    => "<a href='" . url( "?id,{$url['id']};a,{$url['a']};p," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['acept']}'><img src='" . ROOT . "core/assets/images/icons/tick_circle.png'></a> 
+					<a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a> 
+					<a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $new['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['delete']}' onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "core/assets/images/icons/cross.png'></a>"
 				];
 			}
 
@@ -448,7 +448,7 @@ if ( isset( $_GET['v'] ) ) {
 			lentele( $lang['admin']['news_unpublished'], $content);
 			// if list is bigger than limit, then we show list with pagination
 			if ( $viso > $limit ) {
-				lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+				lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 			}
 
 		} else {

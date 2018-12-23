@@ -107,5 +107,5 @@ if ( sizeof( $sql ) > 0 ) {
 lentele( "{$lang['admin']['admin_chat']}", $text );
 
 if ( $viso > $limit ) {
-	lentele( $lang['system']['pages'], puslapiai( $p, $limit, $viso, 10 ) );
+	lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 }
