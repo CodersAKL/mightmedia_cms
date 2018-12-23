@@ -243,7 +243,7 @@ function kodas() {
 	var \$human = document.createElement('img');
 	\$human.setAttribute('src','core/inc/inc.human.php');
 	\$human.setAttribute('style','cursor: pointer');
-	\$human.setAttribute('title','{getLangText('system', 'refresh')}');
+	\$human.setAttribute('title','{$lang['system']['refresh']}');
 	\$human.setAttribute('onclick','this.src="core/inc/inc.human.php?"+Math.random();');
 	\$human.setAttribute('alt','code');
 	\$human.setAttribute('id','captcha');
