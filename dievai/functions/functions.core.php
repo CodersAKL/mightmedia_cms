@@ -152,6 +152,66 @@ function defaultHead()
 	<meta name="msapplication-TileColor" content="#ff440e">
 	<meta name="theme-color" content="#ffffff">
 	<?php
+		if  (getSettingsValue('translation_status') == 1){
+			if (isset($_SESSION['Translation'])){ echo $_SESSION['Translation'];}
+			?>
+			<style>
+			 .notifyTranslation{
+				border: 2px dotted red;
+			 }
+			</style>
+			<script>
+				function addListener(obj, eventName, listener) { //function to add event
+					if (obj.addEventListener) {
+						obj.addEventListener(eventName, listener, false);
+					} else {
+						obj.attachEvent("on" + eventName, listener);
+					}
+				}
+				addListener(document, "DOMContentLoaded", finishedDCL); //add event DOMContentLoaded
+				function finishedDCL() {
+					var theParent = document.body;
+					var theKid = document.createElement("div");
+					theKid.id = 'translationDiv';
+					var style = document.createElement('style');
+					style.type = 'text/css';
+					style.innerHTML = '.translationDivCss {height: 20px;z-index: 10; background: green;color: white;text-align: center;font-size: 20px;padding: 10px; }';
+					document.getElementsByTagName('head')[0].appendChild(style);
+					theKid.innerHTML = 'Translation is ON';
+					theKid.className = 'translationDivCss';
+					// append theKid to the end of theParent
+					theParent.appendChild(theKid);
+					// prepend theKid to the beginning of theParent
+					theParent.insertBefore(theKid, theParent.firstChild);
+				}
+				function editLanguageText(frase) {
+					var group = frase.getAttribute("data-group");
+					var key = frase.getAttribute("data-key");
+					var element = document.getElementById(group + '_' + key);
+					var person = prompt('OLD text: # ' + element.innerHTML + ' # Enter new text below: ', element.innerHTML);
+					updateTranslationInDB(group, key, person,function(event){event.preventDefault()});
+				}
+
+				function addTranslateClass(frase){
+					frase.classList.add("notifyTranslation");
+				}
+
+				function removeTranslateClass(frase){
+					frase.classList.remove("notifyTranslation");
+				}
+
+				function updateTranslationInDB(group, key, newValue) {
+					console.log(group+' '+key+' '+newValue);
+					var element = document.getElementById(group + '_' + key);
+					var xhttp = new XMLHttpRequest();
+					var url = "../extensions/translation/updateTranslation.php?group," + group + ";key," + key +";newValue," + newValue;
+					//Send the proper header information along with the request
+					xhttp.open('GET', url, true);
+					xhttp.send();
+					
+				}
+			</script>
+	<?php }
 }
 
 function adminPages() 
