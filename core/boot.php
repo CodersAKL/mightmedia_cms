@@ -27,11 +27,17 @@ if(! defined('ROOT')) {
 date_default_timezone_set(TIME_ZONE);
 
 /**
+ * Core functions
+ */
+
+require_once ROOT . 'core/functions/functions.core.php';
+
+/**
  * Language
  */
 $lang = [];
 if (isset($conf['kalba'])) {
-    require_once ROOT . '/content/lang/' . (empty($_SESSION[SLAPTAS]['lang'])? basename($conf['kalba'],'.php') : $_SESSION[SLAPTAS]['lang']). '.php';
+    require_once ROOT . '/content/lang/' . (empty(getSession('lang'))? basename($conf['kalba'],'.php') : getSession('lang')). '.php';
 } else {
     require_once ROOT . '/content/lang/lt.php';
 }
@@ -54,7 +60,7 @@ $loadCoreFunctionsArray = [
 	'cache',
     'calendar',
     'categories',
-    'core',
+    // 'core',
     'date',
     'db',
     'file',

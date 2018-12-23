@@ -10,7 +10,7 @@
  * @$Date$
  **/
 
-if ( !isset( $_SESSION[SLAPTAS]['username'] ) ) {
+if (empty(getSession('username'))) {
 	header( "Location: " . url( "?id,{$conf['pages'][$conf['pirminis'].'.php']['id']}" ) );
 }
 unset( $text );
@@ -42,17 +42,17 @@ if ( isset( $url['a'] ) && isnum( $url['a'] ) && $url['a'] >= 0 ) {
 
 
 $limit     = 30;
-$uzeris    = mysql_query1( "SELECT `pm_viso`,`nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE nick='" . $_SESSION[SLAPTAS]['username'] . "' LIMIT 1" );
+$uzeris    = mysql_query1( "SELECT `pm_viso`,`nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE nick='" . getSession('username') . "' LIMIT 1" );
 $pm_sk     = kiek( "private_msg", "WHERE `to`=" . escape( $uzeris['nick'] ) );
 $date['m'] = 'Viso';
 $date['d'] = $pm_sk;
 // ################# Trinam zinute ###########################
-if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] >= 0 && isset( $_SESSION[SLAPTAS]['username'] ) ) {
+if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] >= 0 && ! empty(getSession('username')) ) {
 	if ( $url['d'] == 0 ) {
-		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape( $_SESSION[SLAPTAS]['username'] ) );
+		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape(getSession('username')) );
 		header( "Location: " . url( "?id," . $url['id'] . ";p," . $url['p'] ) );
 	} elseif ( (int)$url['d'] > 0 ) {
-		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " AND `id`=" . escape( (int)$url['d'] ) );
+		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape(getSession('username')) . " AND `id`=" . escape( (int)$url['d'] ) );
 		header( "Location: " . url( "?id," . $url['id'] . ";p," . $url['p'] ) );
 	}
 }
@@ -61,15 +61,15 @@ if ( isset( $_POST['pm_s'] ) ) {
 	foreach ( $_POST['pm_s'] as $a=> $b ) {
 		$trinti[] = "`id`=" . escape( $b );
 	}
-	mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " AND  " . implode( $trinti, " OR " ) . "" );
+	mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape(getSession('username')) . " AND  " . implode( $trinti, " OR " ) . "" );
 	header( "Location:" . url( "?id,{$_GET['id']};a,1" ) );
 	exit;
 }
 // ################# Siunciam zinute ##########################
-if ( isset( $_POST['action'] ) && $_POST['action'] == 'pm_send' && isset( $_SESSION[SLAPTAS]['username'] ) ) {
-	$from = $_SESSION[SLAPTAS]['username'];
+if ( isset( $_POST['action'] ) && $_POST['action'] == 'pm_send' && ! empty(getSession('username'))) {
+	$from = getSession('username');
 	$to   = $_POST['to'];
-	if ( $to == $_SESSION[SLAPTAS]['username'] ) {
+	if ($to == getSession('username')) {
 		$error = "{$lang['user']['pm_error']}<br />";
 	}
 	$title = ( isset( $_POST['title'] ) && !empty( $_POST['title'] ) ? $_POST['title'] : $lang['user']['pm_nosubject'] );
@@ -143,7 +143,7 @@ if ( isset( $url['n'] ) ) {
 		// ############### Jei nera paspaustas atsakyti mygtukas sukuriam paprasta forma #################
 		//if (isset($error) && !empty($error)) { msg("Dėmesio!",$error); }
 		if ( isset( $user ) && (int)$pid > 0 ) {
-			$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape( $user ) . " AND `id`=" . escape( $pid ) . " AND `to`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " LIMIT 1" );
+			$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape( $user ) . " AND `id`=" . escape( $pid ) . " AND `to`=" . escape(getSession('username')) . " LIMIT 1" );
 			if ( $sql['read'] == "NO" ) {
 				mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "private_msg` SET `read`='YES' WHERE `id`=" . escape( $pid ) );
 			}
@@ -156,7 +156,7 @@ if ( isset( $url['n'] ) ) {
 					<tr>
 						<td width=\"15%\" class=\"sarasas\">{$lang['user']['pm_to']}:</td>
 						<td>
-							<input type=\"text\" name=\"to\" value=\"" . ( isset( $user ) && $_SESSION[SLAPTAS]['username'] != $user ? strtolower( $user ) : '' ) . "\" />
+							<input type=\"text\" name=\"to\" value=\"" . ( isset( $user ) && getSession('username') != $user ? strtolower( $user ) : '' ) . "\" />
 						</td>
 					</tr>
 					<tr>
@@ -190,25 +190,25 @@ unset( $text );
 if ( isset( $url['v'] ) ) {
 	if ( !empty( $url['v'] ) && (int)$url['v'] > 0 && isnum( $url['v'] ) ) {
 
-		$sql = mysql_query1( "SELECT `msg`, `from`,`to`, `title`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE (`to`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " OR `from`=" . escape( $_SESSION[SLAPTAS]['username'] ) . ") AND `id`=" . escape( $url['v'] ) . " LIMIT 1" );
+		$sql = mysql_query1( "SELECT `msg`, `from`,`to`, `title`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE (`to`=" . escape(getSession('username')) . " OR `from`=" . escape(getSession('username')) . ") AND `id`=" . escape( $url['v'] ) . " LIMIT 1" );
 		if ( $sql ) {
 			addtotitle( $sql['title'] );
 			$laiskas = "
 				<div class=\"pm_read\"><b>{$lang['user']['pm_from']}:</b>  " . input( $sql['from'] ) . "<br><b>{$lang['user']['pm_to']}:</b> " . $sql['to'] . "<br /> <b>{$lang['user']['pm_subject']}:</b> " . ( isset( $sql['title'] ) && !empty( $sql['title'] ) ? input( $sql['title'] ) : "{$lang['user']['pm_nosubject']}" ) . "<br><br><b>{$lang['user']['pm_message']}:</b><br />" . bbcode( $sql['msg'] ) . "<br /><br /></div>
-				" . ( strtolower( $sql['to'] ) == strtolower( $_SESSION[SLAPTAS]['username'] ) ? "<form name=\"replay_pm\" action='" . url( "?id," . $conf['pages']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $sql['from'] ) ) . ";i," . $url['v'] ) . "' method=\"post\">
+				" . ( strtolower( $sql['to'] ) == strtolower(getSession('username')) ? "<form name=\"replay_pm\" action='" . url( "?id," . $conf['pages']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $sql['from'] ) ) . ";i," . $url['v'] ) . "' method=\"post\">
 					<input type=\"submit\" value=\"{$lang['user']['pm_reply']}\"/> <input type=\"button\" value=\"{$lang['user']['pm_delete']}\" onclick=\"location.href='" . url( "d," . $url['v'] . ";v,0" ) . "'\"/>
 				</form>" : "" ) . "
 				";
 
 			lentele( "{$lang['user']['pm_message']}", $laiskas );
 
-			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "private_msg` SET `read`='YES' WHERE `id`=" . escape( $url['v'] ) . " AND `to`=" . escape( $_SESSION[SLAPTAS]['username'] ) . "" );
+			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "private_msg` SET `read`='YES' WHERE `id`=" . escape( $url['v'] ) . " AND `to`=" . escape(getSession('username')) . "" );
 		}
 	}
 }
-if ( $_SESSION[SLAPTAS]['level'] > 0 && $a == 1 && !isset( $s ) ) {
+if (getSession('level') > 0 && $a == 1 && !isset( $s ) ) {
 	include_once config('class', 'dir') . 'class.table.php';
-	$sql = mysql_query1( "SELECT `id`, `read`,`from`, IF(`from` = '', 'Sve�?ias',`from`) AS `Nuo`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`date` DESC LIMIT $p,$limit" );
+	$sql = mysql_query1( "SELECT `id`, `read`,`from`, IF(`from` = '', 'Sve�?ias',`from`) AS `Nuo`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`from`) AS `from_id`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape(getSession('username')) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`date` DESC LIMIT $p,$limit" );
 	if ( sizeof( $sql ) > 0 ) {
 
 		$bla  = new Table();
@@ -227,9 +227,9 @@ if ( $_SESSION[SLAPTAS]['level'] > 0 && $a == 1 && !isset( $s ) ) {
 		lentele($lang['user']['pm_inbox'], $lang['user']['pm_empty_msg']);
 	}
 }
-if ( $_SESSION[SLAPTAS]['level'] > 0 && $a == 2 && !isset( $s ) ) {
+if (getSession('level') > 0 && $a == 2 && !isset( $s )) {
 	include_once config('class', 'dir') . 'class.table.php';
-	$sql = mysql_query1( "SELECT `id`, `read`, IF(`to` = '', 'Svečias',`to`) AS `to`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`to`) AS `to_id`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`date` DESC LIMIT $p,$limit" );
+	$sql = mysql_query1( "SELECT `id`, `read`, IF(`to` = '', 'Svečias',`to`) AS `to`, INSERT(LEFT(`msg`,80),80,3,'...') AS `Žinutė`, IF(`title` = '', 'Be pavadinimo',INSERT(LEFT(`title`,80),80,3,'...')) AS `Pavadinimas`,(SELECT `id` AS `nick_id` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= `" . LENTELES_PRIESAGA . "private_msg`.`to`) AS `to_id`, `date` AS `Data` FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape(getSession('username')) . " ORDER BY `" . LENTELES_PRIESAGA . "private_msg`.`date` DESC LIMIT $p,$limit" );
 	if ( count( $sql ) > 0 ) {
 		$bla  = new Table();
 		$info = array();

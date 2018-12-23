@@ -53,7 +53,7 @@ if ( isset( $_POST['select'] ) || isset( $_GET['s'] ) ) {
 			$formClass = new Form($forma);
 			lentele($lang['sb']['edit'], $formClass->form());
 		} else {
-			$msg = trim( $_POST['msg'] ) . "\n[sm] [i] {$lang['sb']['editedby']}: " . $_SESSION[SLAPTAS]['username'] . " [/i] [/sm]";
+			$msg = trim( $_POST['msg'] ) . "\n[sm] [i] {$lang['sb']['editedby']}: " . getSession('username') . " [/i] [/sm]";
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "kom` SET `zinute` = " . escape( strip_tags( $msg ) ) . " WHERE `id` =" . escape( $url['e'] ) . " LIMIT 1" );
 			
 			if ( mysqli_affected_rows($prisijungimas_prie_mysql) > 0 ) {
@@ -71,7 +71,7 @@ if ( isset( $_POST['select'] ) || isset( $_GET['s'] ) ) {
 		foreach ( $sql as $row ) {
 			if ( $row['nick_id'] == 0 ) {
 				$duom = @unserialize( $row['nick'] );
-				$nick = user( $duom[0], $row['nick_id'] ) . ( $_SESSION[SLAPTAS]['level'] == 1 ? " (" . $duom[1] . ")" : "" );
+				$nick = user( $duom[0], $row['nick_id'] ) . (getSession('level') == 1 ? " (" . $duom[1] . ")" : "" );
 			} else {
 				$nick = user( $row['nick'], $row['nick_id'] );
 			}

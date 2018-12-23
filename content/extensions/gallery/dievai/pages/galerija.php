@@ -222,7 +222,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 					$komentaras  = (isset($_POST['kom']) && $_POST['kom'] === '1' ? 'taip' : 'ne');
 					$rodymas     = (isset($_POST['rodoma']) && $_POST['rodoma'] === '1' ? 'TAIP' : 'NE');
 					
-					$insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`,`kom`, `lang`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $rand_name . $ext ) . "," . escape($_POST['Aprasymas']) . "," . escape( $_SESSION[SLAPTAS]['id'] ) . ",'" . time() . "'," . escape( $_POST['cat'] ) . "," . escape( $rodymas ) . "," . escape( $komentaras ) . ", " . escape( lang() ) . ")";
+					$insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`,`kom`, `lang`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $rand_name . $ext ) . "," . escape($_POST['Aprasymas']) . "," . escape(getSession('id')) . ",'" . time() . "'," . escape( $_POST['cat'] ) . "," . escape( $rodymas ) . "," . escape( $komentaras ) . ", " . escape( lang() ) . ")";
 
 					if (mysql_query1($insertQuery)) {
 

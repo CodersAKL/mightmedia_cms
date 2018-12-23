@@ -13,8 +13,8 @@
 include_once config('class', 'dir') . 'class.form.php';
 $formClass = new Form();
 //jeigu prisijunges narys
-if ( isset( $_SESSION[SLAPTAS]['username'] ) ) {
-	$el    = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " LIMIT 1" );
+if (! empty(getSession('username'))) {
+	$el    = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape(getSession('username')) . " LIMIT 1" );
 	$email = $el['email'];
 //jeigu gauna linka is emailo deaktyvacijai
 } elseif ( isset( $_GET['e'] ) ) {
@@ -22,7 +22,7 @@ if ( isset( $_SESSION[SLAPTAS]['username'] ) ) {
 }
 //jeigu paspaudzia mygtuka
 if ( isset( $_POST['email'] ) ) {
-	if ( $_SESSION[SLAPTAS]['code'] == strip_tags( strtoupper( $_POST['kode'] ) ) ) {
+	if (getSession('code') == strip_tags(strtoupper($_POST['kode']))) {
 		if ( check_email( $_POST['email'] ) ) {
 			$sql = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "newsgetters` WHERE `email`=" . escape( $_POST['email'] ) . " LIMIT 1" );
 			if ( isset( $sql['email'] ) ) {

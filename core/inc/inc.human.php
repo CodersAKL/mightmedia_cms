@@ -23,8 +23,8 @@ $fg = ImageColorAllocate( $im, 170, 34, 17 ); //Raidziu spalva rgb(170, 34, 17)
 $x                = '5';
 $code             = '';
 $code             = strtoupper(random_name( 5 )); //sugeneruojam atsitiktini koda
-$_SESSION[SLAPTAS]['code'] = $code;
 
+setSession('code', $code);
 
 ImageTTFText( $im, 19, 0, $x, 30, $fg, $font, $code );
 

@@ -11,7 +11,7 @@
  **/
 
 //paziurim ar vartotojas neprisijunges, jei prisijunges tai jam nera cia ka veikti
-if ( isset( $_SESSION[SLAPTAS]['username'] ) ) {
+if (! empty(getSession('username'))) {
 	header( "Location: " . url( "?id,{$conf['pages'][$conf['pirminis'].'.php']['id']}" ) );
 }
 
@@ -44,7 +44,7 @@ elseif ( !empty( $url['c'] ) ) {
 if ( isset( $_POST['action'] ) && $_POST['action'] == 'siusti' ) {
 	$error = '';
 	$kode  = strip_tags( strtoupper( $_POST['kode'] ) );
-	if ( $kode != $_SESSION[SLAPTAS]['code'] ) {
+	if ($kode != getSession('code')) {
 		$error = "{$lang['pass']['wrongcode']}<br />";
 	} elseif ( $_POST['email'] == $_POST['email1'] ) {
 		$email = input( strip_tags( $_POST['email'] ) );

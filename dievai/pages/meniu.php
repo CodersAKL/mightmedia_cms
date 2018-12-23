@@ -309,7 +309,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 	$treeData = [];
 	$res   = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=" . escape( lang() ) . " ORDER BY `place` ASC" );
 	foreach ($res as $row) {
-		if (teises($row['teises'], $_SESSION[SLAPTAS]['level'])) {
+		if (teises($row['teises'], getSession('level'))) {
 			$treeData[$row['parent']][] = $row;
 		}
 	}

@@ -8,21 +8,26 @@ if ( !isset( $_SESSION ) ) {
 	session_start();
 }
 
-if ( !defined( 'ROOT' ) ) {
+if (! defined( 'ROOT' ) ) {
 	define( 'ROOT', '../' );
-} else {
-	define( 'ROOT', $root );
 }
 
-if ( is_file( '../config.php' ) && filesize( '../config.php' ) > 1 ) {
-	include_once ( "../config.php" );
-} elseif ( is_file( '../install/index.php' ) ) {
+if (is_file(ROOT . 'config.php')) {
+	include_once ROOT . 'config.php';
+	if(DEBUG) {
+		ini_set('error_reporting', E_ALL);
+		ini_set('display_errors', 'On');
+	}
+} elseif ( is_file( ROOT . 'install/index.php' ) ) {
 	header( 'location: ../install/index.php' );
 	exit;
 } else {
-	die( klaida( 'Sistemos klaida / System error', 'Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.' ) );
+	die('System error: CMS is not installed.');
 }
-
+/**
+ * Connection to DB
+ */
+include_once ROOT . 'core/inc/inc.db_ready.php';
 /**
  * BOOT
  */

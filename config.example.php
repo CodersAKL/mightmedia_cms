@@ -14,5 +14,5 @@ define('DB_PASSWORD', '{{pass}}');
 define('DB_DATABASE', '{{db}}');
 
 define('LENTELES_PRIESAGA', '{{prefix}}');
-define('SLAPTAS', '{{secret}}');
+define('SECRET', '{{secret}}');
 define('MAIN_URL', '{{main_url}}');

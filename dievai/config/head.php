@@ -4,46 +4,46 @@ header( "Cache-control: public" );
 header( "Content-type: text/html; charset=utf-8" );
 header( 'P3P: CP="NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM"' );
 
-if ( !isset( $_SESSION ) ) {
+if (! isset($_SESSION)) {
 	session_start();
 }
 
-if ( !defined( 'ROOT' ) ) {
-	//_ROOT = $root;
-	define( 'ROOT', '../' );
-} else {
-	define( 'ROOT', $root );
+if (! defined('ROOT')) {
+	define('ROOT', '../');
 }
 
-if ( is_file( ROOT . 'config.php' ) && filesize( ROOT . 'config.php' ) > 1 ) {
-
+if (is_file(ROOT . 'config.php')) {
 	include_once ROOT . 'config.php';
-
-	$base   = explode( '/', dirname( $_SERVER['PHP_SELF'] ) );
-	$folder = $base[count( $base ) - 1];
-	//echo $folder;
-	if ( !isset( $conf['Admin_folder'] ) || $conf['Admin_folder'] != $folder ) {
-		setSettingsValue($folder, 'Admin_folder');
+	if(DEBUG) {
+		ini_set('error_reporting', E_ALL);
+		ini_set('display_errors', 'On');
 	}
-
 	
-	/**
-	 * BOOT
-	 */
-	include_once ROOT . 'core/boot.php';
-
-
-	define( 'LEVEL', $_SESSION[SLAPTAS]['level'] );
-
-	include_once ROOT . 'core/inc/inc.header.php';
-
 } elseif (is_file(ROOT . 'install/index.php')) {
-	// header('location: ' . ROOT . 'install/index.php');
+	header('location: ../install/index.php');
 	exit;
-
 } else {
-	die( klaida( 'Sistemos klaida / System error', 'Atsiprašome svetaine neidiegta. Truksta sisteminiu failu. / CMS is not installed.' ) );
+	die('System error: CMS is not installed.');
 }
+/**
+ * Connection to DB
+ */
+include_once ROOT . 'core/inc/inc.db_ready.php';
+/**
+ * BOOT
+ */
+include_once ROOT . 'core/boot.php';
+
+$base   = explode( '/', dirname( $_SERVER['PHP_SELF'] ) );
+$folder = $base[count( $base ) - 1];
+if (! isset($conf['Admin_folder']) || $conf['Admin_folder'] != $folder ) {
+	setSettingsValue($folder, 'Admin_folder');
+}
+
+define('LEVEL', getSession('level'));
+
+include_once ROOT . 'core/inc/inc.header.php';
+
 //kalbos
 $kalbos   = getFiles( ROOT . 'content/lang/' );
 $language = '<ul class="sf-menu" id="lang"><li><a href=""><img src="' . ROOT . 'core/assets/images/icons/flags/' . lang() . '.png" alt="' . lang() . '"/></a><ul>';
@@ -55,24 +55,32 @@ foreach ( $kalbos as $file ) {
 }
 $language .= '</ul></li></ul>';
 
-if ( !empty( $_GET['lang'] ) ) {
-	$_SESSION[SLAPTAS]['lang'] = basename( $_GET['lang'], '.php' );
-	redirect( url( "?id," . $_GET['id'] ) );
+if (! empty($_GET['lang'])) {
+	setSession('lang', basename($_GET['lang'], '.php'));
+	redirect(url( "?id," . $_GET['id']));
 }
 
-if ( !empty( $_SESSION[SLAPTAS]['lang'] ) && is_file( ROOT . 'content/lang/' . basename( $_SESSION[SLAPTAS]['lang'] ) . '.php' ) ) {
-	require( ROOT . 'content/lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' );
+if (! empty(getSession('lang')) && is_file(ROOT . 'content/lang/' . basename(getSession('lang')) . '.php' )) {
+	require ROOT . 'content/lang/' . basename(getSession('lang'), '.php') . '.php';
 	$extensions = getActiveExtensions();
 	foreach ($extensions as $extension) {
-		if (is_file( ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' )){
-			require( ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . basename( $_SESSION[SLAPTAS]['lang'], '.php' ) . '.php' );
+		if (is_file(ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . basename(getSession('lang'), '.php') . '.php')){
+			require ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . basename(getSession('lang'), '.php') . '.php';
 		}
 	}
 }
-if ( empty( $_SESSION[SLAPTAS]['username'] ) || $_SESSION[SLAPTAS]['level'] != 1 ) {
+if ( empty(getSession('username')) || getSession('level') != 1 ) {
 	redirect( ROOT . 'index.php' );
 }
 if ( isset( $_GET['do'] ) ) {
-	unset( $_SESSION[SLAPTAS]['username'], $_SESSION[SLAPTAS]['level'], $_SESSION[SLAPTAS]['password'], $_SESSION[SLAPTAS]['id'] );
+	forgotSession(
+		[
+			'username',
+			'level',
+			'password',
+			'id'
+		]
+	);
+
 	redirect( ROOT . 'index.php' );
 }

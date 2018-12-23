@@ -41,7 +41,7 @@ if(! function_exists('ar_admin')) {
 
 		global $_SESSION;
 
-		if ( ( is_array( unserialize( $_SESSION[SLAPTAS]['mod'] ) ) && in_array( $failas, unserialize( $_SESSION[SLAPTAS]['mod'] ) ) ) || $_SESSION[SLAPTAS]['level'] == 1 ) {
+		if ( ( is_array( unserialize(getSession('mod')) ) && in_array( $failas, unserialize(getSession('mod')) ) ) || getSession('level') == 1 ) {
 			return TRUE;
 		} else {
 			return FALSE;
@@ -97,7 +97,7 @@ if(! function_exists('user')) {
 
 			return $lang['system']['guest'];
 		} else {
-			if ( isset( $conf['pages']['pm.php'] ) && $id != 0 && isset( $_SESSION[SLAPTAS]['id'] ) && $id != $_SESSION[SLAPTAS]['id'] ) {
+			if ( isset( $conf['pages']['pm.php'] ) && $id != 0 && ! empty(getSession('id')) && $id != getSession('id')) {
 				$pm = "<a href=\"" . url( "?id," . $conf['pages']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $user ) ) ) . "\"><img src=\"" . ROOT . "core/assets/images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>";
 			} else {
 				$pm = '';

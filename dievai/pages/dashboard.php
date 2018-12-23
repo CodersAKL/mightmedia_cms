@@ -21,7 +21,7 @@ $progresas = procentai( ( !empty( $stats['uzvakar'] ) ? $stats['uzvakar'] : 1 ),
 $data2 = [];
 $res   = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang`=" . escape( lang() ) . " ORDER BY `place` ASC" );
 foreach($res as $row) {
-	if (teises($row['teises'], $_SESSION[SLAPTAS]['level'])) {
+	if (teises($row['teises'], getSession('level'))) {
 		$data2[$row['parent']][] = $row;
 	}
 }

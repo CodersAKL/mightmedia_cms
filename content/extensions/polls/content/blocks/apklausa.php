@@ -35,7 +35,7 @@ if ( isset( $quest['question'] ) ) {
 	}
 	//jei dar neprabalsuota
 	if ( !$show_rezults ) {
-		if ( isset( $_POST['answer'] ) && ( $quest['only_guests'] == 0 || ( $quest['only_guests'] == 1 && isset( $_SESSION[SLAPTAS]['username'] ) ) ) ) {
+		if ( isset( $_POST['answer'] ) && ( $quest['only_guests'] == 0 || ( $quest['only_guests'] == 1 && ! empty(getSession('username')) ) ) ) {
 			delete_cache( "SELECT * FROM  `" . LENTELES_PRIESAGA . "poll_votes` WHERE `question_id`=" . escape( $quest['id'] ) );
 			if ( $quest['radio'] == 1 ) {
 				mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "poll_votes` (`ip`, `question_id`, `answer_id`) VALUES (" . escape( $ip ) . ", " . escape( $quest['id'] ) . ", " . escape( $_POST['answer'][0] ) . ")" );
@@ -50,7 +50,7 @@ if ( isset( $quest['question'] ) ) {
 		foreach ( $answers as $row ) {
 			$text .= "<label><input type=\"" . ( $quest['radio'] == 1 ? 'radio' : 'checkbox' ) . "\" name=\"answer[]\" class=\"middle\" value=\"{$row['id']}\" /> " . input( $row['answer'] ) . "</label><br />";
 		}
-		if ( $quest['only_guests'] == 0 || ( $quest['only_guests'] == 1 && isset( $_SESSION[SLAPTAS]['username'] ) ) ) {
+		if ( $quest['only_guests'] == 0 || ( $quest['only_guests'] == 1 && isset(getSession('username')) ) ) {
 			$text .= '<div style="text-align: center;"><button class="btn btn-primary" name="vote" type="submit">' . $lang['poll']['vote'] . '</button></div>';
 		} else {
 			$text .= $lang['poll']['cant'];

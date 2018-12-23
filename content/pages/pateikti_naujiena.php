@@ -23,7 +23,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti' ) {
 		$komentaras  = 'taip';
 		$pavadinimas = strip_tags( $_POST['pav'] );
 		$category  = (int)$_POST['category'];
-		$result      = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija, rodoma, lang) VALUES (" . escape( $pavadinimas ) . ", " . escape( $izanga ) . ", " . escape( $placiau ) . ",  '" . time() . "', '" . ( isset( $_SESSION[SLAPTAS]['username'] ) ? $_SESSION[SLAPTAS]['username'] : 'Svečias' ) . "', " . escape( $komentaras ) . ", " . escape( $category ) . ", 'NE', " . escape( lang() ) . ")" );
+		$result      = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "naujienos` (pavadinimas, naujiena, daugiau, data, autorius, kom, kategorija, rodoma, lang) VALUES (" . escape( $pavadinimas ) . ", " . escape( $izanga ) . ", " . escape( $placiau ) . ",  '" . time() . "', '" . (! empty(getSession('username')) ? getSession('username') : 'Svečias' ) . "', " . escape( $komentaras ) . ", " . escape( $category ) . ", 'NE', " . escape( lang() ) . ")" );
 		if ( $result ) {
 			msg( "{$lang['system']['done']}", "{$lang['news']['sumbit_scc']}." );
 		} else {

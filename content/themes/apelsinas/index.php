@@ -48,7 +48,7 @@
 							</a>
 						<div class="dropdown-menu dropdown-with-icons">
 					<?php } ?>
-					<?php if (teises($menuItem['teises'], $_SESSION[SLAPTAS]['level'])) { ?>
+					<?php if (teises($menuItem['teises'], getSession('level'))) { ?>
 						<?php if($menuCount <= 3) { ?>
 							<li class="nav-item">
 								<a href="<?php echo url('?id,' . (int)$menuItem['id']); ?>" class="nav-link">

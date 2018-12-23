@@ -66,8 +66,8 @@ if(! function_exists('naujas')) {
 	function naujas( $data, $nick = NULL ) {
 
 		global $lang;
-		if ( isset( $_SESSION[SLAPTAS]['lankesi'] ) ) {
-			return ( ( $data > $_SESSION[SLAPTAS]['lankesi'] ) ? '<img src="' . ROOT . 'core/assets/images/icons/new.png" onload="$(this).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);" alt="New" border="0" style="vertical-align: middle;" title="' . $lang['system']['new'] . '" />' : '' );
+		if (! empty(getSession('lankesi'))) {
+			return ( ($data > getSession('lankesi')) ? '<img src="' . ROOT . 'core/assets/images/icons/new.png" onload="$(this).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);" alt="New" border="0" style="vertical-align: middle;" title="' . $lang['system']['new'] . '" />' : '' );
 		} else {
 			return '';
 		}

@@ -61,7 +61,7 @@ if ( $viso > 0 ) {
 		lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
 	}
 	if ( $k >= 0 ) {
-		if ( teises( $sqlas['teises'], $_SESSION[SLAPTAS]['level'] ) || LEVEL == 1 ) {
+		if ( teises( $sqlas['teises'], getSession('level') ) || LEVEL == 1 ) {
 			foreach ( $sql as $row ) {
 				if ( isset( $conf['pages']['naujienos.php']['id'] ) ) {
 

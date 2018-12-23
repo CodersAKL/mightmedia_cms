@@ -10,9 +10,7 @@
  * @$Date$
  *
  **/
-if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
-//("memory_limit", "50M");
-
+if (! empty(getSession('id'))) {
 	if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti siuntinį' ) {
 		if ( isset( $_FILES ) && isset( $_POST['Pavadinimas'] ) && isset( $_POST['Aprasymas'] ) ) {
 			//Tasku pridejimas uz siuntini nutrinkite // noredami kad veiktu
@@ -44,8 +42,8 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 						move_uploaded_file( $_FILES["$file"]["tmp_name"], $upload_dir . $filename );
 
 						if ( file_exists( $upload_dir . $filename ) ) {
-							if ( isset( $_SESSION[SLAPTAS]['id'] ) ) {
-								$autorius = $_SESSION[SLAPTAS]['id'];
+							if (! empty(getSession('id'))) {
+								$autorius = getSession('id');
 							} else {
 								$autorius = '0';
 							}
