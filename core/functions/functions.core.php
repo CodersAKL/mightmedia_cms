@@ -2,7 +2,7 @@
 
 function config($file, $key = null)
 {
-    $config = include ROOT . '/core/configs/config.' . $file . '.php';
+    $config = include ROOT . 'core/configs/config.' . $file . '.php';
 
     return ! empty($key) ? $config[$key] : $config;
 }
