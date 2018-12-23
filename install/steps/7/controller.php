@@ -57,7 +57,6 @@ if (!empty($_POST) && isset($_POST['main_url'])) {
     $configFile = str_replace('{{prefix}}', $_SESSION['mysql']['prefix'], $configFile);
     $configFile = str_replace('{{secret}}', $secret, $configFile);
     $configFile = str_replace('{{main_url}}', $_SESSION['main_url'], $configFile);
-    $configFile = str_replace('{{email}}', $_SESSION['admin']['email'], $configFile);
   
     $newConfig = ROOT . 'config.php';
     if (! $newConfigFile = fopen($newConfig, 'w')) {

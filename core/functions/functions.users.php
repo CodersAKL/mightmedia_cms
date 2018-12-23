@@ -116,24 +116,6 @@ if(! function_exists('user')) {
 	}
 }
 
-if(! function_exists('admin_login')) {
-	function admin_login() {
-
-		global $_SERVER, $admin_name, $admin_pass, $lang;
-		if ( @$_SERVER['PHP_AUTH_USER'] != $admin_name || @$_SERVER['PHP_AUTH_PW'] != $admin_pass ) {
-			header( "WWW-Authenticate: Basic realm='AdminAccess'" );
-			header( "HTTP/1.0 401 Unauthorized" );
-			header( "status: 401 Unauthorized" );
-			mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "ADMIN pultas - Klaida loginantis: User: " . ( isset( $_SERVER['PHP_AUTH_USER'] ) ? $_SERVER['PHP_AUTH_USER'] : "N/A" ) . " Pass: " . ( isset( $_SERVER['PHP_AUTH_PW'] ) ? $_SERVER['PHP_AUTH_PW'] : "N/A" ) ) . ",NOW(), '" . escape( getip() ) . "');" );
-			die( klaida( "{$lang['system']['forbidden']}!", "{$lang['system']['notadmin']}" ) );
-		} else {
-			unset( $admin_name, $admin_pass );
-
-			return TRUE;
-		}
-	}
-}
-
 if(! function_exists('get_user_os')) {
 	function get_user_os() {
 

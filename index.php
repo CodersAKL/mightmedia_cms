@@ -12,7 +12,7 @@
 ob_start();
 header( "Cache-control: public" );
 header( "Content-type: text/html; charset=utf-8" );
-if ( !isset( $_SESSION ) ) {
+if (! isset( $_SESSION ) ) {
 	session_start();
 }
 define( 'ROOT', '' );
@@ -24,14 +24,23 @@ $stime = $m1[1] + $m1[0];
 //Iterpiam nustatymu faila jei ne perkialiam i instaliacija
 clearstatcache();
 
-if ( is_file( 'config.php' ) && filesize( 'config.php' ) > 10 ) {
+if (is_file('config.php')) {
 	include_once 'config.php';
-} elseif ( is_file( 'install/index.php' ) && !isset( $conf['Palaikymas'] ) ) {
-	header( 'location: install/index.php' );
-	exit();
+	if(DEBUG) {
+		ini_set('error_reporting', E_ALL);
+		ini_set('display_errors', 'On');
+	}
+} else if (is_file('install/index.php') && ! isset($conf['Palaikymas'])) {
+	header('location: install/index.php');
+	exit;
 } else {
 	die( '<h1>Sistemos klaida / System error</h1>Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.' );
 }
+
+/**
+ * Connection to DB
+ */
+include_once 'core/inc/inc.db_ready.php';
 
 /**
  * BOOT
