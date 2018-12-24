@@ -36,9 +36,9 @@ require_once ROOT . 'core/functions/functions.core.php';
  */
 $lang = [];
 if (isset($conf['kalba'])) {
-    require_once ROOT . '/content/lang/' . (empty(getSession('lang'))? basename($conf['kalba'],'.php') : getSession('lang')). '.php';
+    require_once ROOT . 'content/lang/' . (empty(getSession('lang'))? basename($conf['kalba'],'.php') : getSession('lang')). '.php';
 } else {
-    require_once ROOT . '/content/lang/lt.php';
+    require_once ROOT . 'content/lang/lt.php';
 }
 
 /**
