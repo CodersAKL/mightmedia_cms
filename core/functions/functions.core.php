@@ -531,11 +531,19 @@ if(! function_exists('getLangText')) {
 
 if (! function_exists('langTextError')){
 	function langTextError($group, $key, $language) {
-		/**
-		 *  Aprasyti funkcija, kai nera kalbinio teksto
-		 *  padaryti LOG failą/DB kurį rodys prie vertimo nustatymų.
-		 *  Jeigu bus daugiau negu x eilučių pridėti puslapiavimą.
-		 */
+		$path = ROOT . 'content/extensions/translation/missingtranslations.json';
+		if (file_exists($path)){
+			$missingTranslationsFileContent = file_get_contents($path);
+			$missingTranslations = json_decode($missingTranslationsFileContent,true);
+			$missingTranslations[$language][$group][$key] = '';
+			file_put_contents($path,json_encode($missingTranslations));
+		} else {
+			$missingTranslationsFileContent = fopen($path, "w+") or die("Unable to open file!");
+			$missingTranslations[$language][$group][$key] = '';
+			$missingTranslations = json_encode($missingTranslations);
+			fwrite($missingTranslationsFileContent, $missingTranslations);
+			fclose($missingTranslationsFileContent);
+		}
 	}
 }
 

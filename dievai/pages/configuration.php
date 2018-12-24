@@ -108,7 +108,7 @@ if (isset($url['c'])) {
 		if ( isset( $conf['pages'] ) && count( $conf['pages'] ) > 0 ) {
 			$pages = array_keys( $conf['pages'] );
 			foreach ( $pages as $key ) {
-				$psl[$key] = ( strlen( getLangText('pages', $key) ) > 0 ? getLangText('pages', $key) : nice_name( basename( $key, '.php' ) ) );
+				$psl[$key] = ( !empty( getLangText('pages', $key) ) ? getLangText('pages', $key) : nice_name( basename( $key, '.php' ) ) );
 			}
 		} else {
 			$psl[] = '';
@@ -488,7 +488,33 @@ if (isset($url['c'])) {
 		];
 		$formClass = new Form($settings);
 		lentele(getLangText('admin', 'configuration_translations'), $formClass->form());
-	}
+	
 
+		$path = ROOT . 'content/extensions/translation/missingtranslations.json';
+		$missingTranslationsFileContent = file_get_contents($path);
+		$missingTranslations = (array)json_decode($missingTranslationsFileContent);
+
+		if (!empty($missingTranslations)){
+			$table = '<table class="table">';
+
+			foreach($missingTranslations[lang()] as $group => $key){
+				$keyCount = count((array)$key) + 1;
+				$table .= '<tr>
+						<td rowspan = "' . $keyCount . '">' . $group . '</td><td></td><td></td></tr>';
+				foreach($key as $keyText => $groupKeyValue){
+					$table .= '<tr><td>' .  $keyText . '</td><td>';
+					$table .= !empty(getLangText($group, $keyText)) ? getLangText($group, $keyText) : $groupKeyValue;
+					$table .= '</td></tr>';
+				}
+
+			}
+			$table .= '</table>';
+		}
+
+		if ( !empty( $table ) ) {
+			lentele( getLangText('about', 'admins'), $table );
+		}
+	}
+	
 
 }
