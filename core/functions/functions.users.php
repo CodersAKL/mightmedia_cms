@@ -41,7 +41,7 @@ if(! function_exists('ar_admin')) {
 
 		global $_SESSION;
 
-		if ( ( is_array( unserialize( $_SESSION[SLAPTAS]['mod'] ) ) && in_array( $failas, unserialize( $_SESSION[SLAPTAS]['mod'] ) ) ) || $_SESSION[SLAPTAS]['level'] == 1 ) {
+		if ( ( is_array( unserialize(getSession('mod')) ) && in_array( $failas, unserialize(getSession('mod')) ) ) || getSession('level') == 1 ) {
 			return TRUE;
 		} else {
 			return FALSE;
@@ -97,7 +97,7 @@ if(! function_exists('user')) {
 
 			return $lang['system']['guest'];
 		} else {
-			if ( isset( $conf['pages']['pm.php'] ) && $id != 0 && isset( $_SESSION[SLAPTAS]['id'] ) && $id != $_SESSION[SLAPTAS]['id'] ) {
+			if ( isset( $conf['pages']['pm.php'] ) && $id != 0 && ! empty(getSession('id')) && $id != getSession('id')) {
 				$pm = "<a href=\"" . url( "?id," . $conf['pages']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $user ) ) ) . "\"><img src=\"" . ROOT . "core/assets/images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>";
 			} else {
 				$pm = '';
@@ -112,24 +112,6 @@ if(! function_exists('user')) {
 			} else {
 				return '<div style="display:inline;" title="' . input( $user ) . '" "' . $extra . '">' . $img . ' ' . trimlink( $user, 10 ) . ' ' . $pm . '</div>';
 			}
-		}
-	}
-}
-
-if(! function_exists('admin_login')) {
-	function admin_login() {
-
-		global $_SERVER, $admin_name, $admin_pass, $lang;
-		if ( @$_SERVER['PHP_AUTH_USER'] != $admin_name || @$_SERVER['PHP_AUTH_PW'] != $admin_pass ) {
-			header( "WWW-Authenticate: Basic realm='AdminAccess'" );
-			header( "HTTP/1.0 401 Unauthorized" );
-			header( "status: 401 Unauthorized" );
-			mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "ADMIN pultas - Klaida loginantis: User: " . ( isset( $_SERVER['PHP_AUTH_USER'] ) ? $_SERVER['PHP_AUTH_USER'] : "N/A" ) . " Pass: " . ( isset( $_SERVER['PHP_AUTH_PW'] ) ? $_SERVER['PHP_AUTH_PW'] : "N/A" ) ) . ",NOW(), '" . escape( getip() ) . "');" );
-			die( klaida( "{$lang['system']['forbidden']}!", "{$lang['system']['notadmin']}" ) );
-		} else {
-			unset( $admin_name, $admin_pass );
-
-			return TRUE;
 		}
 	}
 }

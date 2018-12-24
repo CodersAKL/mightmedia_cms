@@ -61,7 +61,7 @@ if ( isset( $url['d'] ) && $url['d'] != "" && $url['d'] != 0 ) {
 }
 
 if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['save'] && $_POST['id'] > 0 ) {
-	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $_POST['id'] . "'" . ( $_SESSION[SLAPTAS]['id'] == 1 ? '' : 'AND `levelis` > 1' ) . " LIMIT 1" );
+	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $_POST['id'] . "'" . (getSession('id') == 1 ? '' : 'AND `levelis` > 1' ) . " LIMIT 1" );
 
 	if ( !empty( $_POST['tsk'] ) ) {
 		$tsk = (int)$_POST['tsk'];
@@ -84,7 +84,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['save'] && 
 		$mail = $info['email'];
 	}
 
-	$resut = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET `taskai`=" . escape( $tsk ) . " , `levelis`=" . escape( $lvl ) . " , `pass`=" . escape( $slapt ) . " , `email`=" . escape( $mail ) . " WHERE `id`=" . escape( (int)$_POST['id'] ) . " " . ( $_SESSION[SLAPTAS]['id'] == 1 ? '' : 'AND `levelis` > 1' ) );
+	$resut = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET `taskai`=" . escape( $tsk ) . " , `levelis`=" . escape( $lvl ) . " , `pass`=" . escape( $slapt ) . " , `email`=" . escape( $mail ) . " WHERE `id`=" . escape( (int)$_POST['id'] ) . " " . (getSession('id') == 1 ? '' : 'AND `levelis` > 1' ) );
 	if ( $resut ) {
 		redirect(
 			url("?id," . $url['id'] . ";a," . $url['a']),
@@ -109,7 +109,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['save'] && 
 //Jei redaguojam
 if ( isset( $url['r'] ) && $url['r'] != "" && $url['r'] != 0 ) {
 
-	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $url['r'] . "'" . ( $_SESSION[SLAPTAS]['id'] == 1 ? '' : ' AND `levelis` > 1' ) . " LIMIT 1" );
+	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $url['r'] . "'" . (getSession('id') == 1 ? '' : ' AND `levelis` > 1' ) . " LIMIT 1" );
 	if ( $info ) {
 		$lygiai2 = array_keys( $conf['level'] );
 		

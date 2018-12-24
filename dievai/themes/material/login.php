@@ -1,5 +1,5 @@
 <?php
-    if ( isset( $_SESSION[SLAPTAS]['level'] ) && $_SESSION[SLAPTAS]['level'] == 1 ) {
+    if (! empty(getSession('level')) && getSession('level') == 1 ) {
         redirect( 'main.php' );
     }
 ?>

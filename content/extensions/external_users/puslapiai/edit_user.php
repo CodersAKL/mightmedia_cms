@@ -10,7 +10,7 @@
  * @$Date$
  * */
 
-if ( !defined( "OK" ) || !isset( $_SESSION[SLAPTAS]['username'] ) ) {
+if ( !defined( "OK" ) || empty(getSession('username'))) {
 	header( "Location: " . url( "?id,{$conf['pages'][$conf['pirminis'] . '.php']['id']}" ) );
 	exit;
 }
@@ -21,14 +21,14 @@ $id  = $url['id'];
 // ######### Slaptazodzio keitimas #############
 if ( isset( $_POST['old_pass'] ) && count( $_POST['old_pass'] ) > 0 && count( $_POST['new_pass'] ) > 0 && count( $_POST['new_pass2'] ) > 0 ) {
 	$old_pass = koduoju( $_POST['old_pass'] );
-	$user     = mysql_query1( "SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " AND pass=" . escape( $old_pass ) . " LIMIT 1" );
+	$user     = mysql_query1( "SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape(getSession('username')) . " AND pass=" . escape( $old_pass ) . " LIMIT 1" );
 	//ar teisingas senas slaptzodis
 	if ( isset( $user['nick'] ) ) {
 		$new_pass  = koduoju( $_POST['new_pass'] );
 		$new_pass2 = koduoju( $_POST['new_pass2'] );
 		//ar sutampa ivesti nauji slaptazodziai
 		if ( $new_pass == $new_pass2 ) {
-			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET pass=" . escape( $new_pass ) . " WHERE nick=" . escape( $_SESSION[SLAPTAS]['username'] ) );
+			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET pass=" . escape( $new_pass ) . " WHERE nick=" . escape(getSession('username')) );
 			msg( $lang['system']['done'], $lang['user']['edit_updated'] );
 		} else {
 			klaida( $lang['system']['error'], $lang['user']['edit_badconfirm'] );
@@ -50,13 +50,13 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'contacts_change' ) {
 		$url   = ( !empty( $url['scheme'] ) ? $url['scheme'] : 'http' ) . '://' . ( empty( $url['host'] ) ? $url['path'] : $url['host'] . $url['path'] ); //Paruošiam ir sutvarkom įvestą adresą. Išimam visokius argumentus iš nuorodos.
 		$email = $_POST['email'];
 		$ep    = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE email=" . escape( $email ) . " LIMIT 1" );
-		$sql   = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape( $_SESSION[SLAPTAS]['username'] ) . " LIMIT 1" );
+		$sql   = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape(getSession('username')) . " LIMIT 1" );
 		if ( !isset( $ep['email'] ) || ( isset( $ep['email'] ) && $ep['email'] == $sql['email'] ) ) {
 			if ( file_exists( 'content/uploads/avatars/' . md5( $sql['email'] ) . '.jpeg' ) ) {
 				rename( 'content/uploads/avatars/' . md5( $sql['email'] ) . '.jpeg', 'content//uploads/avatars/' . md5( $email ) . '.jpeg' );
 			}
 
-			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET icq=" . escape( $icq ) . ", msn=" . escape( $msn ) . ", skype=" . escape( $skype ) . ", yahoo=" . escape( $yahoo ) . ", aim=" . escape( $aim ) . ", url=" . escape( $url ) . ", email=" . escape( $email ) . " WHERE nick=" . escape( $_SESSION[SLAPTAS]['username'] ) . "" );
+			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET icq=" . escape( $icq ) . ", msn=" . escape( $msn ) . ", skype=" . escape( $skype ) . ", yahoo=" . escape( $yahoo ) . ", aim=" . escape( $aim ) . ", url=" . escape( $url ) . ", email=" . escape( $email ) . " WHERE nick=" . escape(getSession('username')) . "" );
 			msg( $lang['system']['done'], $lang['user']['edit_updated'] );
 		} else {
 			klaida( $lang['system']['error'], $lang['reg']['emailregistered'] );
@@ -70,7 +70,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'contacts_change' ) {
 if ( isset( $_POST['action'] ) && $_POST['action'] == 'country_change' ) {
 	$miestas = $_POST['miestas'];
 	$salis   = $_POST['salis'];
-	mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET salis=" . escape( $salis ) . ", miestas=" . escape( $miestas ) . " WHERE nick=" . escape( $_SESSION[SLAPTAS]['username'] ) . " LIMIT 1" );
+	mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET salis=" . escape( $salis ) . ", miestas=" . escape( $miestas ) . " WHERE nick=" . escape(getSession('username')) . " LIMIT 1" );
 	msg( $lang['system']['done'], $lang['user']['edit_updated'] );
 }
 
@@ -81,7 +81,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'default_change' ) {
 	$pavarde = $_POST['pavarde'];
 	$gimimas = date( 'Y-m-d', strtotime( $_POST['gimimas'] ) );
 	$parasas = $_POST['parasas'];
-	mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET vardas=" . escape( $vardas ) . ", pavarde=" . escape( $pavarde ) . ", parasas=" . escape( $parasas ) . ", gim_data=" . escape( $gimimas ) . " WHERE nick=" . escape( $_SESSION[SLAPTAS]['username'] ) . "" );
+	mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET vardas=" . escape( $vardas ) . ", pavarde=" . escape( $pavarde ) . ", parasas=" . escape( $parasas ) . ", gim_data=" . escape( $gimimas ) . " WHERE nick=" . escape(getSession('username')) . "" );
 	msg( $lang['system']['done'], $lang['user']['edit_updated'] );
 }
 // ################ Siulomi punktai redagavimui MENIU ##########################
@@ -110,7 +110,7 @@ if ( $mid == 1 ) {
 	lentele( $lang['user']['edit_pass'], $form->form( $form_array ) );
 } // Pakeisti kontaktinius duomenis
 elseif ( $mid == 2 ) {
-	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . "LIMIT 1" );
+	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape(getSession('username')) . "LIMIT 1" );
 
 	$form_array = array(
 		"Form"                           => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] . ";m," . $_GET['m'] ), "method" => "post", "enctype" => "", "id" => "", "extra" => "onSubmit=\"return checkMail('change_contacts','email')\"", "name" => "change_contacts" ),
@@ -130,7 +130,7 @@ elseif ( $mid == 2 ) {
 }
 // Pakeisti sali, miesta
 elseif ( $mid == 3 ) {
-	$info = mysql_query1( "SELECT `salis`, `miestas` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " LIMIT 1" );
+	$info = mysql_query1( "SELECT `salis`, `miestas` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape(getSession('username')) . " LIMIT 1" );
 
 	$sql   = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "salis`" );
 	$salis = array();
@@ -147,7 +147,7 @@ elseif ( $mid == 3 ) {
 
 // Avataro keitimas
 elseif ( $mid == 4 ) {
-	$sql = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " LIMIT 1" );
+	$sql = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape(getSession('username')) . " LIMIT 1" );
 	if ( isset( $_GET['a'] ) && $_GET['a'] == 1 ) {
 		unlink( 'content/uploads/avatars/' . md5( $sql['email'] ) . '.jpeg' );
 	}
@@ -208,7 +208,7 @@ HTML;
 }
 // Pagrindiniai nustatymai
 elseif ( $mid == 5 ) {
-	$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape( $_SESSION[SLAPTAS]['username'] ) . " LIMIT 1" );
+	$sql = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape(getSession('username')) . " LIMIT 1" );
 	echo '<script src="core/assets/javascript/jquery/jquery.maskedinput-1.2.2.js" type="text/javascript"></script>
           <script type="text/javascript">jQuery(function($){
              $("#date").mask("9999-99-99");

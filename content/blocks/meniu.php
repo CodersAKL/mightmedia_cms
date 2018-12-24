@@ -11,10 +11,10 @@ unset( $data, $res );
  **/
 
 $res = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`='Y' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
-$data = array();
+$data = [];
 if ( sizeof( $res ) > 0 ) {
 	foreach ( $res as $row ) {
-		if ( teises( $row['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
+		if ( teises( $row['teises'], getSession('level')) ) {
 			$data[$row['parent']][] = $row;
 		}
 	}
@@ -23,5 +23,3 @@ if ( sizeof( $res ) > 0 ) {
 	$text = "";
 }
 unset( $data, $res );
-
-?>

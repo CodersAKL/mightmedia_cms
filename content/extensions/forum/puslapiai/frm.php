@@ -110,7 +110,7 @@ if ( $sid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0 ) {
 //temu sarasas
 if ( $sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0 ) {
 	$teise = mysql_query1( "SELECT `teises` FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`=" . escape( $_GET['s'] ) . " LIMIT 1" );
-	if ( isset( $_SESSION[SLAPTAS]['username'] ) && teises( unserialize( $teise['teises'] ), $_SESSION[SLAPTAS]['level'] ) ) {
+	if (! empty(getSession('username')) && teises( unserialize( $teise['teises'] ), getSession('level')) ) {
 		echo "<br /><a href='" . url( "a,1" ) . "'><img src='{$imagedir}" . lang() . "/nauja_tema.png' border=0 alt='{$lang['forum']['newpost']}'/></a><br/><br/>";
 	}
 	$limit = 20;
@@ -160,7 +160,7 @@ if ( $sid > 0 && $tid == 0 && $aid == 0 && $kid == 0 && $lid == 0 && $rid == 0 )
 //RODOM tema
 if ( $tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0 ) {
 	$teises = mysql_query1( "SELECT `teises` FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`=" . escape( $sid ) . " LIMIT 1" );
-	if ( isset( $teises['teises'] ) && teises( unserialize( $teises['teises'] ), $_SESSION[SLAPTAS]['level'] ) ) {
+	if ( isset( $teises['teises'] ) && teises( unserialize( $teises['teises'] ), getSession('level'))) {
 		//trinam posta
 		if ( $did > 0 && ar_admin( 'frm' ) ) {
 
@@ -217,13 +217,13 @@ if ( $tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0 ) 
 
 				$extra = "";
 				$tool  = "";
-				if ( isset( $_SESSION[SLAPTAS]['id'] ) && $row['nikas'] == $_SESSION[SLAPTAS]['id'] || ar_admin( 'frm' ) ) {
+				if ( ! empty(getSession('id')) && $row['nikas'] == getSession('id') || ar_admin( 'frm' ) ) {
 					$tool .= " <a style='float: right; margin-right:2px;' href='" . url( "e," . $row['zid'] . "" ) . "#end' title='" . $lang['system']['edit'] . "'><img src='{$imagedir}" . lang() . "/redaguoti.png' border='0' alt='[r]'/></a> ";
 					if ( $a != 1 ) {
 						$tool .= " <a style='float: right; margin-right:2px;' href='" . url( "?id," . $url['id'] . ";t," . $tid . ";s," . $sid . ";d," . $row['zid'] ) . "' title='" . $lang['system']['delete'] . "'  onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='{$imagedir}" . lang() . "/trinti.png' border='0' alt='[t]'/></a> ";
 					}
 				}
-				$reply = ( $_SESSION[SLAPTAS]['level'] > 0 ? ' <a style="float: right; margin-right:2px;"  href="' . url( "q," . $row['zid'] . "#end" ) . '" title="' . $lang['admin']['pm_reply'] . '"><img src="' . $imagedir . lang() . '/atsakyti.png" border="0" alt="re"></a> ' : '' );
+				$reply = (getSession('level') > 0 ? ' <a style="float: right; margin-right:2px;"  href="' . url( "q," . $row['zid'] . "#end" ) . '" title="' . $lang['admin']['pm_reply'] . '"><img src="' . $imagedir . lang() . '/atsakyti.png" border="0" alt="re"></a> ' : '' );
 				$turinys .= "<div style=\"\" class=\"tr\">
 			  <div style=\"margin-bottom: 6px;\" >{$reply}{$tool}<em> " . user( $row['nick'], $row['id'], $row['levelis'] ) . " (" . ( ( $row['laikas'] == '0000000000' ) ? '---' : date( 'Y-m-d H:i:s', $row['laikas'] ) ) . ") " . naujas( $row['laikas'], $row['nick'] ) . "</em></div>
 			  <div class=\"avataras\" align=\"left\">" . avatar( $row['email'], 55 ) . "</div><div class=\"tr2\" style=\"\">" . bbcode( $row['zinute'] ) . "<br />" . ( !empty( $row['parasas'] ) ? "<div class=\"signature\">" . bbcode( input( $row['parasas'] ) ) . "</div>" : "" ) . "</div></div>";
@@ -237,14 +237,14 @@ if ( $tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0 ) 
 			$tikrinam = mysql_query1( "SELECT `uzrakinta` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `id`=" . escape( $tid ) . " AND `tid`=" . escape( $sid ) . " limit 1" );
 
 
-			if ( isset( $_SESSION[SLAPTAS]['id'] ) && $kid == 0 && $lid == 0 && $rid == 0 && $eid > 0 ) {
+			if (! empty(getSession('id')) && $kid == 0 && $lid == 0 && $rid == 0 && $eid > 0 ) {
 
 				$extra = '';
 				if ( !empty( $_POST['msg'] ) && $_POST['action'] == 'f_update' ) {
 					if ( ar_admin( 'frm' ) ) {
-						mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape( $_POST['msg'] . "\n[sm][i]{$lang['forum']['edited_by']}: " . $_SESSION[SLAPTAS]['username'] . " " . date( 'Y-m-d H:i:s', time() ) . "[/i][/sm]" ) . " WHERE `id`=" . escape( $eid ) );
+						mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape( $_POST['msg'] . "\n[sm][i]{$lang['forum']['edited_by']}: " . getSession('username') . " " . date( 'Y-m-d H:i:s', time() ) . "[/i][/sm]" ) . " WHERE `id`=" . escape( $eid ) );
 					} else {
-						mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape( $_POST['msg'] . "\n[sm][i]{$lang['forum']['edited_by']}: " . $_SESSION[SLAPTAS]['username'] . " " . date( 'Y-m-d H:i:s', time() ) . "[/i][/sm]" ) . " WHERE `id`=" . escape( $eid ) . " AND `nick`=" . escape( $_SESSION[SLAPTAS]['id'] ) );
+						mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "d_zinute` SET `zinute`=" . escape( $_POST['msg'] . "\n[sm][i]{$lang['forum']['edited_by']}: " . getSession('username') . " " . date( 'Y-m-d H:i:s', time() ) . "[/i][/sm]" ) . " WHERE `id`=" . escape( $eid ) . " AND `nick`=" . escape(getSession('id')) );
 					}
 					//redirect( url( "?id," . $url['id'] . ";s,$sid;t,$tid;p,{$_GET['p']}" ) );
 					redirect( url( "?id," . $url['id'] . ";s,$sid;t,$tid;p,{$pid}" ) );
@@ -253,7 +253,7 @@ if ( $tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0 ) 
 					if ( ar_admin( 'frm' ) ) {
 						$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape( $eid ) . "  LIMIT 1";
 					} else {
-						$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape( $eid ) . " AND `nick`='" . escape( $_SESSION[SLAPTAS]['id'] ) . "' LIMIT 1";
+						$sql = "SELECT * FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `id`=" . escape( $eid ) . " AND `nick`='" . escape(getSession('id')) . "' LIMIT 1";
 					}
 					$sql   = mysql_query1( $sql, 15 );
 					$extra = $sql['zinute'];
@@ -261,7 +261,7 @@ if ( $tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0 ) 
 			}
 			//  Siunciam zinute
 			if ( isset( $_POST['action'] ) && $_POST['action'] == 'f_send' && isset( $_POST['msg'] ) && $tikrinam['uzrakinta'] == "ne" ) {
-				if ( !isset( $_SESSION[SLAPTAS]['username'] ) ) {
+				if (empty(getSession('username'))) {
 					redirect( url( "?id,{$conf['pages'][$conf['pirminis'] . '.php']['id']}" ) );
 				}
 				if ( strlen( str_replace( " ", "", $_POST['msg'] ) ) > 0 ) {
@@ -279,7 +279,7 @@ if ( $tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0 ) 
 						if ( isset( $_POST['post_uid'] ) && $_POST['post_uid'] > 0 ) {
 							$uid = (int)$_POST['post_uid'];
 						} else {
-							$uid = $_SESSION[SLAPTAS]['id'];
+							$uid = getSession('id');
 						}
 
 
@@ -287,11 +287,11 @@ if ( $tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0 ) 
 						mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "d_temos`,`" . LENTELES_PRIESAGA . "users`,`" . LENTELES_PRIESAGA . "d_straipsniai`
 									  SET
 									  `" . LENTELES_PRIESAGA . "d_temos`.`last_data`= '" . time() . "',
-									  `" . LENTELES_PRIESAGA . "d_temos`.`last_nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . ",
-									  `" . LENTELES_PRIESAGA . "d_straipsniai`.`last_data`= '" . time() . "', `" . LENTELES_PRIESAGA . "d_straipsniai`.`last_nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . ",
+									  `" . LENTELES_PRIESAGA . "d_temos`.`last_nick`=" . escape(getSession('username')) . ",
+									  `" . LENTELES_PRIESAGA . "d_straipsniai`.`last_data`= '" . time() . "', `" . LENTELES_PRIESAGA . "d_straipsniai`.`last_nick`=" . escape(getSession('username')) . ",
 									  `" . LENTELES_PRIESAGA . "users`.`forum_atsakyta`=`" . LENTELES_PRIESAGA . "users`.`forum_atsakyta`+1 ,
 									  `" . LENTELES_PRIESAGA . "users`.`taskai`=`" . LENTELES_PRIESAGA . "users`.`taskai`+1
-									  WHERE `" . LENTELES_PRIESAGA . "users`.`nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . "
+									  WHERE `" . LENTELES_PRIESAGA . "users`.`nick`=" . escape(getSession('username')) . "
 									  AND `" . LENTELES_PRIESAGA . "d_straipsniai`.`id`=" . escape( $tid ) . " AND `" . LENTELES_PRIESAGA . "d_temos`.`id`=" . escape( $sid ) . "
 						" );
 						mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "d_zinute` (`tid`, `sid`, `nick`, `zinute`, `laikas`) VALUES (" . escape( $sid ) . ", " . escape( $tid ) . ", " . escape( $uid ) . ", " . escape( $zinute ) . ", '" . time() . "')" );
@@ -305,7 +305,7 @@ if ( $tid > 0 && $sid > 0 && $kid == 0 && $lid == 0 && $rid == 0 && $aid == 0 ) 
 			}
 
 
-			if ( isset( $_SESSION[SLAPTAS]['username'] ) && $tikrinam['uzrakinta'] == "ne" ) {
+			if (! empty(getSession('username')) && $tikrinam['uzrakinta'] == "ne" ) {
 				$citata = "";
 				if ( $qid > 0 ) {
 
@@ -433,15 +433,15 @@ elseif ( (int)$kid && (int)$kid && (int)$kid > 0 ) {
 //temos kurimas
 elseif ( $aid == 1 && $kid == 0 && $lid == 0 && $rid == 0 ) {
 	$teise = mysql_query1( "SELECT `teises` FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `id`=" . escape( $_GET['s'] ) . " LIMIT 1" );
-	if ( teises( unserialize( $teise['teises'] ), $_SESSION[SLAPTAS]['level'] ) ) {
+	if ( teises( unserialize( $teise['teises'] ), getSession('level')) ) {
 		if ( isset( $_POST['post_msg'] ) ) {
-			if ( !isset( $_SESSION[SLAPTAS]['username'] ) ) {
+			if (empty(getSession('username'))) {
 				redirect( url( "?id,{$conf['pages'][$conf['pirminis'] . '.php']['id']}" ) );
 			}
 			if ( isset( $_POST['post_uid'] ) && $_POST['post_uid'] > 0 ) {
 				$uid = (int)$_POST['post_uid'];
 			} else {
-				$uid = $_SESSION[SLAPTAS]['id'];
+				$uid = getSession('id');
 			}
 			$pavadinimas = /*input(*/
 				$_POST['post_pav'] /*)*/
@@ -463,14 +463,14 @@ elseif ( $aid == 1 && $kid == 0 && $lid == 0 && $rid == 0 ) {
 			unset( $result );
 			if ( strlen( $error ) < 1 ) {
 				unset( $error );
-				$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "d_straipsniai` (`tid`, `pav`, `autorius`,`last_data`,`last_nick`,`lang`) VALUES(" . escape( $sid ) . ", " . escape( $pavadinimas ) . ", " . escape( $_SESSION[SLAPTAS]['username'] ) . ", '" . time() . "', " . escape( $_SESSION[SLAPTAS]['username'] ) . ", " . escape( lang() ) . ")" );
+				$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "d_straipsniai` (`tid`, `pav`, `autorius`,`last_data`,`last_nick`,`lang`) VALUES(" . escape( $sid ) . ", " . escape( $pavadinimas ) . ", " . escape(getSession('username')) . ", '" . time() . "', " . escape(getSession('username')) . ", " . escape( lang() ) . ")" );
 				if ( !$result ) {
 					$error .= "<b> " . mysqli_error($prisijungimas_prie_mysql) . "</b>.";
 				}
 				if ( !isset( $error ) ) {
 					unset( $result );
 					//`pav`=" . escape($pavadinimas) . " AND
-					$inf = mysql_query1( "SELECT max(id) AS `id` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE  autorius=" . escape( $_SESSION[SLAPTAS]['username'] ) . " limit 1" );
+					$inf = mysql_query1( "SELECT max(id) AS `id` FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE  autorius=" . escape(getSession('username')) . " limit 1" );
 
 					mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users`,`" . LENTELES_PRIESAGA . "d_temos`
 								   SET
@@ -478,9 +478,9 @@ elseif ( $aid == 1 && $kid == 0 && $lid == 0 && $rid == 0 ) {
 								  `" . LENTELES_PRIESAGA . "users`.`forum_atsakyta`=`" . LENTELES_PRIESAGA . "users`.`forum_atsakyta`+1 ,
 								  `" . LENTELES_PRIESAGA . "users`.`taskai`=`" . LENTELES_PRIESAGA . "users`.`taskai`+1 ,
 								  `" . LENTELES_PRIESAGA . "d_temos`.`last_data`= '" . time() . "',
-								  `" . LENTELES_PRIESAGA . "d_temos`.`last_nick`=" . escape( $_SESSION[SLAPTAS]['username'] ) . "
-								  WHERE `" . LENTELES_PRIESAGA . "users`.nick=" . escape( $_SESSION[SLAPTAS]['username'] ) . " AND `" . LENTELES_PRIESAGA . "d_temos`.`id`=" . escape( $sid ) . "" ) or die( mysqli_error($prisijungimas_prie_mysql) );
-					$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "d_zinute` (`tid`, `sid`, `nick`, `zinute`, `laikas`) VALUES (" . escape( $sid ) . ", (SELECT max(id) FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE  autorius=" . escape( $_SESSION[SLAPTAS]['username'] ) . "), " . escape( $uid ) . ", " . escape( $zinute ) . ", '" . time() . "')" );
+								  `" . LENTELES_PRIESAGA . "d_temos`.`last_nick`=" . escape(getSession('username')) . "
+								  WHERE `" . LENTELES_PRIESAGA . "users`.nick=" . escape(getSession('username')) . " AND `" . LENTELES_PRIESAGA . "d_temos`.`id`=" . escape( $sid ) . "" ) or die( mysqli_error($prisijungimas_prie_mysql) );
+					$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "d_zinute` (`tid`, `sid`, `nick`, `zinute`, `laikas`) VALUES (" . escape( $sid ) . ", (SELECT max(id) FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE  autorius=" . escape(getSession('username')) . "), " . escape( $uid ) . ", " . escape( $zinute ) . ", '" . time() . "')" );
 					if ( !$result ) {
 						$error .= "<b> " . mysqli_error($prisijungimas_prie_mysql) . "</b>";
 					}

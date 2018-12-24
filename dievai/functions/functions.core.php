@@ -224,7 +224,7 @@ function adminPages()
 
 	$fileName = (isset($url['a']) && ! empty(getAllAdminPages($url['a'])) ? getAllAdminPages($url['a']) : null);
 
-	if (! empty($fileName) && file_exists(ROOT . $fileName) && isset($_SESSION[SLAPTAS]['username']) && $_SESSION[SLAPTAS]['level'] == 1 && defined( "OK" ) ) {
+	if (! empty($fileName) && file_exists(ROOT . $fileName) && ! empty(getSession('username')) && getSession('level') == 1 && defined( "OK" ) ) {
 		if (count($_POST) > 0 && $conf['keshas'] == 1) {
 			notifyMsg(
 				[
@@ -359,8 +359,7 @@ function tableFilter($formData, $data, $formId = '')
 
 function deleteRedirectSession()
 {
-	unset($_SESSION[SLAPTAS]['redirect']);
-
+	forgotSession('redirect');
 }
 
 function buttons($id = null)

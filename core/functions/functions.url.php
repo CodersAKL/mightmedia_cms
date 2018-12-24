@@ -164,7 +164,7 @@ if(! function_exists('redirect')) {
 	function redirect($location, $type = "header", $sessions = null) {
 
 		if(! empty($sessions)) {
-			$_SESSION[SLAPTAS]['redirect'] = $sessions;
+			setSession('redirect', $sessions);
 		}
 
 		if ( $type == "header" ) {

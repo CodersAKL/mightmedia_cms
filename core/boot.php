@@ -5,6 +5,11 @@ if (basename($_SERVER['PHP_SELF']) == 'boot.php') {
 	ban(getip(), $lang['system']['forhacking']);
 }
 
+//Jeigu nepavyko nuskaityti nustatymų
+if (! isset($conf) || empty($conf)) {
+	die("<center><h1>Klaida 3</h1><br/>Svetainė laikinai neveikia. <h4>Prašome užsukti vėliau</h4></center>");
+}
+
 // Nustatom maksimalu leidziama keliamu failu dydi
 $max_upload   = (int)( ini_get( 'upload_max_filesize' ) );
 $max_post     = (int)( ini_get( 'post_max_size' ) );
@@ -13,11 +18,29 @@ $upload_mb    = min( $max_upload, $max_post, $memory_limit );
 define( "MFDYDIS", $upload_mb * 1024 * 1024 );
 //ini_set("memory_limit", MFDYDIS);
 define( "OK", TRUE );
+
 define('ROOTAS', dirname( realpath( __FILE__ ) ) . '/../' );
 if(! defined('ROOT')) {
 	define('ROOT', dirname( realpath( __FILE__ ) ) . '/../' );
 }
 
+date_default_timezone_set(TIME_ZONE);
+
+/**
+ * Core functions
+ */
+
+require_once ROOT . 'core/functions/functions.core.php';
+
+/**
+ * Language
+ */
+$lang = [];
+if (isset($conf['kalba'])) {
+    require_once ROOT . '/content/lang/' . (empty(getSession('lang'))? basename($conf['kalba'],'.php') : getSession('lang')). '.php';
+} else {
+    require_once ROOT . '/content/lang/lt.php';
+}
 
 /**
  * Load core
@@ -33,10 +56,11 @@ foreach ($loadCoreConfigsArray as $loadCoreConfigsSlug) {
 }
 
 $loadCoreFunctionsArray = [
-    'cache',
+	'deprecated',
+	'cache',
     'calendar',
     'categories',
-    'core',
+    // 'core',
     'date',
     'db',
     'file',

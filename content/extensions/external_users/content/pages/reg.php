@@ -31,7 +31,7 @@ function registracijos_forma()
 	return $bla->form( $forma );
 }
 
-if ( isset( $_SESSION[SLAPTAS]['username'] ) ) {
+if (! empty(getSession('username'))) {
 	header( "Location: " . url( "?id,{$conf['pages'][$conf['pirminis'].'.php']['id']}" ) );
 }
 $error = '';
@@ -77,7 +77,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'registracija' ) {
 			$error .= " {$lang['reg']['emailregistered']}<br />";
 		}
 	}
-	if ( $_SESSION[SLAPTAS]['code'] != $kode ) {
+	if (getSession('code') != $kode) {
 		$error .= " {$lang['reg']['wrongcode']}<br>";
 	}
 	if ( strlen( $error ) == 0 ) {

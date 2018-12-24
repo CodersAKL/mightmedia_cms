@@ -19,7 +19,7 @@ $viso  = kiek( "knyga" );
 include_once config('class', 'dir') . 'class.form.php';
 $bla = new Form();
 //jei tai moderatorius
-if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
+if (getSession('level') == 1) {
 	//jei adminas paspaude trinti
 	if ( isset( $url['d'] ) && !empty( $url['d'] ) && isnum( $url['d'] ) ) {
 		$id = (int)$url['d'];
@@ -33,8 +33,8 @@ if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
 	}
 	//Jei adminas paspaude redaguoti
 	if ( isset( $url['r'] ) && !empty( $url['r'] ) && $url['r'] > 0 && isnum( $url['r'] ) ) {
-		$nick    = $_SESSION[SLAPTAS]['username'];
-		$nick_id = $_SESSION[SLAPTAS]['id'];
+		$nick    = getSession('username');
+		$nick_id = getSession('id');
 		if ( empty( $_POST ) ) {
 			$msg = mysql_query1( "SELECT `msg` FROM `" . LENTELES_PRIESAGA . "knyga` WHERE `id`=" . escape( ceil( (int)$url['r'] ) ) . " LIMIT 1" );
 
@@ -45,7 +45,7 @@ if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
 			);
 			lentele( $lang['guestbook']['Editmessage'], $bla->form( $form ) );
 		} elseif ( isset( $_POST['knyga'] ) && $_POST['knyga'] == $lang['admin']['edit'] && !empty( $_POST['msg'] ) ) {
-			$msg = trim( $_POST['msg'] ) . "\n[sm][i]Redagavo: " . $_SESSION[SLAPTAS]['username'] . "[/i][/sm]";
+			$msg = trim( $_POST['msg'] ) . "\n[sm][i]Redagavo: " . getSession('username') . "[/i][/sm]";
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "knyga` SET `msg` = " . escape( htmlspecialchars( $msg ) ) . " WHERE `id` =" . escape( $url['r'] ) . " LIMIT 1" );
 			if ( mysqli_affected_rows($prisijungimas_prie_mysql) > 0 ) {
 				msg( $lang['system']['done'], $lang['guestbook']['messageupdated'] );
@@ -93,7 +93,7 @@ if ( sizeof( $sql2 ) > 0 ) {
 	}
 }
 
-if ( isset( $_POST['knyga'] ) && $_POST['knyga'] == $lang['guestbook']['submit'] && strtoupper( $_POST['code'] ) == $_SESSION[SLAPTAS]['code'] && !empty( $_POST['zinute'] ) && !empty( $_POST['vardas'] ) ) {
+if ( isset( $_POST['knyga'] ) && $_POST['knyga'] == $lang['guestbook']['submit'] && strtoupper( $_POST['code'] ) == getSession('code') && !empty( $_POST['zinute'] ) && !empty( $_POST['vardas'] ) ) {
 	$msg  = htmlspecialchars( $_POST['zinute'] );
 	$nick = $_POST['vardas'];
 
@@ -106,7 +106,7 @@ if ( isset( $_POST['knyga'] ) && $_POST['knyga'] == $lang['guestbook']['submit']
 if ( !isset( $_GET['r'] ) ) {
 	$form = array(
 		"Form"                        => array( "action" => "", "method" => "post", "name" => "knyga" ),
-		$lang['guestbook']['name']    => array( "type" => "text", "class" => "input", "value" => ( isset( $_SESSION[SLAPTAS]['username'] ) && !empty( $_SESSION[SLAPTAS]['username'] ) ? input( $_SESSION[SLAPTAS]['username'] ) : '' ), "name" => "vardas", "class" => "input" ),
+		$lang['guestbook']['name']    => array( "type" => "text", "class" => "input", "value" => (! empty(getSession('username')) ? input(getSession('username')) : '' ), "name" => "vardas", "class" => "input" ),
 		$lang['guestbook']['message'] => array( "type" => "textarea", "value" => "", "name" => "zinute", "extra" => "rows=5", "class" => "input" ),
 		kodas()                       => array( "type" => "text", "value" => "", "name" => "code", "class" => "chapter" ),
 		" "                           => array( "type" => "submit", "name" => "knyga", "value" => $lang['guestbook']['submit'] )

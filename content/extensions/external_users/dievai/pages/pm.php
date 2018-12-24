@@ -169,7 +169,7 @@ if ($sql = mysql_query1($sqlQuery)) {
 		$lang['admin']['pm_deleteto'] 	=> [
 			"type" 		=> "select", 
 			"value" 	=> $select, 
-			"selected" 	=> $_SESSION[SLAPTAS]['username'], 
+			"selected" 	=> getSession('username'), 
 			"name" 		=> "to"
 		], 
 
@@ -202,7 +202,7 @@ if ( sizeof( $sql ) > 0 ) {
 		$lang['admin']['pm_deletefrom'] => [
 			"type" 		=> "select", 
 			"value" 	=> $select, 
-			"selected" 	=> $_SESSION[SLAPTAS]['username'], 
+			"selected" 	=> getSession('username'), 
 			"name" 		=> "from"
 		], 
 

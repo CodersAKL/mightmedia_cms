@@ -45,7 +45,7 @@ if(! function_exists('puslapis')) {
 
 		if (isset($conf['pages'][$pageName]['id']) && ! empty( $conf['pages'][$pageName]['id']) && $isFile) {
 
-			if ( $_SESSION[SLAPTAS]['level'] == 1 || ( is_array( $teises ) && in_array( $_SESSION[SLAPTAS]['level'], $teises ) ) || empty( $teises ) ) {
+			if (getSession('level') == 1 || ( is_array( $teises ) && in_array(getSession('level'), $teises ) ) || empty( $teises ) ) {
 
 				if ($extra && isset($conf['pages'][$pageName][$extra]) ) {
 					return $conf['pages'][$pageName][$extra];
@@ -152,12 +152,12 @@ if(! function_exists('site_tree')) {
 			$re = "";
 			foreach ( $data[$id] as $row ) {
 				if ( isset( $data[$row['id']] ) ) {
-					if ( teises( $row['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
+					if ( teises( $row['teises'], getSession('level')) ) {
 						$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><ul>";
 						$re .= site_tree( $data, $row['id'], $active_class );
 						$re .= "</ul></li>";
 					}
-				} else if ( teises( $row['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
+				} else if ( teises( $row['teises'], getSession('level')) ) {
 					$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a></li>";
 				}
 			}
