@@ -11,7 +11,7 @@
  *
  **/
 
-if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
+if (! empty(getSession('id'))) {
 	if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti siuntinį' ) {
 		if ( isset( $_POST['url'] ) && isset( $_POST['Pavadinimas'] ) ) {
 
@@ -20,7 +20,7 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 			//
 			$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`)
     VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $_POST['url'] ) . ",
-    " . escape( $_POST['Aprasymas'] ) . "," . escape( $_SESSION[SLAPTAS]['id'] ) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ")" );
+    " . escape( $_POST['Aprasymas'] ) . "," . escape(getSession('id')) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ")" );
 
 			if ( $result ) {
 				msg(getLangText('system', 'info'), getLangText('download', 'sumbit_scc'));

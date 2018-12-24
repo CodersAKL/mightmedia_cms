@@ -11,7 +11,7 @@
  **/
 
 ####################### Atvaizduojam panele ###########################
-if ( !isset( $_SESSION[SLAPTAS]['username'] ) || empty( $_SESSION[SLAPTAS]['username'] ) ) {
+if (empty(getSession('username'))) {
 	$text = <<< HTML
 	<center>
 		<form id="user_reg" name="user_reg" method="post" action="">
@@ -43,7 +43,7 @@ HTML;
 			$bruksniukxs = ";";
 		}
 
-		$text .= "<li><a href=\"" . url( "?id," . $conf['pages']['view_user.php']['id'] ) . $bruksniukxs . $_SESSION[SLAPTAS]['username'] . "\"><img src=\"core/assets/images/icons/user-white.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> " . getLangText('user',  'profile') . "</a></li>";
+		$text .= "<li><a href=\"" . url( "?id," . $conf['pages']['view_user.php']['id'] ) . $bruksniukxs . getSession('username') . "\"><img src=\"core/assets/images/icons/user-white.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> " . getLangText('user',  'profile') . "</a></li>";
 	}
 	//profilio redagavimo nuoroda
 	if ( isset( $conf['pages']['edit_user.php']['id'] ) ) {
@@ -51,7 +51,7 @@ HTML;
 	}
 	//Pm nuoroda
 	if ( puslapis( 'pm.php' ) ) {
-		$pm = kiek( 'private_msg', "WHERE `to`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " AND `read`='NO'", 'total' );
+		$pm = kiek( 'private_msg', "WHERE `to`=" . escape(getSession('username')) . " AND `read`='NO'", 'total' );
 
 		if ( $pm != 0 ) {
 			$img = "<img src='core/assets/images/icons/email_error.gif' alt='new' border='0' style=\"vertical-align: middle;\"/>";
@@ -61,7 +61,7 @@ HTML;
 		$text .= "<li><a href=\"" . url( "?id," . $conf['pages']['pm.php']['id'] . ";a,1" ) . "\">" . $img . getLangText('user', 'messages') . "(" . $pm . ")</a></li>";
 	}
 	//moderatoriaus puslapio nuoroda
-	if ( puslapis( 'moderatorius.php' ) && !empty( $_SESSION[SLAPTAS]['mod'] ) ) {
+	if ( puslapis( 'moderatorius.php' ) && !empty(getSession('mod')) ) {
 		$text .= "
 			<li><a href=\"" . url( "?id,{$conf['pages']['moderatorius.php']['id']}" ) . "\"><img src=\"core/assets/images/icons/book__pencil.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> " . getLangText('system',  'mod') . "</a></li>";
 	}
@@ -71,6 +71,5 @@ HTML;
 			<li><a href=\"" . getLangText('user',  'logout') . "\"><img src=\"core/assets/images/icons/key_go.png\" alt=\"@\" style=\"vertical-align: middle;\" border=\"0\" /> " . getLangText('user',  'logout') . "</a></li>
 		</ul>
 	";
-	$title = sprintf( getLangText('user', 'hello'), $_SESSION[SLAPTAS]['username'] );
+	$title = sprintf( getLangText('user', 'hello'), getSession('username'));
 }
-?>

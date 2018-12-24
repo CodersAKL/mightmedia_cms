@@ -120,7 +120,7 @@ function upload( $file, $file_types_array = ["BMP", "JPG", "PNG", "PSD", "ZIP", 
                 move_uploaded_file( $_FILES["$file"]["tmp_name"], $upload_dir . $filename );
                 chmod( $upload_dir . $filename, 0777 );
                 if ( file_exists( $upload_dir . $filename ) ) {
-                    $result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $filename ) . ", " . escape( $_POST['Aprasymas'] ) . "," . escape( $_SESSION[SLAPTAS]['id'] ) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ", 'TAIP')" );
+                    $result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $filename ) . ", " . escape( $_POST['Aprasymas'] ) . "," . escape(getSession('id')) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ", 'TAIP')" );
 
                     if ( $result ) {
                         msg( getLangText('system', 'done'), getLangText('admin', 'download_created') );

@@ -70,7 +70,7 @@ if ( $kid == 0 ) {
 			}
 			$pav .= "";
 
-			if ( !isset( $categories_pav['pav'] ) || teises( $categories_pav['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
+			if ( !isset( $categories_pav['pav'] ) || teises( $categories_pav['teises'], getSession('level') ) ) {
 				if ( $row['sticky'] != 0 ) {
 					echo '<div class="sticky" id="news_' . $row['id'] . '">';
 				}
@@ -108,7 +108,7 @@ if ( $kid != 0 ) {
 
 	if ( isset( $sql['naujiena'] ) && !empty( $sql['naujiena'] ) ) {
 		addtotitle( $sql['pavadinimas'] );
-		if ( teises( ( isset( $sql['teises'] ) ? $sql['teises'] : 0 ), $_SESSION[SLAPTAS]['level'] ) ) {
+		if ( teises( ( isset( $sql['teises'] ) ? $sql['teises'] : 0 ), getSession('level') ) ) {
 			$title = $sql['pavadinimas'];
 			$text  = "<div class='naujiena'>" . $sql['naujiena'];
 			if ( !empty( $sql['daugiau'] ) ) {

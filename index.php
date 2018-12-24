@@ -12,7 +12,7 @@
 ob_start();
 header( "Cache-control: public" );
 header( "Content-type: text/html; charset=utf-8" );
-if ( !isset( $_SESSION ) ) {
+if (! isset( $_SESSION ) ) {
 	session_start();
 }
 define( 'ROOT', '' );
@@ -24,14 +24,23 @@ $stime = $m1[1] + $m1[0];
 //Iterpiam nustatymu faila jei ne perkialiam i instaliacija
 clearstatcache();
 
-if ( is_file( 'config.php' ) && filesize( 'config.php' ) > 10 ) {
+if (is_file('config.php')) {
 	include_once 'config.php';
-} elseif ( is_file( 'install/index.php' ) && !isset( $conf['Palaikymas'] ) ) {
-	header( 'location: install/index.php' );
-	exit();
+	if(DEBUG) {
+		ini_set('error_reporting', E_ALL);
+		ini_set('display_errors', 'On');
+	}
+} else if (is_file('install/index.php') && ! isset($conf['Palaikymas'])) {
+	header('location: install/index.php');
+	exit;
 } else {
 	die( '<h1>Sistemos klaida / System error</h1>Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.' );
 }
+
+/**
+ * Connection to DB
+ */
+include_once 'core/inc/inc.db_ready.php';
 
 /**
  * BOOT
@@ -94,7 +103,7 @@ if ( isset( $pslid ) && isnum( $pslid ) && $pslid > 0 ) {
 }
 //Jei svetaine uzdaryta remontui ir jei jungiasi ne administratorius
 if ($conf['Palaikymas'] == 1 ) {
-	if (! isset($_SESSION[SLAPTAS]['id']) || $_SESSION[SLAPTAS]['level'] != 1) {
+	if (empty(getSession('id')) || getSession('level') != 1) {
 		include_once ROOT . "/content/themes/" . $conf['Stilius'] . "/sfunkcijos.php";
 
 		maintenance($lang['admin']['maintenance'], $conf['Maintenance']);
@@ -103,8 +112,8 @@ if ($conf['Palaikymas'] == 1 ) {
 }
 
 if (! empty($_GET['lang'])) {
-	$_SESSION[SLAPTAS]['lang'] = basename( $_GET['lang'], '.php' );
-	redirect( url( "?id," . $_GET['id'] ) );
+	setSession('lang', basename($_GET['lang'], '.php'));
+	redirect(url( "?id," . $_GET['id']));
 }
 /*if (!empty($_SESSION['lang']) && is_file(ROOT . 'content/lang/' . basename($_SESSION['lang']) . '.php')) {
 	require(ROOT . 'content/lang/' . basename($_SESSION['lang'], '.php') . '.php');
@@ -112,7 +121,7 @@ if (! empty($_GET['lang'])) {
 
 include_once 'core/inc/inc.header.php';
 //Tikrinam ar setup.php failas paљalintas. Saugumo sumetimais
-// if ( is_dir( 'install/' ) && $_SESSION[SLAPTAS]['level'] == 1 && !@unlink( 'install/index.php' ) ) {
+// if ( is_dir( 'install/' ) && getSession('level') == 1 && !@unlink( 'install/index.php' ) ) {
 // 	die( '<h1>Demesio / Warning</h1><h3>Neištrintas install aplankalas.</h3> Tai saugumo spraga. Prašome pašalinkite šį aplankalą iš serverio arba pakeiskite jo pavadinimą. /Please, remove install folder from server.</h3>' );
 // }
 
@@ -131,7 +140,7 @@ $etime = $m2[1] + $m2[0];
 $ttime = ( $etime - $stime );
 $ttime = number_format( $ttime, 7 );
 
-if ($_SESSION[SLAPTAS]['level'] == 1) {
+if (getSession('level') == 1) {
 	echo '<!-- Generated ' . apvalinti( $ttime, 2 ) . 's. -->';
 }
 

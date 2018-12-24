@@ -31,7 +31,7 @@ if ( isset( $memb[1] ) ) {
 			$grupe = '-';
 		}
 		//Profilio rodymas
-		if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
+		if (getSession('level') == 1) {
 			$admin = 'IP: ' . $sql['ip'];
 		} else {
 			$admin = '';
@@ -89,7 +89,7 @@ if ( isset( $memb[1] ) ) {
 		
 ';
 		// Jei kitas vartotojas perziuri kita vartotoja BET ne SAVE
-		if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] != $sql['id'] ) {
+		if (! empty(getSession('id')) && getSession('id') != $sql['id'] ) {
 			if ( isset( $conf['pages']['pm.php']['id'] ) ) {
 				$text .= "
 				<center>
@@ -108,7 +108,7 @@ if ( isset( $memb[1] ) ) {
 
 		// Jeigu perziurima TIK informacija, o vartotojas SAVES NEZIURI per nustatyta puslapi
 		//komentarų nereikės
-		if (isset($_SESSION[SLAPTAS]['id'])) {
+		if (! empty(getSession('id'))) {
 			/**
 			 * Comments
 			 */

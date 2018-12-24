@@ -16,7 +16,7 @@ if ( !defined( "OK" ) ) {
 }
 unset( $extra );
 
-if ( $_SESSION[SLAPTAS]['level'] == 1 ) { //ADMINAS
+if (getSession('level') == 1) { //ADMINAS
 	$q = 'SELECT * FROM ' . LENTELES_PRIESAGA . 'kas_prisijunges WHERE `timestamp`>' . $timeout;
 } elseif ( !defined( "LEVEL" ) ) { //SVECIAS
 	$q = 'SELECT `id`, `uid`, `file`, `user`, `clicks`, `timestamp` FROM ' . LENTELES_PRIESAGA . 'kas_prisijunges WHERE `timestamp`>' . $timeout . ' LIMIT 10';
@@ -38,7 +38,7 @@ foreach ( $result as $row ) {
 	);
 	$flag     = ( isset( $row['ip'] ) ? strtolower( getUserCountry( $row['ip'] ) ) : '' ); //"http://api.wipmania.com/$row['ip']";
 
-	if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
+	if (getSession('level') == 1) {
 		$info[$i]['IP']                       = '<a href="http://whois.serveriai.lt/' . $row['ip'] . '" target="_blank" title="' . $row['ip'] . '">' . $row['ip'] . '</a>';
 		$info[$i][getLangText('online', 'page')]    = '<a href="' . $row['file'] . '"><img src="core/assets/images/icons/link.png" alt="page" border="0" class="middle"/></a>';
 		$info[$i][getLangText('online', 'browser')] = '<div>' . $narsykle . '</div>';

@@ -166,8 +166,8 @@ if (isset($url['t'])) {
 	$pavadinimas = strip_tags( $_POST['pav'] );
 	$komentaras  = (isset($_POST['kom']) && $_POST['kom'] === '1' ? 'taip' : 'ne');
 	$rodoma     = (isset($_POST['rodoma']) && $_POST['rodoma'] === '1' ? 'TAIP' : 'NE');
-	$autorius    = $_SESSION[SLAPTAS]['username'];
-	$autoriusid  = $_SESSION[SLAPTAS]['id'];
+	$autorius    = getSession('username');
+	$autoriusid  = getSession('id');
 	if ( empty( $apr ) || empty( $pavadinimas ) ) {
 		$error = getLangText('admin', 'article_emptyfield');
 	}

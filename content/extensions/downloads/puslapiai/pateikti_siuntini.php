@@ -10,8 +10,7 @@
  * @$Date$
  *
  **/
-if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
-//("memory_limit", "50M");
+if (! empty(getSession('id'))) {
 
 	if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti siuntinį' ) {
 		if ( isset( $_FILES ) && isset( $_POST['Pavadinimas'] ) && isset( $_POST['Aprasymas'] ) ) {
@@ -44,11 +43,7 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 						move_uploaded_file( $_FILES["$file"]["tmp_name"], $upload_dir . $filename );
 
 						if ( file_exists( $upload_dir . $filename ) ) {
-							if ( isset( $_SESSION[SLAPTAS]['id'] ) ) {
-								$autorius = $_SESSION[SLAPTAS]['id'];
-							} else {
-								$autorius = '0';
-							}
+							$autorius = getSession('id');
 							$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $filename ) . ", " . escape( $_POST['Aprasymas'] ) . "," . escape( $autorius ) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ")" );
 
 							if ( $result ) {

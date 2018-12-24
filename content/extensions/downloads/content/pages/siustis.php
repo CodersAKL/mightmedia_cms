@@ -99,7 +99,7 @@ if ( $vid > 0 ) {
 	}
 	if ( sizeof( $sql ) > 0 && isset( $sql['id'] ) ) {
 		//$sql = mysql_fetch_assoc($sql);
-		if ( !isset( $sql['teises'] ) || teises( $sql['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
+		if ( !isset( $sql['teises'] ) || teises( $sql['teises'], getSession('level')) ) {
 			$sql_autr = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `id`= '" . $sql['autorius'] . "' LIMIT 1" );
 			if ( isset( $sql_autr ['nick'] ) ) {
 				$autorius = user( $sql_autr ['nick'], $sql_autr['id'], $sql_autr ['levelis'] );
@@ -195,7 +195,7 @@ else {
 		$bla  = new Table();
 		$info = array();
 		foreach ( $sql_s as $sql ) {
-			if ( !isset( $sql['teises'] ) || teises( $sql['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
+			if ( !isset( $sql['teises'] ) || teises( $sql['teises'], getSession('level')) ) {
 				if ( isset( $sql['Nick'] ) ) {
 					$autorius = user( $sql['Nick'], $sql['nick_id'], $sql['levelis'] );
 				} else {

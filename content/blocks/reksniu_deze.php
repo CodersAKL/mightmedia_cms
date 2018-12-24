@@ -15,8 +15,8 @@ if ( isset( $_POST['chat_box'] ) && !empty( $_POST['chat_box'] ) && !empty( $_PO
 		setcookie( "komentatorius", $_POST['name'], time() + 60 * 60 * 24 * 30 );
 	}
 	$msg     = htmlspecialchars( $_POST['chat_msg'] );
-	$nick_id = ( isset( $_SESSION[SLAPTAS]['id'] ) ? $_SESSION[SLAPTAS]['id'] : 0 );
-	$nick    = ( isset( $_SESSION[SLAPTAS]['username'] ) ? $_SESSION[SLAPTAS]['username'] : ( !empty( $_POST['name'] ) ? $_POST['name'] : getLangText('system', 'guest') ) );
+	$nick_id = ( ! empty(getSession('id')) ? getSession('id') : 0 );
+	$nick    = ( ! empty(getSession('username')) ? getSession('username') : ( !empty( $_POST['name'] ) ? $_POST['name'] : $lang['system']['guest'] ) );
 
 	mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "chat_box`
 		(`nikas`, `msg`, `time`, `niko_id`)
@@ -28,9 +28,9 @@ if ( isset( $_POST['chat_box'] ) && !empty( $_POST['chat_box'] ) && !empty( $_PO
 $extra    = '';
 $vardas   = ( isset( $_COOKIE['komentatorius'] ) ? $_COOKIE['komentatorius'] : getLangText('system', 'guest') );
 $sveciams = ( isset( $conf['kmomentarai_sveciams'] ) && $conf['kmomentarai_sveciams'] == 1 );
-if ( ( isset( $_SESSION[SLAPTAS]['username'] ) && !empty( $_SESSION[SLAPTAS]['username'] ) ) || $sveciams ) {
+if (! empty(getSession('username')) || $sveciams) {
 	$chat_box = "<form name=\"chat_box\" action=\"\" method=\"post\">
-	               " . ( $sveciams && !isset( $_SESSION[SLAPTAS]['username'] ) ? '<input type="text" name="name" class="submit" value="' . $vardas . '"/>' : '' ) . "
+	               " . ( $sveciams && empty(getSession('username')) ? '<input type="text" name="name" class="submit" value="' . $vardas . '"/>' : '' ) . "
                    <textarea onkeypress=\"return imposeMaxLength(event, this, 300);\" name=\"chat_msg\" rows=\"3\" cols=\"10\" class=\"input\" style=\"margin-bottom:5px;\"></textarea>
                      <script>
 		               function imposeMaxLength(Event, Object, MaxLen){

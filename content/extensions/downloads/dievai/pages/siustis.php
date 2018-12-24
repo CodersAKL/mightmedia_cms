@@ -192,7 +192,7 @@ if (isset( $_POST['downloads_delete'])) {
 
 	if ( isset( $_POST['failas2'] ) && !empty( $_POST['failas2'] ) ) {
 		$rodoma			= (isset($_POST['rodoma']) && $_POST['rodoma'] === '1' ? 'TAIP' : 'NE');
-		$insertQuery 	= "INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $_POST['failas2'] ) . ", " . escape( $_POST['Aprasymas'] ) . "," . escape( $_SESSION[SLAPTAS]['id'] ) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ", " . escape( $rodoma ) . ")";
+		$insertQuery 	= "INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $_POST['failas2'] ) . ", " . escape( $_POST['Aprasymas'] ) . "," . escape(getSession('id')) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ", " . escape( $rodoma ) . ")";
 
 		if (mysql_query1($insertQuery)) {
 			redirect(

@@ -11,7 +11,7 @@
  * @Apie: Kontaktas su svetainės administratorium
  **/
 
-if ( isset( $_POST['kontaktas'] ) && $_POST['kontaktas'] == 'Siųsti' && strtoupper( $_POST['code'] ) === $_SESSION[SLAPTAS]['code'] && !empty( $_POST['zinute'] ) && !empty( $_POST['vardas'] ) ) {
+if ( isset( $_POST['kontaktas'] ) && $_POST['kontaktas'] == 'Siųsti' && strtoupper( $_POST['code'] ) === getSession('code') && !empty( $_POST['zinute'] ) && !empty( $_POST['vardas'] ) ) {
 
 	$title = strip_tags( $_POST['pavadinimas'] );
 	$from  = strip_tags( $_POST['vardas'] );
@@ -34,8 +34,8 @@ if ( isset( $_POST['kontaktas'] ) && $_POST['kontaktas'] == 'Siųsti' && strtoup
 } elseif ( isset( $_POST ) && !empty( $_POST['kontaktas'] ) ) {
 	klaida( getLangText('system', 'error'), getLangText('contact', 'bad') );
 } else {
-	if ( isset( $_SESSION[SLAPTAS]['username'] ) ) {
-		$from  = $_SESSION[SLAPTAS]['username'];
+	if (! empty(getSession('username'))) {
+		$from  = getSession('username');
 		$email = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape( $from ) . " LIMIT 1" );
 		$email = $email['email'];
 	}

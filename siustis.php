@@ -22,7 +22,7 @@ include_once 'core/inc/inc.header.php';
 ob_start();
 header( "Content-type: text/html; charset=utf-8" );
 // Jei svetaine uzdaryta remontui ir jei kreipiasi ne administratorius
-if ( $conf['Palaikymas'] == 1 && $_SESSION[SLAPTAS]['level'] > 1 ) {
+if ( $conf['Palaikymas'] == 1 && getSession('level') > 1 ) {
 	redirect('index.php');
 	exit;
 }
@@ -36,7 +36,7 @@ if ( isset( $d ) && $d > 0 ) {
 	if ( isset( $sql['file'] ) ) {
 		//teisiu tikrinimas
 		$row = mysql_query1( "SELECT `teises` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape( $sql['categorija'] ) . " LIMIT 1" );
-		if ( !$row || teises( $row['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
+		if ( !$row || teises( $row['teises'], getSession('level')) ) {
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "siuntiniai` SET paspaudimai = paspaudimai + 1 WHERE `ID`=" . escape( $d ) . "" );
 			download( "content/uploads/" . $sql['file'] );
 		} else {

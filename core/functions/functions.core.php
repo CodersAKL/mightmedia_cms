@@ -17,12 +17,13 @@ function config($file, $key = null)
 if(! function_exists('lang')) {
 	function lang() {
 
-		if ( empty( $_SESSION[SLAPTAS]['lang'] ) ) {
+		if ( empty(getSession('lang')) ) {
 			global $conf;
-			$_SESSION[SLAPTAS]['lang'] = basename( $conf['kalba'], '.php' );
+
+			setSession('lang', basename($conf['kalba'], '.php'));
 		}
 
-		return $_SESSION[SLAPTAS]['lang'];
+		return getSession('lang');
 	}
 }
 
@@ -412,7 +413,7 @@ if(! function_exists('checkVersion')) {
 
         $url = 'https://mightmedia.lt/api.php';
         $data = [
-            'token' 	=> SLAPTAS,
+            'token' 	=> SECRET,
             'version' 	=> versija(),
             'type'		=> 'versionCheck'
         ];
@@ -535,5 +536,36 @@ if (! function_exists('langTextError')){
 		 *  padaryti LOG failą/DB kurį rodys prie vertimo nustatymų.
 		 *  Jeigu bus daugiau negu x eilučių pridėti puslapiavimą.
 		 */
+	}
+}
+
+function setSession($key, $value)
+{
+	$_SESSION[SECRET][$key] = $value;
+
+	return $_SESSION[SECRET][$key];
+}
+
+function setSessions($array)
+{
+	foreach ($array as $key => $value) {
+		$_SESSION[SECRET][$key] = $value;
+	}
+}
+
+function getSession($key)
+{
+	return ! isset($_SESSION[SECRET][$key]) ? null : $_SESSION[SECRET][$key];
+}
+
+function forgotSession($key)
+{
+	unset($_SESSION[SECRET][$key]);
+}
+
+function forgotSessions($keys = [])
+{
+	foreach ($keys as $key) {
+		forgotSession($key);
 	}
 }

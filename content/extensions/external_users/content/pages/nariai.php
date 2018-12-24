@@ -30,8 +30,8 @@ if ( sizeof( $sql ) > 0 ) {
 			$grupe = '-';
 		}
 		$i++;
-		$info[] = array( getLangText('ulist',  'username')  => user( $row['nick'], $row['id'], $row['levelis'] ), getLangText('ulist',  'group')  => $grupe );
-		if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
+		$info[] = array( getLangText('ulist',  'username') => user( $row['nick'], $row['id'], $row['levelis'] ), getLangText('ulist',  'group') => $grupe );
+		if (getSession('level') == 1) {
 			$info[( $i - 1 )][getLangText('ulist', 'email')] = preg_replace( "#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)#i", "<a href=\"javascript:mailto:mail('\\1','\\2');\">\\1_(at)_\\2</a>", input( $row['email'] ) );
 		}
 	}

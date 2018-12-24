@@ -11,13 +11,13 @@ function comments($id, $hide = false) {
 	//tikrinam ar komentarai neišjungti
 	if ( $conf['kmomentarai_sveciams'] != 3 ) {
 		if ( isset( $url['id'] ) && $id > 0 ) {
-			if ( isset( $_SESSION[SLAPTAS]['id'] ) || ( isset( $conf['kmomentarai_sveciams'] ) && $conf['kmomentarai_sveciams'] == 1 ) ) {
+			if (! empty(getSession('id')) || ( isset( $conf['kmomentarai_sveciams'] ) && $conf['kmomentarai_sveciams'] == 1 ) ) {
 				include_once config('class', 'dir') . 'class.form.php';
 				$bla  = new Form();
 				$form = array(
 					"Form"                     => array( "action" => "", "method" => "post", "name" => "n_kom" ),
-					getLangText('guestbook', 'name') => (
-						!isset( $_SESSION[SLAPTAS]['username'] )
+						getLangText('guestbook', 'name') => (
+						empty(getSession('username'))
 							? array(
 								"type" => "text",
 								"value" => (
@@ -29,12 +29,12 @@ function comments($id, $hide = false) {
 							)
 							: array(
 							"type" => "string",
-							"value" => "<b>" . $_SESSION[SLAPTAS]['username'] . "</b>"
+							"value" => "<b>" . getSession('username') . "</b>"
 						)
 					),
 					"  \r\r\r\r\r"                               => array( "type" => "string", "value" => bbs( 'n_kom' ) ),
 					getLangText('guestbook', 'message')                => array( "type" => "textarea", "value" => "", "class" => "input", "name" => "n_kom", "extra" => "rows=\"5\" cols=\"3\"" ),
-					( !isset( $_SESSION[SLAPTAS]['id'] ) ? kodas() : "" ) => ( !isset( $_SESSION[SLAPTAS]['id'] ) ? array( "type" => "text", "value" => "", "name" => "code", "class" => "chapter" ) : "" ),
+					(empty(getSession('id')) ? kodas() : "" ) => (empty(getSession('id')) ? array( "type" => "text", "value" => "", "name" => "code", "class" => "chapter" ) : "" ),
 					" "                                          => array( "type" => "submit", "name" => "Naujas", "value" => getLangText('comments', 'send') ),
 					"  "                                         => array( "type" => "hidden", "value" => $id, "name" => "id" )
 				);
@@ -59,7 +59,7 @@ function comments($id, $hide = false) {
 				}
 				if ( $row['nick_id'] == 0 ) {
 					$duom = @unserialize( $row['nick'] );
-					$nick = user( $duom[0], $row['nick_id'] ) . ( $_SESSION[SLAPTAS]['level'] == 1 ? " (" . $duom[1] . ")" : "" );
+					$nick = user( $duom[0], $row['nick_id'] ) . (getSession('level') == 1 ? " (" . $duom[1] . ")" : "" );
 				} else {
 					$nick = user( $row['nick'], $row['nick_id'] );
 				}
@@ -74,16 +74,16 @@ function comments($id, $hide = false) {
 
 
 		//Irasom nauja komentara jei nurodytas puslapis, gal perdidele salyga bet saugumo sumetimais :)
-		if ( isset( $_POST['n_kom'] ) && !empty( $_POST['n_kom'] ) && !empty( $_POST['Naujas'] ) && $_POST['Naujas'] == getLangText('comments', 'send') && isset( $_POST['id'] ) && !empty( $_POST['id'] ) && ( isset( $_SESSION[SLAPTAS]['id'] ) || $conf['kmomentarai_sveciams'] == 1 ) ) {
-			if ( ( isset( $_POST['code'] ) && strtoupper( $_POST['code'] ) == $_SESSION[SLAPTAS]['code'] ) || isset( $_SESSION[SLAPTAS]['id'] ) ) {
-				if ( isset( $_SESSION[SLAPTAS]['id'] ) ) {
-					mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai+1 WHERE nick=" . escape( $_SESSION[SLAPTAS]['username'] ) . " AND `id` = " . escape( $_SESSION[SLAPTAS]['id'] ) . "" );
+		if ( isset( $_POST['n_kom'] ) && !empty( $_POST['n_kom'] ) && !empty( $_POST['Naujas'] ) && $_POST['Naujas'] == getLangText('comments', 'send') && isset( $_POST['id'] ) && !empty( $_POST['id'] ) && (! empty(getSession('id')) || $conf['kmomentarai_sveciams'] == 1 ) ) {
+			if ( ( isset( $_POST['code'] ) && strtoupper( $_POST['code'] ) == getSession('code')) || ! emoty(getSession('id'))) {
+				if (! empty(getSession('id'))) {
+					mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET taskai=taskai+1 WHERE nick=" . escape(getSession('username')) . " AND `id` = " . escape(getSession('id')) . "" );
 				} else if ( !isset( $_COOKIE['komentatorius'] ) || $_POST['name'] != $_COOKIE['komentatorius'] ) {
 					setcookie( "komentatorius", input( $_POST['name'] ), time() + 60 * 60 * 24 * 30 );
 				}
 
-				$nick_id = ( isset( $_SESSION[SLAPTAS]['id'] ) ? $_SESSION[SLAPTAS]['id'] : 0 );
-				$nick    = ( isset( $_SESSION[SLAPTAS]['username'] ) ? $_SESSION[SLAPTAS]['username'] : ( !empty( $_POST['name'] ) ? serialize( array( trimlink( strip_tags( $_POST['name'] ), 9 ), getip() ) ) : serialize( array( getLangText('system', 'guest'), getip() ) ) ) );
+				$nick_id = (! empty(getSession('id')) ? getSession('id') : 0 );
+				$nick    = (! empty(getSession('username')) ? getSession('username') : ( !empty( $_POST['name'] ) ? serialize( array( trimlink( strip_tags( $_POST['name'] ), 9 ), getip() ) ) : serialize( array( getLangText('system', 'guest'), getip() ) ) ) );
 				mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "kom` (`kid`, `pid`, `zinute`, `nick`, `nick_id`, `data`) VALUES (" . escape( $_POST['id'] ) . ", " . escape( $page ) . ", " . escape( $_POST['n_kom'] ) . ", " . escape( $nick ) . ", " . escape( $nick_id ) . ", '" . time() . "')" );
 				delete_cache( "SELECT k.*, u.email AS email, u.levelis AS levelis	FROM " . LENTELES_PRIESAGA . "kom AS k LEFT JOIN " . LENTELES_PRIESAGA . "users AS u ON k.nick_id = u.id WHERE k.kid = " . escape( (int)$_POST['id'] ) . " AND k.pid = " . escape( $page ) . " ORDER BY k.data DESC LIMIT 50" );
 				//unset($_POST['Naujas']);

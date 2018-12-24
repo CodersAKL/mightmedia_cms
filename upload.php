@@ -10,7 +10,7 @@ include_once 'core/boot.php';
 include_once 'core/inc/inc.auth.php';
 
 
-if ( isset( $_SESSION[SLAPTAS]['level'] ) && $_SESSION[SLAPTAS]['level'] > 0 && isset( $_FILES['userfile']['type'] ) ) {
+if (! empty(getSession('level')) && getSession('level') > 0 && isset( $_FILES['userfile']['type'] ) ) {
 
 
 	//$allowed_types = array('image/jpg', 'image/jpeg');

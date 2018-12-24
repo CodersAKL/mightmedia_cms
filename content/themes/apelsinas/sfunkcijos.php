@@ -170,7 +170,7 @@ function bbk($forma) {
 <button onclick=\"addText('$forma', '[quote]', '[/quote]'); return false;\" title=\"QUOTE\"><img src=\"core/assets/images/icons/comment.png\"></button> <button style='padding-top:6px;' onclick=\"addText('$forma', '[php]', '[/php]'); return false;\" title=\"KODAS\"><b>KODAS</b></button> 
 ";
 
-if ($_SESSION[SLAPTAS]['level'] == 1) {
+if (getSession('level') == 1) {
 $return .= "
 <button onclick=\"addText('$forma', '[hide=Tik registruotiems]', '[/hide]'); return false;\" title=\"HIDE\"><img src=\"core/assets/images/icons/shield.png\"></button>
 ";

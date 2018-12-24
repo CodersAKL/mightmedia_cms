@@ -10,7 +10,7 @@
  * @$Date$
  **/
 
-if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
+if (! emoty(getSession('id'))) {
 	//ini_set("memory_limit", "50M");
 	include_once config('class', 'dir') . 'class.form.php';
 	$bla = new Form();
@@ -150,7 +150,7 @@ if ( isset( $_SESSION[SLAPTAS]['id'] ) && $_SESSION[SLAPTAS]['id'] ) {
 						move_uploaded_file( $file_tmp, $big_img . "/originalai/" . $rand_name . $ext );
 						chmod( $big_img . "/originalai/" . $rand_name . $ext, 0777 );
 
-						$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`, `lang`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $rand_name . $ext ) . "," . escape( strip_tags( $_POST['Aprasymas'] ) ) . "," . escape( $_SESSION[SLAPTAS]['id'] ) . ",'" . time() . "'," . escape( $_POST['cat'] ) . ",'NE', " . escape( lang() ) . ")" );
+						$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`, `lang`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $rand_name . $ext ) . "," . escape( strip_tags( $_POST['Aprasymas'] ) ) . "," . escape(getSession('id')) . ",'" . time() . "'," . escape( $_POST['cat'] ) . ",'NE', " . escape( lang() ) . ")" );
 
 						if ( $result ) {
 							msg( getLangText('system', 'done'), getLangText('gallery', 'sumbit_scc') . "." );

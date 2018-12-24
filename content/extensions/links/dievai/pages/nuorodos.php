@@ -212,7 +212,7 @@ if ( $_GET['v'] == 1 ) {
 			// Create post
 			if($_POST['action'] == getLangText('admin', 'links_create')) {
 	
-				$insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie`, `active`) VALUES (" . escape( $cat ) . ", " . escape( $urlLink ) . ", " . escape( $pavadinimas ) . ", " . escape( $_SESSION[SLAPTAS]['id'] ) . ", '" . time() . "', " . escape( $apie ) . ", " . escape( $active ) . ");";
+				$insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie`, `active`) VALUES (" . escape( $cat ) . ", " . escape( $urlLink ) . ", " . escape( $pavadinimas ) . ", " . escape(getSession('id')) . ", '" . time() . "', " . escape( $apie ) . ", " . escape( $active ) . ");";
 
 				if (mysql_query1($insertQuery)) {
 					redirect(

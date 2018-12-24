@@ -20,7 +20,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == getLangText('admin', 'link
 	$apie        = strip_tags( $_POST['apie'] );
 	$pavadinimas = strip_tags( $_POST['name'] );
 	$category  = strip_tags( $_POST['kat'] );
-	$autoriusid  = ( isset( $_SESSION[SLAPTAS]['id'] ) ? $_SESSION[SLAPTAS]['id'] : 0 );
+	$autoriusid  = (! empty(getSession('id')) ? getSession('id') : 0);
 	/*  if (empty($url) || empty($pavadinimas)) {
 		  $error = getLangText('admin', 'links_allfields') . ".";
 		}*/

@@ -52,7 +52,7 @@ if ( $k >= 0 && empty( $url['m'] ) ) {
 			AND `lang` = " . escape( lang() ) . "
 			ORDER BY `date` DESC
 			LIMIT {$p},{$limit}", 100 );
-		if ( teises( $pav['teises'], $_SESSION[SLAPTAS]['level'] ) ) {
+		if ( teises( $pav['teises'], getSession('level')) ) {
 
 			lentele( ( !empty( $pav['pavadinimas'] ) ? $pav['pavadinimas'] : getLangText('pages', 'straipsnis.php') ), $pav['aprasymas'] . "<br /><i>" . getLangText('category',  'articles') . ": " . $viso . "</i>" );
 			foreach ( $sql as $row ) {
@@ -85,7 +85,7 @@ if ( $k >= 0 && empty( $url['m'] ) ) {
 
 	$sqlas = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=" . escape( $row['kat'] ) . " AND `kieno`='straipsniai' AND `lang` = " . escape( lang() ) . " ORDER BY `pavadinimas` LIMIT 1", 86400 );
 	addtotitle( $row['pav'] );
-	if ( teises( $sqlas['teises'], $_SESSION[SLAPTAS]['level'] ) && !empty( $row['date'] ) ) {
+	if ( teises( $sqlas['teises'], getSession('level')) && !empty( $row['date'] ) ) {
 
 		$text = $row['t_text'] . "<div class='line'></div>";
 		if ( !empty( $row['f_text'] ) ) {
