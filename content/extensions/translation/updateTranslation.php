@@ -1,5 +1,6 @@
 <?php
 include_once ( "../../../config.php" );
+include_once ( "../../../core/inc/inc.db_ready.php");
 include_once ( "../../../core/boot.php" );
 if (isset($_GET['group']) && isset($_GET['key']) && isset($_GET['newValue'])){
     if ($_GET['newValue'] !== 'null'){
