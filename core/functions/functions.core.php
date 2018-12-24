@@ -143,7 +143,7 @@ if(! function_exists('header_info')) {
 					console.log(group+' '+key+' '+newValue);
 					var element = document.getElementById(group + '_' + key);
 					var xhttp = new XMLHttpRequest();
-					var url = "../content/extensions/translation/updateTranslation.php?group," + group + ";key," + key +";newValue," + newValue;
+					var url = "../content/extensions/translation/updateTranslation.php?group=" + group + "&key=" + key +"&newValue=" + newValue;
 					//Send the proper header information along with the request
 					xhttp.open('GET', url, true);
 					xhttp.send();
