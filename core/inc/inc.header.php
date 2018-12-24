@@ -109,17 +109,17 @@ foreach ( $q as $row ) {
 	}
 }
 if ( isset( $u ) && $u == 1 ) {
-	$online .= "$u {$lang['system']['guest']}\n";
+	$online .= $u . getLangText('system','guest'). "\n";
 } elseif ( isset( $u ) && $u > 1 ) {
-	$online .= "$u {$lang['online']['guests']}\n";
+	$online .=  $u . getLangText('online','guests'). "\n";
 }
 if ( isset( $i ) && $i > 0 && isset( $u ) && $u > 0 ) {
 	$online .= " ir ";
 }
 if ( isset( $i ) && $i == 1 ) {
-	$online .= "$i {$lang['system']['user']}\n";
+	$online .= $i . getLangText('system','user'). "\n";
 } elseif ( isset( $i ) && $i > 1 ) {
-	$online .= "$i {$lang['online']['usrs']}\n";
+	$online .=  $i . getLangText('online','users'). "\n";
 }
 
 //todo: check this functions
