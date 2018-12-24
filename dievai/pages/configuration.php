@@ -512,7 +512,7 @@ if (isset($url['c'])) {
 		}
 
 		if ( !empty( $table ) ) {
-			lentele( getLangText('about', 'admins'), $table );
+			lentele( getLangText('configuration', 'missingText'), $table );
 		}
 	}
 	
