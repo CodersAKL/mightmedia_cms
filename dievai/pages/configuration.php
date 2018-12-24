@@ -15,7 +15,7 @@ if ( !defined( "OK" ) ) {
 }
 
 if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['configuration'], buttonsMenu(buttons('configuration')));
+	lentele(getLangText('admin', 'configuration'), buttonsMenu(buttons('configuration')));
 }
 
 if (isset($url['c'])) {
@@ -89,7 +89,7 @@ if (isset($url['c'])) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['configuration_updated']
+					'message' 	=> getLangText('admin', 'configuration_updated')
 				]
 			);	
 		}
@@ -108,7 +108,7 @@ if (isset($url['c'])) {
 		if ( isset( $conf['pages'] ) && count( $conf['pages'] ) > 0 ) {
 			$pages = array_keys( $conf['pages'] );
 			foreach ( $pages as $key ) {
-				$psl[$key] = ( isset( $lang['pages'][$key] ) ? $lang['pages'][$key] : nice_name( basename( $key, '.php' ) ) );
+				$psl[$key] = ( strlen( getLangText('pages', $key) ) > 0 ? getLangText('pages', $key) : nice_name( basename( $key, '.php' ) ) );
 			}
 		} else {
 			$psl[] = '';
@@ -124,37 +124,37 @@ if (isset($url['c'])) {
 				"name" => "reg"
 			],
 
-			$lang['admin']['homepage']        => [
+			getLangText('admin', 'homepage')        => [
 				"type" 		=> "select", 
 				"value" 	=> $psl, 
 				"selected" 	=> (getSettingsValue('pirminis') . '.php'), 
 				"name" 		=> "pirminis"
 			],
 
-			$lang['admin']['copyright']       => [
+			getLangText('admin', 'copyright')       => [
 				"type" 	=> "text", 
 				"value" => input(getSettingsValue('Copyright')), 
 				"name" 	=> "Copyright"
 			],
 
-			$lang['admin']['email']           => [
+			getLangText('admin', 'email')           => [
 				"type" 	=> "text", 
 				"value" => input(getSettingsValue('Pastas')), 
 				"name" 	=> "Pastas"
 			],
 
-			$lang['admin']['comm_guests']     => [
+			getLangText('admin', 'comm_guests')     => [
 				"type" 		=> "select", 
 				"value" 	=> [
-					"1" => "{$lang['admin']['yes']}", 
-					"0" => "{$lang['admin']['no']}", 
-					"3"	=> "{$lang['admin']['comments_off']}"
+					"1" => getLangText('admin', 'yes'), 
+					"0" => getLangText('admin', 'no'), 
+					"3"	=> getLangText('admin', 'comments_off')
 				],
 				"selected" 	=> input(@getSettingsValue('kmomentarai_sveciams')),
 				"name" 		=> "koment"
 			],
 
-			$lang['admin']['gallery_rate']    => [
+			getLangText('admin', 'gallery_rate')    => [
 				"type"  	=> "switch",
 				"value" 	=> '1',
 				"name"  	=> "galbalsuot",
@@ -162,42 +162,42 @@ if (isset($url['c'])) {
 				'checked'	=> (input(getSettingsValue('galbalsuot')) == 1 ? true : false)
 			],
 
-			$lang['admin']['newsperpage']     => [
+			getLangText('admin', 'newsperpage')     => [
 				"type" 	=> "text", 
 				"value" => input(getSettingsValue('News_limit')), 
 				"name" 	=> "News_limit", 
 				'extra' => "onkeyup=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\""
 			],
-		//                     "{$lang['admin']['cache']}:"           => array( "type" => "select", "value" => array( "1" => "{$lang['admin']['yes']}", "0" => "{$lang['admin']['no']}" ), "selected" => input( $conf['keshas'] ), "name" => "keshas"),
-			$lang['admin']['theme']           => [
+		//                     getLangText('admin', 'cache') . ":"           => array( "type" => "select", "value" => array( "1" => getLangText('admin', 'yes'), "0" => getLangText('admin', 'no')), "selected" => input( $conf['keshas'] ), "name" => "keshas"),
+			getLangText('admin', 'theme')           => [
 				"type" 		=> "select", 
 				"value" 	=> $stiliai, 
 				"selected" 	=> input(getSettingsValue('Stilius')), 
 				"name" 		=> "Stilius"
 			],
 
-			$lang['admin']['lang']            => [
+			getLangText('admin', 'lang')            => [
 				"type" 		=> "select", 
 				"value" 	=> $kalba, 
 				"selected" 	=> input(getSettingsValue('kalba')), 
 				"name" 		=> "kalba"
 			],
 
-			$lang['admin']['editor']          => [
+			getLangText('admin', 'editor')          => [
 				"type" 		=> "select", 
 				"value" 	=> $editors, 
 				"selected" 	=> input(getSettingsValue('Editor')), 
 				"name" 		=> "Editor"
 			],
 
-			$lang['admin']['use_hyphenator']  => [
+			getLangText('admin', 'use_hyphenator')  => [
 				"type"  	=> "switch",
 				"value" 	=> '1',
 				"name"  	=> "hyphenator",
 				'form_line'	=> 'form-not-line',
 				'checked'	=> (input(getSettingsValue('hyphenator')) == 1 ? true : false)
 			],
-			$lang['admin']['ga']  => [
+			getLangText('admin', 'ga')  => [
 				"type"  	=> "textarea",
 				"value" 	=> input(getSettingsValue('googleanalytics')),
 				"name"  	=> "googleanalytics"
@@ -206,13 +206,13 @@ if (isset($url['c'])) {
 			""                                     => [
 				"type" 		=> "submit", 
 				"name" 		=> "Konfiguracija", 
-				"value" 	=> $lang['admin']['save'], 
+				"value" 	=> getLangText('admin', 'save'), 
 				'form_line'	=> 'form-not-line',
 			]
 		];
 		
 		$formClass = new Form($settings);
-		lentele($lang['admin']['configuration_main'], $formClass->form());
+		lentele(getLangText('admin', 'configuration_main'), $formClass->form());
 		
 	} else if($url['c'] == 'maintenance') {
 
@@ -240,7 +240,7 @@ if (isset($url['c'])) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['configuration_updated']
+					'message' 	=> getLangText('admin', 'configuration_updated')
 				]
 			);
 		}
@@ -254,27 +254,27 @@ if (isset($url['c'])) {
 				"class" => "", 
 				"name" => "reg"
 			],
-			$lang['admin']['maintenance']     => [
+			getLangText('admin', 'maintenance')     => [
 				"type"  	=> "switch",
 				"value" 	=> '1',
 				"name"  	=> "Palaikymas",
 				'form_line'	=> 'form-not-line',
 				'checked'	=> (input(getSettingsValue('Palaikymas')) == 1 ? true : false)
 			],
-			$lang['admin']['maintenancetext'] => [
+			getLangText('admin', 'maintenancetext') => [
 				"type" => "string", 
 				"value" => editor( 'jquery', 'mini', 'Maintenance', getSettingsValue('Maintenance'))
 			],
 			""                                     => [
 				"type" 		=> "submit", 
 				"name" 		=> "Konfiguracija", 
-				"value" 	=> $lang['admin']['save'], 
+				"value" 	=> getLangText('admin', 'save'), 
 				'form_line'	=> 'form-not-line',
 			]
 		];
 
 		$formClass = new Form($settings);
-		lentele($lang['admin']['configuration_maintenance'], $formClass->form());
+		lentele(getLangText('admin', 'configuration_maintenance'), $formClass->form());
 
 	} else if($url['c'] == 'seo') {
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['Konfiguracija'] ) ) {
@@ -310,7 +310,7 @@ if (isset($url['c'])) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['configuration_updated']
+					'message' 	=> getLangText('admin', 'configuration_updated')
 				]
 			);
 		}
@@ -324,19 +324,19 @@ if (isset($url['c'])) {
 				"name" 		=> "reg"
 			],
 
-			$lang['admin']['sitename']	=> [
+			getLangText('admin', 'sitename')	=> [
 				"type" 	=> "text", 
 				"value" => input( getSettingsValue('Pavadinimas')), 
 				"name" 	=> "Pavadinimas"
 			],
 
-			$lang['admin']['about']		=> [
+			getLangText('admin', 'about')		=> [
 				"type" 	=> "textarea", 
 				"name" 	=> "Apie", 
 				"value" => getSettingsValue('Apie')
 			],
 
-			$lang['admin']['keywords']	=> [
+			getLangText('admin', 'keywords')	=> [
 				"type" 	=> "text", 
 				"value" => input( getSettingsValue('Keywords') ), 
 				"name" 	=> "keywords"
@@ -347,7 +347,7 @@ if (isset($url['c'])) {
 				"value"		=>	[
 					'/'=> '/', 
 					';'=> ';', 
-					'0'=> $lang['admin']['off']
+					'0'=> getLangText('admin', 'off')
 				], 
 				"selected"	=> getSettingsValue('F_urls'), 
 				"name"		=> "F_urls"
@@ -356,13 +356,13 @@ if (isset($url['c'])) {
 			""                                     => [
 				"type" 		=> "submit", 
 				"name" 		=> "Konfiguracija", 
-				"value" 	=> $lang['admin']['save'], 
+				"value" 	=> getLangText('admin', 'save'), 
 				'form_line'	=> 'form-not-line',
 			]
 		];
 
 		$formClass = new Form($settings);
-		lentele($lang['admin']['configuration_seo'], $formClass->form());
+		lentele(getLangText('admin', 'configuration_seo'), $formClass->form());
 	} else if($url['c'] == 'extensions') {
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['saveExtensionsSettings']) && (isset($_POST['extension'])) ) {
 			
@@ -386,7 +386,7 @@ if (isset($url['c'])) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['configuration_updated']
+					'message' 	=> getLangText('admin', 'configuration_updated')
 				]
 			);
 		}
@@ -421,11 +421,11 @@ if (isset($url['c'])) {
 			$settings[""] = [ 
 				"type" 		=> "submit", 
 				"name" 		=> "saveExtensionsSettings", 
-				"value" 	=> $lang['admin']['save'], 
+				"value" 	=> getLangText('admin', 'save'), 
 				'form_line'	=> 'form-not-line',
 			];
 		$formClass = new Form($settings);
-		lentele($lang['admin']['configuration_extensions'], $formClass->form());
+		lentele(getLangText('admin', 'configuration_extensions'), $formClass->form());
 	} else if($url['c'] == 'translation') {
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['saveTranslationOptions']))  {
 			$req = array();
@@ -453,7 +453,7 @@ if (isset($url['c'])) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['configuration_updated']
+					'message' 	=> getLangText('admin', 'configuration_updated')
 				]
 			);
 			
@@ -467,7 +467,7 @@ if (isset($url['c'])) {
 			"class" 	=> "", 
 			"name" 		=> "reg"
 		];
-		$settings[$lang['admin']['configuration_translations_status']]= [
+		$settings[getLangText('admin', 'configuration_translations_status')]= [
 			"type"  	=> "switch",
 			"value" 	=> '1',
 			"name"  	=> "status",
@@ -483,11 +483,11 @@ if (isset($url['c'])) {
 		$settings[""] = [ 
 			"type" 		=> "submit", 
 			"name" 		=> "saveTranslationOptions", 
-			"value" 	=> $lang['admin']['save'], 
+			"value" 	=> getLangText('admin', 'save'), 
 			'form_line'	=> 'form-not-line',
 		];
 		$formClass = new Form($settings);
-		lentele($lang['admin']['configuration_translations'], $formClass->form());
+		lentele(getLangText('admin', 'configuration_translations'), $formClass->form());
 	}
 
 

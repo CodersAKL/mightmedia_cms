@@ -30,7 +30,7 @@ foreach ( $sql_p as $row_p ) {
 				unset( $text, $title );
 			}
 		} else {
-			echo lentele_l( $lang['system']['error'], $lang['system']['nopanel'] . ", " . $row_p['file'] );
+			echo lentele_l( getLangText('system', 'error'), getLangText('system', 'nopanel') . ", " . $row_p['file'] );
 		}
 	}
 }

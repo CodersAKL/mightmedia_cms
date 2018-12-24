@@ -46,7 +46,7 @@ if ( !isset( $url['m'] ) ) {
 				$info .= "<div class='albumas'>
 	                <a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "' title='" . input( $sql['pavadinimas'] ) . "'>	" . trimlink( $sql['pavadinimas'], 20 ) . "</a>
 	                <a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "' title='" . input( $sql['aprasymas'] ) . "'>	<div class='foto' style='background-image :url({$fotke});background-repeat: no-repeat;background-position: center center;'>	</div></a>
-		            <small>{$lang['gallery']['photoalbum_img']}: {$sqlkiek} </small>
+		            <small>" . getLangText('gallery',  'photoalbum_img') . ": {$sqlkiek} </small>
                 </div>";
 			}
 		}
@@ -84,7 +84,7 @@ if ( $k > 0 ) {
   `" . LENTELES_PRIESAGA . "galerija`.`" . $conf['galorder'] . "` " . $conf['galorder_type'] . "
   LIMIT  $p,$limit", 86400 );
 	if ( count( $sql ) == 0 && $subs == 0 ) {
-		klaida( $lang['system']['warning'], $lang['system']['no_content'] );
+		klaida( getLangText('system', 'warning'), getLangText('system', 'no_content') );
 	}
 
 } else {
@@ -119,7 +119,7 @@ if ( empty( $url['m'] ) ) {
 			if ( isset( $row['Nick'] ) ) {
 				$autorius = input( $row['Nick'] );
 			} else {
-				$autorius = $lang['system']['guest'];
+				$autorius = getLangText('system', 'guest');
 			}
 
 			$text .= "
@@ -150,7 +150,7 @@ if ( empty( $url['m'] ) ) {
 		}
 		unset( $row, $text, $sql );
 	} else {
-		klaida( $lang['system']['warning'], $lang['category']['cant'] );
+		klaida( getLangText('system', 'warning'), getLangText('category', 'cant') );
 	}
 }
 //}else{ klaida("Dėmesio","Jums nesuteiktos teisės Matyti šią kategoriją."); }
@@ -223,17 +223,17 @@ if ( !empty( $url['m'] ) ) {
 				$autorius = user( $row['Nick'], $row['nick_id'], $row['levelis'] );
 			}
 			else {
-				$autorius = $lang['system']['guest'];
+				$autorius = getLangText('system', 'guest');
 			}
 
 			$text .= '<center>';
 			if ( !empty( $nuoroda2['id'] ) ) {
 				$text .= "<a href=\"" . url( "?id," . $url['id'] . ";m," . $nuoroda2['id'] )
-					. "\" >< {$lang['admin']['gallery_prev']}</a>&nbsp;";
+					. "\" >< " . getLangText('admin',  'gallery_prev') . "</a>&nbsp;";
 			}
 			if ( !empty( $nuoroda['id'] ) ) {
 				$text .= "<a href=\"" . url( "?id," . $url['id'] . ";m," . $nuoroda['id'] )
-					. "\" >{$lang['admin']['gallery_next']} ></a>";
+					. "\" >" . getLangText('admin',  'gallery_next') . " ></a>";
 			}
 			$text
 				.= "</center>
@@ -246,20 +246,20 @@ if ( !empty( $url['m'] ) ) {
 	    </center>
 	  </div>
 		<div style='clear:left;'></div>
-		<b>{$lang['admin']['gallery_author']}:</b> " . $autorius . "<br />
-		<b>{$lang['admin']['gallery_date']}:</b> " . date( 'Y-m-d H:i:s ', $row['data'] ) . "<br />\n";
+		<b>" . getLangText('admin',  'gallery_author') . ":</b> " . $autorius . "<br />
+		<b>" . getLangText('admin',  'gallery_date') . ":</b> " . date( 'Y-m-d H:i:s ', $row['data'] ) . "<br />\n";
 			if ( !empty( $row['apie'] ) ) {
-				$text .= "<b>{$lang['admin']['gallery_about']}:</b> " . input( $row['apie'] ) . "<br />\n";
+				$text .= "<b>" . getLangText('admin',  'gallery_about') . ":</b> " . input( $row['apie'] ) . "<br />\n";
 			}
 			$text .= "<center>";
 
 			if ( !empty( $nuoroda2['id'] ) ) {
 				$text .= "<a href=\"" . url( "?id," . $url['id'] . ";m," . $nuoroda2['id'] )
-					. "\" >< {$lang['admin']['gallery_prev']}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+					. "\" >< " . getLangText('admin',  'gallery_prev') . "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 			}
 			if ( !empty( $nuoroda['id'] ) ) {
 				$text .= "<a href=\"" . url( "?id," . $url['id'] . ";m," . $nuoroda['id'] )
-					. "\" >{$lang['admin']['gallery_next']} ></a>";
+					. "\" >" . getLangText('admin',  'gallery_next') . " ></a>";
 			}
 			$text .= "</center>";
 
@@ -273,12 +273,12 @@ if ( !empty( $url['m'] ) ) {
 				comments($url['m']);
 			}
 		} else {
-			klaida( $lang['system']['warning'], $lang['admin']['gallery_cant'] );
+			klaida( getLangText('system', 'warning'), getLangText('admin', 'gallery_cant') );
 		}
 	}
 }
 if ( kiek( "galerija", "WHERE rodoma='TAIP' AND `lang` = " . escape( lang() ) . "" ) == 0 ) {
-	klaida( $lang['system']['warning'], $lang['system']['no_content'] );
+	klaida( getLangText('system', 'warning'), getLangText('system', 'no_content') );
 }
 
 unset( $text, $row, $sql );

@@ -33,7 +33,7 @@ if ( puslapis( 'frm.php' ) ) {
 		foreach ( $q as $row ) {
 			$text .= "\t <a href='" . url( "?id," . $conf['pages']['frm.php']['id'] . ";t," . $row['id'] . ";s," . $row['tid'] . "#end" ) . "'>" . trimlink( $row['pav'], 40 ) . "</a> (" . date( 'Y-m-d H:i:s', $row['last_data'] ) . " - " . $row['last_nick'] . ")<br />\n";
 		}
-		lentele( $lang['new']['forum'], $text );
+		lentele( getLangText('new', 'forum'), $text );
 		unset( $text, $row, $q );
 	}
 }
@@ -45,7 +45,7 @@ if ( puslapis( 'naujienos.php' ) ) {
 		foreach ( $q as $row ) {
 			$text .= "<a href='" . url( "?id," . $conf['pages']['naujienos.php']['id'] . ";k," . $row['id'] ) . "'>" . trimlink( $row['pavadinimas'], 40 ) . "</a> (" . date( 'Y-m-d H:i:s', $row['data'] ) . " - " . $row['autorius'] . ")<br />\n";
 		}
-		lentele( $lang['new']['news'], $text );
+		lentele( getLangText('new', 'news'), $text );
 		unset( $text, $row, $q );
 	}
 }
@@ -53,12 +53,12 @@ if ( puslapis( 'naujienos.php' ) ) {
 if ( puslapis( 'galerija.php' ) ) {
 	$q = mysql_query1( "SELECT `ID`, `apie`, `pavadinimas`,`data`,`autorius` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `data` BETWEEN " . escape( $nuo ) . " AND " . escape( $iki ) . " AND `rodoma`='TAIP' ORDER BY `data` DESC" );
 	if ( sizeof( $q ) > 0 ) {
-		//$text .= "<b>{$lang['new']['gallery']}:</b><br/>";
+		//$text .= "<b>" . getLangText('new',  'gallery') . ":</b><br/>";
 		$text = '';
 		foreach ( $q as $row ) {
 			$text .= "<a href='" . url( "?id," . $conf['pages']['galerija.php']['id'] . ";m," . $row['ID'] ) . "'>" . trimlink( $row['pavadinimas'], 40 ) . "</a> (" . date( 'Y-m-d H:i:s', $row['data'] ) . ")<br />\n";
 		}
-		lentele( $lang['new']['gallery'], $text );
+		lentele( getLangText('new', 'gallery'), $text );
 		unset( $text, $row, $q );
 	}
 }
@@ -66,12 +66,12 @@ if ( puslapis( 'galerija.php' ) ) {
 if ( puslapis( 'siustis.php' ) ) {
 	$q = mysql_query1( "SELECT `ID`, `apie`, `pavadinimas`, `categorija`,`autorius`,`data` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `data` BETWEEN " . escape( $nuo ) . " AND " . escape( $iki ) . " AND `rodoma`='TAIP' ORDER BY `data` DESC" );
 	if ( sizeof( $q ) > 0 ) {
-		//$text .= "<b>{$lang['new']['downloads']}:</b><br/>";
+		//$text .= "<b>" . getLangText('new',  'downloads') . ":</b><br/>";
 		$text = '';
 		foreach ( $q as $row ) {
 			$text .= "<a href='" . url( "?id," . $conf['pages']['siustis.php']['id'] . ";k," . $row['categorija'] . ";v," . $row['ID'] ) . "'>" . trimlink( $row['pavadinimas'], 40 ) . "</a> (" . date( 'Y-m-d H:i:s', $row['data'] ) . ")<br />\n";
 		}
-		lentele( $lang['new']['downloads'], $text );
+		lentele( getLangText('new', 'downloads'), $text );
 		unset( $text, $row, $q );
 	}
 }
@@ -79,18 +79,18 @@ if ( puslapis( 'siustis.php' ) ) {
 if ( puslapis( 'straipsnis.php' ) ) {
 	$q = mysql_query1( "SELECT `id`, `t_text`, `pav`, `kat`, `date`, `autorius` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `date` BETWEEN " . escape( $nuo ) . " AND " . escape( $iki ) . " AND `rodoma`='TAIP'  ORDER BY `date` DESC" );
 	if ( sizeof( $q ) > 0 ) {
-		//$text .= "<b>{$lang['new']['articles']}:</b><br/>";
+		//$text .= "<b>" . getLangText('new',  'articles') . ":</b><br/>";
 		$text = '';
 		foreach ( $q as $row ) {
 			$text .= "<a href='" . url( "?id," . $conf['pages']['straipsnis.php']['id'] . ";m," . $row['id'] ) . "'>" . trimlink( $row['pav'], 40 ) . "</a> (" . date( 'Y-m-d H:i:s', $row['date'] ) . " - " . $row['autorius'] . ")<br />\n";
 		}
-		lentele( $lang['new']['articles'], $text );
+		lentele( getLangText('new', 'articles'), $text );
 		unset( $text, $row, $q );
 	}
 }
 $q = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `data` BETWEEN " . escape( $nuo ) . " AND " . escape( $iki ) . " ORDER BY `data` " );
 if ( sizeof( $q ) > 0 ) {
-	//$text .= "<b>{$lang['new']['comments']}:</b><br/>";
+	//$text .= "<b>" . getLangText('new',  'comments') . ":</b><br/>";
 	$text = '';
 	foreach ( $q as $row ) {
 		if ( $row['pid'] == 'content/pages/naujienos' && puslapis( 'naujienos.php' ) ) {
@@ -136,9 +136,9 @@ if ( sizeof( $q ) > 0 ) {
 			}
 
 
-			$text .= "<a href='" . url( "?id," . $conf['pages'][$file . '.php']['id'] . ";" . $link . "#" . $row['id'] ) . "' title=\"{$lang['new']['author']}: <b>" . $author . "</b><br/>{$lang['new']['date']}: <b>" . date( 'Y-m-d H:i:s ', $row['data'] ) . "</b><br/>\">" . trimlink( $row['zinute'], 40 ) . "</a> (" . date( 'Y-m-d H:i:s', $row['data'] ) . " - " . $author . ")<br />\n";
+			$text .= "<a href='" . url( "?id," . $conf['pages'][$file . '.php']['id'] . ";" . $link . "#" . $row['id'] ) . "' title=\"" . getLangText('new',  'author') . ": <b>" . $author . "</b><br/>" . getLangText('new',  'date') . ": <b>" . date( 'Y-m-d H:i:s ', $row['data'] ) . "</b><br/>\">" . trimlink( $row['zinute'], 40 ) . "</a> (" . date( 'Y-m-d H:i:s', $row['data'] ) . " - " . $author . ")<br />\n";
 		}
 	}
-	lentele( $lang['new']['comments'], $text );
+	lentele( getLangText('new', 'comments'), $text );
 	unset( $text, $row, $q );
 }

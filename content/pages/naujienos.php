@@ -24,7 +24,7 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 }
 
 if ( $conf['Palaikymas'] == 1 ) {
-	klaida( "{$lang['admin']['maintenance']}", $conf['Maintenance'] );
+	klaida( getLangText('admin', 'maintenance'), $conf['Maintenance'] );
 }
 
 $limit = $conf['News_limit'];
@@ -62,9 +62,9 @@ if ( $kid == 0 ) {
 			$pav             = "";
 			if ( isset( $categories_pav['pav'] ) ) {
 				if ( isset( $conf['pages']['naujkat.php']['id'] ) ) {
-					$pav .= "<div title='<b>{$lang['system']['category']}: </b>" . input( $categories_pav['pavadinimas'] ) . "' class='kat'><a href='" . url( "?id," . $conf['pages']['naujkat.php']['id'] . ";k," . (int)$categories_pav['id'] ) . "'><img src='core/assets/images/naujienu_kat/" . input( $categories_pav['pav'] ) . "' alt='img' border='0' /></a></div>";
+					$pav .= "<div title='<b>" . getLangText('system', 'category') . ": </b>" . input( $categories_pav['pavadinimas'] ) . "' class='kat'><a href='" . url( "?id," . $conf['pages']['naujkat.php']['id'] . ";k," . (int)$categories_pav['id'] ) . "'><img src='core/assets/images/naujienu_kat/" . input( $categories_pav['pav'] ) . "' alt='img' border='0' /></a></div>";
 				} else {
-					$pav .= "<div title='<b>{$lang['system']['category']}: </b>" . input( $categories_pav['pavadinimas'] ) . "' class='kat'><img src='core/assets/images/naujienu_kat/" . input( $categories_pav['pav'] ) . "' alt='img' border='0' /></div>";
+					$pav .= "<div title='<b>" . getLangText('system', 'category') . ": </b>" . input( $categories_pav['pavadinimas'] ) . "' class='kat'><img src='core/assets/images/naujienu_kat/" . input( $categories_pav['pav'] ) . "' alt='img' border='0' /></div>";
 				}
 
 			}
@@ -81,11 +81,11 @@ if ( $kid == 0 ) {
 			}
 		}
 	} else {
-		lentele( $lang['news']['news'], $lang['news']['nonews'] );
+		lentele( getLangText('news', 'news'), getLangText('news', 'nonews') );
 	}
 
 	if ( $viso > $limit ) {
-		lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+		lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 	}
 
 	unset( $sql, $row, $extra, $pav, $autorius, $data, $n_nuoroda, $kiekis );
@@ -120,7 +120,7 @@ if ( $kid != 0 ) {
 			//Dalintis
 			$text .= "<div class='line'></div>
 			<!-- AddThis Button BEGIN -->
-			<div class='addthis_toolbox addthis_default_style '><a href='http://www.addthis.com/bookmark.php?v=250&amp;pubid=xa-4e7a05051d3cf281' class='addthis_button_compact'>" . $lang['news']['share'] . "</a><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a05051d3cf281'></script><a class='addthis_button_facebook_like' fb:like:layout='button_count'></a><a class='addthis_button_tweet'></a><a class='addthis_button_google_plusone' g:plusone:size='medium'></a></div><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a03fc44b95268'></script>
+			<div class='addthis_toolbox addthis_default_style '><a href='http://www.addthis.com/bookmark.php?v=250&amp;pubid=xa-4e7a05051d3cf281' class='addthis_button_compact'>" . getLangText('news', 'share') . "</a><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a05051d3cf281'></script><a class='addthis_button_facebook_like' fb:like:layout='button_count'></a><a class='addthis_button_tweet'></a><a class='addthis_button_google_plusone' g:plusone:size='medium'></a></div><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a03fc44b95268'></script>
 			<!-- AddThis Button END -->
 			";
 
@@ -138,7 +138,7 @@ if ( $kid != 0 ) {
 					$naujienos .= "<li><a href=\"" . url( "?id," . $_GET['id'] . ";".seo_url($susijusios['pavadinimas'],";k,".$susijusios['id']) ) . "\" title=\"{$susijusios['pavadinimas']}\">" . trimlink( $susijusios['pavadinimas'], 55 ) . "</a> (" . date( 'Y-m-d H:i:s', $susijusios['data'] ) . ")</li>";
 				}
 				$naujienos .= "</ul>";
-				lentele($lang['news']['related'], $naujienos);
+				lentele(getLangText('news', 'related'), $naujienos);
 			}
 			//Rodom komentarus
 			if ($sql['kom'] == 'taip') {
@@ -150,10 +150,10 @@ if ( $kid != 0 ) {
 			}
 			unset( $text, $title, $data, $kalba );
 		} else {
-			( !defined( 'LEVEL' ) ? klaida( $lang['system']['forbidden'], $lang['news']['notallowed'] ) : klaida( $lang['system']['error'], $lang['news']['notallowed'] ) );
+			( !defined( 'LEVEL' ) ? klaida( getLangText('system', 'forbidden'), getLangText('news', 'notallowed') ) : klaida( getLangText('system', 'error'), getLangText('news', 'notallowed') ) );
 
 		}
 	} else {
-		klaida( $lang['system']['error'], $lang['news']['notexists'] );
+		klaida( getLangText('system', 'error'), getLangText('news', 'notexists') );
 	}
 }

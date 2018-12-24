@@ -26,7 +26,7 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 $limit = 15;
 //
 if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['straipsnis'], buttonsMenu(buttons('articles')));
+	lentele(getLangText('admin', 'straipsnis'), buttonsMenu(buttons('articles')));
 }
 
 if ( empty( $_GET['v'] ) ) {
@@ -44,7 +44,7 @@ if (isset($_GET['priimti'])) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['article_activated']
+				'message' 	=> getLangText('admin', 'article_activated')
 			]
 		);
 	} else {
@@ -73,7 +73,7 @@ if ( isset( $_POST['articles_delete'] ) ) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['posts_deleted']
+				'message' 	=> getLangText('admin', 'posts_deleted')
 			]
 		);
 	} else {
@@ -82,7 +82,7 @@ if ( isset( $_POST['articles_delete'] ) ) {
 			"header",
 			[
 				'type'		=> 'error',
-				'message' 	=> $lang['system']['error']
+				'message' 	=> getLangText('system', 'error')
 			]
 		);
 	}
@@ -101,7 +101,7 @@ if (isset($url['t'])) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['post_deleted']
+				'message' 	=> getLangText('admin', 'post_deleted')
 			]
 		);
 	} else {
@@ -110,12 +110,12 @@ if (isset($url['t'])) {
 			"header",
 			[
 				'type'		=> 'error',
-				'message' 	=> $lang['system']['error']
+				'message' 	=> getLangText('system', 'error')
 			]
 		);
 	}
 // Article update
-} elseif ( isset( $_POST['action'] ) && isset( $_POST['str'] ) && $_POST['action'] == $lang['admin']['edit'] ) {
+} elseif ( isset( $_POST['action'] ) && isset( $_POST['str'] ) && $_POST['action'] == getLangText('admin', 'edit') ) {
 	$straipsnis  	= explode( '===page===', $_POST['str'] );
 	$apr         	= $straipsnis[0];
 	$str         	= empty( $straipsnis[1] ) ? '' : $straipsnis[1];
@@ -144,7 +144,7 @@ if (isset($url['t'])) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['post_updated']
+				'message' 	=> getLangText('admin', 'post_updated')
 			]
 		);
 	} else {
@@ -157,7 +157,7 @@ if (isset($url['t'])) {
 	}
 
 // Article ceation
-} elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['article_create'] ) {
+} elseif ( isset( $_POST['action'] ) && $_POST['action'] == getLangText('admin', 'article_create') ) {
 
 	$straipsnis  = explode( '===page===', $_POST['str'] );
 	$apr         = $straipsnis[0];
@@ -169,7 +169,7 @@ if (isset($url['t'])) {
 	$autorius    = $_SESSION[SLAPTAS]['username'];
 	$autoriusid  = $_SESSION[SLAPTAS]['id'];
 	if ( empty( $apr ) || empty( $pavadinimas ) ) {
-		$error = $lang['admin']['article_emptyfield'];
+		$error = getLangText('admin', 'article_emptyfield');
 	}
 	if (! isset($error)) {
 		$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "straipsniai` SET
@@ -190,7 +190,7 @@ if (isset($url['t'])) {
 					"header",
 					[
 						'type'		=> 'success',
-						'message' 	=> $lang['admin']['post_created']
+						'message' 	=> getLangText('admin', 'post_created')
 					]
 				);
 			} else {
@@ -239,9 +239,9 @@ if ( $_GET['v'] == 4 ) {
 	if(! empty($sqlArticles)) {
 		//FILTRAVIMAS
 		$formData = [
-			'pavadinimas'	=> $lang['admin']['article'],
-			'data'			=> $lang['admin']['article_date'],
-			'naujiena'		=> $lang['admin']['article_preface'],
+			'pavadinimas'	=> getLangText('admin', 'article'),
+			'data'			=> getLangText('admin', 'article_date'),
+			'naujiena'		=> getLangText('admin', 'article_preface'),
 		];
 
 		$info[] = tableFilter($formData, $_POST, '#arch');
@@ -249,33 +249,33 @@ if ( $_GET['v'] == 4 ) {
 		foreach ($sqlArticles as $row) {
 			$info[] = [
 				"#"                         		=> '<input type="checkbox" value="' . $row['id'] . '" name="articles_delete[]" class="filled-in" id="articles-delete-' . $row['id'] . '"><label for="articles-delete-' . $row['id'] . '"></label>',
-				$lang['admin']['article']         	=> "<span style='cursor:pointer;' title='" . $lang['admin']['article_author'] . ": <b>" . $row['autorius'] . "</b>' >" . input( $row['pav'] ) . "</span>",
-				$lang['admin']['article_date']    	=> date( 'Y-m-d', $row['date'] ),
-				$lang['admin']['article_preface'] 	=> "<span style='cursor:pointer;' title='" . strip_tags( $row['t_text'] ) . "'>" . trimlink( strip_tags( $row['t_text'] ), 55 ) . "</span>",
-				$lang['admin']['action']          	=> "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" border=\"0\"></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png' border='0'></a>"
+				getLangText('admin', 'article')         	=> "<span style='cursor:pointer;' title='" . getLangText('admin', 'article_author') . ": <b>" . $row['autorius'] . "</b>' >" . input( $row['pav'] ) . "</span>",
+				getLangText('admin', 'article_date')    	=> date( 'Y-m-d', $row['date'] ),
+				getLangText('admin', 'article_preface') 	=> "<span style='cursor:pointer;' title='" . strip_tags( $row['t_text'] ) . "'>" . trimlink( strip_tags( $row['t_text'] ), 55 ) . "</span>",
+				getLangText('admin', 'action')          	=> "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='" . getLangText('admin',  'delete') . "' onClick=\"return confirm('" . getLangText('system', 'delete_confirm') . "')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" border=\"0\"></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='" . getLangText('admin',  'edit') . "'><img src='" . ROOT . "core/assets/images/icons/pencil.png' border='0'></a>"
 			];
 		}
 
 		$tableClass = new Table($info);
-		$content = '<form id="arch" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . $lang['system']['delete'] . '</button></form>';
-		lentele($lang['admin']['article_edit'], $content);
+		$content = '<form id="arch" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . getLangText('system', 'delete') . '</button></form>';
+		lentele(getLangText('admin', 'article_edit'), $content);
 		// if list is bigger than limit, then we show list with pagination
 		if ($viso > $limit) {
-			lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+			lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 		}
 	} else {
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> $lang['system']['no_items']
+				'message' 	=> getLangText('system', 'no_items')
 			]
 		);
 	}
 }
 
 if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
-	$editOrCreate 	= (isset($extra) ? $lang['admin']['edit'] : $lang['admin']['article_create']);
-	$editorStr 		= (isset( $extra ) ? $extra['t_text'] . ( empty( $extra['f_text'] ) ? '' : "\n===page===\n" . $extra['f_text'] ) : $lang['admin']['article']);
+	$editOrCreate 	= (isset($extra) ? getLangText('admin', 'edit') : getLangText('admin', 'article_create'));
+	$editorStr 		= (isset( $extra ) ? $extra['t_text'] . ( empty( $extra['f_text'] ) ? '' : "\n===page===\n" . $extra['f_text'] ) : getLangText('admin', 'article'));
 	$articleForm 	= [
 		"Form"								=> [
 			"action" 	=> url( "?id," . $_GET['id'] . ";a," . $_GET['a'] ), 
@@ -283,25 +283,25 @@ if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
 			"name" 		=> "reg"
 		], 
 
-		$lang['admin']['article_title'] 	=> [
+		getLangText('admin', 'article_title') 	=> [
 			"type" 	=> "text", 
 			"value" => input((isset( $extra ) ) ? $extra['pav'] : ''), 
 			"name" 	=> "pav"
 		],
 
-		$lang['system']['category']			=> [
+		getLangText('system', 'category')			=> [
 			"type" 		=> "select", 
 			"value" 	=> $categories, 
 			"name" 		=> "category", 
 			"selected" 	=> (isset($extra['kat']) ? input($extra['kat']) : '')
 		], 
 
-		$lang['admin']['article'] 			=> [
+		getLangText('admin', 'article') 			=> [
 			"type" 	=> "string", 
-			"value" => editor( 'jquery', 'standartinis', ['str' => $lang['admin']['article']], ['str' => $editorStr])
+			"value" => editor( 'jquery', 'standartinis', ['str' => getLangText('admin', 'article')], ['str' => $editorStr])
 		],
 
-		$lang['admin']['article_comments'] 	=> [
+		getLangText('admin', 'article_comments') 	=> [
 			'type'		=> 'switch',
 			'value'		=> 1,
 			'name'		=> 'kom',
@@ -310,7 +310,7 @@ if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
 			'checked' 	=> (! empty($extra['kom']) && $extra['kom'] == 'taip' ? true : false),
 		],
 
-		$lang['admin']['article_shown'] 	=> [
+		getLangText('admin', 'article_shown') 	=> [
 			'type'		=> 'switch',
 			'value'		=> 1,
 			'name'		=> 'rodoma',
@@ -337,7 +337,7 @@ if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
 	}
 
 	$formClass = new Form($articleForm);	
-	lentele($lang['admin']['article_create'], $formClass->form());
+	lentele(getLangText('admin', 'article_create'), $formClass->form());
 
 } elseif ( $_GET['v'] == 6 ) {
 	$viso = kiek( "straipsniai", "WHERE `rodoma`='NE' AND `lang` = " . escape( lang() ));
@@ -350,36 +350,36 @@ if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
 
 		//FILTRAVIMAS
 		$formData = [
-			'pavadinimas'	=> $lang['admin']['article'],
-			'data'			=> $lang['admin']['article_date'],
-			'naujiena'		=> $lang['admin']['article_preface'],
+			'pavadinimas'	=> getLangText('admin', 'article'),
+			'data'			=> getLangText('admin', 'article_date'),
+			'naujiena'		=> getLangText('admin', 'article_preface'),
 		];
 
 		$info[] = tableFilter($formData, $_POST, '#arch');
 		//FILTRAVIMAS - END
 		foreach ($articleSql as $row) {
 			$info[] = [
-				"#"                         		=> '<input type="checkbox" value="' . $row['id'] . '" name="articles_delete[]" class="filled-in" id="articles-delete-' . $row['id'] . '"><label for="articles-delete-' . $row['id'] . '"></label>',
-				$lang['admin']['article']         	=> "<span style='cursor:pointer;' title='" . $lang['admin']['article_author'] . ": <b>" . $row['autorius'] . "</b>' >" . input( $row['pav'] ) . "</span>",
-				$lang['admin']['article_date']    	=> date( 'Y-m-d', $row['date'] ),
-				$lang['admin']['article_preface'] 	=> "<span style='cursor:pointer;' title='" . strip_tags( $row['t_text'] ) . "'>" . trimlink( strip_tags( $row['t_text'] ), 55 ) . "</span>",
-				$lang['admin']['action']          => "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};priimti," . $row['id'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "core/assets/images/icons/tick_circle.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='{$lang['admin']['delete']}'><img src='" . ROOT . "core/assets/images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png' border='0'></a>"
+				"#"                         				=> '<input type="checkbox" value="' . $row['id'] . '" name="articles_delete[]" class="filled-in" id="articles-delete-' . $row['id'] . '"><label for="articles-delete-' . $row['id'] . '"></label>',
+				getLangText('admin', 'article')         	=> "<span style='cursor:pointer;' title='" . getLangText('admin', 'article_author') . ": <b>" . $row['autorius'] . "</b>' >" . input( $row['pav'] ) . "</span>",
+				getLangText('admin', 'article_date')    	=> date( 'Y-m-d', $row['date'] ),
+				getLangText('admin', 'article_preface') 	=> "<span style='cursor:pointer;' title='" . strip_tags( $row['t_text'] ) . "'>" . trimlink( strip_tags( $row['t_text'] ), 55 ) . "</span>",
+				getLangText('admin', 'action')          	=> "<a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};priimti," . $row['id'] ) . "'title='" . getLangText('admin',  'acept') . "'><img src='" . ROOT . "core/assets/images/icons/tick_circle.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};t," . $row['id'] ) . "' title='" . getLangText('admin',  'delete') . "'><img src='" . ROOT . "core/assets/images/icons/cross.png' border='0'></a> <a href='" . url( "?id,{$_GET['id']};a,{$_GET['a']};h," . $row['id'] ) . "' title='" . getLangText('admin',  'edit') . "'><img src='" . ROOT . "core/assets/images/icons/pencil.png' border='0'></a>"
 			];
 		}
 
 		$tableClass  = new Table($info);
-		$content ='<form id="arch" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . $lang['system']['delete'] . '</button></form>';
+		$content ='<form id="arch" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . getLangText('system', 'delete') . '</button></form>';
 
-		lentele($lang['admin']['article_unpublished'], $content);
+		lentele(getLangText('admin', 'article_unpublished'), $content);
 		// if list is bigger than limit, then we show list with pagination
 		if ( $viso > $limit ) {
-			lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+			lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 		}
 	} else {
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> $lang['system']['no_items']
+				'message' 	=> getLangText('system', 'no_items')
 			]
 		);
 	}

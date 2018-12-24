@@ -21,12 +21,12 @@ if ( !isset( $_GET['m'] ) ) {
 			$text .= "<li><a href =\"" . url( "?id,{$_GET['id']};m,{$row['id']}" ) . "\">" . input( $row['question'] ) . "</a> ({$row['votes']})</li>";
 		}
 		$text .= '</ul>';
-		lentele( $lang['poll']['archive'], $text );
+		lentele( getLangText('poll', 'archive'), $text );
 		if ( $viso > $limit ) {
-			lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+			lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 		}
 	} else {
-		klaida( $lang['system']['warning'], $lang['system']['no_content'] );
+		klaida( getLangText('system', 'warning'), getLangText('system', 'no_content') );
 	}
 } else {
 	$quest = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "poll_questions` WHERE `shown`='1' AND `lang` = " . escape( lang() ) . " AND `id`=" . escape( $_GET['m'] ) . " ORDER BY `id` DESC LIMIT 1", 3600 );
@@ -52,7 +52,7 @@ if ( !isset( $_GET['m'] ) ) {
           <div style=\"float:left;height:8px; width:1px; border-right:1px solid black;margin:1px -2px\"></div>
         </div><br />";
 		}
-		$text .= '<br />	' . $lang['poll']['author'] . ': ' . user( $quest['author_name'], $quest['author_id'] ) . '';
+		$text .= '<br />	' . getLangText('poll', 'author') . ': ' . user( $quest['author_name'], $quest['author_id'] ) . '';
 		lentele( input( $quest['question'] ), $text );
 		
 		/**
@@ -61,6 +61,6 @@ if ( !isset( $_GET['m'] ) ) {
 		include_once config('functions', 'dir') . 'functions.comments.php';
 		comments($url['m'], true);
 	} else {
-		klaida( $lang['system']['error'], "{$lang['system']['pagenotfounfd']}." );
+		klaida( getLangText('system', 'error'), getLangText('system', 'pagenotfounfd') . "." );
 	}
 }

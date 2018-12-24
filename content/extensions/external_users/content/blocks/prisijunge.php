@@ -21,12 +21,12 @@ $sqli = mysql_query1( "SELECT count(id) as svec,
 
 foreach ( $sqli as $sql ) {
 	$text = '
-<b>' . $lang['online']['users'] . ':</b><br />
-' . $lang['online']['usrs'] . ': ' . (int)$sql['users'] . '<br />
-' . $lang['online']['guests'] . ': ' . (int)$sql['svec'] . '<br />
-<b>' . $lang['online']['info'] . ':</b><br />
-' . $lang['online']['registeredmembers'] . ': ' . (int)$sql['useriai'] . '<br />
-' . $lang['online']['lastregistered'] . ': <br />' . user( $sql['useris'], $sql['userid'], $sql['lvl'] ) . '
+<b>' . getLangText('online', 'users') . ':</b><br />
+' . getLangText('online', 'usrs') . ': ' . (int)$sql['users'] . '<br />
+' . getLangText('online', 'guests') . ': ' . (int)$sql['svec'] . '<br />
+<b>' . getLangText('online', 'info') . ':</b><br />
+' . getLangText('online', 'registeredmembers') . ': ' . (int)$sql['useriai'] . '<br />
+' . getLangText('online', 'lastregistered') . ': <br />' . user( $sql['useris'], $sql['userid'], $sql['lvl'] ) . '
  ';
 
 }

@@ -17,7 +17,7 @@ if ( !defined( "LEVEL" ) || LEVEL > 1 || !defined( "OK" ) ) {
 include 'functions/functions.blocks.php';
 
 if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['blocks'], buttonsMenu(buttons('blocks')));
+	lentele(getLangText('admin', 'blocks'), buttonsMenu(buttons('blocks')));
 }
 
 $text   = "";
@@ -28,7 +28,7 @@ foreach ( $lygiai as $key ) {
 	$teises[$key] = $conf['level'][$key]['pavadinimas'];
 }
 
-$teises[0] = $lang['admin']['for_guests'];
+$teises[0] = getLangText('admin', 'for_guests');
 
 if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 	mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`= " . escape( (int)$url['d'] ) . " LIMIT 1" );
@@ -41,13 +41,13 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 		"header",
 		[
 			'type'		=> 'success',
-			'message' 	=> $lang['admin']['post_deleted']
+			'message' 	=> getLangText('admin', 'post_deleted')
 		]
 	);
 }
 
 if ( isset( $url['n'] ) && $url['n'] == 2 ) {
-	if ( isset($_POST['file_action']) && $_POST['file_action'] == $lang['admin']['panel_create']) {
+	if ( isset($_POST['file_action']) && $_POST['file_action'] == getLangText('admin', 'panel_create')) {
 		// Nurodote failo pavadinimą
 		//$failas  = ROOT . "content/blocks/" . preg_replace( "/[^a-z0-9-]/", "_", strtolower( $_POST['pav'] ) ) . ".php";
 
@@ -66,7 +66,7 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['system']['file_exists']
+					'message' 	=> getLangText('system', 'file_exists')
 				]
 			);
 		} else {
@@ -81,7 +81,7 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['post_created']
+					'message' 	=> getLangText('admin', 'post_created')
 				]
 			);
 		}
@@ -94,12 +94,12 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 			"id" 		=> "",
 			"class" 	=> ""
 		], 
-		$lang['admin']['panel_name'] 	=> [
+		getLangText('admin', 'panel_name') 	=> [
 			"type" 			=> "text", 
 			"placeholder" 	=> "Naujas blokas", 
 			"name" 			=> "pav"
 		], 
-		$lang['admin']['panel_text']	=> [
+		getLangText('admin', 'panel_text')	=> [
 			"type" 	=> "string",
 			"value" => editor('spaw', 'standartinis', ['pnl' => 'pnl'], FALSE), 
 			"name" 	=> "pnl",
@@ -109,12 +109,12 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 			"type"  	=> "submit",
 			"name"  	=> "file_action",
 			'form_line'	=> 'form-not-line',
-			"value" 	=> $lang['admin']['panel_create']
+			"value" 	=> getLangText('admin', 'panel_create')
 		]
 	];
 
 	$formClass = new Form($blockCreateForm);	
-	lentele($lang['admin']['panel_new'], $formClass->form());
+	lentele(getLangText('admin', 'panel_new'), $formClass->form());
 
 } elseif (isset( $url['n'] ) && $url['n'] == 1 || isset( $url['r'] ) && isnum( $url['r'] ) && $url['r'] > 0 ) {
 	if (isset($_POST['action'])) {
@@ -148,7 +148,7 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 			$teisess = serialize( ( isset( $_POST['Teises'] ) ? $_POST['Teises'] : 0 ) );
 
 			//create
-			if($_POST['action'] == $lang['admin']['panel_create']) {
+			if($_POST['action'] == getLangText('admin', 'panel_create')) {
 				$sql     = "INSERT INTO `" . LENTELES_PRIESAGA . "panel` (`rodyti`, `panel`, `file`, `place`, `align`, `show`, `teises`, `lang`) VALUES (" . escape( $rodyti ) . ", " . escape( $panel ) . ", " . escape( $file ) . ", '0', " . escape( $align ) . ", " . escape( $show ) . ", " . escape( $teisess ) . ", " . escape( lang() ) . ")";
 				mysql_query1( $sql );
 	
@@ -161,10 +161,10 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 					"header",
 					[
 						'type'		=> 'success',
-						'message' 	=> $lang['admin']['post_created']
+						'message' 	=> getLangText('admin', 'post_created')
 					]
 				);
-			} else if($_POST['action'] == $lang['admin']['edit']) {
+			} else if($_POST['action'] == getLangText('admin', 'edit')) {
 				$sql = "UPDATE `" . LENTELES_PRIESAGA . "panel` SET `rodyti`=" . escape( $rodyti ) . ", `panel`=" . escape( $panel ) . ", `align`=" . escape( $align ) . ", `show`=" . escape( $show ) . ",`teises`=" . escape( $teisess ) . ", `lang` = " . escape( lang() ) . " WHERE `id`=" . escape( (int)$url['r'] );
 				mysql_query1( $sql );
 
@@ -177,7 +177,7 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 					"header",
 					[
 						'type'		=> 'success',
-						'message' 	=> $lang['admin']['post_updated']
+						'message' 	=> getLangText('admin', 'post_updated')
 					]
 				);
 			}
@@ -193,7 +193,7 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 		if ($file['type'] == 'file' ) {
 			$sql = mysql_query1( "SELECT `file` FROM `" . LENTELES_PRIESAGA . "panel` WHERE `file`=" . escape( basename( $file['name'] ) ) . " AND `lang` = " . escape( lang() ) . " LIMIT 1" );
 			if ($sql['file'] != $file['name']) {
-				$blocks[$file['name']] = (isset( $lang['blocks'][$file['name']] ) ? $lang['blocks'][$file['name']] : nice_name( basename( $file['name'], '.php' ) ) );
+				$blocks[$file['name']] = (strlen( getLangText('blocks', $file['name'])) > 0 ? getLangText('blocks', $file['name']) : nice_name( basename( $file['name'], '.php' ) ) );
 			}
 		}
 	}
@@ -202,11 +202,11 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> $lang['admin']['panel_no']
+				'message' 	=> getLangText('admin', 'panel_no')
 			]
 		);
 	} else {
-		$info 		= infoIcon($lang['system']['about_allow_pg']);
+		$info 		= infoIcon(getLangText('system', 'about_allow_pg'));
 		
 		if(! empty($url['r'])) {
 			$sqlBlocks	= "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `id`=" . escape( (int)$url['r'] ) . " LIMIT 1";
@@ -225,16 +225,16 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 				"name"    => "new_panel"
 			],
 
-			$lang['admin']['panel_title']     		=> [
+			getLangText('admin', 'panel_title')     		=> [
 				"type"  		=> "text",
-				"placeholder" 	=> $lang['admin']['panel_new'],
+				"placeholder" 	=> getLangText('admin', 'panel_new'),
 				"name"  		=> "Panel",
 				'value'			=> (! empty(input($block['panel'])) ? input($block['panel']) : '')
 			],
 		];
 
 		if(empty($block)) {
-			$blockForm[$lang['admin']['panel_name']]	= [
+			$blockForm[getLangText('admin', 'panel_name')]	= [
 				"type"  => "select",
 				"value" => $blocks,
 				"name"  => "File"
@@ -242,31 +242,31 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 		}
 		
 		$blockForm += 	[
-			$lang['admin']['panel_side']      		=> [
+			getLangText('admin', 'panel_side')      		=> [
 				"id"    	=> "lygiuojam",
 				"type"  	=> "select",
 				"value" 	=> [
-					"L" => $lang['admin']['panel_left'],
-					"R" => $lang['admin']['panel_right'],
-					"C" => $lang['admin']['panel_center']
+					"L" => getLangText('admin', 'panel_left'),
+					"R" => getLangText('admin', 'panel_right'),
+					"C" => getLangText('admin', 'panel_center')
 				],
 				"name"  	=> "Align",
 				'selected'	=> (! empty($block['align']) ? input($block['align']) : '')
 			],
 
-			$lang['admin']['panel_do_show']			=> [
+			getLangText('admin', 'panel_do_show')			=> [
 				"id"    	=> "pasirinkimas",
 				"type"  	=> "select",
 				"value" 	=> [
-					"Taip" => $lang['admin']['panel_do_all'],
-					"Ne"   => $lang['admin']['panel_do_one']
+					"Taip" => getLangText('admin', 'panel_do_all'),
+					"Ne"   => getLangText('admin', 'panel_do_one')
 				],
 				"name"  	=> "rodyti",
 				'class'		=> 'panel-show',
 				'selected'	=> (! empty($block['rodyti']) ? input($block['rodyti']) : '')
 			],
 			
-			$lang['admin']['panel_showtitle']		=> [
+			getLangText('admin', 'panel_showtitle')		=> [
 				"type"  	=> "switch",
 				"value" 	=> 'Y',
 				"name"  	=> "show",
@@ -274,7 +274,7 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 				'checked'	=> (! empty($block['show']) ? true : false)
 			],
 
-			$lang['admin']['panel_showfor'] . $info	=> [
+			getLangText('admin', 'panel_showfor') . $info	=> [
 				"type"  	=> "select",
 				"extra" 	=> "multiple",
 				"value" 	=> $teises,
@@ -287,12 +287,12 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 				"type"  	=> "submit",
 				"name"  	=> "action",
 				'form_line'	=> 'form-not-line',
-				"value" 	=> (! empty($block) ? $lang['system']['edit'] : $lang['admin']['panel_create'])
+				"value" 	=> (! empty($block) ? getLangText('system', 'edit') : getLangText('admin', 'panel_create'))
 			]
 		];
 
 		$formClass = new Form($blockForm);
-		$title = (! empty($block['panel']) ? $block['panel'] : $lang['admin']['panel_new']);
+		$title = (! empty($block['panel']) ? $block['panel'] : getLangText('admin', 'panel_new'));
 		lentele($title, $formClass->form());
 	}
 
@@ -307,7 +307,7 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['admin']['panel_cantedit']
+					'message' 	=> getLangText('admin', 'panel_cantedit')
 				]
 			);
 		} else {
@@ -330,7 +330,7 @@ HTML;
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['post_updated']
+					'message' 	=> getLangText('admin', 'post_updated')
 				]
 			);
 		}
@@ -368,7 +368,7 @@ HTML;
 						"name"    => "panel_txt"
 					),
 
-					$lang['admin']['panel_text'] => array(
+					getLangText('admin', 'panel_text') => array(
 						"type"  => "string",
 						"value" => editor( 'spaw', 'standartinis', array( 'Turinys' => 'Bloko turinys' ), array( 'Turinys' => ( isset( $blocks_txt ) ) ? $blocks_txt : '' ) )
 					),
@@ -377,7 +377,7 @@ HTML;
 						"type"  	=> "submit",
 						"name"  	=> "edit_content",
 						'form_line'	=> 'form-not-line',
-						"value" 	=> $lang['admin']['edit']
+						"value" 	=> getLangText('admin', 'edit')
 					)
 				);
 
@@ -387,7 +387,7 @@ HTML;
 				notifyMsg(
 					[
 						'type'		=> 'error',
-						'message' 	=> $lang['admin']['panel_cantedit']
+						'message' 	=> getLangText('admin', 'panel_cantedit')
 					]
 				);
 			}
@@ -438,13 +438,13 @@ HTML;
 	?>
 	<div class="row clearfix">
 		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-			<?php lentele($lang['admin']['panel_left'], $liLeft); ?>
+			<?php lentele(getLangText('admin', 'panel_left'), $liLeft); ?>
 		</div>
 		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-			<?php lentele($lang['admin']['panel_center'], $liCenter); ?>
+			<?php lentele(getLangText('admin', 'panel_center'), $liCenter); ?>
 		</div>
 		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-			<?php lentele($lang['admin']['panel_right'], $liRight); ?>
+			<?php lentele(getLangText('admin', 'panel_right'), $liRight); ?>
 		</div>
 	</div>	
 	<script type="text/javascript">

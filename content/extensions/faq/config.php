@@ -44,12 +44,12 @@ function faqAdminButtons($buttons)
         'faq'   => [
             [
                 'url' 	=> url( "?id,999;a,faq;v,7" ),
-                'value'	=> $lang['admin']['faq_new'],
+                'value'	=> getLangText('admin', 'faq_new'),
                 'icon'	=> adminIcon('faq', 'create')
             ],
             [
                 'url' 	=> url( "?id,999;a,faq;v,4" ),
-                'value'	=> $lang['admin']['faq_edit'],
+                'value'	=> getLangText('admin', 'faq_edit'),
                 'icon'	=> adminIcon('faq', 'edit')
             ]
         ],

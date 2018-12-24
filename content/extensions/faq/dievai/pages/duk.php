@@ -27,7 +27,7 @@ $limit = 15;
 //
 
 if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['faq'], buttonsMenu(buttons('faq')));
+	lentele(getLangText('admin', 'faq'), buttonsMenu(buttons('faq')));
 }
 
 if ( empty( $_GET['v'] ) ) {
@@ -48,7 +48,7 @@ if (isset($_POST['faq_delete'])) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['posts_deleted']
+				'message' 	=> getLangText('admin', 'posts_deleted')
 			]
 		);
 	} else {
@@ -57,7 +57,7 @@ if (isset($_POST['faq_delete'])) {
 			"header",
 			[
 				'type'		=> 'error',
-				'message' 	=> $lang['system']['error']
+				'message' 	=> getLangText('system', 'error')
 			]
 		);
 	}
@@ -73,7 +73,7 @@ if ( isset( $_GET['t'] ) ) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['faq_deleted']
+				'message' 	=> getLangText('admin', 'faq_deleted')
 			]
 		);
 	} else {
@@ -96,7 +96,7 @@ if ( isset( $_GET['t'] ) ) {
 	$faqItem = mysql_query1($selectQuery);
 
 
-} elseif ( isset( $_POST['action'] ) && isset( $_POST['Klausimas'] ) && $_POST['action'] == $lang['admin']['edit'] ) {
+} elseif ( isset( $_POST['action'] ) && isset( $_POST['Klausimas'] ) && $_POST['action'] == getLangText('admin', 'edit') ) {
 	$klausimas = $_POST['Klausimas'];
 	$atsakymas = $_POST['Atsakymas'];
 	$order     = (int)$_POST['Order'];
@@ -113,7 +113,7 @@ if ( isset( $_GET['t'] ) ) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['faq_updated']
+				'message' 	=> getLangText('admin', 'faq_updated')
 			]
 		);
 	} else {
@@ -124,7 +124,7 @@ if ( isset( $_GET['t'] ) ) {
 			]
 		);
 	}
-} elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['faq']['new'] ) {
+} elseif ( isset( $_POST['action'] ) && $_POST['action'] == getLangText('faq', 'new') ) {
 	$question 	= $_POST['Klausimas'];
 	$answer 	= $_POST['Atsakymas'];
 	$order     	= (int)$_POST['Order'];
@@ -141,7 +141,7 @@ if ( isset( $_GET['t'] ) ) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['faq_created']
+				'message' 	=> getLangText('admin', 'faq_created')
 			]
 		);
 	} else {
@@ -163,9 +163,9 @@ if ( $_GET['v'] == 4 ) {
 	if ($questions = mysql_query1($selectQuery)) {
 		//FILTRAVIMAS
 		$formData = [
-			'order'			=> $lang['faq']['order'],
-			'klausimas'		=> $lang['faq']['question'],
-			'atsakymas'		=> $lang['faq']['answer'],
+			'order'			=> getLangText('faq', 'order'),
+			'klausimas'		=> getLangText('faq', 'question'),
+			'atsakymas'		=> getLangText('faq', 'answer'),
 		];
 
 		$info[] = tableFilter($formData, $_POST, '#faq');
@@ -174,28 +174,28 @@ if ( $_GET['v'] == 4 ) {
 
 			$info[] = [  
 				"#"							=> '<input type="checkbox" value="' . $question['id'] . '" name="faq_delete[]" class="filled-in" id="faq-delete-' . $question['id'] . '"><label for="faq-delete-' . $question['id'] . '"></label>',
-				$lang['faq']['order']		=> $question['order'],
-				$lang['faq']['question']	=> trimlink($question['klausimas'], 55),
-				$lang['faq']['answer']		=> trimlink(strip_tags($question['atsakymas']), 55),
-				$lang['admin']['action']	=> "<a href='" . url("?id,{$url['id']};a,{$url['a']};t," . $question['id']) . "' title='{$lang['admin']['delete']}'><img src='" . ROOT . "images/icons/cross.png'></a> 
-				<a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $question['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "images/icons/pencil.png'></a>"
+				getLangText('faq', 'order')		=> $question['order'],
+				getLangText('faq', 'question')	=> trimlink($question['klausimas'], 55),
+				getLangText('faq', 'answer')		=> trimlink(strip_tags($question['atsakymas']), 55),
+				getLangText('admin', 'action')	=> "<a href='" . url("?id,{$url['id']};a,{$url['a']};t," . $question['id']) . "' title = '" . getLangText('admin',  'delete') . "'><img src='" . ROOT . "images/icons/cross.png'></a> 
+				<a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $question['id'] ) . "' title = '" . getLangText('admin',  'edit') . "'><img src='" . ROOT . "images/icons/pencil.png'></a>"
 			];
 		}
 		
 		$tableClass = new Table($info);
-		$content = '<form id="faq" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . $lang['system']['delete'] . '</button></form>';
-		lentele($lang['faq']['questions'], $content);
+		$content = '<form id="faq" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . getLangText('system', 'delete') . '</button></form>';
+		lentele(getLangText('faq', 'questions'), $content);
 		
 		unset($info);
 		// if list is bigger than limit, then we show list with pagination
 		if ( $viso > $limit ) {
-			lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+			lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 		}
 	} else {
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> $lang['system']['no_items']
+				'message' 	=> getLangText('system', 'no_items')
 			]
 		);
 	}
@@ -208,18 +208,18 @@ if ( $_GET['v'] == 4 ) {
 			"name"    => "reg"
 		],
 
-		$lang['faq']['question']	=> [
+		getLangText('faq', 'question')	=> [
 			"type"  => "text",
 			"value" => input((isset($faqItem)) ? $faqItem['klausimas'] : ''),
 			"name"  => "Klausimas"
 		],
 
-		$lang['faq']['answer']		=> [
+		getLangText('faq', 'answer')		=> [
 			"type"  => "string",
 			"value" => editor('jquery', 'mini', 'Atsakymas', (isset($faqItem ) ? $faqItem['atsakymas'] : ''))
 		],
 
-		$lang['faq']['order']		=> [
+		getLangText('faq', 'order')		=> [
 			"type"  => "text",
 			"value" => (isset($faqItem ) ? (int)$faqItem['order'] : ''),
 			"name"  => "Order"
@@ -236,11 +236,11 @@ if ( $_GET['v'] == 4 ) {
 			"type"  	=> "submit",
 			"name"  	=> "action",
 			'form_line'	=> 'form-not-line',
-			"value" 	=> (isset($faqItem)) ? $lang['admin']['edit'] : $lang['faq']['new']
+			"value" 	=> (isset($faqItem)) ? getLangText('admin', 'edit') : getLangText('faq', 'new')
 		]
 	];
 
 	// Verčiam msayvą į formą
 	$formClass = new Form($faqForm);
-	lentele($lang['faq']['edit'], $formClass->form());
+	lentele(getLangText('faq', 'edit'), $formClass->form());
 }

@@ -19,7 +19,7 @@ if ( isset( $_SESSION[SLAPTAS]['lankesi'] ) && $_SESSION[SLAPTAS]['lankesi'] > 0
 	if ( isset( $conf['pages']['frm.php']['id'] ) ) {
 		$q = mysql_query1( "SELECT `id`,`id` AS strid,`tid`,`tid` as `temosid`,`pav`,`autorius`,`last_data`,`last_nick`, (SELECT COUNT(*) FROM `" . LENTELES_PRIESAGA . "d_zinute` WHERE `tid`=`temosid` AND`sid`=strid AND `lang` = " . escape( lang() ) . " ) AS viso	 FROM `" . LENTELES_PRIESAGA . "d_straipsniai` WHERE `last_data` >= " . escape( $_SESSION[SLAPTAS]['lankesi'] ) . " AND `lang` = " . escape( lang() ) . " ORDER BY `last_data` DESC LIMIT 5" );
 		if ( sizeof( $q ) > 0 ) {
-			$text .= "<b>{$lang['new']['forum']}:</b><br/>";
+			$text .= "<b>" . getLangText('new', 'forum') . ":</b><br/>";
 			foreach ( $q as $row ) {
 				$text .= "\t {$ikonele} <a href='" . url( "?id," . $conf['pages']['frm.php']['id'] . ";t," . $row['id'] . ";s," . $row['tid'] . ";p," . ( (int)( $row['viso'] / 15 - 0.1 ) * 15 ) ) . "#end'>" . trimlink( input( $row['pav'] ), 20 ) . "</a><br />\n";
 			}
@@ -29,7 +29,7 @@ if ( isset( $_SESSION[SLAPTAS]['lankesi'] ) && $_SESSION[SLAPTAS]['lankesi'] > 0
 	if ( isset( $conf['pages']['naujienos.php']['id'] ) ) {
 		$q = mysql_query1( "SELECT `id`, `pavadinimas` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `data` >= " . escape( $_SESSION[SLAPTAS]['lankesi'] ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " ORDER BY `data` DESC LIMIT 10", 60 );
 		if ( sizeof( $q ) > 0 ) {
-			$text .= "<b>{$lang['new']['news']}:</b><br/>";
+			$text .= "<b>" . tgetLangText('new', 'news') . ":</b><br/>";
 			foreach ( $q as $row ) {
 				$text .= " {$ikonele} <a href='" . url( "?id," . $conf['pages']['naujienos.php']['id'] . ";k," . $row['id'] ) . "'>" . trimlink( input( $row['pavadinimas'] ), 20 ) . "</a><br />\n";
 			}
@@ -39,7 +39,7 @@ if ( isset( $_SESSION[SLAPTAS]['lankesi'] ) && $_SESSION[SLAPTAS]['lankesi'] > 0
 	if ( isset( $conf['pages']['galerija.php']['id'] ) ) {
 		$q = mysql_query1( "SELECT `ID`, `apie`, `pavadinimas` FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `data`>=" . escape( $_SESSION[SLAPTAS]['lankesi'] ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " ORDER BY `data` DESC LIMIT 10", 60 );
 		if ( sizeof( $q ) > 0 ) {
-			$text .= "<b>{$lang['new']['gallery']}:</b><br/>";
+			$text .= "<b>" . getLangText('new', 'gallery') . ":</b><br/>";
 			foreach ( $q as $row ) {
 				$text .= " {$ikonele} <a href='" . url( "?id," . $conf['pages']['galerija.php']['id'] . ";m," . $row['ID'] ) . "'>" . trimlink( input( $row['pavadinimas'] ), 20 ) . "</a><br />\n";
 			}
@@ -49,7 +49,7 @@ if ( isset( $_SESSION[SLAPTAS]['lankesi'] ) && $_SESSION[SLAPTAS]['lankesi'] > 0
 	if ( isset( $conf['pages']['siustis.php']['id'] ) ) {
 		$q = mysql_query1( "SELECT `ID`, `apie`, `pavadinimas`, `categorija` FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `data`>=" . escape( $_SESSION[SLAPTAS]['lankesi'] ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " ORDER BY `data` DESC LIMIT 10", 60 );
 		if ( sizeof( $q ) > 0 ) {
-			$text .= "<b>{$lang['new']['downloads']}:</b><br/>";
+			$text .= "<b>" . getLangText('new', 'downloads') . ":</b><br/>";
 			foreach ( $q as $row ) {
 				$text .= " {$ikonele} <a href='" . url( "?id," . $conf['pages']['siustis.php']['id'] . ";k," . $row['categorija'] . ";v," . $row['ID'] ) . "'>" . trimlink( input( $row['pavadinimas'] ), 20 ) . "</a><br />\n";
 			}
@@ -59,7 +59,7 @@ if ( isset( $_SESSION[SLAPTAS]['lankesi'] ) && $_SESSION[SLAPTAS]['lankesi'] > 0
 	if ( isset( $conf['pages']['straipsnis.php']['id'] ) ) {
 		$q = mysql_query1( "SELECT `id`, `t_text`, `pav`, `kat` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `date`>=" . escape( $_SESSION[SLAPTAS]['lankesi'] ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " ORDER BY `date` DESC LIMIT 10", 60 );
 		if ( sizeof( $q ) > 0 ) {
-			$text .= "<b>{$lang['new']['articles']}:</b><br/>";
+			$text .= "<b>" . getLangText('new', 'articles') . ":</b><br/>";
 			foreach ( $q as $row ) {
 				$text .= " {$ikonele} <a href='" . url( "?id," . $conf['pages']['straipsnis.php']['id'] . ";m," . $row['id'] ) . "'>" . trimlink( input( $row['pav'] ), 20 ) . "</a><br />\n";
 			}
@@ -70,7 +70,7 @@ if ( isset( $_SESSION[SLAPTAS]['lankesi'] ) && $_SESSION[SLAPTAS]['lankesi'] > 0
 	if ( isset( $conf['pages']['nuorodos.php']['id'] ) ) {
 		$q = mysql_query1( "SELECT `id`, `pavadinimas`, `apie`, `date`, `cat` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `date`>=" . escape( $_SESSION[SLAPTAS]['lankesi'] ) . " AND `active`='TAIP' AND `lang` = " . escape( lang() ) . " ORDER BY `date` DESC LIMIT 10", 60 );
 		if ( sizeof( $q ) > 0 ) {
-			$text .= "<b>{$lang['pages']['nuorodos.php']}:</b><br/>";
+			$text .= "<b>" . getLangText('pages', 'nuorodos.php') . ":</b><br/>";
 			foreach ( $q as $row ) {
 				$text .= " {$ikonele} <a href='" . url( "?id," . $conf['pages']['nuorodos.php']['id'] . ";k," . $row['cat'] . ";w," . $row['id'] ) . "' target='_blank' rel='nofollow'>" . trimlink( $row['pavadinimas'], 20 ) . "</a><br />\n";
 			}
@@ -80,7 +80,7 @@ if ( isset( $_SESSION[SLAPTAS]['lankesi'] ) && $_SESSION[SLAPTAS]['lankesi'] > 0
 	//Komentarai
 	$q = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `data`>=" . escape( $_SESSION[SLAPTAS]['lankesi'] ) . " ORDER BY `data` DESC LIMIT 10", 60 );
 	if ( sizeof( $q ) > 0 ) {
-		$text .= "<b>{$lang['new']['comments']}:</b><br/>";
+		$text .= "<b>" . getLangText('new', 'comments') . ":</b><br/>";
 		foreach ( $q as $row ) {
 			//Naujienos
 			if ( $row['pid'] == 'content/pages/naujienos' && isset( $conf['pages']['naujienos.php']['id'] ) ) {
@@ -120,7 +120,7 @@ if ( isset( $_SESSION[SLAPTAS]['lankesi'] ) && $_SESSION[SLAPTAS]['lankesi'] > 0
 				}
 
 
-				$text .= " {$ikonele} <a href='" . url( "?id," . $conf['pages']['' . $file . '.php']['id'] . ";" . $link . "#" . $row['id'] ) . "' title=\"{$lang['new']['author']}: <b>" . $author . "</b><br/>{$lang['new']['date']}: <b>" . date( 'Y-m-d H:i:s ', $row['data'] ) . "</b><br/>\">" . trimlink( input( $row['zinute'] ), 20 ) . "</a><br />\n";
+				$text .= " {$ikonele} <a href='" . url( "?id," . $conf['pages']['' . $file . '.php']['id'] . ";" . $link . "#" . $row['id'] ) . "' title=\"" . getLangText('new', 'author') ." : <b>" . $author . "</b><br/>" . getLangText('new', 'date') . ": <b>" . date( 'Y-m-d H:i:s ', $row['data'] ) . "</b><br/>\">" . trimlink( input( $row['zinute'] ), 20 ) . "</a><br />\n";
 			}
 		}
 	}

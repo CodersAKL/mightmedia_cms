@@ -44,22 +44,22 @@ function forumAdminButtons($buttons)
         'forum'     => [
             [
                 'url' 	=> url( "?id,999;a,forum;f,1" ),
-                'value'	=> $lang['system']['createcategory'],
+                'value'	=> getLangText('system', 'createcategory'),
                 'icon'	=> adminIcon('forum', 'create_category')
             ],
             [
                 'url' 	=> url( "?id,999;a,forum;f,2" ),
-                'value'	=> $lang['system']['editcategory'],
+                'value'	=> getLangText('system', 'editcategory'),
                 'icon'	=> adminIcon('forum', 'edit_category')
             ],
             [
                 'url' 	=> url( "?id,999;a,forum;f,3" ),
-                'value'	=> $lang['admin']['forum_createsub'],
+                'value'	=> getLangText('admin', 'forum_createsub'),
                 'icon'	=> adminIcon('forum', 'create_sub_category')
             ],
             [
                 'url' 	=> url( "?id,999;a,forum;f,4" ),
-                'value'	=> $lang['admin']['forum_editsub'],
+                'value'	=> getLangText('admin', 'forum_editsub'),
                 'icon'	=> adminIcon('forum', 'edit_sub_category')
             ]
         ],    
@@ -87,10 +87,10 @@ function buldForumMenu($data)
 
 	foreach ($data as $id => $item) {
         $actions = '<span style="float:right;" class="clearfix">
-        <a href="' . $item['edit'] . '" data-toggle="tooltip" title="' . $lang['admin']['edit'] . '">
+        <a href="' . $item['edit'] . '" data-toggle="tooltip" title="' . getLangText('admin', 'edit') . '">
         <img src="' . ROOT . 'images/icons/wrench.png">
         </a>
-        <a href="' . $item['delete'] . '" data-toggle="tooltip" title="' . $lang['admin']['delete'] . '" onclick="return confirm(\'' . $lang['admin']['delete'] . '?\')">
+        <a href="' . $item['delete'] . '" data-toggle="tooltip" title="' . getLangText('admin', 'delete') . '" onclick="return confirm(\'' . getLangText('admin', 'delete') . '?\')">
         <img src="' . ROOT . 'images/icons/cross.png">
         </a>
         </span>';
@@ -125,7 +125,7 @@ function forumCatsOrder($data)
 
 		if($result = mysql_query1($sqlas)) {
 
-			return $lang['system']['updated'];
+			return getLangText('system', 'updated');
 		}
 	}
 
@@ -150,7 +150,7 @@ function forumSubCatsOrder($data)
 
 		if($result = mysql_query1($sqlas)) {
 
-			return $lang['system']['updated'];
+			return getLangText('system', 'updated');
 		}
 	}
 

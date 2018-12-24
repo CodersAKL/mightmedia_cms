@@ -54,7 +54,7 @@ if ( sizeof( $sqlas ) > 0 ) {
 			$kiek    = mysql_query1( "SELECT count(*) + (SELECT count(*) FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `cat` IN (SELECT `id` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`=" . escape( $sql['id'] ) . ")) as `kiek` FROM `" . LENTELES_PRIESAGA . "nuorodos` WHERE `cat`=" . escape( $sql['id'] ) . " AND `active`='TAIP' AND `lang` = " . escape( lang() ) . " LIMIT 1" );
 			$sqlkiek = $kiek['kiek'];
 			$info[]  = array(
-				$lang['system']['categories'] => "<a style=\"float: left;\" class=\"kat\" href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><img src='core/assets/images/naujienu_kat/" . input( $sql['pav'] ) . "' alt=\"\"  border=\"0\" /></a><div><a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><b>" . input( $sql['pavadinimas'] ) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input( $sql['aprasymas'] ) . "</div><div>{$lang['category']['links']}: $sqlkiek</div></span></div>" //,
+				getLangText('system', 'categories') => "<a style=\"float: left;\" class=\"kat\" href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><img src='core/assets/images/naujienu_kat/" . input( $sql['pav'] ) . "' alt=\"\"  border=\"0\" /></a><div><a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><b>" . input( $sql['pavadinimas'] ) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input( $sql['aprasymas'] ) . "</div><div>" . getLangText('category',  'links') . ": $sqlkiek</div></span></div>" //,
 			);
 		}
 	}
@@ -62,7 +62,7 @@ if ( sizeof( $sqlas ) > 0 ) {
 include_once config('class', 'dir') . 'class.table.php';
 $bla = new Table();
 if ( isset( $info ) ) {
-	lentele( $lang['system']['categories'], $bla->render( $info ), FALSE );
+	lentele( getLangText('system', 'categories'), $bla->render( $info ), FALSE );
 }
 //pabaiga
 
@@ -87,20 +87,20 @@ ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400 );
 				$extra = '';
 
 				$info[] = array(
-					$lang['admin']['link']  => '' . $extra . ' <a href="' . url( '?id,' . $url['id'] . ';k,' . $k . ';w,' . $sql['id'] ) . '"
+					getLangText('admin', 'link')  => '' . $extra . ' <a href="' . url( '?id,' . $url['id'] . ';k,' . $k . ';w,' . $sql['id'] ) . '"
 					title="<center><b>' . input( $sql['url'] ) . '</b><br />
 					<img src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /></center><br />
-					' . $lang['admin']['links_author'] . ': <b>' . $sql['nick'] . '</b><br />
-					' . $lang['admin']['links_date'] . ': <b>' . date( 'Y-m-d H:i:s ', $sql['date'] ) . '</b><br />
-					' . $lang['admin']['links_clicks'] . ': <b>' . input( $sql['click'] ) . '</b>" target="_blank" rel="nofollow">
+					' . getLangText('admin', 'links_author') . ': <b>' . $sql['nick'] . '</b><br />
+					' . getLangText('admin', 'links_date') . ': <b>' . date( 'Y-m-d H:i:s ', $sql['date'] ) . '</b><br />
+					' . getLangText('admin', 'links_clicks') . ': <b>' . input( $sql['click'] ) . '</b>" target="_blank" rel="nofollow">
 					<center><img width="50" src=\'http://enimages2.websnapr.com/?size=s&url=' . $sql['url'] . '\' /><br />' . input( $sql['pavadinimas'] ) . '</a></center>',
-					$lang['system']['info'] => '<b>' . $lang['admin']['links_about'] . ': </b><br />' . $sql['apie'] . '<br />
-					<div style="float:left;"><b>' . $lang['admin']['links_clicks'] . ': </b><br />' . input( $sql['click'] ) . '</div>
+					getLangText('system', 'info') => '<b>' . getLangText('admin', 'links_about') . ': </b><br />' . $sql['apie'] . '<br />
+					<div style="float:left;"><b>' . getLangText('admin', 'links_clicks') . ': </b><br />' . input( $sql['click'] ) . '</div>
 					' );
 
 
 			}
-			lentele( $lang['admin']['links_links'], $bla->render( $info ) );
+			lentele( getLangText('admin', 'links_links'), $bla->render( $info ) );
 		}
 	}
 }
@@ -108,7 +108,7 @@ ORDER BY `" . LENTELES_PRIESAGA . "nuorodos`.`click` DESC", 86400 );
 
 if ( count( $_GET ) == 1 ) {
 	if ( kiek( "nuorodos", "WHERE active='TAIP' AND `lang` = " . escape( lang() ) ) == 0 ) {
-		klaida( $lang['system']['warning'], $lang['system']['no_content'] );
+		klaida( getLangText('system', 'warning'), getLangText('system', 'no_content') );
 	}
 }
 /**

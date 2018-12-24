@@ -87,10 +87,10 @@ function category( $kieno, $leidimas = FALSE ) {
 		foreach ( $lygiai as $key ) {
 			$teises[$key] = $conf['level'][$key]['pavadinimas'];
 		}
-		$teises[0] = $lang['admin']['for_guests'];
+		$teises[0] = getLangText('admin', 'for_guests');
 	}
 
-	if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['system']['createcategory'] ) {
+	if ( isset( $_POST['action'] ) && $_POST['action'] == getLangText('system', 'createcategory') ) {
 
 		$pavadinimas = input( $_POST['Pavadinimas'] );
 		$aprasymas   = $_POST['Aprasymas'];
@@ -124,19 +124,19 @@ function category( $kieno, $leidimas = FALSE ) {
 			$result = mysql_query1( 'INSERT INTO `' . LENTELES_PRIESAGA . 'grupes` (`pavadinimas`, `aprasymas`, `teises`, `pav`, `path`, `kieno`, `mod`) VALUES (' . escape( $pavadinimas ) . ',  ' . escape( $aprasymas ) . ', ' . escape( $teises_in ) . ', ' . escape( $pav ) . ', ' . escape( $pathas ) . ', ' . escape( $kieno ) . ', ' . escape( $moderuoti ) . ')' );
 
 			if ( $result ) {
-				msg( $lang['system']['done'], $lang['system']['categorycreated'] );
+				msg( getLangText('system', 'done'), getLangText('system', 'categorycreated') );
 			}
 		} else {
 			$result = mysql_query1( 'INSERT INTO `' . LENTELES_PRIESAGA . 'grupes` (`pavadinimas`,`aprasymas`, `teises`, `pav`, `path`, `kieno`, `mod`, `lang`) VALUES (' . escape( $pavadinimas ) . ',  ' . escape( $aprasymas ) . ', ' . escape( $teises_in ) . ', ' . escape( $pav ) . ', ' . escape( $pathas ) . ', ' . escape( $kieno ) . ', ' . escape( $moderuoti ) . ', ' . escape( lang() ) . ')' );
 			if ( $result ) {
-				msg( $lang['system']['done'], $lang['system']['categorycreated'] );
+				msg( getLangText('system', 'done'), getLangText('system', 'categorycreated') );
 			} else {
-				klaida( $lang['system']['error'], $lang['system']['error'] );
+				klaida( getLangText('system', 'error'), getLangText('system', 'error') );
 			}
 		}
 		unset( $aprasymas, $pavadinimas, /* $teises,*/
 		$pav, $einfo, $result, $pathas );
-	} elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['system']['editcategory'] ) {
+	} elseif ( isset( $_POST['action'] ) && $_POST['action'] == getLangText('system', 'editcategory') ) {
 
 		$pavadinimas = $_POST['Pavadinimas'];
 		$aprasymas   = $_POST['Aprasymas'];
@@ -162,16 +162,16 @@ function category( $kieno, $leidimas = FALSE ) {
 			WHERE `id`= ' . escape( $id ) . ';
 			' );
 		if ( $result ) {
-			msg( $lang['system']['done'], $lang['system']['categoryupdated'] );
+			msg( getLangText('system', 'done'), getLangText('system', 'categoryupdated') );
 		} else {
-			klaida( $lang['system']['error'], $lang['system']['error'] );
+			klaida( getLangText('system', 'error'), getLangText('system', 'error') );
 		}
 	}
-	if ( isset( $_POST['Kategorijos_id'] ) && isNum( $_POST['Kategorijos_id'] ) && $_POST['Kategorijos_id'] > 0 && isset( $_POST['category'] ) && $_POST['category'] == $lang['system']['edit'] ) {
+	if ( isset( $_POST['Kategorijos_id'] ) && isNum( $_POST['Kategorijos_id'] ) && $_POST['Kategorijos_id'] > 0 && isset( $_POST['category'] ) && $_POST['category'] == getLangText('system', 'edit') ) {
 		$extra = mysql_query1( 'SELECT * FROM `' . LENTELES_PRIESAGA . 'grupes` WHERE `kieno`= \'' . $kieno . '\' AND `id` = ' . escape( (int)$_POST['Kategorijos_id'] ) . ' LIMIT 1' );
 	}
 	//if ($_GET['v'] == 2) {
-	if ( isset( $_POST['category'] ) && $_POST['category'] == $lang['system']['delete'] ) {
+	if ( isset( $_POST['category'] ) && $_POST['category'] == getLangText('system', 'delete') ) {
 		//Trinamos nuorodos esančios kategorijoje
 		if ( $kieno == 'nuorodos' ) {
 			$result = mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'nuorodos` WHERE `cat` = ' . escape( $_POST['Kategorijos_id'] ) );
@@ -225,7 +225,7 @@ function category( $kieno, $leidimas = FALSE ) {
 			foreach ( $sql as $row ) {
 				mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'kom` WHERE pid = \'content/pages/naujienos\' AND kid = ' . escape( $row['id'] ) );
 			}
-			mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'naujienos` WHERE `kategorija` = ' . escape( $id ) ) or klaida( $lang['system']['error'], $lang['system']['error'] );
+			mysql_query1( 'DELETE FROM `' . LENTELES_PRIESAGA . 'naujienos` WHERE `kategorija` = ' . escape( $id ) ) or klaida( getLangText('system', 'error'), getLangText('system', 'error') );
 		}
 		//trinama kategorija
 		//Jei turi subkategoriju, perkeliam
@@ -241,29 +241,29 @@ function category( $kieno, $leidimas = FALSE ) {
 
 
 		if ( $result23 ) {
-			msg( $lang['system']['done'], $lang['system']['categorydeleted'] );
+			msg( getLangText('system', 'done'), getLangText('system', 'categorydeleted') );
 		} else {
-			klaida( $lang['system']['error'], $lang['system']['error'] );
+			klaida( getLangText('system', 'error'), getLangText('system', 'error') );
 		}
 	}
 	if ( $_GET['v'] == 2 ) {
 		//Jei kuriama vartotoju kategorija
 		if ( $kieno == 'vartotojai' ) {
-			$textas = $lang['system']['grouplevel'];
+			$textas = getLangText('system', 'grouplevel');
 			//$pages[""]="";
 			$failai = getFiles( ROOTAS . $conf['Admin_folder'], '.htaccess|index.php|index.html|index.htm|index.php3|config.php|configuration.php|users.php|logs.php|upload.php|todo.php|blocks.php|meniu.php|komentarai.php|narsykle.php|main.php|sfunkcijos.php|pokalbiai.php|dashboard.php|uncache.php|search.php|antivirus.php|sfunkcijos.php' );
 			foreach ( $failai as $file ) {
 				if ( $file['type'] == 'file' ) {
 
-					$pages[basename( $file['name'] )] = ( isset( $lang['admin'][basename( $file['name'], '.php' )] ) ? $lang['admin'][basename( $file['name'], '.php' )] : nice_name( basename( $file['name'], '.php' ) ) );
+					$pages[basename( $file['name'] )] = ( strlen( getLangText('admin', basename( $file['name'], '.php' )) ) > 0 ? getLangText('admin', basename( $file['name'], '.php' )) : nice_name( basename( $file['name'], '.php' ) ) );
 				}
 			}
-			$pages['com'] = '<b>' . $lang['admin']['komentarai'] . '(mod)</b>';
-			$pages['frm'] = '<b>' . $lang['admin']['frm'] . '(mod)</b>';
+			$pages['com'] = '<b>' . getLangText('admin', 'komentarai') . '(mod)</b>';
+			$pages['frm'] = '<b>' . getLangText('admin', 'frm') . '(mod)</b>';
 
 
 		} else {
-			$textas     = $lang['system']['showfor'] . ' <img src="' . ROOT . 'core/assets/images/icons/help.png" title="' . $lang['system']['about_allow_cat'] . '" />:';
+			$textas     = getLangText('system', 'showfor') . ' <img src="' . ROOT . 'core/assets/images/icons/help.png" title="' . getLangText('system', 'about_allow_cat') . '" />:';
 		}
 
 		//if (count($teises) > 0) {
@@ -277,17 +277,17 @@ function category( $kieno, $leidimas = FALSE ) {
 		$kategorijoss[0] = '';
 		$kategorijos     = array(
 			'Form'                                                                                    => array( 'action' => url( "?id,{$_GET['id']};a,{$_GET['a']};v,{$_GET['v']}" ), 'method' => 'post', 'name' => 'reg' ),
-			$lang['system']['name']                                                                   => array( 'type' => 'text', 'value' => ( isset( $extra['pavadinimas'] ) ) ? input( $extra['pavadinimas'] ) : '', 'name' => 'Pavadinimas', 'class' => 'input' ),
-			( $kieno != 'vartotojai' ? $lang['system']['subcat/cat'] : '' )                           => ( $kieno != 'vartotojai' ? array( 'type' => 'select', 'value' => @$kategorijoss, 'name' => 'path', 'selected' => ( isset( $extra['path'] ) ? input( $extra['path'] ) : '0' ), 'disabled' => @$kategorijoss ) : '' ),
-			$lang['system']['about'] . ':'                                                            => array( 'type' => 'textarea', 'value' => ( isset( $extra['aprasymas'] ) ) ? input( $extra['aprasymas'] ) : '', 'name' => 'Aprasymas', 'rows' => '3', 'class' => 'input', 'id' => 'Aprasymas' ),
+			getLangText('system', 'name')                                                                   => array( 'type' => 'text', 'value' => ( isset( $extra['pavadinimas'] ) ) ? input( $extra['pavadinimas'] ) : '', 'name' => 'Pavadinimas', 'class' => 'input' ),
+			( $kieno != 'vartotojai' ? getLangText('system', 'subcat/cat') : '' )                           => ( $kieno != 'vartotojai' ? array( 'type' => 'select', 'value' => @$kategorijoss, 'name' => 'path', 'selected' => ( isset( $extra['path'] ) ? input( $extra['path'] ) : '0' ), 'disabled' => @$kategorijoss ) : '' ),
+			getLangText('system', 'about') . ':'                                                            => array( 'type' => 'textarea', 'value' => ( isset( $extra['aprasymas'] ) ) ? input( $extra['aprasymas'] ) : '', 'name' => 'Aprasymas', 'rows' => '3', 'class' => 'input', 'id' => 'Aprasymas' ),
 			'  '                                                                                      => array( 'type' => 'string', 'value' => '<div class="kat" style="float:inherit;"><img src="' . ROOT . '/' . $dir . '/' . ( isset( $extra['pav'] ) ? $extra['pav'] : 'no_picture.png' ) . '" id="kategorijos_img" /></div>' ),
-			( $kieno != 'galerija' ? $lang['system']['picture'] . ':' : '' )                          => ( $kieno != 'galerija' ? array( 'type' => 'select', 'value' => $kategoriju_pav, 'name' => 'Pav', 'class' => 'input', 'selected' => ( isset( $extra['pav'] ) ? input( $extra['pav'] ) : 'no_picture.png' ), 'extra' => 'onchange="$(\'#kategorijos_img\').attr({ src: \'' . ROOT . '/' . $dir . '/\'+this.value });"' ) : "" ),
-			$lang['admin']['what_moderate']                                                           => '', $textas => '', '' => array( 'type' => 'hidden', 'name' => 'Kategorijos_id', 'value' => ( isset( $extra['id'] ) ? input( $extra['id'] ) : '' ) ),
-			( isset( $extra ) ) ? $lang['system']['editcategory'] : $lang['system']['createcategory'] => array( 'type' => 'submit', 'name' => 'action', 'value' => ( isset( $extra ) ) ? $lang['system']['editcategory'] : $lang['system']['createcategory'] )
+			( $kieno != 'galerija' ? getLangText('system', 'picture') . ':' : '' )                          => ( $kieno != 'galerija' ? array( 'type' => 'select', 'value' => $kategoriju_pav, 'name' => 'Pav', 'class' => 'input', 'selected' => ( isset( $extra['pav'] ) ? input( $extra['pav'] ) : 'no_picture.png' ), 'extra' => 'onchange="$(\'#kategorijos_img\').attr({ src: \'' . ROOT . '/' . $dir . '/\'+this.value });"' ) : "" ),
+			getLangText('admin', 'what_moderate')                                                           => '', $textas => '', '' => array( 'type' => 'hidden', 'name' => 'Kategorijos_id', 'value' => ( isset( $extra['id'] ) ? input( $extra['id'] ) : '' ) ),
+			( isset( $extra ) ) ? getLangText('system', 'editcategory') : getLangText('system', 'createcategory') => array( 'type' => 'submit', 'name' => 'action', 'value' => ( isset( $extra ) ) ? getLangText('system', 'editcategory') : getLangText('system', 'createcategory') )
 		);
 		if ( $kieno == 'vartotojai' ) {
 			//	echo $mod;
-			$kategorijos[$lang['admin']['what_moderate']] = array( 'type' => 'select', 'extra' => 'multiple="multiple"', 'value' => $pages, 'class' => 'asmSelect', 'name' => 'punktai[]', 'id' => 'punktai', 'selected' => ( isset( $extra['mod'] ) ) ? $ser : '' );
+			$kategorijos[getLangText('admin', 'what_moderate')] = array( 'type' => 'select', 'extra' => 'multiple="multiple"', 'value' => $pages, 'class' => 'asmSelect', 'name' => 'punktai[]', 'id' => 'punktai', 'selected' => ( isset( $extra['mod'] ) ) ? $ser : '' );
 		}
 		if ( /* $leidimas == true && */
 			$kieno != 'vartotojai' && $_GET['v'] == 2
@@ -305,20 +305,20 @@ function category( $kieno, $leidimas = FALSE ) {
 		$kategorijos[' '] = array( 'type' => 'hidden', 'name' => 'Kategorijos_id', 'value' => ( isset( $extra['id'] ) ? input( $extra['id'] ) : '' ) );
 		
 		$formClass = new Form($kategorijos);	
-		lentele($lang['system']['categories'], $formClass->form());
+		lentele(getLangText('system', 'categories'), $formClass->form());
 	} elseif ( $_GET['v'] == 3 ) {
 		if ( isset( $kategorijoss ) ) {
 			$kategorijos_redagavimas = array(
 				'Form'                      => array( 'action' => url( '?id,' . $_GET['id'] . ';a,' . $_GET['a'] . ';v,2' ), 'method' => 'post', 'name' => 'reg' ),
-				$lang['system']['category'] => array( 'type' => 'select', 'value' => $kategorijoss, 'name' => 'Kategorijos_id' ),
-				$lang['system']['edit']     => array( 'type' => 'submit', 'name' => 'category', 'value' => $lang['system']['edit'] ),
-				$lang['system']['delete']   => array( 'type' => 'submit', 'name' => 'category', 'value' => $lang['system']['delete'] )
+				getLangText('system', 'category') => array( 'type' => 'select', 'value' => $kategorijoss, 'name' => 'Kategorijos_id' ),
+				getLangText('system', 'edit')     => array( 'type' => 'submit', 'name' => 'category', 'value' => getLangText('system', 'edit') ),
+				getLangText('system', 'delete')   => array( 'type' => 'submit', 'name' => 'category', 'value' => getLangText('system', 'delete') )
 			);
 
 			$formClass = new Form($kategorijos_redagavimas);	
-			lentele($lang['system']['editcategory'], $formClass->form());
+			lentele(getLangText('system', 'editcategory'), $formClass->form());
 		} else {
-			klaida( $lang['system']['warning'], $lang['system']['nocategories'] );
+			klaida( getLangText('system', 'warning'), getLangText('system', 'nocategories') );
 		}
 	}
 	delete_cache( 'SELECT * FROM `' . LENTELES_PRIESAGA . 'grupes` WHERE `kieno` = \'straipsniai\' AND `lang`= ' . escape( lang() ) . ' ORDER BY `pavadinimas`' );

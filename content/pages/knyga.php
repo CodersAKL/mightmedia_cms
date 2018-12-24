@@ -25,9 +25,9 @@ if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
 		$id = (int)$url['d'];
 		mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "knyga` WHERE `id` = " . escape( $id ) . " LIMIT 1" );
 		if ( mysqli_affected_rows($prisijungimas_prie_mysql) > 0 ) {
-			msg( $lang['system']['done'], "{$lang['guestbook']['deleted']}" );
+			msg( getLangText('system', 'done'), getLangText('guestbook', 'deleted'));
 		} else {
-			klaida( $lang['system']['error'], mysqli_error($prisijungimas_prie_mysql) );
+			klaida( getLangText('system', 'error'), mysqli_error($prisijungimas_prie_mysql) );
 		}
 		redirect( url( "?id," . (int)$_GET['id'] . ";p,$p" ), 'header' );
 	}
@@ -40,15 +40,15 @@ if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
 
 			$form = array(
 				"Form"                        => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] ), "method" => "post", "name" => "knyga_edit" ),
-				$lang['guestbook']['message'] => array( "type" => "textarea", "value" => $msg['msg'], "name" => "msg", "extra" => "rows=5", "class" => "input" ),
-				" "                           => array( "type" => "submit", "name" => "knyga", "value" => $lang['admin']['edit'] )
+				getLangText('guestbook', 'message') => array( "type" => "textarea", "value" => $msg['msg'], "name" => "msg", "extra" => "rows=5", "class" => "input" ),
+				" "                           => array( "type" => "submit", "name" => "knyga", "value" => getLangText('admin', 'edit') )
 			);
-			lentele( $lang['guestbook']['Editmessage'], $bla->form( $form ) );
-		} elseif ( isset( $_POST['knyga'] ) && $_POST['knyga'] == $lang['admin']['edit'] && !empty( $_POST['msg'] ) ) {
+			lentele( getLangText('guestbook', 'Editmessage'), $bla->form( $form ) );
+		} elseif ( isset( $_POST['knyga'] ) && $_POST['knyga'] == getLangText('admin', 'edit') && !empty( $_POST['msg'] ) ) {
 			$msg = trim( $_POST['msg'] ) . "\n[sm][i]Redagavo: " . $_SESSION[SLAPTAS]['username'] . "[/i][/sm]";
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "knyga` SET `msg` = " . escape( htmlspecialchars( $msg ) ) . " WHERE `id` =" . escape( $url['r'] ) . " LIMIT 1" );
 			if ( mysqli_affected_rows($prisijungimas_prie_mysql) > 0 ) {
-				msg( $lang['system']['done'], $lang['guestbook']['messageupdated'] );
+				msg( getLangText('system', 'done'), getLangText('guestbook', 'messageupdated') );
 			}
 			redirect( url( "?id,{$_GET['id']};p,$p#" . escape( $url['r'] ) ), "meta" );
 		}
@@ -61,7 +61,7 @@ if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
 //Atvaizduojam pranesimus su puslapiavimu - LIMITAS nurodytas virsuje
 $sql2 = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "knyga` ORDER BY `time` DESC LIMIT $p, $limit" );
 if ( $viso > $limit ) {
-	lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+	lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 }
 
 $text = '';
@@ -70,7 +70,7 @@ if ( sizeof( $sql2 ) > 0 ) {
 	foreach ( $sql2 as $row ) {
 		$i++;
 		if ( defined( "LEVEL" ) && LEVEL == 1 ) {
-			$extra = "<span style=\"float: right;\"><a href='" . url( "d," . $row['id'] . "" ) . "' onclick=\"return confirm('{$lang['system']['delete_confirm']}')\"><img src='core/assets/images/icons/cross_small.png' alt='[d]' title='{$lang['admin']['delete']}' class='middle' border='0' /></a> <a href='" . url( "r," . $row['id'] . "" ) . "'><img src='core/assets/images/icons/pencil_small.png' alt='[{$lang['admin']['edit']}]' title='{$lang['admin']['edit']}' class='middle' border='0' /></a></span>  ";
+			$extra = "<span style=\"float: right;\"><a href='" . url( "d," . $row['id'] . "" ) . "' onclick=\"return confirm('" . getLangText('system',  'delete_confirm') . "')\"><img src='core/assets/images/icons/cross_small.png' alt='[d]' title='" . getLangText('admin',  'delete') . "' class='middle' border='0' /></a> <a href='" . url( "r," . $row['id'] . "" ) . "'><img src='core/assets/images/icons/pencil_small.png' alt='[" . getLangText('admin',  'edit') . "]' title='" . getLangText('admin',  'edit') . "' class='middle' border='0' /></a></span>  ";
 		} else {
 			$extra = '';
 		}
@@ -93,7 +93,7 @@ if ( sizeof( $sql2 ) > 0 ) {
 	}
 }
 
-if ( isset( $_POST['knyga'] ) && $_POST['knyga'] == $lang['guestbook']['submit'] && strtoupper( $_POST['code'] ) == $_SESSION[SLAPTAS]['code'] && !empty( $_POST['zinute'] ) && !empty( $_POST['vardas'] ) ) {
+if ( isset( $_POST['knyga'] ) && $_POST['knyga'] == getLangText('guestbook', 'submit') && strtoupper( $_POST['code'] ) == $_SESSION[SLAPTAS]['code'] && !empty( $_POST['zinute'] ) && !empty( $_POST['vardas'] ) ) {
 	$msg  = htmlspecialchars( $_POST['zinute'] );
 	$nick = $_POST['vardas'];
 
@@ -106,20 +106,20 @@ if ( isset( $_POST['knyga'] ) && $_POST['knyga'] == $lang['guestbook']['submit']
 if ( !isset( $_GET['r'] ) ) {
 	$form = array(
 		"Form"                        => array( "action" => "", "method" => "post", "name" => "knyga" ),
-		$lang['guestbook']['name']    => array( "type" => "text", "class" => "input", "value" => ( isset( $_SESSION[SLAPTAS]['username'] ) && !empty( $_SESSION[SLAPTAS]['username'] ) ? input( $_SESSION[SLAPTAS]['username'] ) : '' ), "name" => "vardas", "class" => "input" ),
-		$lang['guestbook']['message'] => array( "type" => "textarea", "value" => "", "name" => "zinute", "extra" => "rows=5", "class" => "input" ),
+		getLangText('guestbook', 'name')    => array( "type" => "text", "class" => "input", "value" => ( isset( $_SESSION[SLAPTAS]['username'] ) && !empty( $_SESSION[SLAPTAS]['username'] ) ? input( $_SESSION[SLAPTAS]['username'] ) : '' ), "name" => "vardas", "class" => "input" ),
+		getLangText('guestbook', 'message') => array( "type" => "textarea", "value" => "", "name" => "zinute", "extra" => "rows=5", "class" => "input" ),
 		kodas()                       => array( "type" => "text", "value" => "", "name" => "code", "class" => "chapter" ),
-		" "                           => array( "type" => "submit", "name" => "knyga", "value" => $lang['guestbook']['submit'] )
+		" "                           => array( "type" => "submit", "name" => "knyga", "value" => getLangText('guestbook', 'submit') )
 	);
 
-	lentele( $lang['guestbook']['write'], $bla->form( $form ), TRUE );
+	lentele( getLangText('guestbook', 'write'), $bla->form( $form ), TRUE );
 }
 if ( strlen( $text ) < 1 ) {
-	$text = $lang['guestbook']['empty'];
+	$text = getLangText('guestbook', 'empty');
 }
-lentele( $lang['guestbook']['guestbook'], $text );
+lentele( getLangText('guestbook', 'guestbook'), $text );
 
 if ( $viso > $limit ) {
-	lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+	lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 }
 unset( $extra, $text, $form );

@@ -24,7 +24,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti' ) {
 		$autorius    = ( isset( $_SESSION[SLAPTAS]['username'] ) ? $_SESSION[SLAPTAS]['username'] : '-' );
 		$autoriusid  = ( isset( $_SESSION[SLAPTAS]['id'] ) ? $_SESSION[SLAPTAS]['id'] : 0 );
 		if ( empty( $apr ) || empty( $pavadinimas ) ) {
-			$error = "{$lang['admin']['article_emptyfield']}.";
+			$error = getLangText('admin', 'article_emptyfield');
 		}
 		if ( !isset( $error ) ) {
 			$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "straipsniai` SET
@@ -39,16 +39,16 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'Pateikti' ) {
 			`rodoma` = 'NE',
 			`lang` = " . escape( lang() ) . "" );
 			if ( $result ) {
-				msg( $lang['system']['info'], "{$lang['article']['sumbit_scc']}." );
+				msg( getLangText('system', 'info'), getLangText('article', 'sumbit_scc'));
 			} else {
-				klaida( $lang['system']['error'], "{$lang['article']['sumbit_no']}." );
+				klaida( getLangText('system', 'error'), getLangText('article', 'sumbit_no'));
 			}
 		} else {
-			klaida( $lang['system']['error'], $error );
+			klaida( getLangText('system', 'error'), $error );
 		}
 		redirect( url( "?id," . $_GET['id'] ), "meta" );
 	} else {
-		klaida( $lang['system']['warning'], "{$lang['admin']['news_required']}." );
+		klaida( getLangText('system', 'warning'), getLangText('admin', 'news_required'));
 	}
 }
 $sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='straipsniai' AND `lang` = " . escape( lang() ) . " AND `path`=0 ORDER BY `id` DESC" );
@@ -61,9 +61,9 @@ $categories[0] = "--";
 include_once config('class', 'dir') . 'class.form.php';
 $bla        = new Form();
 $straipsnis = array( "Form"                           => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] ), "method" => "post", "name" => "reg" ),
-                     "{$lang['system']['name']}:"     => array( "type" => "text", "value" => "", "name" => "pav", "class"=> "input" ),
-	//"{$lang['comments']['comments']}:" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"), 
-                     "{$lang['system']['category']}:" => array( "type" => "select", "value" => $categories, "name" => "category", "class" => "input", "class"=> "input" ),
-                     "{$lang['admin']['article']}:"   => array( "type" => "string", "value" => editorius( 'jquery', 'standartinis', 'str' ) ),
-                     ""                               => array( "type" => "submit", "name" => "action", "value" => "{$lang['article']['submit']}" ), );
-lentele( "{$lang['article']['submiting']}", $bla->form( $straipsnis ) );
+                     getLangText('system', 'name') . ":"     => array( "type" => "text", "value" => "", "name" => "pav", "class"=> "input" ),
+	//getLangText('comments', 'comments') . ":" => array("type" => "select", "value" => array('taip' => 'TAIP', 'ne' => 'NE'), "name" => "kom", "class" => "input", "class"=>"input"), 
+                     getLangText('system', 'category') . ":" => array( "type" => "select", "value" => $categories, "name" => "category", "class" => "input", "class"=> "input" ),
+                     getLangText('admin', 'article') . ":"   => array( "type" => "string", "value" => editorius( 'jquery', 'standartinis', 'str' ) ),
+                     ""                               => array( "type" => "submit", "name" => "action", "value" => getLangText('article', 'submit')), );
+lentele( getLangText('article', 'submiting'), $bla->form( $straipsnis ) );

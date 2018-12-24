@@ -5,7 +5,7 @@ if ( !defined( "OK" ) || !ar_admin( basename( __file__ ) ) ) {
 }
 
 if(BUTTONS_BLOCK) {
-	lentele( $lang['admin']['frm'], buttonsMenu(buttons('forum')));
+	lentele( getLangText('admin', 'frm'), buttonsMenu(buttons('forum')));
 }
 
 if ( !isset( $_GET['f'] ) && !isset( $_POST['f_forumas'] ) ) {
@@ -18,7 +18,7 @@ $lygiai = array_keys( $conf['level'] );
 foreach ( $lygiai as $key ) {
 	$teises[$key] = $conf['level'][$key]['pavadinimas'];
 }
-$teises[0] = $lang['admin']['for_guests'];
+$teises[0] = getLangText('admin', 'for_guests');
 
 //Kategorijos trynimas (gali but problemu)
 if (isset($_GET['d'])) {
@@ -51,7 +51,7 @@ if (isset($_GET['d'])) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['categorydeleted']
+				'message' 	=> getLangText('admin', 'categorydeleted')
 			]
 		);
 
@@ -87,7 +87,7 @@ if ( isset( $_GET['t'] ) ) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['forum_deletesub']
+				'message' 	=> getLangText('admin', 'forum_deletesub')
 			]
 		);
 	} else {
@@ -116,7 +116,7 @@ if (isset($url['r']) && isset($url['f']) || isset($url['f']) && (int)$url['f'] =
 		// $edit_tema      = input( $_POST['temos_pav'] );
 		// $edit_aprasymas = input( $_POST['temos_apr'] );
 		// creation
-		if ($_POST['action'] == $lang['admin']['forum_createsub'] ) {
+		if ($_POST['action'] == getLangText('admin', 'forum_createsub') ) {
 			$insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "d_temos` (`fid`, `pav`, `aprasymas`, `lang`, `teises`) VALUES (" . escape($category) . ", " . escape($name) . ", " . escape($about) . ", " . escape(lang()) . ", " . escape($rules) . ")";
 	
 			if (mysql_query1($insertQuery)) {
@@ -125,7 +125,7 @@ if (isset($url['r']) && isset($url['f']) || isset($url['f']) && (int)$url['f'] =
 					"header",
 					[
 						'type'		=> 'success',
-						'message' 	=> $lang['admin']['forum_createdsub']
+						'message' 	=> getLangText('admin', 'forum_createdsub')
 					]
 				);
 	
@@ -139,7 +139,7 @@ if (isset($url['r']) && isset($url['f']) || isset($url['f']) && (int)$url['f'] =
 			}
 		}
 		//sub category edit
-		if ($_POST['action'] == $lang['admin']['forum_editsub'] ) {
+		if ($_POST['action'] == getLangText('admin', 'forum_editsub') ) {
 			$id         = (int)$_POST['sub_cat'];
 
 			$updateQuery = "UPDATE `" . LENTELES_PRIESAGA . "d_temos` SET 
@@ -154,7 +154,7 @@ if (isset($url['r']) && isset($url['f']) || isset($url['f']) && (int)$url['f'] =
 					"header",
 					[
 						'type'		=> 'success',
-						'message' 	=> $lang['admin']['forum_updatedsub']
+						'message' 	=> getLangText('admin', 'forum_updatedsub')
 					]
 				);
 			} else {
@@ -187,7 +187,7 @@ if (isset($url['r']) && isset($url['f']) || isset($url['f']) && (int)$url['f'] =
 		}
 	}
 
-	$editOrCreate 	= (isset($extra) ? $lang['admin']['forum_editsub'] : $lang['admin']['forum_createsub']);
+	$editOrCreate 	= (isset($extra) ? getLangText('admin', 'forum_editsub') : getLangText('admin', 'forum_createsub'));
 
 	$forumForm  = [
 		"Form"	=> [
@@ -199,7 +199,7 @@ if (isset($url['r']) && isset($url['f']) || isset($url['f']) && (int)$url['f'] =
 
 	if(isset($extra)) {
 		$forumForm += [
-			$lang['admin']['forum_category'] => [
+			getLangText('admin', 'forum_category') => [
 				"type" 	=> "text",
 				"extra"	=> 'readonly', 
 				"value" => $f_forumas
@@ -216,7 +216,7 @@ if (isset($url['r']) && isset($url['f']) || isset($url['f']) && (int)$url['f'] =
 			],
 		];
 	} else {
-		$forumForm[$lang['admin']['forum_category']] = [
+		$forumForm[getLangText('admin', 'forum_category')] = [
 			"type" 		=> "select", 
 			"value" 	=> $categories, 
 			"name"		=> "category"
@@ -224,19 +224,19 @@ if (isset($url['r']) && isset($url['f']) || isset($url['f']) && (int)$url['f'] =
 	}
 
 	$forumForm  += [
-		$lang['admin']['forum_subcategory']=> [
+		getLangText('admin', 'forum_subcategory')=> [
 			"type"	=> "text", 
 			"value"	=> (! empty($extra['pav']) ? $extra['pav'] : ''), 
 			"name"	=> "name"
 		],
 
-		$lang['admin']['forum_subabout'] => [
+		getLangText('admin', 'forum_subabout') => [
 			"type" 	=> "text", 
 			"value" => (! empty($extra['aprasymas']) ? $extra['aprasymas'] : ''), 
 			"name" 	=> "about"
 		], 
 
-		$lang['system']['showfor'] => [
+		getLangText('system', 'showfor') => [
 			"type" 		=> "select", 
 			"extra" 	=> "multiple", 
 			"value" 	=> $teises, 
@@ -261,7 +261,7 @@ if ( isset( $url['f'] ) ) {
 	// Category creation
 	if ((int)$url['f'] == 1) {
 		// Paspaustas kazkoks mygtukas
-		if (isset($_POST['action']) && $_POST['action'] == $lang['system']['createcategory']) {
+		if (isset($_POST['action']) && $_POST['action'] == getLangText('system', 'createcategory')) {
 			$sqlInsert = "INSERT INTO `" . LENTELES_PRIESAGA . "d_forumai` (`pav`, `lang`) VALUES (" . escape(input($_POST['f_pav'])) . ", " . escape(lang()) . ")";
 
 			if (mysql_query1($sqlInsert)) {
@@ -270,7 +270,7 @@ if ( isset( $url['f'] ) ) {
 					"header",
 					[
 						'type'		=> 'success',
-						'message' 	=> $lang['system']['categorycreated']
+						'message' 	=> getLangText('system', 'categorycreated')
 					]
 				);
 			} else {
@@ -290,7 +290,7 @@ if ( isset( $url['f'] ) ) {
 				"name" 		=> "port"
 			],
 
-			$lang['admin']['forum_category'] 	=> [
+			getLangText('admin', 'forum_category') 	=> [
 				"type" => "text", 
 				"name" => "f_pav"
 			],
@@ -299,17 +299,17 @@ if ( isset( $url['f'] ) ) {
 				"type" 		=> "submit", 
 				"name" 		=> "action", 
 				'form_line'	=> 'form-not-line',
-				"value" 	=> $lang['system']['createcategory']
+				"value" 	=> getLangText('system', 'createcategory')
 			]
 		];
 		
 		$formClass = new Form($categoryForm);
-		lentele($lang['system']['createcategory'], $formClass->form());
+		lentele(getLangText('system', 'createcategory'), $formClass->form());
 	}
 	//Categories list/edit
 	if ( (int)$url['f'] == 2 && !isset( $_GET['r'] ) ) {
 		//Kategorijos redagavimas
-		if ( isset( $_POST['keisti'] ) && $_POST['keisti'] == $lang['admin']['edit'] ) {
+		if ( isset( $_POST['keisti'] ) && $_POST['keisti'] == getLangText('admin', 'edit') ) {
 			$f_id           = (int)$_POST['category'];
 			$f_pav_keitimas = input( $_POST['name'] );
 			$updateQuery 	= "UPDATE `" . LENTELES_PRIESAGA . "d_forumai` SET `pav`=" . escape($f_pav_keitimas) . " WHERE `id`=" . escape($f_id);
@@ -320,7 +320,7 @@ if ( isset( $url['f'] ) ) {
 					"header",
 					[
 						'type'		=> 'success',
-						'message' 	=> $lang['system']['categoryupdated']
+						'message' 	=> getLangText('system', 'categoryupdated')
 					]
 				);
 			} else {
@@ -350,13 +350,13 @@ if ( isset( $url['f'] ) ) {
 					"method" => "post", 
 				], 
 
-				$lang['admin']['forum_category'] 	=> [
+				getLangText('admin', 'forum_category') 	=> [
 					"type" 	=> "select", 
 					"name" 	=> "category", 
 					"value"	=> $catsSelect
 				], 
 
-				$lang['admin']['forum_cangeto'] 	=> [
+				getLangText('admin', 'forum_cangeto') 	=> [
 					"type" => "text", 
 					"name" => "name"
 				],
@@ -365,17 +365,17 @@ if ( isset( $url['f'] ) ) {
 					"type" 		=> "submit", 
 					"name" 		=> "keisti", 
 					'form_line'	=> 'form-not-line',
-					"value"	 	=> $lang['admin']['edit']
+					"value"	 	=> getLangText('admin', 'edit')
 				]
 			];
 			
 			$formClass = new Form($categoryForm);
-			lentele($lang['system']['editcategory'], $formClass->form());
+			lentele(getLangText('system', 'editcategory'), $formClass->form());
 			
 			$li      	= ! empty($cats) ? buldForumMenu($cats) : '';
 			$pageMenu 	= '<div class="dd nestable-with-handle">' . $li . '</div>';
 
-			lentele($lang['admin']['forum_order'], $pageMenu);
+			lentele(getLangText('admin', 'forum_order'), $pageMenu);
 			?>
 			<script type="text/javascript">
 				//nestable
@@ -402,7 +402,7 @@ if ( isset( $url['f'] ) ) {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['system']['nocategories']
+					'message' 	=> getLangText('system', 'nocategories')
 				]
 			);
 		}
@@ -411,7 +411,7 @@ if ( isset( $url['f'] ) ) {
 	//Sub category edit form to select parent cat
 	if ( (int)$url['f'] == 4 ) {
 		//Sub cat edit by selected parent category
-		if (isset($_POST['subedit']) && $_POST['subedit'] == $lang['admin']['forum_select'] ) {
+		if (isset($_POST['subedit']) && $_POST['subedit'] == getLangText('admin', 'forum_select') ) {
 
 			$f_id = (int)$_POST['f_forumas'];
 			$catSelectQuery = "SELECT * FROM `" . LENTELES_PRIESAGA . "d_temos` WHERE `lang` = " . escape(lang()) . " AND `fid`='" . $f_id . "' ORDER by place";
@@ -430,7 +430,7 @@ if ( isset( $url['f'] ) ) {
 				$li      	= ! empty($cats) ? buldForumMenu($cats) : '';
 				$content 	= '<div class="dd nestable-with-handle">' . $li . '</div>';
 
-				lentele($lang['admin']['forum_editsub'], $content);
+				lentele(getLangText('admin', 'forum_editsub'), $content);
 				?>
 				<script type="text/javascript">
 					//nestable
@@ -469,7 +469,7 @@ if ( isset( $url['f'] ) ) {
 					"method" => "post", 
 				], 
 
-				$lang['admin']['forum_subwhere']	=> [
+				getLangText('admin', 'forum_subwhere')	=> [
 					"type" 	=> "select", 
 					"name" 	=> "f_forumas", 
 					"value"	=> $forums
@@ -479,14 +479,14 @@ if ( isset( $url['f'] ) ) {
 					"type" 		=> "submit", 
 					"name" 		=> "subedit",
 					'form_line'	=> 'form-not-line', 
-					"value" 	=> $lang['admin']['forum_select']
+					"value" 	=> getLangText('admin', 'forum_select')
 				]
 			];
 
 			$formClass = new Form($parentCatForm);
-			lentele($lang['admin']['forum_editsub'], $formClass->form());
+			lentele(getLangText('admin', 'forum_editsub'), $formClass->form());
 		} else {
-			klaida( $lang['system']['warning'], $lang['system']['nocategories'] );
+			klaida( getLangText('system', 'warning'), getLangText('system', 'nocategories') );
 		}
 	}
 }	

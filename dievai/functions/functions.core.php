@@ -7,16 +7,16 @@ function build_tree( $data, $id = 0, $active_class = 'active' ) {
 		$re = "";
 		foreach ( $data[$id] as $row ) {
 			if ( isset( $data[$row['id']] ) ) {
-				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><span style=\"display: inline; width: 100px;margin:0; padding:0; height: 16px;\"><a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\"  onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"  /></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\"/></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span><ul>";
+				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><span style=\"display: inline; width: 100px;margin:0; padding:0; height: 16px;\"><a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\"  onClick=\"return confirm(\'" . getLangText('admin', 'delete') . "?\')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" title=\"" . getLangText('admin', 'delete') . "\"  /></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/wrench.png\" title=\"" . getLangText('admin', 'edit') . "\"/></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" title=\"" . getLangText('admin', 'page_text') . "\" /></a></span><ul>";
 				$re .= build_tree( $data, $row['id'], $active_class );
 				$re .= "</ul></li>";
 			} else {
 				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><span style=\"display: inline; width: 100px; margin:0; padding:0; height: 16px;\">
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"/></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\" /></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\" ><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\" onClick=\"return confirm(\'" . getLangText('admin', 'delete') . "?\')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" title=\"" . getLangText('admin', 'delete') . "\"/></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/wrench.png\" title=\"" . getLangText('admin', 'edit') . "\" /></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\" ><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" title=\"" . getLangText('admin', 'page_text') . "\" /></a></span>
 </li>";
 			}
 		}
@@ -204,7 +204,7 @@ function defaultHead()
 					console.log(group+' '+key+' '+newValue);
 					var element = document.getElementById(group + '_' + key);
 					var xhttp = new XMLHttpRequest();
-					var url = "../extensions/translation/updateTranslation.php?group," + group + ";key," + key +";newValue," + newValue;
+					var url = "../content/extensions/translation/updateTranslation.php?group," + group + ";key," + key +";newValue," + newValue;
 					//Send the proper header information along with the request
 					xhttp.open('GET', url, true);
 					xhttp.send();
@@ -229,7 +229,7 @@ function adminPages()
 			notifyMsg(
 				[
 					'type'		=> 'warning',
-					'message' 	=> $lang['system']['cache_info']
+					'message' 	=> getLangText('system', 'cache_info')
 				]
 			);
 		}
@@ -352,7 +352,7 @@ function tableFilter($formData, $data, $formId = '')
 		$newFormData[$value] = $input;
 	}
 
-	$newFormData[$lang['admin']['action']] = '<button type="submit" class="btn btn-primary waves-effect">' . $lang['admin']['filtering'] . '</button>';
+	$newFormData[getLangText('admin', 'action')] = '<button type="submit" class="btn btn-primary waves-effect">' . getLangText('admin', 'filtering') . '</button>';
 
 	return $newFormData;
 }
@@ -396,109 +396,3 @@ function iconsMenu($icon)
 }
 
 
-if(! function_exists('getSettingsValue')) {
-	function getSettingsValue($key, $options = null)
-	{
-		global $conf;
-		if (isset($conf[$key])){
-			return $conf[$key];
-		}
-		
-		$request = "SELECT `val` FROM `" . LENTELES_PRIESAGA . "nustatymai` WHERE `key` = " . escape($key);
-		//Adding additional info to the querry i.e. LIKE, LIMIT, ORDER BY and etc.
-		if (is_array($options)){
-			$mysqliOptions = ['LIKE', 'LIMIT', 'ORDER BY', 'OFFSET'];
-			foreach ($options as $optionKey => $optionValue) {
-				if (in_array($optionKey,$mysqliOptions)){
-					$sqlStatement =  str_replace("'", '', escape($optionKey)). " " . escape($optionValue);
-					$updateRequest .= " " . $sqlStatement;
-				}
-			}
-		}
-		$result =  mysql_query1($request);
-		if (count($result) > 0) {
-			return $result[0]['val'];
-		} else {
-			return null;
-		}
-	}
-}
-if(! function_exists('setSettingsValue')) {
-	function setSettingsValue($val, $key, $options = null)
-	{
-		$request = "SELECT * FROM `" . LENTELES_PRIESAGA . "nustatymai` WHERE `key` = " . escape($key);
-		if (sizeof(mysql_query1($request)) > 0) {
-			
-			//DataSet for given key is found. We can update the value
-			$updateRequest = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val`= " . escape($val) . " WHERE `key` = " . escape($key);
-			//Adding additional info to the querry i.e. LIKE, LIMIT, ORDER BY and etc.
-			if (is_array($options)){
-				$mysqliOptions = ['LIKE', 'LIMIT', 'ORDER BY', 'OFFSET'];
-				foreach ($options as $optionKey => $optionValue) {
-					if (in_array($optionKey,$mysqliOptions)){
-						$sqlStatement =  str_replace("'", '', escape($optionKey)). " " . escape($optionValue);
-						$updateRequest .= " " . $sqlStatement;
-					}
-				}
-			}
-			if ($result = mysql_query1($updateRequest)){
-				return $result;
-			}
-		} else {
-			//DataSet for given key is NOT found. Inserting new key with a given value
-			$insertRequest = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`key`,`val`) VALUES (" . escape($key) . "," . escape($val) . ")";
-			if ($result = mysql_query1($insertRequest)){
-				return $result;
-			}
-		}
-		
-		return $result;
-	}
-}
-
-if(! function_exists('getLangText')) {
-	function getLangText($group, $key, $new = false, $value = ''){
-		global $lang;
-		$sqlCheckTranslation = "SELECT `value` FROM `" . LENTELES_PRIESAGA . "translations` WHERE `group`= " . escape($group) . " and `key`= " . escape($key) . " ORDER BY `last_update` DESC LIMIT 1";
-		if ($textFromDb = mysql_query1($sqlCheckTranslation)){
-			$langTextFromDataBase =  $textFromDb['value'];
-		}
-
-		if (array_key_exists($group, $lang) && (array_key_exists($key, $lang[$group]))){
-			$langText = $lang[$group][$key];
-		} else {
-			$language = lang();
-			langTextError($group, $key, $language);
-			$langText = null;
-		}
-
-		if (lang() == 'lt'){ $needTranslation = '--- nenurodyta ---'; } else if (lang() == 'en') { $needTranslation = '--- undefined ---';}
-		if  (getSettingsValue('translation_status') == 1){
-			$result = '<p id ="' . $group . '_' . $key . '"  class= "col-10" onclick="editLanguageText(this,function(event){event.preventDefault()})" ';
-			$result .= 'onmouseover="addTranslateClass(this)" onmouseout="removeTranslateClass(this)" style="width: 100%;"';
-			$result .= ' data-group="' . $group . '" data-key="' . $key . '">';
-			if (isset($langTextFromDataBase)){ 
-				$result .= $langTextFromDataBase . '</p>'; 
-			} else { 
-				!is_null($langText) ? $result .= $langText . '</p>' :  $result .= $needTranslation . '</p>';
-			} 
-			return $result;
-
-		} else if (isset($langTextFromDataBase)) {
-			return $langTextFromDataBase;
-		} else {
-			return $langText;	
-		}
-			
-	}
-}
-
-if (! function_exists('langTextError')){
-	function langTextError($group, $key, $language) {
-		/**
-		 *  Aprasyti funkcija, kai nera kalbinio teksto
-		 *  padaryti LOG failą/DB kurį rodys prie vertimo nustatymų.
-		 *  Jeigu bus daugiau negu x eilučių pridėti puslapiavimą.
-		 */
-	}
-}

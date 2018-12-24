@@ -24,25 +24,25 @@ $viso  = kiek( 'admin_chat' );
 //
 
 unset( $extra );
-if ( isset( $_POST['admin_chat_send'] ) && $_POST['admin_chat_send'] == $lang['admin']['send'] && !empty( $_POST['admin_chat'] ) ) {
+if ( isset( $_POST['admin_chat_send'] ) && $_POST['admin_chat_send'] == getLangText('admin', 'send') && !empty( $_POST['admin_chat'] ) ) {
 
 	if ( isset( $_POST['pm'] ) && $_POST['pm'] != 'x' ) {
 
-		$extra = "[i]{$lang['admin']['globalmessagefor']}:[b]" . $conf['level'][$_POST['pm']]['pavadinimas'] . "[/b][/i]\n---\n";
+		$extra = "[i]" . getLangText('admin',  'globalmessagefor') . ":[b]" . $conf['level'][$_POST['pm']]['pavadinimas'] . "[/b][/i]\n---\n";
 
 
 		if ( $_POST['pm'] == 0 ) {
-			$extra = "[i]{$lang['admin']['globalmessagefor']}: [b] {$lang['admin']['all']} [/b][/i]\n---\n";
+			$extra = "[i]" . getLangText('admin',  'globalmessagefor') . ": [b] " . getLangText('admin',  'all') . " [/b][/i]\n---\n";
 
 			$sql = mysql_query1( "SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users`" );
 		} else {
-			$extra = "[i]{$lang['admin']['globalmessagefor']}:[b]" . $conf['level'][$_POST['pm']]['pavadinimas'] . "[/b][/i]\n---\n";
+			$extra = "[i]" . getLangText('admin',  'globalmessagefor') . ":[b]" . $conf['level'][$_POST['pm']]['pavadinimas'] . "[/b][/i]\n---\n";
 			$sql   = mysql_query1( "SELECT `nick` FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis = '" . $_POST['pm'] . "'" );
 		}
 		if ( sizeof( $sql ) > 0 ) {
 			foreach ( $sql as $row ) {
 				if ( kiek( "private_msg", "WHERE `to`=" . escape( $row['nick'] ) . "" ) < 51 ) {
-					mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "private_msg` (`from` , `to` , `title` , `msg` , `date`) VALUES (" . escape( $_SESSION[SLAPTAS]['username'] ) . ", " . escape( $row['nick'] ) . ", '" . $lang['admin']['readme'] . "!', " . escape( $_POST['admin_chat'] ) . ", '" . time() . "')" );
+					mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "private_msg` (`from` , `to` , `title` , `msg` , `date`) VALUES (" . escape( $_SESSION[SLAPTAS]['username'] ) . ", " . escape( $row['nick'] ) . ", '" . getLangText('admin', 'readme') . "!', " . escape( $_POST['admin_chat'] ) . ", '" . time() . "')" );
 				}
 			}
 		}
@@ -62,21 +62,21 @@ if ( isset( $url['r'] ) && !isset( $url['d'] ) && !isset( $url['a'] ) && isnum( 
 	if ( !isset( $_POST['admin_chat_send'] ) ) {
 		$extra = mysql_query1( "SELECT msg FROM `" . LENTELES_PRIESAGA . "admin_chat` WHERE id=" . escape( (int)$url['r'] ) . " LIMIT 1" );
 		$extra = $extra['msg'];
-	} elseif ( $_POST['admin_chat_send'] == $lang['admin']['edit'] ) {
+	} elseif ( $_POST['admin_chat_send'] == getLangText('admin', 'edit') ) {
 		mysqli_query( "UPDATE `" . LENTELES_PRIESAGA . "admin_chat` SET `msg`=" . escape( $_POST['admin_chat'] ) . ",`date` = '" . time() . "' WHERE `admin`=" . escape( $_SESSION[SLAPTAS]['username'] ) . " AND id=" . escape( (int)$url['r'] ) . " LIMIT 1" );
 		//header("Location: ".url("?id," . $url['id']));
 		redirect( $_SERVER['PHP_SELF'] );
 	}
 }
 $lygiai = array_keys( $conf['level'] );
-$teises = "<option value='x'>{$lang['admin']['noone']}";
-$teises .= "<option value='0'>{$lang['admin']['all']}";
+$teises = "<option value='x'>" . getLangText('admin',  'noone');
+$teises .= "<option value='0'>" . getLangText('admin',  'all');
 foreach ( $lygiai as $key ) {
 	$teises .= '<option value=' . $key . '>' . $conf['level'][$key]['pavadinimas'] . '';
 }
 $text = "
 		<form name=\"admin_chat\" action=\"\" method=\"post\" id=\"chat\">
-		<fieldset style='padding:3px'><legend>{$lang['admin']['pmto']}:</legend>
+		<fieldset style='padding:3px'><legend>" . getLangText('admin',  'pmto') . ":</legend>
 	<select name=\"pm\"   style=\"width:95%;\" >';
                 {$teises}
                 </select>
@@ -89,7 +89,7 @@ $text = "
 		<br/>
 		" . bbk( "admin_chat" ) . "
         <br/>
-        <input name=\"admin_chat_send\" type=\"submit\" value=\"" . ( ( isset( $url['r'] ) && isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['send'] ) . "\">
+        <input name=\"admin_chat_send\" type=\"submit\" value=\"" . ( ( isset( $url['r'] ) && isset( $extra ) ) ? getLangText('admin', 'edit') : getLangText('admin', 'send') ) . "\">
 		</form>
 		</center><br/>";
 
@@ -98,14 +98,14 @@ if ( sizeof( $sql ) > 0 ) {
 	$i = 0;
 	foreach ( $sql as $row ) {
 		$text .= "
-				<div class='" . ( is_int( $i / 2 ) ? 'tr2' : 'tr' ) . "'><em><a href=\"" . url( "d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\">[{$lang['admin']['delete']}]</a> " . ( ( $_SESSION[SLAPTAS]['username'] == $row['admin'] ) ? "<a href=\"" . url( "r," . $row['id'] . "" ) . "\">[{$lang['admin']['edit']}]</a> " : "" ) . $row['admin'] . " [" . date( 'Y-m-d H:i:s ', $row['date'] ) . "] - " . kada( date( 'Y-m-d H:i:s ', $row['date'] ) ) . " " . naujas( $row['date'], $row['admin'] ) . "</em><br />
+				<div class='" . ( is_int( $i / 2 ) ? 'tr2' : 'tr' ) . "'><em><a href=\"" . url( "d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . getLangText('admin', 'delete') . "?')\">[" . getLangText('admin',  'delete') . "]</a> " . ( ( $_SESSION[SLAPTAS]['username'] == $row['admin'] ) ? "<a href=\"" . url( "r," . $row['id'] . "" ) . "\">[" . getLangText('admin',  'edit') . "]</a> " : "" ) . $row['admin'] . " [" . date( 'Y-m-d H:i:s ', $row['date'] ) . "] - " . kada( date( 'Y-m-d H:i:s ', $row['date'] ) ) . " " . naujas( $row['date'], $row['admin'] ) . "</em><br />
 				" . bbcode( $row['msg'] ) . "<br /></div>
 		";
 		$i++;
 	}
 }
-lentele( "{$lang['admin']['admin_chat']}", $text );
+lentele( getLangText('admin', 'admin_chat'), $text );
 
 if ( $viso > $limit ) {
-	lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+	lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 }

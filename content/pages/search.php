@@ -14,47 +14,47 @@
 //Sarašas kur ieškoti
 $kur = array();
 if ( isset( $conf['pages']['naujienos.php']['id'] ) ) {
-	$kur['naujienos'] = $lang['search']['news'];
+	$kur['naujienos'] = getLangText('search', 'news');
 }
 if ( isset( $conf['pages']['straipsnis.php']['id'] ) ) {
-	$kur['str'] = $lang['search']['articles'];
+	$kur['str'] = getLangText('search', 'articles');
 }
 if ( isset( $conf['pages']['siustis.php']['id'] ) ) {
-	$kur['siunt'] = $lang['search']['downloads'];
+	$kur['siunt'] = getLangText('search', 'downloads');
 }
 if ( isset( $conf['pages']['frm.php']['id'] ) ) {
-	$kur['frmt'] = $lang['search']['forum_topics'];
+	$kur['frmt'] = getLangText('search', 'forum_topics');
 }
 if ( isset( $conf['pages']['frm.php']['id'] ) ) {
-	$kur['frm'] = $lang['search']['forum_messages'];
+	$kur['frm'] = getLangText('search', 'forum_messages');
 }
 if ( isset( $conf['pages']['galerija.php']['id'] ) ) {
-	$kur['galerija'] = $lang['search']['images'];
+	$kur['galerija'] = getLangText('search', 'images');
 }
 if ( isset( $conf['pages']['reg.php']['id'] ) ) {
-	$kur['memb'] = $lang['search']['members'];
+	$kur['memb'] = getLangText('search', 'members');
 }
-$kur['kom']  = $lang['search']['comments'];
-$kur['page'] = $lang['search']['pages'];
-//$kur['vis'] = $lang['search']['everything'];
+$kur['kom']  = getLangText('search', 'comments');
+$kur['page'] = getLangText('search', 'pages');
+//$kur['vis'] = getLangText('search', 'everything');
 $box = "";
 foreach ( $kur as $name => $check ) {
 	$box .= "<label><input type=\"checkbox\" name=\"$name\" value=\"$name\" " . ( ( isset( $_POST[$name] ) && !empty( $_POST[$name] ) ) || ( isset( $_POST['vis'] ) && !empty( $_POST['vis'] ) ) ? 'checked="yes"' : '' ) . "/> $check</label><br /> ";
 }
-$box .= "<label><input type='checkbox' name='vis' onclick='checkedAll(\"search\");'/> {$lang['search']['everything']}</label>";
+$box .= "<label><input type='checkbox' name='vis' onclick='checkedAll(\"search\");'/> " . getLangText('search',  'everything') . "</label>";
 //Paieškos forma
 $search = array(
 	"Form"                      => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] ), "method" => "post", "enctype" => "", "id" => "search", "name" => "search" ),
-	$lang['search']['for']		=> array( "type" => "text", "class" => "form-control", "value" => ( isset( $_POST['s'] ) ? input( $_POST['s'] ) : '' ), "name" => "s" ),
+	getLangText('search', 'for')		=> array( "type" => "text", "class" => "form-control", "value" => ( isset( $_POST['s'] ) ? input( $_POST['s'] ) : '' ), "name" => "s" ),
 	" "							=> array( "type" => "string", "value" => $box ),
-	""                          => array( "type" => "submit", "class" => "btn btn-primary", "name" => "subsearch", "value" => $lang['search']['search'] )
+	""                          => array( "type" => "submit", "class" => "btn btn-primary", "name" => "subsearch", "value" => getLangText('search', 'search') )
 );
 
 //Nupiešiam paieškos formą
 include_once config('class', 'dir') . 'class.form.php';
 
 $bla = new Form();
-lentele($lang['search']['search'], $bla->form($search));
+lentele(getLangText('search', 'search'), $bla->form($search));
 $i = 0;
 //Atliekam paiešką
 //print_r($_POST);
@@ -69,7 +69,7 @@ if ( isset( $_POST['s'] ) ) {
 					$i++;
 					$text .= "<a href='" . url( "?id," . $conf['pages']['naujienos.php']['id'] . ";k," . $row3['id'] ) . "'>" . trimlink( input( $row3['pavadinimas'] ), 40 ) . "...</a><br />";
 				}
-				lentele( $lang['search']['news'], $text );
+				lentele( getLangText('search', 'news'), $text );
 			}
 		}
 		if ( ( isset( $_POST['frmt'] ) || isset( $_POST['vis'] ) ) && isset( $conf['pages']['frm.php']['id'] ) ) {
@@ -81,7 +81,7 @@ if ( isset( $_POST['s'] ) ) {
 					$i++;
 					$text .= "<a href='" . url( "?id," . $conf['pages']['frm.php']['id'] . ";t," . $row4['id'] . ";s," . $row4['tid'] ) . "'>" . trimlink( input( $row4['pav'] ), 40 ) . "...</a><br />";
 				}
-				lentele( $lang['search']['forum_topics'], $text );
+				lentele( getLangText('search', 'forum_topics'), $text );
 			}
 		}
 		if ( ( isset( $_POST['frm'] ) || isset( $_POST['vis'] ) ) && isset( $conf['pages']['frm.php']['id'] ) ) {
@@ -93,7 +93,7 @@ if ( isset( $_POST['s'] ) ) {
 					$i++;
 					$text .= "<a href='" . url( "?id," . $conf['pages']['frm.php']['id'] . ";t," . $row5['sid'] . ";s," . $row5['tid'] ) . "'>" . trimlink( input( $row5['zinute'] ), 40 ) . "...</a><br />";
 				}
-				lentele( $lang['search']['forum_messages'], $text );
+				lentele( getLangText('search', 'forum_messages'), $text );
 			}
 
 		}
@@ -106,7 +106,7 @@ if ( isset( $_POST['s'] ) ) {
 					$i++;
 					$text .= "<a href='" . url( "?id," . $conf['pages']['straipsnis.php']['id'] . ";k," . $row6['kat'] . ";m," . $row6['id'] ) . "'>" . trimlink( input( $row6['pav'] ), 40 ) . "...</a><br />";
 				}
-				lentele( $lang['search']['articles'], $text );
+				lentele( getLangText('search', 'articles'), $text );
 			}
 
 		}
@@ -119,7 +119,7 @@ if ( isset( $_POST['s'] ) ) {
 					$i++;
 					$text .= "<a href='" . url( "?id," . $conf['pages']['siustis.php']['id'] . ";k," . $row7['categorija'] . ";v," . $row7['ID'] ) . "'>" . trimlink( input( $row7['pavadinimas'] ), 40 ) . "...</a><br />";
 				}
-				lentele( $lang['search']['downloads'], $text );
+				lentele( getLangText('search', 'downloads'), $text );
 			}
 
 		}
@@ -132,7 +132,7 @@ if ( isset( $_POST['s'] ) ) {
 					$i++;
 					$text .= "<a href='" . url( "?id," . $conf['pages']['galerija.php']['id'] . ";m," . $row7['ID'] ) . "'>" . trimlink( input( $row7['pavadinimas'] ), 40 ) . "...</a><br />";
 				}
-				lentele( $lang['search']['images'], $text );
+				lentele( getLangText('search', 'images'), $text );
 			}
 
 		}
@@ -146,7 +146,7 @@ if ( isset( $_POST['s'] ) ) {
 
 					$text .= user( $row9['nick'], $row9['id'], $row9['levelis'] ) . "<br />";
 				}
-				lentele( $lang['search']['members'], $text );
+				lentele( getLangText('search', 'members'), $text );
 			}
 
 		}
@@ -160,7 +160,7 @@ if ( isset( $_POST['s'] ) ) {
 
 					$text .= "<a href=\"" . url( "?id,{$row10['id']}" ) . "\">{$row10['pavadinimas']}</a><br />";
 				}
-				lentele( $lang['search']['pages'], $text );
+				lentele( getLangText('search', 'pages'), $text );
 			}
 
 		}
@@ -194,18 +194,18 @@ if ( isset( $_POST['s'] ) ) {
 						$text .= "<a href=" . url( "?id," . $conf['pages']['' . $file . '.php']['id'] . ";" . $link . "#" . $row2['id'] ) . ">" . substr( input( $row2['zinute'] ), 0, 200 ) . "...</a><br />";
 					}
 				}
-				lentele( $lang['search']['comments'], $text );
+				lentele( getLangText('search', 'comments'), $text );
 			}
 		}
 		if ( $i > 0 ) {
 			//$kiek = mysql_num_rows($sqlas);
-			//msg($lang['system']['done'],"<b>".input(str_replace("%"," ",$_POST['s']))."</b><br/>Rasta atikmenų: ".$i);
-			//msg($lang['search']['results'], $text);
+			//msg(getLangText('system', 'done'),"<b>".input(str_replace("%"," ",$_POST['s']))."</b><br/>Rasta atikmenų: ".$i);
+			//msg(getLangText('search', 'results'), $text);
 		} else {
-			klaida( $lang['system']['sorry'], "<b>" . input( str_replace( "%", " ", $_POST['s'] ) ) . "</b> {$lang['search']['notfound']}" );
+			klaida( getLangText('system', 'sorry'), "<b>" . input( str_replace( "%", " ", $_POST['s'] ) ) . "</b> " . getLangText('search',  'notfound') . "" );
 		}
 	} else {
-		klaida( $lang['system']['warning'], $lang['search']['short'] );
+		klaida( getLangText('system', 'warning'), getLangText('search', 'short') );
 	}
 }
 

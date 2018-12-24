@@ -48,27 +48,27 @@ function linksAdminButtons($buttons)
         'links'     => [
             [
                 'url' 	=> url( "?id,999;a,links;v,1" ),
-                'value'	=> $lang['admin']['links_unpublished'],
+                'value'	=> getLangText('admin', 'links_unpublished'),
                 'icon'	=> adminIcon('links', 'unpublished')
             ],
             [
                 'url' 	=> url( "?id,999;a,links;v,5" ),
-                'value'	=> $lang['admin']['links_create'],
+                'value'	=> getLangText('admin', 'links_create'),
                 'icon'	=> adminIcon('links', 'create')
             ],
             [
                 'url' 	=> url( "?id,999;a,links;v,4" ),
-                'value'	=> $lang['admin']['links_edit'],
+                'value'	=> getLangText('admin', 'links_edit'),
                 'icon'	=> adminIcon('links', 'edit')
             ],
             [
                 'url' 	=> url( "?id,999;a,links;v,2" ),
-                'value'	=> $lang['system']['createcategory'],
+                'value'	=> getLangText('system', 'createcategory'),
                 'icon'	=> adminIcon('links', 'create_category')
             ],
             [
                 'url' 	=> url( "?id,999;a,links;v,3" ),
-                'value'	=> $lang['system']['editcategory'],
+                'value'	=> getLangText('system', 'editcategory'),
                 'icon'	=> adminIcon('links', 'edit_category')
             ]
         ],

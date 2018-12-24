@@ -15,7 +15,7 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 $limit = 15;
 //
 if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['siustis'], buttonsMenu(buttons('downloads')));
+	lentele(getLangText('admin', 'siustis'), buttonsMenu(buttons('downloads')));
 }
 
 if ( empty( $url['s'] ) ) {
@@ -42,7 +42,7 @@ if (isset($_GET['p'])) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['download_activated']
+				'message' 	=> getLangText('admin', 'download_activated')
 			]
 		);
 	} else {
@@ -78,7 +78,7 @@ if (isset($url['t'])) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['download_deleted']
+				'message' 	=> getLangText('admin', 'download_deleted')
 			]
 		);
 	} else {
@@ -116,7 +116,7 @@ if (isset( $_POST['downloads_delete'])) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['posts_deleted']
+					'message' 	=> getLangText('admin', 'posts_deleted')
 				]
 			);
 		} else {
@@ -148,7 +148,7 @@ if (isset( $_POST['downloads_delete'])) {
 	$selectQuery = "SELECT * FROM `" . LENTELES_PRIESAGA . "siuntiniai` WHERE `id`=" . escape($redaguoti) . " LIMIT 1";
 	$extra = mysql_query1($selectQuery);
 
-} elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['edit'] ) {
+} elseif ( isset( $_POST['action'] ) && $_POST['action'] == getLangText('admin', 'edit') ) {
 	$apie        	= $_POST['Aprasymas'];
 	$pavadinimas 	= strip_tags( $_POST['Pavadinimas'] );
 	$category 	 = (int)$_POST['cat'];
@@ -170,7 +170,7 @@ if (isset( $_POST['downloads_delete'])) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['download_updated']
+				'message' 	=> getLangText('admin', 'download_updated')
 			]
 		);
 	} else {
@@ -182,7 +182,7 @@ if (isset( $_POST['downloads_delete'])) {
 		);
 	}
 
-} elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['download_create'] ) {
+} elseif ( isset( $_POST['action'] ) && $_POST['action'] == getLangText('admin', 'download_create') ) {
 
 	if ( isset( $_FILES['failas'] ) && !empty( $_FILES['failas'] ) ) {
 		if ( is_uploaded_file( $_FILES['failas']['tmp_name'] ) ) {
@@ -200,7 +200,7 @@ if (isset( $_POST['downloads_delete'])) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['download_created']
+					'message' 	=> getLangText('admin', 'download_created')
 				]
 			);
 		} else {
@@ -227,9 +227,9 @@ if ( isset( $_GET['v'] ) ) {
 		if($downloads = mysql_query1($selectQuery)) {
 			//FILTRAVIMAS
 			$formData = [
-				'pavadinimas'	=> $lang['download']['title'],
-				'data'			=> $lang['download']['date'],
-				'apie'			=> $lang['download']['about'],
+				'pavadinimas'	=> getLangText('download', 'title'),
+				'data'			=> getLangText('download', 'date'),
+				'apie'			=> getLangText('download', 'about'),
 			];
 
 			$info[] = tableFilter($formData, $_POST, '#downloads');
@@ -238,25 +238,25 @@ if ( isset( $_GET['v'] ) ) {
 			foreach ($downloads as $download) {
 				$info[] = [
 					"#"							=> '<input type="checkbox" value="' . $download['ID'] . '" name="downloads_delete[]" class="filled-in" id="downloads-delete-' . $download['ID'] . '"><label for="downloads-delete-' . $download['ID'] . '"></label>',
-					$lang['download']['title'] 	=> input($download['pavadinimas']),
-					$lang['download']['date']  	=> date('Y-m-d', $download['data']),
-					$lang['download']['about'] 	=> trimlink(strip_tags($download['apie']), 55),
-					$lang['admin']['action']   	=> "<a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $download['ID'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\"></a> <a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $download['ID'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a>"
+					getLangText('download', 'title') 	=> input($download['pavadinimas']),
+					getLangText('download', 'date')  	=> date('Y-m-d', $download['data']),
+					getLangText('download', 'about') 	=> trimlink(strip_tags($download['apie']), 55),
+					getLangText('admin', 'action')   	=> "<a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $download['ID'] ) . "' title='" . getLangText('admin',  'delete') . "' onClick=\"return confirm('" . getLangText('system', 'delete_confirm') . "')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\"></a> <a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $download['ID'] ) . "' title='" . getLangText('admin',  'edit') . "'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a>"
 				];
 			}
 
 			$tableClass = new Table($info);
-			$content = '<form id="downloads" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . $lang['system']['delete'] . '</button></form>';
-			lentele( $lang['admin']['edit'], $content);
+			$content = '<form id="downloads" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . getLangText('system', 'delete') . '</button></form>';
+			lentele( getLangText('admin', 'edit'), $content);
 			// if list is bigger than limit, then we show list with pagination
 			if ( $viso > $limit ) {
-				lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+				lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 			}
 		} else {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['system']['no_items']
+					'message' 	=> getLangText('system', 'no_items')
 				]
 			);
 		}
@@ -266,8 +266,8 @@ if ( isset( $_GET['v'] ) ) {
 		if ( ! isset( $nocat ) ) {
 			if ( !isset( $_POST['tipas'] ) && !isset( $extra ) ) {
 				$type = [
-					1 => $lang['admin']['download_uploaded'],
-					2 => $lang['admin']['link']
+					1 => getLangText('admin', 'download_uploaded'),
+					2 => getLangText('admin', 'link')
 				];
 
 				$tipas = [
@@ -277,26 +277,26 @@ if ( isset( $_GET['v'] ) ) {
 						"name"   => "type"
 					],
 
-					$lang['admin']['download_type']   => [
+					getLangText('admin', 'download_type')   => [
 						"type"  => "select",
 						"value" => $type,
 						"name"  => "tipas"
 					],
 
-					$lang['admin']['download_select'] => [
+					getLangText('admin', 'download_select') => [
 						"type"  	=> "submit",
 						"name"  	=> "action",
 						'form_line'	=> 'form-not-line',
-						"value" 	=> $lang['admin']['download_select']
+						"value" 	=> getLangText('admin', 'download_select')
 					]
 				];
 
 				$formClass = new Form($tipas);	
-				lentele($lang['admin']['download_Create'], $formClass->form());
+				lentele(getLangText('admin', 'download_Create'), $formClass->form());
 			}
 
 			if ( isset( $_POST['tipas'] ) || isset( $extra ) ) {
-				$editOrCreate = (isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['download_create'];
+				$editOrCreate = (isset($extra)) ? getLangText('admin', 'edit') : getLangText('admin', 'download_create');
 
 				$downloadForm = [
 					"Form"	=> [
@@ -308,13 +308,13 @@ if ( isset( $_GET['v'] ) ) {
 				];
 
 				if((! isset($extra ) && @$_POST['tipas'] != 2 )) {
-					$downloadForm[$lang['admin']['download_file']] = [
+					$downloadForm[getLangText('admin', 'download_file')] = [
 						"name"  => "failas",
 						"type"  => 'file',
 						"value" => "",
 					];
 				} elseif(isset($extra) || $_POST['tipas'] == 2) {
-					$downloadForm[$lang['admin']['download_fileurl']] = [
+					$downloadForm[getLangText('admin', 'download_fileurl')] = [
 						"name"  => "failas2",
 						"type"  => 'text',
 						"value" => (isset($extra['file'])) ? input($extra['file']) : '',
@@ -322,25 +322,25 @@ if ( isset( $_GET['v'] ) ) {
 				}
 
 				$downloadForm += [
-					$lang['admin']['download_download']	=> [
+					getLangText('admin', 'download_download')	=> [
 						"type"  => "text",
 						"value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '',
 						"name"  => "Pavadinimas"
 					],
 
-					$lang['system']['category']			=> [
+					getLangText('system', 'category')			=> [
 						"type"     => "select",
 						"value"    => $categories,
 						"name"     => "cat",
 						"selected" => (isset($extra['categorija']) ? input($extra['categorija']) : '0')
 					],
 
-					$lang['admin']['download_about']	=> [
+					getLangText('admin', 'download_about')	=> [
 						"type"  => "string",
 						"value" => editor('jquery', 'mini', 'Aprasymas', (isset($extra['apie'])) ? $extra['apie'] : '')
 					],
 
-					$lang['admin']['article_shown'] 	=> [
+					getLangText('admin', 'article_shown') 	=> [
 						'type'		=> 'switch',
 						'value'		=> 1,
 						'name'		=> 'rodoma',
@@ -367,13 +367,13 @@ if ( isset( $_GET['v'] ) ) {
 				}
 
 				$formClass = new Form($downloadForm);	
-				lentele($lang['admin']['download_create'], $formClass->form());
+				lentele(getLangText('admin', 'download_create'), $formClass->form());
 			}
 		} else {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['system']['nocategories']
+					'message' 	=> getLangText('system', 'nocategories')
 				]
 			);
 		}
@@ -387,9 +387,9 @@ if ( isset( $_GET['v'] ) ) {
 			
 			//FILTRAVIMAS
 			$formData = [
-				'pavadinimas'	=> $lang['download']['title'],
-				'data'			=> $lang['download']['date'],
-				'apie'			=> $lang['download']['about'],
+				'pavadinimas'	=> getLangText('download', 'title'),
+				'data'			=> getLangText('download', 'date'),
+				'apie'			=> getLangText('download', 'about'),
 			];
 
 			$info[] = tableFilter($formData, $_POST, '#downloads');
@@ -397,26 +397,26 @@ if ( isset( $_GET['v'] ) ) {
 			foreach ($downloadsNotActive as $download) {
 				$info[] = [
 					"#"							=> '<input type="checkbox" value="' . $download['ID'] . '" name="downloads_delete[]" class="filled-in" id="downloads-delete-' . $download['ID'] . '"><label for="downloads-delete-' . $download['ID'] . '"></label>',
-					$lang['download']['title'] 	=> input($download['pavadinimas']),
-					$lang['download']['date']  	=> date('Y-m-d', $download['data']),
-					$lang['download']['about'] 	=> trimlink(strip_tags($download['apie']), 55),
-					$lang['admin']['action']   	=> "<a href='" . url( "?id,{$url['id']};a,{$url['a']};p," . $download['ID'] ) . "'title='{$lang['admin']['acept']}'><img src='" . ROOT . "core/assets/images/icons/tick_circle.png' alt='a'></a><a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $download['ID'] ) . "' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\"></a> <a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $download['ID'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a>"
+					getLangText('download', 'title') 	=> input($download['pavadinimas']),
+					getLangText('download', 'date')  	=> date('Y-m-d', $download['data']),
+					getLangText('download', 'about') 	=> trimlink(strip_tags($download['apie']), 55),
+					getLangText('admin', 'action')   	=> "<a href='" . url( "?id,{$url['id']};a,{$url['a']};p," . $download['ID'] ) . "'title='" . getLangText('admin',  'acept') . "'><img src='" . ROOT . "core/assets/images/icons/tick_circle.png' alt='a'></a><a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $download['ID'] ) . "' title='" . getLangText('admin',  'delete') . "' onClick=\"return confirm('" . getLangText('system', 'delete_confirm') . "')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\"></a> <a href='" . url( "?id,{$url['id']};a,{$url['a']};h," . $download['ID'] ) . "' title='" . getLangText('admin',  'edit') . "'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a>"
 				];
 			}
 
 			$tableClass  = new Table($info);
-			$content = '<form id="downloads" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . $lang['system']['delete'] . '</button></form>';
-			lentele( $lang['admin']['download_unpublished'], $content);
+			$content = '<form id="downloads" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . getLangText('system', 'delete') . '</button></form>';
+			lentele( getLangText('admin', 'download_unpublished'), $content);
 			// if list is bigger than limit, then we show list with pagination
 			if ( $viso > $limit ) {
-				lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+				lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 			}
 
 		} else {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['system']['no_items']
+					'message' 	=> getLangText('system', 'no_items')
 				]
 			);
 		}

@@ -55,10 +55,10 @@ function lentele_c( $pavadinimas, $tekstas, $n_nuoroda, $kom_kiekis = FALSE, $da
 	$data = date( 'Y-m-d', $datai );
 //Naujienų
 	if ( 'naujienos' == str_replace( 'content/pages/', '', $page ) ) {
-		$skaitom = "{$lang['news']['read']} • {$lang['news']['comments']}({$kom_kiekis})";
+		$skaitom = getLangText('news', 'read') . " • " . getLangText('news', 'comments') . "(" . $kom_kiekis . ")";
 //Straipsnių
 	} else {
-		$skaitom = "{$lang['article']['read']}({$kom_kiekis})";
+		$skaitom = getLangText('article', 'read') . "(" . $kom_kiekis .")";
 	}
 //Atvaizduojame
 	?>
@@ -366,12 +366,12 @@ function bbcode( $str ) {
 
 	// Rodom paveiksliuka
 	$str = preg_replace_callback("/\[img\](http:\/\/[^\s'\"<>]+(\.gif|\.jpeg|\.jpg|\.png))\[\/img\]/", function($m) {
-		return '<a title=" '. $lang['admin']['preview'] .' " href="' . $m[1] . '">
+		return '<a title=" '. getLangText('admin', 'preview') .' " href="' . $m[1] . '">
 			<img class="forum_img" src="' . $m[1] . '" alt="pc" onerror="this.src=\'core/assets/images/icons/nopic.png\';this.style.border=\'1px dashed red\';this.style.margin=\'5px\';this.style.padding=\'5px\'">
 		</a>';
 	}, $str);
 	$str = preg_replace_callback( "/\[img\](http:\/\/[^\s'\"<>]+(\.GIF|\.JPEG|\.JPG|\.PNG))\[\/img\]/", function($m) {
-		return "<a title=\"{$lang['admin']['preview']}\" href=\"\\1\"><img border=0 class=\"forum_img\" src='" . $m[1] . "' alt=\"pic\" onerror=\"this.src='core/assets/images/icons/nopic.png';this.style.border='1px dashed red';this.style.margin='5px';this.style.padding='5px'\"></a>";
+		return "<a title=\"" . getLangText('admin',  'preview') . "\" href=\"\\1\"><img border=0 class=\"forum_img\" src='" . $m[1] . "' alt=\"pic\" onerror=\"this.src='core/assets/images/icons/nopic.png';this.style.border='1px dashed red';this.style.margin='5px';this.style.padding='5px'\"></a>";
 	}, $str);
 
 	// [img=http://www/image.gif]

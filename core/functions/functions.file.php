@@ -15,7 +15,7 @@ if(! function_exists('delLineFromFile')) {
 		// check the file exists
 		if ( !is_writable( $fileName ) ) {
 			// print an error
-			klaida( $lang['system']['error'], $lang['system']['error'] );
+			klaida( getLangText('system', 'error'), getLangText('system', 'error') );
 			// exit the function
 			exit;
 		} else {
@@ -29,7 +29,7 @@ if(! function_exists('delLineFromFile')) {
 		// check if the line to delete is greater than the length of the file
 		if ( $lineToDelete > sizeof( $arr ) ) {
 			// print an error
-			klaida( $lang['system']['error'], "{$lang['system']['error']} <b>[$lineNum]</b>." );
+			klaida( getLangText('system', 'error'), getLangText('system', 'error') . "<b>[" . $lineNum. "</b>." );
 			// exit the function
 			exit;
 		}
@@ -40,7 +40,7 @@ if(! function_exists('delLineFromFile')) {
 		// open the file for reading
 		if ( !$fp = fopen( $fileName, 'w+' ) ) {
 			// print an error
-			klaida( $lang['system']['error'], "{$lang['system']['error']} ($fileName)" );
+			klaida( getLangText('system', 'error'), getLangText('system', 'error') . "(" . $fileName . ")" );
 			// exit the function
 			exit;
 		}
@@ -56,7 +56,7 @@ if(! function_exists('delLineFromFile')) {
 			fclose( $fp );
 		}
 
-		//msg($lang['system']['done'],"IP {$lang['admin']['unbaned']}.");
+		//msg(getLangText('system', 'done'),"IP " . getLangText('admin',  'unbaned') . ".");
 	}
 }
 
@@ -134,10 +134,10 @@ if(! function_exists('getFiles')) {
 				}
 				closedir( $dh );
 			} else {
-				die($lang['system']['error'] . ' ' . $lang['system']['cantread'] . ': ' . $path);
+				die(getLangText('system', 'error') . ' ' . getLangText('system', 'cantread') . ': ' . $path);
 			}
 		} else {
-			die($lang['system']['error'] . ': ' . $lang['system']['notdir'] . ': ' . $path);
+			die(getLangText('system', 'error') . ': ' . getLangText('system', 'notdir') . ': ' . $path);
 		}
 		sort( $fileNames, SORT_STRING ); // surusiuojam
 		$sortedFiles = array();

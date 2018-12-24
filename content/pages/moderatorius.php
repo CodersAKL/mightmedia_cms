@@ -26,7 +26,7 @@ if ( !empty( $_SESSION[SLAPTAS]['mod'] ) ) {
 <div>";
 	foreach ( $failai as $id => $failas ) {
 		if ( $failas != 'com' && $failas != 'frm' ) {
-			$text .= "<div class=\"blokas\"><center><a href=\"" . url( "?id," . $url['id'] . ";a," . ( $id + 1 ) ) . "\"><img src=\"core/assets/images/mod/" . basename( $failas, ".php" ) . ".png\" />" . ( isset( $lang['admin'][basename( $failas, ".php" )] ) ? $lang['admin'][basename( $failas, ".php" )] : nice_name( $failas ) ) . "</a></center></div>";
+			$text .= "<div class=\"blokas\"><center><a href=\"" . url( "?id," . $url['id'] . ";a," . ( $id + 1 ) ) . "\"><img src=\"core/assets/images/mod/" . basename( $failas, ".php" ) . ".png\" />" . ( strlen( getLangText('admin', basename( $failas, ".php" )) ) ? getLangText('admin', basename( $failas, ".php" )) : nice_name( $failas ) ) . "</a></center></div>";
 		}
 	}
 	$text .= "</div><br style=\"clear:left\"/></td>
@@ -41,11 +41,11 @@ if ( !empty( $_SESSION[SLAPTAS]['mod'] ) ) {
 		if ( file_exists( ROOT . $conf['Admin_folder'] . "/" . $failai[( (int)$url['a'] - 1 )] ) ) {
 			include_once ( ROOT . $conf['Admin_folder'] . "/" . $failai[( (int)$url['a'] - 1 )] );
 		} else {
-			klaida( $lang['system']['error'], $lang['system']['nopage'] );
+			klaida( getLangText('system', 'error'), getLangText('system', 'nopage') );
 		}
 	}
 } else {
-	klaida( $lang['system']['error'], $lang['system']['nopage'] );
+	klaida( getLangText('system', 'error'), getLangText('system', 'nopage') );
 }
 
 ?>

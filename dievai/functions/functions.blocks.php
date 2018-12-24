@@ -21,7 +21,7 @@ function blocksOrder($data)
 			delete_cache( "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='L' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
 			delete_cache( "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='C' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
 
-			return $lang['system']['updated'];
+			return getLangText('system', 'updated');
 		}
 	}
 
@@ -32,9 +32,9 @@ function blockContent($data)
 {
     global $url, $lang;
 
-    $content = '<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $data['id'] ) . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="' . ROOT . 'core/assets/images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
-    <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $data['id'] ) . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
-    <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $data['id'] ) . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/pencil.png" title="' . $lang['admin']['panel_text'] . '" align="right" /></a>
+    $content = '<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $data['id'] ) . '" style="align:right" onClick="return confirm(\'' . getLangText('admin', 'delete') . '?\')"><img src="' . ROOT . 'core/assets/images/icons/cross.png" title="' . getLangText('admin', 'delete') . '" align="right" /></a>
+    <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $data['id'] ) . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/wrench.png" title="' . getLangText('admin', 'edit') . '" align="right" /></a>
+    <a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $data['id'] ) . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/pencil.png" title="' . getLangText('admin', 'panel_text') . '" align="right" /></a>
     ' . $data['panel'];
 
     return $content;

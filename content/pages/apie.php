@@ -11,7 +11,7 @@
  **/
 
 
-lentele( "{$lang['about']['about']} - " . $conf['Pavadinimas'], $conf['Apie'] );
+lentele( getLangText('about', 'about') . " - " . $conf['Pavadinimas'], $conf['Apie'] );
 
 $adminai = '';
 //Kešuojam 24 valandom
@@ -26,5 +26,5 @@ if ( sizeof( $sql ) > 0 ) {
 	$adminai .= "</ul>";
 }
 if ( !empty( $adminai ) ) {
-	lentele( $lang['about']['admins'], $adminai );
+	lentele( getLangText('about', 'admins'), $adminai );
 }

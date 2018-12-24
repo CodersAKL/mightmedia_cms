@@ -13,7 +13,7 @@ if ( !defined( "LEVEL" ) || LEVEL > 1 || !defined( "OK" ) ) {
 }
 
 if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['users'], buttonsMenu(buttons('users')));
+	lentele(getLangText('admin', 'users'), buttonsMenu(buttons('users')));
 }
 
 if ( !isset( $_GET['v'] ) ) {
@@ -43,7 +43,7 @@ if ( isset( $_POST['users_delete'] ) ) {
 		"header",
 		[
 			'type'		=> 'success',
-			'message' 	=> $lang['admin']['post_deleted']
+			'message' 	=> getLangText('admin', 'post_deleted')
 		]
 	);
 }
@@ -55,12 +55,12 @@ if ( isset( $url['d'] ) && $url['d'] != "" && $url['d'] != 0 ) {
 		"header",
 		[
 			'type'		=> 'success',
-			'message' 	=> $lang['admin']['post_deleted']
+			'message' 	=> getLangText('admin', 'post_deleted')
 		]
 	);
 }
 
-if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['save'] && $_POST['id'] > 0 ) {
+if ( isset( $_POST['action'] ) && $_POST['action'] == getLangText('admin', 'save') && $_POST['id'] > 0 ) {
 	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE id='" . $_POST['id'] . "'" . ( $_SESSION[SLAPTAS]['id'] == 1 ? '' : 'AND `levelis` > 1' ) . " LIMIT 1" );
 
 	if ( !empty( $_POST['tsk'] ) ) {
@@ -91,7 +91,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['save'] && 
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['user_updated']
+				'message' 	=> getLangText('admin', 'user_updated')
 			]
 		);
 	} else {
@@ -117,7 +117,7 @@ if ( isset( $url['r'] ) && $url['r'] != "" && $url['r'] != 0 ) {
 			$lygiai[$key] = $conf['level'][$key]['pavadinimas'];
 		}
 
-		$infoIcon = infoIcon($lang['system']['warning'] . ' ' . $lang['admin']['user_passinfo']);
+		$infoIcon = infoIcon(getLangText('system', 'warning') . ' ' . getLangText('admin', 'user_passinfo'));
 
 		$userEditForm = [
 			'Form'											=> [
@@ -127,26 +127,26 @@ if ( isset( $url['r'] ) && $url['r'] != "" && $url['r'] != 0 ) {
 				'extra' 	=> "onSubmit=\"return checkMail('change_contacts','email')\""
 			],
 
-			$lang['admin']['user_points']					=> [
+			getLangText('admin', 'user_points')					=> [
 				'type' 	=> 'text',
 				'name' 	=> 'tsk',
 				'extra' => "onkeyup=\"javascript:this.value=this.value.replace(/[^0-9]/g, '');\"",
 				'value' => ( isset( $info['taskai'] ) ? input( $info['taskai'] ) : "" ),
 			],
 
-			$lang['admin']['user_level']					=> [
+			getLangText('admin', 'user_level')					=> [
 				"type" 		=> "select",
 				"value" 	=> $lygiai,
 				"name" 		=> "lvl",
 				"selected" 	=> ( isset( $info['levelis'] ) ? (int)$info['levelis'] : '' )
 			],
 
-			$lang['admin']['user_pass'] . ' ' . $infoIcon	=> [
+			getLangText('admin', 'user_pass') . ' ' . $infoIcon	=> [
 				'type' => 'password',
 				'name' => 'slapt'
 			],
 
-			$lang['admin']['user_email']   					=> [
+			getLangText('admin', 'user_email')   					=> [
 				'type' 	=> 'text',
 				'value' => ( isset( $info['email'] ) ? input( $info['email'] ) : "" )
 			],
@@ -160,21 +160,21 @@ if ( isset( $url['r'] ) && $url['r'] != "" && $url['r'] != 0 ) {
 				'type' 		=> 'submit',
 				'name' 		=> 'action',
 				'form_line'	=> 'form-not-line',
-				"value" 	=> $lang['admin']['save']
+				"value" 	=> getLangText('admin', 'save')
 			]
 		];
 		
 		$formClass = new Form($userEditForm);
 		$title= '<strong>' . input( $info['nick'] ) . '</strong>';
 		
-		lentele($title, $formClass->form() . "<br /><small>*{$lang['admin']['user_canteditadmin']}</small>", $lang['admin']['user_details']);
+		lentele($title, $formClass->form() . "<br /><small>*" . getLangText('admin',  'user_canteditadmin') . "</small>", getLangText('admin', 'user_details'));
 		
 		unset( $info, $userEditForm );
 	} else {
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> $lang['admin']['user_canteditadmin']
+				'message' 	=> getLangText('admin', 'user_canteditadmin')
 			]
 		);
 	}
@@ -189,7 +189,7 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 		$grupe .= "<img src='" . ROOT . "core/assets/images/icons/" . $conf['level'][$key]['pav'] . "'> <a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";v," . $_GET['v'] . ";k," . $key ) . "'>" . $conf['level'][$key]['pavadinimas'] . "</a><br>";
 	}
 
-	lentele( $lang['admin']['user_groups'], $grupe );
+	lentele( getLangText('admin', 'user_groups'), $grupe );
 
 	if ( isset( $_GET['k'] ) ) {//vartotoju sarasas pagal esamą levelį
 	
@@ -200,9 +200,9 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 
 			//FILTER - begin
 			$formData = [
-				'nick'	=> $lang['admin']['user_name'],
-				'ip '	=> 'IP ' . infoIcon($lang['system']['warning'] . ' ' . $lang['admin']['user_ip_filter']),
-				'email'	=> $lang['admin']['user_email'],
+				'nick'	=> getLangText('admin', 'user_name'),
+				'ip '	=> 'IP ' . infoIcon(getLangText('system', 'warning') . ' ' . getLangText('admin', 'user_ip_filter')),
+				'email'	=> getLangText('admin', 'user_email'),
 			];
 			
 			$info2[] = tableFilter($formData, $_POST, '#usersch');
@@ -215,20 +215,20 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 				$i++;
 				$info2[] = array(
 					"#"                           => '<input type="checkbox" value="' . $row2['id'] . '" name="users_delete[]" class="filled-in" id="users-delete-' . $row2['id'] . '"><label for="users-delete-' . $row2['id'] . '"></label>',
-				     $lang['admin']['user_name']  => user( $row2['nick'], $row2['id'], $row2['levelis'] ),
+				     getLangText('admin', 'user_name')  => user( $row2['nick'], $row2['id'], $row2['levelis'] ),
 				     "IP"                         => $row2['ip'],
-				     $lang['admin']['user_email'] => "" . $row2['email'] . "",
-				     $lang['admin']['action']     => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "'title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "core/assets/images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a," . getAdminPagesbyId('bans') . ";b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "core/assets/images/icons/delete.png' border='0' class='middle' /></a>"
+				     getLangText('admin', 'user_email') => "" . $row2['email'] . "",
+				     getLangText('admin', 'action')     => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "'title = '" . getLangText('admin',  'edit') . "'><img src='" . ROOT . "core/assets/images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . getLangText('system', 'delete_confirm') . "')\" title = '" . getLangText('admin',  'delete') . "'><img src='" . ROOT . "core/assets/images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a," . getAdminPagesbyId('bans') . ";b,1;ip," . $row2['ip'] ) . "' title = '" . getLangText('admin',  'badip') . "'><img src='" . ROOT . "core/assets/images/icons/delete.png' border='0' class='middle' /></a>"
 				);
 			}
 
 			$title = $conf['level'][$_GET['k']]['pavadinimas'] . " ({$viso})";
 			$tableClass = new Table($info2);
-			$content = "<form id=\"usersch\" method=\"post\">" . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . $lang['system']['delete'] . '</button></form>';
+			$content = "<form id=\"usersch\" method=\"post\">" . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . getLangText('system', 'delete') . '</button></form>';
 			lentele($title, $content);
 			// if list is bigger than limit, then we show list with pagination
 			if ($viso > $limit) {
-				lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+				lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 			}
 
 			unset($info2, $i);
@@ -236,29 +236,29 @@ if ( isset( $_GET['v'] ) && $_GET['v'] == 1 ) {
 	}
 }
 if ( isset( $_GET['v'] ) && $_GET['v'] == 4 ) {
-	$text = "<form name='rasti' method='post' id='rasti' action=''>{$lang['admin']['user_name']}: <input type='text' name='vardas'> <input name='rasti' type='submit' value='{$lang['admin']['user_find']}'></form>";
+	$text = "<form name='rasti' method='post' id='rasti' action=''>" . getLangText('admin',  'user_name') . ": <input type='text' name='vardas'> <input name='rasti' type='submit' value='" . getLangText('admin',  'user_find') . "'></form>";
 	
-	lentele($lang['admin']['user_find'], $text);
+	lentele(getLangText('admin', 'user_find'), $text);
 	
 	if ( isset( $_POST['rasti'] ) && isset( $_POST['vardas'] ) ) {
 		$resultas = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE nick LIKE " . escape( "%" . $_POST['vardas'] . "%" ) . "LIMIT 0,100" );
 		if (! empty($resultas)) {
 			foreach ( $resultas as $row2 ) {
 				$info3[] = array(
-					$lang['admin']['user_name']      => user( $row2['nick'], $row2['id'], $row2['levelis'] ),
+					getLangText('admin', 'user_name')      => user( $row2['nick'], $row2['id'], $row2['levelis'] ),
 					"IP"                             => $row2['ip'],
-					$lang['admin']['user_email']	 => "" . $row2['email'] . "",
-					" "                              => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\" title='{$lang['admin']['delete']}'><img src='" . ROOT . "core/assets/images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a," . getAdminPagesbyId('bans') . ";b,1;ip," . $row2['ip'] ) . "' title='{$lang['admin']['badip']}'><img src='" . ROOT . "core/assets/images/icons/delete.png' border='0' class='middle' /></a>"
+					getLangText('admin', 'user_email')	 => "" . $row2['email'] . "",
+					" "                              => "<a href='" . url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";r," . $row2['id'] ) . "' title = '" . getLangText('admin',  'edit') . "'><img src='" . ROOT . "core/assets/images/icons/pencil.png' border='0' class='middle' /></a> <a href='" . url( "d," . $row2['id'] ) . "' onClick=\"return confirm('" . getLangText('admin', 'delete') . "?')\" title = '" . getLangText('admin',  'delete') . "'><img src='" . ROOT . "core/assets/images/icons/cross.png' border='0' class='middle' /></a><a href='" . url( "?id," . $_GET['id'] . ";a," . getAdminPagesbyId('bans') . ";b,1;ip," . $row2['ip'] ) . "' title = '" . getLangText('admin',  'badip') . "'><img src='" . ROOT . "core/assets/images/icons/delete.png' border='0' class='middle' /></a>"
 				);
 			}
 
 			$tableClass = new Table($info3);
-			lentele($lang['admin']['user_list'], $tableClass->render());
+			lentele(getLangText('admin', 'user_list'), $tableClass->render());
 		} else {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['admin']['user_notfound']
+					'message' 	=> getLangText('admin', 'user_notfound')
 				]
 			);
 		}

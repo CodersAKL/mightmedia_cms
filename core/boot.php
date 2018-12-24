@@ -1,5 +1,4 @@
 <?php
-
 // ban for trying open file
 if (basename($_SERVER['PHP_SELF']) == 'boot.php') {
 	ban(getip(), $lang['system']['forhacking']);

@@ -30,17 +30,17 @@ if ( sizeof( $sql ) > 0 ) {
 			$grupe = '-';
 		}
 		$i++;
-		$info[] = array( "{$lang['ulist']['username']}" => user( $row['nick'], $row['id'], $row['levelis'] ), "{$lang['ulist']['group']}" => $grupe );
+		$info[] = array( getLangText('ulist',  'username')  => user( $row['nick'], $row['id'], $row['levelis'] ), getLangText('ulist',  'group')  => $grupe );
 		if ( $_SESSION[SLAPTAS]['level'] == 1 ) {
-			$info[( $i - 1 )][$lang['ulist']['email']] = preg_replace( "#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)#i", "<a href=\"javascript:mailto:mail('\\1','\\2');\">\\1_(at)_\\2</a>", input( $row['email'] ) );
+			$info[( $i - 1 )][getLangText('ulist', 'email')] = preg_replace( "#([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+)#i", "<a href=\"javascript:mailto:mail('\\1','\\2');\">\\1_(at)_\\2</a>", input( $row['email'] ) );
 		}
 	}
 	//nupiesiam adminu lentele
 	include_once config('class', 'dir') . 'class.table.php';
 	$bla = new Table();
-	lentele( "{$lang['ulist']['list']} - $viso", $bla->render( $info ), FALSE );
+	lentele(getLangText('ulist', 'list') . " - " . $viso . ", " . $bla->render( $info ), FALSE );
 	if ( $viso > $limit ) {
-		lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+		lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 	}
 
 }
