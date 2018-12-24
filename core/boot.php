@@ -117,13 +117,13 @@ if (basename($_SERVER['PHP_SELF']) != 'upgrade.php' && basename($_SERVER['PHP_SE
 		}
 	}
 	$levels[1] = array(
-		'pavadinimas' => $lang['system']['admin'],
-		'aprasymas'   => $lang['system']['admin'],
+		'pavadinimas' => getLangText('system','admin'),
+		'aprasymas'   => getLangText('system','admin'),
 		'pav'         => 'admin.png'
 	);
 	$levels[2] = array(
-		'pavadinimas' => $lang['system']['user'],
-		'aprasymas'   => $lang['system']['user'],
+		'pavadinimas' => getLangText('system','user'),
+		'aprasymas'   => getLangText('system','user'),
 		'pav'         => 'user.png'
 	);
 
