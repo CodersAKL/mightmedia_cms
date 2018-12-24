@@ -35,8 +35,8 @@ if (! empty(getSession('username')) && ! empty(getSession('password'))) {
 		$result = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET `login_before`=login_data, `login_data` = '" . time() . "', `ip` = '" . escape(getip()) . "' WHERE `id` ='" . escape( $user_id ) . "' LIMIT 1" );
 		login( $linformacija2 );
 	} else {
-		mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "{$lang['user']['cookie']}: UserID: " . $user_id . " Pass: " . $user_pass ) . ", '" . time() . "', '" . escape( getip() ) . "')" );
-		$strError = $lang['user']['cookie'];
+		mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( getLangText('user', 'cookie') . ": UserID: " . $user_id . " Pass: " . $user_pass ) . ", '" . time() . "', '" . escape( getip() ) . "')" );
+		$strError = getLangText('user', 'cookie');
 		logout();
 	}
 }
@@ -56,8 +56,8 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'prisijungimas' ) {
 			}
 			header( "Location: " . ( isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : adresas() ) );
 		} else {
-			mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "{$lang['user']['wrong']}: User: " . $strUsername . " Pass: " . str_repeat( '*', strlen( $_POST['slaptazodis'] ) ) ) . ",'" . time() . "', '" . escape( getip() ) . "');" );
-			$strError = $lang['user']['wrong'];
+			mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( getLangText('user', 'wrong') . ": User: " . $strUsername . " Pass: " . str_repeat( '*', strlen( $_POST['slaptazodis'] ) ) ) . ",'" . time() . "', '" . escape( getip() ) . "');" );
+			$strError = getLangText('user', 'wrong');
 			// + bandymas
 			$loginError = getSession('login_error');
 			! empty($loginError) ? $loginError++ : $loginError = 1;
@@ -66,7 +66,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'prisijungimas' ) {
 		}
 		unset( $linfo, $strUsername, $strPassword );
 	} else {
-		$strError = $lang['user']['cantlogin'] . ' ' . (getSession('timeout_idle') - time() ) . 's.';
+		$strError = getLangText('user', 'cantlogin') . ' ' . (getSession('timeout_idle') - time() ) . 's.';
 		//jeigu baigesi laikas
 		if (getSession('timeout_idle') - time() <= 0) {
 			forgotSessions(
@@ -79,7 +79,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'prisijungimas' ) {
 	}
 }
 //jei paspaude atsijungti
-if ( isset( $_GET['id'] ) && !empty( $_GET['id'] ) && $_GET['id'] == $lang['user']['logout'] ) {
+if ( isset( $_GET['id'] ) && !empty( $_GET['id'] ) && $_GET['id'] == getLangText('user', 'logout') ) {
 	logout();
 	setcookie( "PHPSESSID", "", time() - 3600, PATH, DOM );
 	header( "HTTP/1.0 401 Unauthorized" );

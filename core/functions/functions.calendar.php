@@ -39,7 +39,7 @@ if(! function_exists('download')) {
 					exit;
 				}
 			} else {
-				klaida( $lang['system']['error'], $lang['download']['notfound'] );
+				klaida( getLangText('system', 'error'), getLangText('download', 'notfound') );
 				header( "HTTP/1.0 404 Not Found" );
 			}
 		} else {
@@ -105,8 +105,8 @@ if(! function_exists('showCalendar')) {
 		$sql = mysql_query1( $sql, 86400 );
 		foreach ( $sql as $row ) {
 			if ( $row['diena'] >= date( "j" ) ) {
-				$sventes[date( 'n' ) . "-" . $row['diena']][] = "<b>" . $row['nick'] . "</b> {$lang['calendar']['birthday']}. " . ( ($row['diena'] < date('j')) ? (amzius( $row['gim_data'] ) + 1) : amzius($row['gim_data'])) . "m.";
-				//$sventes[date( 'n' ) . "-" . $row['diena']][] = "<b>" . $row['nick'] . "</b> {$lang['calendar']['birthday']}. " . ( amzius( $row['gim_data'] ) + 1 ) . "m.";
+				$sventes[date( 'n' ) . "-" . $row['diena']][] = "<b>" . $row['nick'] . "</b> " . getLangText('calendar', 'birthday') . ". " . ( ($row['diena'] < date('j')) ? (amzius( $row['gim_data'] ) + 1) : amzius($row['gim_data'])) . "m.";
+				//$sventes[date( 'n' ) . "-" . $row['diena']][] = "<b>" . $row['nick'] . "</b> " . getLangText('calendar', 'birthday') . ". " . ( amzius( $row['gim_data'] ) + 1 ) . "m.";
 			}
 		}
 
@@ -136,18 +136,18 @@ if(! function_exists('showCalendar')) {
 			"November"
 		);
 		$keiciam               = array(
-			$lang['calendar']['December'],
-			$lang['calendar']['January'],
-			$lang['calendar']['February'],
-			$lang['calendar']['March'],
-			$lang['calendar']['April'],
-			$lang['calendar']['May'],
-			$lang['calendar']['June'],
-			$lang['calendar']['July'],
-			$lang['calendar']['August'],
-			$lang['calendar']['September'],
-			$lang['calendar']['October'],
-			$lang['calendar']['November']
+			getLangText('calendar','December'),
+			getLangText('calendar', 'January'),
+			getLangText('calendar', 'February'),
+			getLangText('calendar', 'March'),
+			getLangText('calendar', 'April'),
+			getLangText('calendar', 'May'),
+			getLangText('calendar', 'June'),
+			getLangText('calendar', 'July'),
+			getLangText('calendar', 'August'),
+			getLangText('calendar', 'September'),
+			getLangText('calendar', 'October'),
+			getLangText('calendar', 'November')
 		);
 		$referenceDay['month'] = str_replace( $ieskom, $keiciam, $referenceDay['month'] );
 		$month                 = $referenceDay['mon'];
@@ -155,7 +155,7 @@ if(! function_exists('showCalendar')) {
 		// Create a table with the necessary header informations
 		$return = '<div class="kalendorius"><table class="table" width="100%" >
 		<tr><th colspan="7">' . $referenceDay['month'] . ' - ' . $referenceDay['year'] . '</th></tr>
-		<tr class="dienos"><td>' . $lang['calendar']['Mon'] . '</td><td>' . $lang['calendar']['Tue'] . '</td><td>' . $lang['calendar']['Wed'] . '</td><td>' . $lang['calendar']['Thu'] . '</td><td>' . $lang['calendar']['Fri'] . '</td><td>' . $lang['calendar']['Sat'] . '</td><td>' . $lang['calendar']['Sun'] . '</td></tr>';
+		<tr class="dienos"><td>' . getLangText('calendar', 'Mon') . '</td><td>' . getLangText('calendar', 'Tue') . '</td><td>' . getLangText('calendar', 'Wed') . '</td><td>' . getLangText('calendar', 'Thu') . '</td><td>' . getLangText('calendar', 'Fri') . '</td><td>' . getLangText('calendar', 'Sat') . '</td><td>' . getLangText('calendar', 'Sun') . '</td></tr>';
 
 
 		// Display the first calendar row with correct positioning
@@ -176,7 +176,7 @@ if(! function_exists('showCalendar')) {
 				$class = '';
 			}
 			if ( !empty( $svente ) ) {
-				$return .= "<td$class ><div style='color:red' title=\"<b>{$lang['calendar']['this']}</b><br/>" . $svente . "<br/>\">$actday</div></td>";
+				$return .= "<td$class ><div style='color:red' title=\"<b>" . getLangText('calendar', 'this') . "</b><br/>" . $svente . "<br/>\">$actday</div></td>";
 			} else {
 				$return .= "<td$class>" . ( $actday <= $today['mday'] && puslapis('kas_naujo.php') ? "<a href='" . url( "?id," . puslapis( 'kas_naujo.php' ) . ';d,' . mktime( 23, 59, 59, $month, $actday, $year ) ) . "'>$actday</a>" : $actday ) . "</td>";
 			}
@@ -199,7 +199,7 @@ if(! function_exists('showCalendar')) {
 					$class = '';
 				}
 				if ( !empty( $svente ) ) {
-					$return .= "<td$class ><div style='color:red' title=\"<b>{$lang['calendar']['this']}</b><br/>" . $svente . "<br/>\">$actday</div></td>";
+					$return .= "<td$class ><div style='color:red' title=\"<b>" . getLangText('calendar', 'this') . "</b><br/>" . $svente . "<br/>\">$actday</div></td>";
 				} else {
 					$return .= "<td$class>" . ( $actday <= $today['mday'] && puslapis( 'kas_naujo.php' ) ? "<a href='" . url( "?id," . puslapis( 'kas_naujo.php' ) . ';d,' . mktime( 23, 59, 59, $month, $actday, $year ) ) . "'>$actday</a>" : $actday ) . "</td>";
 				}
@@ -224,7 +224,7 @@ if(! function_exists('showCalendar')) {
 
 				if ( $actday <= $lastDay['mday'] ) {
 					if ( !empty( $svente ) ) {
-						$return .= "<td$class ><div style='color:red' title=\"<b>{$lang['calendar']['this']}</b><br/>" . $svente . "<br/>\">$actday</div></td>";
+						$return .= "<td$class ><div style='color:red' title=\"<b>" . getLangText('calendar', 'this') . "</b><br/>" . $svente . "<br/>\">$actday</div></td>";
 					} else {
 						$return .= "<td$class>" . ( $actday <= $today['mday'] && puslapis( 'kas_naujo.php' ) ? "<a href='" . url( "?id," . puslapis( 'kas_naujo.php' ) . ';d,' . mktime( 23, 59, 59, $month, $actday, $year ) ) . "'>$actday</a>" : $actday ) . "</td>";
 					}
