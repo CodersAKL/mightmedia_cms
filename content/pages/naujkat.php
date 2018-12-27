@@ -33,7 +33,7 @@ if ( $sqlas && sizeof( $sqlas ) > 0 ) {
 			$kiek    = mysql_query1( "SELECT count(*) + (SELECT count(*) FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija` IN (SELECT `id` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`=" . escape( $sql['id'] ) . ")) as `kiek` FROM `" . LENTELES_PRIESAGA . "naujienos` WHERE `kategorija`=" . escape( $sql['id'] ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " LIMIT 1" );
 			$sqlkiek = $kiek['kiek'];
 			$info[]  = array(
-				$lang['system']['categories'] => "<a style=\"float: left;\" class=\"kat\" href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><img src='core/assets/images/naujienu_kat/" . input( $sql['pav'] ) . "' alt=\"\"  border=\"0\" /></a><div><a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><b>" . input( $sql['pavadinimas'] ) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input( $sql['aprasymas'] ) . "</div><div>{$lang['category']['news']}: $sqlkiek</div></span></div>" //,
+				getLangText('system', 'categories') => "<a style=\"float: left;\" class=\"kat\" href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><img src='core/assets/images/naujienu_kat/" . input( $sql['pav'] ) . "' alt=\"\"  border=\"0\" /></a><div><a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><b>" . input( $sql['pavadinimas'] ) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input( $sql['aprasymas'] ) . "</div><div>" . getLangText('category',  'news') . ": $sqlkiek</div></span></div>" //,
 			);
 
 		}
@@ -42,7 +42,7 @@ if ( $sqlas && sizeof( $sqlas ) > 0 ) {
 include_once config('class', 'dir') . 'class.table.php';
 $bla = new Table();
 if ( isset( $info ) ) {
-	lentele($lang['system']['categories'], $bla->render( $info ), FALSE );
+	lentele(getLangText('system', 'categories'), $bla->render( $info ), FALSE );
 }
 //Rodom naujienas esancias kategorijoj
 
@@ -58,22 +58,24 @@ $viso = kiek( "naujienos", "WHERE `rodoma`= 'TAIP' AND `kategorija`=" . escape( 
 if ( $viso > 0 ) {
 	$sqlas = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`='" . $k . "' AND `kieno`='naujienos' AND `lang` = " . escape( lang() ) . " ORDER BY `pavadinimas` LIMIT 1", 86400 );
 	if ( $viso > $limit ) {
-		lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+		lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 	}
 	if ( $k >= 0 ) {
 		if ( teises( $sqlas['teises'], getSession('level') ) || LEVEL == 1 ) {
 			foreach ( $sql as $row ) {
 				if ( isset( $conf['pages']['naujienos.php']['id'] ) ) {
 
-					$extra = "<div style='float: right;'>" . ( ( $row['kom'] == 'taip' ) ? "<a href='" . url( "?id," . $conf['pages']['naujienos.php']['id'] . ";k," . $row['id'] ) . "'>{$lang['news']['read']} • {$lang['news']['comments']} (" . $row['viso'] . ")</a>" : "<a href='" . url( "?id," . $conf['pages']['naujienos.php']['id'] . ";k," . $row['id'] ) . "'>{$lang['news']['read']}</a>" ) . "</div><br />";
+					$extra = "<div style='float: right;'>" . ( ( $row['kom'] == 'taip' ) ? 
+						"<a href='" . url( "?id," . $conf['pages']['naujienos.php']['id'] . ";k," . $row['id'] ) . "'>" . getLangText('news', 'read') . " • " . getLangText('news', 'comments') ." (" . $row['viso'] . ")</a>" : 
+						"<a href='" . url( "?id," . $conf['pages']['naujienos.php']['id'] . ";k," . $row['id'] ) . "'>" . getLangText('news', 'read') . "</a>" ) . "</div><br />";
 
 					lentele( $row['pavadinimas'], "<table><tr valign='top'><td>" . $row['naujiena'] . "</td></tr></table>" . $extra, FALSE, array( menesis( (int)date( 'm', strtotime( date( 'Y-m-d H:i:s', $row['data'] ) ) ) ), (int)date( 'd', strtotime( date( 'Y-m-d H:i:s', $row['data'] ) ) ) ) );
 				}
 			}
 		} else {
-			klaida( $lang['system']['warning'], "{$lang['category']['cant']}." );
+			klaida( getLangText('system', 'warning'), getLangText('category', 'cant') );
 		}
 	}
 } elseif ( $k > 0 ) {
-	klaida( $lang['system']['warning'], "{$lang['category']['no_news']}." );
+	klaida( getLangText('system', 'warning'), getLangText('category', 'no_news'));
 }

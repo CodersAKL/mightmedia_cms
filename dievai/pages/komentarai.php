@@ -26,15 +26,15 @@ if ( !isset( $_POST['pg'] ) && !isset( $_GET['s'] ) ) {
 	$sql = mysql_query1( "SELECT `pid` FROM `" . LENTELES_PRIESAGA . "kom` GROUP BY `pid` ORDER BY `pid` DESC" );
 	if ( !empty( $sql ) ) {
 		foreach ( $sql as $row ) {
-			$pgs[$row['pid']] = ( isset( $lang['pages'][str_replace( 'content/content/pages/', '', $row['pid'] ) . '.php'] ) ? $lang['pages'][str_replace( 'content/pages/', '', $row['pid'] ) . '.php'] : str_replace( 'content/pages/', '', $row['pid'] ) );
+			$pgs[$row['pid']] = ( strlen( getLangText('pages', str_replace( 'content/content/pages/', '', $row['pid'] ) . '.php') ) > 0 ? getLangText('pages', str_replace( 'content/pages/', '', $row['pid']) . '.php') : str_replace( 'content/pages/', '', $row['pid'] ) );
 		}
 
-		$form = array( "Form" => array( "action" => "", "method" => "post", "name" => "com" ), "{$lang['online']['page']}:" => array( "type" => "select", "value" => $pgs, "name" => "pg" ), " " => array( "type" => "submit", "name" => "select", "value" => "{$lang['admin']['page_select']}" ), "  " => array( "type" => "submit", "name" => "del", "value" => "{$lang['admin']['del_comments']}" ) );
+		$form = array( "Form" => array( "action" => "", "method" => "post", "name" => "com" ), getLangText('online',  'page') . ":" => array( "type" => "select", "value" => $pgs, "name" => "pg" ), " " => array( "type" => "submit", "name" => "select", "value" => getLangText('admin',  'page_select') ), "  " => array( "type" => "submit", "name" => "del", "value" => getLangText('admin', 'del_comments')));
 		
 		$formClass = new Form($forma);
-		lentele($lang['admin']['adm_comments'], $formClass->form());
+		lentele(getLangText('admin', 'adm_comments'), $formClass->form());
 	} else {
-		klaida( $lang['system']['warning'], $lang['system']['no_items'] );
+		klaida( getLangText('system', 'warning'), getLangText('system', 'no_items') );
 	}
 }
 if ( isset( $_POST['select'] ) || isset( $_GET['s'] ) ) {
@@ -46,18 +46,18 @@ if ( isset( $_POST['select'] ) || isset( $_GET['s'] ) ) {
 			$row  = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "kom` WHERE `id`=" . escape( $_GET['e'] ) . " LIMIT 1" );
 			$form = array( 
 				"Form" => array( "action" => "", "method" => "post" ), 
-				"{$lang['contact']['message'] }:" => array( "type" => "textarea", "value" => input( $row['zinute'] ), "name" => "msg", "extra" => "rows=5" ),
-				" "    => array( "type" => "submit", "name" => "edit", "value" => $lang['admin']['edit'] )
+				getLangText('contact', 'message') . ":" => array( "type" => "textarea", "value" => input( $row['zinute'] ), "name" => "msg", "extra" => "rows=5" ),
+				" "    => array( "type" => "submit", "name" => "edit", "value" => getLangText('admin', 'edit') )
 			);
 
 			$formClass = new Form($forma);
-			lentele($lang['sb']['edit'], $formClass->form());
+			lentele(getLangText('sb', 'edit'), $formClass->form());
 		} else {
-			$msg = trim( $_POST['msg'] ) . "\n[sm] [i] {$lang['sb']['editedby']}: " . getSession('username') . " [/i] [/sm]";
+			$msg = trim( $_POST['msg'] ) . "\n[sm] [i] " . getLangText('sb',  'editedby') . ": " . getSession('username') . " [/i] [/sm]";
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "kom` SET `zinute` = " . escape( strip_tags( $msg ) ) . " WHERE `id` =" . escape( $url['e'] ) . " LIMIT 1" );
 			
 			if ( mysqli_affected_rows($prisijungimas_prie_mysql) > 0 ) {
-				msg( $lang['system']['done'], $lang['sb']['updated'] );
+				msg( getLangText('system', 'done'), getLangText('sb', 'updated') );
 			}
 		}
 	}
@@ -77,20 +77,20 @@ if ( isset( $_POST['select'] ) || isset( $_GET['s'] ) ) {
 			}
 
 			$info[] = array(
-				$lang['new']['author']      => $nick,
-				$lang['contact']['message'] => smile( bbchat( trimlink( input( $row['zinute'] ), 150 ) ) ),
-				" "                         => "<a href=\"" . url( "s," . str_replace( '=', '', base64_encode( $pg ) ) . ";d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a><a href=\"" . url( "s," . str_replace( '=', '', base64_encode( $pg ) ) . ";e," . $row['id'] . "" ) . "\" title='{$lang['admin']['edit']}'><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" alt=\"[{$lang['admin']['edit']}]\" border=\"0\" class=\"middle\" /></a>"
+				getLangText('new', 'author')      => $nick,
+				getLangText('contact', 'message') => smile( bbchat( trimlink( input( $row['zinute'] ), 150 ) ) ),
+				" "                         => "<a href=\"" . url( "s," . str_replace( '=', '', base64_encode( $pg ) ) . ";d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . getLangText('system', 'delete_confirm') . "')\" title='" . getLangText('admin',  'delete') . "'><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" alt=\"[" . getLangText('admin',  'delete') . "]\" border=\"0\" class=\"middle\" /></a><a href=\"" . url( "s," . str_replace( '=', '', base64_encode( $pg ) ) . ";e," . $row['id'] . "" ) . "\" title='" . getLangText('admin',  'edit') . "'><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" alt=\"[" . getLangText('admin',  'edit') . "]\" border=\"0\" class=\"middle\" /></a>"
 			);
 		}
 
 		$tableClass = new Table($info);
-		lentele($lang['admin']['adm_comments'], $tableClass->render());
+		lentele(getLangText('admin', 'adm_comments'), $tableClass->render());
 		// if list is bigger than limit, then we show list with pagination
 		if ( $viso > $limit ) {
-			lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+			lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 		}
 
 	} else {
-		klaida( $lang['system']['warning'], $lang['system']['no_items'] );
+		klaida( getLangText('system', 'warning'), getLangText('system', 'no_items') );
 	}
 }

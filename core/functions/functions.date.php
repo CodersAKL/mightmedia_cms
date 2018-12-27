@@ -67,7 +67,7 @@ if(! function_exists('naujas')) {
 
 		global $lang;
 		if (! empty(getSession('lankesi'))) {
-			return ( ($data > getSession('lankesi')) ? '<img src="' . ROOT . 'core/assets/images/icons/new.png" onload="$(this).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);" alt="New" border="0" style="vertical-align: middle;" title="' . $lang['system']['new'] . '" />' : '' );
+			return ( ($data > getSession('lankesi')) ? '<img src="' . ROOT . 'core/assets/images/icons/new.png" onload="$(this).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);" alt="New" border="0" style="vertical-align: middle;" title="' . getLangText('system', 'new') . '" />' : '' );
 		} else {
 			return '';
 		}
@@ -99,26 +99,26 @@ if(! function_exists('kada')) {
 		$year = floor( $month / 12 );
 		$days -= $year * 12;
 		if ( $year ) {
-			return ( $year > 1 ? sprintf( $lang['system']['years'], $year ) : sprintf( $lang['system']['year'], $year ) );
+			return ( $year > 1 ? sprintf( getLangText('system', 'years'), $year ) : sprintf( getLangText('system', 'year'), $year ) );
 		}
 		if ( $month ) {
-			return ( $month > 1 ? sprintf( $lang['system']['months'], $month ) : sprintf( $lang['system']['month'], $month ) );
+			return ( $month > 1 ? sprintf( getLangText('system', 'months'), $month ) : sprintf( getLangText('system', 'month'), $month ) );
 		}
 		if ( $weeks ) {
-			return ( $weeks > 1 ? sprintf( $lang['system']['weeks'], $weeks ) : sprintf( $lang['system']['week'], $weeks ) );
+			return ( $weeks > 1 ? sprintf( getLangText('system', 'weeks'), $weeks ) : sprintf( getLangText('system', 'week'), $weeks ) );
 		}
 		if ( $days ) {
-			return ( $days > 1 ? sprintf( $lang['system']['days'], $days ) : sprintf( $lang['system']['day'], $days ) );
+			return ( $days > 1 ? sprintf( getLangText('system', 'days'), $days ) : sprintf( getLangText('system', 'day'), $days ) );
 		}
 		if ( $hours ) {
-			return ( $hours > 1 ? sprintf( $lang['system']['hours'], $hours ) : sprintf( $lang['system']['hour'], $hours ) );
+			return ( $hours > 1 ? sprintf( getLangText('system', 'hours'), $hours ) : sprintf( getLangText('system', 'hour'), $hours ) );
 		}
 		if ( $mins ) {
-			return ( $mins > 1 ? sprintf( $lang['system']['minutes'], $mins ) : sprintf( $lang['system']['minute'], $mins ) );
+			return ( $mins > 1 ? sprintf( getLangText('system', 'minutes'), $mins ) : sprintf( getLangText('system', 'minute'), $mins ) );
 		}
 
-		//return "&lt; 1 {$lang['system']['minute']} {$lang['system']['ago']}";
-		return sprintf( $lang['system']['minute'], '&lt; 1' );
+		//return "&lt; 1 " . getLangText('system',  'minute') . " " . getLangText('system',  'ago') . "";
+		return sprintf( getLangText('system', 'minute'), '&lt; 1' );
 	}
 }
 

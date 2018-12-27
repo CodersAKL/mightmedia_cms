@@ -29,12 +29,12 @@ if ( isset( $_POST['old_pass'] ) && count( $_POST['old_pass'] ) > 0 && count( $_
 		//ar sutampa ivesti nauji slaptazodziai
 		if ( $new_pass == $new_pass2 ) {
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET pass=" . escape( $new_pass ) . " WHERE nick=" . escape(getSession('username')) );
-			msg( $lang['system']['done'], $lang['user']['edit_updated'] );
+			msg( getLangText('system', 'done'), getLangText('user', 'edit_updated') );
 		} else {
-			klaida( $lang['system']['error'], $lang['user']['edit_badconfirm'] );
+			klaida( getLangText('system', 'error'), getLangText('user', 'edit_badconfirm') );
 		}
 	} else {
-		klaida( $lang['system']['error'], $lang['user']['edit_badpass'] );
+		klaida( getLangText('system', 'error'), getLangText('user', 'edit_badpass') );
 	}
 	unset( $old_pass, $user, $new_pass, $new_pass2 );
 }
@@ -57,13 +57,13 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'contacts_change' ) {
 			}
 
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET icq=" . escape( $icq ) . ", msn=" . escape( $msn ) . ", skype=" . escape( $skype ) . ", yahoo=" . escape( $yahoo ) . ", aim=" . escape( $aim ) . ", url=" . escape( $url ) . ", email=" . escape( $email ) . " WHERE nick=" . escape(getSession('username')) . "" );
-			msg( $lang['system']['done'], $lang['user']['edit_updated'] );
+			msg( getLangText('system', 'done'), getLangText('user', 'edit_updated') );
 		} else {
-			klaida( $lang['system']['error'], $lang['reg']['emailregistered'] );
+			klaida( getLangText('system', 'error'), getLangText('reg', 'emailregistered') );
 		}
 		unset( $icq, $msn, $skype, $yahoo, $aim, $url, $email );
 	} else {
-		klaida( $lang['system']['error'], $lang['reg']['bademail'] );
+		klaida( getLangText('system', 'error'), getLangText('reg', 'bademail') );
 	}
 }
 // ################ Salies bei miesto nustatymai #############
@@ -71,7 +71,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'country_change' ) {
 	$miestas = $_POST['miestas'];
 	$salis   = $_POST['salis'];
 	mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET salis=" . escape( $salis ) . ", miestas=" . escape( $miestas ) . " WHERE nick=" . escape(getSession('username')) . " LIMIT 1" );
-	msg( $lang['system']['done'], $lang['user']['edit_updated'] );
+	msg( getLangText('system', 'done'), getLangText('user', 'edit_updated') );
 }
 
 
@@ -82,32 +82,60 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'default_change' ) {
 	$gimimas = date( 'Y-m-d', strtotime( $_POST['gimimas'] ) );
 	$parasas = $_POST['parasas'];
 	mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET vardas=" . escape( $vardas ) . ", pavarde=" . escape( $pavarde ) . ", parasas=" . escape( $parasas ) . ", gim_data=" . escape( $gimimas ) . " WHERE nick=" . escape(getSession('username')) . "" );
-	msg( $lang['system']['done'], $lang['user']['edit_updated'] );
+	msg( getLangText('system', 'done'), getLangText('user', 'edit_updated') );
 }
 // ################ Siulomi punktai redagavimui MENIU ##########################
 $text = "
  <table width=100% border=0>
 	<tr>
 		<td>
-			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,1" ) . "'><img src=\"core/assets/images/user/user-auth.png\" alt=\"slaptazodis\" />{$lang['user']['edit_pass']}</a></center></div>
-			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,2" ) . "'><img src=\"core/assets/images/user/user-contact.png\" alt=\"kontaktai\" />{$lang['user']['edit_contacts']}</a></center></div>
-			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,3" ) . "'><img src=\"core/assets/images/user/user-place.png\" alt=\"vietove\" />{$lang['user']['edit_locality']}</a></center></div>
-<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,4" ) . "'><img src=\"core/assets/images/user/user-avatar.png\" alt=\"avataras\" />{$lang['user']['edit_avatar']}</a></center></div>
-			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,5" ) . "'><img src=\"core/assets/images/user/user-settings.png\" alt=\"nustatymai\" />{$lang['user']['edit_mainsettings']}</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,1" ) . "'><img src=\"core/assets/images/user/user-auth.png\" alt=\"slaptazodis\" />" . getLangText('user',  'edit_pass') . "</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,2" ) . "'><img src=\"core/assets/images/user/user-contact.png\" alt=\"kontaktai\" />" . getLangText('user',  'edit_contacts') . "</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,3" ) . "'><img src=\"core/assets/images/user/user-place.png\" alt=\"vietove\" />" . getLangText('user',  'edit_locality') . "</a></center></div>
+<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,4" ) . "'><img src=\"core/assets/images/user/user-avatar.png\" alt=\"avataras\" />" . getLangText('user',  'edit_avatar') . "</a></center></div>
+			<div class=\"blokas\"><center><a href='" . url( "?id," . $id . ";m,5" ) . "'><img src=\"core/assets/images/user/user-settings.png\" alt=\"nustatymai\" />" . getLangText('user',  'edit_mainsettings') . "</a></center></div>
 			
 		</td>
 	</tr>
 </table>
 ";
-lentele( $lang['user']['edit_settings'], $text );
+lentele( getLangText('user', 'edit_settings'), $text );
 // ######################### Jei pasirinktas vienas is pasiulytu MENIU ####################
 
 // Pakeisti slaptazodi
 if ( $mid == 1 ) {
-	$form_array = array( "Form" => array( "action" => "", "method" => "post", "enctype" => "", "id" => "", "class" => "", "name" => "change_password" ), "{$lang['user']['edit_pass']}:" => array( "type" => "password", "value" => "", "name" => "old_pass" ), "{$lang['user']['edit_newpass']}:" => array( "type" => "password", "value" => "", "name" => "new_pass" ), "{$lang['user']['edit_confirmnewpass']}:" => array( "type" => "password", "value" => "", "name" => "new_pass2" ), "" => array( "type" => "hidden", "name" => "action", "value" => "pass_change" ), "" => array( "type" => "submit", "value" => "{$lang['user']['edit_update']}" ) );
+	$form_array = array( 
+		"Form" => array( 
+			"action" => "", 
+			"method" => "post", 
+			"enctype" => "", 
+			"id" => "", 
+			"class" => "", 
+			"name" => "change_password" 
+		), getLangText('user', 'edit_pass') . " :" => array( 
+			"type" => "password", 
+			"value" => "", 
+			"name" => "old_pass" 
+		), getLangText('user', 'edit_newpass') . ":" => array( 
+			"type" => "password",
+			"value" => "",
+			"name" => "new_pass" 
+		), getLangText('user', 'edit_confirmnewpass') . ":" => array( 
+			"type" => "password", 
+			"value" => "", 
+			"name" => "new_pass2" 
+		), "" => array( 
+			"type" => "hidden", 
+			"name" => "action", 
+			"value" => "pass_change" 
+		), "" => array( 
+			"type" => "submit",
+			"value" => getLangText('user', 'edit_update')
+		) 
+	);
 	include_once config('class', 'dir') . 'class.form.php';
 	$form       = new Form();
-	lentele( $lang['user']['edit_pass'], $form->form( $form_array ) );
+	lentele( getLangText('user', 'edit_pass'), $form->form( $form_array ) );
 } // Pakeisti kontaktinius duomenis
 elseif ( $mid == 2 ) {
 	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape(getSession('username')) . "LIMIT 1" );
@@ -119,14 +147,14 @@ elseif ( $mid == 2 ) {
 		"Skype:"                         => array( "type" => "text", "value" => input( $info['skype'] ), "name" => "skype", "class" => "input" ),
 		"Yahoo:"                         => array( "type" => "text", "value" => input( $info['yahoo'] ), "name" => "yahoo", "class" => "input" ),
 		"AIM:"                           => array( "type" => "text", "value" => input( $info['aim'] ), "name" => "aim", "class" => "input" ),
-		"{$lang['user']['edit_web']}:"   => array( "type" => "text", "value" => input( $info['url'] ), "name" => "url", "class" => "input" ),
-		"{$lang['user']['edit_email']}:" => array( "type" => "text", "value" => input( $info['email'] ), "name" => "email", "class" => "input" ),
+		getLangText('user', 'edit_web') . ":"   => array( "type" => "text", "value" => input( $info['url'] ), "name" => "url", "class" => "input" ),
+		getLangText('user', 'edit_email') . ":" => array( "type" => "text", "value" => input( $info['email'] ), "name" => "email", "class" => "input" ),
 		"\r\r\r"                         => array( "type" => "hidden", "name" => "action", "value" => "contacts_change" ),
-		""                               => array( "type" => "submit", "value" => $lang['user']['edit_update'] )
+		""                               => array( "type" => "submit", "value" => getLangText('user', 'edit_update') )
 	);
 	include_once config('class', 'dir') . 'class.form.php';
 	$form       = new Form();
-	lentele( $lang['user']['edit_contacts'], $form->form( $form_array ) );
+	lentele( getLangText('user', 'edit_contacts'), $form->form( $form_array ) );
 }
 // Pakeisti sali, miesta
 elseif ( $mid == 3 ) {
@@ -138,11 +166,37 @@ elseif ( $mid == 3 ) {
 		$salis[$row['iso']] = $row['printable_name'];
 	}
 
-	$form_array = array( "Form" => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] . ";m," . $_GET['m'] ), "method" => "post", "name" => "change_country" ), "{$lang['user']['edit_country']}:" => array( "type" => "select", "value" => $salis, "name" => "salis", "selected" => input( $info['salis'] ) ), "{$lang['user']['edit_city']}:" => array( "type" => "text", "value" => input( $info['miestas'] ), "name" => "miestas" ), " \r " => array( "type" => "hidden", "name" => "action", "value" => "country_change" ), "" => array( "type" => "submit", "value" => $lang['user']['edit_update'] ) );
+	$form_array = 	array( 
+		"Form" => array( 
+			"action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] . ";m," . $_GET['m'] ), 
+			"method" => "post", 
+			"name" => "change_country" 
+		), 
+		getLangText('user', 'edit_country') . ":" => array( 
+			"type" => "select", 
+			"value" => $salis, 
+			"name" => "salis", 
+			"selected" => input( $info['salis'] ) 
+		),
+		getLangText('user', 'edit_city') . ":" => array( 
+			"type" => "text", 
+			"value" => input( $info['miestas'] ), 
+			"name" => "miestas" 
+		), 
+		" \r " => array(
+			"type" => "hidden", 
+			"name" => "action",
+			"value" => "country_change" 
+		), 
+		"" => array( 
+			"type" => "submit", 
+			"value" => getLangText('user', 'edit_update') 
+			) 
+	);
 
 	include_once config('class', 'dir') . 'class.form.php';
 	$form = new Form();
-	lentele( $lang['user']['edit_locality'], $form->form( $form_array ) );
+	lentele( getLangText('user', 'edit_locality'), $form->form( $form_array ) );
 }
 
 // Avataro keitimas
@@ -201,10 +255,10 @@ elseif ( $mid == 4 ) {
         </div>
 HTML;
 	if ( isset( $_GET['a'] ) && $_GET['a'] == 1 ) {
-		$avatar .= "<div align='center' id='gravatar'>{$lang['user']['edit_avatarcontent']} <b>" . input( $sql['email'] ) . "</b>.</div>";
+		$avatar .= "<div align='center' id='gravatar'>" . getLangText('user', 'edit_avatarcontent') . " <b>" . input( $sql['email'] ) . "</b>.</div>";
 	}
 
-	lentele( $lang['user']['edit_avatar'], $avatar );
+	lentele( getLangText('user', 'edit_avatar'), $avatar );
 }
 // Pagrindiniai nustatymai
 elseif ( $mid == 5 ) {
@@ -216,18 +270,18 @@ elseif ( $mid == 5 ) {
           </script>';
 	$form_array = array(
 		"Form"                                 => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] . ";m," . $_GET['m'] ), "method" => "post", "name" => "parasas" ),
-		"{$lang['user']['edit_name']}:"        => array( "type" => "text", "value" => input( $sql['vardas'] ), "name" => "vardas", "class" => "input" ),
-		"{$lang['user']['edit_secondname']}:"  => array( "type" => "text", "value" => input( $sql['pavarde'] ), "name" => "pavarde", "class" => "input" ),
-		"{$lang['user']['edit_dateOfbirth']}:" => array( "type" => "text", "value" => input( $sql['gim_data'] ), "extra" => "title='0000-00-00' size='10' maxlength='10' style='width:inherit'", "class" => "input", "name" => "gimimas", "id" => "date" ),
-		$lang['user']['edit_signature']        => array( "type" => "textarea", "class" => "input", "value" => input( $sql['parasas'] ), "name" => "parasas", "id" => "parasas" ),
+		getLangText('user', 'edit_name') . ":"        => array( "type" => "text", "value" => input( $sql['vardas'] ), "name" => "vardas", "class" => "input" ),
+		getLangText('user', 'edit_secondname') . ":"  => array( "type" => "text", "value" => input( $sql['pavarde'] ), "name" => "pavarde", "class" => "input" ),
+		getLangText('user', 'edit_dateOfbirth') . ":" => array( "type" => "text", "value" => input( $sql['gim_data'] ), "extra" => "title='0000-00-00' size='10' maxlength='10' style='width:inherit'", "class" => "input", "name" => "gimimas", "id" => "date" ),
+		getLangText('user', 'edit_signature')        => array( "type" => "textarea", "class" => "input", "value" => input( $sql['parasas'] ), "name" => "parasas", "id" => "parasas" ),
 		" "                                    => array( "type" => "string", "value" => bbk( 'parasas' ) ),
 		" \r \n"                               => array( "type" => "hidden", "name" => "action", "value" => "default_change" ),
-		""                                     => array( "type" => "submit", "value" => $lang['user']['edit_update'] )
+		""                                     => array( "type" => "submit", "value" => getLangText('user', 'edit_update') )
 	);
 
 	include_once config('class', 'dir') . 'class.form.php';
 	$form = new Form();
-	lentele( $lang['user']['edit_mainsettings'], $form->form( $form_array ) );
+	lentele( getLangText('user', 'edit_mainsettings'), $form->form( $form_array ) );
 	unset( $data, $viso, $day, $month, $year );
 }
 
@@ -241,7 +295,7 @@ unset( $text );
 			return true;
 		}
 		else {
-			alert('<?php echo $lang['user']['edit_bademail'];?>');
+			alert('<?php echo getLangText('user', 'edit_bademail');?>');
 			return false;
 		}
 	}

@@ -1,5 +1,4 @@
 <?php
-
 // ban for trying open file
 if (basename($_SERVER['PHP_SELF']) == 'boot.php') {
 	ban(getip(), $lang['system']['forhacking']);
@@ -37,9 +36,9 @@ require_once ROOT . 'core/functions/functions.core.php';
  */
 $lang = [];
 if (isset($conf['kalba'])) {
-    require_once ROOT . '/content/lang/' . (empty(getSession('lang'))? basename($conf['kalba'],'.php') : getSession('lang')). '.php';
+    require_once ROOT . 'content/lang/' . (empty(getSession('lang'))? basename($conf['kalba'],'.php') : getSession('lang')). '.php';
 } else {
-    require_once ROOT . '/content/lang/lt.php';
+    require_once ROOT . 'content/lang/lt.php';
 }
 
 /**
@@ -118,13 +117,13 @@ if (basename($_SERVER['PHP_SELF']) != 'upgrade.php' && basename($_SERVER['PHP_SE
 		}
 	}
 	$levels[1] = array(
-		'pavadinimas' => $lang['system']['admin'],
-		'aprasymas'   => $lang['system']['admin'],
+		'pavadinimas' => getLangText('system','admin'),
+		'aprasymas'   => getLangText('system','admin'),
 		'pav'         => 'admin.png'
 	);
 	$levels[2] = array(
-		'pavadinimas' => $lang['system']['user'],
-		'aprasymas'   => $lang['system']['user'],
+		'pavadinimas' => getLangText('system','user'),
+		'aprasymas'   => getLangText('system','user'),
 		'pav'         => 'user.png'
 	);
 

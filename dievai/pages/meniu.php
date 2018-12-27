@@ -18,7 +18,7 @@ if ( !defined( "LEVEL" ) || LEVEL > 1 || !defined( "OK" ) ) {
 include 'functions/functions.pages.php';
 
 if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['meniu'], buttonsMenu(buttons('pages')));
+	lentele(getLangText('admin', 'meniu'), buttonsMenu(buttons('pages')));
 }
 
 $parent     = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent`='0' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
@@ -32,10 +32,10 @@ $lygiai = array_keys( $conf['level'] );
 foreach ( $lygiai as $key ) {
 	$teises[$key] = $conf['level'][$key]['pavadinimas'];
 }
-$teises[0] = $lang['admin']['for_guests'];
+$teises[0] = getLangText('admin', 'for_guests');
 
 
-if ( isset( $_POST['Naujas_puslapis2'] ) && $_POST['Naujas_puslapis2'] == $lang['admin']['page_create'] ) {
+if ( isset( $_POST['Naujas_puslapis2'] ) && $_POST['Naujas_puslapis2'] == getLangText('admin', 'page_create') ) {
 	// Nurodote failo pavadinimą:
 	//$failas = ROOT . "content/pages/" . preg_replace( "/[^a-z0-9-]/", "_", strtolower( $_POST['pav'] ) ) . ".php";
 	$failas = ROOT . "content/pages/" . seo_url( basename( $_POST['pav'] ), '' ) . ".php";
@@ -55,7 +55,7 @@ lentele($page_pavadinimas,$text);
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> $lang['system']['file_exists']
+				'message' 	=> getLangText('system', 'file_exists')
 			]
 		);
 	} else {
@@ -69,7 +69,7 @@ lentele($page_pavadinimas,$text);
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['post_created']
+				'message' 	=> getLangText('admin', 'post_created')
 			]
 		);
 	}
@@ -86,13 +86,13 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 		"header",
 		[
 			'type'		=> 'success',
-			'message' 	=> $lang['admin']['post_deleted']
+			'message' 	=> getLangText('admin', 'post_deleted')
 		]
 	);
 
 } elseif ( isset( $url['n'] ) && $url['n'] == 1 ) {
 
-	if ( isset( $_POST['Naujas_puslapis'] ) && $_POST['Naujas_puslapis'] == $lang['admin']['page_create'] ) {
+	if ( isset( $_POST['Naujas_puslapis'] ) && $_POST['Naujas_puslapis'] == getLangText('admin', 'page_create') ) {
 		$psl    = input( $_POST['Page'] );
 		$teises = serialize( ( isset( $_POST['Teises'] ) ? $_POST['Teises'] : 0 ) );
 		
@@ -127,7 +127,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['post_created']
+					'message' 	=> getLangText('admin', 'post_created')
 				]
 			);
 		} else {
@@ -147,7 +147,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 	foreach ($pageFiles as $file) {
 		if ($file['type'] == 'file') {
 			$fileName 	= $file['name'];
-			$fileTitle	= (isset($lang['pages'][$file['name']]) ? $lang['pages'][$file['name']] : nice_name(basename($file['name'], '.php')));
+			$fileTitle	= (strlen( getLangText('pages', $file['name'])) > 0 ? getLangText('pages', $file['name'] ) : nice_name(basename($file['name'], '.php')));
 
 			if ($file['name'] !== 'klaida.php' && ! isset($conf['pages'][basename($fileName)]['id'])) {
 				$pages[$fileName] = $fileTitle;
@@ -159,11 +159,11 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> $lang['admin']['page_nounused']
+				'message' 	=> getLangText('admin', 'page_nounused')
 			]
 		);
 	} else {
-		$info = infoIcon($lang['system']['about_allow_pg']);
+		$info = infoIcon(getLangText('system', 'about_allow_pg'));
 		
 		$pageForm = [
 			"Form"									=> [
@@ -172,13 +172,13 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 				"name" 		=> "new_panel"
 			],
 
-			$lang['admin']['page_name']				=> [
+			getLangText('admin', 'page_name')				=> [
 				"type"			=> "text",
-				"placeholder"	=> $lang['admin']['page_name'],
+				"placeholder"	=> getLangText('admin', 'page_name'),
 				"name"  		=> "Page"
 			],
 
-			$lang['admin']['page_url']				=> [
+			getLangText('admin', 'page_url')				=> [
 				'type'		=> 'switch',
 				'value'		=> 1,
 				'name'		=> 'external_page',
@@ -187,7 +187,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 				'checked'	=> false
 			],
 
-			$lang['admin']['page_file']				=> [
+			getLangText('admin', 'page_file')				=> [
 				"type"		=> "select",
 				"value"		=> $pages,
 				"name"		=> "File",
@@ -195,7 +195,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 				"row_class"	=> "page-file",
 			],
 
-			$lang['admin']['page_link']				=> [
+			getLangText('admin', 'page_link')				=> [
 				"type"  		=> "text",
 				"name"  		=> "url",
 				"id"    		=> "url",
@@ -209,7 +209,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 				"name"  => "parent"
 			],
 
-			$lang['admin']['page_show']				=> [
+			getLangText('admin', 'page_show')				=> [
 				"type"  	=> "switch",
 				"value" 	=> 'Y',
 				"name"  	=> "show",
@@ -217,28 +217,28 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 				'checked'	=> false
 			],
 
-			$lang['admin']['page_showfor'] . $info	=> [
+			getLangText('admin', 'page_showfor') . $info	=> [
 				"type"  => "select",
 				"extra" => "multiple",
 				"value" => $teises,
 				"name"  => "Teises[]",
 				"id"    => "punktai"
 			],
-			$lang['admin']['page_metatitle'] => [
+			getLangText('admin', 'page_metatitle') => [
 				"type"  		=> "text",
-				"placeholder" 	=> $lang['admin']['page_metatitle'],
+				"placeholder" 	=> getLangText('admin', 'page_metatitle'),
 				"id"			=> "metatitle",
 				"name"  		=> "metatitle"
 			],
-			$lang['admin']['page_metadesc'] => [
+			getLangText('admin', 'page_metadesc') => [
 				"type"  		=> "text",
-				"placeholder" 	=> $lang['admin']['page_metadesc'],
+				"placeholder" 	=> getLangText('admin', 'page_metadesc'),
 				"id"			=> "metadesc",
 				"name"  		=> "metadesc"
 			],
-			$lang['admin']['page_metakeywords'] => [
+			getLangText('admin', 'page_metakeywords') => [
 				"type"  		=> "text",
-				"placeholder" 	=> $lang['admin']['page_metakeywords'],
+				"placeholder" 	=> getLangText('admin', 'page_metakeywords'),
 				"id"			=> "metakeywords",
 				"name"  		=> "metakeywords"
 			],
@@ -246,12 +246,12 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 				"type" 		=> "submit",
 				"name" 		=> "Naujas_puslapis",
 				'form_line'	=> 'form-not-line',
-				"value" 	=> $lang['admin']['page_create']
+				"value" 	=> getLangText('admin', 'page_create')
 			]
 		];
 		
 		$formClass = new Form($pageForm);
-		lentele($lang['admin']['page_select'], $formClass->form());
+		lentele(getLangText('admin', 'page_select'), $formClass->form());
 
 		?>
 			<script>
@@ -282,13 +282,13 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 			"name"    => "new_page2"
 		],
 
-		$lang['admin']['page_filename'] => [
+		getLangText('admin', 'page_filename') => [
 			"type"  		=> "text",
-			"placeholder" 	=> $lang['admin']['page_name'],
+			"placeholder" 	=> getLangText('admin', 'page_name'),
 			"name"  		=> "pav"
 		],
 
-		$lang['admin']['page_text']     => [
+		getLangText('admin', 'page_text')     => [
 			"type"  => "string",
 			"value" => editor('spaw', 'standartinis', ['Page' => 'Page'], FALSE),
 			"name"  => "Page",
@@ -298,12 +298,12 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 			"type"  	=> "submit",
 			"name"  	=> "Naujas_puslapis2",
 			'form_line'	=> 'form-not-line',
-			"value" 	=> $lang['admin']['page_create']
+			"value" 	=> getLangText('admin', 'page_create')
 		]
 	];
 
 	$formClass = new Form($pageForm);
-	lentele($lang['admin']['page_create'], $formClass->form());
+	lentele(getLangText('admin', 'page_create'), $formClass->form());
 } elseif (isset($url['n']) && $url['n'] == 3) {
 	//tree
 	$treeData = [];
@@ -316,16 +316,16 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && $url['d'] > 0 ) {
 	$tree = build_tree($treeData);
 	$text = '<ul id="treemenu">' . $tree . '</ul>';
 
-	lentele($lang['system']['tree'], $text);
+	lentele(getLangText('system', 'tree'), $text);
 }
 //pages redagavimas
 elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
-	if (isset($_POST['Redaguoti_psl']) && $_POST['Redaguoti_psl'] == $lang['admin']['edit'] ) {
+	if (isset($_POST['Redaguoti_psl']) && $_POST['Redaguoti_psl'] == getLangText('admin', 'edit') ) {
 		$psl    = input($_POST['pslp']);
 		$teises = serialize((isset($_POST['Teises']) ? $_POST['Teises'] : 0));
 		
 		if (empty($psl) || $psl == '') {
-			$psl = $lang['admin']['page_text'];
+			$psl = getLangText('admin', 'page_text');
 		}
 		
 		if(! empty($_POST['show']) && $_POST['show'] === 'Y') {
@@ -344,7 +344,7 @@ elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['post_updated']
+					'message' 	=> getLangText('admin', 'post_updated')
 				]
 			);
 		} else {
@@ -353,7 +353,7 @@ elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
 				"header",
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['admin']['post_not_updated']
+					'message' 	=> getLangText('admin', 'post_not_updated')
 				]
 			);
 		}				
@@ -365,7 +365,7 @@ elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
 
 		unset($parents[$sql['id']]);
 		
-		$info = infoIcon($lang['system']['about_allow_pg']);
+		$info = infoIcon(getLangText('system', 'about_allow_pg'));
 		
 		$psl = [
 			"Form"                                 => [
@@ -374,14 +374,14 @@ elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
 				"name"    => "new_psl"
 			],
 
-			$lang['admin']['page_name']            => [
+			getLangText('admin', 'page_name')            => [
 				"type"  => "text",
 				"value" => $sql['pavadinimas'],
 				"name"  => "pslp",
 				"class" => "input"
 			],
 
-			$lang['admin']['page_show']				=> [
+			getLangText('admin', 'page_show')				=> [
 				"type"  	=> "switch",
 				"value" 	=> 'Y',
 				"name"  	=> "show",
@@ -396,30 +396,30 @@ elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
 				"name"     => "parent"
 			],
 
-			$lang['admin']['page_showfor'] . $info => [
+			getLangText('admin', 'page_showfor') . $info => [
 				"type"  => "select",
 				"extra" => "multiple",
 				"value" => $teises,
 				"name"  => "Teises[]",
 				"id"    => "punktai"
 			],
-			$lang['admin']['page_metatitle'] => [
+			getLangText('admin', 'page_metatitle') => [
 				"type"  		=> "text",
-				"placeholder" 	=> $lang['admin']['page_metatitle'],
+				"placeholder" 	=> getLangText('admin', 'page_metatitle'),
 				"id"			=> "metatitle",
 				"value" 		=> $sql['metatitle'],
 				"name"  		=> "metatitle"
 			],
-			$lang['admin']['page_metadesc'] => [
+			getLangText('admin', 'page_metadesc') => [
 				"type"  		=> "text",
-				"placeholder" 	=> $lang['admin']['page_metadesc'],
+				"placeholder" 	=> getLangText('admin', 'page_metadesc'),
 				"id"			=> "metadesc",
 				"value" 		=> $sql['metadesc'],
 				"name"  		=> "metadesc"
 			],
-			$lang['admin']['page_metakeywords'] => [
+			getLangText('admin', 'page_metakeywords') => [
 				"type"  		=> "text",
-				"placeholder" 	=> $lang['admin']['page_metakeywords'],
+				"placeholder" 	=> getLangText('admin', 'page_metakeywords'),
 				"id"			=> "metakeywords",
 				"value" 		=> $sql['metakeywords'],
 				"name"  		=> "metakeywords"
@@ -429,13 +429,13 @@ elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
 				"type"  	=> "submit",
 				"name"  	=> "Redaguoti_psl",
 				'form_line'	=> 'form-not-line',
-				"value" 	=> $lang['admin']['edit']
+				"value" 	=> getLangText('admin', 'edit')
 			]
 		];
 
 
 		if (! empty($selected)) {
-			$psl[$lang['admin']['page_showfor'] . $info]['selected'] = $selected;
+			$psl[getLangText('admin', 'page_showfor') . $info]['selected'] = $selected;
 		}
 		
 		$formClass = new Form($psl);
@@ -447,7 +447,7 @@ elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
 elseif ( isset( $url['e'] ) && isnum( $url['e'] ) && $url['e'] > 0 ) {
 	$psl_id = (int)$url['e']; //pages ID
 
-	if ( isset( $_POST['Redaguoti_txt'] ) && $_POST['Redaguoti_txt'] == $lang['admin']['edit'] ) {
+	if ( isset( $_POST['Redaguoti_txt'] ) && $_POST['Redaguoti_txt'] == getLangText('admin', 'edit') ) {
 		$sql     	= "SELECT `file`,`pavadinimas` FROM `" . LENTELES_PRIESAGA . "page` WHERE `id`=" . escape( $psl_id ) . " LIMIT 1";
 		$sql     	= mysql_query1($sql);
 		$tekstas 	= str_replace(['$', 'HTML'], ['&#36;', 'html'], $_POST['Page']);
@@ -511,7 +511,7 @@ lentele($page_pavadinimas,$text);
 					"name"    => "psl_txt"
 				],
 
-				$lang['admin']['page_text'] => [
+				getLangText('admin', 'page_text') => [
 					"type"  => "string",
 					"value" => editor('spaw', 'standartinis', ['Page' => 'Page'], ['Page' => $puslapio_txt]),
 					"name"  => "Turinys",
@@ -522,7 +522,7 @@ lentele($page_pavadinimas,$text);
 					"type"  	=> "submit",
 					"name"  	=> "Redaguoti_txt",
 					'form_line'	=> 'form-not-line',
-					"value" 	=> $lang['admin']['edit']
+					"value" 	=> getLangText('admin', 'edit')
 				]
 			];
 
@@ -532,7 +532,7 @@ lentele($page_pavadinimas,$text);
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['admin']['page_cantedit']
+					'message' 	=> getLangText('admin', 'page_cantedit')
 				]
 			);
 		}
@@ -553,14 +553,14 @@ lentele($page_pavadinimas,$text);
 	if (! empty($sqlOtherPages)) {
 		foreach ($sqlOtherPages as $otherPage) {
 			$otherPages .= '<li class="dd-handle">
-			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $otherPage['id'] ) . '" onClick="return confirm(\'' . $lang['system']['delete_confirm'] . '\')">
-			<img src="' . ROOT . 'core/assets/images/icons/cross.png" title="' . $lang['admin']['delete'] . '" />
+			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $otherPage['id'] ) . '" onClick="return confirm(\'' . getLangText('system', 'delete_confirm') . '\')">
+			<img src="' . ROOT . 'core/assets/images/icons/cross.png" title="' . getLangText('admin', 'delete') . '" />
 			</a>
 			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $otherPage['id'] ) . '" >
-			<img src="' . ROOT . 'core/assets/images/icons/wrench.png" title="' . $lang['admin']['edit'] . '" />
+			<img src="' . ROOT . 'core/assets/images/icons/wrench.png" title="' . getLangText('admin', 'edit') . '" />
 			</a>
 			<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $otherPage['id'] ) . '">
-			<img src="' . ROOT . 'core/assets/images/icons/pencil.png" title="' . $lang['admin']['page_text'] . '"/>
+			<img src="' . ROOT . 'core/assets/images/icons/pencil.png" title="' . getLangText('admin', 'page_text') . '"/>
 			</a>
 			' . $otherPage['pavadinimas'] . '
 			</li>';
@@ -570,10 +570,10 @@ lentele($page_pavadinimas,$text);
 	?>
 		<div class="row clearfix">
 			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<?php lentele($lang['admin']['page_navigation'], $pageMenu); ?>
+				<?php lentele(getLangText('admin', 'page_navigation'), $pageMenu); ?>
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<?php lentele($lang['admin']['page_other'], $otherPages); ?>
+				<?php lentele(getLangText('admin', 'page_other'), $otherPages); ?>
 			</div>
 		</div>
 	<?php

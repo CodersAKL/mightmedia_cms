@@ -23,14 +23,14 @@ if (! empty(getSession('id'))) {
     " . escape( $_POST['Aprasymas'] ) . "," . escape(getSession('id')) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ")" );
 
 			if ( $result ) {
-				msg($lang['system']['info'], $lang['download']['sumbit_scc']);
+				msg(getLangText('system', 'info'), getLangText('download', 'sumbit_scc'));
 			} else {
-				klaida( $lang['system']['error'], "{$lang['download']['doc']}: <font color='#FF0000'>" . $filename . "</font> {$lang['download']['not_uploaded']}." );
+				klaida( getLangText('system', 'error'), getLangText('download', 'doc') . ": <font color='#FF0000'>" . $filename . "</font> " . getLangText('download',  'not_uploaded') . "." );
 			}
 			//unset($result,$_POST['action'],$_FILES['failas'],$file);
 			redirect( "?id," . $_GET['id'] . ";", "meta" );
 		} else {
-			klaida( $lang['system']['warning'], "{$lang['admin']['news_required']}." );
+			klaida( getLangText('system', 'warning'), getLangText('admin', 'news_required'));
 		}
 	}
 	$sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `lang` = " . escape( lang() ) . " AND `path`=0 ORDER BY `id` DESC" );
@@ -43,13 +43,13 @@ if (! empty(getSession('id'))) {
 	include_once config('class', 'dir') . 'class.form.php';
 	$bla   = new Form();
 	$form = array( "Form"                                  => array( "action" => '', "method" => "post", "name" => "action" ),
-	                "{$lang['admin']['download_fileurl']}:" => array( "name" => "url", "type" => "text", "value" => "http://", "class"=> "input" ),
-	                "{$lang['system']['name']}:"            => array( "type" => "text", "value" => '', "name" => "Pavadinimas", "class"=> "input" ),
-	                "{$lang['system']['category']}:"        => array( "type" => "select", "value" => $categories, "name" => "cat", "class" => "input", "class"=> "input" ),
-	                "{$lang['system']['about']}:"           => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
-	                ""                                      => array( "type" => "submit", "name" => "action", "value" => "{$lang['admin']['download_Create']}" ), );
-	lentele($lang['admin']['download_Create'], $bla->form($form));
+	                getLangText('admin', 'download_fileurl') . ":" => array( "name" => "url", "type" => "text", "value" => "http://", "class"=> "input" ),
+	                getLangText('system', 'name') . ":"            => array( "type" => "text", "value" => '', "name" => "Pavadinimas", "class"=> "input" ),
+	                getLangText('system', 'category') . ":"        => array( "type" => "select", "value" => $categories, "name" => "cat", "class" => "input", "class"=> "input" ),
+	                getLangText('system', 'about') . ":"           => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
+	                ""                                      => array( "type" => "submit", "name" => "action", "value" => getLangText('admin', 'download_Create')));
+	lentele(getLangText('admin', 'download_Create'), $bla->form($form));
 
 } else {
-	klaida( $lang['system']['warning'], $lang['system']['pleaselogin'] );
+	klaida( getLangText('system', 'warning'), getLangText('system', 'pleaselogin') );
 }

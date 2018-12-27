@@ -52,27 +52,27 @@ function downloadsAdminButtons($buttons)
         'downloads' => [
             [
                 'url' 	=> url( "?id,999;a,downloads;v,6" ),
-                'value'	=> $lang['admin']['download_unpublished'],
+                'value'	=> getLangText('admin', 'download_unpublished'),
                 'icon'	=> adminIcon('downloads', 'unpublished')
             ],
             [
                 'url' 	=> url( "?id,999;a,downloads;v,1" ),
-                'value'	=> $lang['admin']['download_Create'],
+                'value'	=> getLangText('admin', 'download_Create'),
                 'icon'	=> adminIcon('downloads', 'create')
             ],
             [
                 'url' 	=> url( "?id,999;a,downloads;v,7" ),
-                'value'	=> $lang['admin']['download_edit'],
+                'value'	=> getLangText('admin', 'download_edit'),
                 'icon'	=> adminIcon('downloads', 'edit')
             ],
             [
                 'url' 	=> url( "?id,999;a,downloads;v,2" ),
-                'value'	=> $lang['system']['createcategory'],
+                'value'	=> getLangText('system', 'createcategory'),
                 'icon'	=> adminIcon('downloads', 'create_category')
             ],
             [
                 'url' 	=> url( "?id,999;a,downloads;v,3" ),
-                'value'	=> $lang['system']['editcategory'],
+                'value'	=> getLangText('system', 'editcategory'),
                 'icon'	=> adminIcon('downloads', 'edit_category')
             ]
         ],
@@ -123,18 +123,18 @@ function upload( $file, $file_types_array = ["BMP", "JPG", "PNG", "PSD", "ZIP", 
                     $result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $filename ) . ", " . escape( $_POST['Aprasymas'] ) . "," . escape(getSession('id')) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ", 'TAIP')" );
 
                     if ( $result ) {
-                        msg( $lang['system']['done'], $lang['admin']['download_created'] );
+                        msg( getLangText('system', 'done'), getLangText('admin', 'download_created') );
                     } else {
-                        klaida( $lang['system']['error'], $lang['system']['error'] );
+                        klaida( getLangText('system', 'error'), getLangText('system', 'error') );
                     }
                 } else {
-                    klaida( $lang['system']['error'], '<font color="#FF0000">' . $filename . '</font>' );
+                    klaida( getLangText('system', 'error'), '<font color="#FF0000">' . $filename . '</font>' );
                 }
             } else {
-                klaida( $lang['system']['error'], '<font color="#FF0000">' . $filename . '</font> ' . $lang['admin']['download_toobig'] . '' );
+                klaida( getLangText('system', 'error'), '<font color="#FF0000">' . $filename . '</font> ' . getLangText('admin', 'download_toobig') . '' );
             }
         } else {
-            klaida( $lang['system']['error'], '<font color="#FF0000">' . $filename . '</font> ' . $lang['admin']['download_badfile'] . '' );
+            klaida( getLangText('system', 'error'), '<font color="#FF0000">' . $filename . '</font> ' . getLangText('admin', 'download_badfile') . '' );
         }
     }
 }

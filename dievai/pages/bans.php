@@ -42,13 +42,13 @@ if ( isset( $_GET['d'] ) ) {
 		"header",
 		[
 			'type'		=> 'success',
-			'message' 	=> 'IP ' . $lang['admin']['unbaned']
+			'message' 	=> 'IP ' . getLangText('admin', 'unbaned')
 		]
 	);
 }
 //ip baninimas
 if ( isset( $_GET['b'] ) && $_GET['b'] == 1 ) {
-	$title = 'IP ' . $lang['admin']['bans'];
+	$title = 'IP ' . getLangText('admin', 'bans');
 	
 	$form = [
 		"Form"                     	=> [
@@ -63,7 +63,7 @@ if ( isset( $_GET['b'] ) && $_GET['b'] == 1 ) {
 			"name" 	=> "ip"
 		],
 
-	    $lang['admin']['why'] 		=> [	
+	    getLangText('admin', 'why') 		=> [	
 			"type" => "text",
 			"name" => "priezastis"
 		],
@@ -72,7 +72,7 @@ if ( isset( $_GET['b'] ) && $_GET['b'] == 1 ) {
 			"type" 		=> "submit",
 			"name" 		=> "Portai",
 			'form_line'	=> 'form-not-line',
-			"value" 	=> $lang['admin']['save']
+			"value" 	=> getLangText('admin', 'save')
 		]
 	];
 
@@ -87,14 +87,14 @@ if ( isset( $_GET['b'] ) && $_GET['b'] == 1 ) {
 					"header",
 					[
 						'type'		=> 'success',
-						'message' 	=> 'IP: ' . $_POST['ip'] . ' ' . $lang['admin']['banned']
+						'message' 	=> 'IP: ' . $_POST['ip'] . ' ' . getLangText('admin', 'banned')
 					]
 				);
 			} else {
 				notifyMsg(
 					[
 						'type'		=> 'error',
-						'message' 	=> $lang['admin']['notallowed']
+						'message' 	=> getLangText('admin', 'notallowed')
 					]
 				);
 			}
@@ -102,7 +102,7 @@ if ( isset( $_GET['b'] ) && $_GET['b'] == 1 ) {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['admin']['badip']
+					'message' 	=> getLangText('admin', 'badip')
 				]
 			);
 		}
@@ -184,11 +184,11 @@ if (! empty($IPS)) {
 
 		$info[] = array(
 			'IP'                     => $key,
-			$lang['admin']['why']    => trimlink( $val, 150 ),
-			$lang['admin']['action'] => "<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};d,{$key}" ) . "\" title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" alt=\"delete\" border=\"0\"></a> " );
+			getLangText('admin', 'why')    => trimlink( $val, 150 ),
+			getLangText('admin', 'action') => "<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};d,{$key}" ) . "\" title = '" . getLangText('admin',  'delete') . "' onClick=\"return confirm('" . getLangText('system', 'delete_confirm') . "')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" alt=\"delete\" border=\"0\"></a> " );
 	}
 }
-$title = $lang['admin']['bans'];
+$title = getLangText('admin', 'bans');
 //nupiesiam lenteles/sarasus
 if (! empty($title) && ! empty($info) ) {
 	$tableClass = new Table($info);

@@ -50,10 +50,10 @@ if ( isset( $quest['question'] ) ) {
 		foreach ( $answers as $row ) {
 			$text .= "<label><input type=\"" . ( $quest['radio'] == 1 ? 'radio' : 'checkbox' ) . "\" name=\"answer[]\" class=\"middle\" value=\"{$row['id']}\" /> " . input( $row['answer'] ) . "</label><br />";
 		}
-		if ( $quest['only_guests'] == 0 || ( $quest['only_guests'] == 1 && isset(getSession('username')) ) ) {
-			$text .= '<div style="text-align: center;"><button class="btn btn-primary" name="vote" type="submit">' . $lang['poll']['vote'] . '</button></div>';
+		if ( $quest['only_guests'] == 0 || ( $quest['only_guests'] == 1 && !empty(getSession('username')) ) ) {
+			$text .= '<div style="text-align: center;"><button class="btn btn-primary" name="vote" type="submit">' . getLangText('poll', 'vote') . '</button></div>';
 		} else {
-			$text .= $lang['poll']['cant'];
+			$text .= getLangText('poll', 'cant');
 		}
 		$text .= "</form>";
 	} else {
@@ -66,12 +66,12 @@ if ( isset( $quest['question'] ) ) {
 			<div style=\"float:left;height:8px; width:1px; border-right:1px solid black;margin:1px -2px\"></div>
 		</div><br />";
 		}
-		$text .= '<br />	' . $lang['poll']['author'] . ': ' . user( $quest['author_name'], $quest['author_id'] ) . '';
+		$text .= '<br />	' . getLangText('poll', 'author') . ': ' . user( $quest['author_name'], $quest['author_id'] ) . '';
 		if ( puslapis( 'blsavimo_archyvas.php' ) ) {
-			$text .= "<br /><a href=\"" . url( '?id,' . $conf['pages']['blsavimo_archyvas.php']['id'] . ';m,' . $quest['id'] ) . "\">{$lang['news']['comments']}</a><br /><a href=\"" . url( '?id,' . $conf['pages']['blsavimo_archyvas.php']['id'] ) . "\"> {$lang['poll']['archive']}</a>";
+			$text .= "<br /><a href=\"" . url( '?id,' . $conf['pages']['blsavimo_archyvas.php']['id'] . ';m,' . $quest['id'] ) . "\">" . getLangText('news', 'comments') . "</a><br /><a href=\"" . url( '?id,' . $conf['pages']['blsavimo_archyvas.php']['id'] ) . "\"> " . getLangText('poll',  'archive') . "</a>";
 		}
 	}
 } else {
-	$text = "<b>{$lang['poll']['no']}</b><br />";
+	$text = "<b>" . getLangText('poll',  'no') . "</b><br />";
 }
 ?>

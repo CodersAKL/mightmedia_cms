@@ -32,25 +32,25 @@ $i      = 0;
 foreach ( $result as $row ) {
 	$narsykle = ( ( isset( $row['agent'] ) ) ? browser( $row['agent'] ) : '?' );
 	$info[$i] = array(
-		$lang['online']['who']       => user( $row['user'], $row['id'] ),
-		$lang['online']['timestamp'] => date( 'i:s', $timestamp - $row['timestamp'] ),
-		$lang['online']['clicks']    => $row['clicks']
+		getLangText('online', 'who')       => user( $row['user'], $row['id'] ),
+		getLangText('online', 'timestamp') => date( 'i:s', $timestamp - $row['timestamp'] ),
+		getLangText('online', 'clicks')    => $row['clicks']
 	);
 	$flag     = ( isset( $row['ip'] ) ? strtolower( getUserCountry( $row['ip'] ) ) : '' ); //"http://api.wipmania.com/$row['ip']";
 
 	if (getSession('level') == 1) {
 		$info[$i]['IP']                       = '<a href="http://whois.serveriai.lt/' . $row['ip'] . '" target="_blank" title="' . $row['ip'] . '">' . $row['ip'] . '</a>';
-		$info[$i][$lang['online']['page']]    = '<a href="' . $row['file'] . '"><img src="core/assets/images/icons/link.png" alt="page" border="0" class="middle"/></a>';
-		$info[$i][$lang['online']['browser']] = '<div>' . $narsykle . '</div>';
+		$info[$i][getLangText('online', 'page')]    = '<a href="' . $row['file'] . '"><img src="core/assets/images/icons/link.png" alt="page" border="0" class="middle"/></a>';
+		$info[$i][getLangText('online', 'browser')] = '<div>' . $narsykle . '</div>';
 		$info[$i]['OS']                       = get_user_os();
-		$info[$i][$lang['online']['country']] = '<img src="core/assets/images/icons/flags/' . $flag . '.png " height="12" />';
+		$info[$i][getLangText('online', 'country')] = '<img src="core/assets/images/icons/flags/' . $flag . '.png " height="12" />';
 	}
 	$i++;
 }
 
 include_once config('class', 'dir') . 'class.table.php';
 $bla = new Table();
-lentele( $lang['online']['users'] . ' - ' . $u, $bla->render( $info ) );
+lentele( getLangText('online', 'users') . ' - ' . $u, $bla->render( $info ) );
 
 //mysql_free_result($result);
 unset( $user, $nekvepuoja, $file, $img, $content, $i, $u, $q, $row, $extra );

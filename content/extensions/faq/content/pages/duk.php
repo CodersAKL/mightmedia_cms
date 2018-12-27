@@ -36,8 +36,8 @@ if ( sizeof( $sql ) > 0 ) {
 	}
 
 	$text .= "</div>";
-	lentele( $lang['faq']['faq_answers'], $text );
+	lentele( getLangText('faq', 'faq_answers'), $text );
 	unset( $text );
 } else {
-	klaida( $lang['system']['error'], $lang['system']['no_items'] );
+	klaida( getLangText('system', 'error'), getLangText('system', 'no_items') );
 }

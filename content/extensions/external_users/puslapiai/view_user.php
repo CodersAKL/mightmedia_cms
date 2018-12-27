@@ -20,10 +20,10 @@ if ( isset( $memb[1] ) ) {
 		//$sql2 = mysql_query1("SELECT * FROM " . LENTELES_PRIESAGA . "kas_prisijunges WHERE user='" . $sql['nick'] . "' AND `timestamp`>'" . $timeout . "' LIMIT 1");
 		if ( isset( $user_online[(int)$sql['id']] ) && $user_online[(int)$sql['id']] == TRUE ) {
 			$prisijunges = 'core/assets/images/icons/status_online.png';
-			$pr          = $lang['user']['user_online'];
+			$pr          = getLangText('user', 'user_online');
 		} else {
 			$prisijunges = 'core/assets/images/icons/status_offline.png';
-			$pr          = $lang['user']['user_ofline'];
+			$pr          = getLangText('user', 'user_ofline');
 		}
 		if ( isset( $conf['level'][$sql['levelis']]['pavadinimas'] ) ) {
 			$grupe = $conf['level'][$sql['levelis']]['pavadinimas'];
@@ -39,8 +39,8 @@ if ( isset( $memb[1] ) ) {
 		$text = '<table align="center" border="0" cellpadding="0" cellspacing="0" class="table" width="100%">
 			<tr class="th">
 				<th height="14" class="th" width="140"><b>' . $sql['nick'] . '</b> <img src="' . $prisijunges . '" title="' . $pr . '" style="vertical-align:middle" alt="' . $pr . '" /></th>
-				<th height="14" class="th" width="50%">' . $lang['user']['user_info'] . '</th>
-				<th height="14" class="th" width="50%">' . $lang['user']['user_contacts'] . '</th>
+				<th height="14" class="th" width="50%">' . getLangText('user', 'user_info') . '</th>
+				<th height="14" class="th" width="50%">' . getLangText('user', 'user_contacts') . '</th>
 			</tr>
 			<tr class="tr">
 				<td height="14" class="td" width="140">
@@ -51,13 +51,13 @@ if ( isset( $memb[1] ) ) {
 		</td>
 				<td height="58" valign="top" class="td" width="190">
 		  <small>
-			<b>' . $lang['user']['user_name'] . ':</b> ' . $sql['vardas'] . '<br />
-			<b>' . $lang['user']['user_secondname'] . ':</b> ' . $sql['pavarde'] . '<br />
-			<b>' . $lang['user']['user_age'] . ':</b> ' . ( amzius( $sql['gim_data'] ) > 0 ? amzius( $sql['gim_data'] ) : "-" ) . '<br />
-			<b>' . $lang['user']['user_city'] . ':</b> ' . input( $sql['miestas'] ) . '<br />
-			<b>' . $lang['user']['user_registered'] . ': </b> ' . date( 'Y-m-d H:i:s ', $sql['reg_data'] ) . '<br />
-			<b>' . $lang['user']['user_lastvisit'] . ': </b> ' . kada( date( 'Y-m-d H:i:s ', $sql['login_data'] ) ) . '<br />
-			<b>' . $lang['user']['user_points'] . ': </b> ' . $sql['taskai'] . '<br />
+			<b>' . getLangText('user', 'user_name') . ':</b> ' . $sql['vardas'] . '<br />
+			<b>' . getLangText('user', 'user_secondname') . ':</b> ' . $sql['pavarde'] . '<br />
+			<b>' . getLangText('user', 'user_age') . ':</b> ' . ( amzius( $sql['gim_data'] ) > 0 ? amzius( $sql['gim_data'] ) : "-" ) . '<br />
+			<b>' . getLangText('user', 'user_city') . ':</b> ' . input( $sql['miestas'] ) . '<br />
+			<b>' . getLangText('user', 'user_registered') . ': </b> ' . date( 'Y-m-d H:i:s ', $sql['reg_data'] ) . '<br />
+			<b>' . getLangText('user', 'user_lastvisit') . ': </b> ' . kada( date( 'Y-m-d H:i:s ', $sql['login_data'] ) ) . '<br />
+			<b>' . getLangText('user', 'user_points') . ': </b> ' . $sql['taskai'] . '<br />
 		  </small>
 		</td>
 				<td height="58" valign="top" class="td" width="140">
@@ -72,18 +72,18 @@ if ( isset( $memb[1] ) ) {
 				</td>
 			</tr>
 			<tr class="th">
-				' . ( puslapis( 'frm.php' ) ? '<th  class="th" height="14" width="140">' . $lang['forum']['forum'] . '</th>' : '' ) . '
-				<th class="th" height="14" colspan="' . ( puslapis( 'frm.php' ) ? '2' : '3' ) . '"  width="280">' . $lang['user']['user_signature'] . '</th>
+				' . ( puslapis( 'frm.php' ) ? '<th  class="th" height="14" width="140">' . getLangText('forum', 'forum') . '</th>' : '' ) . '
+				<th class="th" height="14" colspan="' . ( puslapis( 'frm.php' ) ? '2' : '3' ) . '"  width="280">' . getLangText('user', 'user_signature') . '</th>
 			</tr>
 			<tr class="tr2">
 				' . ( puslapis( 'frm.php' ) ? '<td class="td" rowspan="1" height="87" valign="top" width="140"><small>
-					<b>' . $lang['user']['topics'] . ':</b> ' . $sql['forum_temos'] . '<br />
-					<b>' . $lang['forum']['messages'] . ':</b>	' . $sql['forum_atsakyta'] . '<br /></small>
+					<b>' . getLangText('user', 'topics') . ':</b> ' . $sql['forum_temos'] . '<br />
+					<b>' . getLangText('forum', 'messages') . ':</b>	' . $sql['forum_atsakyta'] . '<br /></small>
 		</td>' : '' ) . '
 				<td class="td" colspan="' . ( puslapis( 'frm.php' ) ? '2' : '3' ) . '" height="18" width="280">' . bbcode( $sql['parasas'] ) . '</td>
 			</tr>		
 			' . ( $conf['galbalsuot'] == 1 ? '<tr class="th">
-				<th class="th" height="14" colspan="3" >' . $lang['user']['user_rate'] . '</th>
+				<th class="th" height="14" colspan="3" >' . getLangText('user', 'user_rate') . '</th>
 			</tr>' : '' ) . '
 		</table>
 		
@@ -94,7 +94,7 @@ if ( isset( $memb[1] ) ) {
 				$text .= "
 				<center>
 				<form name=\"send_pm\" action='" . url( "?id," . $conf['pages']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $sql['nick'] ) ) ) . "' method=\"post\">
-				<input type=\"submit\" value=\"{$lang['user']['user_pm']}\" />
+				<input type=\"submit\" value=\"" . getLangText('user',  'user_pm') . "\" />
 				</form>
 				</center>
 			";
@@ -102,7 +102,7 @@ if ( isset( $memb[1] ) ) {
 		}
 
 
-		lentele( "{$lang['user']['user_profile']} - {$sql['nick']}", $text );
+		lentele( getLangText('user', 'user_profile') . " - " . $sql['nick'] , $text );
 		unset( $text );
 
 
@@ -116,8 +116,8 @@ if ( isset( $memb[1] ) ) {
 			comments($sql['id'], true);
 		}
 	} else {
-		klaida( $lang['system']['error'], "{$lang['system']['pagenotfounfd']}." );
+		klaida( getLangText('system', 'error'), getLangText('system', 'pagenotfounfd') . "." );
 	}
 } else {
-	klaida( $lang['system']['error'], "{$lang['system']['pagenotfounfd']}." );
+	klaida( getLangText('system', 'error'), getLangText('system', 'pagenotfounfd') . "." );
 }

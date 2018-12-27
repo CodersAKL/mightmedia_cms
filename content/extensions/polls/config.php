@@ -61,12 +61,12 @@ function pollsAdminButtons($buttons)
         'polls'     => [
             [
                 'url' 	=> url( "?id,999;a,polls;v,1" ),
-                'value'	=> $lang['admin']['poll_create'],
+                'value'	=> getLangText('admin', 'poll_create'),
                 'icon'	=> adminIcon('polls', 'create')
             ],
             [
                 'url'	=> url( "?id,999;a,polls;v,2" ),
-                'value'	=> $lang['admin']['poll_edit'],
+                'value'	=> getLangText('admin', 'poll_edit'),
                 'icon'	=> adminIcon('polls', 'edit')
             ]
         ],

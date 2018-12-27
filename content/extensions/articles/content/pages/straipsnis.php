@@ -25,7 +25,7 @@ if ( $sqlas && sizeof( $sqlas ) > 0 && !isset( $url['m'] ) ) {
 			$kiek    = mysql_query1( "SELECT count(*) + (SELECT count(*) FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `kat` IN (SELECT `id` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `path`=" . escape( $sql['id'] ) . ")) as `kiek` FROM `" . LENTELES_PRIESAGA . "straipsniai` WHERE `kat`=" . escape( $sql['id'] ) . " AND `rodoma`='TAIP' AND `lang` = " . escape( lang() ) . " LIMIT 1" );
 			$sqlkiek = $kiek['kiek'];
 			$info[]  = array(
-				$lang['system']['categories'] => "<a style=\"float: left;\" class=\"kat\" href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><img src='core/assets/images/naujienu_kat/" . input( $sql['pav'] ) . "' alt=\"\"  border=\"0\" /></a><div><a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><b>" . input( $sql['pavadinimas'] ) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input( $sql['aprasymas'] ) . "</div><div>{$lang['category']['articles']}: $sqlkiek</div></span></div>" //,
+				getLangText('system', 'categories') => "<a style=\"float: left;\" class=\"kat\" href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><img src='core/assets/images/naujienu_kat/" . input( $sql['pav'] ) . "' alt=\"\"  border=\"0\" /></a><div><a href='" . url( "?id," . $url['id'] . ";k," . $sql['id'] . "" ) . "'><b>" . input( $sql['pavadinimas'] ) . "</b></a><span class=\"small_about\"style='font-size:9px;width:auto;display:block;'><div>" . input( $sql['aprasymas'] ) . "</div><div>" . getLangText('category',  'articles') . ": $sqlkiek</div></span></div>" //,
 			);
 		}
 	}
@@ -54,7 +54,7 @@ if ( $k >= 0 && empty( $url['m'] ) ) {
 			LIMIT {$p},{$limit}", 100 );
 		if ( teises( $pav['teises'], getSession('level')) ) {
 
-			lentele( ( !empty( $pav['pavadinimas'] ) ? $pav['pavadinimas'] : $lang['pages']['straipsnis.php'] ), $pav['aprasymas'] . "<br /><i>{$lang['category']['articles']}: {$viso}</i>" );
+			lentele( ( !empty( $pav['pavadinimas'] ) ? $pav['pavadinimas'] : getLangText('pages', 'straipsnis.php') ), $pav['aprasymas'] . "<br /><i>" . getLangText('category',  'articles') . ": {$viso}</i>" );
 			foreach ( $sql as $row ) {
 				$sql_autr = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= '" . $row['autorius'] . "' LIMIT 1" );
 				$data     = $row['date'];
@@ -69,15 +69,15 @@ if ( $k >= 0 && empty( $url['m'] ) ) {
 				}
 			}
 		} else {
-			klaida( $lang['system']['warning'], "{$lang['article']['cant']}." );
+			klaida( getLangText('system', 'warning'), "" . getLangText('article',  'cant') . "." );
 		}
 		if ( $viso > $limit ) {
-			lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+			lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 		}
 		unset( $text, $row, $sql );
 
 	} elseif ( $k > 0 ) {
-		klaida( $lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>" );
+		klaida( getLangText('system', 'warning'), getLangText('system', 'no_content') . "<br /><a href=\"javascript: history.go(-1)\">" . getLangText('download',  'back') . "</a>" );
 	}
 
 } elseif ( !empty( $url['m'] ) ) {
@@ -92,13 +92,13 @@ if ( $k >= 0 && empty( $url['m'] ) ) {
 			$text = $row['f_text'] . "<div class='line'></div>";
 		}
 		$sql_aut = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= '" . $row['autorius'] . "' LIMIT 1" );
-		$text .= "{$lang['article']['date']}: " . date( 'Y-m-d H:i:s', $row['date'] ) . ",
-	{$lang['article']['author']}: " . user( $row['autorius'], $sql_aut['id'], $sql_aut['levelis'] ) . "";
+		$text .= "" . getLangText('article',  'date') . ": " . date( 'Y-m-d H:i:s', $row['date'] ) . ",
+	" . getLangText('article',  'author') . ": " . user( $row['autorius'], $sql_aut['id'], $sql_aut['levelis'] ) . "";
 		//Dalintis
 		$text .= "
 			<div class='line'></div>
 			<!-- AddThis Button BEGIN -->
-			<div class='addthis_toolbox addthis_default_style '><a href='http://www.addthis.com/bookmark.php?v=250&amp;pubid=xa-4e7a05051d3cf281' class='addthis_button_compact'>" . $lang['news']['share'] . "</a><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a05051d3cf281'></script><a class='addthis_button_facebook_like' fb:like:layout='button_count'></a><a class='addthis_button_tweet'></a><a class='addthis_button_google_plusone' g:plusone:size='medium'></a></div><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a03fc44b95268'></script>
+			<div class='addthis_toolbox addthis_default_style '><a href='http://www.addthis.com/bookmark.php?v=250&amp;pubid=xa-4e7a05051d3cf281' class='addthis_button_compact'>" . getLangText('news', 'share') . "</a><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a05051d3cf281'></script><a class='addthis_button_facebook_like' fb:like:layout='button_count'></a><a class='addthis_button_tweet'></a><a class='addthis_button_google_plusone' g:plusone:size='medium'></a></div><script type='text/javascript' src='http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e7a03fc44b95268'></script>
 			<!-- AddThis Button END -->
 			";
 		lentele( input( $row['pav'] ), $text);
@@ -108,11 +108,11 @@ if ( $k >= 0 && empty( $url['m'] ) ) {
 		include_once config('functions', 'dir') . 'functions.comments.php';
 		comments($url['m'], true);
 	} else {
-		klaida( $lang['system']['warning'], "{$lang['article']['cant']}." );
+		klaida( getLangText('system', 'warning'), "" . getLangText('article',  'cant') . "." );
 	}
 }
 if ( count( $_GET ) == 1 ) {
 	if ( kiek( "straipsniai", "WHERE rodoma='TAIP' AND `lang` = " . escape( lang() ) . "" ) <= 0 ) {
-		klaida( $lang['system']['warning'], $lang['system']['no_content'] . "<br /><a href=\"javascript: history.go(-1)\">{$lang['download']['back']}</a>" );
+		klaida( getLangText('system', 'warning'), getLangText('system', 'no_content') . "<br /><a href=\"javascript: history.go(-1)\">" . getLangText('download',  'back') . "</a>" );
 	}
 }

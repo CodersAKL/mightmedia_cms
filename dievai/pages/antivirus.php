@@ -68,22 +68,22 @@ $report .= '<div style="width:100%; height:400px; overflow:auto;">';
 file_scan( $CONFIG['scanpath'], $defs, $CONFIG['debug'] );
 $report .= '</div>';
 // output summary
-$report .= '<h2 class="ico_mug">' . $lang['admin']['antivirus_scan_completed'] . '</h2>';
+$report .= '<h2 class="ico_mug">' . getLangText('admin', 'antivirus_scan_completed') . '</h2>';
 $report .= '<div id=summary>';
-$report .= '<p><strong>' . $lang['admin']['antivirus_scaned_folders'] . ':</strong> ' . $dircount . '</p>';
-$report .= '<p><strong>' . $lang['admin']['antivirus_scaned_files'] . ':</strong> ' . $filecount . '</p>';
-$report .= '<p style="color:red;"><strong>' . $lang['admin']['antivirus_infected_files'] . ':</strong> ' . $infected . '</p>';
+$report .= '<p><strong>' . getLangText('admin', 'antivirus_scaned_folders') . ':</strong> ' . $dircount . '</p>';
+$report .= '<p><strong>' . getLangText('admin', 'antivirus_scaned_files') . ':</strong> ' . $filecount . '</p>';
+$report .= '<p style="color:red;"><strong>' . getLangText('admin', 'antivirus_infected_files') . ':</strong> ' . $infected . '</p>';
 $report .= '</div>';
 
 // output full report
-lentele( $lang['admin']['antivirus'], $report );
+lentele( getLangText('admin', 'antivirus'), $report );
 function file_scan( $folder, $defs, $debug ) {
 
 	// hunts files/folders recursively for scannable items
 	global $dircount, $report, $lang;
 	$dircount++;
 	if ( $debug ) {
-		$report .= '<p class="info">' . $lang['admin']['antivirus_scanning'] . ' ' . $folder . ' ...</p>';
+		$report .= '<p class="info">' . getLangText('admin', 'antivirus_scanning') . ' ' . $folder . ' ...</p>';
 	}
 	if ( $d = dir( $folder ) ) {
 		while ( FALSE !== ( $entry = $d->read() ) ) {
@@ -119,13 +119,13 @@ function virus_check( $file, $defs, $debug ) {
 		foreach ( $defs as $virus ) {
 			if ( @stripos( $data, trim( $virus[1] ) ) ) { //ne=inau kas 2ia blogai, pridejau eta
 				// file matches virus defs
-				$report .= '<p style="color:red;">' . $lang['admin']['antivirus_infected'] . ': ' . $file . ' (' . $virus[0] . ')</p>';
+				$report .= '<p style="color:red;">' . getLangText('admin', 'antivirus_infected') . ': ' . $file . ' (' . $virus[0] . ')</p>';
 				$infected++;
 				$clean = 0;
 			}
 		}
 		if ( ( $debug ) && ( $clean ) ) {
-			$report .= '<p style="color:green;">' . $lang['admin']['antivirus_clean'] . ': ' . $file . '</p>';
+			$report .= '<p style="color:green;">' . getLangText('admin', 'antivirus_clean') . ': ' . $file . '</p>';
 		}
 	}
 }

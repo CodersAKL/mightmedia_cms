@@ -62,32 +62,32 @@ function galleryAdminButtons($buttons)
         'gallery'   => [
             [
                 'url' 	=> url("?id,999;a,gallery;v,6"),
-                'value'	=> $lang['admin']['gallery_conf'],
+                'value'	=> getLangText('admin', 'gallery_conf'),
                 'icon'	=> adminIcon('gallery', 'config')
             ],
             [
                 'url' 	=> url("?id,999;a,gallery;v,7"),
-                'value'	=> $lang['admin']['gallery_unpublished'],
+                'value'	=> getLangText('admin', 'gallery_unpublished'),
                 'icon'	=> adminIcon('gallery', 'unpublished')
             ],
             [
                 'url' 	=> url("?id,999;a,gallery;v,1"),
-                'value'	=> $lang['admin']['gallery_add'],
+                'value'	=> getLangText('admin', 'gallery_add'),
                 'icon'	=> adminIcon('gallery', 'add')
             ],
             [
                 'url' 	=> url("?id,999;a,gallery;v,8"),
-                'value'	=> $lang['admin']['gallery_edit'],
+                'value'	=> getLangText('admin', 'gallery_edit'),
                 'icon'	=> adminIcon('gallery', 'edit')
             ],
             [
                 'url' 	=> url("?id,999;a,gallery;v,2"),
-                'value'	=> $lang['admin']['gallery_photoalbum_cr'],
+                'value'	=> getLangText('admin', 'gallery_photoalbum_cr'),
                 'icon'	=> adminIcon('gallery', 'album_create')
             ],
             [
                 'url' 	=> url("?id,999;a,gallery;v,3"),
-                'value'	=> $lang['admin']['gallery_photoalbum_ed'],
+                'value'	=> getLangText('admin', 'gallery_photoalbum_ed'),
                 'icon'	=> adminIcon('gallery', 'album_create')
             ],
         ],

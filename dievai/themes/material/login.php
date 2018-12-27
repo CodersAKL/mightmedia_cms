@@ -59,14 +59,14 @@
             <div class="body">
                 <form name="loginform" id="sign_in" method="POST">
                     <div class="msg">
-                        <?php echo $lang['system']['pleaselogin']; ?>
+                        <?php echo getLangText('system', 'pleaselogin'); ?>
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
                         </span>
                         <div class="form-line">
-                            <input type="text" class="form-control" name="vartotojas" placeholder="<?php echo $lang['user']['user'];?>" required autofocus>
+                            <input type="text" class="form-control" name="vartotojas" placeholder="<?php echo getLangText('user', 'user');?>" required autofocus>
                         </div>
                     </div>
                     <div class="input-group">
@@ -74,7 +74,7 @@
                             <i class="material-icons">lock</i>
                         </span>
                         <div class="form-line">
-                            <input type="password" class="form-control" name="slaptazodis" placeholder="<?php echo $lang['user']['password']; ?>" required>
+                            <input type="password" class="form-control" name="slaptazodis" placeholder="<?php echo getLangText('user', 'password'); ?>" required>
                         </div>
                     </div>
                     <div class="row">
@@ -84,7 +84,7 @@
                         </div>
                         <div class="col-xs-4">
                             <button class="btn btn-block bg-deep-orange waves-effect" type="submit">
-                                <?php echo $lang['user']['login']; ?>
+                                <?php echo getLangText('user', 'login'); ?>
                             </button>
                         </div>
                     </div>

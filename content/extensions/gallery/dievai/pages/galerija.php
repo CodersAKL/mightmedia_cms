@@ -35,7 +35,7 @@ if ( empty( $url['v'] ) ) {
 }
 
 if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['galerija'], buttonsMenu($buttons['gallery']));
+	lentele(getLangText('admin', 'galerija'), buttonsMenu($buttons['gallery']));
 }
 
 unset( $buttons, $extra, $text );
@@ -54,7 +54,7 @@ if (isset( $_GET['priimti'] )) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['gallery_activated']
+				'message' 	=> getLangText('admin', 'gallery_activated')
 			]
 		);
 	} else {
@@ -67,7 +67,7 @@ if (isset( $_GET['priimti'] )) {
 	}
 }
 //foto salinimas
-if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete'] && isset( $_POST['edit_new'] ) && $_POST['edit_new'] > 0 ) ) || isset( $url['t'] ) ) {
+if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == getLangText('admin', 'delete') && isset( $_POST['edit_new'] ) && $_POST['edit_new'] > 0 ) ) || isset( $url['t'] ) ) {
 	if ( isset( $url['t'] ) ) {
 		$trinti = (int)$url['t'];
 	} elseif ( isset( $_POST['edit_new'] ) ) {
@@ -98,7 +98,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['gallery_deleted']
+				'message' 	=> getLangText('admin', 'gallery_deleted')
 			]
 		);
 		
@@ -121,7 +121,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 
 	$extra = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "galerija` WHERE `id`=" . escape( $redaguoti ) . " LIMIT 1" );
 
-} elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['edit'] ) {
+} elseif ( isset( $_POST['action'] ) && $_POST['action'] == getLangText('admin', 'edit') ) {
 
 	$apie        = strip_tags( $_POST['Aprasymas'] );
 	$pavadinimas = strip_tags( $_POST['Pavadinimas'] );
@@ -144,7 +144,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['gallery_updated']
+				'message' 	=> getLangText('admin', 'gallery_updated')
 			]
 		);
 	} else {
@@ -156,7 +156,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 		);
 	}
 
-} elseif ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['gallery_add'] ) {
+} elseif ( isset( $_POST['action'] ) && $_POST['action'] == getLangText('admin', 'gallery_add') ) {
 	//image upload
 	if (isset($_FILES['failas']['name'])) {
 		$file_type = $_FILES['failas']['type'];
@@ -170,7 +170,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 				notifyMsg(
 					[
 						'type'		=> 'error',
-						'message' 	=> $lang['admin']['gallery_nofile']
+						'message' 	=> getLangText('admin', 'gallery_nofile')
 					]
 				);
 			} else {
@@ -183,7 +183,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 					notifyMsg(
 						[
 							'type'		=> 'error',
-							'message' 	=> $lang['admin']['gallery_notimg']
+							'message' 	=> getLangText('admin', 'gallery_notimg')
 						]
 					);
 				}
@@ -231,7 +231,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 							"header",
 							[
 								'type'		=> 'success',
-								'message' 	=> $lang['admin']['gallery_added']
+								'message' 	=> getLangText('admin', 'gallery_added')
 							]
 						);
 					} else {
@@ -250,7 +250,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $file_name . ' ' . $lang['admin']['download_toobig']
+					'message' 	=> $file_name . ' ' . getLangText('admin', 'download_toobig')
 				]
 			);
 		}
@@ -259,7 +259,7 @@ if ( ( ( isset( $_POST['action'] ) && $_POST['action'] == $lang['admin']['delete
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> $lang['admin']['download_badfile']
+				'message' 	=> getLangText('admin', 'download_badfile')
 			]
 		);
 	}
@@ -272,7 +272,7 @@ if ( isset( $_GET['v'] ) ) {
 			<div class="card">
 				<div class="header">
 					<h2>
-						<?php echo $lang['gallery']['photoalbums']; ?>
+						<?php echo getLangText('gallery', 'photoalbums'); ?>
 					</h2>
 				</div>
 				<div class="body">
@@ -311,7 +311,7 @@ if ( isset( $_GET['v'] ) ) {
 			<div class="card">
 				<div class="header">
 					<h2>
-						<?php echo $lang['admin']['gallery_edit']; ?>
+						<?php echo getLangText('admin', 'gallery_edit'); ?>
 					</h2>
 				</div>
 				<div class="body">
@@ -326,14 +326,14 @@ if ( isset( $_GET['v'] ) ) {
 										</h3>
 										<p>
 											<span>
-												<?php echo $lang['admin']['gallery_date']; ?>:  <?php echo date( 'Y-m-d H:i:s ', $row2['data'] ); ?>
+												<?php echo getLangText('admin', 'gallery_date'); ?>:  <?php echo date( 'Y-m-d H:i:s ', $row2['data'] ); ?>
 											</span>
 											<a href="<?php echo url( "?id," . $url['id'] . ";a," . $url['a'] . ";t," . $row2['ID'] ); ?>"
-											onclick="return confirm('<?php echo $lang['system']['delete_confirm']; ?>');">
+											onclick="return confirm('<?php echo getLangText('system', 'delete_confirm'); ?>');">
 												<img src="<?php echo ROOT . 'core/assets/images/icons/cross.png'; ?>">
 											</a>
 											<a href="<?php echo url( "?id," . $url['id'] . ";a," . $url['a'] . ";h," . $row2['ID'] ); ?>" 
-											title="<?php echo $lang['admin']['edit']; ?>">
+											title="<?php echo getLangText('admin', 'edit'); ?>">
 												<img src="<?php echo ROOT . 'core/assets/images/icons/picture_edit.png'; ?>">
 											</a>
 										</p>
@@ -349,18 +349,18 @@ if ( isset( $_GET['v'] ) ) {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['system']['no_items']
+					'message' 	=> getLangText('system', 'no_items')
 				]
 			);
 		}
 
 		if ($viso > $limit) {
-			lentele($lang['system']['pages'], pages($p, $limit, $viso, 10));
+			lentele(getLangText('system', 'pages'), pages($p, $limit, $viso, 10));
 		}
 
 	} elseif ( $_GET['v'] == 1 || isset( $url['h'] ) ) {
 
-		$editOrCreate = (isset( $extra ) ) ? $lang['admin']['edit'] : $lang['admin']['gallery_add'];
+		$editOrCreate = (isset( $extra ) ) ? getLangText('admin', 'edit') : getLangText('admin', 'gallery_add');
 
 		$photoForm  = [
 			"Form"				=> [
@@ -372,34 +372,34 @@ if ( isset( $_GET['v'] ) ) {
 		];
 
 		if(! isset($extra)) {
-			$photoForm[$lang['admin']['gallery_file']] = [
+			$photoForm[getLangText('admin', 'gallery_file')] = [
 				"name" => "failas", 
 				"type" => 'file'
 			];
 		}
 
 		$photoForm += [
-			$lang['admin']['gallery_title']		=> [
+			getLangText('admin', 'gallery_title')		=> [
 				"type" => "text", 
 				"value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', 
 				"name" => "Pavadinimas"
 			],
 
-			$lang['gallery']['photoalbum']		=> [
+			getLangText('gallery', 'photoalbum')		=> [
 				"type" 		=> "select", 
 				"value" 	=> $categories, 
 				"name" 		=> "cat", 
 				"selected" 	=> (isset($extra['categorija']) ? input($extra['categorija']) : '0')
 			],
 		
-			$lang['admin']['gallery_about'] 	=> [
+			getLangText('admin', 'gallery_about') 	=> [
 				"type" 	=> "string", 
 				"name" 	=> "Aprasymas", 
 				"rows" 	=> "3", 
 				"value" => editor('jquery', 'standartinis','Aprasymas', (isset($extra['apie'])) ? input($extra['apie']) : '')
 			],
 
-			$lang['admin']['article_comments'] 	=> [
+			getLangText('admin', 'article_comments') 	=> [
 				'type'		=> 'switch',
 				'value'		=> 1,
 				'name'		=> 'kom',
@@ -408,7 +408,7 @@ if ( isset( $_GET['v'] ) ) {
 				'checked' 	=> (! empty($extra['kom']) && $extra['kom'] == 'taip' ? true : false),
 			],
 	
-			$lang['admin']['article_shown'] 	=> [
+			getLangText('admin', 'article_shown') 	=> [
 				'type'		=> 'switch',
 				'value'		=> 1,
 				'name'		=> 'rodoma',
@@ -434,7 +434,7 @@ if ( isset( $_GET['v'] ) ) {
 		}
 
 		$formClass = new Form($photoForm);
-		$title = ((isset($extra)) ? $lang['admin']['edit'] : $lang['admin']['gallery_add']);
+		$title = ((isset($extra)) ? getLangText('admin', 'edit') : getLangText('admin', 'gallery_add'));
 		$content = '<a name="edit"></a>' . ( ( isset( $extra['file'] ) ) ? '<center><img src="' . ROOT . 'content/uploads/gallery/' . input( $extra['file'] ) . '"></center>' : '' );
 
 		lentele($title, $content . $formClass->form());
@@ -485,7 +485,7 @@ if ( isset( $_GET['v'] ) ) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['configuration_updated']
+					'message' 	=> getLangText('admin', 'configuration_updated')
 				]
 			);
 		}
@@ -497,46 +497,46 @@ if ( isset( $_GET['v'] ) ) {
 				"name" 		=> "reg"
 			],
 
-			$lang['admin']['gallery_maxwidth']        	=> [
+			getLangText('admin', 'gallery_maxwidth')        	=> [
 				"type" 	=> "text", 
 				"value" => input($conf['fotodyd']), 
 				"name" 	=> "fotodyd"
 			],
 
-			$lang['admin']['gallery_minwidth']        	=> [
+			getLangText('admin', 'gallery_minwidth')        	=> [
 				"type" 	=> "text", 
 				"value" => input($conf['minidyd']), 
 				"name" 	=> "minidyd"
 			],
 			
-			$lang['admin']['gallery_images_per_page']	=>[
+			getLangText('admin', 'gallery_images_per_page')	=>[
 				"type" 	=> "text", 
 				"value" => input( (int)$conf['fotoperpsl'] ), 
 				"name" 	=> "fotoperpsl"
 			],
 
-			$lang['admin']['gallery_order']           	=> [
+			getLangText('admin', 'gallery_order')           	=> [
 				"type" 		=> "select", 
 				"selected" 	=> (isset($conf['galorder']) ? $conf['galorder'] : ''), 
 				"value" 	=> [ 
-					'data' 			=> $lang['admin']['gallery_date'], 
-					'pavadinimas'	=> $lang['admin']['gallery_title'], 
-					'autorius' 		=> $lang['admin']['gallery_author'] 
+					'data' 			=> getLangText('admin', 'gallery_date'), 
+					'pavadinimas'	=> getLangText('admin', 'gallery_title'), 
+					'autorius' 		=> getLangText('admin', 'gallery_author') 
 				], 
 				"name"		 => "order"
 			],
 
-			$lang['admin']['gallery_order_type']      	=> [
+			getLangText('admin', 'gallery_order_type')      	=> [
 				"type" 		=> "select", 
 				"selected" 	=> (isset($conf['galorder_type']) ? $conf['galorder_type'] : ''),
 				"value" 	=> [ 
-					'DESC'	=> $lang['admin']['gallery_from_biggest'], 
-					'ASC' 	=> $lang['admin']['gallery_from_smallest']
+					'DESC'	=> getLangText('admin', 'gallery_from_biggest'), 
+					'ASC' 	=> getLangText('admin', 'gallery_from_smallest')
 				], 
 				"name" 		=> "order_type"
 			],
 
-			$lang['admin']['gallery_comments'] 	=> [
+			getLangText('admin', 'gallery_comments') 	=> [
 				'type'		=> 'switch',
 				'value'		=> 1,
 				'name'		=> 'galkom',
@@ -549,12 +549,12 @@ if ( isset( $_GET['v'] ) ) {
 				"type" 		=> "submit", 
 				"name" 		=> "Konfiguracija", 
 				'form_line'	=> 'form-not-line',
-				"value" 	=> $lang['admin']['save']
+				"value" 	=> getLangText('admin', 'save')
 			]
 		];
 
 		$formClass = new Form($settings);
-		lentele($lang['admin']['gallery_conf'], $formClass->form());
+		lentele(getLangText('admin', 'gallery_conf'), $formClass->form());
 
 	} elseif ( $_GET['v'] == 7 ) {
 
@@ -565,7 +565,7 @@ if ( isset( $_GET['v'] ) ) {
 			<div class="card">
 				<div class="header">
 					<h2>
-						<?php echo $lang['admin']['gallery_unpublished']; ?>
+						<?php echo getLangText('admin', 'gallery_unpublished'); ?>
 					</h2>
 				</div>
 				<div class="body">
@@ -580,17 +580,17 @@ if ( isset( $_GET['v'] ) ) {
 										</h3>
 										<p>
 											<span>
-												<?php echo $lang['admin']['gallery_date']; ?>:  <?php echo date( 'Y-m-d H:i:s ', $unpublishedPhoto['data'] ); ?>
+												<?php echo getLangText('admin', 'gallery_date'); ?>:  <?php echo date( 'Y-m-d H:i:s ', $unpublishedPhoto['data'] ); ?>
 											</span>
 											<a href="<?php echo url( "?id," . $url['id'] . ";a," . $url['a'] . ";t," . $unpublishedPhoto['ID'] ); ?>"
-											onclick="return confirm('<?php echo $lang['system']['delete_confirm']; ?>');">
+											onclick="return confirm('<?php echo getLangText('system', 'delete_confirm'); ?>');">
 												<img src="<?php echo ROOT . 'core/assets/images/icons/cross.png'; ?>">
 											</a>
 											<a href="<?php echo url( "?id," . $url['id'] . ";a," . $url['a'] . ";h," . $unpublishedPhoto['ID'] ); ?>" 
-											title="<?php echo $lang['admin']['edit']; ?>">
+											title="<?php echo getLangText('admin', 'edit'); ?>">
 												<img src="<?php echo ROOT . 'core/assets/images/icons/picture_edit.png'; ?>">
 											</a>
-											<a href="<?php echo url( "?id," . $url['id'] . ";a," . $url['a'] . ";priimti," . $unpublishedPhoto['ID']); ?>" title="<?php echo $lang['admin']['acept']; ?>">
+											<a href="<?php echo url( "?id," . $url['id'] . ";a," . $url['a'] . ";priimti," . $unpublishedPhoto['ID']); ?>" title="<?php echo getLangText('admin', 'acept'); ?>">
 												<img src="<?php echo ROOT . 'core/assets/images/icons/tick_circle.png'; ?>">
 											</a>
 										</p>
@@ -604,13 +604,13 @@ if ( isset( $_GET['v'] ) ) {
 			<?php
 			// if list is bigger than limit, then we show list with pagination
 			if ( $viso > $limit ) {
-				lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+				lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 			}
 		} else {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['system']['no_items']
+					'message' 	=> getLangText('system', 'no_items')
 				]
 			);
 		}

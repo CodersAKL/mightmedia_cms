@@ -47,27 +47,27 @@ function articlesAdminButtons($buttons)
         'articles'  => [
             [
                 'url' 	=> url( "?id,999;a,articles;v,6" ),
-                'value'	=> $lang['admin']['article_unpublished'],
+                'value'	=> getLangText('admin', 'article_unpublished'),
                 'icon'	=> adminIcon('articles', 'unpublished')
             ],
             [
                 'url' 	=> url( "?id,999;a,articles;v,7" ),
-                'value'	=> $lang['admin']['article_create'],
+                'value'	=> getLangText('admin', 'article_create'),
                 'icon'	=> adminIcon('articles', 'create')
             ],
             [
                 'url' 	=> url( "?id,999;a,articles;v,4" ),
-                'value'	=> $lang['admin']['article_edit'],
+                'value'	=> getLangText('admin', 'article_edit'),
                 'icon'	=> adminIcon('articles', 'edit')
             ],
             [
                 'url' 	=> url( "?id,999;a,articles;v,2" ),
-                'value'	=> $lang['system']['createcategory'],
+                'value'	=> getLangText('system', 'createcategory'),
                 'icon'	=> adminIcon('articles', 'create_category')
             ],
             [
                 'url' 	=> url( "?id,999;a,articles;v,3" ),
-                'value'	=> $lang['system']['editcategory'],
+                'value'	=> getLangText('system', 'editcategory'),
                 'icon'	=> adminIcon('articles', 'edit_category')
             ]
         ],

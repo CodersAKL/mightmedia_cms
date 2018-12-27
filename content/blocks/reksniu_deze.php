@@ -26,7 +26,7 @@ if ( isset( $_POST['chat_box'] ) && !empty( $_POST['chat_box'] ) && !empty( $_PO
 	redirect( $_SERVER['HTTP_REFERER'], "header" );
 }
 $extra    = '';
-$vardas   = ( isset( $_COOKIE['komentatorius'] ) ? $_COOKIE['komentatorius'] : $lang['system']['guest'] );
+$vardas   = ( isset( $_COOKIE['komentatorius'] ) ? $_COOKIE['komentatorius'] : getLangText('system', 'guest') );
 $sveciams = ( isset( $conf['kmomentarai_sveciams'] ) && $conf['kmomentarai_sveciams'] == 1 );
 if (! empty(getSession('username')) || $sveciams) {
 	$chat_box = "<form name=\"chat_box\" action=\"\" method=\"post\">
@@ -37,10 +37,10 @@ if (! empty(getSession('username')) || $sveciams) {
                          return (Object.value.length <= MaxLen)||(Event.keyCode == 8 ||Event.keyCode==46||(Event.keyCode>=35&&Event.keyCode<=40))
                        }
 		            </script>
-                   <input type=\"submit\" name=\"chat_box\" class=\"submit\" value=\"{$lang['sb']['send']}\" />
+                   <input type=\"submit\" name=\"chat_box\" class=\"submit\" value=\"" . getLangText('sb',  'send') . "\" />
                 </form>";
 } else {
-	$chat_box = $lang['system']['pleaselogin'];
+	$chat_box = getLangText('system', 'pleaselogin');
 }
 $chat_box .= "<div class='line'></div>";
 $extras = "";
@@ -66,8 +66,8 @@ if ( sizeof( $chat ) > 0 ) {
 		$tr = $i % 2 ? '2' : '';
 		if ( ar_admin( 'com' ) && puslapis( 'deze.php' ) ) {
 			$extras = "<span style='display: none;' id='irankiai{$i}'>
-			<a style=\"float: right;\" title=\"{$lang['admin']['delete']}\" href=\"" . url( "?id,{$conf['pages']['deze.php']['id']};d,{$row['id']}" ) . "\" onclick=\"return confirm('{$lang['system']['delete_confirm']}')\"><img height=\"12\" src=\"core/assets/images/icons/cross.png\" alt=\"[d]\" class=\"middle\" border=\"0\" /></a>
-			<a style=\"float: right;\" title=\"{$lang['admin']['edit']}\" href=\"" . url( "?id,{$conf['pages']['deze.php']['id']};r,{$row['id']}" ) . "\"><img height=\"12\" src=\"core/assets/images/icons/pencil.png\" alt=\"[r]\" class=\"middle\" border=\"0\" /></a>
+			<a style=\"float: right;\" title=\"" . getLangText('admin',  'delete') . "\" href=\"" . url( "?id,{$conf['pages']['deze.php']['id']};d,{$row['id']}" ) . "\" onclick=\"return confirm('" . getLangText('system',  'delete_confirm') . "')\"><img height=\"12\" src=\"core/assets/images/icons/cross.png\" alt=\"[d]\" class=\"middle\" border=\"0\" /></a>
+			<a style=\"float: right;\" title=\"" . getLangText('admin',  'edit') . "\" href=\"" . url( "?id,{$conf['pages']['deze.php']['id']};r,{$row['id']}" ) . "\"><img height=\"12\" src=\"core/assets/images/icons/pencil.png\" alt=\"[r]\" class=\"middle\" border=\"0\" /></a>
 			</span>
 			";
 		}
@@ -81,7 +81,7 @@ if ( sizeof( $chat ) > 0 ) {
 }
 //jei archyvo psl ijungtas, rodom nuoroda
 if ( puslapis( 'deze.php' ) ) {
-	$chat_box .= "<a href=\"" . url( "?id,{$conf['pages']['deze.php']['id']}" ) . "\" >{$lang['sb']['archive']}</a>";
+	$chat_box .= "<a href=\"" . url( "?id,{$conf['pages']['deze.php']['id']}" ) . "\" >" . getLangText('sb',  'archive') . "</a>";
 }
 
 

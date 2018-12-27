@@ -27,22 +27,22 @@ if ( isset( $_POST['email'] ) ) {
 			$sql = mysql_query1( "SELECT `email` FROM `" . LENTELES_PRIESAGA . "newsgetters` WHERE `email`=" . escape( $_POST['email'] ) . " LIMIT 1" );
 			if ( isset( $sql['email'] ) ) {
 				mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "newsgetters` WHERE `email`=" . escape( $_POST['email'] ) . "" );
-				msg( $lang['system']['done'], $lang['news']['unordered'] );
+				msg( getLangText('system', 'done'), getLangText('news', 'unordered') );
 				redirect( url( '?id,' . $_GET['id'] ), 'meta' );
 			} else {
 				mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "newsgetters` (`email`) VALUES (" . escape( $_POST['email'] ) . ")" );
-				msg( $lang['system']['done'], $lang['news']['ordered'] );
+				msg( getLangText('system', 'done'), getLangText('news', 'ordered') );
 				redirect( url( '?id,' . $_GET['id'] ), 'meta' );
 			}
 		} else {
-			klaida( $lang['system']['warning'], $lang['reg']['bademail'] );
+			klaida( getLangText('system', 'warning'), getLangText('reg', 'bademail') );
 		}
 	} else {
-		klaida( $lang['system']['warning'], $lang['reg']['wrongcode'] );
+		klaida( getLangText('system', 'warning'), getLangText('reg', 'wrongcode') );
 	}
 }
 $form = array( "Form"                     => array( "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] ), "method" => "post", "name" => "get" ),
-               "{$lang['reg']['email']}:" => array( "type" => "text", "value" => ( isset( $email ) ? input( $email ) : "" ), "name" => "email", "class" => "input" ),
+               getLangText('reg', 'email') . ":" => array( "type" => "text", "value" => ( isset( $email ) ? input( $email ) : "" ), "name" => "email", "class" => "input" ),
                kodas()                    => array( "type"=> "text", "name"=> "kode", "class"=> "chapter" ),
-               " "                        => array( "type" => "submit", "name" => "submit", "value" => $lang['news']['Order/Unorder'] ) );
+               " "                        => array( "type" => "submit", "name" => "submit", "value" => getLangText('news', 'Order/Unorder') ) );
 lentele( $page_pavadinimas, $formClass->form( $form ) );

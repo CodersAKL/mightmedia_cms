@@ -123,8 +123,8 @@ function naujienlaiskis($pavadinimas, $izanga, $nuoroda_i_naujiena, $nuoroda_ats
 	<tr>
 		<td align='center' valign='top' width='90%' class='vidus'>
 			{$izanga}
-			<a href='{$nuoroda_i_naujiena}' target='_blank' title='{$lang[' news']['read']}'>{$lang['news']['read']}</a>
-			<a href='{$nuoroda_atsisakyti}' target='_blank' title='{$lang[' news']['unorder']}'>{$lang['news']['unorder']}</a>
+			<a href='{$nuoroda_i_naujiena}' target='_blank' title='" . getLangText('news', 'read') . "'>" . getLangText('news', 'read') . "</a>
+			<a href='{$nuoroda_atsisakyti}' target='_blank' title='" . getLangText('news', 'unorder') . "'>" . getLangText('news', 'unorder') . "</a>
 		</td>
 	</tr>
 </table>

@@ -19,7 +19,7 @@ $limit = 15;
 //
 
 if(BUTTONS_BLOCK) {
-	lentele( $lang['admin']['nuorodos'],  buttonsMenu(buttons('links')));
+	lentele( getLangText('admin', 'nuorodos'),  buttonsMenu(buttons('links')));
 }
 
 if (empty($_GET['v'])) {
@@ -48,7 +48,7 @@ if ( isset( $_GET['m'] ) ) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['links_Deleted']
+				'message' 	=> getLangText('admin', 'links_Deleted')
 			]
 		);
 	} else {
@@ -76,7 +76,7 @@ if (isset($_POST['links_delete'])) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['posts_deleted']
+				'message' 	=> getLangText('admin', 'posts_deleted')
 			]
 		);
 	} else {
@@ -85,7 +85,7 @@ if (isset($_POST['links_delete'])) {
 			"header",
 			[
 				'type'		=> 'error',
-				'message' 	=> $lang['system']['error']
+				'message' 	=> getLangText('system', 'error')
 			]
 		);
 	}
@@ -99,7 +99,7 @@ if (isset($_POST['links_delete'])) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['links_activated']
+				'message' 	=> getLangText('admin', 'links_activated')
 			]
 		);
 	} else {
@@ -121,9 +121,9 @@ if ( $_GET['v'] == 1 ) {
 	if ($links = mysql_query1($sqlQuery)) {
 		//FILTRAVIMAS
 		$formData = [
-			'url'	=> $lang['admin']['link'],
-			'date'	=> $lang['admin']['links_date'],
-			'apie'	=> $lang['admin']['links_about'],
+			'url'	=> getLangText('admin', 'link'),
+			'date'	=> getLangText('admin', 'links_date'),
+			'apie'	=> getLangText('admin', 'links_about'),
 		];
 
 		$info[] = tableFilter($formData, $_POST, '#links');
@@ -131,25 +131,25 @@ if ( $_GET['v'] == 1 ) {
 		foreach ($links as $link) {
 			$info[]   = [
 				"#"								=> '<input type="checkbox" value="' . $link['id'] . '" name="articles_delete[]" class="filled-in" id="links-delete-' . $link['id'] . '"><label for="links-delete-' . $link['id'] . '"></label>',
-				$lang['admin']['link']        	=> '<a href="' . $link['url'] . '" target="_blank">' . $link['pavadinimas'] . '</a>',
-				$lang['admin']['links_date']  	=> date( 'Y-m-d', $link['date'] ),
-				$lang['admin']['links_about'] 	=> "<span style='cursor:pointer;' data-toggle='tooltip' title='" . trimlink(strip_tags($link['apie']), 300) . "'>" . trimlink(strip_tags($link['apie']), 55) . "</span>",
-				$lang['admin']['action']      	=> "<a href='" . url( "?id,{$url['id']};a,{$url['a']};c," . $link['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['acept']}'><img src='" . ROOT . "core/assets/images/icons/tick_circle.png' alt='a' border='0'></a>
-				<a href='" . url( "?id,{$url['id']};a,{$url['a']};m," . $link['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='" . ROOT . "core/assets/images/icons/cross.png'></a> 
-				<a href='" . url( "?id,{$url['id']};a,{$url['a']};r," . $link['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a>"
+				getLangText('admin', 'link')        	=> '<a href="' . $link['url'] . '" target="_blank">' . $link['pavadinimas'] . '</a>',
+				getLangText('admin', 'links_date')  	=> date( 'Y-m-d', $link['date'] ),
+				getLangText('admin', 'links_about') 	=> "<span style='cursor:pointer;' data-toggle='tooltip' title='" . trimlink(strip_tags($link['apie']), 300) . "'>" . trimlink(strip_tags($link['apie']), 55) . "</span>",
+				getLangText('admin', 'action')      	=> "<a href='" . url( "?id,{$url['id']};a,{$url['a']};c," . $link['id'] ) . "' data-toggle='tooltip' title='" . getLangText('admin',  'acept') . "'><img src='" . ROOT . "core/assets/images/icons/tick_circle.png' alt='a' border='0'></a>
+				<a href='" . url( "?id,{$url['id']};a,{$url['a']};m," . $link['id'] ) . "' data-toggle='tooltip' title='" . getLangText('admin',  'delete') . "' onClick=\"return confirm('" . getLangText('admin', 'delete') . "?')\"><img src='" . ROOT . "core/assets/images/icons/cross.png'></a> 
+				<a href='" . url( "?id,{$url['id']};a,{$url['a']};r," . $link['id'] ) . "' data-toggle='tooltip' title='" . getLangText('admin',  'edit') . "'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a>"
 			];
 		}
 
 		$tableClass  = new Table($info);
-		$content = '<form id="links" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . $lang['system']['delete'] . '</button></form>';
-		lentele( $lang['admin']['links_unpublished'], $content);
+		$content = '<form id="links" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . getLangText('system', 'delete') . '</button></form>';
+		lentele( getLangText('admin', 'links_unpublished'), $content);
 		// if list is bigger than limit, then we show list with pagination
 		if ( $viso > $limit ) {
-			lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+			lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 		}
 
 	} else {
-		klaida( $lang['system']['warning'], $lang['system']['no_items'] );
+		klaida( getLangText('system', 'warning'), getLangText('system', 'no_items') );
 	}
 } elseif ( $_GET['v'] == 4 ) {
 ///FILTRAVIMAS
@@ -161,9 +161,9 @@ if ( $_GET['v'] == 1 ) {
 
 		//FILTRAVIMAS
 		$formData = [
-			'url'	=> $lang['admin']['link'],
-			'date'	=> $lang['admin']['links_date'],
-			'apie'	=> $lang['admin']['links_about'],
+			'url'	=> getLangText('admin', 'link'),
+			'date'	=> getLangText('admin', 'links_date'),
+			'apie'	=> getLangText('admin', 'links_about'),
 		];
 
 		$info[] = tableFilter($formData, $_POST, '#links');
@@ -171,24 +171,24 @@ if ( $_GET['v'] == 1 ) {
 		foreach ($links as $link) {
 			$info[]   = [
 				"#"								=> '<input type="checkbox" value="' . $link['id'] . '" name="articles_delete[]" class="filled-in" id="links-delete-' . $link['id'] . '"><label for="links-delete-' . $link['id'] . '"></label>',
-				$lang['admin']['link']        	=> '<a href="' . $link['url'] . '" target="_blank">' . $link['pavadinimas'] . '</a>',
-				$lang['admin']['links_date']  	=> date( 'Y-m-d', $link['date'] ),
-				$lang['admin']['links_about'] 	=> "<span style='cursor:pointer;' data-toggle='tooltip' title='" . trimlink(strip_tags($link['apie']), 300) . "'>" . trimlink(strip_tags($link['apie']), 55) . "</span>",
-				$lang['admin']['action']      	=> "<a href='" . url( "?id,{$url['id']};a,{$url['a']};m," . $link['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['delete']}' onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"><img src='" . ROOT . "core/assets/images/icons/cross.png'></a> 
-				<a href='" . url( "?id,{$url['id']};a,{$url['a']};r," . $link['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a>"
+				getLangText('admin', 'link')        	=> '<a href="' . $link['url'] . '" target="_blank">' . $link['pavadinimas'] . '</a>',
+				getLangText('admin', 'links_date')  	=> date( 'Y-m-d', $link['date'] ),
+				getLangText('admin', 'links_about') 	=> "<span style='cursor:pointer;' data-toggle='tooltip' title='" . trimlink(strip_tags($link['apie']), 300) . "'>" . trimlink(strip_tags($link['apie']), 55) . "</span>",
+				getLangText('admin', 'action')      	=> "<a href='" . url( "?id,{$url['id']};a,{$url['a']};m," . $link['id'] ) . "' data-toggle='tooltip' title='" . getLangText('admin',  'delete') . "' onClick=\"return confirm('" . getLangText('admin', 'delete') . "?')\"><img src='" . ROOT . "core/assets/images/icons/cross.png'></a> 
+				<a href='" . url( "?id,{$url['id']};a,{$url['a']};r," . $link['id'] ) . "' data-toggle='tooltip' title='" . getLangText('admin',  'edit') . "'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a>"
 			];
 		}
 
 		$tableClass  = new Table($info);
-		$content = '<form id="links" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . $lang['system']['delete'] . '</button></form>';
-		lentele( $lang['admin']['nuorodos'], $content);
+		$content = '<form id="links" method="post">' . $tableClass->render() . '<button type="submit" class="btn bg-red waves-effect">' . getLangText('system', 'delete') . '</button></form>';
+		lentele( getLangText('admin', 'nuorodos'), $content);
 		// if list is bigger than limit, then we show list with pagination
 		if ( $viso > $limit ) {
-			lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+			lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 		}
 
 	} else {
-		klaida( $lang['system']['warning'], $lang['system']['no_items'] );
+		klaida( getLangText('system', 'warning'), getLangText('system', 'no_items') );
 	}
 } elseif ($_GET['v'] == 5 || isset($_GET['r'])) {
 
@@ -205,12 +205,12 @@ if ( $_GET['v'] == 1 ) {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['admin']['links_bad']
+					'message' 	=> getLangText('admin', 'links_bad')
 				]
 			);
 		} else {
 			// Create post
-			if($_POST['action'] == $lang['admin']['links_create']) {
+			if($_POST['action'] == getLangText('admin', 'links_create')) {
 	
 				$insertQuery = "INSERT INTO `" . LENTELES_PRIESAGA . "nuorodos` (`cat` , `url` ,`pavadinimas` , `nick` , `date` , `apie`, `active`) VALUES (" . escape( $cat ) . ", " . escape( $urlLink ) . ", " . escape( $pavadinimas ) . ", " . escape(getSession('id')) . ", '" . time() . "', " . escape( $apie ) . ", " . escape( $active ) . ");";
 
@@ -220,7 +220,7 @@ if ( $_GET['v'] == 1 ) {
 						"header",
 						[
 							'type'		=> 'success',
-							'message' 	=> $lang['admin']['links_created']
+							'message' 	=> getLangText('admin', 'links_created')
 						]
 					);
 				} else {
@@ -233,7 +233,7 @@ if ( $_GET['v'] == 1 ) {
 				}
 			
 			// Edit post
-			} elseif($_POST['action'] == $lang['admin']['links_edit']) {
+			} elseif($_POST['action'] == getLangText('admin', 'links_edit')) {
 		
 				$updateQuery = "UPDATE `" . LENTELES_PRIESAGA . "nuorodos` SET
 				`pavadinimas` = " . escape($pavadinimas) . ",
@@ -249,7 +249,7 @@ if ( $_GET['v'] == 1 ) {
 						"header",
 						[
 							'type'		=> 'success',
-							'message' 	=> $lang['admin']['links_updated']
+							'message' 	=> getLangText('admin', 'links_updated')
 						]
 					);
 				} else {
@@ -270,7 +270,7 @@ if ( $_GET['v'] == 1 ) {
 		$extra			= mysql_query1($selectQuery);
 	}
 
-	$editOrCreate 	= (isset($extra) ? $lang['admin']['links_edit'] : $lang['admin']['links_create']);
+	$editOrCreate 	= (isset($extra) ? getLangText('admin', 'links_edit') : getLangText('admin', 'links_create'));
 
 	$nuorodos = [
 		"Form"							=> [
@@ -279,14 +279,14 @@ if ( $_GET['v'] == 1 ) {
 			"name" 		=> "Submit_link"
 		],
 
-		$lang['system']['category']  	=> [
+		getLangText('system', 'category')  	=> [
 			"type" 		=> "select", 
 			"value" 	=> $categories, 
 			"name" 		=> "cat",
 			"selected" => (isset($extra['cat']) ? input($extra['cat']) : '0')
 		],
 
-		$lang['admin']['links_title']	=> [
+		getLangText('admin', 'links_title')	=> [
 			"type" 	=> "text", 
 			"value" => (isset($extra['pavadinimas'])) ? input($extra['pavadinimas']) : '', 
 			"name" 	=> "name"
@@ -299,12 +299,12 @@ if ( $_GET['v'] == 1 ) {
 			'value'			=> (isset($extra['url'])) ? input($extra['url']) : ''
 		], 
 
-		$lang['admin']['links_about'] 	=> [
+		getLangText('admin', 'links_about') 	=> [
 			"type" => "string", 
 			"value" => editor('jquery', 'standartinis', 'Aprasymas', (isset($extra['apie'])) ? $extra['apie'] : '') 
 		],
 
-		$lang['admin']['links_active']	=> [
+		getLangText('admin', 'links_active')	=> [
 			'type'		=> 'switch',
 			'value'		=> 1,
 			'name'		=> 'active',

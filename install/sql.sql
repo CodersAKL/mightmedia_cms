@@ -545,6 +545,18 @@ INSERT INTO `extensions` (`id`, `name`, `status`, `options`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `translations`
+--
+
+CREATE TABLE `translations` (
+  `id` int(11) NOT NULL,
+  `group` varchar(255) DEFAULT NULL,
+  `key` varchar(255) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `lang` text NOT NULL,
+  `last_update` int(20) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+--
 -- Table structure for table `users`
 --
 
@@ -779,9 +791,21 @@ ALTER TABLE `extensions`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `translations`
+--
+ALTER TABLE `translations`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `translations`
+--
+ALTER TABLE `translations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `admin_chat`
 --

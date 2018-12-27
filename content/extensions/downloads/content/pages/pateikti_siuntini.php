@@ -50,21 +50,21 @@ if (! empty(getSession('id'))) {
 							$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "siuntiniai` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $filename ) . ", " . escape( $_POST['Aprasymas'] ) . "," . escape( $autorius ) . ", '" . time() . "', " . escape( $_POST['cat'] ) . ")" );
 
 							if ( $result ) {
-								msg( $lang['system']['info'], $lang['download']['sumbit_scc'] );
+								msg( getLangText('system', 'info'), getLangText('download', 'sumbit_scc') );
 
 							} else {
-								klaida( $lang['system']['error'], "{$lang['download']['doc']}: <font color='#FF0000'>" . $filename . "</font> {$lang['download']['not_uploaded']}." );
+								klaida( getLangText('system', 'error'), getLangText('download', 'doc'). ": <font color='#FF0000'>" . $filename . "</font>" . getLangText('download', 'not_uploaded'));
 
 							}
 						} else {
-							klaida( $lang['system']['error'], "{$lang['download']['doc']}: <font color='#FF0000'>" . $filename . "</font> {$lang['download']['not_uploaded']}." );
+							klaida( getLangText('system', 'error'), getLangText('download',  'doc') . ": <font color='#FF0000'>" . $filename . "</font>" . getLangText('download', 'not_uploaded') );
 						}
 						/*} else {
 							klaida('Įkėlimo klaida', '<font color="#FF0000">' . $filename . '</font> dokumentas perdidelis');
 						}*/
 					} // if
 					else {
-						klaida( $lang['system']['error'], '<font color="#FF0000">' . $filename . "</font> {$lang['download']['not_good']}." );
+						klaida( getLangText('system', 'error'), '<font color="#FF0000">' . $filename . "</font> " . getLangText('download',  'not_good') . "." );
 					}
 				}
 			}
@@ -80,7 +80,7 @@ if (! empty(getSession('id'))) {
 			//unset($result,$_POST['action'],$_FILES['failas'],$file);
 			redirect( url( "?id," . $_GET['id'] ), "meta" );
 		} else {
-			klaida( $lang['system']['warning'], "{$lang['admin']['news_required']}." );
+			klaida( getLangText('system', 'warning'), getLangText('admin',  'news_required') );
 		}
 	}
 	$sql = mysql_query1( "SELECT * FROM  `" . LENTELES_PRIESAGA . "grupes` WHERE `kieno`='siuntiniai' AND `lang` = " . escape( lang() ) . " AND `path`=0 ORDER BY `id` DESC" );
@@ -94,14 +94,14 @@ if (! empty(getSession('id'))) {
 	$bla = new Form();
 
 	$forma = array( "Form"                               => array( "enctype" => "multipart/form-data", "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] ), "method" => "post", "name" => "action" ),
-	                "{$lang['admin']['download_file']}:" => array( "name" => "failas", "type" => "file", "value" => "", "class"=> "input" ),
-	                "{$lang['system']['name']}:"         => array( "type" => "text", "value" => '', "name" => "Pavadinimas", "class"=> "input" ),
-	                "{$lang['system']['category']}:"     => array( "type" => "select", "value" => $categories, "name" => "cat", "class" => "input", "class"=> "input" ),
-	                "{$lang['system']['about']}:"        => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
-	                ""                                   => array( "type" => "submit", "name" => "action", "value" => "{$lang['admin']['download_Create']}" ), );
+	                getLangText('admin', 'download_file') . ":" => array( "name" => "failas", "type" => "file", "value" => "", "class"=> "input" ),
+	                getLangText('system', 'name') . ":"         => array( "type" => "text", "value" => '', "name" => "Pavadinimas", "class"=> "input" ),
+	                getLangText('system', 'category') . ":"     => array( "type" => "select", "value" => $categories, "name" => "cat", "class" => "input", "class"=> "input" ),
+	                getLangText('system', 'about') . ":"         => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
+	                ""                                   => array( "type" => "submit", "name" => "action", "value" => getLangText('admin', 'download_Create')), );
 
-	lentele( $lang['admin']['download_Create'], $bla->form( $forma ) );
+	lentele( getLangText('admin', 'download_Create'), $bla->form( $forma ) );
 
 } else {
-	klaida( $lang['system']['warning'], $lang['system']['pleaselogin'] );
+	klaida( getLangText('system', 'warning'), getLangText('system', 'pleaselogin') );
 }

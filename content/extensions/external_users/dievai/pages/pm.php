@@ -15,7 +15,7 @@ $viso  = kiek( "private_msg" );
 //
 // Trinam laiska
 if (isset($url['d']) && isnum($url['d'])) {
-	if ($url['d'] == "0" && isset( $_POST['to'] ) && !empty( $_POST['to'] ) && $_POST['del_all'] == $lang['admin']['delete'] ) {
+	if ($url['d'] == "0" && isset( $_POST['to'] ) && !empty( $_POST['to'] ) && $_POST['del_all'] == getLangText('admin', 'delete') ) {
 		$deleteQuery = "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `to`=" . escape($_POST['to']);
 
 		if (mysql_query1($deleteQuery)) {
@@ -24,19 +24,19 @@ if (isset($url['d']) && isnum($url['d'])) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['pm_msgsdeleted']
+					'message' 	=> getLangText('admin', 'pm_msgsdeleted')
 				]
 			);
 		} else {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['admin']['pm_deleteerror']
+					'message' 	=> getLangText('admin', 'pm_deleteerror')
 				]
 			);
 		}
 	}
-	if ($url['d'] == "0" && isset($_POST['from']) && ! empty($_POST['from']) && $_POST['del_all'] == $lang['admin']['delete']) {
+	if ($url['d'] == "0" && isset($_POST['from']) && ! empty($_POST['from']) && $_POST['del_all'] == getLangText('admin', 'delete')) {
 		$deleteQuery = "DELETE FROM `" . LENTELES_PRIESAGA . "private_msg` WHERE `from`=" . escape($_POST['from']);
 
 		if (mysql_query1($deleteQuery)) {
@@ -45,14 +45,14 @@ if (isset($url['d']) && isnum($url['d'])) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['pm_msgsdeleted']
+					'message' 	=> getLangText('admin', 'pm_msgsdeleted')
 				]
 			);
 		} else {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['admin']['pm_deleteerror']
+					'message' 	=> getLangText('admin', 'pm_deleteerror')
 				]
 			);
 		}
@@ -66,14 +66,14 @@ if (isset($url['d']) && isnum($url['d'])) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['pm_deleted']
+					'message' 	=> getLangText('admin', 'pm_deleted')
 				]
 			);
 		} else {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['admin']['pm_deleteerror']
+					'message' 	=> getLangText('admin', 'pm_deleteerror')
 				]
 			);
 		}
@@ -88,18 +88,18 @@ if ( isset( $url['v'] ) ) {
 
 		if ($sql = mysql_query1($pmQuery)) {
 			$laiskas = "
-				<b>{$lang['admin']['pm_sender']}:</b>  " . $sql['from'] . "<br />
-				<b>{$lang['admin']['pm_reciever']}:</b> " . $sql['to'] . "<br />
-				<b>{$lang['admin']['pm_subject']}:</b> " . ( isset( $sql['title'] ) && !empty( $sql['title'] ) ? input( trimlink( $sql['title'], 40 ) ) : $lang['admin']['pm_nosubject'] ) . "<br><br />
-				<b>{$lang['admin']['pm_message']}:</b><br />" . bbcode( $sql['msg'] ) . "<br /><br />
-				<a class='btn bg-red waves-effect' href='" . url( "d," . $url['v'] . ";v,0" ) . ">" . $lang['admin']['delete'] . "</a>";
+				<b>" . getLangText('admin',  'pm_sender') . ":</b>  " . $sql['from'] . "<br />
+				<b>" . getLangText('admin',  'pm_reciever') . ":</b> " . $sql['to'] . "<br />
+				<b>" . getLangText('admin',  'pm_subject') . ":</b> " . ( isset( $sql['title'] ) && !empty( $sql['title'] ) ? input( trimlink( $sql['title'], 40 ) ) : getLangText('admin', 'pm_nosubject') ) . "<br><br />
+				<b>" . getLangText('admin',  'pm_message') . ":</b><br />" . bbcode( $sql['msg'] ) . "<br /><br />
+				<a class='btn bg-red waves-effect' href='" . url( "d," . $url['v'] . ";v,0" ) . ">" . getLangText('admin', 'delete') . "</a>";
 
-			lentele( $lang['admin']['pm_message'], $laiskas );
+			lentele( getLangText('admin', 'pm_message'), $laiskas );
 		} else {
 			notifyMsg(
 				[
 					'type'		=> 'error',
-					'message' 	=> $lang['admin']['pm_nomessage']
+					'message' 	=> getLangText('admin', 'pm_nomessage')
 				]
 			);
 		}
@@ -125,27 +125,27 @@ if ($sql = mysql_query1($sqlQuery)) {
 
 		$info[] = array(
 			" "                               => $extra,
-			"{$lang['admin']['pm_sender']}"   => user( $row['from_nick'], $row['from_id'] ),
-			"{$lang['admin']['pm_reciever']}" => user( $row['to_nick'], $row['to_id'] ),
-			"{$lang['admin']['pm_subject'] }" => "<a href=\"" . url( "?id,{$_GET['id']};a," . $_GET['a'] . ";v," . $row['id'] ) . "\" title=\"<b>Laiško ištrauka:</b> " . input( trim( strip_tags( str_replace( array( '[', ']' ), '', $row['msg'] ) ) ) ) . "...\" style=\"display:block\">" . ( isset( $row['title'] ) && !empty( $row['title'] ) ? trimlink( input( $row['title'] ), 10 ) : 'Be temos' ) . "</a>",
-			"{$lang['admin']['pm_date']}"     => date( 'Y-m-d H:i:s ', $row['date'] ), "{$lang['admin']['action']}" => "
-			<a href=\"" . url( "d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a>"
+			getLangText('admin',  'pm_sender')    => user( $row['from_nick'], $row['from_id'] ),
+			getLangText('admin',  'pm_reciever')  => user( $row['to_nick'], $row['to_id'] ),
+			getLangText('admin',  'pm_subject')  => "<a href=\"" . url( "?id,{$_GET['id']};a," . $_GET['a'] . ";v," . $row['id'] ) . "\" title=\"<b>Laiško ištrauka:</b> " . input( trim( strip_tags( str_replace( array( '[', ']' ), '', $row['msg'] ) ) ) ) . "...\" style=\"display:block\">" . ( isset( $row['title'] ) && !empty( $row['title'] ) ? trimlink( input( $row['title'] ), 10 ) : 'Be temos' ) . "</a>",
+			getLangText('admin',  'pm_date')      => date( 'Y-m-d H:i:s ', $row['date'] ), getLangText('admin',  'action')  => "
+			<a href=\"" . url( "d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . getLangText('system', 'delete_confirm') . "')\" " . getLangText('admin',  'delete') . "'><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" alt=\"[" . getLangText('admin',  'delete') . "]\" border=\"0\" class=\"middle\" /></a>"
 		);
 	}
 }
 //nupiesiam laisku lentele
 if(! empty($info)) {
 	$formClass = new Table($info);
-	lentele($lang['admin']['pm_messages'], $formClass->render());
+	lentele(getLangText('admin', 'pm_messages'), $formClass->render());
 	// if list is bigger than limit, then we show list with pagination
 	if ( $viso > $limit ) {
-		lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+		lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 	}
 } else {
 	notifyMsg(
 		[
 			'type'		=> 'error',
-			'message' 	=> $lang['user']['pm_empty_msg']
+			'message' 	=> getLangText('user', 'pm_empty_msg')
 		]
 	);
 }
@@ -166,7 +166,7 @@ if ($sql = mysql_query1($sqlQuery)) {
 			"name" 		=> "reg"
 		], 
 
-		$lang['admin']['pm_deleteto'] 	=> [
+		getLangText('admin', 'pm_deleteto') 	=> [
 			"type" 		=> "select", 
 			"value" 	=> $select, 
 			"selected" 	=> getSession('username'), 
@@ -176,12 +176,12 @@ if ($sql = mysql_query1($sqlQuery)) {
 		"" 								=> [
 			"type" 	=> "submit", 
 			"name" 	=> "del_all", 
-			"value" => $lang['admin']['delete']
+			"value" => getLangText('admin', 'delete')
 		]
 	];
 	
 	$formClass = new Form($nustatymai);	
-	lentele($lang['admin']['pm_deleteto'], $formClass->form());
+	lentele(getLangText('admin', 'pm_deleteto'), $formClass->form());
 
 	unset( $nustatymai, $select, $sql );
 }
@@ -199,7 +199,7 @@ if ( sizeof( $sql ) > 0 ) {
 			"name" 		=> "reg"
 		], 
 
-		$lang['admin']['pm_deletefrom'] => [
+		getLangText('admin', 'pm_deletefrom') => [
 			"type" 		=> "select", 
 			"value" 	=> $select, 
 			"selected" 	=> getSession('username'), 
@@ -209,12 +209,12 @@ if ( sizeof( $sql ) > 0 ) {
 		"" 								=> [
 			"type" 	=> "submit", 
 			"name" 	=> "del_all", 
-			"value" => $lang['admin']['delete']
+			"value" => getLangText('admin', 'delete')
 		]
 	];
 	
 	$formClass = new Form($nustatymai);	
-	lentele($lang['admin']['pm_deletefrom'], $formClass->form());
+	lentele(getLangText('admin', 'pm_deletefrom'), $formClass->form());
 
 	unset($nustatymai, $select, $sql);
 }

@@ -7,16 +7,16 @@ function build_tree( $data, $id = 0, $active_class = 'active' ) {
 		$re = "";
 		foreach ( $data[$id] as $row ) {
 			if ( isset( $data[$row['id']] ) ) {
-				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><span style=\"display: inline; width: 100px;margin:0; padding:0; height: 16px;\"><a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\"  onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"  /></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\"/></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span><ul>";
+				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><span style=\"display: inline; width: 100px;margin:0; padding:0; height: 16px;\"><a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\"  onClick=\"return confirm(\'" . getLangText('admin', 'delete') . "?\')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" title=\"" . getLangText('admin', 'delete') . "\"  /></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/wrench.png\" title=\"" . getLangText('admin', 'edit') . "\"/></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" title=\"" . getLangText('admin', 'page_text') . "\" /></a></span><ul>";
 				$re .= build_tree( $data, $row['id'], $active_class );
 				$re .= "</ul></li>";
 			} else {
 				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><span style=\"display: inline; width: 100px; margin:0; padding:0; height: 16px;\">
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\" onClick=\"return confirm(\'" . $lang['admin']['delete'] . "?\')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" title=\"" . $lang['admin']['delete'] . "\"/></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/wrench.png\" title=\"" . $lang['admin']['edit'] . "\" /></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\" ><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" title=\"" . $lang['admin']['page_text'] . "\" /></a></span>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\" onClick=\"return confirm(\'" . getLangText('admin', 'delete') . "?\')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" title=\"" . getLangText('admin', 'delete') . "\"/></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/wrench.png\" title=\"" . getLangText('admin', 'edit') . "\" /></a>
+<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\" ><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" title=\"" . getLangText('admin', 'page_text') . "\" /></a></span>
 </li>";
 			}
 		}
@@ -152,6 +152,66 @@ function defaultHead()
 	<meta name="msapplication-TileColor" content="#ff440e">
 	<meta name="theme-color" content="#ffffff">
 	<?php
+		if  (getSettingsValue('translation_status') == 1){
+			if (isset($_SESSION['Translation'])){ echo $_SESSION['Translation'];}
+			?>
+			<style>
+			 .notifyTranslation{
+				border: 2px dotted red;
+			 }
+			</style>
+			<script>
+				function addListener(obj, eventName, listener) { //function to add event
+					if (obj.addEventListener) {
+						obj.addEventListener(eventName, listener, false);
+					} else {
+						obj.attachEvent("on" + eventName, listener);
+					}
+				}
+				addListener(document, "DOMContentLoaded", finishedDCL); //add event DOMContentLoaded
+				function finishedDCL() {
+					var theParent = document.body;
+					var theKid = document.createElement("div");
+					theKid.id = 'translationDiv';
+					var style = document.createElement('style');
+					style.type = 'text/css';
+					style.innerHTML = '.translationDivCss {height: 20px;z-index: 10; background: green;color: white;text-align: center;font-size: 20px;padding: 10px; }';
+					document.getElementsByTagName('head')[0].appendChild(style);
+					theKid.innerHTML = 'Translation is ON';
+					theKid.className = 'translationDivCss';
+					// append theKid to the end of theParent
+					theParent.appendChild(theKid);
+					// prepend theKid to the beginning of theParent
+					theParent.insertBefore(theKid, theParent.firstChild);
+				}
+				function editLanguageText(frase) {
+					var group = frase.getAttribute("data-group");
+					var key = frase.getAttribute("data-key");
+					var element = document.getElementById(group + '_' + key);
+					var person = prompt('OLD text: # ' + element.innerHTML + ' # Enter new text below: ', element.innerHTML);
+					updateTranslationInDB(group, key, person,function(event){event.preventDefault()});
+				}
+
+				function addTranslateClass(frase){
+					frase.classList.add("notifyTranslation");
+				}
+
+				function removeTranslateClass(frase){
+					frase.classList.remove("notifyTranslation");
+				}
+
+				function updateTranslationInDB(group, key, newValue) {
+					console.log(group+' '+key+' '+newValue);
+					var element = document.getElementById(group + '_' + key);
+					var xhttp = new XMLHttpRequest();
+					var url = "../content/extensions/translation/updateTranslation.php?group=" + group + "&key=" + key +"&newValue=" + newValue;
+					//Send the proper header information along with the request
+					xhttp.open('GET', url, true);
+					xhttp.send();
+					
+				}
+			</script>
+	<?php }
 }
 
 function adminPages() 
@@ -169,7 +229,7 @@ function adminPages()
 			notifyMsg(
 				[
 					'type'		=> 'warning',
-					'message' 	=> $lang['system']['cache_info']
+					'message' 	=> getLangText('system', 'cache_info')
 				]
 			);
 		}
@@ -292,7 +352,7 @@ function tableFilter($formData, $data, $formId = '')
 		$newFormData[$value] = $input;
 	}
 
-	$newFormData[$lang['admin']['action']] = '<button type="submit" class="btn btn-primary waves-effect">' . $lang['admin']['filtering'] . '</button>';
+	$newFormData[getLangText('admin', 'action')] = '<button type="submit" class="btn btn-primary waves-effect">' . getLangText('admin', 'filtering') . '</button>';
 
 	return $newFormData;
 }
@@ -334,59 +394,4 @@ function iconsMenu($icon)
 	return ! empty($iconsMenu[$icon]) ? $iconsMenu[$icon] : null;
 }
 
-function getSettingsValue($key, $options = null)
-{
-	global $conf;
-	if (isset($conf[$key])){
-		return $conf[$key];
-	}
-	
-	$request = "SELECT `val` FROM `" . LENTELES_PRIESAGA . "nustatymai` WHERE `key` = " . escape($key);
-	//Adding additional info to the querry i.e. LIKE, LIMIT, ORDER BY and etc.
-	if (is_array($options)){
-		$mysqliOptions = ['LIKE', 'LIMIT', 'ORDER BY', 'OFFSET'];
-		foreach ($options as $optionKey => $optionValue) {
-			if (in_array($optionKey,$mysqliOptions)){
-				$sqlStatement =  str_replace("'", '', escape($optionKey)). " " . escape($optionValue);
-				$updateRequest .= " " . $sqlStatement;
-			}
-		}
-	}
-	$result =  mysql_query1($request);
-	if (count($result) > 0) {
-		return $result[0]['val'];
-	} else {
-		return null;
-	}
-}
 
-function setSettingsValue($val, $key, $options = null)
-{
-	$request = "SELECT * FROM `" . LENTELES_PRIESAGA . "nustatymai` WHERE `key` = " . escape($key);
-	if (sizeof(mysql_query1($request)) > 0) {
-		
-		//DataSet for given key is found. We can update the value
-		$updateRequest = "UPDATE `" . LENTELES_PRIESAGA . "nustatymai` SET `val`= " . escape($val) . " WHERE `key` = " . escape($key);
-		//Adding additional info to the querry i.e. LIKE, LIMIT, ORDER BY and etc.
-		if (in_array($options)){
-			$mysqliOptions = ['LIKE', 'LIMIT', 'ORDER BY', 'OFFSET'];
-			foreach ($options as $optionKey => $optionValue) {
-				if (in_array($optionKey,$mysqliOptions)){
-					$sqlStatement =  str_replace("'", '', escape($optionKey)). " " . escape($optionValue);
-					$updateRequest .= " " . $sqlStatement;
-				}
-			}
-		}
-		if ($result = mysql_query1($updateRequest)){
-			return $result;
-		}
-	} else {
-		//DataSet for given key is NOT found. Inserting new key with a given value
-		$insertRequest = "INSERT INTO `" . LENTELES_PRIESAGA . "nustatymai` (`key`,`val`) VALUES (" . escape($key) . "," . escape($val) . ")";
-		if ($result = mysql_query1($insertRequest)){
-			return $result;
-		}
-	}
-	
-	return $result;
-}

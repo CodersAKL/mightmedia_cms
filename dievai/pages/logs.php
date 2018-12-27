@@ -24,14 +24,14 @@ $limit = 15;
 
 //trinam irasa
 if ( isset( $url['d'] ) && isnum( $url['d'] ) && getSession('level') == 1 ) {
-	if ( $url['d'] == "0" && isset( $_POST['ip'] ) && !empty( $_POST['ip'] ) && $_POST['del_all'] == $lang['admin']['delete'] && isnum( $_POST['ip'] ) ) {
+	if ( $url['d'] == "0" && isset( $_POST['ip'] ) && !empty( $_POST['ip'] ) && $_POST['del_all'] == getLangText('admin', 'delete') && isnum( $_POST['ip'] ) ) {
 		$sql = mysql_query1( "DELETE FROM `" . LENTELES_PRIESAGA . "logai` WHERE `ip` = " . escape( $_POST['ip'] ) );		
 		redirect(
 			url("?id," . $url['id'] . ";a," . $url['a']),
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> long2ip($_POST['ip']) . ' ' . $lang['admin']['logs_logsdeleted']
+				'message' 	=> long2ip($_POST['ip']) . ' ' . getLangText('admin', 'logs_logsdeleted')
 			]
 		);
 
@@ -43,7 +43,7 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && getSession('level') == 1 ) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['logs_logsdeleted']
+				'message' 	=> getLangText('admin', 'logs_logsdeleted')
 			]
 		);
 	}
@@ -55,14 +55,14 @@ if ( isset( $url['d'] ) && isnum( $url['d'] ) && getSession('level') == 1 ) {
 //valom zurnala
 if ( !empty( $url['t'] ) ) {
 	mysql_query1( "TRUNCATE TABLE `" . LENTELES_PRIESAGA . "logai`" );
-	mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( " " . getSession('username') . ":{$lang['admin']['logs_logsdeleted']}." ) . ", '" . time() . "', '" . escape( getip() ) . "')" );
+	mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( " " . getSession('username') . ":" . getLangText('admin',  'logs_logsdeleted') . "." ) . ", '" . time() . "', '" . escape( getip() ) . "')" );
 	
 	redirect(
 		url("?id," . $url['id'] . ";a," . $url['a']),
 		"header",
 		[
 			'type'		=> 'success',
-			'message' 	=> $lang['admin']['posts_deleted']
+			'message' 	=> getLangText('admin', 'posts_deleted')
 		]
 	);
 //rodom zurnala
@@ -74,19 +74,19 @@ if ( !empty( $url['t'] ) ) {
 
 	if ($sql  = mysql_query1($sqlQuery)) {
 		foreach ( $sql as $row ) {
-			if ( $row['nick'] == $lang['system']['guest'] ) {
-				$kas = $lang['system']['guest'];
+			if ( $row['nick'] == getLangText('system', 'guest') ) {
+				$kas = getLangText('system', 'guest');
 			} else {
 				$kas = user( $row['nick'], $row['nick_id'], $row['levelis'] );
 			}
-			$info[] = array( $lang['admin']['logs_log'] => "<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v," . $row['id'] ) . "\" title=\"{$lang['admin']['logs_date']}: <b>" . date( 'Y-m-d H:i:s', $row['time'] ) . "</b><br/>IP: <b>" . $row['ip1'] . "</b><br/>{$lang['admin']['logs_log']}: <i>" . wrap1( input( $row['action'] ), 50 ) . "</i><br/>\">" . trimlink( input( strip_tags( $row['action'] ) ), 100 ) . "</a>", $lang['admin']['logs_user'] => $kas, $lang['admin']['action'] => "<a href=\"" . url( "d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" title='{$lang['admin']['delete']}'><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" alt=\"[{$lang['admin']['delete']}]\" border=\"0\" class=\"middle\" /></a> <a href='" . url( "?id," . $url['id'] . ";a," . getAdminPagesbyId('bans') . ";b,1;ip," . $row['ip'] ) . "' title='{$lang['admin']['badip']}'><img src=\"" . ROOT . "core/assets/images/icons/delete.png\" alt=\"[{$lang['admin']['badip']}]\" border=\"0\" class=\"middle\" /></a>" );
+			$info[] = array( getLangText('admin', 'logs_log') => "<a href=\"" . url( "?id,{$_GET['id']};a,{$_GET['a']};v," . $row['id'] ) . "\" title=\"" . getLangText('admin',  'logs_date') . ": <b>" . date( 'Y-m-d H:i:s', $row['time'] ) . "</b><br/>IP: <b>" . $row['ip1'] . "</b><br/>" . getLangText('admin',  'logs_log') . ": <i>" . wrap1( input( $row['action'] ), 50 ) . "</i><br/>\">" . trimlink( input( strip_tags( $row['action'] ) ), 100 ) . "</a>", getLangText('admin', 'logs_user') => $kas, getLangText('admin', 'action') => "<a href=\"" . url( "d," . $row['id'] . "" ) . "\" onClick=\"return confirm('" . getLangText('system', 'delete_confirm') . "')\" title='" . getLangText('admin',  'delete') . "'><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" alt=\"[" . getLangText('admin',  'delete') . "]\" border=\"0\" class=\"middle\" /></a> <a href='" . url( "?id," . $url['id'] . ";a," . getAdminPagesbyId('bans') . ";b,1;ip," . $row['ip'] ) . "' title='" . getLangText('admin',  'badip') . "'><img src=\"" . ROOT . "core/assets/images/icons/delete.png\" alt=\"[" . getLangText('admin',  'badip') . "]\" border=\"0\" class=\"middle\" /></a>" );
 		}
 		
-		$title = $lang['admin']['logs'] . ' - ' . $lang['admin']['logs_yourip'] . ': <span color="red">' . getip() . '</span>';
+		$title = getLangText('admin', 'logs') . ' - ' . getLangText('admin', 'logs_yourip') . ': <span color="red">' . getip() . '</span>';
 		
 		$tableClass = new Table($info);
-		$tableClassla->width[$lang['admin']['action']]	= '50px';
-		$tableClass->width[$lang['admin']['logs_user']]	= '150px';
+		$tableClassla->width[getLangText('admin', 'action')]	= '50px';
+		$tableClass->width[getLangText('admin', 'logs_user')]	= '150px';
 
 		lentele($title, $tableClass->render());
 
@@ -94,14 +94,14 @@ if ( !empty( $url['t'] ) ) {
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> $lang['admin']['logs_nologs']
+				'message' 	=> getLangText('admin', 'logs_nologs')
 			]
 		);
 	}
 
 	// if list is bigger than limit, then we show list with pagination
 	if ( $viso > $limit ) {
-		lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+		lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 	}
 
 	$sql = mysql_query1("SELECT count(`id`) as `viso`, `ip` FROM `" . LENTELES_PRIESAGA . "logai` GROUP BY `ip`, `id` ORDER BY `time` DESC");
@@ -118,7 +118,7 @@ if ( !empty( $url['t'] ) ) {
 				"name" 		=> "reg"
 			],
 
-			$lang['admin']['logs_deletebyip'] => [
+			getLangText('admin', 'logs_deletebyip') => [
 				"type" 		=> "select",
 				"value" 	=> $select,
 				"selected" 	=> ip2long( $_SERVER['REMOTE_ADDR'] ),
@@ -129,13 +129,13 @@ if ( !empty( $url['t'] ) ) {
 				"type" 		=> "submit",
 				"name" 		=> "del_all",
 				'form_line'	=> 'form-not-line',
-				"extra" 	=> "onClick=\"return confirm('" . $lang['admin']['delete'] . "?')\"",
-				"value" 	=> $lang['admin']['delete']
+				"extra" 	=> "onClick=\"return confirm('" . getLangText('admin', 'delete') . "?')\"",
+				"value" 	=> getLangText('admin', 'delete')
 			]
 		];
 		
 		$formClass = new Form($delete);
-		lentele($lang['admin']['logs_delete'], $formClass->form());
+		lentele(getLangText('admin', 'logs_delete'), $formClass->form());
 
 		$delete = [
 			"Form" => [
@@ -144,17 +144,17 @@ if ( !empty( $url['t'] ) ) {
 				"name" 		=> "reg"
 			], 
 
-			$lang['admin']['logs_clear'] => [
+			getLangText('admin', 'logs_clear') => [
 				"type" 		=> "submit",
 				"name" 		=> "del_all",
-				"value" 	=> $lang['admin']['logs_clear'],
+				"value" 	=> getLangText('admin', 'logs_clear'),
 				'form_line'	=> 'form-not-line',
-				"extra" 	=> "onclick=\"return confirm('{$lang['system']['delete_confirm']}')\""
+				"extra" 	=> "onclick=\"return confirm('" . getLangText('system',  'delete_confirm') . "')\""
 			]
 		];
 		
 		$formClass = new Form($delete);
-		lentele($lang['admin']['logs_clear'], $formClass->form());
+		lentele(getLangText('admin', 'logs_clear'), $formClass->form());
 	}
 }
 

@@ -70,46 +70,46 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'pm_send' && ! empty(getSe
 	$from = getSession('username');
 	$to   = $_POST['to'];
 	if ($to == getSession('username')) {
-		$error = "{$lang['user']['pm_error']}<br />";
+		$error = getLangText('user',  'pm_error') . "<br />";
 	}
-	$title = ( isset( $_POST['title'] ) && !empty( $_POST['title'] ) ? $_POST['title'] : $lang['user']['pm_nosubject'] );
+	$title = ( isset( $_POST['title'] ) && !empty( $_POST['title'] ) ? $_POST['title'] : getLangText('user', 'pm_nosubject') );
 	if ( !isset( $title ) ) {
-		$title = $lang['user']['pm_nosubject'];
+		$title = getLangText('user', 'pm_nosubject');
 	}
 	$msg  = $_POST['msg'];
 	$date = time();
 	$sql  = mysql_query1( "SELECT nick,email FROM `" . LENTELES_PRIESAGA . "users` WHERE nick=" . escape( $to ) . " LIMIT 1" );
 	if ( !isset( $sql['nick'] ) ) {
-		$error = $lang['user']['pm_noreceiver'];
+		$error = getLangText('user', 'pm_noreceiver');
 	}
 	if ( !isset( $error ) ) {
 		if ( kiek( "private_msg", "WHERE `to`=" . escape( $to ) . "" ) < 51 ) {
 			$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "private_msg` (`from`, `to`, `title`, `msg`, `read`, `date`) VALUES (" . escape( $from ) . ", " . escape( $to ) . ", " . escape( $title ) . ", " . escape( $msg ) . ", 'NO', '" . $date . "')" );
 			if ( !$result ) {
-				$error = $lang['user']['pm_error'];
+				$error = getLangText('user', 'pm_error');
 			}
 			if ( $result ) {
-				$error = $lang['user']['pm_sent'];
-				msg( $lang['user']['pm_sent'], $error );
+				$error = getLangText('user', 'pm_sent');
+				msg( getLangText('user', 'pm_sent'), $error );
 				unset( $result, $error, $sql, $_POST );
 				redirect( url( "?id," . $url['id'] ), "meta" );
 			}
 		} else {
-			klaida( $lang['system']['error'], "{$lang['user']['pm_users'] } <b>" . $to . "</b> {$lang['user']['pm_full']}." );
+			klaida( getLangText('system', 'error'), getLangText('user', 'pm_users'). " <b>" . $to . "</b> " . getLangText('user', 'pm_full') . "." );
 			redirect( url( "?id," . $url['id'] ), "meta" );
 		}
 	} else {
-		klaida( $lang['system']['error'], $error );
+		klaida( getLangText('system', 'error'), $error );
 	}
 }
 // ######### Paneles rodymas ir zinuciu isvedimas ######################
 $text   = "
 <fieldset>
-<legend>{$lang['user']['pm_freespace']}</legend>
+<legend>" . getLangText('user',  'pm_freespace') . "</legend>
 <table class='table' border=0>
 	<tr>
 		<td>
-		{$lang['user']['pm_left']}: <b>" . ( $uzeris['pm_viso'] - $pm_sk ) . " {$lang['user']['pm_of']} <b>" . $uzeris['pm_viso'] . "</b></b><br />
+		" . getLangText('user',  'pm_left') . ": <b>" . ( $uzeris['pm_viso'] - $pm_sk ) . " " . getLangText('user',  'pm_of') . " <b>" . $uzeris['pm_viso'] . "</b></b><br />
 		";
 $pm_img = substr( $pm_sk, 0, -1 );
 $pm_img = "<img src='images/pm/" . ( empty( $pm_img ) ? '0' : $pm_img ) . ".gif'/>";
@@ -123,14 +123,14 @@ $text .= $pm_img . "
 </fieldset>
 
 <fieldset>
-<legend>{$lang['user']['pm_actions']}</legend>
+<legend>" . getLangText('user',  'pm_actions') . "</legend>
 	<table width='100%'>
 		<tr>
 			<td>
-				<div class=\"blokas\"><center><a href='" . url( "?id," . $url['id'] . ";n,1" ) . "'><img src=\"images/pm/new.png\" alt=\"{$lang['user']['pm_new']}\" />{$lang['user']['pm_new']}</a></center></div>
-				<div class=\"blokas\"><center><a href='" . url( "?id," . $url['id'] . ";a,1" ) . "'><img src=\"images/pm/inbox.png\" alt=\"{$lang['user']['pm_inbox']}\" />{$lang['user']['pm_inbox']}</a></center></div>
-				<div class=\"blokas\"><center><a href='" . url( "?id," . $url['id'] . ";a,2" ) . "'><img src=\"images/pm/outbox.png\" alt=\"{$lang['user']['pm_outbox']}\" />{$lang['user']['pm_outbox']}</a></center></div>
-				<div class=\"blokas\"><center><a onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" href='" . url( "?id," . $url['id'] . ";d,0" ) . "' ><img src=\"images/pm/delete_all.png\" alt=\"{$lang['user']['pm_delete_all']}\" />{$lang['user']['pm_delete_all']}</a></center></div>
+				<div class=\"blokas\"><center><a href='" . url( "?id," . $url['id'] . ";n,1" ) . "'><img src=\"images/pm/new.png\" alt=\"" . getLangText('user',  'pm_new') . "\" />" . getLangText('user',  'pm_new') . "</a></center></div>
+				<div class=\"blokas\"><center><a href='" . url( "?id," . $url['id'] . ";a,1" ) . "'><img src=\"images/pm/inbox.png\" alt=\"" . getLangText('user',  'pm_inbox') . "\" />" . getLangText('user',  'pm_inbox') . "</a></center></div>
+				<div class=\"blokas\"><center><a href='" . url( "?id," . $url['id'] . ";a,2" ) . "'><img src=\"images/pm/outbox.png\" alt=\"" . getLangText('user',  'pm_outbox') . "\" />" . getLangText('user',  'pm_outbox') . "</a></center></div>
+				<div class=\"blokas\"><center><a onClick=\"return confirm('" . getLangText('system', 'delete_confirm') . "')\" href='" . url( "?id," . $url['id'] . ";d,0" ) . "' ><img src=\"images/pm/delete_all.png\" alt=\"" . getLangText('user',  'pm_delete_all') . "\" />" . getLangText('user',  'pm_delete_all') . "</a></center></div>
 			</td>
 		</tr>
 	</table>
@@ -150,26 +150,26 @@ if ( isset( $url['n'] ) ) {
 		}
 		$text .= "
 				<fieldset>
-				<legend>" . ( ( isset( $user ) && (int)$pid > 0 ) ? "{$lang['user']['pm_reply']}" : "{$lang['user']['pm_send']}" ) . " </legend>
+				<legend>" . ( ( isset( $user ) && (int)$pid > 0 ) ? getLangText('user', 'pm_reply') : getLangText('user', 'pm_send') ) . " </legend>
 				<form name=\"msg\" action=\"" . url( "?id," . $conf['pages'][basename( __FILE__ )]['id'] ) . "\" method=\"post\">
 					<table border=0 width=\"100%\">
 					<tr>
-						<td width=\"15%\" class=\"sarasas\">{$lang['user']['pm_to']}:</td>
+						<td width=\"15%\" class=\"sarasas\">" . getLangText('user',  'pm_to') . ":</td>
 						<td>
 							<input type=\"text\" name=\"to\" value=\"" . ( isset( $user ) && getSession('username') != $user ? strtolower( $user ) : '' ) . "\" />
 						</td>
 					</tr>
 					<tr>
-						<td class=\"sarasas\">{$lang['user']['pm_subject']}:</td>
+						<td class=\"sarasas\">" . getLangText('user',  'pm_subject') . ":</td>
 						<td><input name=\"title\" type=\"text\" size=\"50\" value=\"" . ( ( isset( $user ) && (int)$pid > 0 ) ? "Re: " . input( trimlink( $sql['title'], 40 ) ) : "" ) . "\" style=\"width:95%\"></td>
 					</tr>
 					<tr>
-						<td valign='top' align='left' class=\"sarasas\">{$lang['user']['pm_message']}:</td>
+						<td valign='top' align='left' class=\"sarasas\">" . getLangText('user',  'pm_message') . ":</td>
 						<td><textarea name=\"msg\" rows=\"10\" cols=\"50\" wrap=\"on\" style=\"width:95%\">" . ( ( isset( $user ) && (int)$pid > 0 ) ? "[quote=" . $user . "]" . input( trim( preg_replace( array( "#\[quote=(http://)?(.*?)\](.*?)\[/quote]#si", "[/quote]" ), "", $sql['msg'] ) ) . "[/quote]\n\n" ) : "" ) . "</textarea>
 						<br />
 						" . bbk( "msg" ) . "
 						<br />
-						<input type=\"submit\" value=\"" . ( ( isset( $user ) && (int)$pid > 0 ) ? "{$lang['user']['pm_reply']}" : "{$lang['user']['pm_send']}" ) . "\">
+						<input type=\"submit\" value=\"" . ( ( isset( $user ) && (int)$pid > 0 ) ? getLangText('user', 'pm_reply') : getLangText('user', 'pm_send') ) . "\">
 						<input type=\"hidden\" name=\"action\" value=\"pm_send\" />
 					</td>
 					</tr>
@@ -183,7 +183,7 @@ if ( isset( $url['n'] ) ) {
 	}
 }
 
-lentele( $lang['user']['pm_panel'], $text );
+lentele( getLangText('user', 'pm_panel'), $text );
 unset( $text );
 
 // ##################### Perziureti zinute ######################
@@ -194,13 +194,20 @@ if ( isset( $url['v'] ) ) {
 		if ( $sql ) {
 			addtotitle( $sql['title'] );
 			$laiskas = "
-				<div class=\"pm_read\"><b>{$lang['user']['pm_from']}:</b>  " . input( $sql['from'] ) . "<br><b>{$lang['user']['pm_to']}:</b> " . $sql['to'] . "<br /> <b>{$lang['user']['pm_subject']}:</b> " . ( isset( $sql['title'] ) && !empty( $sql['title'] ) ? input( $sql['title'] ) : "{$lang['user']['pm_nosubject']}" ) . "<br><br><b>{$lang['user']['pm_message']}:</b><br />" . bbcode( $sql['msg'] ) . "<br /><br /></div>
-				" . ( strtolower( $sql['to'] ) == strtolower(getSession('username')) ? "<form name=\"replay_pm\" action='" . url( "?id," . $conf['pages']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $sql['from'] ) ) . ";i," . $url['v'] ) . "' method=\"post\">
-					<input type=\"submit\" value=\"{$lang['user']['pm_reply']}\"/> <input type=\"button\" value=\"{$lang['user']['pm_delete']}\" onclick=\"location.href='" . url( "d," . $url['v'] . ";v,0" ) . "'\"/>
-				</form>" : "" ) . "
-				";
+				<div class=\"pm_read\">
+					<b>" . getLangText('user',  'pm_from') . ":</b>  " . input( $sql['from'] ) . "<br>
+					<b>" . getLangText('user',  'pm_to') . ":</b> " . $sql['to'] . "<br />
+					<b>" . getLangText('user',  'pm_subject') . ":</b> " . ( isset( $sql['title'] ) && !empty( $sql['title'] ) ? input( $sql['title'] ) : getLangText('user', 'pm_nosubject') ) . "<br>
+					<br>
+					<b>" . getLangText('user',  'pm_message') . ":</b><br />
+					" . bbcode( $sql['msg'] ) . "<br />
+					<br />
+				</div>" . ( strtolower( $sql['to'] ) == strtolower(getSession('username')) ? "<form name=\"replay_pm\" action='" . url( "?id," . $conf['pages']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $sql['from'] ) ) . ";i," . $url['v'] ) . "' method=\"post\">
+					<input type=\"submit\" value=\"" . getLangText('user',  'pm_reply') . "\"/>
+					<input type=\"button\" value=\"" . getLangText('user',  'pm_delete') . "\" onclick=\"location.href='" . url( "d," . $url['v'] . ";v,0" ) . "'\"/>
+				</form>" : "" );
 
-			lentele( "{$lang['user']['pm_message']}", $laiskas );
+			lentele(getLangText('user', 'pm_message'), $laiskas );
 
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "private_msg` SET `read`='YES' WHERE `id`=" . escape( $url['v'] ) . " AND `to`=" . escape(getSession('username')) . "" );
 		}
@@ -220,11 +227,17 @@ if (getSession('level') > 0 && $a == 1 && !isset( $s ) ) {
 			} else {
 				$extra = "<img src='".ROOT."/images/pm/pm_read.png' />";
 			}
-			$info[] = array( "<input type=\"checkbox\" name='visi' onclick='checkedAll(\"pm\");'/>"=> "<input type=\"checkbox\" name=\"pm_s[]\" value=\"{$row['id']}\" />", "" => $extra, "{$lang['user']['pm_subject']}:" => "<a href='" . url( "?id," . $url['id'] . ";v," . $row['id'] ) . "' style=\"display: block\">" . ( isset( $row['Pavadinimas'] ) && !empty( $row['Pavadinimas'] ) ? input( trimlink( $row['Pavadinimas'], 40 ) ) : "{$lang['user']['pm_nosubject']}" ) . "</a></div>", "{$lang['user']['pm_from']}:" => user( $row['Nuo'], $row['from_id'] ), "{$lang['user']['pm_time']}:" => kada( date( 'Y-m-d H:i:s ', $row['Data'] ) ), " " => "<a href='" . url( "?id," . $url['id'] . ";n,1;u," . str_replace( "=", "", input( base64_encode( $row['from'] ) ) ) . ";i," . $row['id'] ) . "'><img src='images/pm/replay.png' border=0 alt=\"{$lang['user']['pm_reply']}\" title=\"{$lang['user']['pm_reply']}\"/></a><a href='" . url( 'd,' . $row['id'] . '' ) . "' onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='images/pm/delete.png' border=0 alt=\"{$lang['user']['pm_delete']}\" title=\"{$lang['user']['pm_delete']}\"/></a>" );
+			$info[] = array( 
+				"<input type=\"checkbox\" name='visi' onclick='checkedAll(\"pm\");'/>" => "<input type=\"checkbox\" name=\"pm_s[]\" value=\"" . $row['id'] . "\" />", 
+				"" => $extra, 
+				getLangText('user', 'pm_subject') . ":" => "<a href='" . url( "?id," . $url['id'] . ";v," . $row['id'] ) . "' style=\"display: block\">" . ( isset( $row['Pavadinimas'] ) && !empty( $row['Pavadinimas'] ) ? input( trimlink( $row['Pavadinimas'], 40 ) ) : getLangText('user', 'pm_nosubject')) . "</a></div>", 
+				getLangText('user', 'pm_from') . ":" => user( $row['Nuo'], $row['from_id'] ), 
+				getLangText('user', 'pm_time') . ":" => kada( date( 'Y-m-d H:i:s ', $row['Data'] ) ), 
+				" " => "<a href='" . url( "?id," . $url['id'] . ";n,1;u," . str_replace( "=", "", input( base64_encode( $row['from'] ) ) ) . ";i," . $row['id'] ) . "'><img src='images/pm/replay.png' border=0 alt=\"" . getLangText('user',  'pm_reply') . "\" title=\"" . getLangText('user',  'pm_reply') . "\"/></a><a href='" . url( 'd,' . $row['id'] . '' ) . "' onClick=\"return confirm('" . getLangText('system', 'delete_confirm') . "')\"><img src='images/pm/delete.png' border=0 alt=\"" . getLangText('user',  'pm_delete') . "\" title=\"" . getLangText('user',  'pm_delete') . "\"/></a>" );
 		}
-		lentele($lang['user']['pm_inbox'], pages( $p, $limit, $pm_sk, 10 ) . "<br/><form method=\"post\" id=\"pm\" astion=\"\">" . $bla->render( $info ) . "<input type=\"submit\" onClick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\" value=\"{$lang['system']['delete']}\" /></form><br/>" . pages( $p, $limit, $pm_sk, 10 ) );
+		lentele(getLangText('user', 'pm_inbox'), pages( $p, $limit, $pm_sk, 10 ) . "<br/><form method=\"post\" id=\"pm\" astion=\"\">" . $bla->render( $info ) . "<input type=\"submit\" onClick=\"return confirm('" . getLangText('system', 'delete_confirm') . "')\" value=\"" . getLangText('system',  'delete') . "\" /></form><br/>" . pages( $p, $limit, $pm_sk, 10 ) );
 	} else {
-		lentele($lang['user']['pm_inbox'], $lang['user']['pm_empty_msg']);
+		lentele(getLangText('user', 'pm_inbox'), getLangText('user', 'pm_empty_msg'));
 	}
 }
 if (getSession('level') > 0 && $a == 2 && !isset( $s )) {
@@ -240,12 +253,14 @@ if (getSession('level') > 0 && $a == 2 && !isset( $s )) {
 			} else {
 				$extra = "<img src='".ROOT."/images/pm/pm_read.png' />";
 			}
-			$info[] = array( "" => $extra, "{$lang['user']['pm_subject']}:" => "<a href='" . url( "?id," . $url['id'] . ";v," . $row['id'] ) . "' title=\"{$lang['user']['pm_time']}: <b>" . date( 'Y-m-d H:i:s', $row['Data'] ) . "</b><br/>{$lang['user']['pm_message']}: <i>" . nl2br( input( str_replace( array( "[", "]" ), "", strip_tags( $row['Žinutė'] ) ) ) ) . "</i><br/>\" style=\"display: block\">" . trimlink( $row['Pavadinimas'], 40 ) . "</a>", "{$lang['user']['pm_to']}:" => user( $row['to'], $row['to_id'] ), "{$lang['user']['pm_time']}:" => kada( date( 'Y-m-d H:i:s ', $row['Data'] ) ) );
+			$info[] = array( 
+				"" => $extra, 
+				getLangText('user', 'pm_subject') . ":" => "<a href='" . url( "?id," . $url['id'] . ";v," . $row['id'] ) . "' title=\"" . getLangText('user',  'pm_time') . ": <b>" . date( 'Y-m-d H:i:s', $row['Data'] ) . "</b><br/>" . getLangText('user',  'pm_message') . ": <i>" . nl2br( input( str_replace( array( "[", "]" ), "", strip_tags( $row['Žinutė'] ) ) ) ) . "</i><br/>\" style=\"display: block\">" . trimlink( $row['Pavadinimas'], 40 ) . "</a>", getLangText('user', 'pm_to') . ":" => user( $row['to'], $row['to_id'] ), getLangText('user', 'pm_time') . ":" => kada( date( 'Y-m-d H:i:s ', $row['Data'] ) ) );
 		}
 		asort( $info );
-		lentele( $lang['user']['pm_outbox'], pages( $p, $limit, $pm_sk, 10 ) . "<br/>" . $bla->render( $info ) . "<br/>" . pages( $p, $limit, $pm_sk, 10 ), "" );
+		lentele( getLangText('user', 'pm_outbox'), pages( $p, $limit, $pm_sk, 10 ) . "<br/>" . $bla->render( $info ) . "<br/>" . pages( $p, $limit, $pm_sk, 10 ), "" );
 	} else {
-		lentele( $lang['user']['pm_outbox'], $lang['user']['pm_empty_msg'] );
+		lentele( getLangText('user', 'pm_outbox'), getLangText('user', 'pm_empty_msg') );
 	}
 }
 unset( $title, $info, $text, $extra );

@@ -93,9 +93,9 @@ if(! function_exists('user')) {
 	function user( $user, $id = 0, $level = 0, $extra = FALSE ) {
 
 		global $lang, $conf;
-		if ( $user == '' || $user == $lang['system']['guest'] ) {
+		if ( $user == '' || $user == getLangText('system','guest')) {
 
-			return $lang['system']['guest'];
+			return  getLangText('system','guest');
 		} else {
 			if ( isset( $conf['pages']['pm.php'] ) && $id != 0 && ! empty(getSession('id')) && $id != getSession('id')) {
 				$pm = "<a href=\"" . url( "?id," . $conf['pages']['pm.php']['id'] . ";n,1;u," . str_replace( "=", "", base64_encode( $user ) ) ) . "\"><img src=\"" . ROOT . "core/assets/images/pm/mail.png\"  style=\"vertical-align:middle\" alt=\"pm\" border=\"0\" /></a>";

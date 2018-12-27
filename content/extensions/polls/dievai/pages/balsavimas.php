@@ -18,7 +18,7 @@ if ( isset( $url['p'] ) && isnum( $url['p'] ) && $url['p'] > 0 ) {
 $limit = 15;
 
 if(BUTTONS_BLOCK) {
-	lentele($lang['admin']['poll'], buttonsMenu(buttons('polls')));
+	lentele(getLangText('admin', 'poll'), buttonsMenu(buttons('polls')));
 }
 
 //delete poll
@@ -37,7 +37,7 @@ if (isset($url['t'])) {
 			"header",
 			[
 				'type'		=> 'success',
-				'message' 	=> $lang['admin']['post_deleted']
+				'message' 	=> getLangText('admin', 'post_deleted')
 			]
 		);
 	} else {
@@ -68,7 +68,7 @@ if ($url['v'] == 1) {
 				"header",
 				[
 					'type'		=> 'success',
-					'message' 	=> $lang['admin']['poll_created']
+					'message' 	=> getLangText('admin', 'poll_created')
 				]
 			);
 		} else {
@@ -88,20 +88,20 @@ if ($url['v'] == 1) {
 			"method" 	=> "post",
 			"name" 		=> "reg"
 		],
-	    $lang['admin']['poll_question'] => [
+	    getLangText('admin', 'poll_question') => [
 			"type" => "text", 
 			"name" => "question"
 		],
-	    $lang['admin']['poll_votecan']  => [
+	    getLangText('admin', 'poll_votecan')  => [
 			"type" 	=> "select", 
 			"name" 	=> "only_guests", 
 			"value" => [
-				0 => $lang['admin']['poll_all'], 
-				1 => $lang['admin']['poll_membs']
+				0 => getLangText('admin', 'poll_all'), 
+				1 => getLangText('admin', 'poll_membs')
 			]
 		],
 
-	    $lang['admin']['poll_type']     => [
+	    getLangText('admin', 'poll_type')     => [
 			"type" => "select", 
 			"name" => "type", 
 			"value" => [
@@ -110,7 +110,7 @@ if ($url['v'] == 1) {
 			]
 		],
 		
-		$lang['admin']['poll_answers']  => [
+		getLangText('admin', 'poll_answers')  => [
 			"type" 	=> "string", 
 			"value" => "<a href=\"#\" onclick=\"return false;\" id=\"add\">
 			<img src=\"" . ROOT . "core/assets/images/icons/plus.png\" alt=\"[+]\" /></a> 
@@ -118,12 +118,12 @@ if ($url['v'] == 1) {
 			<img src=\"" . ROOT . "core/assets/images/icons/minus.png\" alt=\"[-]\" /></a>
 			<div id=\"inputs\">
 			<div class='form-line'>
-			<input type=\"text\" name=\"answers[]\" class=\"form-control\" placeholder='" . $lang['admin']['poll_question'] . "' />
+			<input type=\"text\" name=\"answers[]\" class=\"form-control\" placeholder='" . getLangText('admin', 'poll_question') . "' />
 			</div>
 			</div>"
 		],
 
-		$lang['admin']['poll_active']	=> [
+		getLangText('admin', 'poll_active')	=> [
 			'type'		=> 'switch',
 			'value'		=> 1,
 			'name'		=> 'shown',
@@ -135,12 +135,12 @@ if ($url['v'] == 1) {
 		''								=> [
 			"type" 		=> "submit", 
 			'form_line'	=> 'form-not-line',
-			"value" 	=> $lang['admin']['poll_create']
+			"value" 	=> getLangText('admin', 'poll_create')
 		]
 	];
 
 	$formClass = new Form($pollForm);
-	lentele($lang['admin']['poll_create'], $formClass->form());
+	lentele(getLangText('admin', 'poll_create'), $formClass->form());
 	?>
   	<script type="text/javascript">
 		var i = $('input').size() + 1;
@@ -180,7 +180,7 @@ if ($url['v'] == 1) {
 					"header",
 					[
 						'type'		=> 'success',
-						'message' 	=> $lang['admin']['post_updated']
+						'message' 	=> getLangText('admin', 'post_updated')
 					]
 				);
 		
@@ -202,23 +202,23 @@ if ($url['v'] == 1) {
 				"name" 		=> "reg"
 			],
 
-			$lang['admin']['poll_question'] => [
+			getLangText('admin', 'poll_question') => [
 				"type" 	=> "text", 
 				"name" 	=> "question", 
 				"value" => input($quest['question'])
 			],
 			
-			$lang['admin']['poll_votecan']  => [
+			getLangText('admin', 'poll_votecan')  => [
 				"type" 		=> "select", 
 				"selected" 	=> input($quest['only_guests']), 
 				"name" 		=> "only_guests", 
 				"value" 	=> [
-					0 => $lang['admin']['poll_all'], 
-					1 => $lang['admin']['poll_membs']
+					0 => getLangText('admin', 'poll_all'), 
+					1 => getLangText('admin', 'poll_membs')
 				]
 			],
 
-			$lang['admin']['poll_type']     => [
+			getLangText('admin', 'poll_type')     => [
 				"type" => "select", 
 				"name" => "type", 
 				"value" => [
@@ -228,7 +228,7 @@ if ($url['v'] == 1) {
 				"selected" => input($quest['radio'])
 			],
 			
-			$lang['admin']['poll_active']	=> [
+			getLangText('admin', 'poll_active')	=> [
 				'type'		=> 'switch',
 				'value'		=> 1,
 				'name'		=> 'shown',
@@ -241,38 +241,38 @@ if ($url['v'] == 1) {
 				"type" 		=> "submit",
 				"name" 		=> "update", 
 				'form_line'	=> 'form-not-line',
-				"value" 	=> $lang['admin']['edit']
+				"value" 	=> getLangText('admin', 'edit')
 			]
 		];
 
 		$formClass = new Form($inputs);
-		lentele($lang['admin']['poll_edit'], $formClass->form());
+		lentele(getLangText('admin', 'poll_edit'), $formClass->form());
 	}
 
 	$viso  = kiek( "poll_questions", "WHERE `lang` = " . escape( lang() ) . "" );
 	$quest = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "poll_questions` WHERE `lang` = " . escape( lang() ) . " ORDER BY `id` DESC LIMIT {$p},{$limit}", 3600 );
 	foreach ( $quest as $row ) {
 		$info[] = [
-			$lang['admin']['poll_active_q'] => ( $row['shown'] == 1 ? '<img src="' . ROOT . '/core/assets/images/icons/status_online.png" alt="" />' : '<img src="' . ROOT . '/core/assets/images/icons/status_offline.png" alt="" />' ),
-			$lang['admin']['poll']          => input( $row['question'] ),
-			$lang['system']['edit']         => " <a href='" . url( "?id,{$url['id']};a,{$url['a']};v,{$url['v']};e," . $row['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['edit']}'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a> 
-			<a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $row['id'] ) . "' data-toggle='tooltip' title='{$lang['admin']['delete']}' onclick=\"return confirm('" . $lang['system']['delete_confirm'] . "')\"><img src='" . ROOT . "core/assets/images/icons/cross.png'></a>" 
+			getLangText('admin', 'poll_active_q') => ( $row['shown'] == 1 ? '<img src="' . ROOT . '/core/assets/images/icons/status_online.png" alt="" />' : '<img src="' . ROOT . '/core/assets/images/icons/status_offline.png" alt="" />' ),
+			getLangText('admin', 'poll')          => input( $row['question'] ),
+			getLangText('system', 'edit')         => " <a href='" . url( "?id,{$url['id']};a,{$url['a']};v,{$url['v']};e," . $row['id'] ) . "' data-toggle='tooltip' title='" . getLangText('admin',  'edit') . "'><img src='" . ROOT . "core/assets/images/icons/pencil.png'></a> 
+			<a href='" . url( "?id,{$url['id']};a,{$url['a']};t," . $row['id'] ) . "' data-toggle='tooltip' title='" . getLangText('admin',  'delete') . "' onclick=\"return confirm('" . getLangText('system', 'delete_confirm') . "')\"><img src='" . ROOT . "core/assets/images/icons/cross.png'></a>" 
 		];
 	}
 	if (! empty($info)) {
 
 		$tableClass   = new Table($info);
-		lentele($lang['admin']['poll_edit'], $tableClass->render());
+		lentele(getLangText('admin', 'poll_edit'), $tableClass->render());
 		// if list is bigger than limit, then we show list with pagination
 		if ( $viso > $limit ) {
-			lentele( $lang['system']['pages'], pages( $p, $limit, $viso, 10 ) );
+			lentele( getLangText('system', 'pages'), pages( $p, $limit, $viso, 10 ) );
 		}
 
 	} else {
 		notifyMsg(
 			[
 				'type'		=> 'error',
-				'message' 	=> $lang['admin']['poll_no']
+				'message' 	=> getLangText('admin', 'poll_no')
 			]
 		);
 	}

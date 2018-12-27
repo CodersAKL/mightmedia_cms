@@ -35,7 +35,7 @@ if (! emoty(getSession('id'))) {
 
 				//Patikrinam ar failas įkeltas sėkmingai
 				if ( !is_uploaded_file( $file_tmp ) ) {
-					klaida( $lang['system']['warning'], "{$lang['admin']['gallery_nofile']}." );
+					klaida( getLangText('system', 'warning'), getLangText('admin', 'gallery_nofile') . "." );
 				} else {
 					//gaunamm failo galunę
 					$ext = strrchr( $file_name, '.' );
@@ -43,7 +43,7 @@ if (! emoty(getSession('id'))) {
 
 					//Tikrinam ar tinkamas failas
 					if ( !in_array( $ext, $limitedext ) ) {
-						klaida( $lang['system']['warning'], "{$lang['admin']['gallery_notimg']}" );
+						klaida( getLangText('system', 'warning'), getLangText('admin', 'gallery_notimg'));
 					}
 
 					//create a random file name
@@ -94,12 +94,12 @@ if (! emoty(getSession('id'))) {
 
 						$new_img = ImageCreateTrueColor( $conf['minidyd'], $conf['minidyd'] );
 						if ( !@imagefilledrectangle( $new_img, 0, 0, $target_width - 1, $target_height - 1, 0 ) ) { // Fill the image black
-							klaida( $lang['system']['error'], 'GD v2+' . $lang['system']['error'] );
+							klaida( getLangText('system', 'error'), 'GD v2+' . getLangText('system', 'error') );
 							exit( 0 );
 						}
 
 						if ( !@imagecopyresampled( $new_img, $img, ( $target_width - $new_width ) / 2, ( $target_height - $new_height ) / 2, 0, 0, $new_width, $new_height, $width, $height ) ) {
-							klaida( $lang['system']['error'], 'GD v2+' . $lang['system']['error'] );
+							klaida( getLangText('system', 'error'), 'GD v2+' . getLangText('system', 'error') );
 							exit( 0 );
 						}
 
@@ -153,9 +153,9 @@ if (! emoty(getSession('id'))) {
 						$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "galerija` (`pavadinimas`,`file`,`apie`,`autorius`,`data`,`categorija`,`rodoma`, `lang`) VALUES (" . escape( $_POST['Pavadinimas'] ) . "," . escape( $rand_name . $ext ) . "," . escape( strip_tags( $_POST['Aprasymas'] ) ) . "," . escape(getSession('id')) . ",'" . time() . "'," . escape( $_POST['cat'] ) . ",'NE', " . escape( lang() ) . ")" );
 
 						if ( $result ) {
-							msg( $lang['system']['done'], "{$lang['gallery']['sumbit_scc']}." );
+							msg( getLangText('system', 'done'), getLangText('gallery', 'sumbit_scc') . "." );
 						} else {
-							klaida( $lang['system']['error'], " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
+							klaida( getLangText('system', 'error'), " <br><b>" . mysqli_error($prisijungimas_prie_mysql) . "</b>" );
 						}
 						unset( $_FILES['failas'], $filename, $_POST['action'] );
 						redirect( url( "?id," . $_GET['id'] . ";a," . $_GET['a'] . ";v,1" ), "meta" );
@@ -164,7 +164,7 @@ if (! emoty(getSession('id'))) {
 				}
 			}
 		} else {
-			klaida( $lang['system']['warning'], "{$lang['admin']['news_required']}." );
+			klaida( getLangText('system', 'warning'), getLangText('admin', 'news_required') . "." );
 		}
 
 		/**
@@ -281,13 +281,13 @@ if (! emoty(getSession('id'))) {
 	}
 	$categories[0] = "--";
 	$form          = array( "Form"                              => array( "enctype" => "multipart/form-data", "action" => url( "?id," . $conf['pages'][basename( __file__ )]['id'] ), "method" => "post", "name" => "action" ),
-	                         "{$lang['admin']['gallery_file']}:" => array( "name" => "failas", "type" => "file", "value" => "", "class"=> "input" ),
-	                         "{$lang['system']['name']}:"        => array( "type" => "text", "value" => '', "name" => "Pavadinimas", "class"=> "input" ),
-	                         "{$lang['gallery']['photoalbum']}:"    => array( "type" => "select", "value" => $categories, "name" => "cat", "class" => "input", "class"=> "input" ),
-	                         "{$lang['system']['about']}:"       => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
+	                         getLangText('admin', 'gallery_file') . ":" => array( "name" => "failas", "type" => "file", "value" => "", "class"=> "input" ),
+	                         getLangText('system', 'name') . ":" => array( "type" => "text", "value" => '', "name" => "Pavadinimas", "class"=> "input" ),
+	                         getLangText('gallery', 'photoalbum') . ":"  => array( "type" => "select", "value" => $categories, "name" => "cat", "class" => "input", "class"=> "input" ),
+	                         getLangText('system', 'about') . ":"  => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
 		//"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","class"=>"input"),
-	                         ""                                  => array( "type" => "submit", "name" => "action", "value" => "{$lang['gallery']['submit']}" ) );
-	lentele($lang['gallery']['submiting'], $bla->form($form));
+	                         ""                                  => array( "type" => "submit", "name" => "action", "value" => getLangText('gallery', 'submit')) );
+	lentele(getLangText('gallery', 'submiting'), $bla->form($form));
 } else {
-	klaida($lang['system']['warning'], $lang['system']['pleaselogin']);
+	klaida(getLangText('system', 'warning'), getLangText('system', 'pleaselogin'));
 }

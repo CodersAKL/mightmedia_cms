@@ -26,12 +26,12 @@ $user = getUserMail(getSession('id'));
                     <ul class="dropdown-menu pull-right">
                         <?php if(isset($conf['pages']['view_user.php'])) { ?>
                             <li>
-                                <a href="<?php echo url( '?id,' . $conf['pages']['view_user.php']['id'] . ';' . $user['nick'] ); ?>"><i class="material-icons">person</i><?php echo $lang['user']['user_profile']; ?></a>
+                                <a href="<?php echo url( '?id,' . $conf['pages']['view_user.php']['id'] . ';' . $user['nick'] ); ?>"><i class="material-icons">person</i><?php echo getLangText('user', 'user_profile'); ?></a>
                             </li>
                         <?php } ?>
                         <li role="separator" class="divider"></li>
                         <li>
-                            <a href="/<?php echo $lang['user']['logout']; ?>"><i class="material-icons">input</i><?php echo $lang['user']['logout']; ?></a>
+                            <a href="/<?php echo getLangText('user', 'logout'); ?>"><i class="material-icons">input</i><?php echo getLangText('user', 'logout'); ?></a>
                         </li>
                     </ul>
                 </div>
@@ -42,11 +42,11 @@ $user = getUserMail(getSession('id'));
         <div class="menu">
             <ul class="list">
                 <li class="header">
-                    <?php echo $lang['admin']['menu_main']; ?>
+                    <?php echo getLangText('admin', 'menu_main'); ?>
                 </li>
                 <?php foreach (getAdminPages() as $id => $file) { ?>
                     <?php
-                        $linkValue = (isset( $lang['admin'][basename($file, '.php')] ) ? $lang['admin'][basename($file, '.php')] : nice_name($file));
+                        $linkValue = (strlen( getLangText('admin', basename($file, '.php')) ) > 0 ? getLangText('admin', basename($file, '.php')) : nice_name($file));
                     ?>
                     <li <?php echo ( isset( $_GET['a'] ) && $_GET['a'] == $id ? 'class="active"' : '' ); ?>>
                         <?php if(isset($buttons[$id]) && ! empty($buttons[$id])) { ?>
@@ -72,11 +72,11 @@ $user = getUserMail(getSession('id'));
                 
                 <?php if(! empty(getAdminExtensionsMenu())) { ?>
                     <li class="header">
-                        <?php echo $lang['admin']['menu_extensions']; ?>
+                        <?php echo getLangText('admin', 'menu_extensions'); ?>
                     </li>
                     <?php foreach (getAdminExtensionsMenu() as $id => $file) { ?>
                         <?php
-                            $linkValue = (isset( $lang['admin'][basename($file, '.php')] ) ? $lang['admin'][basename($file, '.php')] : nice_name($file));
+                            $linkValue = (strlen( getLangText('admin', basename($file, '.php')) ) > 0 ? getLangText('admin', basename($file, '.php')) : nice_name($file));
                         ?>
                         <li <?php echo ( isset( $_GET['a'] ) && $_GET['a'] == $id ? 'class="active"' : '' ); ?>>
                             <?php if(! empty(buttons($id))) { ?>
