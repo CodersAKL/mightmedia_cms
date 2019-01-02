@@ -1,15 +1,5 @@
 <?php
 
-/**
- * @Projektas: MightMedia TVS
- * @Puslapis: www.coders.lt
- * @$Author: p.dambrauskas $
- * @copyright CodeRS ©2008
- * @license GNU General Public License v2
- * @$Revision: 360 $
- * @$Date: 2009-11-20 17:27:27 +0200 (Fri, 20 Nov 2009) $
- **/
-
 if ( !defined( "OK" ) ) {
 	redirect( 'location: http://' . $_SERVER["HTTP_HOST"] );
 }
@@ -458,7 +448,7 @@ if (isset($url['c'])) {
 			);
 			
 		}
-		$settings = array();
+		$settings = [];
 		$settings["Form"]   = [
 			"action" 	=> "", 
 			"method" 	=> "post", 
@@ -491,8 +481,10 @@ if (isset($url['c'])) {
 	
 
 		$path = ROOT . 'content/extensions/translation/missingtranslations.json';
-		$missingTranslationsFileContent = file_get_contents($path);
-		$missingTranslations = (array)json_decode($missingTranslationsFileContent);
+		if(file_exists($path)) {
+			$missingTranslationsFileContent = file_get_contents($path);
+			$missingTranslations = json_decode($missingTranslationsFileContent, true);
+		}
 
 		if (!empty($missingTranslations)){
 			$table = '<table class="table">';

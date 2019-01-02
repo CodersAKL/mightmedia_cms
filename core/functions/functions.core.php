@@ -436,6 +436,7 @@ if(! function_exists('getSettingsValue')) {
 	function getSettingsValue($key, $options = null)
 	{
 		global $conf;
+
 		if (isset($conf[$key])){
 			return $conf[$key];
 		}
@@ -495,6 +496,7 @@ if(! function_exists('setSettingsValue')) {
 if(! function_exists('getLangText')) {
 	function getLangText($group, $key, $new = false, $value = ''){
 		global $lang;
+
 		$sqlCheckTranslation = "SELECT `value` FROM `" . LENTELES_PRIESAGA . "translations` WHERE `group`= " . escape($group) . " and `key`= " . escape($key) . " ORDER BY `last_update` DESC LIMIT 1";
 		if ($textFromDb = mysql_query1($sqlCheckTranslation)){
 			$langTextFromDataBase =  $textFromDb['value'];
@@ -508,16 +510,23 @@ if(! function_exists('getLangText')) {
 			$langText = null;
 		}
 
-		if (lang() == 'lt'){ $needTranslation = '--- nenurodyta ---'; } else if (lang() == 'en') { $needTranslation = '--- undefined ---';}
+		if (lang() == 'lt'){
+			$needTranslation = '--- nenurodyta ---';
+		} else if (lang() == 'en') {
+			$needTranslation = '--- undefined ---';
+		}
+
 		if  (getSettingsValue('translation_status') == 1){
-			$result = '<p id ="' . $group . '_' . $key . '"  class= "col-10" onclick="editLanguageText(this,function(event){event.preventDefault()})" ';
-			$result .= 'onmouseover="addTranslateClass(this)" onmouseout="removeTranslateClass(this)" style="width: 100%;"';
+			$result = '<span id ="' . $group . '_' . $key . '"  class="mm-translation" onclick="editLanguageText(this,function(event){event.preventDefault()})"';
 			$result .= ' data-group="' . $group . '" data-key="' . $key . '">';
 			if (isset($langTextFromDataBase)){ 
-				$result .= $langTextFromDataBase . '</p>'; 
+				$result .= $langTextFromDataBase; 
 			} else { 
-				!is_null($langText) ? $result .= $langText . '</p>' :  $result .= $needTranslation . '</p>';
-			} 
+				$result .= ! is_null($langText) ? $langText : $needTranslation;
+			}
+
+			$result .= '</span>'; 
+
 			return $result;
 
 		} else if (isset($langTextFromDataBase)) {

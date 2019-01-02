@@ -1,3 +1,9 @@
+
+    <div class="admin-foots">
+        <a href="<?php echo url("?id,999;a,configuration;c,translation"); ?>" class="mm-translations--btn btn btn-success btn-circle waves-effect waves-circle waves-float">
+            <i class="material-icons">translate</i>
+        </a>
+    </div>
     <!-- Bootstrap Core Js -->
     <script src="themes/material/plugins/bootstrap/js/bootstrap.js"></script>
 
