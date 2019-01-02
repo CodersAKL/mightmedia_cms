@@ -9,7 +9,7 @@ function faqPages($adminPages)
 
     $cmsPages = [
         [
-            'name' => $extensionDir . '/puslapiai/duk.php',
+            'name' => $extensionDir . '/content/pages/duk.php',
             'type' => 'file'
         ],
     ];
