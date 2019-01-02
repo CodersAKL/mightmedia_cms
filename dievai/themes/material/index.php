@@ -24,6 +24,7 @@ $user = getUserMail(getSession('id'));
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
+                        <li> <a>Profilis</a></li>
                         <?php if(isset($conf['pages']['view_user.php'])) { ?>
                             <li>
                                 <a href="<?php echo url( '?id,' . $conf['pages']['view_user.php']['id'] . ';' . $user['nick'] ); ?>"><i class="material-icons">person</i><?php echo getLangText('user', 'user_profile'); ?></a>
