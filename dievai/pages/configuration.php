@@ -418,23 +418,7 @@ if (isset($url['c'])) {
 		lentele(getLangText('admin', 'configuration_extensions'), $formClass->form());
 	} else if($url['c'] == 'translation') {
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['saveTranslationOptions']))  {
-			$req = array();
-			
-			$req[] = [
-				'val' 		=> (str_replace(',','.', $_POST['ip'])),
-				'key' 		=> 'translator',
-				'options' 	=> null
-			];
-			
-			$req[] = [
-				'val' 		=> $_POST['status'],
-				'key' 		=> 'translation_status',
-				'options' 	=> null
-			];
-			
-			foreach ($req as $row) {
-				setSettingsValue( $row['val'], $row['key'], $row['options'] );
-			}
+			setSession('translation_status', $_POST['status']);
 			
 			delete_cache( "SELECT id, reg_data, gim_data, login_data, nick, vardas, levelis, pavarde FROM `" . LENTELES_PRIESAGA . "users` WHERE levelis=1 OR levelis=2" );
 			
@@ -462,13 +446,8 @@ if (isset($url['c'])) {
 			"value" 	=> '1',
 			"name"  	=> "status",
 			'form_line'	=> 'form-not-line',
-			'checked'	=> (input(getSettingsValue('translation_status')) == 1 ? true : false)
+			'checked'	=> (!empty(getSession('translation_status')) ? true : false)
 		];
-		$settings["IP (xx.xxx.xxx.xx)"] =  [
-			"type" 	=> "text",
-			"value" => input( (getSettingsValue('translator') ) ? getSettingsValue('translator') : '' ),
-			"name" 	=> "ip"
-		];			
 		
 		$settings[""] = [ 
 			"type" 		=> "submit", 

@@ -92,8 +92,7 @@ if(! function_exists('header_info')) {
 				}
 			}
 		</script>';
-		if  (getSettingsValue('translation_status') == 1){
-			if (isset($_SESSION['Translation'])){ echo $_SESSION['Translation'];}
+		if  (getSession('translation_status') == 1){
 			?>
 			<style>
 			 .notifyTranslation{
@@ -497,7 +496,7 @@ if(! function_exists('getLangText')) {
 	function getLangText($group, $key, $new = false, $value = ''){
 		global $lang;
 
-		$sqlCheckTranslation = "SELECT `value` FROM `" . LENTELES_PRIESAGA . "translations` WHERE `group`= " . escape($group) . " and `key`= " . escape($key) . " ORDER BY `last_update` DESC LIMIT 1";
+		$sqlCheckTranslation = "SELECT * FROM `" . LENTELES_PRIESAGA . "translations` WHERE `group`= " . escape($group) . " and `key`= " . escape($key) . " ORDER BY `last_update` DESC LIMIT 1";
 		if ($textFromDb = mysql_query1($sqlCheckTranslation)){
 			$langTextFromDataBase =  $textFromDb['value'];
 		}
@@ -516,11 +515,14 @@ if(! function_exists('getLangText')) {
 			$needTranslation = '--- undefined ---';
 		}
 
-		if  (getSettingsValue('translation_status') == 1){
+		if  (!empty(getSession('translation_status'))){
 			$result = '<span id ="' . $group . '_' . $key . '"  class="mm-translation" onclick="editLanguageText(this,function(event){event.preventDefault()})"';
 			$result .= ' data-group="' . $group . '" data-key="' . $key . '">';
 			if (isset($langTextFromDataBase)){ 
+				($textFromDb['status'] == 0) ? $result .= '<strong style="color:red;">' : '';
+				
 				$result .= $langTextFromDataBase; 
+				($textFromDb['status'] == 0) ? $result .= '</strong>' : '';
 			} else { 
 				$result .= ! is_null($langText) ? $langText : $needTranslation;
 			}
