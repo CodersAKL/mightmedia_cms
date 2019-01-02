@@ -168,12 +168,13 @@ class Form
 					}
 				case "submit":
 					{
-                    return "<input type=\"" . $array['type'] . "\" 
+                    return "<button type=\"" . $array['type'] . "\" 
                     class=\"" . $this->defaultClass['button'] . (isset($array['class']) ? " " . $array['class'] : "" ) . "\"
                     " . ( isset( $array['id'] ) ? " id=\"" . $array['id'] . "\"" : "" ) . "
                     " . ( isset( $array['name'] ) ? " name=\"" . $array['name'] . "\"" : "" ) . "
-                    " . ( isset( $array['value'] ) ? " value=\"" . $array['value'] . "\"" : "" ) . "
-                    " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . "/>";
+                    " . ( isset( $array['style'] ) ? " style=\"" . $array['style'] . "\"" : "" ) . ( isset( $array['extra'] ) ? ' ' . $array['extra'] : "" ) . ">
+                    " . ( isset( $array['value'] ) ? $array['value'] : "" ) . "
+                    </button>";
 					}
 				case "radio":
 					{

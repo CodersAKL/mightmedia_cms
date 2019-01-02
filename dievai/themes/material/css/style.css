@@ -8090,3 +8090,11 @@ html.ie11 .bs-searchbox .form-control {
 .alert--cta {
   align-self: center;
 }
+
+.admin-foots {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 999;
+  padding: 20px;
+}
