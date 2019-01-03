@@ -457,7 +457,52 @@ if (isset($url['c'])) {
 		];
 		$formClass = new Form($settings);
 		lentele(getLangText('admin', 'configuration_translations'), $formClass->form());
+
+
+		if (isset($_POST['approve']) && isset($_POST['cofirmTranslation'])){
+			$confirmedTranslationIDs = $_POST['cofirmTranslation'];
+			foreach($confirmedTranslationIDs as $confirmedId){
+				$sqlConfirmedText = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "translations` SET `status` = 1 WHERE id = $confirmedId");		
+			}
+			langTextToFile();
+			redirect(
+				url("?id," . $url['id'] . ";a," . $url['a'] . ";c," . $url['c']),
+				"header",
+				[
+					'type'		=> 'success',
+					'message' 	=> count($confirmedTranslationIDs) > 1 ?  getLangText('translation', 'drafts_confirmed') : getLangText('translation', 'draft_confirmed')
+				]
+			);
+		}
+
+		$langIdentificator = getSession('lang');
+		$viso = kiek( "translations", "WHERE `status`=0 AND `lang` = " . escape( lang() ) . "" );
+		$sqlDraftText = mysql_query1( "SELECT `id`,`group`,`key`,`translation` FROM `" . LENTELES_PRIESAGA . "translations` WHERE `status` = 0 and `lang`='$langIdentificator' ORDER BY `group`, `key` ASC");
+		if(! empty($sqlDraftText)) {
+			if ($viso > 20 ){
+				//Data filtration start
+				$formData = [
+					'group'	=> getLangText('translation', 'group'),
+					'key'	=> getLangText('translation', 'key')
+				];
+			
+				$info[] = tableFilter($formData, $_POST, '#arch');
+				//Data filtration end
+			}
+			foreach ($sqlDraftText as $row) {
+				$info[] = [
+					"#"                         				=> '<input type="checkbox" value="' . $row['id'] . '" name="cofirmTranslation[]" class="filled-in" id="translation-confirm-' . $row['id'] . '"><label for="translation-confirm-' . $row['id'] . '">' . getLangText('translation', 'draft') . '</label>',
+					getLangText('translation', 'group')    		=> "<span>" . input( $row['group'] ) . "</span>",
+					getLangText('translation', 'key')  			=> "<span>" . input( $row['key'] ) . "</span>",
+					getLangText('translation', 'translation') 	=> "<span>" . input( $row['translation'] ) . "</span>",
+				];
+			}
 	
+			$tableClass = new Table($info);
+			$content = '<form id="arch" name="approveForm" method="post">' . $tableClass->render() . '<button type="submit" name="approve" class="btn waves-effect">' . getLangText('admin', 'save') . '</button></form>';
+			lentele(getLangText('translation', 'draftList'), $content);
+			
+		}
 
 		$path = ROOT . 'content/extensions/translation/missingtranslations.json';
 		if(file_exists($path)) {
