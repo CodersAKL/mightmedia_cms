@@ -14,6 +14,7 @@ content/uploads/gallery/thumbs/!index.html
 content/uploads/gallery/!originals
 content/uploads/gallery/originals/!.htaccess
 content/extensions/translation/missingtranslations.json
+content/extensions/translation/*/
 
 //for dev
 .history
