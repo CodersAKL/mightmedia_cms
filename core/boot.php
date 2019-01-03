@@ -31,15 +31,7 @@ date_default_timezone_set(TIME_ZONE);
 
 require_once ROOT . 'core/functions/functions.core.php';
 
-/**
- * Language
- */
-$lang = [];
-if (isset($conf['kalba'])) {
-    require_once ROOT . 'content/lang/' . (empty(getSession('lang'))? basename($conf['kalba'],'.php') : getSession('lang')). '.php';
-} else {
-    require_once ROOT . 'content/lang/lt.php';
-}
+
 
 /**
  * Load core
@@ -75,6 +67,36 @@ $loadCoreFunctionsArray = [
 
 foreach ($loadCoreFunctionsArray as $loadCoreFunctionSlug) {
     require_once ROOT . 'core/functions/functions.' . $loadCoreFunctionSlug . '.php';
+}
+
+/**
+ * Language
+ */
+$lang = [];
+
+if (! empty(getSession('lang')) && is_file(ROOT . 'content/lang/' . basename(getSession('lang')) . '.php' )) {
+	require ROOT . 'content/lang/' . basename(getSession('lang'), '.php') . '.php';
+	$extensions = getActiveExtensions();
+	foreach ($extensions as $extension) {
+		if (is_file(ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . basename(getSession('lang'), '.php') . '.php')){
+			require ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . basename(getSession('lang'), '.php') . '.php';
+		}
+	}
+}
+
+if (isset($conf['kalba'])) {
+	$dir = ROOT . 'content/extensions/translation/' . getSession('lang');
+	$path = $dir . '/translations.php';
+	if(file_exists($path)){
+		$translations = unserialize(file_get_contents($path));
+		foreach ($translations as $translation) {
+			$lang[$translation['group']][$translation['key']] = $translation['translation'];
+		}
+	}
+	unset($path);
+	unset($dir);
+} else {
+    require_once ROOT . 'content/lang/lt.php';
 }
 
 //Isvalom POST'us nuo xss
