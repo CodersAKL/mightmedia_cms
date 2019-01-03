@@ -121,7 +121,7 @@ if (isset($url['t'])) {
 	$str         	= empty( $straipsnis[1] ) ? '' : $straipsnis[1];
 	$komentaras  	= (isset($_POST['kom']) && $_POST['kom'] === '1' ? 'taip' : 'ne');
 	$rodoma			= (isset($_POST['rodoma']) && $_POST['rodoma'] === '1' ? 'TAIP' : 'NE');
-	$category  	= (int)$_POST['category'];
+	$category  		= (int)$_POST['category'];
 	$pavadinimas 	= strip_tags( $_POST['pav'] );
 	$id          	= ceil( (int)$_POST['idas'] );
 
@@ -130,13 +130,13 @@ if (isset($url['t'])) {
 	}
 
 	$updateQuery = "UPDATE `" . LENTELES_PRIESAGA . "straipsniai` SET
-	    `kat` = " . escape( $category ) . ",
-		`pav` = " . escape( $pavadinimas ) . ",
-		`t_text` = " . escape( $apr ) . ",
-		`f_text` = " . escape( $str ) . ",
-		`kom` = " . escape( $komentaras ) . ",
-		`rodoma` = " . escape( $rodoma ) . "
-		WHERE `id`=" . escape( $id ) . ";";
+	    `kat` 		= " . escape( $category ) . ",
+		`pav` 		= " . escape( $pavadinimas ) . ",
+		`t_text` 	= " . escape( $apr ) . ",
+		`f_text` 	= " . escape( $str ) . ",
+		`kom` 		= " . escape( $komentaras ) . ",
+		`rodoma` 	= " . escape( $rodoma ) . "
+		WHERE `id`	= " . escape( $id ) . ";";
 	
 	if(mysql_query1($updateQuery)) {
 		redirect(
@@ -159,30 +159,31 @@ if (isset($url['t'])) {
 // Article ceation
 } elseif ( isset( $_POST['action'] ) && $_POST['action'] == getLangText('admin', 'article_create') ) {
 
-	$straipsnis  = explode( '===page===', $_POST['str'] );
-	$apr         = $straipsnis[0];
-	$str         = empty( $straipsnis[1] ) ? '' : $straipsnis[1];
-	$category  = (int)$_POST['category'];
-	$pavadinimas = strip_tags( $_POST['pav'] );
-	$komentaras  = (isset($_POST['kom']) && $_POST['kom'] === '1' ? 'taip' : 'ne');
-	$rodoma     = (isset($_POST['rodoma']) && $_POST['rodoma'] === '1' ? 'TAIP' : 'NE');
-	$autorius    = getSession('username');
-	$autoriusid  = getSession('id');
+	$straipsnis  	= explode( '===page===', $_POST['str'] );
+	$apr         	= $straipsnis[0];
+	$str         	= empty( $straipsnis[1] ) ? '' : $straipsnis[1];
+	$category  		= (int)$_POST['category'];
+	$pavadinimas 	= strip_tags( $_POST['pav'] );
+	$komentaras  	= (isset($_POST['kom']) && $_POST['kom'] === '1' ? 'taip' : 'ne');
+	$rodoma     	= (isset($_POST['rodoma']) && $_POST['rodoma'] === '1' ? 'TAIP' : 'NE');
+	$autorius   	= getSession('username');
+	$autoriusid  	= getSession('id');
+
 	if ( empty( $apr ) || empty( $pavadinimas ) ) {
 		$error = getLangText('admin', 'article_emptyfield');
 	}
 	if (! isset($error)) {
 		$result = mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "straipsniai` SET
-	    	`kat` = " . escape( $category ) . ",
-			`pav` = " . escape( $pavadinimas ) . ",
-			`t_text` = " . escape( $apr ) . ",
-			`f_text` = " . escape( $str ) . ",
-			`date` = " . time() . ",
-			`autorius` = " . escape( $autorius ) . ",
-			`autorius_id` = " . escape( $autoriusid ) . ",
-			`kom` = " . escape( $komentaras ) . ",
-			`rodoma` = " . escape( $rodoma ) . ",
-			`lang` = " . escape( lang() ) . "" );
+	    	`kat` 			= " . escape( $category ) . ",
+			`pav` 			= " . escape( $pavadinimas ) . ",
+			`t_text` 		= " . escape( $apr ) . ",
+			`f_text` 		= " . escape( $str ) . ",
+			`date` 			= " . time() . ",
+			`autorius` 		= " . escape( $autorius ) . ",
+			`autorius_id` 	= " . escape( $autoriusid ) . ",
+			`kom` 			= " . escape( $komentaras ) . ",
+			`rodoma` 		= " . escape( $rodoma ) . ",
+			`lang` 			= " . escape( lang() ) . "" );
 		
 			if ($result) {
 				redirect(
@@ -248,7 +249,7 @@ if ( $_GET['v'] == 4 ) {
 		//FILTRAVIMAS - END
 		foreach ($sqlArticles as $row) {
 			$info[] = [
-				"#"                         		=> '<input type="checkbox" value="' . $row['id'] . '" name="articles_delete[]" class="filled-in" id="articles-delete-' . $row['id'] . '"><label for="articles-delete-' . $row['id'] . '"></label>',
+				"#"                         				=> '<input type="checkbox" value="' . $row['id'] . '" name="articles_delete[]" class="filled-in" id="articles-delete-' . $row['id'] . '"><label for="articles-delete-' . $row['id'] . '"></label>',
 				getLangText('admin', 'article')         	=> "<span style='cursor:pointer;' title='" . getLangText('admin', 'article_author') . ": <b>" . $row['autorius'] . "</b>' >" . input( $row['pav'] ) . "</span>",
 				getLangText('admin', 'article_date')    	=> date( 'Y-m-d', $row['date'] ),
 				getLangText('admin', 'article_preface') 	=> "<span style='cursor:pointer;' title='" . strip_tags( $row['t_text'] ) . "'>" . trimlink( strip_tags( $row['t_text'] ), 55 ) . "</span>",
