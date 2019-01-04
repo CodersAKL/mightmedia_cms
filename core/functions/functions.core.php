@@ -59,7 +59,8 @@ if(! function_exists('header_info')) {
 		if ( isset($pageMetaData['keywords'])  && !empty($pageMetaData['keywords']) ){ 
 			$pageKeywords = $pageMetaData['keywords']; 
 		} else { 
-			$pageKeywords = input( strip_tags( $conf['Keywords'] ) );}
+			$pageKeywords = input( strip_tags( $conf['Keywords'] ) );
+		}
 		echo '
 		<base href="' . adresas() . '"></base>
 		<meta name="generator" content="MightMedia TVS" />
@@ -92,8 +93,7 @@ if(! function_exists('header_info')) {
 				}
 			}
 		</script>';
-		if  (getSettingsValue('translation_status') == 1){
-			if (isset($_SESSION['Translation'])){ echo $_SESSION['Translation'];}
+		if  (getSession('translation_status') == 1){
 			?>
 			<style>
 			 .notifyTranslation{
@@ -497,10 +497,7 @@ if(! function_exists('getLangText')) {
 	function getLangText($group, $key, $new = false, $value = ''){
 		global $lang;
 
-		$sqlCheckTranslation = "SELECT `value` FROM `" . LENTELES_PRIESAGA . "translations` WHERE `group`= " . escape($group) . " and `key`= " . escape($key) . " ORDER BY `last_update` DESC LIMIT 1";
-		if ($textFromDb = mysql_query1($sqlCheckTranslation)){
-			$langTextFromDataBase =  $textFromDb['value'];
-		}
+		
 
 		if (array_key_exists($group, $lang) && (array_key_exists($key, $lang[$group]))){
 			$langText = $lang[$group][$key];
@@ -516,11 +513,18 @@ if(! function_exists('getLangText')) {
 			$needTranslation = '--- undefined ---';
 		}
 
-		if  (getSettingsValue('translation_status') == 1){
+		if  (!empty(getSession('translation_status'))){
+			$sqlCheckTranslation = "SELECT * FROM `" . LENTELES_PRIESAGA . "translations` WHERE `group`= " . escape($group) . " and `key`= " . escape($key) . " and `status` = 0 ORDER BY `last_update` DESC LIMIT 1";
+			if ($textFromDb = mysql_query1($sqlCheckTranslation)){
+				$langTextFromDataBase =  $textFromDb['translation'];
+			}
 			$result = '<span id ="' . $group . '_' . $key . '"  class="mm-translation" onclick="editLanguageText(this,function(event){event.preventDefault()})"';
 			$result .= ' data-group="' . $group . '" data-key="' . $key . '">';
 			if (isset($langTextFromDataBase)){ 
+				($textFromDb['status'] == 0) ? $result .= '<strong style="color:red;">' : '';
+				
 				$result .= $langTextFromDataBase; 
+				($textFromDb['status'] == 0) ? $result .= '</strong>' : '';
 			} else { 
 				$result .= ! is_null($langText) ? $langText : $needTranslation;
 			}
@@ -529,8 +533,6 @@ if(! function_exists('getLangText')) {
 
 			return $result;
 
-		} else if (isset($langTextFromDataBase)) {
-			return $langTextFromDataBase;
 		} else {
 			return $langText;	
 		}
@@ -552,6 +554,36 @@ if (! function_exists('langTextError')){
 			$missingTranslations = json_encode($missingTranslations);
 			fwrite($missingTranslationsFileContent, $missingTranslations);
 			fclose($missingTranslationsFileContent);
+		}
+	}
+}
+
+if (! function_exists('langTextToFile')){
+	function langTextToFile() {
+		$langIdentificator = getSession('lang');
+		$sqlApprovedTranslations = "SELECT `group`,`key`,`translation` FROM `" . LENTELES_PRIESAGA . "translations` WHERE `status` = 1 and `lang`='$langIdentificator'";
+		if ($approvedTranslations = mysql_query1($sqlApprovedTranslations)){
+			$dir = ROOT . 'content/extensions/translation/' . lang();
+			$path = $dir . '/translations.php';
+			if(file_exists($path)){
+				$translations = unserialize(file_get_contents($path));
+			} else {
+				!file_exists($dir) ? mkdir($dir) : null;
+			}
+			if (is_array($translations)){
+				$result = array_merge($approvedTranslations, $translations);
+			} else {
+				$result = $approvedTranslations;
+			}
+
+			$fileName = fopen($path, "w+") or die("Unable to open file!");
+			fwrite($fileName, serialize($result));
+			fclose($fileName);
+			$sqlDeleteApprovedTranslations = "DELETE FROM `" . LENTELES_PRIESAGA . "translations` WHERE `status` = 1";
+			$deleteResult = mysql_query1($sqlDeleteApprovedTranslations);
+			if (!$deleteResult){
+				echo mysqli_error();
+			}
 		}
 	}
 }

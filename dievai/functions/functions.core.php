@@ -152,7 +152,7 @@ function defaultHead()
 	<meta name="msapplication-TileColor" content="#ff440e">
 	<meta name="theme-color" content="#ffffff">
 	<?php
-		if  (getSettingsValue('translation_status') == 1){
+		if  (getSession('translation_status') == 1){
 			if (! empty(getSession('Translation'))){ echo getSession('Translation'); }
 			?>
 			<style>

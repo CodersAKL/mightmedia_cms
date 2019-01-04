@@ -60,15 +60,7 @@ if (! empty($_GET['lang'])) {
 	redirect(url( "?id," . $_GET['id']));
 }
 
-if (! empty(getSession('lang')) && is_file(ROOT . 'content/lang/' . basename(getSession('lang')) . '.php' )) {
-	require ROOT . 'content/lang/' . basename(getSession('lang'), '.php') . '.php';
-	$extensions = getActiveExtensions();
-	foreach ($extensions as $extension) {
-		if (is_file(ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . basename(getSession('lang'), '.php') . '.php')){
-			require ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . basename(getSession('lang'), '.php') . '.php';
-		}
-	}
-}
+
 if ( empty(getSession('username')) || getSession('level') != 1 ) {
 	redirect( ROOT . 'index.php' );
 }

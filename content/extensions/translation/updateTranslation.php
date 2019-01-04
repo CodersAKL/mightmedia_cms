@@ -8,8 +8,14 @@ if (isset($_GET['group']) && isset($_GET['key']) && isset($_GET['newValue'])){
         $key = escape( $_GET['key'] );
         $newValue = escape( urldecode( $_GET['newValue'] ) );
         $updateTime = time();
-        $kalba = lang();
-        $sql = "INSERT INTO  `" . LENTELES_PRIESAGA . "translations` (`group`, `key`, `value`, `lang`, `last_update`) VALUES (" . $group . ", " . $key . ", " . $newValue . ", " . escape( $kalba ) . ", " .  $updateTime . ")";
+        $kalba = escape( lang() );
+        $sqlCheckCombination = "SELECT * FROM `" . LENTELES_PRIESAGA . "translations` WHERE `group`= " . $group . " and  `key` = " . $key ;
+        $combinationResult = mysql_query1($sqlCheckCombination);
+        if (count($combinationResult) == 0 ){
+            $sql = "INSERT INTO  `" . LENTELES_PRIESAGA . "translations` (`group`, `key`, `translation`, `lang`, `last_update`, `status`) VALUES (" . $group . ", " . $key . ", " . $newValue . ", " .  $kalba  . ", " .  $updateTime . ", 0)";
+        } else {
+            $sql = "UPDATE `" . LENTELES_PRIESAGA . "translations` set `translation` = " . $newValue . " WHERE `group` = " . $group . " and `key` = " . $key . " and `lang`= " . $kalba;
+        }
         if ($result = mysql_query1($sql)){
             unset($sql);
             return $newValue;
