@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo getsession('lang'); ?>">
 
 <head>
 	<?php header_info(); ?>
@@ -104,25 +104,30 @@
 				if (isset($strError ) && ! empty($strError)) {
 					klaida("Klaida", $strError);
 				}
+				if ($page_type == 'cms' || $page_type == null){
+					?>
+					<div class="row">
+						<div class="col-md-8">
+							<div class="main main-raised">
+								<?php
+									include 'core/inc/inc.center_blocks.php';
+									include $page . ".php";
+								?>
+							</div>
+						
+						</div>
+						<div class="col-md-4">
+							<div class="">
+								<?php include 'core/inc/inc.left_blocks.php'; ?>
+								<?php include 'core/inc/inc.right_blocks.php'; ?>
+							</div>
+						</div>
+					</div>
+					<?php
+				} elseif ($page_type == 'assembler') {
+					include $page . ".php";
+				}
 			?>
-			<div class="row">
-				<div class="col-md-8">
-					<div class="main main-raised">
-						<?php
-							include 'core/inc/inc.center_blocks.php';
-							include $page . ".php";
-						?>
-					</div>
-				
-				</div>
-				<div class="col-md-4">
-					<div class="">
-						<?php include 'core/inc/inc.left_blocks.php'; ?>
-						<?php include 'core/inc/inc.right_blocks.php'; ?>
-					</div>
-				</div>
-			</div>
-
 		</div>
 	</main>
   	
