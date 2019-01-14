@@ -1,0 +1,79 @@
+{
+    "configurations":
+        {
+            "author":
+                {
+                    "name":"Tadas Putjato",
+                    "e-mail": "tadasPutjato@gmail.com"
+                },
+            "version":"1.0",
+            "bootstrap":"3.0",
+            "type": "form",
+            "title":"registration block",
+            "backEndHtmlFile":"/pageassembler/form_blocks/registration_form/registration-form.php",
+            "frontEndHtml":""
+        },
+    "content":
+        {
+            "0":{
+                "type":"text",
+                "style":"",
+                "name":"Form_name",
+                "value":""
+            },
+            "1":{
+                "type":"text",
+                "style":"",
+                "name":"First_dp_action",
+                "value":""
+            },
+            "2":{
+                "type":"text",
+                "style":"",
+                "name":"Second_dp_action",
+                "value":""
+            },
+            "3":{
+                "type":"text",
+                "style":"",
+                "name":"Third_dp_action",
+                "value":""
+            },
+            "4":{
+                "type":"text",
+                "style":"",
+                "name":"Define_first_input",
+                "value":"name"
+            },
+            "5":{
+                "type":"text",
+                "style":"",
+                "name":"Define_second_input",
+                "value":"surname"
+            },
+            "6":{
+                "type":"text",
+                "style":"",
+                "name":"Define_third_input",
+                "value":"email"
+            },
+            "7":{
+                "type":"text",
+                "style":"",
+                "name":"First_radio_option",
+                "value":"male"
+            },
+            "8":{
+                "type":"text",
+                "style":"",
+                "name":"Second_radio_option",
+                "value":"female"
+            },
+            "9":{
+                "type":"text",
+                "style":"",
+                "name":"Check_box_question",
+                "value":"I have read and agreed terms" 
+            }
+        }
+}

@@ -1,0 +1,49 @@
+{
+    "configurations":
+        {
+            "author":
+                {
+                    "name":"Tadas Putjato",
+                    "e-mail": "tadasPutjato@gmail.com"
+                },
+            "version":"1.0",
+            "bootstrap":"3.0",
+            "type": "list",
+            "title":"12 col list",
+            "backEndHtmlFile":"/pageassembler/list_blocks/12-col-list/12-col-list.php",
+            "frontEndHtml":""
+        },
+    "content":
+        {
+            "0":{
+                "type":"span",
+                "style":"",
+                "name":"Column1",
+                "value":"Your Value"
+            },
+            "1":{
+                "type":"span",
+                "style":"",
+                "name":"Column2",
+                "value":"Your Value"
+            },
+            "2":{
+                "type":"span",
+                "style":"",
+                "name":"Column3",
+                "value":"Your Value"
+            },
+            "3":{
+                "type":"span",
+                "style":"",
+                "name":"Column4",
+                "value":"Your Value"
+            },
+            "4":{
+                "type":"span",
+                "style":"",
+                "name":"Column5",
+                "value":"Your Value"
+            }
+        }
+}

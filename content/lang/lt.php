@@ -385,6 +385,7 @@ $lang['admin']['logs_nologs'] = 'Žurnalas tuščias';
 $lang['admin']['logs_clear'] = 'Išvalyti žurnalą';
 $lang['admin']['logs_delete'] = 'Žurnalo valymas';
 $lang['admin']['logs_deletebyip'] = 'Trinti pagal ip';
+$lang['admin']['title'] = 'Pavadinimas';
 $lang['admin']['page_text'] = 'Puslapio turinys';
 $lang['admin']['page_metatitle'] = 'Meta pavadinimas';
 $lang['admin']['page_metadesc'] = 'Meta aprašymas';
@@ -699,3 +700,13 @@ $lang['blocks']['kalbos.php'] = 'Kalbos pasirinkimas';
 //Kas naujo puslapis
 $lang['whatsnew']['title'] = 'Kas naujo?';
 $lang['whatsnew']['label'] = 'Kelių dienų naujienas norėtumėte peržvelgti?';
+//PageAssembler
+$lang['pageAssembler']['new_page'] = 'Naujas puslapis';
+$lang['pageAssembler']['pageassembler_settings'] = 'Nustatymai';
+$lang['pageAssembler']['pageassembler_list'] = 'Puslapių sąrašas';
+$lang['pageAssembler']['pa-noPage'] = 'Duomenų bazėje tokio puslapio nėra';
+$lang['pageAssembler']['blockAdded'] = 'Blokas pridėtas';
+$lang['pageAssembler']['page_url'] = "Draugiškas url";
+$lang['pageAssembler']['page_settings_saved'] = "Puslapio nustatymai išsaugoti";
+$lang['admin']['pageAssembler'] = 'Puslapių dėlionė';
+$lang['admin']['pageStatus'] = 'Statusas';

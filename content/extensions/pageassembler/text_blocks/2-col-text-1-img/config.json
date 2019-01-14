@@ -1,0 +1,51 @@
+{
+    "configurations":
+        {
+            "author":
+                {
+                    "name":"Jonas Burneika",
+                    "e-mail": "jonas.letai@gmail.com"
+                },
+            "version":"1.0",
+            "bootstrap":"3.0",
+            "type": "text",
+            "title":"2 col text and img",
+            "backEndHtmlFile":"/pageassembler/text_blocks/2-col-text-1-img/2-col-text-1-img.php",
+            "frontEndHtml":""
+        },
+    "content":
+        {
+            "0":{
+                "type":"span",
+                "style":"",
+                "name":"Column1",
+                "value":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula."
+            },
+            "1":{
+                "type":"span",
+                "style":"",
+                "name":"Column2",
+                "value":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat sit amet magna in dignissim. Pellentesque consectetur vestibulum metus, blandit posuere ligula sollicitudin non. Suspendisse eu pharetra sem. Nunc non dapibus enim. Vivamus tincidunt nunc augue, blandit auctor nulla consequat nec. Pellentesque et urna elementum nunc suscipit tristique. Sed vel diam a quam pellentesque consectetur. Curabitur varius aliquam lectus vitae dignissim. Nulla ut justo rutrum, posuere nunc ac, hendrerit libero. Nullam vehicula libero pulvinar malesuada rhoncus. In maximus velit aliquet tortor auctor, vitae posuere urna vehicula."
+            },
+            "2":{
+                "type":"text",
+                "style":"crop",
+                "name":"Image_sorce",
+                "value":"http://www.apimages.com/Images/Ap_Creative_Stock_Header.jpg"
+            },
+            "3":{
+                "type":"text",
+                "style":"",
+                "name":"Image_title",
+                "value":""
+
+            },
+            "4":{
+                "type":"text",
+                "style":"",
+                "name":"Image_alt",
+                "value":""
+            }
+           
+        }
+}

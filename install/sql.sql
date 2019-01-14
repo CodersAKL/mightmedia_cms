@@ -343,6 +343,7 @@ CREATE TABLE `page` (
   `show` enum('Y','N') NOT NULL DEFAULT 'Y',
   `teises` varchar(255) NOT NULL DEFAULT 'N;',
   `parent` int(150) NOT NULL DEFAULT '0',
+  `builder` text DEFAULT 'cms',
   `metatitle` text DEFAULT NULL,
   `metadesc` text DEFAULT NULL,
   `metakeywords` text DEFAULT NULL

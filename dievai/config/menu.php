@@ -4,6 +4,7 @@ $adminDir = basename(dirname(__DIR__));
 $adminMenu = [
     'dashboard'     => $adminDir . '/pages/dashboard.php',
     'configuration' => $adminDir . '/pages/configuration.php', 
+    'pageAssembler' => $adminDir . '/pages/pageAssembler.php',
     'pages'         => $adminDir . '/pages/meniu.php',
     'blocks'        => $adminDir . '/pages/blocks.php',
     'news'          => $adminDir . '/pages/naujienos.php',

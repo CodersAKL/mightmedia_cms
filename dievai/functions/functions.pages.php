@@ -44,9 +44,26 @@ function build_menu_admin($data, $id = 0) {
 	$liPage = '<ol class="dd-list">';
 
 	foreach ($data[$id] as $row) {
-		$actions = '<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $row['id'] ) . '" style="align:right" onClick="return confirm(\'' . getLangText('system', 'delete_confirm') . '\')"><img src="' . ROOT . 'core/assets/images/icons/cross.png" title="' . getLangText('admin', 'delete') . '" align="right" /></a>
-		<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $row['id'] ) . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/wrench.png" title="' . getLangText('admin', 'edit') . '" align="right" /></a>
-		<a href="' . url( '?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $row['id'] ) . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/pencil.png" title="' . getLangText('admin', 'page_text') . '" align="right" /></a>';
+		if ($row['builder'] == 'cms') {
+			$pageEditUrl = url('?id,' . $url['id'] . ';a,' . $url['a'] . ';e,' . $row['id']);
+			$pageDeleteUrl = url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $row['id']);
+			$pageSettingsUrl = url('?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $row['id']);
+		} else {
+			$pageEditUrl = url('?id,' . $url['id'] . ';a,pageAssembler;c,edit;pageId,' . $row['file']);
+			$pageSettingsUrl = url('?id,' . $url['id'] . ';a,pageAssembler;c,settings;pageId,' . $row['file']);
+			unset($pageDeleteUrl);
+		}
+		$actions = '';
+		if ( isset($pageEditUrl) ){
+			$actions .= '<a href="' . $pageEditUrl . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/pencil.png" title="' . getLangText('admin', 'page_text') . '" align="right" /></a>';
+		}
+        if (isset($pageDeleteUrl)) {
+            $actions .= '<a href="' . $pageDeleteUrl . '" style="align:right" onClick="return confirm(\'' . getLangText('system', 'delete_confirm') . '\')"><img src="' . ROOT . 'core/assets/images/icons/cross.png" title="' . getLangText('admin', 'delete') . '" align="right" /></a>';
+        }
+        if (isset($pageSettingsUrl)) {
+            $actions .= '<a href="' . $pageSettingsUrl . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/wrench.png" title="' . getLangText('admin', 'edit') . '" align="right" /></a>';
+        }
+		
 		$content =	'';
 
 		if (isset($data[$row['id']])) {
