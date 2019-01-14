@@ -104,7 +104,8 @@
 				if (isset($strError ) && ! empty($strError)) {
 					klaida("Klaida", $strError);
 				}
-				if ($page_type == 'cms' || $page_type == null){
+				
+				if (empty($page_type) || (! empty($page_type) && $page_type == 'cms')){
 					?>
 					<div class="row">
 						<div class="col-md-8">
