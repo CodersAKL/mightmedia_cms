@@ -7,7 +7,7 @@ class Form
 		return "\n<table style=\"width: 100%\" border=\"0\" class=\"form_table\">\n\t<tr>\n\t\t<td><fieldset style=\"border:silver solid 1px\"><legend style=\"color: silver\">$pav</legend>$text</fieldset></td>\n\t</tr>\n</table>\n";
 	}
 
-	public function form($inputs = []) {
+	public function render($inputs = []) {
 
 		if ( is_array( $inputs ) ) {
 			$return = '';

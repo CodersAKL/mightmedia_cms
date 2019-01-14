@@ -114,7 +114,7 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 	];
 
 	$formClass = new Form($blockCreateForm);	
-	lentele(getLangText('admin', 'panel_new'), $formClass->form());
+	lentele(getLangText('admin', 'panel_new'), $formClass->render());
 
 } elseif (isset( $url['n'] ) && $url['n'] == 1 || isset( $url['r'] ) && isnum( $url['r'] ) && $url['r'] > 0 ) {
 	if (isset($_POST['action'])) {
@@ -293,7 +293,7 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 
 		$formClass = new Form($blockForm);
 		$title = (! empty($block['panel']) ? $block['panel'] : getLangText('admin', 'panel_new'));
-		lentele($title, $formClass->form());
+		lentele($title, $formClass->render());
 	}
 
 } elseif ( isset( $url['e'] ) && isnum( $url['e'] ) && $url['e'] > 0 ) { //Redaguojam panelės turinį
@@ -382,7 +382,7 @@ HTML;
 				);
 
 				$formClass = new Form($panele);	
-				lentele($sql['panel'], $formClass->form());
+				lentele($sql['panel'], $formClass->render());
 			} else {
 				notifyMsg(
 					[

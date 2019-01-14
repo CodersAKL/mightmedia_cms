@@ -57,7 +57,7 @@ if ( ar_admin( 'com' ) ) {
 
 			include_once config('class', 'dir') . 'class.form.php'; // Formu iš masyvo generavimas
 			$form = new Form(); // Sukuriam formos objektą
-			lentele( getLangText('sb', 'edit'), $form->form( $form_array ) );
+			lentele( getLangText('sb', 'edit'), $form->render( $form_array ) );
 
 		} else {
 			$msg = trim( $_POST['msg'] ) . "\n[sm] [i] " . getLangText('sb',  'editedby') . ": " . getSession('username') . " [/i] [/sm]";

@@ -78,4 +78,4 @@ $links = array( "Form"                        => array( "action" => url( "?id," 
                    getLangText('admin', 'links_about') => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'apie' ) ),
                    " "                           => array( "type" => "submit", "name" => "action", "value" => getLangText('admin', 'links_create') ) );
 
-lentele( getLangText('admin', 'links_create'), $bla->form( $links ) );
+lentele( getLangText('admin', 'links_create'), $bla->render( $links ) );

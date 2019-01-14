@@ -13,7 +13,7 @@ $form = array(
 	"Kelių dienų naujienas norėtumėte peržvelgti?:" => array( "type" => "select", "value" => $dienos, "name" => "dienos", "class" => "input", "selected" => ( isset( $_POST['dienos'] ) ? (int)$_POST['dienos'] : 7 ) ),
 	" "                                             => array( "type" => "submit", "name" => "ziureti", "value" => "Žiūrėti" )
 );
-lentele( 'Kas naujo?', $bla->form( $form ) );
+lentele( 'Kas naujo?', $bla->render( $form ) );
 /*if (isset($_POST['dienos'])) {*/
 if ( isset( $_POST['dienos'] ) ) {
 	$nuo = time() - 24 * 3600 * (int)$_POST['dienos'];

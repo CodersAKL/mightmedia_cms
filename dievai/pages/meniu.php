@@ -248,7 +248,7 @@ if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
         ];
         
         $formClass = new Form($pageForm);
-        lentele(getLangText('admin', 'page_select'), $formClass->form()); ?>
+        lentele(getLangText('admin', 'page_select'), $formClass->render()); ?>
 		<script>
 			var pageLinkEl = document.querySelector('.page-link');
 			var pageFileEl = document.querySelector('.page-file');
@@ -297,7 +297,7 @@ if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
     ];
 
     $formClass = new Form($pageForm);
-    lentele(getLangText('admin', 'page_create'), $formClass->form());
+    lentele(getLangText('admin', 'page_create'), $formClass->render());
 } elseif (isset($url['n']) && $url['n'] == 3) {
     //tree
     $treeData = [];
@@ -432,7 +432,7 @@ elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
         }
         
         $formClass = new Form($psl);
-        lentele($sql['pavadinimas'], $formClass->form());
+        lentele($sql['pavadinimas'], $formClass->render());
     }
 }
 
@@ -519,7 +519,7 @@ lentele($page_pavadinimas,$text);
             ];
 
             $formClass = new Form($puslapis);
-            lentele($sql['pavadinimas'], $formClass->form());
+            lentele($sql['pavadinimas'], $formClass->render());
         } else {
             notifyMsg(
                 [

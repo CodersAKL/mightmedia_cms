@@ -287,7 +287,7 @@ if (! emoty(getSession('id'))) {
 	                         getLangText('system', 'about') . ":"  => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
 		//"Paveiksliukas:"=>array("type"=>"text","value"=>(isset($extra['foto']))?input($extra['foto']):'http://',"name"=>"Pav","class"=>"input"),
 	                         ""                                  => array( "type" => "submit", "name" => "action", "value" => getLangText('gallery', 'submit')) );
-	lentele(getLangText('gallery', 'submiting'), $bla->form($form));
+	lentele(getLangText('gallery', 'submiting'), $bla->render($form));
 } else {
 	klaida(getLangText('system', 'warning'), getLangText('system', 'pleaselogin'));
 }

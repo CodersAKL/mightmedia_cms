@@ -242,5 +242,5 @@ if ( $_GET['v'] == 4 ) {
 
 	// Verčiam msayvą į formą
 	$formClass = new Form($faqForm);
-	lentele(getLangText('faq', 'edit'), $formClass->form());
+	lentele(getLangText('faq', 'edit'), $formClass->render());
 }

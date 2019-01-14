@@ -254,7 +254,7 @@ if (isset($url['r']) && isset($url['f']) || isset($url['f']) && (int)$url['f'] =
 	];
 	
 	$formClass = new Form($forumForm);
-	lentele($editOrCreate, $formClass->form());
+	lentele($editOrCreate, $formClass->render());
 }
 
 if ( isset( $url['f'] ) ) {
@@ -304,7 +304,7 @@ if ( isset( $url['f'] ) ) {
 		];
 		
 		$formClass = new Form($categoryForm);
-		lentele(getLangText('system', 'createcategory'), $formClass->form());
+		lentele(getLangText('system', 'createcategory'), $formClass->render());
 	}
 	//Categories list/edit
 	if ( (int)$url['f'] == 2 && !isset( $_GET['r'] ) ) {
@@ -370,7 +370,7 @@ if ( isset( $url['f'] ) ) {
 			];
 			
 			$formClass = new Form($categoryForm);
-			lentele(getLangText('system', 'editcategory'), $formClass->form());
+			lentele(getLangText('system', 'editcategory'), $formClass->render());
 			
 			$li      	= ! empty($cats) ? buldForumMenu($cats) : '';
 			$pageMenu 	= '<div class="dd nestable-with-handle">' . $li . '</div>';
@@ -484,7 +484,7 @@ if ( isset( $url['f'] ) ) {
 			];
 
 			$formClass = new Form($parentCatForm);
-			lentele(getLangText('admin', 'forum_editsub'), $formClass->form());
+			lentele(getLangText('admin', 'forum_editsub'), $formClass->render());
 		} else {
 			klaida( getLangText('system', 'warning'), getLangText('system', 'nocategories') );
 		}

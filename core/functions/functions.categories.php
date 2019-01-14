@@ -305,7 +305,7 @@ function category( $kieno, $leidimas = FALSE ) {
 		$kategorijos[' '] = array( 'type' => 'hidden', 'name' => 'Kategorijos_id', 'value' => ( isset( $extra['id'] ) ? input( $extra['id'] ) : '' ) );
 		
 		$formClass = new Form($kategorijos);	
-		lentele(getLangText('system', 'categories'), $formClass->form());
+		lentele(getLangText('system', 'categories'), $formClass->render());
 	} elseif ( $_GET['v'] == 3 ) {
 		if ( isset( $kategorijoss ) ) {
 			$kategorijos_redagavimas = array(
@@ -316,7 +316,7 @@ function category( $kieno, $leidimas = FALSE ) {
 			);
 
 			$formClass = new Form($kategorijos_redagavimas);	
-			lentele(getLangText('system', 'editcategory'), $formClass->form());
+			lentele(getLangText('system', 'editcategory'), $formClass->render());
 		} else {
 			klaida( getLangText('system', 'warning'), getLangText('system', 'nocategories') );
 		}

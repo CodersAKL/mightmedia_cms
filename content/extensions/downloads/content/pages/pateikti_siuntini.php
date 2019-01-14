@@ -100,7 +100,7 @@ if (! empty(getSession('id'))) {
 	                getLangText('system', 'about') . ":"         => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
 	                ""                                   => array( "type" => "submit", "name" => "action", "value" => getLangText('admin', 'download_Create')), );
 
-	lentele( getLangText('admin', 'download_Create'), $bla->form( $forma ) );
+	lentele( getLangText('admin', 'download_Create'), $bla->render( $forma ) );
 
 } else {
 	klaida( getLangText('system', 'warning'), getLangText('system', 'pleaselogin') );

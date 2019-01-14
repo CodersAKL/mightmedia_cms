@@ -181,7 +181,7 @@ if ($sql = mysql_query1($sqlQuery)) {
 	];
 	
 	$formClass = new Form($nustatymai);	
-	lentele(getLangText('admin', 'pm_deleteto'), $formClass->form());
+	lentele(getLangText('admin', 'pm_deleteto'), $formClass->render());
 
 	unset( $nustatymai, $select, $sql );
 }
@@ -214,7 +214,7 @@ if ( sizeof( $sql ) > 0 ) {
 	];
 	
 	$formClass = new Form($nustatymai);	
-	lentele(getLangText('admin', 'pm_deletefrom'), $formClass->form());
+	lentele(getLangText('admin', 'pm_deletefrom'), $formClass->render());
 
 	unset($nustatymai, $select, $sql);
 }

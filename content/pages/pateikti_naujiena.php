@@ -51,4 +51,4 @@ $new = array(
 	getLangText('admin', 'news_more') . ":" => array( "type" => "string", "value" => editorius( 'tinymce', 'standartinis', 'naujiena' ) ),
 	""                               => array( "type" => "submit", "name" => "action", "value" => getLangText('news', 'submit') )
 );
-lentele(getLangText('news', 'submiting'), $bla->form( $new ) );
+lentele(getLangText('news', 'submiting'), $bla->render( $new ) );

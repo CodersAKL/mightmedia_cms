@@ -338,7 +338,7 @@ if ( $_GET['v'] == 7 || isset( $url['h'] ) ) {
 	}
 
 	$formClass = new Form($articleForm);	
-	lentele(getLangText('admin', 'article_create'), $formClass->form());
+	lentele(getLangText('admin', 'article_create'), $formClass->render());
 
 } elseif ( $_GET['v'] == 6 ) {
 	$viso = kiek( "straipsniai", "WHERE `rodoma`='NE' AND `lang` = " . escape( lang() ));

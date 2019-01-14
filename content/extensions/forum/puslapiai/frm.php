@@ -340,7 +340,7 @@ $(\"#perveiza\").empty().append($(data));
 					"     "                   => array( "type" => "hidden", "name" => "action", "value" => ( ( !empty( $extra ) ) ? "f_update" : "f_send" ) ),
 					""                        => array( "type" => "string", "value"=> "<input type=\"button\" class=\"perveiza\" value=\"" . getLangText('forum',  'perview') . "\" /> <input type=\"submit\" class=\"submit\" value=\"" . ( ( !empty( $extra ) ) ? getLangText('admin', 'edit') : getLangText('forum', 'submit') ) . "\" />" ) );
 
-				lentele( getLangText('forum', 'newpost'), $bla->form( $form ) );
+				lentele( getLangText('forum', 'newpost'), $bla->render( $form ) );
 			}
 		}
 	} else {
@@ -426,7 +426,7 @@ elseif ( (int)$kid && (int)$kid && (int)$kid > 0 ) {
 				"name"  => "sub",
 				"value" => getLangText('admin',  'edit')  )
 		);
-		lentele( $tsql['pav'], $bla->form( $form ) );
+		lentele( $tsql['pav'], $bla->render( $form ) );
 
 		if ( isset( $_POST['name'] ) ) {
 			$new    = $_POST['name'];
@@ -547,6 +547,6 @@ echo "<script type=\"text/javascript\">$(document).ready(function() {
 		);
 
 		addtotitle( getLangText('forum', 'newtopic') );
-		lentele( getLangText('forum', 'newtopic'), $bla->form( $form ) );
+		lentele( getLangText('forum', 'newtopic'), $bla->render( $form ) );
 	}
 }

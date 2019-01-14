@@ -45,4 +45,4 @@ $form = array( "Form"                     => array( "action" => url( "?id," . $c
                getLangText('reg', 'email') . ":" => array( "type" => "text", "value" => ( isset( $email ) ? input( $email ) : "" ), "name" => "email", "class" => "input" ),
                kodas()                    => array( "type"=> "text", "name"=> "kode", "class"=> "chapter" ),
                " "                        => array( "type" => "submit", "name" => "submit", "value" => getLangText('news', 'Order/Unorder') ) );
-lentele( $page_pavadinimas, $formClass->form( $form ) );
+lentele( $page_pavadinimas, $formClass->render( $form ) );

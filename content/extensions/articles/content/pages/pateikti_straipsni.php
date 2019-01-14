@@ -66,4 +66,4 @@ $straipsnis = array( "Form"                           => array( "action" => url(
                      getLangText('system', 'category') . ":" => array( "type" => "select", "value" => $categories, "name" => "category", "class" => "input", "class"=> "input" ),
                      getLangText('admin', 'article') . ":"   => array( "type" => "string", "value" => editorius( 'jquery', 'standartinis', 'str' ) ),
                      ""                               => array( "type" => "submit", "name" => "action", "value" => getLangText('article', 'submit')), );
-lentele( getLangText('article', 'submiting'), $bla->form( $straipsnis ) );
+lentele( getLangText('article', 'submiting'), $bla->render( $straipsnis ) );

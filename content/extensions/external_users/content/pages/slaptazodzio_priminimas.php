@@ -99,6 +99,6 @@ if ( isset( $error ) ) {
 		" \r\r"                      => array( "type" => "hidden", "name" => "action", "value" => "siusti" )
 	);
 
-	lentele( getLangText('pass', 'remain'), $bla->form( $forma ) );
+	lentele( getLangText('pass', 'remain'), $bla->render( $forma ) );
 	unset( $text );
 }
