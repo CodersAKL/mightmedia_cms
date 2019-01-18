@@ -139,17 +139,18 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 				$align = 'L';
 			}
 
-			if(! empty($_POST['show']) && $_POST['show'] === 'Y') {
+			if(! empty($_POST['show']) && $_POST['show'] == 1) {
 				$show = input($_POST['show']);
 			} else {
-				$show = 'N';
+				$show = 0;
 			}
 
 			$teisess = serialize( ( isset( $_POST['Teises'] ) ? $_POST['Teises'] : 0 ) );
 
 			//create
 			if($_POST['action'] == getLangText('admin', 'panel_create')) {
-				$sql     = "INSERT INTO `" . LENTELES_PRIESAGA . "panel` (`rodyti`, `panel`, `file`, `place`, `align`, `show`, `teises`, `lang`) VALUES (" . escape( $rodyti ) . ", " . escape( $panel ) . ", " . escape( $file ) . ", '0', " . escape( $align ) . ", " . escape( $show ) . ", " . escape( $teisess ) . ", " . escape( lang() ) . ")";
+				$sql     = "INSERT INTO `" . LENTELES_PRIESAGA . "panel` (`rodyti`, `panel`, `file`, `place`, `align`, `show`, `teises`, `lang`) 
+				VALUES (" . escape( $rodyti ) . ", " . escape( $panel ) . ", " . escape( $file ) . ", '0', " . escape( $align ) . ", " .  $show  . ", " . escape( $teisess ) . ", " . escape( lang() ) . ")";
 				mysql_query1( $sql );
 	
 				delete_cache( "SELECT * FROM `" . LENTELES_PRIESAGA . "panel` WHERE `align`='R' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
@@ -268,10 +269,10 @@ if ( isset( $url['n'] ) && $url['n'] == 2 ) {
 			
 			getLangText('admin', 'panel_showtitle')		=> [
 				"type"  	=> "switch",
-				"value" 	=> 'Y',
+				"value" 	=> 1,
 				"name"  	=> "show",
 				'form_line'	=> 'form-not-line',
-				'checked'	=> (! empty($block['show']) ? true : false)
+				'checked'	=> ( $block['show'] == 1 ? true : false)
 			],
 
 			getLangText('admin', 'panel_showfor') . $info	=> [

@@ -337,20 +337,25 @@ CREATE TABLE `page` (
   `lang` varchar(3) NOT NULL DEFAULT 'lt' COMMENT 'Language',
   `file` varchar(255) DEFAULT NULL,
   `place` int(11) DEFAULT NULL,
-  `show` enum('Y','N') NOT NULL DEFAULT 'Y',
+  `show` int(1) DEFAULT '1',
   `teises` varchar(255) NOT NULL DEFAULT 'N;',
-  `parent` int(150) NOT NULL DEFAULT '0'
+  `parent` int(150) NOT NULL DEFAULT '0',
+  `builder` text DEFAULT 'cms',
+  `metatitle` text DEFAULT NULL,
+  `metadesc` text DEFAULT NULL,
+  `metakeywords` text DEFAULT NULL,
+  `url` text DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `page`
 --
 
-INSERT INTO `page` (`id`, `pavadinimas`, `lang`, `file`, `place`, `show`, `teises`, `parent`) VALUES
-(1, 'Naujienos', 'lt', 'content/pages/naujienos.php', 1, 'Y', 'N;', 0),
-(2, 'Apie', 'lt', 'content/pages/apie.php', 5, 'Y', 'N;', 0),
-(3, 'Paieška', 'lt', 'content/pages/search.php', 6, 'Y', 'N;', 0),
-(4, 'Kontaktai', 'lt', 'content/pages/kontaktas.php', 6, 'Y', 'N;', 0);
+INSERT INTO `page` (`id`, `pavadinimas`, `lang`, `file`, `place`, `show`, `teises`, `parent`, `builder`,`metatitle`,`metadesc`,`metakeywords`,`url`) VALUES
+(1, 'Naujienos', 'lt', 'content/pages/naujienos.php', 1, 1, 'N;', 0, 'cms','','','','Naujienos'),
+(2, 'Apie', 'lt', 'content/pages/apie.php', 5, 1, 'N;', 0, 'cms','','','','Apie'),
+(3, 'Paieška', 'lt', 'content/pages/search.php', 6, 1, 'N;', 0, 'cms','','','','Paieška'),
+(4, 'Kontaktai', 'lt', 'content/pages/kontaktas.php', 6, 1, 'N;', 0, 'cms','','','','Kontaktai');
 
 -- --------------------------------------------------------
 
@@ -366,7 +371,7 @@ CREATE TABLE `panel` (
   `place` int(11) DEFAULT NULL,
   `align` enum('R','L','C') NOT NULL DEFAULT 'C',
   `rodyti` varchar(4) DEFAULT NULL,
-  `show` enum('Y','N') NOT NULL DEFAULT 'Y',
+  `show` int(1) DEFAULT '1',
   `teises` varchar(255) NOT NULL DEFAULT 'N;'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 

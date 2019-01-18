@@ -10,7 +10,7 @@ unset( $data, $res );
  * @$Date: 2012-06-13 19:05:30 +0300 (Tr, 13 Bir 2012) $
  **/
 
-$res = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`='Y' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
+$res = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`= 1 AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC" );
 $data = [];
 if ( sizeof( $res ) > 0 ) {
 	foreach ( $res as $row ) {

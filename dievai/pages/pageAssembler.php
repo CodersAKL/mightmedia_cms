@@ -9,11 +9,7 @@ if (!defined("OK")) {
 }
 
 if (BUTTONS_BLOCK) {
-    lentele($lang['pageAssembler']['pageassembler'], buttonsMenu(buttons('pageAssembler')));
-}
-
-if (pageAssemblerDBexist("pa_page_settings")) {
-    //return error notifyMsg
+    lentele(getLangText('pageAssembler','pageassembler'), buttonsMenu(buttons('pageAssembler')));
 }
 
 if (isset($url['c'])) {
@@ -67,13 +63,13 @@ if (isset($url['c'])) {
                 $settings[""] = [
                     "type" 		=> "submit",
                     "name" 		=> "addblock",
-                    "value" 	=> $lang['admin']['save'],
+                    "value" 	=> getLangText('admin','save'),
                     'form_line'	=> 'form-not-line',
                 ];
             
            
                 $formClass = new Form($settings);
-                lentele($lang['pageAssembler']['new_page'], $formClass->form());
+                lentele(getLangText('pageAssembler','new_page'), $formClass->form());
             }
 
             if (isset($_POST['addblock'])) {
@@ -94,7 +90,7 @@ if (isset($url['c'])) {
                     "header",
                     [
                         'type'		=> 'success',
-                        'message' 	=> $lang['pageAssembler']['blockAdded']
+                        'message' 	=> getLangText('pageAssembler','blockAdded')
                     ]
                 );
             }
@@ -209,18 +205,18 @@ if (isset($url['c'])) {
         echo '<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">';
             echo '<div class="card">';
                 echo '<div class="header">';
-                    echo '<h2>' . $lang['pageAssembler']['pageassembler_list'] . '</h2>';
+                    echo '<h2>' . getLangText('pageAssembler','pageassembler_list') . '</h2>';
                 echo '</div>';
                 echo '<div class="body clearfix">';
                     echo '<div>';
-                        $selectSql = mysql_query1("SELECT *FROM `" . LENTELES_PRIESAGA . "pa_page_settings`");
+                        $selectSql = mysql_query1("SELECT *FROM `" . LENTELES_PRIESAGA . "page`");
                         echo '<ul>';
                         foreach ($selectSql as $irasas) {
                             $content = '
-                                <a href="' . url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $irasas['page_id']) . '" style="align:right" onClick="return confirm(\'' . $lang['admin']['delete'] . '?\')"><img src="' . ROOT . 'core/assets/images/icons/cross.png" title="' . $lang['admin']['delete'] . '" align="right" /></a>
-                                <a href="' . url('?id,' . $url['id'] . ';a,' . $url['a'] . ';c,settings;pageId,' . $irasas['page_id']) . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/wrench.png" title="' . $lang['pageAssembler']['pageassembler_settings'] . '" align="right" /></a>
-                                <a href="' . url('?id,' . $url['id'] . ';a,' . $url['a'] . ';c,edit;pageId,' . $irasas['page_id']) . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/pencil.png" title="' . $lang['admin']['edit'] . '" align="right" /></a>
-                                <a href="http://localhost:8080/mightmedia/' . $irasas['page_id'] . '" target="_blank">' . $irasas['title'] . '</a>';
+                                <a href="' . url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $irasas['id']) . '" style="align:right" onClick="return confirm(\'' . getLangText('admin','delete') . '?\')"><img src="' . ROOT . 'core/assets/images/icons/cross.png" title="' . getLangText('admin','delete') . '" align="right" /></a>
+                                <a href="' . url('?id,' . $url['id'] . ';a,' . $url['a'] . ';c,settings;pageId,' . $irasas['id']) . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/wrench.png" title="' . getLangText('pageAssembler','pageassembler_settings') . '" align="right" /></a>
+                                <a href="' . url('?id,' . $url['id'] . ';a,' . $url['a'] . ';c,edit;pageId,' . $irasas['id']) . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/pencil.png" title="' . getLangText('admin','edit') . '" align="right" /></a>
+                                <a href="http://localhost:8080/mightmedia/' . $irasas['id'] . '" target="_blank">' . $irasas['pavadinimas'] . '</a>';
                             echo '<li>' . $content . '</li>';
                         }
                         echo '</ul>';
@@ -231,7 +227,7 @@ if (isset($url['c'])) {
 
         if (isset($_POST['delete'])) {
             $page_id =  $irasas['page_id'];
-            $irasoTrinimas = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE page_id = $page_id");
+            $irasoTrinimas = mysql_query1("DELETE FROM `" . LENTELES_PRIESAGA . "page` WHERE id = $page_id");
         }
     }
     if ($url['c'] == 'settings') {
@@ -244,33 +240,34 @@ if (isset($url['c'])) {
             $metaKeywords = escape($_POST['metaKeywords']);
             $friendlyUrl = escape($_POST['fUrl']);
             $statusID = (int)$_POST['rodymas'];
-            $sqlCheckPageIDstatus = "SELECT * FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE page_id = " . escape($pageId);
+            if (isset($_POST['page_id'])){
+                $sqlCheckPageIDstatus = "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE id = " . escape($pageId);
             $result = mysql_query1($sqlCheckPageIDstatus);
+            } else {
+                $result = null;
+            }
             if (count($result) == 0) {
                 $sqlPageSettings =
-                    "INSERT INTO `" . LENTELES_PRIESAGA . "pa_page_settings` (`title`,`meta_title`,`meta_desc`,`meta_keywords`,`status_id`,`friendly_url`, `lang`)
-                     VALUES (" . $title . "," . $metaTitle . "," . $metaDescription . "," . $metaKeywords . "," . $statusID . "," . $friendlyUrl . "," . $langText . ")";
+                    "INSERT INTO `" . LENTELES_PRIESAGA . "page` (`pavadinimas`, `metatitle`, `metadesc`, `metakeywords`, `show`, `url`, `lang`, `builder`)
+                     VALUES (" . $title . "," . $metaTitle . "," . $metaDescription . "," . $metaKeywords . "," . $statusID . "," . $friendlyUrl . "," . $langText . ", 'assembler')";
             } else {
-                $sqlPageSettings ="UPDATE `" . LENTELES_PRIESAGA . "pa_page_settings` SET title = $title, meta_title = $metaTitle, meta_desc = $metaDescription, 
-                 meta_keywords = $metaKeywords, status_id = '$statusID', friendly_url = $friendlyUrl , lang = $langText
-                 WHERE page_id = $pageId";
-                $statusID = $statusID == 1 ? 'Y': 'N';
-                $sqlPagesList = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `show` = '$statusID', `pavadinimas`= $title WHERE `file` = $pageId";
-                mysql_query1($sqlPagesList);
+                $sqlPageSettings ="UPDATE `" . LENTELES_PRIESAGA . "page` SET `title` = $title, `meta_title` = $metaTitle, `meta_desc` = $metaDescription, 
+                 `meta_keywords` = $metaKeywords, `show` = $statusID, `url` = $friendlyUrl , `lang` = $langText WHERE `id` = $pageId";
             }
+            echo $sqlPageSettings;
             $result = mysql_query1($sqlPageSettings);
            
             if ($result) {
                 if (!isset($_POST['page_id'])) {
-                  /*  redirect(
+                    redirect(
                         url("?id," . $url['id'] . ";a," . $url['a'] . ";c,list"),
                         "header",
                         [
                             'type'		=> 'success',
-                            'message' 	=> $lang['pageAssembler']['page_settings_saved']
+                            'message' 	=> getLangText('pageAssembler','page_settings_saved')
                         ]
                     );
-                    */
+                    
                 } else {
                     $pageId = $prisijungimas_prie_mysql->insert_id;
                     if ($statusID == 1){
@@ -278,26 +275,26 @@ if (isset($url['c'])) {
                         $placeId = $placeId[0]['max']+1;
                         $sqlPagesList =
                         "INSERT INTO `" . LENTELES_PRIESAGA . "page` (`pavadinimas`,`file`, `lang`,`show`, `teises`, `parent`, `builder`, `metatitle`,`metadesc`,`metakeywords`, `place`)
-                         VALUES (" . $title . "," . $pageId . "," . $langText . ", 'Y','N;','0','assembler'," . $metaTitle . "," . $metaDescription . ", " . $metaKeywords . ", " . $placeId . ")";
+                         VALUES (" . $title . "," . $pageId . "," . $langText . ", " . $statusID . " ,'N;','0','assembler'," . $metaTitle . "," . $metaDescription . ", " . $metaKeywords . ", " . $placeId . ")";
                         
                         mysql_query1($sqlPagesList);
                     }
-                  /*
+                  
                     redirect(
                         url("?id," . $url['id'] . ";a," . $url['a'] . ";c,edit;pageId," . $pageId),
                         "header",
                         [
                             'type'		=> 'success',
-                            'message' 	=> $lang['pageAssembler']['page_settings_saved']
+                            'message' 	=> getLangText('pageAssembler','page_settings_saved')
                         ]
                     );
-                    */
+                    
                 }
             }
         }
         if (isset($_GET['pageId'])) {
             $pageId = $_GET['pageId'];
-            $sqlPageSettings = "SELECT * FROM `" . LENTELES_PRIESAGA . "pa_page_settings` WHERE page_id = " . escape($pageId);
+            $sqlPageSettings = "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE id = " . escape($pageId);
             $pageSettings = mysql_query1($sqlPageSettings);
             $pageSettings = $pageSettings[0];
         } else {
@@ -313,26 +310,26 @@ if (isset($url['c'])) {
                "page_Id" => [
                 "type" 	=> "hidden",
                 "name" 	=> "page_id",
-                "value" =>  input($pageSettings['page_id'])
+                "value" =>  input($pageSettings['id'])
             ],
             getLangText('admin','title')  => [
                 "type"  => "text",
-                "value" => input($pageSettings['title']),
+                "value" => input($pageSettings['pavadinimas']),
                 "name"  => "Pavadinimas"
             ],
             getLangText('admin','page_metatitle') => [
                 "type"  => "text",
-                "value" => input($pageSettings['meta_title']),
+                "value" => input($pageSettings['metatitle']),
                 "name"  => "metaPavadinimas"
             ],
             getLangText('admin','page_metadesc') => [
                 "type"  => "text",
-                "value" => input($pageSettings['meta_desc']),
+                "value" => input($pageSettings['metadesc']),
                 "name"  => "metaAprasymas"
             ],
             getLangText('admin','page_metakeywords')  => [
                 "type"  => "text",
-                "value" => input($pageSettings['meta_keywords']),
+                "value" => input($pageSettings['metakeywords']),
                 "name"  => "metaKeywords"
             ],
             getLangText('admin','pageStatus') => [
@@ -340,11 +337,11 @@ if (isset($url['c'])) {
                 "value" 	=> '1',
                 'name'		=> 'rodymas',
                 'form_line'	=> 'form-not-line',
-                'checked' 	=> (input($pageSettings['status_id']) == 1 ? true : false),
+                'checked' 	=> (input($pageSettings['show']) == 1 ? true : false),
             ],
             getLangText('pageAssembler','page_url') => [
                 "type"      => "text",
-                "value"     =>  $pageSettings['friendly_url'],
+                "value"     =>  $pageSettings['url'],
                 "name"      => "fUrl"
             ],
             ""              => [

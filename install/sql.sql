@@ -340,25 +340,25 @@ CREATE TABLE `page` (
   `lang` varchar(3) NOT NULL DEFAULT 'lt' COMMENT 'Language',
   `file` varchar(255) DEFAULT NULL,
   `place` int(11) DEFAULT NULL,
-  `show` enum('Y','N') NOT NULL DEFAULT 'Y',
+  `show` int(1) DEFAULT '1',
   `teises` varchar(255) NOT NULL DEFAULT 'N;',
   `parent` int(150) NOT NULL DEFAULT '0',
   `builder` text DEFAULT 'cms',
   `metatitle` text DEFAULT NULL,
   `metadesc` text DEFAULT NULL,
-  `metakeywords` text DEFAULT NULL
-  
+  `metakeywords` text DEFAULT NULL,
+  `url` text DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `page`
 --
 
-INSERT INTO `page` (`id`, `pavadinimas`, `lang`, `file`, `place`, `show`, `teises`, `parent`) VALUES
-(1, 'Naujienos', 'lt', 'content/pages/naujienos.php', 1, 'Y', 'N;', 0),
-(2, 'Apie', 'lt', 'content/pages/apie.php', 5, 'Y', 'N;', 0),
-(3, 'Paieška', 'lt', 'content/pages/search.php', 6, 'Y', 'N;', 0),
-(4, 'Kontaktai', 'lt', 'content/pages/kontaktas.php', 6, 'Y', 'N;', 0);
+INSERT INTO `page` (`id`, `pavadinimas`, `lang`, `file`, `place`, `show`, `teises`, `parent`, `builder`,`metatitle`,`metadesc`,`metakeywords`,`url`) VALUES
+(1, 'Naujienos', 'lt', 'content/pages/naujienos.php', 1, 1, 'N;', 0, 'cms','','','','Naujienos'),
+(2, 'Apie', 'lt', 'content/pages/apie.php', 5, 1, 'N;', 0, 'cms','','','','Apie'),
+(3, 'Paieška', 'lt', 'content/pages/search.php', 6, 1, 'N;', 0, 'cms','','','','Paieška'),
+(4, 'Kontaktai', 'lt', 'content/pages/kontaktas.php', 6, 1, 'N;', 0, 'cms','','','','Kontaktai');
 
 -- --------------------------------------------------------
 
@@ -374,7 +374,7 @@ CREATE TABLE `panel` (
   `place` int(11) DEFAULT NULL,
   `align` enum('R','L','C') NOT NULL DEFAULT 'C',
   `rodyti` varchar(4) DEFAULT NULL,
-  `show` enum('Y','N') NOT NULL DEFAULT 'Y',
+  `show`  int(1) DEFAULT 1,
   `teises` varchar(255) NOT NULL DEFAULT 'N;'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
@@ -600,6 +600,16 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `ip`, `nick`, `levelis`, `pass`, `email`, `slaptas`, `icq`, `msn`, `skype`, `yahoo`, `aim`, `url`, `salis`, `miestas`, `vardas`, `pavarde`, `gim_data`, `parasas`, `forum_temos`, `forum_atsakyta`, `taskai`, `balsai`, `balsavo`, `pm_viso`, `reg_data`, `login_data`, `login_before`, `avatar`) VALUES
 (1, NULL, 'Admin', 1, '21232f297a57a5a743894a0e4a801fc3', 'info@localhost', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'LT', NULL, NULL, NULL, NULL, 'Svetainės administratorius', 0, 0, '0', 0, NULL, 500, NULL, NULL, NULL, NULL);
 
+CREATE TABLE `pa_data` (
+  `id` INT(9) NOT NULL, 
+  `parent_id` INT(9) NOT NULL,
+  `order_id` INT(9) NOT NULL,
+  `type` TEXT,
+  `lang` TEXT,
+  `content` TEXT,
+  `page_id` INT(9) NOT NULL,
+  `style` text
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 --
 -- Indexes for dumped tables
 --
@@ -799,6 +809,9 @@ ALTER TABLE `translations`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id` (`id`);
 
+
+ALTER TABLE `pa_data`
+  ADD PRIMARY KEY (`id`)
 --
 -- AUTO_INCREMENT for dumped tables
 --
@@ -940,6 +953,9 @@ ALTER TABLE `users`
 ALTER TABLE `extensions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
+
+ALTER TABLE `pa_data`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
