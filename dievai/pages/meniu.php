@@ -550,9 +550,9 @@ lentele($page_pavadinimas,$text);
                 $pageSettingsUrl = url('?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $otherPage['id']);
 			} else {
 				//admin;a,pageAssembler;c,edit;pageId,5
-				$pageEditUrl = url('?id,' . $url['id'] . ';a,pageAssembler;c,edit;pageId,' . $otherPage['file']);
-                $pageDeleteUrl = url('?id,' . $url['id'] . ';a,pageAssembler;d,' . $otherPage['file']);
-                $pageSettingsUrl = url('?id,' . $url['id'] . ';a,pageAssembler;c,settings;pageId,' . $otherPage['file']);
+				$pageEditUrl = url('?id,' . $url['id'] . ';a,pageAssembler;c,edit;pageId,' . $otherPage['id']);
+                $pageDeleteUrl = url('?id,' . $url['id'] . ';a,pageAssembler;d,' . $otherPage['id']);
+                $pageSettingsUrl = url('?id,' . $url['id'] . ';a,pageAssembler;c,settings;pageId,' . $otherPage['id']);
 			}
             $otherPages .= '<li class="dd-handle">
 			<a href="' . $pageDeleteUrl . '" onClick="return confirm(\'' . getLangText('system', 'delete_confirm') . '\')">

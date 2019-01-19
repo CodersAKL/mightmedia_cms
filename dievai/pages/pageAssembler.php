@@ -240,21 +240,22 @@ if (isset($url['c'])) {
             $metaKeywords = escape($_POST['metaKeywords']);
             $friendlyUrl = escape($_POST['fUrl']);
             $statusID = (int)$_POST['rodymas'];
+            
             if (isset($_POST['page_id'])){
                 $sqlCheckPageIDstatus = "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE id = " . escape($pageId);
-            $result = mysql_query1($sqlCheckPageIDstatus);
+                $result = mysql_query1($sqlCheckPageIDstatus);
             } else {
                 $result = null;
             }
+            
             if (count($result) == 0) {
                 $sqlPageSettings =
                     "INSERT INTO `" . LENTELES_PRIESAGA . "page` (`pavadinimas`, `metatitle`, `metadesc`, `metakeywords`, `show`, `url`, `lang`, `builder`)
                      VALUES (" . $title . "," . $metaTitle . "," . $metaDescription . "," . $metaKeywords . "," . $statusID . "," . $friendlyUrl . "," . $langText . ", 'assembler')";
             } else {
-                $sqlPageSettings ="UPDATE `" . LENTELES_PRIESAGA . "page` SET `title` = $title, `meta_title` = $metaTitle, `meta_desc` = $metaDescription, 
-                 `meta_keywords` = $metaKeywords, `show` = $statusID, `url` = $friendlyUrl , `lang` = $langText WHERE `id` = $pageId";
+                $sqlPageSettings ="UPDATE `" . LENTELES_PRIESAGA . "page` SET `pavadinimas` = $title, `metatitle` = $metaTitle, `metadesc` = $metaDescription, 
+                 `metakeywords` = $metaKeywords, `show` = $statusID, `url` = $friendlyUrl , `lang` = $langText WHERE `id` = $pageId";
             }
-            echo $sqlPageSettings;
             $result = mysql_query1($sqlPageSettings);
            
             if ($result) {

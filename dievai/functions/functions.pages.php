@@ -49,8 +49,8 @@ function build_menu_admin($data, $id = 0) {
 			$pageDeleteUrl = url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $row['id']);
 			$pageSettingsUrl = url('?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $row['id']);
 		} else {
-			$pageEditUrl = url('?id,' . $url['id'] . ';a,pageAssembler;c,edit;pageId,' . $row['file']);
-			$pageSettingsUrl = url('?id,' . $url['id'] . ';a,pageAssembler;c,settings;pageId,' . $row['file']);
+			$pageEditUrl = url('?id,' . $url['id'] . ';a,pageAssembler;c,edit;pageId,' . $row['id']);
+			$pageSettingsUrl = url('?id,' . $url['id'] . ';a,pageAssembler;c,settings;pageId,' . $row['id']);
 			unset($pageDeleteUrl);
 		}
 		$actions = '';
