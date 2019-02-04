@@ -18,9 +18,9 @@
 			addItemTarget:'bottom',
 			animate:true,
 			highlight:true,
-			removeLabel:'<?php echo $lang['system']['delete']; ?>',
-			highlightAddedLabel:'<?php echo $lang['admin']['added']; ?>: ',
-			highlightRemovedLabel:'<?php echo $lang['sb']['deleted']; ?>: ',
+			removeLabel:'<?php// echo getLangText('system','delete'); ?>',
+			highlightAddedLabel:'<?php// echo getLangText('admin','added'); ?>: ',
+			highlightRemovedLabel:'<?php //echo getLangText('sb','deleted'); ?>: ',
 			sortable: true
 		});
 	});
@@ -50,13 +50,13 @@ function category( $kieno, $leidimas = FALSE ) {
 	}
 	//Kalba galerijai
 	if ( $kieno == 'galerija' ) {
-		$lang['system']['subcat/cat']      = $lang['gallery']['subphotoalbum/photoalbum'];
-		$lang['system']['nocategories']    = $lang['gallery']['nophotoalbums'];
-		$lang['system']['categorydeleted'] = $lang['admin']['gallery_photoalbum_del'];
-		$lang['system']['category']        = $lang['gallery']['photoalbum'];
-		$lang['system']['categoryupdated'] = $lang['admin']['gallery_photoalbum_up'];
-		$lang['system']['editcategory']    = $lang['admin']['gallery_photoalbum_ed'];
-		$lang['system']['createcategory']  = $lang['admin']['gallery_photoalbum_cr'];
+		$lang['system']['subcat/cat']      = getLangText('gallery','subphotoalbum/photoalbum');
+		$lang['system']['nocategories']    = getLangText('gallery','nophotoalbums');
+		$lang['system']['categorydeleted'] = getLangText('admin','gallery_photoalbum_del');
+		$lang['system']['category']        = getLangText('gallery','photoalbum');
+		$lang['system']['categoryupdated'] = getLangText('admin','gallery_photoalbum_up');
+		$lang['system']['editcategory']    = getLangText('admin','gallery_photoalbum_ed');
+		$lang['system']['createcategory']  = getLangText('admin','gallery_photoalbum_cr');
 	}
 	$sql = mysql_query1( 'SELECT * FROM  `' . LENTELES_PRIESAGA . 'grupes` WHERE `kieno`=' . escape( $kieno ) . ' AND `lang` = ' . escape( lang() ) . ' ORDER BY `id` DESC' );
 	if ( sizeof( $sql ) > 0 ) {
