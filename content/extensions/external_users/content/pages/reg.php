@@ -28,7 +28,7 @@ function registracijos_forma()
 		" \r"                                		=> array( "type" => "submit", "name" => "Submit_link", "value" => getLangText('reg', 'register'), "class" => "submit" )
 	);
 
-	return $bla->form( $forma );
+	return $bla->render( $forma );
 }
 
 if (! empty(getSession('username'))) {

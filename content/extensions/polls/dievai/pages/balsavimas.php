@@ -140,7 +140,7 @@ if ($url['v'] == 1) {
 	];
 
 	$formClass = new Form($pollForm);
-	lentele(getLangText('admin', 'poll_create'), $formClass->form());
+	lentele(getLangText('admin', 'poll_create'), $formClass->render());
 	?>
   	<script type="text/javascript">
 		var i = $('input').size() + 1;
@@ -246,7 +246,7 @@ if ($url['v'] == 1) {
 		];
 
 		$formClass = new Form($inputs);
-		lentele(getLangText('admin', 'poll_edit'), $formClass->form());
+		lentele(getLangText('admin', 'poll_edit'), $formClass->render());
 	}
 
 	$viso  = kiek( "poll_questions", "WHERE `lang` = " . escape( lang() ) . "" );

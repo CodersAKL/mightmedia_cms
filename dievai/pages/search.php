@@ -52,7 +52,7 @@ $search = array(
 
 //Nupiesiam paieskos forma
 $formClass = new Form($search);	
-lentele(getLangText('admin', 'pm_deletefrom'), $formClass->form());
+lentele(getLangText('admin', 'pm_deletefrom'), $formClass->render());
 
 $i = 0;
 //Atliekam paieska

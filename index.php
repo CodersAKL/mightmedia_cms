@@ -54,7 +54,7 @@ include_once 'core/inc/inc.auth.php';
 // }
 
 /* Puslapiu aprasymas */
-if (isset($url['id']) && !empty($url['id']) && isnum($url['id'])) {
+if (isset($url['id']) && ! empty($url['id']) && isnum($url['id'])) {
     $pslid = (int)$url['id'];
 } else {
     $pslid            = $conf['pages'][$conf['pirminis'] . '.php']['id'];
@@ -64,11 +64,9 @@ if (isset($url['id']) && !empty($url['id']) && isnum($url['id'])) {
     $url['id']        = $pslid;
 }
 
-
 if (isset($pslid) && isnum($pslid) && $pslid > 0) {
-    $sql1 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int)$pslid) . " and `lang` = " . escape(lang()) . " LIMIT 1", 259200); //keshas  3dienos.
-    if (!empty($sql1)) {
-        if ($sql1['builder'] == 'cms') {
+    if ($sql1 = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `id` = " . escape((int)$pslid) . " and `lang` = " . escape(lang()) . " LIMIT 1", 259200)) {
+        if (empty($sql1['builder']) || (! empty($sql1['builder']) && $sql1['builder'] == 'cms')) {
             if (!preg_match("/\.php$/i", $sql1['file'])) {
                 header("Location:{$sql1['file']}");
                 exit;
@@ -110,6 +108,7 @@ if (isset($pslid) && isnum($pslid) && $pslid > 0) {
         $page_type = 'cms';
     }
 }
+
 //Jei svetaine uzdaryta remontui ir jei jungiasi ne administratorius
 if ($conf['Palaikymas'] == 1) {
     if (empty(getSession('id')) || getSession('level') != 1) {

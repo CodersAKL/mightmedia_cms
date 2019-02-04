@@ -48,7 +48,7 @@ if (! empty(getSession('id'))) {
 	                getLangText('system', 'category') . ":"        => array( "type" => "select", "value" => $categories, "name" => "cat", "class" => "input", "class"=> "input" ),
 	                getLangText('system', 'about') . ":"           => array( "type" => "string", "value" => editorius( 'spaw', 'mini', 'Aprasymas' ) ),
 	                ""                                      => array( "type" => "submit", "name" => "action", "value" => getLangText('admin', 'download_Create')));
-	lentele(getLangText('admin', 'download_Create'), $bla->form($form));
+	lentele(getLangText('admin', 'download_Create'), $bla->render($form));
 
 } else {
 	klaida( getLangText('system', 'warning'), getLangText('system', 'pleaselogin') );

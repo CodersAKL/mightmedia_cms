@@ -97,7 +97,7 @@ if (! empty(getSession('id'))) {
 					""                                   		=> array( "type" => "submit", "name" => "action", "value" => getLangText('admin', 'download_Create')) 
 				);
 
-	lentele( getLangText('admin', 'download_Create'), $bla->form( $forma ) );
+	lentele( getLangText('admin', 'download_Create'), $bla->render( $forma ) );
 
 } else {
 	klaida( getLangText('system', 'warning'), getLangText('system', 'pleaselogin') );

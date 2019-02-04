@@ -292,7 +292,7 @@ if ( isset( $_GET['v'] ) ) {
 				];
 
 				$formClass = new Form($tipas);	
-				lentele(getLangText('admin', 'download_Create'), $formClass->form());
+				lentele(getLangText('admin', 'download_Create'), $formClass->render());
 			}
 
 			if ( isset( $_POST['tipas'] ) || isset( $extra ) ) {
@@ -367,7 +367,7 @@ if ( isset( $_GET['v'] ) ) {
 				}
 
 				$formClass = new Form($downloadForm);	
-				lentele(getLangText('admin', 'download_create'), $formClass->form());
+				lentele(getLangText('admin', 'download_create'), $formClass->render());
 			}
 		} else {
 			notifyMsg(

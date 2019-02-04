@@ -111,7 +111,7 @@ if ( isset( $_GET['b'] ) && $_GET['b'] == 1 ) {
 //Atvaizduojam info ir formas
 if (isset($form) && isset($title)) {
 	$formClass = new Form($form);
-	lentele($title, $formClass->form());
+	lentele($title, $formClass->render());
 }
 
 /**

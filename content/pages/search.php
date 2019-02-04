@@ -54,7 +54,7 @@ $search = array(
 include_once config('class', 'dir') . 'class.form.php';
 
 $bla = new Form();
-lentele(getLangText('search', 'search'), $bla->form($search));
+lentele(getLangText('search', 'search'), $bla->render($search));
 $i = 0;
 //Atliekam paiešką
 //print_r($_POST);
