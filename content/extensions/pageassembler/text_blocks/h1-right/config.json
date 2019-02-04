@@ -1,0 +1,25 @@
+{
+    "configurations":
+        {
+            "author":
+                {
+                    "name":"Jonas Burneika",
+                    "e-mail": "jonas.letai@gmail.com"
+                },
+            "version":"1.0",
+            "bootstrap":"3.0",
+            "type": "text",
+            "title":"H1",
+            "backEndHtmlFile":"/pageassembler/text_blocks/h1-right/h1.php",
+            "frontEndHtml":""
+        },
+    "content":
+        {
+            "0":{
+                "type":"text",
+                "style":"",
+                "name":"h-title",
+                "value":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            }
+        }
+}

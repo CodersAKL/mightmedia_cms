@@ -29,7 +29,7 @@
             },
             "2":{
                 "type":"text",
-                "style":"crop",
+                "style":"width: 100%;",
                 "name":"Image_sorce",
                 "value":"http://www.apimages.com/Images/Ap_Creative_Stock_Header.jpg"
             },
