@@ -161,7 +161,7 @@ if (isset($url['c'])) {
                             <?php foreach ($category as $key => $block) {
                         ?>
                             <li>
-                                <?php echo '<a tabindex="-1" href="' . $realPath . '/admin;a,pageAssembler;c,edit;pageId,' . $_GET['pageId'] . ';insertBlock,' . $key . ';blockType,' . $categoryName . '">' ?>
+                                <?php echo '<a tabindex="-1" href="' . $realPath . '/admin;a,' . $url['a'] . ';c,' . $url['c'] . ';pageId,' . $url['pageId'] . ';insertBlock,' . $key . ';blockType,' . $categoryName . '">' ?>
                                 <?php echo ucfirst($key.' block') ?>
                                 </a>
                             </li>
@@ -216,7 +216,7 @@ if (isset($url['c'])) {
                                 <a href="' . url('?id,' . $url['id'] . ';a,' . $url['a'] . ';d,' . $irasas['id']) . '" style="align:right" onClick="return confirm(\'' . getLangText('admin','delete') . '?\')"><img src="' . ROOT . 'core/assets/images/icons/cross.png" title="' . getLangText('admin','delete') . '" align="right" /></a>
                                 <a href="' . url('?id,' . $url['id'] . ';a,' . $url['a'] . ';c,settings;pageId,' . $irasas['id']) . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/wrench.png" title="' . getLangText('pageAssembler','pageassembler_settings') . '" align="right" /></a>
                                 <a href="' . url('?id,' . $url['id'] . ';a,' . $url['a'] . ';c,edit;pageId,' . $irasas['id']) . '" style="align:right"><img src="' . ROOT . 'core/assets/images/icons/pencil.png" title="' . getLangText('admin','edit') . '" align="right" /></a>
-                                <a href="http://localhost:8080/mightmedia/' . $irasas['id'] . '" target="_blank">' . $irasas['pavadinimas'] . '</a>';
+                                <a href="'. MAIN_URL . $irasas['id'] . '" target="_blank">' . $irasas['pavadinimas'] . '</a>';
                             echo '<li>' . $content . '</li>';
                         }
                         echo '</ul>';
@@ -253,8 +253,10 @@ if (isset($url['c'])) {
                     "INSERT INTO `" . LENTELES_PRIESAGA . "page` (`pavadinimas`, `metatitle`, `metadesc`, `metakeywords`, `show`, `url`, `lang`, `builder`)
                      VALUES (" . $title . "," . $metaTitle . "," . $metaDescription . "," . $metaKeywords . "," . $statusID . "," . $friendlyUrl . "," . $langText . ", 'assembler')";
             } else {
-                $sqlPageSettings ="UPDATE `" . LENTELES_PRIESAGA . "page` SET `pavadinimas` = $title, `metatitle` = $metaTitle, `metadesc` = $metaDescription, 
-                 `metakeywords` = $metaKeywords, `show` = $statusID, `url` = $friendlyUrl , `lang` = $langText WHERE `id` = $pageId";
+                $placeId = mysql_query1("SELECT MAX( place ) AS 'max' FROM `" . LENTELES_PRIESAGA . "page`");
+                $placeId = $placeId[0]['max']+1;
+                $sqlPageSettings ="UPDATE `" . LENTELES_PRIESAGA . "page` SET `pavadinimas` = $title, `file` = $pageId, `metatitle` = $metaTitle, `metadesc` = $metaDescription, 
+                 `metakeywords` = $metaKeywords, `show` = $statusID, `url` = $friendlyUrl , `lang` = $langText, `place` = $placeId WHERE `id` = $pageId";
             }
             $result = mysql_query1($sqlPageSettings);
            
@@ -270,17 +272,7 @@ if (isset($url['c'])) {
                     );
                     
                 } else {
-                    $pageId = $prisijungimas_prie_mysql->insert_id;
-                    if ($statusID == 1){
-                        $placeId = mysql_query1("SELECT MAX( place ) AS 'max' FROM `" . LENTELES_PRIESAGA . "page`");
-                        $placeId = $placeId[0]['max']+1;
-                        $sqlPagesList =
-                        "INSERT INTO `" . LENTELES_PRIESAGA . "page` (`pavadinimas`,`file`, `lang`,`show`, `teises`, `parent`, `builder`, `metatitle`,`metadesc`,`metakeywords`, `place`)
-                         VALUES (" . $title . "," . $pageId . "," . $langText . ", " . $statusID . " ,'N;','0','assembler'," . $metaTitle . "," . $metaDescription . ", " . $metaKeywords . ", " . $placeId . ")";
-                        
-                        mysql_query1($sqlPagesList);
-                    }
-                  
+                    $pageId = $prisijungimas_prie_mysql->insert_id;                  
                     redirect(
                         url("?id," . $url['id'] . ";a," . $url['a'] . ";c,edit;pageId," . $pageId),
                         "header",
