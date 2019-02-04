@@ -18,7 +18,7 @@ class Form
         ];
     }
 
-	public function form() {
+	public function render() {
         $return = '';
 
 		if (is_array($this->inputs)) {

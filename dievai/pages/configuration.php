@@ -202,7 +202,7 @@ if (isset($url['c'])) {
 		];
 		
 		$formClass = new Form($settings);
-		lentele(getLangText('admin', 'configuration_main'), $formClass->form());
+		lentele(getLangText('admin', 'configuration_main'), $formClass->render());
 		
 	} else if($url['c'] == 'maintenance') {
 
@@ -264,7 +264,7 @@ if (isset($url['c'])) {
 		];
 
 		$formClass = new Form($settings);
-		lentele(getLangText('admin', 'configuration_maintenance'), $formClass->form());
+		lentele(getLangText('admin', 'configuration_maintenance'), $formClass->render());
 
 	} else if($url['c'] == 'seo') {
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['Konfiguracija'] ) ) {
@@ -352,7 +352,7 @@ if (isset($url['c'])) {
 		];
 
 		$formClass = new Form($settings);
-		lentele(getLangText('admin', 'configuration_seo'), $formClass->form());
+		lentele(getLangText('admin', 'configuration_seo'), $formClass->render());
 	} else if($url['c'] == 'extensions') {
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['saveExtensionsSettings']) && (isset($_POST['extension'])) ) {
 			
@@ -415,7 +415,7 @@ if (isset($url['c'])) {
 				'form_line'	=> 'form-not-line',
 			];
 		$formClass = new Form($settings);
-		lentele(getLangText('admin', 'configuration_extensions'), $formClass->form());
+		lentele(getLangText('admin', 'configuration_extensions'), $formClass->render());
 	} else if($url['c'] == 'translation') {
 		if ( isset( $_POST ) && !empty( $_POST ) && isset( $_POST['saveTranslationOptions']))  {
 			setSession('translation_status', $_POST['status']);
@@ -456,7 +456,7 @@ if (isset($url['c'])) {
 			'form_line'	=> 'form-not-line',
 		];
 		$formClass = new Form($settings);
-		lentele(getLangText('admin', 'configuration_translations'), $formClass->form());
+		lentele(getLangText('admin', 'configuration_translations'), $formClass->render());
 
 
 		if (isset($_POST['approve']) && isset($_POST['cofirmTranslation'])){

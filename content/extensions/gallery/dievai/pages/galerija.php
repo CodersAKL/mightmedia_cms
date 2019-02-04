@@ -437,7 +437,7 @@ if ( isset( $_GET['v'] ) ) {
 		$title = ((isset($extra)) ? getLangText('admin', 'edit') : getLangText('admin', 'gallery_add'));
 		$content = '<a name="edit"></a>' . ( ( isset( $extra['file'] ) ) ? '<center><img src="' . ROOT . 'content/uploads/gallery/' . input( $extra['file'] ) . '"></center>' : '' );
 
-		lentele($title, $content . $formClass->form());
+		lentele($title, $content . $formClass->render());
 
 		//gallery settings
 	} elseif ( $_GET['v'] == 6 ) {
@@ -554,7 +554,7 @@ if ( isset( $_GET['v'] ) ) {
 		];
 
 		$formClass = new Form($settings);
-		lentele(getLangText('admin', 'gallery_conf'), $formClass->form());
+		lentele(getLangText('admin', 'gallery_conf'), $formClass->render());
 
 	} elseif ( $_GET['v'] == 7 ) {
 

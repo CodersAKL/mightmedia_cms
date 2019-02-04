@@ -70,6 +70,7 @@ if (isset($url['c'])) {
            
                 $formClass = new Form($settings);
                 lentele(getLangText('pageAssembler','new_page'), $formClass->form());
+
             }
 
             if (isset($_POST['addblock'])) {
@@ -346,9 +347,9 @@ if (isset($url['c'])) {
         ];
         $formClass = new Form($settings);
         if (isset($_GET['pageId'])) {
-            lentele(getLangText('pageAssembler','pageassembler_settings') , $formClass->form());
+            lentele(getLangText('pageAssembler','pageassembler_settings') , $formClass->render());
         } else {
-            lentele(getLangText('pageAssembler','new_page'), $formClass->form());
+            lentele(getLangText('pageAssembler','new_page'), $formClass->render());
         }
     } ?>
 <div class='modal-insert-place'></div>

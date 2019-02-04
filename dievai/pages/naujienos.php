@@ -409,7 +409,7 @@ if ( isset( $_GET['v'] ) ) {
 		$formClass = new Form($newForm);
 		$title = ( !isset( $extra ) ? getLangText('admin', 'news_create') : getLangText('admin', 'news_edit') );
 		
-		lentele($title, $formClass->form());
+		lentele($title, $formClass->render());
 
 	} elseif ( $_GET['v'] == 6 ) {
 

@@ -135,7 +135,7 @@ if ( $mid == 1 ) {
 	);
 	include_once config('class', 'dir') . 'class.form.php';
 	$form       = new Form();
-	lentele( getLangText('user', 'edit_pass'), $form->form( $form_array ) );
+	lentele( getLangText('user', 'edit_pass'), $form->render( $form_array ) );
 } // Pakeisti kontaktinius duomenis
 elseif ( $mid == 2 ) {
 	$info = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape(getSession('username')) . "LIMIT 1" );
@@ -154,7 +154,7 @@ elseif ( $mid == 2 ) {
 	);
 	include_once config('class', 'dir') . 'class.form.php';
 	$form       = new Form();
-	lentele( getLangText('user', 'edit_contacts'), $form->form( $form_array ) );
+	lentele( getLangText('user', 'edit_contacts'), $form->render( $form_array ) );
 }
 // Pakeisti sali, miesta
 elseif ( $mid == 3 ) {
@@ -196,7 +196,7 @@ elseif ( $mid == 3 ) {
 
 	include_once config('class', 'dir') . 'class.form.php';
 	$form = new Form();
-	lentele( getLangText('user', 'edit_locality'), $form->form( $form_array ) );
+	lentele( getLangText('user', 'edit_locality'), $form->render( $form_array ) );
 }
 
 // Avataro keitimas
@@ -281,7 +281,7 @@ elseif ( $mid == 5 ) {
 
 	include_once config('class', 'dir') . 'class.form.php';
 	$form = new Form();
-	lentele( getLangText('user', 'edit_mainsettings'), $form->form( $form_array ) );
+	lentele( getLangText('user', 'edit_mainsettings'), $form->render( $form_array ) );
 	unset( $data, $viso, $day, $month, $year );
 }
 

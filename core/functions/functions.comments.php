@@ -40,7 +40,7 @@ function comments($id, $hide = false) {
 				);
 
 
-				lentele( getLangText('comments', 'write'), $bla->form( $form ) );
+				lentele( getLangText('comments', 'write'), $bla->render( $form ) );
 			} else {
 				lentele( getLangText('comments', 'write'), getLangText('system', 'pleaselogin') );
 			}

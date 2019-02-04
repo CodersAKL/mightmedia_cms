@@ -135,7 +135,7 @@ if ( !empty( $url['t'] ) ) {
 		];
 		
 		$formClass = new Form($delete);
-		lentele(getLangText('admin', 'logs_delete'), $formClass->form());
+		lentele(getLangText('admin', 'logs_delete'), $formClass->render());
 
 		$delete = [
 			"Form" => [
@@ -154,7 +154,7 @@ if ( !empty( $url['t'] ) ) {
 		];
 		
 		$formClass = new Form($delete);
-		lentele(getLangText('admin', 'logs_clear'), $formClass->form());
+		lentele(getLangText('admin', 'logs_clear'), $formClass->render());
 	}
 }
 

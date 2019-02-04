@@ -167,7 +167,7 @@ if ( isset( $url['r'] ) && $url['r'] != "" && $url['r'] != 0 ) {
 		$formClass = new Form($userEditForm);
 		$title= '<strong>' . input( $info['nick'] ) . '</strong>';
 		
-		lentele($title, $formClass->form() . "<br /><small>*" . getLangText('admin',  'user_canteditadmin') . "</small>", getLangText('admin', 'user_details'));
+		lentele($title, $formClass->render() . "<br /><small>*" . getLangText('admin',  'user_canteditadmin') . "</small>", getLangText('admin', 'user_details'));
 		
 		unset( $info, $userEditForm );
 	} else {

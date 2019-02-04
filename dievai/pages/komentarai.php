@@ -32,7 +32,7 @@ if ( !isset( $_POST['pg'] ) && !isset( $_GET['s'] ) ) {
 		$form = array( "Form" => array( "action" => "", "method" => "post", "name" => "com" ), getLangText('online',  'page') . ":" => array( "type" => "select", "value" => $pgs, "name" => "pg" ), " " => array( "type" => "submit", "name" => "select", "value" => getLangText('admin',  'page_select') ), "  " => array( "type" => "submit", "name" => "del", "value" => getLangText('admin', 'del_comments')));
 		
 		$formClass = new Form($forma);
-		lentele(getLangText('admin', 'adm_comments'), $formClass->form());
+		lentele(getLangText('admin', 'adm_comments'), $formClass->render());
 	} else {
 		klaida( getLangText('system', 'warning'), getLangText('system', 'no_items') );
 	}
@@ -51,7 +51,7 @@ if ( isset( $_POST['select'] ) || isset( $_GET['s'] ) ) {
 			);
 
 			$formClass = new Form($forma);
-			lentele(getLangText('sb', 'edit'), $formClass->form());
+			lentele(getLangText('sb', 'edit'), $formClass->render());
 		} else {
 			$msg = trim( $_POST['msg'] ) . "\n[sm] [i] " . getLangText('sb',  'editedby') . ": " . getSession('username') . " [/i] [/sm]";
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "kom` SET `zinute` = " . escape( strip_tags( $msg ) ) . " WHERE `id` =" . escape( $url['e'] ) . " LIMIT 1" );

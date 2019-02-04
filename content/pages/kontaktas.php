@@ -52,6 +52,6 @@ $form = array(
 	kodas()                          => array( "type" => "text", "value" => "", "name"=> "code", "class"=> "chapter" ),
 	" "                              => array( "type" => "submit", "name" => "kontaktas", "value" => getLangText('contact', 'submit'))
 );
-lentele( getLangText('contact', 'form'), $bla->form( $form ) );
+lentele( getLangText('contact', 'form'), $bla->render( $form ) );
 unset( $form, $result, $from, $error, $to, $msg, $email, $title );
 //PABAIGA - atvaizdavimo

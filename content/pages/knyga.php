@@ -43,7 +43,7 @@ if (getSession('level') == 1) {
 				getLangText('guestbook', 'message') => array( "type" => "textarea", "value" => $msg['msg'], "name" => "msg", "extra" => "rows=5", "class" => "input" ),
 				" "                           => array( "type" => "submit", "name" => "knyga", "value" => getLangText('admin', 'edit') )
 			);
-			lentele( getLangText('guestbook', 'Editmessage'), $bla->form( $form ) );
+			lentele( getLangText('guestbook', 'Editmessage'), $bla->render( $form ) );
 		} elseif ( isset( $_POST['knyga'] ) && $_POST['knyga'] == $lang['admin']['edit'] && !empty( $_POST['msg'] ) ) {
 			$msg = trim( $_POST['msg'] ) . "\n[sm][i]Redagavo: " . getSession('username') . "[/i][/sm]";
 			mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "knyga` SET `msg` = " . escape( htmlspecialchars( $msg ) ) . " WHERE `id` =" . escape( $url['r'] ) . " LIMIT 1" );
@@ -112,7 +112,7 @@ if ( !isset( $_GET['r'] ) ) {
 		" "                           => array( "type" => "submit", "name" => "knyga", "value" => getLangText('guestbook', 'submit') )
 	);
 
-	lentele( getLangText('guestbook', 'write'), $bla->form( $form ), TRUE );
+	lentele( getLangText('guestbook', 'write'), $bla->render( $form ), TRUE );
 }
 if ( strlen( $text ) < 1 ) {
 	$text = getLangText('guestbook', 'empty');

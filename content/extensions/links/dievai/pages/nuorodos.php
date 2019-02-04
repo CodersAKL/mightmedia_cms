@@ -330,7 +330,7 @@ if ( $_GET['v'] == 1 ) {
 	}
 
 	$formClass = new Form($nuorodos);
-	lentele($editOrCreate, $formClass->form());
+	lentele($editOrCreate, $formClass->render());
 }
 
 unset($info);
