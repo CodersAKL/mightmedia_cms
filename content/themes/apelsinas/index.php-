@@ -32,7 +32,7 @@
 			<ul>
 				<?php
 				$limit = '8'; //Kiek nuorodų rodome
-				$sql1  = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent` = 0 AND `show` = 'Y' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC LIMIT {$limit}" );
+				$sql1  = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent` = 0 AND `show` = 1 AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC LIMIT {$limit}" );
 				$text  = '';
 				foreach ( $sql1 as $row1 ) {
 					if ( teises( $row1['teises'], $_SESSION[SECRET]['level'] ) ) {

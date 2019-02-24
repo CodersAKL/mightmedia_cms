@@ -104,10 +104,10 @@ if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
             $psl = basename($file, ".php");
         }
 
-        if (! empty($_POST['show']) && $_POST['show'] === 'Y') {
+        if (! empty($_POST['show']) && $_POST['show'] == 1) {
             $show = input($_POST['show']);
         } else {
-            $show = 'N';
+            $show = 0;
         }
 
         $metaTitle = escape($_POST['metatitle']);
@@ -115,7 +115,7 @@ if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
         $metaKeywords = escape($_POST['metakeywords']);
 
         $sql = "INSERT INTO `" . LENTELES_PRIESAGA . "page` (`pavadinimas`, `file`, `place`, `show`, `teises`,`parent`, `lang`,`metatitle`,`metadesc`,`metakeywords`) 
-				VALUES (" . escape($psl) . ", " . escape($file) . ", '0', " . escape($show) . ", " . escape($teises) . "," . escape((int)$_POST['parent']) . ", " . escape(lang()) . "," . escape($_POST['metatitle']) . "," . escape($_POST['metadesc']) . "," . escape($_POST['metakeywords']) . ")";
+				VALUES (" . escape($psl) . ", " . escape($file) . ", '0', " . $show . ", " . escape($teises) . "," . escape((int)$_POST['parent']) . ", " . escape(lang()) . "," . escape($_POST['metatitle']) . "," . escape($_POST['metadesc']) . "," . escape($_POST['metakeywords']) . ")";
 
         if (mysql_query1($sql)) {
             delete_cache("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `lang` = " . escape(lang()) . " ORDER BY `place` ASC");
@@ -208,7 +208,7 @@ if (isset($url['d']) && isnum($url['d']) && $url['d'] > 0) {
 
             getLangText('admin', 'page_show')				=> [
                 "type"  	=> "switch",
-                "value" 	=> 'Y',
+                "value" 	=> 1,
                 "name"  	=> "show",
                 'form_line'	=> 'form-not-line',
                 'checked'	=> false
@@ -322,12 +322,12 @@ elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
             $psl = getLangText('admin', 'page_text');
         }
         
-        if (! empty($_POST['show']) && $_POST['show'] === 'Y') {
+        if (! empty($_POST['show']) && $_POST['show'] == 1) {
             $show = input($_POST['show']);
         } else {
-            $show = 'N';
+            $show = 0;
         }
-        $sql = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `pavadinimas`=" . escape($psl) . ", `show`=" . escape($show) . ",`teises`=" . escape($teises) . ",`parent`= " . escape((int)$_POST['parent']) . "
+        $sql = "UPDATE `" . LENTELES_PRIESAGA . "page` SET `pavadinimas`=" . escape($psl) . ", `show`=" . $show . ",`teises`=" . escape($teises) . ",`parent`= " . escape((int)$_POST['parent']) . "
 				,`metatitle`= " . escape($_POST['metatitle']) . ",`metadesc`= " . escape($_POST['metadesc']) . ",`metakeywords`= " . escape($_POST['metakeywords']) . "
 				WHERE `id`=" . escape((int)$url['r']);
         if (mysql_query1($sql)) {
@@ -375,11 +375,11 @@ elseif (isset($url['r']) && isnum($url['r']) && $url['r'] > 0) {
             ],
 
             getLangText('admin', 'page_show')				=> [
-                "type"  	=> "switch",
-                "value" 	=> 'Y',
-                "name"  	=> "show",
-                'form_line'	=> 'form-not-line',
-                'checked'	=> (input($sql['show']) === 'Y')
+            	"type"  	=> "switch",
+				"value" 	=> 1,
+				"name"  	=> "show",
+				'form_line'	=> 'form-not-line',
+				'checked'	=> ( $sql['show'] == 1 ? true : false)
             ],
 
             "Sub"                                  => [
@@ -530,7 +530,7 @@ lentele($page_pavadinimas,$text);
         }
     }
 } else { // Pages list VIEW
-    $sqlPages = mysql_query1("SELECT * from `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'Y' AND `lang` = " . escape(lang()) . " order by place");
+    $sqlPages = mysql_query1("SELECT * from `" . LENTELES_PRIESAGA . "page` WHERE `show`= 1 AND `lang` = " . escape(lang()) . " order by place");
 
     foreach ($sqlPages as $row) {
         $data[$row['parent']][] = $row;
@@ -539,7 +539,7 @@ lentele($page_pavadinimas,$text);
     $li      	= ! empty($data) ? build_menu_admin($data) : '';
     $pageMenu 	= '<div class="dd nestable-with-handle">' . $li . '</div>';
 
-    $sqlOtherPages = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`= 'N' AND `lang` = " . escape(lang()) . " order by id");
+    $sqlOtherPages = mysql_query1("SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `show`= 0 AND `lang` = " . escape(lang()) . " order by id");
     
     $otherPages = '<ol class="dd-list">';
     if (! empty($sqlOtherPages)) {
@@ -550,9 +550,9 @@ lentele($page_pavadinimas,$text);
                 $pageSettingsUrl = url('?id,' . $url['id'] . ';a,' . $url['a'] . ';r,' . $otherPage['id']);
 			} else {
 				//admin;a,pageAssembler;c,edit;pageId,5
-				$pageEditUrl = url('?id,' . $url['id'] . ';a,pageAssembler;c,edit;pageId,' . $otherPage['file']);
-                $pageDeleteUrl = url('?id,' . $url['id'] . ';a,pageAssembler;d,' . $otherPage['file']);
-                $pageSettingsUrl = url('?id,' . $url['id'] . ';a,pageAssembler;c,settings;pageId,' . $otherPage['file']);
+				$pageEditUrl = url('?id,' . $url['id'] . ';a,pageAssembler;c,edit;pageId,' . $otherPage['id']);
+                $pageDeleteUrl = url('?id,' . $url['id'] . ';a,pageAssembler;d,' . $otherPage['id']);
+                $pageSettingsUrl = url('?id,' . $url['id'] . ';a,pageAssembler;c,settings;pageId,' . $otherPage['id']);
 			}
             $otherPages .= '<li class="dd-handle">
 			<a href="' . $pageDeleteUrl . '" onClick="return confirm(\'' . getLangText('system', 'delete_confirm') . '\')">

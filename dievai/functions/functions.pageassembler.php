@@ -24,16 +24,21 @@ function pageAssemblerDBexist($dbName){
                     ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;";
                 break;
             case 'pa_page_settings':
-                $sql1 = "CREATE TABLE `" . LENTELES_PRIESAGA . "pa_page_settings` (
-                    page_id INT(9) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
-                    title TEXT,
-                    lang TEXT,
-                    meta_title TEXT,
-                    meta_desc TEXT,
-                    meta_keywords TEXT,
-                    friendly_url TEXT,
-                    status_id INT(2)
-                    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;";
+                $sql1 = "CREATE TABLE `page` (
+                    `id` int(11) NOT NULL,
+                    `pavadinimas` varchar(255) DEFAULT NULL,
+                    `lang` varchar(3) NOT NULL DEFAULT 'lt' COMMENT 'Language',
+                    `file` varchar(255) DEFAULT NULL,
+                    `place` int(11) DEFAULT NULL,
+                    `show` enum('Y','N') NOT NULL DEFAULT 'Y',
+                    `teises` varchar(255) NOT NULL DEFAULT 'N;',
+                    `parent` int(150) NOT NULL DEFAULT '0',
+                    `builder` text DEFAULT 'cms',
+                    `metatitle` text DEFAULT NULL,
+                    `metadesc` text DEFAULT NULL,
+                    `metakeywords` text DEFAULT NULL,
+                    `url` text DEFAULT NULL
+                  ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;";
                 break;
         }
         $result = mysqli_query( $prisijungimas_prie_mysql, $sql1 ); 

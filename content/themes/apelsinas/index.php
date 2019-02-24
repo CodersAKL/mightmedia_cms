@@ -37,7 +37,7 @@
 			<ul class="navbar-nav ml-auto">
 				<?php
 					$limit 		= 8; //Kiek nuorodų rodome
-					$menuSql  	= mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent` = 0 AND `show` = 'Y' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC LIMIT {$limit}" );
+					$menuSql  	= mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent` = 0 AND `show` = 1 AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC LIMIT {$limit}" );
 					$menuCount 	= 0;
 				?>
 				<?php foreach ($menuSql as $menuItem) { $menuCount++; ?>
@@ -136,7 +136,7 @@
 	<div class="container">
 		<?php
 			$limit 		= 8; //Kiek nuorodų rodome
-			$footerMenuSql  	= mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent` = 0 AND `show` = 'Y' AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC LIMIT {$limit}" );
+			$footerMenuSql  	= mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "page` WHERE `parent` = 0 AND `show` = 1 AND `lang` = " . escape( lang() ) . " ORDER BY `place` ASC LIMIT {$limit}" );
 		?>
 	  <nav class="float-left">
 		<ul>
