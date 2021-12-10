@@ -53,7 +53,7 @@ if(! function_exists('url_arr')) {
  * @return string
  */
 if(! function_exists('adresas')) {
-	function adresas() {
+	function url() {
 		//TODO: problems with admin CP
 		// if(defined('MAIN_URL')) {
 		// 	return MAIN_URL;
@@ -114,10 +114,10 @@ if(! function_exists('url')) {
 				$url_title = str_replace( ' ', '_', $url_title );
 
 				// Atskiriam atskirus getus pasirinktu simboliu
-				$return = adresas() . ROOT . $url_title . implode( ( $conf['F_urls'] != '0' ? $conf['F_urls'] : ';' ), $linkai );
+				$return = url() . ROOT . $url_title . implode( ( $conf['F_urls'] != '0' ? $conf['F_urls'] : ';' ), $linkai );
 			} else {
 
-				$return = adresas() . ( substr( $str, 4, 3 ) == '999' && ( empty( $conf['F_urls'] ) || $conf['F_urls'] == '0' ) ? 'main.php' : ( substr( $str, 0, 1 ) != '?' ? '' : ROOT ) ) . $str;
+				$return = url() . ( substr( $str, 4, 3 ) == '999' && ( empty( $conf['F_urls'] ) || $conf['F_urls'] == '0' ) ? 'main.php' : ( substr( $str, 0, 1 ) != '?' ? '' : ROOT ) ) . $str;
 			}
 		} else {
 

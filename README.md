@@ -24,7 +24,7 @@ Autoriai: zlotas, FDisk, p.dambrauskas
  * BUGFIX: Patogiau atsijungti is admin paneles
  * BUGFIX: nerodo avataro kai raso svecias.
  * BUGFIX: Atsijungus nuo admin paneles nebuvo unsetinamas User ID
- * BUGFIX: Install adresas()
+ * BUGFIX: Install url()
  * įvedam truputi tvarkos
  * naujienlaiškių dizaino sprendimas...
  * "kažkas :)" neteisingai if'us parašęs buvo
@@ -74,7 +74,7 @@ Autoriai: zlotas, p.dambrauskas, FDisk
  * RSS BUG: Bandau pataisyti
  * rss nukreipimas
  * įvedam truputi tvarkos
- * BUGFIX: adresas()
+ * BUGFIX: url()
  * įvedam truputi tvarkos
  * tooltip spalva.
  * naujas google lankomumo grafikas
@@ -356,7 +356,7 @@ MightMedia v1.36 | 4/2/2010 4:50 PM
 Autoriai: FDisk, p.dambrauskas
 ---
  * biskiuka bugfix filemanager
- * neveikia funkcija adresas(), gražina kelią iki ten, kur esi, tai netinka administravimui ir manageriui, suprantu, kodėl visi tvsai klausia kur instaliuotas TVS'AS, gal reiktų į configą tokį laukelį įkišt?
+ * neveikia funkcija url(), gražina kelią iki ten, kur esi, tai netinka administravimui ir manageriui, suprantu, kodėl visi tvsai klausia kur instaliuotas TVS'AS, gal reiktų į configą tokį laukelį įkišt?
  * manageris, uploadina tik į siuntiniai/ , į sub direktorijas - ne, peržiūra neveikia  (nerodo img), peržiūros failo commitint neleidžia
  * antivirus
  * naujienlaiškiai
@@ -538,7 +538,7 @@ Autoriai: FDisk, p.dambrauskas
  * smulkmenos...
  * teisės
  * truputis validumo
- * adresas() gal dar patobulint reikėtų
+ * url() gal dar patobulint reikėtų
  * buvo nevalidųs tie buttonai
  * timlink
  * komentarai

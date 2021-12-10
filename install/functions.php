@@ -15,7 +15,7 @@ if (isset($_SESSION['language'])) {
  * @return string
  */
 if(! function_exists('adresas')) {
-	function adresas() {
+	function url() {
 		if ( isset( $_SERVER['HTTP_HOST'] ) ) {
 			$adresas = isset( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) !== 'off' ? 'https' : 'http';
 			$adresas .= '://' . $_SERVER['HTTP_HOST'];

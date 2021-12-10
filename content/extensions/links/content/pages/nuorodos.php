@@ -11,7 +11,7 @@
  **/
 
 if ( !defined( "OK" ) ) {
-	header( "Location: " . adresas() );
+	header( "Location: " . url() );
 	exit;
 }
 if ( isset( $url['w'] ) && isnum( $url['w'] ) && $url['w'] > 0 ) {

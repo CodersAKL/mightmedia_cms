@@ -1,6 +1,6 @@
 <?php
 //susigeneruojame stiliaus aplankalo adresą
-$gabalas = explode("/".$conf['Admin_folder'], adresas());
+$gabalas = explode("/".$conf['Admin_folder'], url());
 $stilius = $gabalas[0]."/content/themes/".$conf['Stilius']."/";
 $naujienlaiskio_css = '
 <style type="text/css">

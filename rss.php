@@ -13,14 +13,14 @@ if ( isset( $conf['pages']['rss.php'] ) ) {
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title><?php echo htmlspecialchars( $conf['Pavadinimas'] ); ?></title>
-		<link><?php echo adresas(); ?></link>
+		<link><?php echo url(); ?></link>
 		<description><![CDATA[ <?php echo strip_tags( $conf['Apie'] ); ?> ]]></description>
 		<language>en-lt</language>
 		<copyright><![CDATA[ <?php echo strip_tags( $conf['Copyright'] ); ?> ]]></copyright>
 		<managingEditor><![CDATA[ <?php echo htmlspecialchars( $conf['Pastas'] ) . ' (' . $admin_name . ')'; ?> ]]></managingEditor>
 		<webMaster><![CDATA[ <?php echo htmlspecialchars( $conf['Pastas'] ) . ' (' . $admin_name . ')'; ?> ]]></webMaster>
 		<pubDate><?php echo date( "D, d M Y H:i:s O" ); ?></pubDate>
-		<atom:link href="<?php echo adresas(); ?>/rss.php" rel="self" type="application/rss+xml" />
+		<atom:link href="<?php echo url(); ?>/rss.php" rel="self" type="application/rss+xml" />
 		<lastBuildDate><?php echo date( "D, d M Y H:i:s O" ); ?></lastBuildDate>
 		<category><![CDATA[ <?php echo htmlspecialchars( $conf['Pavadinimas'] ); ?> ]]></category>
 		<generator>MightMedia TVS</generator>
@@ -43,7 +43,7 @@ if ( isset( $conf['pages']['rss.php'] ) ) {
                   <author><![CDATA[' . $nickas['email'] . ' (' . $row['autorius'] . ')]]></author>
                   ' . ( isset( $category['pavadinimas'] ) ? '<category>' . $category['pavadinimas'] . '</category>' : '' ) . '
                   <pubDate>' . date( 'D, d M Y H:i:s O', $row['data'] ) . '</pubDate>
-                  <source url="' . adresas() . '">' . $conf['Pavadinimas'] . ' RSS</source>
+                  <source url="' . url() . '">' . $conf['Pavadinimas'] . ' RSS</source>
                   <guid>' . url( '?id,' . $conf['pages']['naujienos.php']['id'] . ';k,' . $row['id'] . '' ) . '</guid>
               </item>';
 			}
