@@ -16,7 +16,7 @@
 	<nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
 		<div class="container">
 		<div class="navbar-translate">
-			<a class="navbar-brand" href="<?php echo url(); ?>">
+			<a class="navbar-brand" href="<?php echo siteUrl(); ?>">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 91.3 97.3" class="navbar-brand--logo">
 					<ellipse class="navbar-brand--logo-circle" cx="12.3" cy="57" rx="12.3" ry="12.3"></ellipse>
 					<path class="navbar-brand--logo-first" d="M57 68.2c6.2-2.9 8.8-10.2 6-16.4L42.2 7.2C39.3 1 32-1.7 25.8 1.2c-6.2 2.9-8.8 10.2-6 16.4l20.8 44.6c2.9 6.2 10.3 8.9 16.4 6z"></path>

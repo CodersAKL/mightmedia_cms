@@ -17,7 +17,7 @@ if ( isset( $_POST['kontaktas'] ) && $_POST['kontaktas'] == 'Siųsti' && strtoup
 	$from  = strip_tags( $_POST['vardas'] );
 	$email = strip_tags( $_POST['email'] );
 
-	$msg = getLangText('contact', 'email') . ": <b>" . $email . "</b><br/>\n" . getLangText('contact',  'name') . ": <b>" . $from . "</b><br/>\n" . getLangText('contact',  'from') . ": <b>" . url() . "</b><br/><b>IP:</b>" . getip() . "<br/>\n----<br/>\n" . nl2br( htmlspecialchars( $_POST['zinute'] ) );
+	$msg = getLangText('contact', 'email') . ": <b>" . $email . "</b><br/>\n" . getLangText('contact',  'name') . ": <b>" . $from . "</b><br/>\n" . getLangText('contact',  'from') . ": <b>" . siteUrl() . "</b><br/><b>IP:</b>" . getip() . "<br/>\n----<br/>\n" . nl2br( htmlspecialchars( $_POST['zinute'] ) );
 	$to  = $conf['Pastas'];
 
 	ini_set( "sendmail_from", $email );

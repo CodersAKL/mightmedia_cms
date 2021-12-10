@@ -2,7 +2,7 @@
 
 require_once config('functions', 'dir') . 'functions.auth.php';
 
-$kelias = explode( '/', url() );
+$kelias = explode( '/', siteUrl() );
 define( "PATH", ( !empty( $kelias[sizeof( $kelias ) - 2] ) ? "/{$kelias[sizeof($kelias)-2]}/" : "/" ) );
 define( "DOM", $kelias[2] );
 
@@ -54,7 +54,7 @@ if ( isset( $_POST['action'] ) && $_POST['action'] == 'prisijungimas' ) {
 			if ( isset( $_POST['Prisiminti'] ) && $_POST['Prisiminti'] == 'on' ) {
 				setcookie( "user", getSession('id') . "." . koduoju( SECRET . getip() . getSession('password')), time() + 60 * 60 * 24 * 30, PATH, DOM );
 			}
-			header( "Location: " . ( isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : url() ) );
+			header( "Location: " . ( isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : siteUrl() ) );
 		} else {
 			mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( getLangText('user', 'wrong') . ": User: " . $strUsername . " Pass: " . str_repeat( '*', strlen( $_POST['slaptazodis'] ) ) ) . ",'" . time() . "', '" . escape( getip() ) . "');" );
 			$strError = getLangText('user', 'wrong');
@@ -83,5 +83,5 @@ if ( isset( $_GET['id'] ) && !empty( $_GET['id'] ) && $_GET['id'] == getLangText
 	logout();
 	setcookie( "PHPSESSID", "", time() - 3600, PATH, DOM );
 	header( "HTTP/1.0 401 Unauthorized" );
-	header( "Location: " . ( isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : url() ) );
+	header( "Location: " . ( isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : siteUrl() ) );
 }

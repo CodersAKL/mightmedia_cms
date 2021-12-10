@@ -62,7 +62,7 @@ if(! function_exists('header_info')) {
 			$pageKeywords = input( strip_tags( $conf['Keywords'] ) );
 		}
 		echo '
-		<base href="' . url() . '"></base>
+		<base href="' . siteUrl() . '"></base>
 		<meta name="generator" content="MightMedia TVS" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="content-language" content="' . lang() . '" />
@@ -72,8 +72,8 @@ if(! function_exists('header_info')) {
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="' . $pageTitle . '" />
 		<meta property="og:description" content="' . $pageDescription . '" />
-		<meta property="og:url" content="' . url() . '" />
-		<meta property="og:image" content="' . url() . 'content/themes/' . input( strip_tags( $conf['Stilius'] ) ) . '/paveiksleliai/mm_logo.png" />
+		<meta property="og:url" content="' . siteUrl() . '" />
+		<meta property="og:image" content="' . siteUrl() . 'content/themes/' . input( strip_tags( $conf['Stilius'] ) ) . '/paveiksleliai/mm_logo.png" />
 
 		' . ( isset( $conf['pages']['rss.php'] ) ? '<link rel="alternate" type="application/rss+xml" title="' . input( strip_tags( $conf['Pavadinimas'] ) ) . '" href="rss.php" />' : '' ) . '
 		
