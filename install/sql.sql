@@ -343,7 +343,7 @@ CREATE TABLE `page` (
   `show` int(1) DEFAULT '1',
   `teises` varchar(255) NOT NULL DEFAULT 'N;',
   `parent` int(150) NOT NULL DEFAULT '0',
-  `builder` text DEFAULT 'cms',
+  `builder` text DEFAULT NULL,
   `metatitle` text DEFAULT NULL,
   `metadesc` text DEFAULT NULL,
   `metakeywords` text DEFAULT NULL,
@@ -383,8 +383,8 @@ CREATE TABLE `panel` (
 --
 
 INSERT INTO `panel` (`id`, `panel`, `lang`, `file`, `place`, `align`, `rodyti`, `show`, `teises`) VALUES
-(1, 'Kalendorius', 'lt', 'content/blocks/kalendorius.php', 1, 'R', 'Taip', 'Y', 'N;'),
-(2, 'Meniu', 'lt', 'content/blocks/meniu.php', 2, 'L', 'Taip', 'Y', 'N;');
+(1, 'Kalendorius', 'lt', 'content/blocks/kalendorius.php', 1, 'R', 'Taip', 1, 'N;'),
+(2, 'Meniu', 'lt', 'content/blocks/meniu.php', 2, 'L', 'Taip', 1, 'N;');
 
 -- --------------------------------------------------------
 
@@ -811,7 +811,7 @@ ALTER TABLE `translations`
 
 
 ALTER TABLE `pa_data`
-  ADD PRIMARY KEY (`id`)
+  ADD PRIMARY KEY (`id`);
 --
 -- AUTO_INCREMENT for dumped tables
 --
