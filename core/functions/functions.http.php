@@ -33,6 +33,7 @@ if(! function_exists('postRemote')) {
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_POSTFIELDS     => $data,
 			// not secure stuff
+			// todo: remove it or change 
 			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_SSL_VERIFYPEER => 0
 		];

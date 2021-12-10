@@ -197,9 +197,11 @@ function adminPages()
 {
 	global $url, $lang, $conf, $buttons, $timeout, $prisijungimas_prie_mysql;
 
-	if($versionData = checkVersion()) {
-		notifyUpdate($versionData);
-	}	
+	// todo: check this after page is online
+
+	// if($versionData = checkVersion()) {
+	// 	notifyUpdate($versionData);
+	// }	
 
 	$fileName = (isset($url['a']) && ! empty(getAllAdminPages($url['a'])) ? getAllAdminPages($url['a']) : null);
 

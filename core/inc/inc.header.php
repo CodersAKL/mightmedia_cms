@@ -137,17 +137,29 @@ function check_name( $name ) {
 	return TRUE;
 }
 
-function curl_get_file_contents( $URL ) {
+function curl_get_file_contents($url) {
 
 	if ( function_exists( 'curl_init' ) ) {
 		$c = curl_init();
-		curl_setopt( $c, CURLOPT_RETURNTRANSFER, 1 );
-		curl_setopt( $c, CURLOPT_CONNECTTIMEOUT, 5 );
-		curl_setopt( $c, CURLOPT_URL, $URL );
-		$contents = curl_exec( $c );
-		curl_close( $c );
+		$curlConfig = [
+			CURLOPT_URL            	=> $url,
+			CURLOPT_RETURNTRANSFER 	=> true,
+			CURLOPT_CONNECTTIMEOUT	=> 5,
+			// not secure stuff
+			// todo: remove it or change 
+			CURLOPT_SSL_VERIFYHOST => 0,
+			CURLOPT_SSL_VERIFYPEER => 0
+		];
 
-		return $contents;
+		curl_setopt_array($c, $curlConfig);
+
+		if (! $result = curl_exec($c)) {
+			echo curl_error($c);
+		}
+		//close connection
+		curl_close($c);
+
+		return $result;
 	} else {
 		return FALSE;
 	}

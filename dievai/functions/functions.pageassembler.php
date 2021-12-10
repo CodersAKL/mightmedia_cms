@@ -91,5 +91,3 @@ function generateNewBlockList($path = '../content/extensions/pageassembler/'){
     return empty($newArray) ? null : $newArray;
     
 }
-?>
-
