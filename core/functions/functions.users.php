@@ -16,8 +16,8 @@ if(! function_exists('avatar')) {
 		} else {
 			$avatardir = (
 			file_exists( ROOT . 'stiliai/' . $conf['Stilius'] . '/no_avatar.png' )
-				? adresas() . 'stiliai/' . $conf['Stilius'] . '/no_avatar.png'
-				: adresas() . 'content/uploads/avatars/no_avatar.png'
+				? siteUrl() . 'stiliai/' . $conf['Stilius'] . '/no_avatar.png'
+				: siteUrl() . 'content/uploads/avatars/no_avatar.png'
 			);
 			$avatarUrl = 'https://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . $size . '&r=g&d=' . $avatardir . '&time=' . time();
 			$result    = '<img src="' . $avatarUrl . '"  width="' . $size . '" alt="avatar" />';

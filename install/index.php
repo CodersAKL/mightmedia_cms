@@ -50,23 +50,23 @@ if (is_dir($stepDirName) && is_file($stepDirName . 'controller.php')) {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Core Css -->
-    <link href="<?php echo adresas(); ?>plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="<?php echo siteUrl(); ?>plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Waves Effect Css -->
-    <link href="<?php echo adresas(); ?>plugins/node-waves/waves.css" rel="stylesheet" />
+    <link href="<?php echo siteUrl(); ?>plugins/node-waves/waves.css" rel="stylesheet" />
 
     <!-- Animation Css -->
-    <link href="<?php echo adresas(); ?>plugins/animate-css/animate.css" rel="stylesheet" />
+    <link href="<?php echo siteUrl(); ?>plugins/animate-css/animate.css" rel="stylesheet" />
 
     <!-- Custom Css -->
-    <link href="<?php echo adresas(); ?>assets/css/style.css" rel="stylesheet">
+    <link href="<?php echo siteUrl(); ?>assets/css/style.css" rel="stylesheet">
 
     <!-- Jquery Core Js -->
-    <script src="<?php echo adresas(); ?>plugins/jquery/jquery.min.js"></script>
+    <script src="<?php echo siteUrl(); ?>plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap Notify Plugin Js -->
-    <script src="<?php echo adresas(); ?>plugins/bootstrap-notify/bootstrap-notify.js"></script>
+    <script src="<?php echo siteUrl(); ?>plugins/bootstrap-notify/bootstrap-notify.js"></script>
     <!-- Bootstrap Select Css -->
-    <link href="<?php echo adresas(); ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+    <link href="<?php echo siteUrl(); ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
     <title><?php echo $lang['setup']['heading']; ?></title>
 </head>
@@ -143,16 +143,16 @@ if (is_dir($stepDirName) && is_file($stepDirName . 'controller.php')) {
     </div>
 
     <!-- Bootstrap Core Js -->
-    <script src="<?php echo adresas(); ?>plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="<?php echo siteUrl(); ?>plugins/bootstrap/js/bootstrap.js"></script>
 
     <!-- Waves Effect Plugin Js -->
-    <script src="<?php echo adresas(); ?>plugins/node-waves/waves.js"></script>
+    <script src="<?php echo siteUrl(); ?>plugins/node-waves/waves.js"></script>
 
     <!-- Select Plugin Js -->
-    <script src="<?php echo adresas(); ?>plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="<?php echo siteUrl(); ?>plugins/bootstrap-select/js/bootstrap-select.js"></script>
 
     <!-- Custom Js -->
-    <script src="<?php echo adresas(); ?>assets/js/admin.js"></script>
+    <script src="<?php echo siteUrl(); ?>assets/js/admin.js"></script>
 </body>
 
 </html>

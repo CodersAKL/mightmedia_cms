@@ -61,7 +61,7 @@ HTML;
 
 		}
 	} elseif ($conf['Editor'] == 'tinymce') {
-		$dir    = adresas();
+		$dir    = siteUrl();
 		$return .= <<<HTML
       <!-- Load TinyMCE -->
 <script src="{$dir}htmlarea/tinymce/tinymce.js" type="text/javascript"></script>
@@ -101,7 +101,7 @@ HTML;
 		}
 		
 	} elseif ( $conf['Editor'] == 'ckeditor' ) {
-		$dir = adresas();
+		$dir = siteUrl();
 
 		$return .= <<<HTML
 	<script type="text/javascript" src="{$dir}htmlarea/ckeditor/ckeditor.js"></script>
@@ -136,7 +136,7 @@ function defaultHead()
 	global $conf;
 
 	?>
-	<base href="<?php echo adresas(); ?>" />
+	<base href="<?php echo siteUrl(); ?>" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><?php echo input(strip_tags($conf['Pavadinimas']) . ' - Admin'); ?></title>
 	<meta name="description" content="" />

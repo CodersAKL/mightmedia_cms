@@ -171,7 +171,7 @@ function browser( $browser ) {
 function getUserCountry( $ip ) {
 
 	if ( function_exists( 'curl_init' ) ) {
-		$url     = 'http://api.wipmania.com/' . $ip . '?' . adresas();
+		$url     = 'http://api.wipmania.com/' . $ip . '?' . siteUrl();
 		$ch      = curl_init();
 		$headers = "Typ: phpcurl\r\n";
 		$headers .= "Ver: 1.0\r\n";
