@@ -3,7 +3,7 @@
 $chmodFiles = [
 	'install/index.php',
 	'.htaccess',
-	'contnent/uploads',
+	'content/uploads',
 	'content/cache',
 	'content/pages',
 	'content/blocks',
