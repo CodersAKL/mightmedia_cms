@@ -19,7 +19,4 @@ if(isset($_GET['a']) && $_GET['a'] === 'ajax') {
 	exit;
 }
 
-global $buttons;
-
-var_dump($buttons);
 require 'themes/material/index.php';
