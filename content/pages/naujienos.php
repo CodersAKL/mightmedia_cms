@@ -57,7 +57,13 @@ if ( $kid == 0 ) {
 			}
 			$sql_autr        = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= '" . $row['autorius'] . "' LIMIT 1" );
 			$data            = $row['data'];
-			$autorius        = user( $row['autorius'], $sql_autr['id'], $sql_autr['levelis'] );
+
+			if(! empty($sql_autr)) {
+				$autorius = user( $row['autorius'], $sql_autr['id'], $sql_autr['levelis'] );
+			} else {
+				$autorius = $row['autorius'];
+			}
+			
 			$categories_pav = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id` = " . escape( $row['kategorija'] ) . " AND `lang` = " . escape( lang() ) . " limit 1" );
 			$pav             = "";
 			if ( isset( $categories_pav['pav'] ) ) {
@@ -114,8 +120,17 @@ if ( $kid != 0 ) {
 			if ( !empty( $sql['daugiau'] ) ) {
 				$text = '<div class="naujiena">' . $sql['daugiau'];
 			}
+
 			$sql_aut = mysql_query1( "SELECT * FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`= '" . $sql['autorius'] . "' LIMIT 1" );
-			$text .= "</div><div class='line'></div>" . date( 'Y-m-d H:i:s', $sql['data'] ) . ",  " . user( $sql['autorius'], $sql_aut['id'], $sql_aut['levelis'] ) . "";
+			
+			if(! empty($sql_aut)) {
+				$itemAuthor = user( $sql['autorius'], $sql_aut['id'], $sql_aut['levelis'] );
+			} else {
+				$itemAuthor = $sql['autorius'];
+			}
+			
+			
+			$text .= "</div><div class='line'></div>" . date( 'Y-m-d H:i:s', $sql['data'] ) . ",  " . $itemAuthor;
 
 			//Dalintis
 			$text .= "<div class='line'></div>

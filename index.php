@@ -17,7 +17,7 @@ if (! isset($_SESSION)) {
 }
 define('ROOT', '');
 
-//kad rodytu per kiek laiko sugeneravo koda
+// Code generation time
 $m1    = explode(" ", microtime());
 $stime = $m1[1] + $m1[0];
 
@@ -53,7 +53,8 @@ include_once 'core/inc/inc.auth.php';
 // 	include_once 'funkcijos.php';
 // }
 
-/* Puslapiu aprasymas */
+// TODO: minimize this huge if/else
+// Pages LOAD
 if (isset($url['id']) && ! empty($url['id']) && isnum($url['id'])) {
     $pslid = (int)$url['id'];
 } else {
@@ -98,7 +99,7 @@ if (isset($pslid) && isnum($pslid) && $pslid > 0) {
                 $page_type = 'cms';
             }
         } elseif ($sql1['builder'] == 'assembler') {
-            $page             = "content/pages/page_assembler";
+            $page             = "content/pages/page_assembler"; // TODO: remove
             $pageId = $sql1['file'];
             $page_type = 'assembler';
         }
@@ -112,7 +113,7 @@ if (isset($pslid) && isnum($pslid) && $pslid > 0) {
 //Jei svetaine uzdaryta remontui ir jei jungiasi ne administratorius
 if ($conf['Palaikymas'] == 1) {
     if (empty(getSession('id')) || getSession('level') != 1) {
-        include_once ROOT . "/content/themes/" . $conf['Stilius'] . "/sfunkcijos.php";
+        include_once __DIR__ . "/content/themes/" . $conf['Stilius'] . "/functions.php";
 
         maintenance($lang['admin']['maintenance'], $conf['Maintenance']);
         exit;
@@ -133,7 +134,7 @@ include_once 'core/inc/inc.header.php';
 // 	die( '<h1>Demesio / Warning</h1><h3>Neištrintas install aplankalas.</h3> Tai saugumo spraga. Prašome pašalinkite šį aplankalą iš serverio arba pakeiskite jo pavadinimą. /Please, remove install folder from server.</h3>' );
 // }
 
-include_once 'content/themes/' . $conf['Stilius'] . '/sfunkcijos.php';
+include_once 'content/themes/' . $conf['Stilius'] . '/functions.php';
 
 if (empty($_GET['ajax'])) {
     include_once 'content/themes/' . $conf['Stilius'] . '/index.php';
@@ -149,7 +150,7 @@ $ttime = ($etime - $stime);
 $ttime = number_format($ttime, 7);
 
 if (getSession('level') == 1) {
-    echo '<!-- Generated ' . apvalinti($ttime, 2) . 's. -->';
+    echo '<!-- Generated ' . apvalinti($ttime, 2) . 's. -->'; // TODO: remove
 }
 
 ob_end_flush();

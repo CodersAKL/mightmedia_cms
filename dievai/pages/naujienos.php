@@ -199,7 +199,7 @@ elseif ( isset( $_POST['action'] ) && $_POST['action'] == getLangText('admin', '
 		if ( isset( $_POST['letter'] ) ) {
 
 			require_once config('class', 'dir') . 'class.phpmailer-lite.php';
-			include_once ROOT . 'content/themes/' . $conf['Stilius'] . '/sfunkcijos.php';
+			include_once ROOT . 'content/themes/' . $conf['Stilius'] . '/functions.php';
 			include_once ROOT . 'content/themes/' . $conf['Stilius'] . '/naujienlaiskiui.php';
 
 			$mail = new PHPMailerLite();

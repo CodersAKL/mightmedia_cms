@@ -251,6 +251,7 @@ function category( $kieno, $leidimas = FALSE ) {
 		if ( $kieno == 'vartotojai' ) {
 			$textas = getLangText('system', 'grouplevel');
 			//$pages[""]="";
+			// TODO: WTF is this?!!!
 			$failai = getFiles( ROOTAS . $conf['Admin_folder'], '.htaccess|index.php|index.html|index.htm|index.php3|config.php|configuration.php|users.php|logs.php|upload.php|todo.php|blocks.php|meniu.php|komentarai.php|narsykle.php|main.php|sfunkcijos.php|pokalbiai.php|dashboard.php|uncache.php|search.php|antivirus.php|sfunkcijos.php' );
 			foreach ( $failai as $file ) {
 				if ( $file['type'] == 'file' ) {
