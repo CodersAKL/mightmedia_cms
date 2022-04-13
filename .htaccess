@@ -5,34 +5,35 @@ Options +Indexes
 # RewriteCond %{HTTPS} off
 # RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
 
-<IfModule mod_php5.c>
-  php_flag magic_quotes_gpc                 off
-  php_flag magic_quotes_sybase              off
-  php_flag register_globals                 off
-  php_flag session.auto_start               off
-  php_value mbstring.http_input             pass
-  php_value mbstring.http_output            pass
-  php_flag mbstring.encoding_translation    off
-  #php_value allow_call_time_pass_reference  on
-</IfModule>
+# <IfModule mod_php5.c>
+#   php_flag magic_quotes_gpc                 off
+#   php_flag magic_quotes_sybase              off
+#   php_flag register_globals                 off
+#   php_flag session.auto_start               off
+#   php_value mbstring.http_input             pass
+#   php_value mbstring.http_output            pass
+#   php_flag mbstring.encoding_translation    off
+#   #php_value allow_call_time_pass_reference  on
+# </IfModule>
 
-<IfModule mod_rewrite.c>
-	RewriteEngine on
-	#kai kuriuose netikusiuose hostinguose reikia
-	#RewriteBase /
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond $1 !^(index\.php|images|javascript|uploads|themes|(.*).(png|js|jpg|css|gif|ico|jpeg|txt|xml)$)
-	RewriteRule ^(.*)$ index.php?id=$1 [L]
-</IfModule>
+# <IfModule mod_rewrite.c>
+# 	RewriteEngine on
+# 	RewriteCond %{REQUEST_FILENAME} !-f
+# 	RewriteCond %{REQUEST_FILENAME} !-d
+# 	RewriteCond $1 !^(index\.php|images|javascript|uploads|themes|(.*).(png|js|jpg|css|gif|ico|jpeg|txt|xml)$)
+# 	RewriteRule ^(.*)$ index.php?id=$1 [L]
+# </IfModule>
 
-<IfModule mod_headers.c>
-        <FilesMatch "\.(xml|png|jpg|gif|css|js|txt|mp3)$">
-                Header set Cache-Control "max-age=172800, proxy-revalidate"
-        </FilesMatch>
-</IfModule>
+# <IfModule mod_headers.c>
+#         <FilesMatch "\.(xml|png|jpg|gif|css|js|txt|mp3)$">
+#                 Header set Cache-Control "max-age=172800, proxy-revalidate"
+#         </FilesMatch>
+# </IfModule>
 
-Order Allow,Deny
-Deny from env=draudziam
+# Order Allow,Deny
+# Deny from env=draudziam
 
-Allow from all
+# Allow from all
+RewriteEngine On
+RewriteCond %{REQUEST_URI}  !(\.png|\.jpg|\.gif|\.jpeg|\.zip|\.css|\.svg|\.js)$
+RewriteRule (.*) index.php [QSA,L]
