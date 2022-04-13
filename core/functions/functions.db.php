@@ -11,11 +11,12 @@ if(! function_exists('escape')) {
 	function escape( $sql ) {
 		global $prisijungimas_prie_mysql;
 		// Stripslashes
-		if ( get_magic_quotes_gpc() ) {
-			$sql = stripslashes( $sql );
-		}
+		// TODO: delete it if works, because of deprecated func
+		// if ( get_magic_quotes_gpc() ) {
+		// 	$sql = stripslashes( $sql );
+		// }
 		// Jei ne skaičius
-		if ( !isNum( $sql ) || $sql[0] == '0' ) {
+		if (! isNum( $sql ) || (is_array($sql) && $sql[0] == '0')) {
 			if ( !isNum( $sql ) ) {
 				$sql = "'" . @mysqli_real_escape_string( $prisijungimas_prie_mysql, $sql ) . "'";
 			}

@@ -10,7 +10,7 @@
             "bootstrap":"3.0",
             "type": "text",
             "title":"2 col text and img",
-            "backEndHtmlFile":"/pageassembler/text_blocks/2-col-text-1-img/2-col-text-1-img.php",
+            "backEndHtmlFile":"/page_assembler/text_blocks/2-col-text-1-img/2-col-text-1-img.php",
             "frontEndHtml":""
         },
     "content":
@@ -29,7 +29,7 @@
             },
             "2":{
                 "type":"text",
-                "style":"width: 100%;",
+                "style":"crop",
                 "name":"Image_sorce",
                 "value":"http://www.apimages.com/Images/Ap_Creative_Stock_Header.jpg"
             },

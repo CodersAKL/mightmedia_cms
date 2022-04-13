@@ -9,12 +9,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4">
-       <img src="<?php echo $content[2]['value'];?>" 
-        <?php 
-            if (!empty($content[2]['style'])){ echo ' style ="' . $content[2]['style'] . '" ';}
-            if (!empty($content[4]['value'])){ echo ' alt ="' . $content[4]['value'] . '" ';}
-            if (!empty($content[3]['value'])){ echo ' title ="' . $content[3]['value'] . '" ';}
-        ?> />
+    <div class="col-lg-4 <?php echo $content[2]['style'];?>">
+       <img src="<?php echo $content[2]['value'];?>" title ="<?php echo $content[3]['value'];?>" alt="<?php echo $content[4]['value'];?>" />
     </div>
 </div>

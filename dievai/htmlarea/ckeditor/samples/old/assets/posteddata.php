@@ -32,9 +32,10 @@ if (!empty($_POST))
 		if ( ( !is_string($value) && !is_numeric($value) ) || !is_string($key) )
 			continue;
 
-		if ( get_magic_quotes_gpc() )
-			$value = htmlspecialchars( stripslashes((string)$value) );
-		else
+			// TODO: delete it if works, because of deprecated func
+		// if ( get_magic_quotes_gpc() )
+		// 	$value = htmlspecialchars( stripslashes((string)$value) );
+		// else
 			$value = htmlspecialchars( (string)$value );
 ?>
 		<tr>

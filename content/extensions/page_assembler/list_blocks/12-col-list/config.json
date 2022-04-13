@@ -10,7 +10,7 @@
             "bootstrap":"3.0",
             "type": "list",
             "title":"12 col list",
-            "backEndHtmlFile":"/pageassembler/list_blocks/12-col-list/12-col-list.php",
+            "backEndHtmlFile":"/page_assembler/list_blocks/12-col-list/12-col-list.php",
             "frontEndHtml":""
         },
     "content":

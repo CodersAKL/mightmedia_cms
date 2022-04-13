@@ -10,7 +10,7 @@
             "bootstrap":"3.0",
             "type": "team",
             "title":"team1",
-            "backEndHtmlFile":"/pageassembler/team_blocks/team_block/team1.php",
+            "backEndHtmlFile":"/page_assembler/team_blocks/team_block/team1.php",
             "frontEndHtml":""
         },
     "content":

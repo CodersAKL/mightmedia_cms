@@ -2,6 +2,8 @@ var button = document.querySelectorAll("button.btn.bg-deep-purple.waves-effect")
 
 for(var i = 0; i < button.length; i++){
     button[i].addEventListener('click', function(){
+        // alert("button was clicked");
+        // var HTMLText = 'some text';
         var HTMLText =
         `
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -30,5 +32,10 @@ for(var i = 0; i < button.length; i++){
         blockToInsert.innerHTML = HTMLText ;
         containerBlock = document.querySelector('div.modal-insert-place');
         containerBlock.appendChild( blockToInsert );
+
+
+        // var div = document.createElement('div');
+        // div.className = 'insert-rows';
+        // div.appendChild(div);
     });
 }

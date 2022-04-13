@@ -2,6 +2,7 @@
 
 /**
  * Tikrina ar kintamasis teigiamas skaičius
+ * TODO: deprecate and remove
  *
  * @param int $value
  *
@@ -10,7 +11,9 @@
 if(! function_exists('isNum')) {
 	function isNum( $value ) {
 
-		return @preg_match( "/^[0-9]+$/", $value ); //}
+		// return @preg_match( "/^[0-9]+$/", $value ); //}
+
+		return is_numeric($value);
 	}
 }
 

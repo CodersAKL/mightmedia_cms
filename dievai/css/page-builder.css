@@ -1,0 +1,155 @@
+.crop {
+
+    overflow: hidden;
+}
+/*
+.row {
+    background: #e9c5c5;
+}
+*/
+.max-plotis{
+    max-width: 100% !important;
+  }
+.crop img {
+    width: 100%;
+    height: auto;
+}
+
+/* Bottom left text */
+.bottom-left {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+}
+
+/* Top left text */
+.top-left {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    color: #ffffff;
+    font-size: 70px;
+}
+
+/* Top right text */
+.top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+}
+
+/* Bottom right text */
+.bottom-right {
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+}
+
+/* Centered text */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    width: 300px;
+    text-align: justify;
+}
+.left-centered {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    color: #ffffff;
+    width: 33%;
+    text-align: justify;
+}
+/* Block Menu */
+
+
+.dropdown-submenu {
+    position:relative;
+    background-color:#FF5722;
+    color:black;
+}
+
+.dropdown-submenu .dropdown-menu {
+    background-color:#FF5722;
+    color:black;
+    top: 0px;
+    left: 100%;
+    margin-top: -25px;
+}
+
+
+#page-builder-zone .row {
+    margin-bottom: 10px;
+    /* border: 2px dashed black; */
+}
+
+.block-item {
+    position: relative;
+}
+
+.block-edit-bar {
+    opacity: 0;
+    background-color: #00000082;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 5px;
+    width: 100%;
+    transition: opacity .5s ease;
+    z-index: 9;
+}
+
+.block-item:hover .block-edit-bar {
+    opacity: 1;
+    transition: opacity .5s ease;
+}
+.box {
+    position: relative;
+    top: 5px;
+    left: 5px;
+    cursor: pointer;
+    border: 2px dotted grey;
+  }
+  
+  .held {
+    border: solid 10px black;
+    background-color: black;
+  }
+  
+  .holder {
+    /*border: solid 5px black;
+    background-color: white;
+    */display: inline-block;
+  }
+  
+  .hovered {
+    border: dotted 5px black;
+    opacity: 0.25;
+  }
+  
+  .invisible {
+    display: none;
+  }
+  
+  #container {
+    margin: auto;
+    position: relative;
+  }
+
+#edit{
+    margin-right:10px;
+    color: #337ab7;
+}
+
+#delete{
+    color: #337ab7;
+}
+
+#pageListForm{
+    position:absolute; 
+    right:2%; 
+    top:10%;
+}

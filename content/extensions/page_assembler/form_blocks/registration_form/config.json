@@ -10,7 +10,7 @@
             "bootstrap":"3.0",
             "type": "form",
             "title":"registration block",
-            "backEndHtmlFile":"/pageassembler/form_blocks/registration_form/registration-form.php",
+            "backEndHtmlFile":"/page_assembler/form_blocks/registration_form/registration-form.php",
             "frontEndHtml":""
         },
     "content":

@@ -17,10 +17,14 @@ $upload_mb    = min( $max_upload, $max_post, $memory_limit );
 define( "MFDYDIS", $upload_mb * 1024 * 1024 );
 //ini_set("memory_limit", MFDYDIS);
 define( "OK", TRUE );
+// rtrim( $string, '/\\' )
+define('ROOTAS', realpath(dirname(__FILE__) . '/../') . DIRECTORY_SEPARATOR);
+// define('ROOTAS', rtrim(dirname(__FILE__) . '/../', '/\\') . DIRECTORY_SEPARATOR);
 
-define('ROOTAS', dirname( realpath( __FILE__ ) ) . '/../' );
+define('EXTENSIONS_ROOT', ROOTAS . 'extensions');
+
 if(! defined('ROOT')) {
-	define('ROOT', dirname( realpath( __FILE__ ) ) . '/../' );
+	define('ROOT', dirname( realpath( __FILE__ )) . '/../' );
 }
 
 date_default_timezone_set(TIME_ZONE);
