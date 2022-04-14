@@ -9,7 +9,7 @@ if (! isset($_SESSION)) {
 	session_start();
 }
 
-define('ROOT', '');
+// define('ROOT', ''); // todo: remove?
 
 // Code generation time
 $m1    = explode(" ", microtime());
@@ -32,11 +32,6 @@ if (is_file('config.php')) {
 }
 
 /**
- * Connection to DB
- */
-include_once 'core/inc/inc.db_ready.php';
-
-/**
  * BOOT
  */
 include_once 'core/boot.php';
@@ -49,7 +44,7 @@ include_once 'core/inc/inc.auth.php';
 
 
 // Pages LOAD by routes
-include_once 'core/functions/functions.routes.php';
+// include_once 'core/functions/functions.routes.php';
 include_once 'core/inc/inc.routes.php';
 // TODO: remove
 // if (isset($url['id']) && ! empty($url['id']) && isnum($url['id'])) {

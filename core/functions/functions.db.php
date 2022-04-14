@@ -1,5 +1,64 @@
 <?php
 
+
+
+function createTable($array = [])
+{
+	global $mmdb;
+
+	// $array = [
+	// 	'name'	=>	'',
+	// 	'columns'	=>	[
+	// 		'name'	=>	[
+	// 			'type'		=>	'text',
+	// 			'null'		=>	false,
+	// 			'default'	=>	null,
+	// 			'increment'	=>	false,
+	// 			'collation'	=>	'utf8mb4_general_ci',
+	// 		]
+	// 	],
+	// 	'engine'	=>	'InnoDB', // MyISAM/InnoDB
+	// 	'charset'	=>	'utf8mb4_general_ci',
+	// 	'primary'	=>	'id', // ?
+
+	// ];
+
+	if(empty($array) && empty($array['columns'])) {
+		return false;
+	}
+
+	// make a string
+	$columns = [];
+
+	foreach ($array['columns'] as $columnKey => $column) {
+		$default		= ! empty($column['default']) && is_string($column['default']) ? 'DEFAULT ' . $column['default'] . '' : '';
+		$null			= ! empty($column['null']) && $column['null'] ? 'NULL ' : 'NOT NULL ';
+		$increment		= ! empty($column['increment']) && $column['increment'] ? 'AUTO_INCREMENT ' : '';
+
+		$columns[]		= '`' . $columnKey . '` ' . $column['type'] . ' ' . $default . $null . $increment;
+	}
+
+	// indexes
+	if(isset($array['primary']) && $array['primary']) {
+		$columns[] = ' PRIMARY KEY (`' . $array['primary'] . '`)';
+	}
+
+	// check if table exists
+	// if($mmdb->run(''))
+
+	// create sql string
+	$sqlCreate = 'CREATE TABLE IF NOT EXISTS `' . $array['name'] . '` (' . implode(', ', $columns) . ') ENGINE=' . $array['engine'] . ' DEFAULT CHARSET=' . $array['charset'] . ';';
+
+	// create table
+	$mmdb->run($sqlCreate);
+
+	// check if table exists
+	$sqlCheck = "SHOW TABLES LIKE '" . $array['name'] . "';";
+	
+	return $mmdb->run($sqlCheck);
+}
+
+// OLD-----
 /**
  * Sutvarko SQL užklausą
  *
@@ -27,42 +86,17 @@ if(! function_exists('escape')) {
  * MySQL queries
  *
  * @param string $query
- * @param int    $lifetime
  *
  * @return array
  */
 if(! function_exists('dbQuery')) {
-	function dbQuery($query, $lifetime = 0) {
+	function dbQuery($query) {
+		global $mmdb;
 
-		global $mysql_num, $prisijungimas_prie_mysql, $conf;
+		// trigger_error('Deprecated function called. Use `dbQuery` instead.', E_USER_NOTICE);
+		//add LOGS
 
-		$return = [];
-
-		$mysql_num++;
-
-		$sql = mysqli_query($prisijungimas_prie_mysql, $query);
-
-		if (mysqli_error($prisijungimas_prie_mysql)) {
-			mysqli_query($prisijungimas_prie_mysql, "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( "MySql error:  " . mysqli_error($prisijungimas_prie_mysql) . " query: " . $query ) . ",'" . time() . "', '" . escape( getip() ) . "');" );
-		}
-		
-		if (in_array(strtolower(substr($query, 0, 6)), ['delete', 'insert', 'update'])) {
-			if (in_array(strtolower(substr($query, 0, 6)), ['insert'])) {
-				$return = mysqli_insert_id($prisijungimas_prie_mysql);
-			} else {
-				$return = mysqli_affected_rows($prisijungimas_prie_mysql);
-			}
-		} else {
-			if (substr(strtolower($query), -7) == 'limit 1') {
-				$return = mysqli_fetch_assoc($sql);
-			} else {
-				while ($row = mysqli_fetch_assoc($sql)) {
-					$return[] = $row;
-				}
-			}
-		}
-
-		return $return;
+		return $mmdb->run($query);
 	}
 }
 

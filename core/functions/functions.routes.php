@@ -42,8 +42,7 @@ function any($route, $pathToInclude)
 
 function route($route, $pathToInclude)
 {
-	// $ROOT = $_SERVER['DOCUMENT_ROOT'];
-	$ROOT = $_SERVER['DOCUMENT_ROOT'];
+	$ROOT = ROOT;
 
 	if($route == "/404"){
 		include_once("$ROOT/$pathToInclude");

@@ -1,4 +1,5 @@
 <?php
+// todo: everything to boot.php ?
 ob_start();
 header( "Cache-control: public" );
 header( "Content-type: text/html; charset=utf-8" );
@@ -25,10 +26,7 @@ if (is_file(ROOT . 'config.php')) {
 } else {
 	die('System error: CMS is not installed.');
 }
-/**
- * Connection to DB
- */
-include_once ROOT . 'core/inc/inc.db_ready.php';
+
 /**
  * BOOT
  */

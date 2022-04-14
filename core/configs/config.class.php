@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'dir'   => ROOTAS . 'core/class/',
+    'dir'   => ROOT . 'core/class/',
 ];
