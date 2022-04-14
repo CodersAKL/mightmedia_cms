@@ -9,14 +9,12 @@ if (! isset($_SESSION)) {
 	session_start();
 }
 
-// define('ROOT', ''); // todo: remove?
-
 // Code generation time
 $m1    = explode(" ", microtime());
 $stime = $m1[1] + $m1[0];
 
 //Iterpiam nustatymu faila jei ne perkialiam i instaliacija
-clearstatcache();
+clearstatcache(); // todo: check!
 
 if (is_file('config.php')) {
 	include_once 'config.php';

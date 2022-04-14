@@ -1,7 +1,6 @@
 <?php
 
 require_once config('functions', 'dir') . 'functions.auth.php';
-
 $kelias = explode( '/', siteUrl() );
 define( "PATH", ( !empty( $kelias[sizeof( $kelias ) - 2] ) ? "/{$kelias[sizeof($kelias)-2]}/" : "/" ) );
 define( "DOM", $kelias[2] );
@@ -17,29 +16,15 @@ if (empty(getSession('level'))) {
 
 //tikrinam sesija
 if (! empty(getSession('username')) && ! empty(getSession('password'))) {
-	$linformacija = mysql_query1( "SELECT `id`, `levelis`,`pass`,`nick`,`login_data`,`login_before`,(SELECT `mod` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=levelis) as `mod` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape(getSession('username')) . " AND `pass`=" . escape(getSession('password')) . " LIMIT 1" );
+	$userQuery = "SELECT `id`, `levelis`,`pass`,`nick`,`login_data`,`login_before`,(SELECT `mod` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=levelis) as `mod` FROM `" . LENTELES_PRIESAGA . "users` WHERE `nick`=" . escape(getSession('username')) . " AND `pass`=" . escape(getSession('password')) . " LIMIT 1";
+	$linformacija = mysql_query1($userQuery);
 	if ( !empty( $linformacija['levelis'] ) ) {
 		login( $linformacija );
 	} else {
 		logout();
 	}
-//jeigu yra sausainis bandom jungtis naudojant ji
-} elseif ( isset( $_COOKIE[SECRET]['user'] ) && !empty( $_COOKIE[SECRET]['user'] ) ) {
-	$user_id = explode( ".", $_COOKIE[SECRET]['user'], 2 );
-	if ( isnum( $user_id['0'] ) ) {
-		$user_pass = $user_id['1'];
-		$user_id   = $user_id['0'];
-	}
-	$linformacija2 = mysql_query1( "SELECT `id`, `levelis`,`pass`,`nick`,`login_data`,`login_before`, (SELECT `mod` FROM `" . LENTELES_PRIESAGA . "grupes` WHERE `id`=levelis) as `mod` FROM `" . LENTELES_PRIESAGA . "users` WHERE `id`=" . escape( (int)$user_id ) . " LIMIT 1" );
-	if ( !empty( $linformacija2['levelis'] ) && isset( $user_pass ) && koduoju( SECRET . getip() . $linformacija2['pass'] ) === $user_pass ) {
-		$result = mysql_query1( "UPDATE `" . LENTELES_PRIESAGA . "users` SET `login_before`=login_data, `login_data` = '" . time() . "', `ip` = '" . escape(getip()) . "' WHERE `id` ='" . escape( $user_id ) . "' LIMIT 1" );
-		login( $linformacija2 );
-	} else {
-		mysql_query1( "INSERT INTO `" . LENTELES_PRIESAGA . "logai` (`action` ,`time` ,`ip`) VALUES (" . escape( getLangText('user', 'cookie') . ": UserID: " . $user_id . " Pass: " . $user_pass ) . ", '" . time() . "', '" . escape( getip() ) . "')" );
-		$strError = getLangText('user', 'cookie');
-		logout();
-	}
 }
+
 //jeigu jungiasi per html forma
 if ( isset( $_POST['action'] ) && $_POST['action'] == 'prisijungimas' ) {
 

@@ -58,6 +58,72 @@ function createTable($array = [])
 	return $mmdb->run($sqlCheck);
 }
 
+function dbInsert(string $table, array $data, string $fieldGet = null)
+{
+	global $mmdb;
+
+	$date = new DateTime();
+
+	$defaultData = [
+		'created' => $date->getTimestamp(),
+		'updated' => $date->getTimestamp(),
+	];
+
+	$data = array_merge($defaultData, $data);
+
+	if(! empty($fieldGet)) {
+		return $mmdb->insertGet($table, $data, $fieldGet);
+	}
+
+	return $mmdb->insert($table, $data);
+}
+
+function dbUpdate($table, $data = [], $where = [])
+{
+	global $mmdb;
+
+	$date = new DateTime();
+
+	$defaultData = [
+		'updated' => $date->getTimestamp(),
+	];
+
+	$data = array_merge($defaultData, $data);
+
+	return $mmdb->update($table, $data, $where);
+}
+
+function dbDelete($table, $data = [])
+{
+	global $mmdb;
+
+	return $mmdb->delete($table, $data);
+}
+
+function dbSelect(string $table, array $where, array $columns = null)
+{
+	global $mmdb;
+
+	$string = '';
+	$i 		= 0;
+
+	foreach ($where as $column => $value) {
+		$i++;
+
+		if($i = 1) {
+			$string .= ' WHERE ' . $column . ' = ' . $value;
+		} else {
+			$string .= ' AND ' . $column . ' = ' . $value;
+		}
+	}
+
+	$queryColumns = ! empty($columns) ? implode(', ', $columns) : '*';
+
+	$query = 'SELECT ' . $queryColumns . ' FROM `' . $table . '`' . $string;
+
+	return $mmdb->run($query);
+}
+
 // OLD-----
 /**
  * Sutvarko SQL užklausą

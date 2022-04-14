@@ -1,4 +1,20 @@
 <?php
+
+// fix check
+if (is_file(ROOT . 'config.php')) {
+	include_once ROOT . 'config.php';
+	if(DEBUG) {
+		ini_set('error_reporting', E_ALL);
+		ini_set('display_errors', 'On');
+	}
+} elseif ( is_file( ROOT . 'install/index.php' ) ) {
+	header( 'location: ../install/index.php' );
+	exit;
+} else {
+	die('System error: CMS is not installed.');
+}
+
+
 // ban for trying open file
 if (basename($_SERVER['PHP_SELF']) == 'boot.php') {
 	ban(getip(), $lang['system']['forhacking']);
