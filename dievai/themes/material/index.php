@@ -1,35 +1,29 @@
-﻿<?php
-include 'header.php';
-$user = getUserMail(getSession('id'));
-?>
+﻿<?php include 'header.php'; ?>
 <section>
     <!-- Left Sidebar -->
     <aside id="leftsidebar" class="sidebar">
         <!-- User Info -->
         <div class="user-info">
             <div class="image">
-                <?php echo avatar($user['email'], 48); ?>
+                <?php echo avatar(loggedUser('email'), 48); ?>
             </div>
             <div class="info-container">
                 <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <?php
-                        if(! empty($user['vardas']) && ! empty($user['pavarde'])) {
-                            echo $user['vardas'] . ' ' . $user['pavarde'];
+                        $userName = loggedUser('name', true);
+                        if(! empty($userName)) {
+                            echo $userName;
                         } else {
-                            echo $user['nick'];
+                            echo loggedUser('email');
                         }
                     ?>
                 </div>
-                <div class="email"><?php echo $user['email']; ?></div>
+                <div class="email"><?php echo loggedUser('email'); ?></div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
                         <li> <a>Profilis</a></li>
-                        <?php if(isset($conf['pages']['view_user.php'])) { ?>
-                            <li>
-                                <a href="<?php echo url( '?id,' . $conf['pages']['view_user.php']['id'] . ';' . $user['nick'] ); ?>"><i class="material-icons">person</i><?php echo getLangText('user', 'user_profile'); ?></a>
-                            </li>
-                        <?php } ?>
+
                         <li role="separator" class="divider"></li>
                         <li>
                             <a href="/<?php echo getLangText('user', 'logout'); ?>"><i class="material-icons">input</i><?php echo getLangText('user', 'logout'); ?></a>

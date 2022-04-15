@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?php echo getsession('lang'); ?>">
+<html lang="<?php echo getseSsion('lang'); ?>">
 
 <head>
 	<?php header_info(); ?>

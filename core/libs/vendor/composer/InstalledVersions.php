@@ -43,6 +43,15 @@ private static $installed = array (
       ),
       'reference' => NULL,
     ),
+    'kint-php/kint' => 
+    array (
+      'pretty_version' => '4.1.2',
+      'version' => '4.1.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'fa53c4333cda79dc9cb002cfa029abe994d0ae00',
+    ),
     'paragonie/corner' => 
     array (
       'pretty_version' => 'v2.0.1',

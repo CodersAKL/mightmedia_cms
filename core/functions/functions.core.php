@@ -17,10 +17,11 @@ function config($file, $key = null)
 if(! function_exists('lang')) {
 	function lang() {
 
-		if ( empty(getSession('lang')) ) {
-			global $conf;
+		if (! getSession('lang')) {
+			$siteLang = getOption('site_lang');
+			setSession('lang', $siteLang);
 
-			setSession('lang', basename($conf['kalba'], '.php'));
+			return $siteLang;
 		}
 
 		return getSession('lang');
@@ -326,7 +327,7 @@ if(! function_exists('versija')) {
 	// 	return apvalinti( ( intval( $scid ) / 5000 ) + '1.28', 2 );
 	// }
 	function versija() {
-		$content  	= file_get_contents(ROOTAS . '/version.txt');
+		$content  	= file_get_contents(ROOT . '/version.txt');
 
 		return $content;
 	}
@@ -497,7 +498,8 @@ if(! function_exists('getLangText')) {
 	function getLangText($group, $key, $new = false, $value = ''){
 		global $lang;
 
-		
+		// TODO: renew lang parse
+		return $group . '-' . $key; // dev
 
 		if (array_key_exists($group, $lang) && (array_key_exists($key, $lang[$group]))){
 			$langText = $lang[$group][$key];
@@ -513,7 +515,7 @@ if(! function_exists('getLangText')) {
 			$needTranslation = '--- undefined ---';
 		}
 
-		if  (!empty(getSession('translation_status'))){
+		if  (getSession('translation_status')){
 			$sqlCheckTranslation = "SELECT * FROM `" . LENTELES_PRIESAGA . "translations` WHERE `group`= " . escape($group) . " and `key`= " . escape($key) . " and `status` = 0 ORDER BY `last_update` DESC LIMIT 1";
 			if ($textFromDb = mysql_query1($sqlCheckTranslation)){
 				$langTextFromDataBase =  $textFromDb['translation'];
@@ -588,14 +590,32 @@ if (! function_exists('langTextToFile')){
 	}
 }
 
-function setSession($key, $value)
+function setSession(string $key, $value)
 {
-	$_SESSION[SECRET][$key] = $value;
+	// if session with current key exists make array with that key
+	if(isset($_SESSION[SECRET][$key])) {
+
+		if(is_array($value)) {
+			foreach($value as $k => $v) {
+				$_SESSION[SECRET][$key][$k] = $v;
+			}
+			
+		} else {
+			if(is_string($_SESSION[SECRET][$key])) {
+				$_SESSION[SECRET][$key] = [];
+			}
+
+			$_SESSION[SECRET][$key][] = $value;
+		}
+
+	} else {
+		$_SESSION[SECRET][$key] = $value;
+	}
 
 	return $_SESSION[SECRET][$key];
 }
 
-function setSessions($array)
+function setSessions(array $array)
 {
 	foreach ($array as $key => $value) {
 		$_SESSION[SECRET][$key] = $value;
@@ -604,7 +624,8 @@ function setSessions($array)
 
 function getSession($key)
 {
-	return ! isset($_SESSION[SECRET][$key]) ? null : $_SESSION[SECRET][$key];
+	// todo: make sure we wil need null not a bolean
+	return ! isset($_SESSION[SECRET][$key]) || empty($_SESSION[SECRET][$key]) ? null : $_SESSION[SECRET][$key];
 }
 
 function forgotSession($key)
@@ -617,4 +638,36 @@ function forgotSessions($keys = [])
 	foreach ($keys as $key) {
 		forgotSession($key);
 	}
+}
+
+// flash messages to sessions
+function setFlashMessages(string $name, string $type, $value)
+{
+
+	if(is_array($value)) {
+		
+		foreach ($value as $keyMessage => $valueMessage) {
+			$message[$name][$type][$keyMessage] = $valueMessage;
+
+			// if exsist - forget
+			if(isset($_SESSION[SECRET][$name][$type][$keyMessage])) {
+				unset($_SESSION[SECRET][$name][$type][$keyMessage]);
+			}
+		}
+	} else {
+		$message[$name][$type]['main'] = $value;
+
+		// if exsist - forget
+		if(isset($_SESSION[SECRET][$name][$type]['main'])) {
+			unset($_SESSION[SECRET][$name][$type]['main']);
+		}
+	}
+
+	setSession('flash_messages', $message);
+}
+
+function getFlashMessages(string $key)
+{
+
+	return getSession('flash_messages', $key);
 }

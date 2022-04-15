@@ -1,11 +1,22 @@
 <?php
 
-// fix check
+define('DS', DIRECTORY_SEPARATOR);
+define('ROOT', $_SERVER['DOCUMENT_ROOT'] . DS);
+
+date_default_timezone_set(TIME_ZONE);
+
 if (is_file(ROOT . 'config.php')) {
 	include_once ROOT . 'config.php';
+
 	if(DEBUG) {
-		ini_set('error_reporting', E_ALL);
-		ini_set('display_errors', 'On');
+		// ini_set('error_reporting', E_ALL);
+		error_reporting(E_ALL);
+		ini_set('display_errors', true);
+		ini_set('display_startup_errors', true);
+		// Error/Exception file logging engine.
+		ini_set('log_errors', true);
+		// Logging file path
+		ini_set('error_log', ROOT . 'errors.log');
 	}
 } elseif ( is_file( ROOT . 'install/index.php' ) ) {
 	header( 'location: ../install/index.php' );
@@ -14,6 +25,7 @@ if (is_file(ROOT . 'config.php')) {
 	die('System error: CMS is not installed.');
 }
 
+require_once ROOT . 'core/libs/vendor/autoload.php';
 
 // ban for trying open file
 if (basename($_SERVER['PHP_SELF']) == 'boot.php') {
@@ -35,16 +47,7 @@ define( "MFDYDIS", $upload_mb * 1024 * 1024 );
 //ini_set("memory_limit", MFDYDIS);
 define( "OK", TRUE );
 
-define('DS', DIRECTORY_SEPARATOR);
-define('ROOT', $_SERVER['DOCUMENT_ROOT'] . DS);
-define('MAIN_DIR', $_SERVER['DOCUMENT_ROOT'] . DS);
-// TODO: change
-// define('ROOTAS', dirname( realpath( __FILE__ ) ) . '/../' );
-// if(! defined('ROOT')) {
-// 	define('ROOT', dirname( realpath( __FILE__ ) ) . '/../' );
-// }
 
-date_default_timezone_set(TIME_ZONE);
 
 /**
  * Connection to DB
@@ -57,7 +60,15 @@ require_once ROOT . 'core/inc/inc.db_ready.php';
 
 require_once ROOT . 'core/functions/functions.core.php';
 
-
+// set CSRF token data
+if(! getSession('token')) {
+	setSessions(
+		[
+			'token'			=> bin2hex(random_bytes(32)),
+			'token_expire'	=> time() + 3600 // 1 hour = 3600 secs TODO: change time
+		]
+	);
+}
 
 /**
  * Load core
@@ -73,13 +84,13 @@ foreach ($loadCoreConfigsArray as $loadCoreConfigsSlug) {
 }
 
 $loadCoreFunctionsArray = [
+	'db',
 	'deprecated',
+	'options',
 	'cache',
     'calendar',
     'categories',
-    // 'core',
     'date',
-    'db',
     'file',
     'hooks',
     'http',
@@ -90,10 +101,20 @@ $loadCoreFunctionsArray = [
 	'users',
 	'extensions',
 	'routes',
+	'form',
 ];
 
 foreach ($loadCoreFunctionsArray as $loadCoreFunctionSlug) {
     require_once ROOT . 'core/functions/functions.' . $loadCoreFunctionSlug . '.php';
+}
+
+// check CSRF token on POST
+if(isset($_POST) && ! empty($_POST)) {
+	if(isset($_POST['token']) && ! empty($_POST['token'])) {
+		checkCSRFreal($_POST['token']);
+	} else {
+		die('No posting without CSRF token!');
+	}
 }
 
 /**
@@ -101,18 +122,18 @@ foreach ($loadCoreFunctionsArray as $loadCoreFunctionSlug) {
  */
 $lang = [];
 
-if (! empty(getSession('lang')) && is_file(ROOT . 'content/lang/' . basename(getSession('lang')) . '.php' )) {
-	require ROOT . 'content/lang/' . basename(getSession('lang'), '.php') . '.php';
+if (lang() && is_file(ROOT . 'content/lang/' . lang() . '.php' )) {
+	require ROOT . 'content/lang/' . lang() . '.php';
 	$extensions = getActiveExtensions();
 	foreach ($extensions as $extension) {
-		if (is_file(ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . basename(getSession('lang'), '.php') . '.php')){
-			require ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . basename(getSession('lang'), '.php') . '.php';
+		if (is_file(ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . lang() . '.php')){
+			require ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . lang() . '.php';
 		}
 	}
 }
 
-if (isset($conf['kalba'])) {
-	$dir = ROOT . 'content/extensions/translation/' . getSession('lang');
+if (getOption('site_lang')) {
+	$dir = ROOT . 'content/extensions/translation/' . lang();
 	$path = $dir . '/translations.php';
 	if(file_exists($path)){
 		$translations = unserialize(file_get_contents($path));

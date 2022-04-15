@@ -11,7 +11,7 @@ if (! isset($_SESSION)) {
 /**
  * BOOT
  */
-include_once ROOT . 'core/boot.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/core/boot.php';
 
 
 include_once ROOT . 'core/inc/inc.auth.php';
@@ -20,4 +20,16 @@ require 'themes/material/config.php';
 require 'themes/material/functions.php';
 
 include 'functions/functions.core.php';
-include 'themes/material/login.php';
+
+// add admin login check
+
+if (! empty(getSession('user')) && getSession('user')['level'] == 1 ) {
+    include 'main.php';;
+} else {
+	// do login
+	if(isset($_POST['action']) && $_POST['action'] == 'admin-login') {
+		loginUser($_POST['email'], $_POST['password']);
+	}
+
+	include 'themes/material/login.php';
+}

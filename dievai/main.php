@@ -1,13 +1,6 @@
 <?php
 
-include 'config/head.php';
-
-require 'themes/material/config.php';
-
 require 'config/menu.php';
-
-include 'functions/functions.core.php';
-require 'themes/material/functions.php';
 require 'config/buttons.php';
 
 require 'themes/material/form.class.php';

@@ -100,7 +100,7 @@ function dbDelete($table, $data = [])
 	return $mmdb->delete($table, $data);
 }
 
-function dbSelect(string $table, array $where, array $columns = null)
+function dbSelect(string $table, array $where, array $columns = null, $limit = 0)
 {
 	global $mmdb;
 
@@ -111,10 +111,14 @@ function dbSelect(string $table, array $where, array $columns = null)
 		$i++;
 
 		if($i = 1) {
-			$string .= ' WHERE ' . $column . ' = ' . $value;
+			$string .= " WHERE `" . $column . "` = '" . $value . "'";
 		} else {
-			$string .= ' AND ' . $column . ' = ' . $value;
+			$string .= " AND `" . $column . "` = '" . $value . "'";
 		}
+	}
+
+	if($limit) {
+		$string .= " LIMIT " . $limit;
 	}
 
 	$queryColumns = ! empty($columns) ? implode(', ', $columns) : '*';
@@ -122,6 +126,12 @@ function dbSelect(string $table, array $where, array $columns = null)
 	$query = 'SELECT ' . $queryColumns . ' FROM `' . $table . '`' . $string;
 
 	return $mmdb->run($query);
+}
+
+function dbRow(string $table, array $where, array $columns = null)
+{
+
+	return dbSelect($table, $where, $columns, 1)[0];
 }
 
 // OLD-----
@@ -132,17 +142,18 @@ function dbSelect(string $table, array $where, array $columns = null)
  *
  * @return string escaped
  */
+// TODO: can we get solution to escape strings?
 if(! function_exists('escape')) {
 	function escape( $sql ) {
-		global $prisijungimas_prie_mysql;
-		// Stripslashes
-		$sql = stripslashes($sql);
+		// global $prisijungimas_prie_mysql;
+		// // Stripslashes
+		// $sql = stripslashes($sql);
 		
-		if ( !isNum( $sql ) || $sql[0] == '0' ) {
-			if ( !isNum( $sql ) ) {
-				$sql = "'" . @mysqli_real_escape_string( $prisijungimas_prie_mysql, $sql ) . "'";
-			}
-		}
+		// if ( !isNum( $sql ) || $sql[0] == '0' ) {
+		// 	if ( !isNum( $sql ) ) {
+		// 		$sql = "'" . @mysqli_real_escape_string( $prisijungimas_prie_mysql, $sql ) . "'";
+		// 	}
+		// }
 
 		return $sql;
 	}

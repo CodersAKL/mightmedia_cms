@@ -1,5 +1,40 @@
 <?php
 
+function loggedUser(string $key = null, $dataFromDB = null)
+{
+	if(! empty($dataFromDB)) {
+		if(is_array($dataFromDB)) {
+			$dbData = getUserById(getSession('user')['id'], $dataFromDB);
+
+			return $dbData;
+		}
+
+		if(is_string($dataFromDB) && $dataFromDB === 'all') {
+			return getUserById(getSession('user')['id']);
+		}
+
+		return getUserById(getSession('user')['id'], [$key])[$key];
+	}
+
+	if(! empty($key)) {
+		return isset(getSession('user')[$key]) ? getSession('user')[$key] : null;
+	}
+
+	return getSession('user');
+}
+
+function getUserById(int $id, array $columns = null)
+{
+	$where = [
+		'id' => $id
+	];
+
+	return dbRow('users', $where, $columns);
+}
+
+
+// OLD----
+
 /**
  * Grąžina vartotojo avatarą
  *
@@ -15,8 +50,8 @@ if(! function_exists('avatar')) {
 			$result = '<img src="' . ROOT . 'content/uploads/avatars/' . md5( $mail ) . '.jpeg?' . time() . '" width="' . $size . '" height="' . $size . '" alt="avataras" />';
 		} else {
 			$avatardir = (
-			file_exists( ROOT . 'stiliai/' . $conf['Stilius'] . '/no_avatar.png' )
-				? siteUrl() . 'stiliai/' . $conf['Stilius'] . '/no_avatar.png'
+			file_exists( ROOT . 'stiliai/' . getOption('site_theme') . '/no_avatar.png' )
+				? siteUrl() . 'stiliai/' . getOption('site_theme') . '/no_avatar.png'
 				: siteUrl() . 'content/uploads/avatars/no_avatar.png'
 			);
 			$avatarUrl = 'https://www.gravatar.com/avatar/' . md5(strtolower($mail)) . '?s=' . $size . '&r=g&d=' . $avatardir . '&time=' . time();

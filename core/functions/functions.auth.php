@@ -12,14 +12,12 @@ function checkPassword($string, $hash)
 
 function createUser($email, $password)
 {
-	$return = dbInsert(
-		'users', 
-		[
-			'email'		=>	$email,
-			'password'	=>	createPassword($password),
-		],
-		'id'
-	);
+	$data = [
+		'email'		=>	$email,
+		'password'	=>	createPassword($password),
+	];
+
+	$return = dbInsert('users', $data, 'id');
 
 	return $return;
 }
@@ -27,30 +25,38 @@ function createUser($email, $password)
 function loginUser($email, $password)
 {
 	$columns = [
+		'id',
 		'email',
 		'password',
+		'level',
 	];
 
 	$where = [
 		'email'	=> $email
 	];
 
-	$user = dbSelect('users', $where, $columns);
+	// Check if user exists
+	if(! $user = dbRow('users', $where, $columns)) {
 
-	var_dump($user); exit;
-
-	if(! checkPassword($password, $user['hash'])) {
+		setFlashMessages('login', 'errors', 'User not exists!');
 		return false;
 	}
 
-	$data = [
-		'user_id'	=> $user['id'],
+	// Check if user password the same
+	if(! checkPassword($password, $user['password'])) {
+
+		setFlashMessages('login', 'errors', 'Bad password!');
+		return false;
+	}
+
+	$data['user'] = [
+		'id'	=> $user['id'],
 		'email' 	=> $user['email'],
+		'level' 	=> $user['level'],
 	];
 
 	// set user data to session
 	setSessions($data);
-
 }
 
 function logoutUser() 

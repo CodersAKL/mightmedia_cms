@@ -6,11 +6,19 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit0373bcb0d635f3eaea5ce474f17d0e04
 {
+    public static $files = array (
+        '3917c79c5052b270641b5a200963dbc2' => __DIR__ . '/..' . '/kint-php/kint/init.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (
             'ParagonIE\\EasyDB\\' => 17,
             'ParagonIE\\Corner\\' => 17,
+        ),
+        'K' => 
+        array (
+            'Kint\\' => 5,
         ),
     );
 
@@ -22,6 +30,10 @@ class ComposerStaticInit0373bcb0d635f3eaea5ce474f17d0e04
         'ParagonIE\\Corner\\' => 
         array (
             0 => __DIR__ . '/..' . '/paragonie/corner/src',
+        ),
+        'Kint\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kint-php/kint/src',
         ),
     );
 

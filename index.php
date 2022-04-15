@@ -16,18 +16,7 @@ $stime = $m1[1] + $m1[0];
 //Iterpiam nustatymu faila jei ne perkialiam i instaliacija
 clearstatcache(); // todo: check!
 
-if (is_file('config.php')) {
-	include_once 'config.php';
-	if (DEBUG) {
-		ini_set('error_reporting', E_ALL);
-		ini_set('display_errors', 'On');
-	}
-} elseif (is_file('install/index.php') && ! isset($conf['Palaikymas'])) {
-	header('location: install/index.php');
-	exit;
-} else {
-	die('<h1>Sistemos klaida / System error</h1>Atsiprašome svetaine neįdiegta. Trūksta sisteminių failų. / CMS is not installed.');
-}
+
 
 /**
  * BOOT

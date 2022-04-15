@@ -1,28 +1,4 @@
 <?php
-//medzio darymo f-ja
-function build_tree( $data, $id = 0, $active_class = 'active' ) {
-
-	global $lang;
-	if ( !empty( $data ) ) {
-		$re = "";
-		foreach ( $data[$id] as $row ) {
-			if ( isset( $data[$row['id']] ) ) {
-				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><span style=\"display: inline; width: 100px;margin:0; padding:0; height: 16px;\"><a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\"  onClick=\"return confirm(\'" . getLangText('admin', 'delete') . "?\')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" title=\"" . getLangText('admin', 'delete') . "\"  /></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/wrench.png\" title=\"" . getLangText('admin', 'edit') . "\"/></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" title=\"" . getLangText('admin', 'page_text') . "\" /></a></span><ul>";
-				$re .= build_tree( $data, $row['id'], $active_class );
-				$re .= "</ul></li>";
-			} else {
-				$re .= "<li><a href=\"" . url( '?id,' . $row['id'] ) . "\" >" . $row['pavadinimas'] . "</a><span style=\"display: inline; width: 100px; margin:0; padding:0; height: 16px;\">
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';d,' . $row['id'] ) . "\" onClick=\"return confirm(\'" . getLangText('admin', 'delete') . "?\')\"><img src=\"" . ROOT . "core/assets/images/icons/cross.png\" title=\"" . getLangText('admin', 'delete') . "\"/></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';r,' . $row['id'] ) . "\"><img src=\"" . ROOT . "core/assets/images/icons/wrench.png\" title=\"" . getLangText('admin', 'edit') . "\" /></a>
-<a href=\"" . url( '?id,999;a,' . getAdminPagesbyId('meniu') . ';e,' . $row['id'] ) . "\" ><img src=\"" . ROOT . "core/assets/images/icons/pencil.png\" title=\"" . getLangText('admin', 'page_text') . "\" /></a></span>
-</li>";
-			}
-		}
-		return $re;
-	}
-}
 
 function editor( $tipas = 'jquery', $dydis = 'standartinis', $id = FALSE, $value = '' ) {
 
@@ -44,7 +20,7 @@ function editor( $tipas = 'jquery', $dydis = 'standartinis', $id = FALSE, $value
 	$root = ROOT;
 	$return = '';
 
-	if ( $conf['Editor'] == 'textarea' ) {
+	if (getOption('site_editor') == 'textarea' ) {
 		
 		if ( is_array( $id ) ) {
 			foreach ( $id as $key => $val ) {
@@ -60,7 +36,7 @@ HTML;
 HTML;
 
 		}
-	} elseif ($conf['Editor'] == 'tinymce') {
+	} elseif (getOption('site_editor') == 'tinymce') {
 		$dir    = siteUrl();
 		$return .= <<<HTML
       <!-- Load TinyMCE -->
@@ -100,7 +76,7 @@ HTML;
 
 		}
 		
-	} elseif ( $conf['Editor'] == 'ckeditor' ) {
+	} elseif (getOption('site_editor') == 'ckeditor' ) {
 		$dir = siteUrl();
 
 		$return .= <<<HTML

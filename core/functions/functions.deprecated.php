@@ -14,7 +14,12 @@ if(! function_exists('mysql_query1')) {
 
 		// trigger_error('Deprecated function called. Use `dbQuery` instead.', E_USER_NOTICE);
 		//add LOGS
+		try {
+			return $mmdb->run($query);
+		} catch (exception $e) {
+			d($e);
+		}
 
-		return $mmdb->run($query);
+		
 	}
 }
