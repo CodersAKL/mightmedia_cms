@@ -1,0 +1,13 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+# Always dievai
+# RewriteCond %{THE_REQUEST} ^GET\ /gods_1/
+# RewriteRule ^dievai/(.*) /gods_1/$1 [L,R=301]
+
+RewriteCond %{REQUEST_URI}  !(\.png|\.jpg|\.gif|\.jpeg|\.zip|\.css|\.svg|\.js)$
+RewriteRule (.*) index.php [QSA,L]
+RewriteBase /gods/
+
+</IfModule>

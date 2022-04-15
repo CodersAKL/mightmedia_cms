@@ -1,9 +1,9 @@
 <?php
 
-function get($route, $pathToInclude)
+function get($route, $pathToInclude, bool $root = true)
 {
 	if($_SERVER['REQUEST_METHOD'] == 'GET'){
-		route($route, $pathToInclude);
+		route($route, $pathToInclude, $root);
 	}  
 }
 
@@ -40,28 +40,34 @@ function any($route, $pathToInclude)
 	route($route, $pathToInclude);
 }
 
-function route($route, $pathToInclude)
+// todo: add group option
+function route($route, $pathToInclude, bool $root = true)
 {
-	$ROOT = ROOT;
 
-	if($route == "/404"){
-		include_once("$ROOT/$pathToInclude");
-		exit();
+	if($root) {
+		$root = ROOT;
+	} else {
+		$root = '';
 	}
 
-	$requestUrl        = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
-	$requestUrl        = rtrim($requestUrl, '/');
-	$requestUrl        = strtok($requestUrl, '?');
-	$routeParts        = explode('/', $route);
-	$requestUrlParts  = explode('/', $requestUrl);
+	$file = $root . $pathToInclude;
+
+
+	if($route == '/404'){
+		includePage($file);
+	}
+	
+	$requestUrl			= filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
+	$requestUrl			= rtrim($requestUrl, '/');
+	$requestUrl			= strtok($requestUrl, '?');
+	$routeParts			= explode('/', $route);
+	$requestUrlParts	= explode('/', $requestUrl);
 
 	array_shift($routeParts);
 	array_shift($requestUrlParts);
 
 	if( $routeParts[0] == '' && count($requestUrlParts) == 0 ){
-		include_once("$ROOT/$pathToInclude");
-
-		exit;
+		includePage($file);
 	}
 
 	if(count($routeParts) != count($requestUrlParts)){
@@ -73,46 +79,32 @@ function route($route, $pathToInclude)
 	for($i = 0; $i < count($routeParts); $i++){
 		$route_part = $routeParts[$i];
 	  
-		if(preg_match("/^[$]/", $route_part)){
+		if(preg_match("/^[$]/", $route_part)) {
 			$route_part = ltrim($route_part, '$');
 			array_push($parameters, $requestUrlParts[$i]);
-			$$route_part=$requestUrlParts[$i];
+			$route_part = $requestUrlParts[$i];
 
-		} else if( $routeParts[$i] != $requestUrlParts[$i] ){
+		} else if($routeParts[$i] != $requestUrlParts[$i]){
+			d($routeParts);
+			d($requestUrlParts);
 			return;
 		} 
 	}
 
-	include_once("$ROOT/$pathToInclude");
+	includePage($file);
+}
 
-	exit;
+function includePage($file)
+{
+	if(file_exists($file)) {
+		include_once $file;
+		exit;
+	} else {
+		die('File: <strong>' . $file . '</strong> not found!');
+	}
 }
 
 function out($text)
 {
 	echo htmlspecialchars($text);
-}
-
-// TODO: move to the new seperate file
-
-function setCsrf()
-{
-	if(! isset($_SESSION["csrf"]) ){
-		$_SESSION["csrf"] = bin2hex(random_bytes(50));
-	}
-
-	echo '<input type="hidden" name="csrf" value="'.$_SESSION["csrf"].'">';
-}
-
-function isCsrfValid()
-{
-	if(! isset($_SESSION['csrf']) || ! isset($_POST['csrf'])){
-		return false;
-	}
-
-	if( $_SESSION['csrf'] != $_POST['csrf']){
-		return false;
-	}
-
-	return true;
 }

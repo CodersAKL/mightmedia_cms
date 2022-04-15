@@ -1,10 +1,18 @@
 <?php
+ob_start();
+// header( "Cache-control: public" );
+header( "Content-type: text/html; charset=utf-8" );
+// header( 'P3P: CP="NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM"' );
 
+if (! isset($_SESSION)) {
+	session_start();
+}
+
+// define root
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', $_SERVER['DOCUMENT_ROOT'] . DS);
 
-date_default_timezone_set(TIME_ZONE);
-
+// load config
 if (is_file(ROOT . 'config.php')) {
 	include_once ROOT . 'config.php';
 
@@ -24,6 +32,9 @@ if (is_file(ROOT . 'config.php')) {
 } else {
 	die('System error: CMS is not installed.');
 }
+
+date_default_timezone_set(TIME_ZONE);
+
 
 require_once ROOT . 'core/libs/vendor/autoload.php';
 
@@ -117,35 +128,7 @@ if(isset($_POST) && ! empty($_POST)) {
 	}
 }
 
-/**
- * Language
- */
-$lang = [];
 
-if (lang() && is_file(ROOT . 'content/lang/' . lang() . '.php' )) {
-	require ROOT . 'content/lang/' . lang() . '.php';
-	$extensions = getActiveExtensions();
-	foreach ($extensions as $extension) {
-		if (is_file(ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . lang() . '.php')){
-			require ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . lang() . '.php';
-		}
-	}
-}
-
-if (getOption('site_lang')) {
-	$dir = ROOT . 'content/extensions/translation/' . lang();
-	$path = $dir . '/translations.php';
-	if(file_exists($path)){
-		$translations = unserialize(file_get_contents($path));
-		foreach ($translations as $translation) {
-			$lang[$translation['group']][$translation['key']] = $translation['translation'];
-		}
-	}
-	unset($path);
-	unset($dir);
-} else {
-    require_once ROOT . 'content/lang/lt.php';
-}
 
 //Isvalom POST'us nuo xss
 if (! empty($_POST)) {
@@ -167,16 +150,6 @@ $_SERVER['QUERY_STRING'] = isset( $_SERVER['QUERY_STRING'] ) ? cleanurl( $_SERVE
 $_SERVER['REQUEST_URI']  = isset( $_SERVER['REQUEST_URI'] ) ? cleanurl( $_SERVER['REQUEST_URI'] ) : "";
 $PHP_SELF                = cleanurl( $_SERVER['PHP_SELF'] );
 
-//Extensions configs include
-$extPath = ROOT . 'content/extensions/';
-$extensions = getDirs($extPath);
 
-if(! empty($extensions)) {
-	foreach ($extensions as $extension) {
-		$fileExt = $extPath . $extension . '/config.php';
-
-		if(file_exists($fileExt) && getExtensionStatus($extension)) {
-			require_once $fileExt;
-		}
-	}
-}
+// Pages LOAD by routes
+require_once ROOT . 'core/inc/inc.routes.php';

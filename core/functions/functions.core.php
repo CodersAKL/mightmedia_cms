@@ -50,17 +50,17 @@ if(! function_exists('header_info')) {
 		if ( isset($pageMetaData['title']) && !empty($pageMetaData['title']) ){ 
 			$pageTitle = $pageMetaData['title'] . ' - ' . input( strip_tags( $conf['Pavadinimas'] ) ); 
 		} else { 
-			$pageTitle = input( strip_tags( $conf['Pavadinimas'] ) . ' - ' . $page_pavadinimas );
+			$pageTitle = input( strip_tags( getOption('site_name') ) . ' - ' . $page_pavadinimas );
 		}
 		if ( isset($pageMetaData['description']) && !empty($pageMetaData['description']) ){ 
 			$pageDescription = $pageMetaData['description']; 
 		} else { 
-			$pageDescription = trimlink( trim( str_replace( "\n\r", "", strip_tags( $conf['Apie'] ) ) ), 120 );
+			$pageDescription = trimlink( trim( str_replace( "\n\r", "", strip_tags( getOption('site_description') ) ) ), 120 );
 		}
 		if ( isset($pageMetaData['keywords'])  && !empty($pageMetaData['keywords']) ){ 
 			$pageKeywords = $pageMetaData['keywords']; 
 		} else { 
-			$pageKeywords = input( strip_tags( $conf['Keywords'] ) );
+			$pageKeywords = input( strip_tags( getOption('site_keywords') ) );
 		}
 		echo '
 		<base href="' . siteUrl() . '"></base>
@@ -69,16 +69,13 @@ if(! function_exists('header_info')) {
 		<meta http-equiv="content-language" content="' . lang() . '" />
 		<meta name="description" content="' . $pageDescription . '" />
 		<meta name="keywords" content="' . $pageKeywords . '" />
-		<meta name="author" content="' . input( strip_tags( $conf['Copyright'] ) ) . '" />
+		<meta name="author" content="MightMedia TVS" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="' . $pageTitle . '" />
 		<meta property="og:description" content="' . $pageDescription . '" />
 		<meta property="og:url" content="' . siteUrl() . '" />
-		<meta property="og:image" content="' . siteUrl() . 'content/themes/' . input( strip_tags( $conf['Stilius'] ) ) . '/paveiksleliai/mm_logo.png" />
-
-		' . ( isset( $conf['pages']['rss.php'] ) ? '<link rel="alternate" type="application/rss+xml" title="' . input( strip_tags( $conf['Pavadinimas'] ) ) . '" href="rss.php" />' : '' ) . '
-		
-		<title>' . input( strip_tags( $conf['Pavadinimas'] ) . ' - ' . $page_pavadinimas ) . '</title>
+		<meta property="og:image" content="' . siteUrl() . 'content/themes/' . input( strip_tags( getOption('site_theme') ) ) . '/paveiksleliai/mm_logo.png" />		
+		<title>' . input( strip_tags( getOption('site_title') ) . ' - ' . $page_pavadinimas ) . '</title>
 		<script type="text/javascript" src="core/assets/javascript/main.js"></script>
 		
 		<script type="text/javascript">

@@ -1,38 +1,26 @@
 <?php
 
-ob_start();
-
-header("Cache-control: public");
-header("Content-type: text/html; charset=utf-8");
-
-if (! isset($_SESSION)) {
-	session_start();
-}
-
-// Code generation time
-$m1    = explode(" ", microtime());
-$stime = $m1[1] + $m1[0];
-
-//Iterpiam nustatymu faila jei ne perkialiam i instaliacija
-clearstatcache(); // todo: check!
-
-
-
 /**
  * BOOT
  */
 include_once 'core/boot.php';
 
+//Extensions configs include
+$extPath = ROOT . 'content/extensions/';
+$extensions = getDirs($extPath);
+
+if(! empty($extensions)) {
+	foreach ($extensions as $extension) {
+		$fileExt = $extPath . $extension . '/config.php';
+
+		if(file_exists($fileExt) && getExtensionStatus($extension)) {
+			require_once $fileExt;
+		}
+	}
+}
+
 include_once 'core/inc/inc.auth.php';
 
-// if ( !isset( $conf ) ) {
-// 	include_once 'funkcijos.php';
-// }
-
-
-// Pages LOAD by routes
-// include_once 'core/functions/functions.routes.php';
-include_once 'core/inc/inc.routes.php';
 // TODO: remove
 // if (isset($url['id']) && ! empty($url['id']) && isnum($url['id'])) {
 //     $pslid = (int)$url['id'];
@@ -90,7 +78,7 @@ include_once 'core/inc/inc.routes.php';
 // }
 
 //Jei svetaine uzdaryta remontui ir jei jungiasi ne administratorius
-if ($conf['Palaikymas'] == 1) {
+if (getOption('maintenance') == 1) {
 	if (empty(getSession('id')) || getSession('level') != 1) {
 		include_once __DIR__ . "/content/themes/" . $conf['Stilius'] . "/functions.php";
 
@@ -98,38 +86,51 @@ if ($conf['Palaikymas'] == 1) {
 		exit;
 	}
 }
-
-if (! empty($_GET['lang'])) {
-	setSession('lang', basename($_GET['lang'], '.php'));
-	redirect(url("?id," . $_GET['id']));
-}
-/*if (!empty($_SESSION['lang']) && is_file(ROOT . 'content/lang/' . basename($_SESSION['lang']) . '.php')) {
-	require(ROOT . 'content/lang/' . basename($_SESSION['lang'], '.php') . '.php');
-}*/
-
-include_once 'core/inc/inc.header.php';
+// TODO: check and remove
+// include_once 'core/inc/inc.header.php';
 //Tikrinam ar setup.php failas paљalintas. Saugumo sumetimais
 // if ( is_dir( 'install/' ) && getSession('level') == 1 && !@unlink( 'install/index.php' ) ) {
 // 	die( '<h1>Demesio / Warning</h1><h3>Neištrintas install aplankalas.</h3> Tai saugumo spraga. Prašome pašalinkite šį aplankalą iš serverio arba pakeiskite jo pavadinimą. /Please, remove install folder from server.</h3>' );
 // }
 
-include_once 'content/themes/' . $conf['Stilius'] . '/functions.php';
+/**
+ * Language
+ */
+$lang = [];
+
+if (lang() && is_file(ROOT . 'content/lang/' . lang() . '.php' )) {
+	require ROOT . 'content/lang/' . lang() . '.php';
+	$extensions = getActiveExtensions();
+	foreach ($extensions as $extension) {
+		if (is_file(ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . lang() . '.php')){
+			require ROOT . 'content/extensions/' . $extension['name'] . '\/content/lang/' . lang() . '.php';
+		}
+	}
+}
+
+if (getOption('site_lang')) {
+	$dir = ROOT . 'content/extensions/translation/' . lang();
+	$path = $dir . '/translations.php';
+	if(file_exists($path)){
+		$translations = unserialize(file_get_contents($path));
+		foreach ($translations as $translation) {
+			$lang[$translation['group']][$translation['key']] = $translation['translation'];
+		}
+	}
+	unset($path);
+	unset($dir);
+} else {
+    require_once ROOT . 'content/lang/lt.php';
+}
+
+include_once 'content/themes/' . getOption('site_theme') . '/functions.php';
 
 if (empty($_GET['ajax'])) {
-	include_once 'content/themes/' . $conf['Stilius'] . '/index.php';
+	include_once 'content/themes/' . getOption('site_theme') . '/index.php';
 } else {
 	include_once $page . '.php';
 }
 
-mysqli_close($prisijungimas_prie_mysql);
 
-$m2    = explode(" ", microtime());
-$etime = $m2[1] + $m2[0];
-$ttime = ($etime - $stime);
-$ttime = number_format($ttime, 7);
-
-if (getSession('level') == 1) {
-	echo '<!-- Generated ' . apvalinti($ttime, 2) . 's. -->'; // TODO: remove
-}
 
 ob_end_flush();

@@ -169,55 +169,55 @@ function defaultHead()
 	<?php }
 }
 
-function adminPages() 
-{
-	global $url, $lang, $conf, $buttons, $timeout, $prisijungimas_prie_mysql;
+// function adminPages() 
+// {
+// 	global $url, $lang, $conf, $buttons, $timeout, $prisijungimas_prie_mysql;
 
-	// todo: check this after page is online
+// 	// todo: check this after page is online
 
-	// if($versionData = checkVersion()) {
-	// 	notifyUpdate($versionData);
-	// }	
+// 	// if($versionData = checkVersion()) {
+// 	// 	notifyUpdate($versionData);
+// 	// }	
 
-	$fileName = (isset($url['a']) && ! empty(getAllAdminPages($url['a'])) ? getAllAdminPages($url['a']) : null);
+// 	$fileName = (isset($url['a']) && ! empty(getAllAdminPages($url['a'])) ? getAllAdminPages($url['a']) : null);
 
-	if (! empty($fileName) && file_exists(ROOT . $fileName) && ! empty(getSession('username')) && getSession('level') == 1 && defined( "OK" ) ) {
-		if (count($_POST) > 0 && $conf['keshas'] == 1) {
-			notifyMsg(
-				[
-					'type'		=> 'warning',
-					'message' 	=> getLangText('system', 'cache_info')
-				]
-			);
-		}
+// 	if (! empty($fileName) && file_exists(ROOT . $fileName) && ! empty(getSession('username')) && getSession('level') == 1 && defined( "OK" ) ) {
+// 		if (count($_POST) > 0 && $conf['keshas'] == 1) {
+// 			notifyMsg(
+// 				[
+// 					'type'		=> 'warning',
+// 					'message' 	=> getLangText('system', 'cache_info')
+// 				]
+// 			);
+// 		}
 		
-		include_once ROOT . $fileName;
+// 		include_once ROOT . $fileName;
 
-	} elseif (isset($url['m'])) {
+// 	} elseif (isset($url['m'])) {
 
-		switch ($url['m']) {
-			case 1:
-				$page = 'uncache.php';
-				break;
-			case 2:
-				$page = 'pokalbiai.php';
-				break;
-			case 3:
-				$page = 'antivirus.php';
-				break;
-			case 4:
-				$page = 'search.php';
-				break;
-			case 'upgrade':
-				$page = 'upgrade.php';
-				break;
-		}
+// 		switch ($url['m']) {
+// 			case 1:
+// 				$page = 'uncache.php';
+// 				break;
+// 			case 2:
+// 				$page = 'pokalbiai.php';
+// 				break;
+// 			case 3:
+// 				$page = 'antivirus.php';
+// 				break;
+// 			case 4:
+// 				$page = 'search.php';
+// 				break;
+// 			case 'upgrade':
+// 				$page = 'upgrade.php';
+// 				break;
+// 		}
 
-		include_once 'pages/' . $page;
-	} else {
-		include_once 'pages/dashboard.php';
-	}
-}
+// 		include_once 'pages/' . $page;
+// 	} else {
+// 		include_once 'pages/dashboard.php';
+// 	}
+// }
 
 function getAdminExtensionsMenu($page = null) 
 {

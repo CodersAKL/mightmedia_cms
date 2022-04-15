@@ -34,6 +34,25 @@ Options +Indexes
 # Deny from env=draudziam
 
 # Allow from all
-RewriteEngine On
+# RewriteEngine On
+# # RewriteCond %{REQUEST_URI}  !(\.png|\.jpg|\.gif|\.jpeg|\.zip|\.css|\.svg|\.js)$
+# # RewriteRule (.*) index.php [QSA,L]
+# # RewriteCond %{SCRIPT_FILENAME} !-f
+# # RewriteCond %{SCRIPT_FILENAME} !-d
+# # RewriteCond %{SCRIPT_FILENAME} !-l
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^(.*)$ index.php/$1
+
+<IfModule mod_rewrite.c>
+# RewriteEngine On
+# RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+# RewriteBase /
+# RewriteRule ^index\.php$ - [L]
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule . /index.php [L]
 RewriteCond %{REQUEST_URI}  !(\.png|\.jpg|\.gif|\.jpeg|\.zip|\.css|\.svg|\.js)$
 RewriteRule (.*) index.php [QSA,L]
+RewriteBase /
+</IfModule>

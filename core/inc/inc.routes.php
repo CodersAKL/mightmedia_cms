@@ -1,29 +1,18 @@
 <?php
 
-// var_dump($url);
-
-// $sqlQuery = "SELECT * FROM `" . LENTELES_PRIESAGA . "page` 
-// WHERE 
-// `id` = " . escape((int)$pslid) . " 
-// AND 
-// `lang` = " . escape(lang()) . " 
-// LIMIT 1";
-
-// $sql1 = mysql_query1($sqlQuery, 259200);
-
 //
-$pages = [
-	'name'  	=>	'pages',
-	'fields'    =>	[
-		'title',
-		'editor',
-		'media'     => [
-			'attachments'   => true,
-			'photo'         => true,
-			'gallery'       => true,
-		],
-	],
-];
+// $pages = [
+// 	'name'  	=>	'pages',
+// 	'fields'    =>	[
+// 		'title',
+// 		'editor',
+// 		'media'     => [
+// 			'attachments'   => true,
+// 			'photo'         => true,
+// 			'gallery'       => true,
+// 		],
+// 	],
+// ];
 
 
 
@@ -121,41 +110,46 @@ function createPostType($params = [])
 
 
 
-///
-$pagesQuery = [
-	'name'	=>	'pages',
-	'columns'	=>	[
-		'id'	=>	[
-			'type'		=>	'bigint(20)',
-			'null'		=>	false,
-			'default'	=>	null,
-			'increment'	=>	true,
-			'collation'	=>	'utf8mb4_general_ci',
-		],
-		'title'	=>	[
-			'type'		=>	'varchar(255)',
-			'null'		=>	false,
-			'default'	=>	null,
-			'increment'	=>	false,
-			'collation'	=>	'utf8mb4_general_ci',
-		],
-		'slug'	=>	[
-			'type'		=>	'varchar(255)',
-			'null'		=>	false,
-			'default'	=>	null,
-			'increment'	=>	false,
-			'collation'	=>	'utf8mb4_general_ci',
-		],
-	],
-	'engine'	=>	'InnoDB', // MyISAM/InnoDB
-	'charset'	=>	'utf8mb4',
-	'primary'	=>	'id', // ?
+// ///
+// $pagesQuery = [
+// 	'name'	=>	'pages',
+// 	'columns'	=>	[
+// 		'id'	=>	[
+// 			'type'		=>	'bigint(20)',
+// 			'null'		=>	false,
+// 			'default'	=>	null,
+// 			'increment'	=>	true,
+// 			'collation'	=>	'utf8mb4_general_ci',
+// 		],
+// 		'title'	=>	[
+// 			'type'		=>	'varchar(255)',
+// 			'null'		=>	false,
+// 			'default'	=>	null,
+// 			'increment'	=>	false,
+// 			'collation'	=>	'utf8mb4_general_ci',
+// 		],
+// 		'slug'	=>	[
+// 			'type'		=>	'varchar(255)',
+// 			'null'		=>	false,
+// 			'default'	=>	null,
+// 			'increment'	=>	false,
+// 			'collation'	=>	'utf8mb4_general_ci',
+// 		],
+// 	],
+// 	'engine'	=>	'InnoDB', // MyISAM/InnoDB
+// 	'charset'	=>	'utf8mb4',
+// 	'primary'	=>	'id', // ?
 
-];
+// ];
 
-var_dump(createTable($pagesQuery));
+// var_dump(createTable($pagesQuery));
 
-get('/$var', 'content/pages/main.php');
+// get('/$var', 'content/pages/main.php');
+
+// register hook
+doAction('routes');
+
+// any('/404','content/pages/404.php'); //TODO
 
 
-any('/404','views/404.php'); //TODO
+

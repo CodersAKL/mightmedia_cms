@@ -125,13 +125,21 @@ function dbSelect(string $table, array $where, array $columns = null, $limit = 0
 
 	$query = 'SELECT ' . $queryColumns . ' FROM `' . $table . '`' . $string;
 
-	return $mmdb->run($query);
+	try {
+		return $mmdb->run($query);
+	} catch (exception $e) {
+		die('dbSelect: ' . $e);
+	}
 }
 
 function dbRow(string $table, array $where, array $columns = null)
 {
 
-	return dbSelect($table, $where, $columns, 1)[0];
+	try {
+		return dbSelect($table, $where, $columns, 1)[0];
+	} catch (exception $e) {
+		die('dbRow: ' . $e);
+	}
 }
 
 // OLD-----

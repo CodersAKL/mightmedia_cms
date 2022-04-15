@@ -61,7 +61,7 @@
 
 <body class="theme-deep-orange">
     <!-- Page Loader -->
-    <?php if (!DEBUG) { ?>
+    <?php if (! DEBUG) { ?>
         <div class="page-loader-wrapper">
             <div class="loader">
                 <div class="preloader">
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                <p><?php echo $lang['sb']['loading']; ?></p>
+                <p><?php echo getLangText('sb', 'loading'); ?></p>
             </div>
         </div>
     <?php } ?>
@@ -89,7 +89,7 @@
         </div>
         <form method="post" action="<?php echo url('?id,999;m,4'); ?>">
             <input name="vis" value="vis" type="hidden">
-            <input type="text" name="s" value="" placeholder="<?php echo $lang['search']['search']; ?>...">
+            <input type="text" name="s" value="" placeholder="<?php echo getLangText('search', 'search'); ?>...">
         </form>
         <div class="close-search">
             <i class="material-icons">close</i>
