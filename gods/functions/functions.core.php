@@ -1,5 +1,19 @@
 <?php
 
+function adminMenu()
+{
+
+	$adminMenu = [
+		'dashboard' => [
+			'url' 	=> '/' . ADMIN_DIR,
+			'title' => 'Dashboard',
+		]
+	];
+
+	return applyFilters('adminMenu', $adminMenu);
+}
+
+// old ----
 function editor( $tipas = 'jquery', $dydis = 'standartinis', $id = FALSE, $value = '' ) {
 
 	global $conf, $lang;

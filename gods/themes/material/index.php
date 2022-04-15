@@ -39,62 +39,18 @@
                 <li class="header">
                     <?php echo getLangText('admin', 'menu_main'); ?>
                 </li>
-                <?php foreach (getAdminPages() as $id => $file) { ?>
-                    <?php
-                        $linkValue = (strlen( getLangText('admin', basename($file, '.php')) ) > 0 ? getLangText('admin', basename($file, '.php')) : nice_name($file));
-                    ?>
-                    <li <?php echo ( isset( $_GET['a'] ) && $_GET['a'] == $id ? 'class="active"' : '' ); ?>>
-                        <?php if(isset($buttons[$id]) && ! empty($buttons[$id])) { ?>
-                            <a href="javascript:void(0);" class="menu-toggle">
-                                <i class="material-icons"><?php echo adminMenuIcon($id); ?></i>
-                                <span><?php echo $linkValue; ?></span>
-                            </a>
-                            <ul class="ml-menu" id="sub-menu-admin">
-                                <?php foreach($buttons[$id] as $button) { ?>
-                                    <li>
-                                        <a href="<?php echo $button['url']; ?>"><?php echo $button['value']; ?></a>
-                                    </li>
-                                <?php } ?>
-                            </ul>
-                        <?php } else { ?>
-                            <a href="<?php echo url( '?id,999;a,' . $id ); ?>">
-                                <i class="material-icons"><?php echo adminMenuIcon($id); ?></i>
-                                <span><?php echo $linkValue; ?></span>
-                            </a>
-                        <?php } ?>
+				<?php
+					$adminMenu = adminMenu();
+				?>
+                <?php foreach ($adminMenu as $id => $adminMenuItem) { ?>
+                    <li>
+                        <a href="<?php echo $adminMenuItem['url']; ?>">
+							<i class="material-icons"><?php echo adminMenuIcon($id); ?></i>
+							<span><?php echo $adminMenuItem['title']; ?></span>
+						</a>
                     </li>
                 <?php } ?>
-                
-                <?php if(! empty(getAdminExtensionsMenu())) { ?>
-                    <li class="header">
-                        <?php echo getLangText('admin', 'menu_extensions'); ?>
-                    </li>
-                    <?php foreach (getAdminExtensionsMenu() as $id => $file) { ?>
-                        <?php
-                            $linkValue = (strlen( getLangText('admin', basename($file, '.php')) ) > 0 ? getLangText('admin', basename($file, '.php')) : nice_name($file));
-                        ?>
-                        <li <?php echo ( isset( $_GET['a'] ) && $_GET['a'] == $id ? 'class="active"' : '' ); ?>>
-                            <?php if(! empty(buttons($id))) { ?>
-                                <a href="javascript:void(0);" class="menu-toggle">
-                                    <i class="material-icons"><?php echo adminMenuIcon($id); ?></i>
-                                    <span><?php echo $linkValue; ?></span>
-                                </a>
-                                <ul class="ml-menu" id="sub-menu-admin">
-                                    <?php foreach(buttons($id) as $button) { ?>
-                                        <li>
-                                            <a href="<?php echo $button['url']; ?>"><?php echo $button['value']; ?></a>
-                                        </li>
-                                    <?php } ?>
-                                </ul>
-                            <?php } else { ?>
-                                <a href="<?php echo url( '?id,999;a,' . $id ); ?>">
-                                    <i class="material-icons"><?php echo adminMenuIcon($id); ?></i>
-                                    <span><?php echo $linkValue; ?></span>
-                                </a>
-                            <?php } ?>
-                        </li>
-                    <?php } ?>
-                <?php } ?>
+
             </ul>
         </div>
         <!-- #Menu -->
