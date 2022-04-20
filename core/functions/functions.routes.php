@@ -52,9 +52,8 @@ function route($route, $pathToInclude, bool $root = true)
 
 	$file = $root . $pathToInclude;
 
-
 	if($route == '/404'){
-		includePage($file);
+		include_once includePage($file);
 	}
 	
 	$requestUrl			= filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
@@ -67,38 +66,43 @@ function route($route, $pathToInclude, bool $root = true)
 	array_shift($requestUrlParts);
 
 	if( $routeParts[0] == '' && count($requestUrlParts) == 0 ){
-		includePage($file);
+		include_once includePage($file);
 	}
 
 	if(count($routeParts) != count($requestUrlParts)){
+		
 		return;
 	}
 	
-	$parameters = [];
+	$routeParam = [];
 
 	for($i = 0; $i < count($routeParts); $i++){
-		$route_part = $routeParts[$i];
+		$routePart = $routeParts[$i];
 	  
-		if(preg_match("/^[$]/", $route_part)) {
-			$route_part = ltrim($route_part, '$');
-			array_push($parameters, $requestUrlParts[$i]);
-			$route_part = $requestUrlParts[$i];
+		if(preg_match("/^[$]/", $routePart)) {
+			$routePart = ltrim($routePart, '$');
+			// set params
+			array_push($routeParam, $requestUrlParts[$i]);
+			// create var
+			${$routePart} = $requestUrlParts[$i];
+			// set route data
+			$routePart = $requestUrlParts[$i];
+			
 
 		} else if($routeParts[$i] != $requestUrlParts[$i]){
-			d($routeParts);
-			d($requestUrlParts);
+
 			return;
 		} 
 	}
 
-	includePage($file);
+	include_once includePage($file);
 }
 
 function includePage($file)
 {
 	if(file_exists($file)) {
-		include_once $file;
-		exit;
+		return $file;
+		// exit;
 	} else {
 		die('File: <strong>' . $file . '</strong> not found!');
 	}

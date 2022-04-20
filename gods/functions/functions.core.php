@@ -2,12 +2,9 @@
 
 function adminMenu()
 {
-
-	$adminMenu = [
-		'dashboard' => [
-			'url' 	=> '/' . ADMIN_DIR,
-			'title' => 'Dashboard',
-		]
+	$adminMenu['dashboard'] = [
+		'url' 	=> '/' . ADMIN_DIR,
+		'title' => 'Dashboard',
 	];
 
 	return applyFilters('adminMenu', $adminMenu);
@@ -128,7 +125,7 @@ function defaultHead()
 	?>
 	<base href="<?php echo siteUrl(); ?>" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title><?php echo input(strip_tags($conf['Pavadinimas']) . ' - Admin'); ?></title>
+	<title><?php echo getOption('site_name'); ?> - Admin</title>
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index,follow" />

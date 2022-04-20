@@ -21,5 +21,11 @@ function userMenu($data)
 
 addAction('adminMenu', 'userMenu');
 
+// disdplay users list
+
+// edit user
+
+// create user
+
 // if we need
 // require_once 'functions.php';

@@ -9,40 +9,40 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Core Css -->
-    <link href="themes/material/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="<?php echo adminUrl('themes/material/plugins/bootstrap/css/bootstrap.css'); ?>" rel="stylesheet">
 
     <!-- Bootstrap Material Datetime Picker Css -->
-    <link href="themes/material/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+    <link href="<?php echo adminUrl('themes/material/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css'); ?>" rel="stylesheet" />
 
     <!-- Wait Me Css -->
-    <link href="themes/material/plugins/waitme/waitMe.css" rel="stylesheet" />
+    <link href="<?php echo adminUrl('themes/material/plugins/waitme/waitMe.css'); ?>" rel="stylesheet" />
 
     <!-- JQuery Nestable Css -->
-    <link href="themes/material/plugins/nestable/jquery-nestable.css" rel="stylesheet" />
+    <link href="<?php echo adminUrl('themes/material/plugins/nestable/jquery-nestable.css'); ?>" rel="stylesheet" />
 
     <!-- Bootstrap Select Css -->
-    <link href="themes/material/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+    <link href="<?php echo adminUrl('themes/material/plugins/bootstrap-select/css/bootstrap-select.css'); ?>" rel="stylesheet" />
 
     <!-- Waves Effect Css -->
-    <link href="themes/material/plugins/node-waves/waves.css" rel="stylesheet" />
+    <link href="<?php echo adminUrl('themes/material/plugins/node-waves/waves.css'); ?>" rel="stylesheet" />
 
     <!-- Animation Css -->
-    <link href="themes/material/plugins/animate-css/animate.css" rel="stylesheet" />
+    <link href="<?php echo adminUrl('themes/material/plugins/animate-css/animate.css'); ?>" rel="stylesheet" />
 
     <!-- Morris Chart Css-->
-    <link href="themes/material/plugins/morrisjs/morris.css" rel="stylesheet" />
+    <link href="<?php echo adminUrl('themes/material/plugins/morrisjs/morris.css'); ?>" rel="stylesheet" />
 
     <!-- Custom Css -->
-    <link href="themes/material/css/style.css" rel="stylesheet">
+    <link href="<?php echo adminUrl('themes/material/css/style.css'); ?>" rel="stylesheet">
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link href="themes/material/css/themes/all-themes.css" rel="stylesheet" />
+    <link href="<?php echo adminUrl('themes/material/css/themes/all-themes.css'); ?>" rel="stylesheet" />
 
     <!-- Jquery Core Js -->
-    <script src="themes/material/plugins/jquery/jquery.min.js"></script>
+    <script src="<?php echo adminUrl('themes/material/plugins/jquery/jquery.min.js'); ?>"></script>
     <!-- treview -->
-    <link rel="stylesheet" href="css/jquery.treeview.css" />
-    <script src="js/jquery.treeview.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="<?php echo adminUrl('css/jquery.treeview.css'); ?>" />
+    <script src="<?php echo adminUrl('js/jquery.treeview.js'); ?>" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $("#treemenu").treeview({
@@ -54,9 +54,9 @@
     </script>
 
     <!-- Bootstrap Notify Plugin Js -->
-    <script src="themes/material/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+    <script src="<?php echo adminUrl('themes/material/plugins/bootstrap-notify/bootstrap-notify.js'); ?>"></script>
     <!-- Jquery Nestable -->
-    <script src="themes/material/plugins/nestable/jquery.nestable.js"></script>
+    <script src="<?php echo adminUrl('themes/material/plugins/nestable/jquery.nestable.js'); ?>"></script>
 </head>
 
 <body class="theme-deep-orange">
@@ -87,7 +87,7 @@
         <div class="search-icon">
             <i class="material-icons">search</i>
         </div>
-        <form method="post" action="<?php echo url('?id,999;m,4'); ?>">
+        <form method="post" action="">
             <input name="vis" value="vis" type="hidden">
             <input type="text" name="s" value="" placeholder="<?php echo getLangText('search', 'search'); ?>...">
         </form>
@@ -102,7 +102,7 @@
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="<?php echo url('?id,999'); ?>">
+                <a class="navbar-brand" href="">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 91.3 97.3" class="admin-logo">
                         <ellipse cx="12.3" cy="57" rx="12.3" ry="12.3" />
                         <path d="M57 68.2c6.2-2.9 8.8-10.2 6-16.4L42.2 7.2C39.3 1 32-1.7 25.8 1.2c-6.2 2.9-8.8 10.2-6 16.4l20.8 44.6c2.9 6.2 10.3 8.9 16.4 6z" />

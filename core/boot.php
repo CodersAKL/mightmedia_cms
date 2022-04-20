@@ -98,21 +98,17 @@ $loadCoreFunctionsArray = [
 	'db',
 	'deprecated',
 	'options',
+	'url',
 	'cache',
-    'calendar',
-    'categories',
-    'date',
-    'file',
     'hooks',
     'http',
-    'images',
     'pages',
     'string',
-    'url',
 	'users',
 	'extensions',
 	'routes',
 	'form',
+	'post_type',
 ];
 
 foreach ($loadCoreFunctionsArray as $loadCoreFunctionSlug) {
@@ -145,10 +141,10 @@ if (! empty($_POST)) {
 }
 
 // Tvarkom $_SERVER globalus.
-$_SERVER['PHP_SELF']     = cleanurl( $_SERVER['PHP_SELF'] );
-$_SERVER['QUERY_STRING'] = isset( $_SERVER['QUERY_STRING'] ) ? cleanurl( $_SERVER['QUERY_STRING'] ) : "";
-$_SERVER['REQUEST_URI']  = isset( $_SERVER['REQUEST_URI'] ) ? cleanurl( $_SERVER['REQUEST_URI'] ) : "";
-$PHP_SELF                = cleanurl( $_SERVER['PHP_SELF'] );
+$_SERVER['PHP_SELF']     = cleanUrl($_SERVER['PHP_SELF']);
+$_SERVER['QUERY_STRING'] = isset($_SERVER['QUERY_STRING'] ) ? cleanUrl($_SERVER['QUERY_STRING']) : '';
+$_SERVER['REQUEST_URI']  = isset($_SERVER['REQUEST_URI'] ) ? cleanUrl($_SERVER['REQUEST_URI']) : '';
+$PHP_SELF                = cleanUrl($_SERVER['PHP_SELF']);
 
 
 // Pages LOAD by routes

@@ -12,11 +12,11 @@ function doAction($tag, $arg = '')
 	return $hooks->do_action($tag, $arg);
 }
 
-function addAction($tag, $callback)
+function addAction($tag, $callback, $data = null)
 {
 	$hooks = Hooks::getInstance();
 
-	return $hooks->add_action($tag, $callback);
+	return $hooks->add_action($tag, $callback, $data);
 }
 
 function applyFilters($tag, $value)

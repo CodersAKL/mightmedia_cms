@@ -75,25 +75,25 @@ function logoutUser()
  * SOURCE IDEA: https://github.com/delight-im/PHP-Auth/blob/master/src/Auth.php
  * */
 
-function enhanceHttpSecurity()
-{
-	// remove exposure of PHP version (at least where possible)
-	\header_remove('X-Powered-By');
+// function enhanceHttpSecurity()
+// {
+// 	// remove exposure of PHP version (at least where possible)
+// 	\header_remove('X-Powered-By');
 
-	// if the user is signed in
-	if (isLoggedIn()) {
-		// prevent clickjacking
-		\header('X-Frame-Options: sameorigin');
-		// prevent content sniffing (MIME sniffing)
-		\header('X-Content-Type-Options: nosniff');
+// 	// if the user is signed in
+// 	if (isLoggedIn()) {
+// 		// prevent clickjacking
+// 		\header('X-Frame-Options: sameorigin');
+// 		// prevent content sniffing (MIME sniffing)
+// 		\header('X-Content-Type-Options: nosniff');
 
-		// disable caching of potentially sensitive data
-		\header('Cache-Control: no-store, no-cache, must-revalidate', true);
-		\header('Expires: Thu, 19 Nov 1981 00:00:00 GMT', true);
-		\header('Pragma: no-cache', true);
-	}
-}
-
+// 		// disable caching of potentially sensitive data
+// 		\header('Cache-Control: no-store, no-cache, must-revalidate', true);
+// 		\header('Expires: Thu, 19 Nov 1981 00:00:00 GMT', true);
+// 		\header('Pragma: no-cache', true);
+// 	}
+// }
+// OLD------------------
 function isLoggedIn()
 {
 

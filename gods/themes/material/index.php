@@ -44,10 +44,26 @@
 				?>
                 <?php foreach ($adminMenu as $id => $adminMenuItem) { ?>
                     <li>
-                        <a href="<?php echo $adminMenuItem['url']; ?>">
-							<i class="material-icons"><?php echo adminMenuIcon($id); ?></i>
-							<span><?php echo $adminMenuItem['title']; ?></span>
-						</a>
+						<?php if(isset($adminMenuItem['sub']) && ! empty($adminMenuItem['sub'])) { ?>
+							<a href="javascript:void(0);" class="menu-toggle">
+								<i class="material-icons"><?php echo ! empty($adminMenuItem['icon']) ? $adminMenuItem['icon'] : adminMenuIcon($id); ?></i>
+								<span><?php echo $adminMenuItem['title']; ?></span>
+							</a>
+							<ul class="ml-menu">
+								<?php foreach ($adminMenuItem['sub'] as $idSub => $adminMenuSubItem) { ?>
+									<li>
+										<a href="<?php echo $adminMenuSubItem['url']; ?>" class=" waves-effect waves-block">
+											<?php echo $adminMenuSubItem['title']; ?>
+										</a>
+									</li>
+								<?php } ?>
+							</ul>
+						<?php } else { ?>
+							<a href="<?php echo $adminMenuItem['url']; ?>">
+								<i class="material-icons"><?php echo ! empty($adminMenuItem['icon']) ? $adminMenuItem['icon'] : adminMenuIcon($id); ?></i>
+								<span><?php echo $adminMenuItem['title']; ?></span>
+							</a>
+						<?php } ?>
                     </li>
                 <?php } ?>
 

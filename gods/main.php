@@ -1,13 +1,11 @@
 <?php
 
-// require 'config/menu.php';
+// todo: replace and rename
 
 function adminPages()
 {
-
 	get('/' . ADMIN_DIR, ADMIN_ROOT . 'pages/dashboard.php', false);
 	doAction('adminRoutes');
-	
 }
 
 // var_dump(function_exists('addAction')); exit;
