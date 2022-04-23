@@ -40,6 +40,9 @@
     <script src="<?php echo adminUrl('themes/material/plugins/jquery-sparkline/jquery.sparkline.js'); ?>"></script>
 
     <!-- Custom Js -->
+	<?php
+        doAction('adminScripts');
+    ?>
     <script src="<?php echo adminUrl('themes/material/js/admin.js'); ?>"></script>
     <script src="<?php echo adminUrl('themes/material/js/pages/index.js'); ?>"></script>
 

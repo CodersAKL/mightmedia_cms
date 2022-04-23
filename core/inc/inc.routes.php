@@ -61,5 +61,8 @@ doAction('routes');
 
 // any('/404','content/pages/404.php'); //TODO
 
+//ajax
+routeAjax('/ajax/$action'); // ?????
+
 
 

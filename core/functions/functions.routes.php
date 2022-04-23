@@ -1,9 +1,10 @@
 <?php
+// todo: move to class;
 
-function get($route, $pathToInclude, bool $root = true)
+function get($route, $pathToInclude, bool $root = true, $viewData = [])
 {
 	if($_SERVER['REQUEST_METHOD'] == 'GET'){
-		route($route, $pathToInclude, $root);
+		route($route, $pathToInclude, $root, $viewData);
 	}  
 }
 
@@ -18,6 +19,46 @@ function put($route, $pathToInclude)
 {
 	if($_SERVER['REQUEST_METHOD'] == 'PUT'){
 		route($route, $pathToInclude);
+	}    
+}
+
+function routeAjax($route)
+{
+	if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'PUT'){
+
+		$routeCheck 		= routeCheck($route);
+		$routeParts 		= $routeCheck['routeParts'];
+		$requestUrlParts	= $routeCheck['requestUrlParts'];
+
+		if(count($routeParts) != count($requestUrlParts)){
+			
+			return false;
+		}
+		
+		$routeParam = [];
+
+		for($i = 0; $i < count($routeParts); $i++){
+			$routePart = $routeParts[$i];
+		
+			if(preg_match("/^[$]/", $routePart)) {
+				$routePart = ltrim($routePart, '$');
+				// set params
+				array_push($routeParam, $requestUrlParts[$i]);
+				// set route data
+				$routePart = $requestUrlParts[$i];
+				
+
+			} else if($routeParts[$i] != $requestUrlParts[$i]){
+
+				return false;
+			} 
+		}
+
+		$action = 'ajax' . ucfirst($routePart);
+
+		include ROOT . 'core/inc/inc.ajax.php';
+
+		exit;
 	}    
 }
 
@@ -40,22 +81,8 @@ function any($route, $pathToInclude)
 	route($route, $pathToInclude);
 }
 
-// todo: add group option
-function route($route, $pathToInclude, bool $root = true)
+function routeCheck($route)
 {
-
-	if($root) {
-		$root = ROOT;
-	} else {
-		$root = '';
-	}
-
-	$file = $root . $pathToInclude;
-
-	if($route == '/404'){
-		include_once includePage($file);
-	}
-	
 	$requestUrl			= filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
 	$requestUrl			= rtrim($requestUrl, '/');
 	$requestUrl			= strtok($requestUrl, '?');
@@ -64,6 +91,40 @@ function route($route, $pathToInclude, bool $root = true)
 
 	array_shift($routeParts);
 	array_shift($requestUrlParts);
+
+	return [
+		'routeParts' 		=> $routeParts,
+		'requestUrlParts' 	=> $requestUrlParts,
+	];
+
+}
+
+// todo: add group option
+function route($route, $pathToInclude, bool $root = true, $viewData = [])
+{
+
+	if($root) {
+		$root = ROOT;
+	} else {
+		$root = '';
+	}
+
+	if(! empty($viewData)) {
+		foreach ($viewData as $kViewData => $VviewData) {
+			// create var
+			${$kViewData} = $VviewData;
+		}
+	}
+
+	$file = $root . $pathToInclude;
+
+	if($route == '/404'){
+		include_once includePage($file);
+	}
+	
+	$routeCheck 		= routeCheck($route);
+	$routeParts 		= $routeCheck['routeParts'];
+	$requestUrlParts	= $routeCheck['requestUrlParts'];
 
 	if( $routeParts[0] == '' && count($requestUrlParts) == 0 ){
 		include_once includePage($file);
@@ -111,4 +172,9 @@ function includePage($file)
 function out($text)
 {
 	echo htmlspecialchars($text);
+}
+
+function getRoute($type, $action)
+{
+	return $type . '/' . $action;
 }

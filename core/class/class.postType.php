@@ -2,7 +2,9 @@
 
 class PostType {
 
-	// public $args = [];
+	public $params = [];
+
+	public $posTypes = [];
 
 
 	public function __construct($args = [])
@@ -17,6 +19,7 @@ class PostType {
 			'fields'    	=>	[
 				'title'     => true,
 				'editor'    => true,
+				'excerpt'	=> false,
 				'media'     => [
 					'attachments'   => false,
 					'photo'         => false,
@@ -30,11 +33,17 @@ class PostType {
 	public function setArgs(array $params = [])
 	{
 		$this->params = array_merge($this->defaultArgs, $params);
+		$this->posTypes[$this->defaultArgs['name']] = array_merge($this->defaultArgs, $params);
 	}
 
 	public function getArgs()
 	{
 		return $this->params;
+	}
+
+	public function getPostType($name = [])
+	{
+		return ! empty($this->posTypes) ? $this->posTypes[$name] : $this->posTypes;
 	}
 
 	public function createPostType()
@@ -45,7 +54,7 @@ class PostType {
 		// $this->createPostQuery($params);
 
 		// register data
-		// addAction('adminCustomData', 'adminCustomData');
+		// addAction('adminCustomData', [$this, 'adminCustomData']);
 		// register admin pages
 		addAction('adminRoutes', [$this, 'adminCustomRoutes']);
 
@@ -129,10 +138,19 @@ class PostType {
 		}
 	}
 
+	public function adminCustomData()
+	{
+		// return $this->params;
+	}
+
 	public function adminCustomRoutes()
 	{
-		get('/' . ADMIN_DIR . '/type/$type', ADMIN_ROOT . 'pages/custom.php', false);
-		get('/' . ADMIN_DIR . '/type/$type/$page', ADMIN_ROOT . 'pages/custom.php', false);
+		$viewData = [
+			'postType' => $this->params
+		];
+		
+		get('/' . ADMIN_DIR . '/type/$type', ADMIN_ROOT . 'sys/custom/page.php', false, $viewData);
+		get('/' . ADMIN_DIR . '/type/$type/$page', ADMIN_ROOT . 'sys/custom/page.php', false, $viewData);
 	}
 
 

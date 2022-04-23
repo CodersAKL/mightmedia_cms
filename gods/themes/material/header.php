@@ -32,8 +32,11 @@
     <!-- Morris Chart Css-->
     <link href="<?php echo adminUrl('themes/material/plugins/morrisjs/morris.css'); ?>" rel="stylesheet" />
 
+	<?php
+        doAction('adminStyles');
+	?>
     <!-- Custom Css -->
-    <link href="<?php echo adminUrl('themes/material/css/style.css'); ?>" rel="stylesheet">
+	<link href="<?php echo adminUrl('themes/material/css/style.css'); ?>" rel="stylesheet">
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="<?php echo adminUrl('themes/material/css/themes/all-themes.css'); ?>" rel="stylesheet" />

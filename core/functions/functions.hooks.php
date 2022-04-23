@@ -5,23 +5,25 @@
  */
 require_once (config('class', 'dir') . 'class.hooks.php');
 
+$mmHooks = Hooks::getInstance();
+
 function doAction($tag, $arg = '')
 {
-	$hooks = Hooks::getInstance();
+	global $mmHooks;
 
-	return $hooks->do_action($tag, $arg);
+	return $mmHooks->do_action($tag, $arg);
 }
 
-function addAction($tag, $callback, $data = null)
+function addAction($tag, $callback)
 {
-	$hooks = Hooks::getInstance();
+	global $mmHooks;
 
-	return $hooks->add_action($tag, $callback, $data);
+	return $mmHooks->add_action($tag, $callback);
 }
 
-function applyFilters($tag, $value)
+function applyFilters($tag, $value = [])
 {
-	$hooks = Hooks::getInstance();
+	global $mmHooks;
 
-	return $hooks->apply_filters($tag, $value);
+	return $mmHooks->apply_filters($tag, $value);
 }

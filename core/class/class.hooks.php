@@ -111,13 +111,13 @@ class Hooks
    */
   public static function getInstance()
   {
-	static $instance;
+    static $instance;
 
-	if (null === $instance) {
-	  $instance = new self();
-	}
+    if (null === $instance) {
+      $instance = new self();
+    }
 
-	return $instance;
+    return $instance;
   }
 
   /**
@@ -149,19 +149,18 @@ class Hooks
    *
    * @return bool
    */
-  public function add_filter($tag, $function_to_add, $data, $priority = self::PRIORITY_NEUTRAL, $include_path = null)
+  public function add_filter($tag, $function_to_add, $priority = self::PRIORITY_NEUTRAL, $include_path = null)
   {
-	$idx = $this->_filter_build_unique_id($function_to_add);
+    $idx = $this->_filter_build_unique_id($function_to_add);
 
-	$this->filters[$tag][$priority][$idx] = [
-		'data'     		=> $data,
-		'function'     	=> $function_to_add,
-		'include_path' 	=> \is_string($include_path) ? $include_path : null,
-	];
+    $this->filters[$tag][$priority][$idx] = [
+        'function'     => $function_to_add,
+        'include_path' => \is_string($include_path) ? $include_path : null,
+    ];
 
-	unset($this->merged_filters[$tag]);
+    unset($this->merged_filters[$tag]);
 
-	return true;
+    return true;
   }
 
   /**
@@ -176,20 +175,20 @@ class Hooks
    */
   public function remove_filter($tag, $function_to_remove, $priority = self::PRIORITY_NEUTRAL)
   {
-	$function_to_remove = $this->_filter_build_unique_id($function_to_remove);
+    $function_to_remove = $this->_filter_build_unique_id($function_to_remove);
 
-	if (!isset($this->filters[$tag][$priority][$function_to_remove])) {
-	  return false;
-	}
+    if (!isset($this->filters[$tag][$priority][$function_to_remove])) {
+      return false;
+    }
 
-	unset($this->filters[$tag][$priority][$function_to_remove]);
-	if (empty($this->filters[$tag][$priority])) {
-	  unset($this->filters[$tag][$priority]);
-	}
+    unset($this->filters[$tag][$priority][$function_to_remove]);
+    if (empty($this->filters[$tag][$priority])) {
+      unset($this->filters[$tag][$priority]);
+    }
 
-	unset($this->merged_filters[$tag]);
+    unset($this->merged_filters[$tag]);
 
-	return true;
+    return true;
   }
 
   /**
@@ -202,21 +201,21 @@ class Hooks
    */
   public function remove_all_filters($tag, $priority = false)
   {
-	if (isset($this->merged_filters[$tag])) {
-	  unset($this->merged_filters[$tag]);
-	}
+    if (isset($this->merged_filters[$tag])) {
+      unset($this->merged_filters[$tag]);
+    }
 
-	if (!isset($this->filters[$tag])) {
-	  return true;
-	}
+    if (!isset($this->filters[$tag])) {
+      return true;
+    }
 
-	if (false !== $priority && isset($this->filters[$tag][$priority])) {
-	  unset($this->filters[$tag][$priority]);
-	} else {
-	  unset($this->filters[$tag]);
-	}
+    if (false !== $priority && isset($this->filters[$tag][$priority])) {
+      unset($this->filters[$tag][$priority]);
+    } else {
+      unset($this->filters[$tag]);
+    }
 
-	return true;
+    return true;
   }
 
   /**
@@ -245,22 +244,22 @@ class Hooks
    */
   public function has_filter($tag, $function_to_check = false)
   {
-	$has = isset($this->filters[$tag]);
-	if (false === $function_to_check || !$has) {
-	  return $has;
-	}
+    $has = isset($this->filters[$tag]);
+    if (false === $function_to_check || !$has) {
+      return $has;
+    }
 
-	if (!($idx = $this->_filter_build_unique_id($function_to_check))) {
-	  return false;
-	}
+    if (!($idx = $this->_filter_build_unique_id($function_to_check))) {
+      return false;
+    }
 
-	foreach (\array_keys($this->filters[$tag]) as $priority) {
-	  if (isset($this->filters[$tag][$priority][$idx])) {
-		return $priority;
-	  }
-	}
+    foreach (\array_keys($this->filters[$tag]) as $priority) {
+      if (isset($this->filters[$tag][$priority][$idx])) {
+        return $priority;
+      }
+    }
 
-	return false;
+    return false;
   }
 
   /**
@@ -278,66 +277,59 @@ class Hooks
    */
   public function apply_filters($tag, $value)
   {
-	$args = [];
+    $args = [];
 
-	// Do 'all' actions first
-	if (isset($this->filters['all'])) {
-	  $this->current_filter[] = $tag;
-	  $args = \func_get_args();
-	  $this->_call_all_hook($args);
-	}
+    // Do 'all' actions first
+    if (isset($this->filters['all'])) {
+      $this->current_filter[] = $tag;
+      $args = \func_get_args();
+      $this->_call_all_hook($args);
+    }
 
-	if (!isset($this->filters[$tag])) {
-	  if (isset($this->filters['all'])) {
-		\array_pop($this->current_filter);
-	  }
+    if (!isset($this->filters[$tag])) {
+      if (isset($this->filters['all'])) {
+        \array_pop($this->current_filter);
+      }
 
-	  return $value;
-	}
+      return $value;
+    }
 
-	if (!isset($this->filters['all'])) {
-	  $this->current_filter[] = $tag;
-	}
+    if (!isset($this->filters['all'])) {
+      $this->current_filter[] = $tag;
+    }
 
-	// Sort
-	if (!isset($this->merged_filters[$tag])) {
-	  \ksort($this->filters[$tag]);
-	  $this->merged_filters[$tag] = true;
-	}
+    // Sort
+    if (!isset($this->merged_filters[$tag])) {
+      \ksort($this->filters[$tag]);
+      $this->merged_filters[$tag] = true;
+    }
 
-	\reset($this->filters[$tag]);
+    \reset($this->filters[$tag]);
 
-	if (empty($args)) {
-	  $args = \func_get_args();
-	}
+    if (empty($args)) {
+      $args = \func_get_args();
+    }
 
-	\array_shift($args);
+    \array_shift($args);
 
-	do {
-	  foreach ((array)\current($this->filters[$tag]) as $the_) {
-		if (null !== $the_['function']) {
+    do {
+      foreach ((array)\current($this->filters[$tag]) as $the_) {
+        if (null !== $the_['function']) {
 
-			if (null !== $the_['include_path']) {
-				/** @noinspection PhpIncludeInspection */
-				include_once $the_['include_path'];
-			}
+          if (null !== $the_['include_path']) {
+            /** @noinspection PhpIncludeInspection */
+            include_once $the_['include_path'];
+          }
 
-		  	$args[0] = $value;
+          $args[0] = $value;
+          $value = \call_user_func_array($the_['function'], $args);
+        }
+      }
+    } while (\next($this->filters[$tag]) !== false);
 
-			if(! empty($the_['data'])) {
-				$funcName = $the_['function'];
-				$args[$funcName . '_data'] = $the_['data'];
-			}
-			
-			$value = \call_user_func_array($the_['function'], $args);
+    \array_pop($this->current_filter);
 
-		}
-	  }
-	} while (\next($this->filters[$tag]) !== false);
-
-	\array_pop($this->current_filter);
-
-	return $value;
+    return $value;
   }
 
   /**
@@ -350,58 +342,50 @@ class Hooks
    */
   public function apply_filters_ref_array($tag, $args)
   {
-	// Do 'all' actions first
-	if (isset($this->filters['all'])) {
-	  $this->current_filter[] = $tag;
-	  $all_args = \func_get_args();
-	  $this->_call_all_hook($all_args);
-	}
+    // Do 'all' actions first
+    if (isset($this->filters['all'])) {
+      $this->current_filter[] = $tag;
+      $all_args = \func_get_args();
+      $this->_call_all_hook($all_args);
+    }
 
-	if (!isset($this->filters[$tag])) {
-	  if (isset($this->filters['all'])) {
-		\array_pop($this->current_filter);
-	  }
+    if (!isset($this->filters[$tag])) {
+      if (isset($this->filters['all'])) {
+        \array_pop($this->current_filter);
+      }
 
-	  return $args[0];
-	}
+      return $args[0];
+    }
 
-	if (!isset($this->filters['all'])) {
-	  $this->current_filter[] = $tag;
-	}
+    if (!isset($this->filters['all'])) {
+      $this->current_filter[] = $tag;
+    }
 
-	// Sort
-	if (!isset($this->merged_filters[$tag])) {
-	  \ksort($this->filters[$tag]);
-	  $this->merged_filters[$tag] = true;
-	}
+    // Sort
+    if (!isset($this->merged_filters[$tag])) {
+      \ksort($this->filters[$tag]);
+      $this->merged_filters[$tag] = true;
+    }
 
-	\reset($this->filters[$tag]);
+    \reset($this->filters[$tag]);
 
-	do {
-	  foreach ((array)\current($this->filters[$tag]) as $the_) {
-		if (null !== $the_['function']) {
+    do {
+      foreach ((array)\current($this->filters[$tag]) as $the_) {
+        if (null !== $the_['function']) {
 
-		  if (null !== $the_['include_path']) {
-			/** @noinspection PhpIncludeInspection */
-			include_once $the_['include_path'];
-		  }
+          if (null !== $the_['include_path']) {
+            /** @noinspection PhpIncludeInspection */
+            include_once $the_['include_path'];
+          }
 
-		  	if(null !== $the_['data']) {
-				$funcName = $the_['function'];
-				$args[$funcName . '_data'] = $the_['data'];
+          $args[0] = \call_user_func_array($the_['function'], $args);
+        }
+      }
+    } while (\next($this->filters[$tag]) !== false);
 
-				$args[0] = \call_user_func_array($the_['function'], $args);
-				
-			} else {
-				$args[0] = \call_user_func_array($the_['function'], $args);
-			}
-		}
-	  }
-	} while (\next($this->filters[$tag]) !== false);
+    \array_pop($this->current_filter);
 
-	\array_pop($this->current_filter);
-
-	return $args[0];
+    return $args[0];
   }
 
   /**
@@ -425,14 +409,13 @@ class Hooks
    * @return bool
    */
   public function add_action(
-	  $tag,
-	  $function_to_add,
-	  $data = null,
-	  $priority = self::PRIORITY_NEUTRAL,
-	  $include_path = null
+      $tag,
+      $function_to_add,
+      $priority = self::PRIORITY_NEUTRAL,
+      $include_path = null
   )
   {
-	return $this->add_filter($tag, $function_to_add, $data, $priority, $include_path);
+    return $this->add_filter($tag, $function_to_add, $priority, $include_path);
   }
 
   /**
@@ -461,7 +444,7 @@ class Hooks
    */
   public function has_action($tag, $function_to_check = false)
   {
-	return $this->has_filter($tag, $function_to_check);
+    return $this->has_filter($tag, $function_to_check);
   }
 
   /**
@@ -475,7 +458,7 @@ class Hooks
    */
   public function remove_action($tag, $function_to_remove, $priority = self::PRIORITY_NEUTRAL)
   {
-	return $this->remove_filter($tag, $function_to_remove, $priority);
+    return $this->remove_filter($tag, $function_to_remove, $priority);
   }
 
   /**
@@ -488,7 +471,7 @@ class Hooks
    */
   public function remove_all_actions($tag, $priority = false)
   {
-	return $this->remove_all_filters($tag, $priority);
+    return $this->remove_all_filters($tag, $priority);
   }
 
   /**
@@ -504,92 +487,82 @@ class Hooks
    */
   public function do_action($tag, $arg = '')
   {
-	if (!\is_array($this->actions)) {
-	  $this->actions = [];
-	}
+    if (!\is_array($this->actions)) {
+      $this->actions = [];
+    }
 
-	if (isset($this->actions[$tag])) {
-	  ++$this->actions[$tag];
-	} else {
-	  $this->actions[$tag] = 1;
-	}
+    if (isset($this->actions[$tag])) {
+      ++$this->actions[$tag];
+    } else {
+      $this->actions[$tag] = 1;
+    }
 
-	// Do 'all' actions first
-	if (isset($this->filters['all'])) {
-	  $this->current_filter[] = $tag;
-	  $all_args = \func_get_args();
-	  $this->_call_all_hook($all_args);
-	}
+    // Do 'all' actions first
+    if (isset($this->filters['all'])) {
+      $this->current_filter[] = $tag;
+      $all_args = \func_get_args();
+      $this->_call_all_hook($all_args);
+    }
 
-	if (!isset($this->filters[$tag])) {
-	  if (isset($this->filters['all'])) {
-		\array_pop($this->current_filter);
-	  }
+    if (!isset($this->filters[$tag])) {
+      if (isset($this->filters['all'])) {
+        \array_pop($this->current_filter);
+      }
 
-	  return false;
-	}
+      return false;
+    }
 
-	if (!isset($this->filters['all'])) {
-	  $this->current_filter[] = $tag;
-	}
+    if (!isset($this->filters['all'])) {
+      $this->current_filter[] = $tag;
+    }
 
-	$args = [];
+    $args = [];
 
-	if (
-		\is_array($arg)
-		&&
-		isset($arg[0])
-		&&
-		\is_object($arg[0])
-		&&
-		1 == \count($arg)
-	) {
-	  $args[] =& $arg[0];
-	} else {
-	  $args[] = $arg;
-	}
+    if (
+        \is_array($arg)
+        &&
+        isset($arg[0])
+        &&
+        \is_object($arg[0])
+        &&
+        1 == \count($arg)
+    ) {
+      $args[] =& $arg[0];
+    } else {
+      $args[] = $arg;
+    }
 
-	$numArgs = \func_num_args();
+    $numArgs = \func_num_args();
 
-	for ($a = 2; $a < $numArgs; $a++) {
-	  $args[] = \func_get_arg($a);
-	}
+    for ($a = 2; $a < $numArgs; $a++) {
+      $args[] = \func_get_arg($a);
+    }
 
-	// Sort
-	if (!isset($this->merged_filters[$tag])) {
-	  \ksort($this->filters[$tag]);
-	  $this->merged_filters[$tag] = true;
-	}
+    // Sort
+    if (!isset($this->merged_filters[$tag])) {
+      \ksort($this->filters[$tag]);
+      $this->merged_filters[$tag] = true;
+    }
 
-	\reset($this->filters[$tag]);
+    \reset($this->filters[$tag]);
 
-	do {
-	  foreach ((array)\current($this->filters[$tag]) as $the_) {
-		if (null !== $the_['function']) {
+    do {
+      foreach ((array)\current($this->filters[$tag]) as $the_) {
+        if (null !== $the_['function']) {
 
-		  if (null !== $the_['include_path']) {
-			/** @noinspection PhpIncludeInspection */
-			include_once $the_['include_path'];
-		  }
+          if (null !== $the_['include_path']) {
+            /** @noinspection PhpIncludeInspection */
+            include_once $the_['include_path'];
+          }
 
-		 	 if(null !== $the_['data']) {
-				$funcName = $the_['function'];
-				$args[$funcName . '_data'] = $the_['data'];
+          \call_user_func_array($the_['function'], $args);
+        }
+      }
+    } while (\next($this->filters[$tag]) !== false);
 
-				\call_user_func_array($the_['function'], $args);
-				
-			} else {
-				\call_user_func_array($the_['function'], $args);
-			}
+    \array_pop($this->current_filter);
 
-		  
-		}
-	  }
-	} while (\next($this->filters[$tag]) !== false);
-
-	\array_pop($this->current_filter);
-
-	return true;
+    return true;
   }
 
   /**
@@ -602,60 +575,60 @@ class Hooks
    */
   public function do_action_ref_array($tag, $args)
   {
-	if (!\is_array($this->actions)) {
-	  $this->actions = [];
-	}
+    if (!\is_array($this->actions)) {
+      $this->actions = [];
+    }
 
-	if (isset($this->actions[$tag])) {
-	  ++$this->actions[$tag];
-	} else {
-	  $this->actions[$tag] = 1;
-	}
+    if (isset($this->actions[$tag])) {
+      ++$this->actions[$tag];
+    } else {
+      $this->actions[$tag] = 1;
+    }
 
-	// Do 'all' actions first
-	if (isset($this->filters['all'])) {
-	  $this->current_filter[] = $tag;
-	  $all_args = \func_get_args();
-	  $this->_call_all_hook($all_args);
-	}
+    // Do 'all' actions first
+    if (isset($this->filters['all'])) {
+      $this->current_filter[] = $tag;
+      $all_args = \func_get_args();
+      $this->_call_all_hook($all_args);
+    }
 
-	if (!isset($this->filters[$tag])) {
-	  if (isset($this->filters['all'])) {
-		\array_pop($this->current_filter);
-	  }
+    if (!isset($this->filters[$tag])) {
+      if (isset($this->filters['all'])) {
+        \array_pop($this->current_filter);
+      }
 
-	  return false;
-	}
+      return false;
+    }
 
-	if (!isset($this->filters['all'])) {
-	  $this->current_filter[] = $tag;
-	}
+    if (!isset($this->filters['all'])) {
+      $this->current_filter[] = $tag;
+    }
 
-	// Sort
-	if (!isset($this->merged_filters[$tag])) {
-	  \ksort($this->filters[$tag]);
-	  $this->merged_filters[$tag] = true;
-	}
+    // Sort
+    if (!isset($this->merged_filters[$tag])) {
+      \ksort($this->filters[$tag]);
+      $this->merged_filters[$tag] = true;
+    }
 
-	\reset($this->filters[$tag]);
+    \reset($this->filters[$tag]);
 
-	do {
-	  foreach ((array)\current($this->filters[$tag]) as $the_) {
-		if (null !== $the_['function']) {
+    do {
+      foreach ((array)\current($this->filters[$tag]) as $the_) {
+        if (null !== $the_['function']) {
 
-		  if (null !== $the_['include_path']) {
-			/** @noinspection PhpIncludeInspection */
-			include_once $the_['include_path'];
-		  }
+          if (null !== $the_['include_path']) {
+            /** @noinspection PhpIncludeInspection */
+            include_once $the_['include_path'];
+          }
 
-		  \call_user_func_array($the_['function'], $args);
-		}
-	  }
-	} while (\next($this->filters[$tag]) !== false);
+          \call_user_func_array($the_['function'], $args);
+        }
+      }
+    } while (\next($this->filters[$tag]) !== false);
 
-	\array_pop($this->current_filter);
+    \array_pop($this->current_filter);
 
-	return true;
+    return true;
   }
 
   /**
@@ -667,11 +640,11 @@ class Hooks
    */
   public function did_action($tag)
   {
-	if (!\is_array($this->actions) || !isset($this->actions[$tag])) {
-	  return 0;
-	}
+    if (!\is_array($this->actions) || !isset($this->actions[$tag])) {
+      return 0;
+    }
 
-	return $this->actions[$tag];
+    return $this->actions[$tag];
   }
 
   /**
@@ -681,7 +654,7 @@ class Hooks
    */
   public function current_filter()
   {
-	return \end($this->current_filter);
+    return \end($this->current_filter);
   }
 
   /**
@@ -697,31 +670,31 @@ class Hooks
    */
   private function _filter_build_unique_id($function)
   {
-	if (\is_string($function)) {
-	  return $function;
-	}
+    if (\is_string($function)) {
+      return $function;
+    }
 
-	if (\is_object($function)) {
-	  // Closures are currently implemented as objects
-	  $function = [
-		  $function,
-		  '',
-	  ];
-	} else {
-	  $function = (array)$function;
-	}
+    if (\is_object($function)) {
+      // Closures are currently implemented as objects
+      $function = [
+          $function,
+          '',
+      ];
+    } else {
+      $function = (array)$function;
+    }
 
-	if (\is_object($function[0])) {
-	  // Object Class Calling
-	  return \spl_object_hash($function[0]) . $function[1];
-	}
+    if (\is_object($function[0])) {
+      // Object Class Calling
+      return \spl_object_hash($function[0]) . $function[1];
+    }
 
-	if (\is_string($function[0])) {
-	  // Static Calling
-	  return $function[0] . $function[1];
-	}
+    if (\is_string($function[0])) {
+      // Static Calling
+      return $function[0] . $function[1];
+    }
 
-	return false;
+    return false;
   }
 
   /**
@@ -731,29 +704,21 @@ class Hooks
    */
   public function _call_all_hook($args)
   {
-	\reset($this->filters['all']);
+    \reset($this->filters['all']);
 
-	do {
-	  foreach ((array)\current($this->filters['all']) as $the_) {
-		if (null !== $the_['function']) {
+    do {
+      foreach ((array)\current($this->filters['all']) as $the_) {
+        if (null !== $the_['function']) {
 
-		  if (null !== $the_['include_path']) {
-			/** @noinspection PhpIncludeInspection */
-			include_once $the_['include_path'];
-		  }
+          if (null !== $the_['include_path']) {
+            /** @noinspection PhpIncludeInspection */
+            include_once $the_['include_path'];
+          }
 
-		  	if(null !== $the_['data']) {
-				$funcName = $the_['function'];
-				$args[$funcName . '_data'] = $the_['data'];
-
-				\call_user_func_array($the_['function'], $args);
-				
-			} else {
-				\call_user_func_array($the_['function'], $args);
-			}
-		}
-	  }
-	} while (\next($this->filters['all']) !== false);
+          \call_user_func_array($the_['function'], $args);
+        }
+      }
+    } while (\next($this->filters['all']) !== false);
   }
 
   /** @noinspection MagicMethodsValidityInspection */
@@ -764,10 +729,10 @@ class Hooks
    */
   public function __call_all_hook($args)
   {
-	// <-- refactoring "__call_all_hook()" into "_call_all_hook()" is a breaking change (BC),
-	// so we will only deprecate the usage
+    // <-- refactoring "__call_all_hook()" into "_call_all_hook()" is a breaking change (BC),
+    // so we will only deprecate the usage
 
-	$this->_call_all_hook($args);
+    $this->_call_all_hook($args);
   }
 
   /**
@@ -824,13 +789,13 @@ class Hooks
    */
   public function add_shortcode(string $tag, $func)
   {
-	if (\is_callable($func)) {
-	  self::$shortcode_tags[$tag] = $func;
+    if (\is_callable($func)) {
+      self::$shortcode_tags[$tag] = $func;
 
-	  return true;
-	}
+      return true;
+    }
 
-	return false;
+    return false;
   }
 
   /**
@@ -842,13 +807,13 @@ class Hooks
    */
   public function remove_shortcode(string $tag)
   {
-	if (isset(self::$shortcode_tags[$tag])) {
-	  unset(self::$shortcode_tags[$tag]);
+    if (isset(self::$shortcode_tags[$tag])) {
+      unset(self::$shortcode_tags[$tag]);
 
-	  return true;
-	}
+      return true;
+    }
 
-	return false;
+    return false;
   }
 
   /**
@@ -860,9 +825,9 @@ class Hooks
    */
   public function remove_all_shortcodes()
   {
-	self::$shortcode_tags = [];
+    self::$shortcode_tags = [];
 
-	return true;
+    return true;
   }
 
   /**
@@ -874,7 +839,7 @@ class Hooks
    */
   public function shortcode_exists(string $tag)
   {
-	return \array_key_exists($tag, self::$shortcode_tags);
+    return \array_key_exists($tag, self::$shortcode_tags);
   }
 
   /**
@@ -887,28 +852,28 @@ class Hooks
    */
   public function has_shortcode(string $content, string $tag)
   {
-	if (false === \strpos($content, '[')) {
-	  return false;
-	}
+    if (false === \strpos($content, '[')) {
+      return false;
+    }
 
-	if ($this->shortcode_exists($tag)) {
-	  \preg_match_all('/' . $this->get_shortcode_regex() . '/s', $content, $matches, PREG_SET_ORDER);
-	  if (empty($matches)) {
-		return false;
-	  }
+    if ($this->shortcode_exists($tag)) {
+      \preg_match_all('/' . $this->get_shortcode_regex() . '/s', $content, $matches, PREG_SET_ORDER);
+      if (empty($matches)) {
+        return false;
+      }
 
-	  foreach ($matches as $shortcode) {
-		if ($tag === $shortcode[2]) {
-		  return true;
-		}
+      foreach ($matches as $shortcode) {
+        if ($tag === $shortcode[2]) {
+          return true;
+        }
 
-		if (!empty($shortcode[5]) && $this->has_shortcode($shortcode[5], $tag)) {
-		  return true;
-		}
-	  }
-	}
+        if (!empty($shortcode[5]) && $this->has_shortcode($shortcode[5], $tag)) {
+          return true;
+        }
+      }
+    }
 
-	return false;
+    return false;
   }
 
   /**
@@ -927,20 +892,20 @@ class Hooks
    */
   public function do_shortcode(string $content)
   {
-	if (empty(self::$shortcode_tags) || !\is_array(self::$shortcode_tags)) {
-	  return $content;
-	}
+    if (empty(self::$shortcode_tags) || !\is_array(self::$shortcode_tags)) {
+      return $content;
+    }
 
-	$pattern = $this->get_shortcode_regex();
+    $pattern = $this->get_shortcode_regex();
 
-	return \preg_replace_callback(
-		"/$pattern/s",
-		[
-			$this,
-			'_do_shortcode_tag',
-		],
-		$content
-	);
+    return \preg_replace_callback(
+        "/$pattern/s",
+        [
+            $this,
+            '_do_shortcode_tag',
+        ],
+        $content
+    );
   }
 
   /**
@@ -967,40 +932,40 @@ class Hooks
    */
   public function get_shortcode_regex()
   {
-	$tagnames = \array_keys(self::$shortcode_tags);
-	$tagregexp = \implode('|', \array_map('preg_quote', $tagnames));
+    $tagnames = \array_keys(self::$shortcode_tags);
+    $tagregexp = \implode('|', \array_map('preg_quote', $tagnames));
 
-	// WARNING! Do not change this regex without changing __do_shortcode_tag() and __strip_shortcode_tag()
-	// Also, see shortcode_unautop() and shortcode.js.
-	return
-		'\\[' // Opening bracket
-		. '(\\[?)' // 1: Optional second opening bracket for escaping shortcodes: [[tag]]
-		. "($tagregexp)" // 2: Shortcode name
-		. '(?![\\w-])' // Not followed by word character or hyphen
-		. '(' // 3: Unroll the loop: Inside the opening shortcode tag
-		. '[^\\]\\/]*' // Not a closing bracket or forward slash
-		. '(?:'
-		. '\\/(?!\\])' // A forward slash not followed by a closing bracket
-		. '[^\\]\\/]*' // Not a closing bracket or forward slash
-		. ')*?'
-		. ')'
-		. '(?:'
-		. '(\\/)' // 4: Self closing tag ...
-		. '\\]' // ... and closing bracket
-		. '|'
-		. '\\]' // Closing bracket
-		. '(?:'
-		. '(' // 5: Unroll the loop: Optionally, anything between the opening and closing shortcode tags
-		. '[^\\[]*+' // Not an opening bracket
-		. '(?:'
-		. '\\[(?!\\/\\2\\])' // An opening bracket not followed by the closing shortcode tag
-		. '[^\\[]*+' // Not an opening bracket
-		. ')*+'
-		. ')'
-		. '\\[\\/\\2\\]' // Closing shortcode tag
-		. ')?'
-		. ')'
-		. '(\\]?)'; // 6: Optional second closing brocket for escaping shortcodes: [[tag]]
+    // WARNING! Do not change this regex without changing __do_shortcode_tag() and __strip_shortcode_tag()
+    // Also, see shortcode_unautop() and shortcode.js.
+    return
+        '\\[' // Opening bracket
+        . '(\\[?)' // 1: Optional second opening bracket for escaping shortcodes: [[tag]]
+        . "($tagregexp)" // 2: Shortcode name
+        . '(?![\\w-])' // Not followed by word character or hyphen
+        . '(' // 3: Unroll the loop: Inside the opening shortcode tag
+        . '[^\\]\\/]*' // Not a closing bracket or forward slash
+        . '(?:'
+        . '\\/(?!\\])' // A forward slash not followed by a closing bracket
+        . '[^\\]\\/]*' // Not a closing bracket or forward slash
+        . ')*?'
+        . ')'
+        . '(?:'
+        . '(\\/)' // 4: Self closing tag ...
+        . '\\]' // ... and closing bracket
+        . '|'
+        . '\\]' // Closing bracket
+        . '(?:'
+        . '(' // 5: Unroll the loop: Optionally, anything between the opening and closing shortcode tags
+        . '[^\\[]*+' // Not an opening bracket
+        . '(?:'
+        . '\\[(?!\\/\\2\\])' // An opening bracket not followed by the closing shortcode tag
+        . '[^\\[]*+' // Not an opening bracket
+        . ')*+'
+        . ')'
+        . '\\[\\/\\2\\]' // Closing shortcode tag
+        . ')?'
+        . ')'
+        . '(\\]?)'; // 6: Optional second closing brocket for escaping shortcodes: [[tag]]
   }
 
   /**
@@ -1014,21 +979,21 @@ class Hooks
    */
   private function _do_shortcode_tag(array $m)
   {
-	// allow [[foo]] syntax for escaping a tag
-	if ($m[1] == '[' && $m[6] == ']') {
-	  return \substr($m[0], 1, -1);
-	}
+    // allow [[foo]] syntax for escaping a tag
+    if ($m[1] == '[' && $m[6] == ']') {
+      return \substr($m[0], 1, -1);
+    }
 
-	$tag = $m[2];
-	$attr = $this->shortcode_parse_atts($m[3]);
+    $tag = $m[2];
+    $attr = $this->shortcode_parse_atts($m[3]);
 
-	// enclosing tag - extra parameter
-	if (isset($m[5])) {
-	  return $m[1] . \call_user_func(self::$shortcode_tags[$tag], $attr, $m[5], $tag) . $m[6];
-	}
+    // enclosing tag - extra parameter
+    if (isset($m[5])) {
+      return $m[1] . \call_user_func(self::$shortcode_tags[$tag], $attr, $m[5], $tag) . $m[6];
+    }
 
-	// self-closing tag
-	return $m[1] . \call_user_func(self::$shortcode_tags[$tag], $attr, null, $tag) . $m[6];
+    // self-closing tag
+    return $m[1] . \call_user_func(self::$shortcode_tags[$tag], $attr, null, $tag) . $m[6];
   }
 
   /**
@@ -1047,29 +1012,29 @@ class Hooks
    */
   public function shortcode_parse_atts(string $text)
   {
-	$atts = [];
-	$pattern = '/(\w+)\s*=\s*"([^"]*)"(?:\s|$)|(\w+)\s*=\s*\'([^\']*)\'(?:\s|$)|(\w+)\s*=\s*([^\s\'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/';
-	$text = \preg_replace("/[\x{00a0}\x{200b}]+/u", ' ', $text);
-	$matches = [];
-	if (\preg_match_all($pattern, $text, $matches, PREG_SET_ORDER)) {
-	  foreach ($matches as $m) {
-		if (!empty($m[1])) {
-		  $atts[\strtolower($m[1])] = \stripcslashes($m[2]);
-		} elseif (!empty($m[3])) {
-		  $atts[\strtolower($m[3])] = \stripcslashes($m[4]);
-		} elseif (!empty($m[5])) {
-		  $atts[\strtolower($m[5])] = \stripcslashes($m[6]);
-		} elseif (isset($m[7]) && $m[7] !== '') {
-		  $atts[] = \stripcslashes($m[7]);
-		} elseif (isset($m[8])) {
-		  $atts[] = \stripcslashes($m[8]);
-		}
-	  }
-	} else {
-	  $atts = \ltrim($text);
-	}
+    $atts = [];
+    $pattern = '/(\w+)\s*=\s*"([^"]*)"(?:\s|$)|(\w+)\s*=\s*\'([^\']*)\'(?:\s|$)|(\w+)\s*=\s*([^\s\'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/';
+    $text = \preg_replace("/[\x{00a0}\x{200b}]+/u", ' ', $text);
+    $matches = [];
+    if (\preg_match_all($pattern, $text, $matches, PREG_SET_ORDER)) {
+      foreach ($matches as $m) {
+        if (!empty($m[1])) {
+          $atts[\strtolower($m[1])] = \stripcslashes($m[2]);
+        } elseif (!empty($m[3])) {
+          $atts[\strtolower($m[3])] = \stripcslashes($m[4]);
+        } elseif (!empty($m[5])) {
+          $atts[\strtolower($m[5])] = \stripcslashes($m[6]);
+        } elseif (isset($m[7]) && $m[7] !== '') {
+          $atts[] = \stripcslashes($m[7]);
+        } elseif (isset($m[8])) {
+          $atts[] = \stripcslashes($m[8]);
+        }
+      }
+    } else {
+      $atts = \ltrim($text);
+    }
 
-	return $atts;
+    return $atts;
   }
 
   /**
@@ -1094,39 +1059,39 @@ class Hooks
    */
   public function shortcode_atts($pairs, $atts, $shortcode = '')
   {
-	$atts = (array)$atts;
-	$out = [];
-	foreach ($pairs as $name => $default) {
-	  if (array_key_exists($name, $atts)) {
-		$out[$name] = $atts[$name];
-	  } else {
-		$out[$name] = $default;
-	  }
-	}
+    $atts = (array)$atts;
+    $out = [];
+    foreach ($pairs as $name => $default) {
+      if (array_key_exists($name, $atts)) {
+        $out[$name] = $atts[$name];
+      } else {
+        $out[$name] = $default;
+      }
+    }
 
-	/**
-	 * Filter a shortcode's default attributes.
-	 *
-	 * <p>
-	 * <br />
-	 * If the third parameter of the shortcode_atts() function is present then this filter is available.
-	 * The third parameter, $shortcode, is the name of the shortcode.
-	 * </p>
-	 *
-	 * @param array $out   <p>The output array of shortcode attributes.</p>
-	 * @param array $pairs <p>The supported attributes and their defaults.</p>
-	 * @param array $atts  <p>The user defined shortcode attributes.</p>
-	 */
-	if ($shortcode) {
-	  $out = $this->apply_filters(
-		  "shortcode_atts_{$shortcode}",
-		  $out,
-		  $pairs,
-		  $atts
-	  );
-	}
+    /**
+     * Filter a shortcode's default attributes.
+     *
+     * <p>
+     * <br />
+     * If the third parameter of the shortcode_atts() function is present then this filter is available.
+     * The third parameter, $shortcode, is the name of the shortcode.
+     * </p>
+     *
+     * @param array $out   <p>The output array of shortcode attributes.</p>
+     * @param array $pairs <p>The supported attributes and their defaults.</p>
+     * @param array $atts  <p>The user defined shortcode attributes.</p>
+     */
+    if ($shortcode) {
+      $out = $this->apply_filters(
+          "shortcode_atts_{$shortcode}",
+          $out,
+          $pairs,
+          $atts
+      );
+    }
 
-	return $out;
+    return $out;
   }
 
   /**
@@ -1139,20 +1104,20 @@ class Hooks
   public function strip_shortcodes(string $content)
   {
 
-	if (empty(self::$shortcode_tags) || !\is_array(self::$shortcode_tags)) {
-	  return $content;
-	}
+    if (empty(self::$shortcode_tags) || !\is_array(self::$shortcode_tags)) {
+      return $content;
+    }
 
-	$pattern = $this->get_shortcode_regex();
+    $pattern = $this->get_shortcode_regex();
 
-	return preg_replace_callback(
-		"/$pattern/s",
-		[
-			$this,
-			'_strip_shortcode_tag',
-		],
-		$content
-	);
+    return preg_replace_callback(
+        "/$pattern/s",
+        [
+            $this,
+            '_strip_shortcode_tag',
+        ],
+        $content
+    );
   }
 
   /**
@@ -1164,12 +1129,12 @@ class Hooks
    */
   private function _strip_shortcode_tag(array $m)
   {
-	// allow [[foo]] syntax for escaping a tag
-	if ($m[1] == '[' && $m[6] == ']') {
-	  return substr($m[0], 1, -1);
-	}
+    // allow [[foo]] syntax for escaping a tag
+    if ($m[1] == '[' && $m[6] == ']') {
+      return substr($m[0], 1, -1);
+    }
 
-	return $m[1] . $m[6];
+    return $m[1] . $m[6];
   }
 
 }

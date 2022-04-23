@@ -7,13 +7,20 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/core/boot.php';
 define('ADMIN_ROOT', __DIR__ . DS);
 define('ADMIN_DIR', basename(dirname(__FILE__)));
 
-
 include_once ROOT . 'core/inc/inc.auth.php';
+
+// FUNC files
+$loadFuncFilesArray = [
+	'core',
+	'form',
+];
+
+foreach ($loadFuncFilesArray as $loadFuncFile) {
+    require ADMIN_ROOT . 'functions/functions.' . $loadFuncFile . '.php';
+}
 
 require 'themes/material/config.php';
 require 'themes/material/functions.php';
-
-include 'functions/functions.core.php';
 
 // add admin login check
 if (! empty(getSession('user')) && getSession('user')['level'] == 1 ) {

@@ -125,7 +125,7 @@ if(isset($_POST) && ! empty($_POST)) {
 }
 
 
-
+// TODO: check and change or remove
 //Isvalom POST'us nuo xss
 if (! empty($_POST)) {
 	include_once ROOT . 'core/functions/functions.safe_html.php';
@@ -146,6 +146,12 @@ $_SERVER['QUERY_STRING'] = isset($_SERVER['QUERY_STRING'] ) ? cleanUrl($_SERVER[
 $_SERVER['REQUEST_URI']  = isset($_SERVER['REQUEST_URI'] ) ? cleanUrl($_SERVER['REQUEST_URI']) : '';
 $PHP_SELF                = cleanUrl($_SERVER['PHP_SELF']);
 
+// current theme functions file load
+require_once ROOT . 'content/themes/' . getOption('site_theme') . '/functions.php';
+
+// INIT hooks
+doAction('boot');
 
 // Pages LOAD by routes
 require_once ROOT . 'core/inc/inc.routes.php';
+

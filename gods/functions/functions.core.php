@@ -1,5 +1,13 @@
 <?php
 
+
+function adminPages()
+{
+	get('/' . ADMIN_DIR, ADMIN_ROOT . 'pages/dashboard.php', false);
+	doAction('adminRoutes');
+}
+
+
 function adminMenu()
 {
 	$adminMenu['dashboard'] = [
@@ -10,117 +18,13 @@ function adminMenu()
 	return applyFilters('adminMenu', $adminMenu);
 }
 
+
+
 // old ----
-function editor( $tipas = 'jquery', $dydis = 'standartinis', $id = FALSE, $value = '' ) {
 
-	global $conf, $lang;
-
-	if (! $id) {
-		$id = md5(uniqid());
-	}
-
-	if ( is_array( $id ) ) {
-		foreach ( $id as $key => $val ) {
-			$arr[$val] = "'$key'";
-		}
-		$areos = implode(',', $arr);
-	} else {
-		$areos = "'$id'";
-	}
-
-	$root = ROOT;
-	$return = '';
-
-	if (getOption('site_editor') == 'textarea' ) {
-		
-		if ( is_array( $id ) ) {
-			foreach ( $id as $key => $val ) {
-				$return .= <<<HTML
-
-	<textarea id="{$key}" name="{$key}" rows="1" class="form-control no-resize auto-growth">{$value[$key]}</textarea>
-HTML;
-			}
-		} else {
-			$return .= <<<HTML
-
-<textarea id="{$id}" name="{$id}" rows="1" class="form-control no-resize auto-growth">{$value}</textarea>
-HTML;
-
-		}
-	} elseif (getOption('site_editor') == 'tinymce') {
-		$dir    = siteUrl();
-		$return .= <<<HTML
-      <!-- Load TinyMCE -->
-<script src="{$dir}htmlarea/tinymce/tinymce.js" type="text/javascript"></script>
-<script type="text/javascript">
-	//TinyMCE
-    tinymce.init({
-        selector: "textarea.tinymce",
-        theme: "modern",
-        height: 300,
-        plugins: [
-            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-            'searchreplace wordcount visualblocks visualchars code fullscreen',
-            'insertdatetime media nonbreaking save table contextmenu directionality',
-            'emoticons template paste textcolor colorpicker textpattern imagetools'
-        ],
-        toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-        toolbar2: 'print preview media | forecolor backcolor emoticons',
-		image_advtab: true,
-		// images_upload_url: 'postAcceptor.php', - images local upload
-    });
-
-</script>
-<!-- /TinyMCE -->
-HTML;
-		if ( is_array( $id ) ) {
-			foreach ( $id as $key => $val ) {
-
-				$return .= <<< HTML
-<textarea id="{$key}" name="{$key}" class="tinymce">{$value[$key]}</textarea>
-HTML;
-			}
-		} else {
-			$return .= <<< HTML
-<textarea id="{$id}" name="{$id}" class="tinymce">{$value}</textarea>
-HTML;
-
-		}
-		
-	} elseif (getOption('site_editor') == 'ckeditor' ) {
-		$dir = siteUrl();
-
-		$return .= <<<HTML
-	<script type="text/javascript" src="{$dir}htmlarea/ckeditor/ckeditor.js"></script>
-	<script type="text/javascript">
-		//CKEditor
-		CKEDITOR.replaceClass = 'ckeditor';
-		CKEDITOR.config.height = 300;
-		CKEDITOR.config.extraPlugins = 'uploadimage';
-	</script>
-HTML;
-
-		if ( is_array( $id ) ) {
-			foreach ( $id as $key => $val ) {
-
-				$return .= <<< HTML
-<textarea id="{$key}" name="{$key}" class="ckeditor">{$value[$key]}</textarea>
-HTML;
-			}
-		} else {
-			$return .= <<< HTML
-<textarea id="{$id}" name="{$id}" class="ckeditor">{$value}</textarea>
-HTML;
-
-		}
-	}
-	
-	return $return;
-}
 
 function defaultHead() 
 {
-	global $conf;
 
 	?>
 	<base href="<?php echo siteUrl(); ?>" />
