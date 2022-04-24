@@ -65,8 +65,8 @@ function dbInsert(string $table, array $data, string $fieldGet = null)
 	$date = new DateTime();
 
 	$defaultData = [
-		'created' => $date->getTimestamp(),
-		'updated' => $date->getTimestamp(),
+		'created' => $date->format(TIME_FORMAT),
+		'updated' => $date->format(TIME_FORMAT),
 	];
 
 	$data = array_merge($defaultData, $data);
@@ -85,7 +85,7 @@ function dbUpdate($table, $data = [], $where = [])
 	$date = new DateTime();
 
 	$defaultData = [
-		'updated' => $date->getTimestamp(),
+		'updated' => $date->format(TIME_FORMAT),
 	];
 
 	$data = array_merge($defaultData, $data);
@@ -100,20 +100,22 @@ function dbDelete($table, $data = [])
 	return $mmdb->delete($table, $data);
 }
 
-function dbSelect(string $table, array $where, array $columns = null, $limit = 0)
+function dbSelect(string $table, array $where = null, array $columns = null, $limit = 0)
 {
 	global $mmdb;
 
 	$string = '';
 	$i 		= 0;
 
-	foreach ($where as $column => $value) {
-		$i++;
+	if (! empty($where)) {
+		foreach ($where as $column => $value) {
+			$i++;
 
-		if($i = 1) {
-			$string .= " WHERE `" . $column . "` = '" . $value . "'";
-		} else {
-			$string .= " AND `" . $column . "` = '" . $value . "'";
+			if($i = 1) {
+				$string .= " WHERE `" . $column . "` = '" . $value . "'";
+			} else {
+				$string .= " AND `" . $column . "` = '" . $value . "'";
+			}
 		}
 	}
 

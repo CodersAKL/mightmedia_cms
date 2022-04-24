@@ -18,7 +18,10 @@ function addDropZoneScript()
 		//Dropzone
 		Dropzone.options.frmFileUpload = {
 			paramName: "file",
-			maxFilesize: 10
+			maxFilesize: 10,
+			uploadMultiple: true
+			// maxFilesize
+			// acceptedFiles
 		};
 		//});
 	</script>

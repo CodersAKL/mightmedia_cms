@@ -60,12 +60,12 @@ class ImageResize
      *
      * @param string $image_data
      * @return ImageResize
-     * @throws ImageResizeException
+     * @throws Exception
      */
     public static function createFromString($image_data)
     {
         if (empty($image_data) || $image_data === null) {
-            throw new ImageResizeException('image_data must not be empty');
+            throw new Exception('image_data must not be empty');
         }
         $resize = new self('data://application/octet-stream;base64,' . base64_encode($image_data));
         return $resize;
@@ -102,7 +102,7 @@ class ImageResize
      *
      * @param string $filename
      * @return ImageResize
-     * @throws ImageResizeException
+     * @throws Exception
      */
     public function __construct($filename)
     {
@@ -115,7 +115,7 @@ class ImageResize
         }
 
         if ($filename === null || empty($filename) || (substr($filename, 0, 5) !== 'data:' && !is_file($filename))) {
-            throw new ImageResizeException('File does not exist');
+            throw new Exception('File does not exist');
         }
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -125,7 +125,7 @@ class ImageResize
                 $checkWebp = true;
                 $this->source_type = IMAGETYPE_WEBP;
             } else {
-                throw new ImageResizeException('Unsupported file type');
+                throw new Exception('Unsupported file type');
             }
         } elseif(strstr(finfo_file($finfo, $filename), 'image/webp') !== false) {
           $checkWebp = true;
@@ -139,10 +139,10 @@ class ImageResize
         if (!$checkWebp) {
             if (!$image_info) {
                 if (strstr(finfo_file($finfo, $filename), 'image') !== false) {
-                    throw new ImageResizeException('Unsupported image type');
+                    throw new Exception('Unsupported image type');
                 }
 
-                throw new ImageResizeException('Could not read file');
+                throw new Exception('Could not read file');
             }
 
             $this->original_w = $image_info[0];
@@ -177,17 +177,17 @@ class ImageResize
 
         case IMAGETYPE_BMP:
             if (version_compare(PHP_VERSION, '7.2.0', '<')) {
-                throw new ImageResizeException('For bmp support PHP >= 7.2.0 is required');
+                throw new Exception('For bmp support PHP >= 7.2.0 is required');
             }
             $this->source_image = imagecreatefrombmp($filename);
             break;
 
         default:
-            throw new ImageResizeException('Unsupported image type');
+            throw new Exception('Unsupported image type');
         }
 
         if (!$this->source_image) {
-            throw new ImageResizeException('Could not load image');
+            throw new Exception('Could not load image');
         }
 
         finfo_close($finfo);
@@ -217,11 +217,11 @@ class ImageResize
         $orientation = $exif['Orientation'];
 
         if ($orientation === 6 || $orientation === 5) {
-            $img = imagerotate($img, 270, null);
+            $img = imagerotate($img, 270, 0);
         } elseif ($orientation === 3 || $orientation === 4) {
-            $img = imagerotate($img, 180, null);
+            $img = imagerotate($img, 180, 0);
         } elseif ($orientation === 8 || $orientation === 7) {
-            $img = imagerotate($img, 90, null);
+            $img = imagerotate($img, 90, 0);
         }
 
         if ($orientation === 5 || $orientation === 4 || $orientation === 7) {
@@ -274,7 +274,7 @@ class ImageResize
 
         case IMAGETYPE_WEBP:
             if (version_compare(PHP_VERSION, '5.5.0', '<')) {
-                throw new ImageResizeException('For WebP support PHP >= 5.5.0 is required');
+                throw new Exception('For WebP support PHP >= 5.5.0 is required');
             }
             if( !empty($exact_size) && is_array($exact_size) ){
                 $dest_image = imagecreatetruecolor($exact_size[0], $exact_size[1]);
@@ -316,7 +316,7 @@ class ImageResize
 
         case IMAGETYPE_BMP:
             if (version_compare(PHP_VERSION, '7.2.0', '<')) {
-                throw new ImageResizeException('For WebP support PHP >= 7.2.0 is required');
+                throw new Exception('For WebP support PHP >= 7.2.0 is required');
             }
 
             if(!empty($exact_size) && is_array($exact_size)) {
@@ -383,7 +383,7 @@ class ImageResize
 
         case IMAGETYPE_WEBP:
             if (version_compare(PHP_VERSION, '5.5.0', '<')) {
-                throw new ImageResizeException('For WebP support PHP >= 5.5.0 is required');
+                throw new Exception('For WebP support PHP >= 5.5.0 is required');
             }
             if ($quality === null) {
                 $quality = $this->quality_webp;

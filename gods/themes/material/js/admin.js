@@ -548,3 +548,96 @@ function checkedAll(formEl) {
         form.elements[i].checked = checked;
     }
 }
+// MM
+
+// media
+class Media {
+	constructor() {
+		this.els = {
+			medias: document.querySelectorAll('[data-mm-media]'),
+			thumb: document.querySelector('.media-thumb'),
+			input: document.querySelector('.media-thumbInput')
+		};
+
+		this.attributes = {
+			links: 'data-mm-media-link'
+		}
+
+		if (this.els.medias.length <= 0) {
+			return;
+		}
+
+		this.init();
+	}
+
+	init() {
+		for (var i = 0; i < this.els.medias.length; i++) {
+			const el = this.els.medias[i];
+
+			this.mediaLinks(el);
+		}
+	}
+
+	mediaLinks(el) {
+		const links = el.querySelectorAll('[' + this.attributes.links + ']');
+
+		if (links.length <= 0) {
+			return;
+		}
+
+		for (var i = 0; i < links.length; i++) {
+			const link = links[i];
+			const _this = this;
+
+			link.addEventListener('click', function (e) {
+				e.preventDefault();
+
+				_this.click(this, el);
+			});
+		}
+			
+	}
+
+	click(el, modal) {
+		const plainData = el.getAttribute(this.attributes.links);
+		const url = el.getAttribute('href');
+		const data = JSON.parse(plainData);
+
+		this.attach(data, modal);
+	}
+
+	attach(data, modal) {
+		if (this.els.thumb.querySelector('.thumbnail')) {
+			this.els.thumb.removeChild(this.els.thumb.querySelector('.thumbnail'));
+		}
+		const newEl = document.createElement('div');
+		newEl.classList.add('thumbnail');
+
+		const template = '<h3>' + data.name + '</h3>';
+		newEl.innerHTML = template;
+
+		// check if its image
+		if (data.type == 'image') {
+			const newImg = document.createElement('img');
+			newImg.setAttribute('src', data.path + data.name);
+
+			newEl.appendChild(newImg);
+		} else {
+			const imgTemplate = '<i class="material-icons">description</i>';
+			
+			newEl.innerHTML += imgTemplate;
+		}
+
+		// insert in DOM file preview
+		this.els.thumb.appendChild(newEl);
+		// insert data to input
+		this.els.input.value = parseInt(data.id);
+		// close modal
+		$('#' + modal.id).modal('hide');
+	}
+
+	
+}
+
+// init
+new Media();

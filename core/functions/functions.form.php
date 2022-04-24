@@ -12,8 +12,6 @@ function checkCSRF($token)
 	}
    
   // compare token with session token
-  d($token);
-  d(getSession('token'));
 //   todo: use hash_equals func to compare hash
 //   if(hash_equals(crypt('$_SESSION['token'],'$2a$07$usesomesillystringforsalt$'), crypt($_POST['token'],'$2a$07$usesomesillystringforsalt$')) {
   if (getSession('token') == $token) {
@@ -58,4 +56,9 @@ function checkCSRFreal($token)
 	if($check['error']) {
 		die($check['message']);
 	}
+}
+
+function CSRFinput()
+{
+	return '<input type="hidden" name="_token" value="' . getSession('token') . '">';
 }

@@ -51,12 +51,9 @@
 							<button type="button" class="btn btn-default waves-effect" data-toggle="modal" data-target="#largeModal">
 								Media
 							</button>
+							<div class="media-thumb"></div>
+							<input type="hidden" class="media-thumbInput">
 						</div>
-
-						
-
-
-
 
 						<label for="active">Post activation</label>
 						<div class="switch">
@@ -69,28 +66,69 @@
 						</div>
 						<br>
 						<button type="button" class="btn btn-primary m-t-15 waves-effect">Submit</button>
+						<?php echo CSRFinput(); ?>
 					</form>
 
 
-						<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" >
+						<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" data-mm-media>
 							<div class="modal-dialog modal-lg" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h4 class="modal-title" id="largeModalLabel">Modal title</h4>
+										<h4 class="modal-title" id="largeModalLabel">
+											Media
+										</h4>
 									</div>
 									<div class="modal-body">
-										<form action="<?php echo adminUrl() . getRoute('ajax', 'mediaUpload'); ?>" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
-											<div class="dz-message">
-												<div class="drag-icon-cph">
-													<i class="material-icons">touch_app</i>
-												</div>
-												<h3>Drop files here or click to upload.</h3>
-												<em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em>
+										<ul class="nav nav-tabs tab-nav-right" role="tablist">
+											<li role="presentation" class="active">
+												<a href="#mediaSelect" data-toggle="tab" aria-expanded="true">
+													Select
+												</a>
+											</li>
+											<li role="presentation">
+												<a href="#mediaUpload" data-toggle="tab" aria-expanded="false">
+													Upload
+												</a>
+											</li>
+										</ul>
+										<div class="tab-content">
+											<div role="tabpanel" class="tab-pane fade active in" id="mediaSelect">
+												<?php if($mediaList = mediaList()) { ?>
+													<div class="row">
+														<?php foreach($mediaList as $mediaItem) { ?>
+															<div class="col-xs-6 col-md-3">
+																<a href="<?php echo siteUrl() . $mediaItem['path'] . $mediaItem['name']; ?>" class="thumbnail" style="word-break: break-all;" data-mm-media-link="<?php echo htmlspecialchars(json_encode($mediaItem, JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8'); ?>">
+																	<h3>
+																		<?php echo $mediaItem['name']; ?>
+																	</h3>
+																	<?php if($mediaItem['type'] == 'image') { ?>
+																		<img src="<?php echo siteUrl() . $mediaItem['path'] . $mediaItem['name']; ?>" class="img-responsive">
+																	<?php } else { ?>
+																		<i class="material-icons">description</i>
+																	<?php } ?>	
+																</a>
+															</div>
+														<?php } ?>
+													</div>
+												<?php } ?>
 											</div>
-											<div class="fallback">
-												<input name="file" type="file" multiple />
+											<div role="tabpanel" class="tab-pane fade" id="mediaUpload">
+												<form action="<?php echo adminUrl() . getRoute('ajax', 'mediaUpload'); ?>" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+													<div class="dz-message">
+														<div class="drag-icon-cph">
+															<i class="material-icons">touch_app</i>
+														</div>
+														<h3>Drop files here or click to upload.</h3>
+														<em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em>
+													</div>
+													<div class="fallback">
+														<input name="file" type="file" multiple />
+													</div>
+													<?php echo CSRFinput(); ?>
+												</form>
 											</div>
-										</form>
+										</div>
+										
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>

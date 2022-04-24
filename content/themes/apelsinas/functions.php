@@ -5,7 +5,7 @@ function createMyPostType()
 	$params  = [
 		'name'  	=>	'pages',
 		'label'  	=>	'Pages',
-		'label_list'  	=>	'Custom list',
+		'label_list'  	=>	'Pages list',
 		'icon'  	=>	'favorite_border',
 		'fields'    =>	[
 			'title'     => true,
