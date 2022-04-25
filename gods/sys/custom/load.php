@@ -1,5 +1,7 @@
 <?php
 
+use Gumlet\ImageResize;
+
 addAction('adminStyles', 'addDropZoneStyle');
 
 addAction('adminScripts', 'addDropZoneScript');
@@ -47,11 +49,29 @@ function mediaUpload($data)
 
 		foreach ($files as $vFiley) {
 
-			// if image add thumbnails
+			//TODO: if image add thumbnails
+			$fileType = getFileType($vFiley['type'][0]);
+
+			if($fileType == 'image') {
+				require_once (config('class', 'dir') . 'class.imageResize.php');
+
+				// plain name
+				$imageBaseName = basename($vFiley['name'], '.' . $vFiley['extension']);
+				$imageRoot = ROOT . $uploadDir . $imageBaseName;
+
+				// do crop or resize
+				$imageFile = new ImageResize(ROOT . $uploadDir . $vFiley['name']);
+				// create webpb
+				// $imageFile->save($imageRoot . '.webp', IMAGETYPE_WEBP);
+
+				$imageFile->resizeToWidth(300);
+				$imageFile->save($imageRoot . '-300.' . $vFiley['extension']);
+			}
+
 			
 			$queryData = [
 				'name' 		=> $vFiley['name'],
-				'type' 		=> getFileType($vFiley['type'][0]),
+				'type' 		=> $fileType,
 				'mime' 		=> implode('/', $vFiley['type']),
 				'extension' => $vFiley['extension'],
 				'path'		=> $uploadDir,
