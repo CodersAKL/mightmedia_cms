@@ -2,6 +2,8 @@
 
 require_once (config('class', 'dir') . 'class.routes.php');
 
+$mmRoutes = new Routes();
+
 function get($route, $pathToInclude, bool $root = true, $viewData = [])
 {
 	if($_SERVER['REQUEST_METHOD'] == 'GET'){
@@ -25,42 +27,42 @@ function put($route, $pathToInclude)
 
 function routeAjax($route)
 {
-	if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'PUT'){
+	// if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'PUT'){
 
-		$routeCheck 		= routeCheck($route);
-		$routeParts 		= $routeCheck['routeParts'];
-		$requestUrlParts	= $routeCheck['requestUrlParts'];
+	// 	$routeCheck 		= routeCheck($route);
+	// 	$routeParts 		= $routeCheck['routeParts'];
+	// 	$requestUrlParts	= $routeCheck['requestUrlParts'];
 
-		if(count($routeParts) != count($requestUrlParts)){
+	// 	if(count($routeParts) != count($requestUrlParts)){
 			
-			return false;
-		}
+	// 		return false;
+	// 	}
 		
-		$routeParam = [];
+	// 	$routeParam = [];
 
-		for($i = 0; $i < count($routeParts); $i++){
-			$routePart = $routeParts[$i];
+	// 	for($i = 0; $i < count($routeParts); $i++){
+	// 		$routePart = $routeParts[$i];
 		
-			if(preg_match("/^[$]/", $routePart)) {
-				$routePart = ltrim($routePart, '$');
-				// set params
-				array_push($routeParam, $requestUrlParts[$i]);
-				// set route data
-				$routePart = $requestUrlParts[$i];
+	// 		if(preg_match("/^[$]/", $routePart)) {
+	// 			$routePart = ltrim($routePart, '$');
+	// 			// set params
+	// 			array_push($routeParam, $requestUrlParts[$i]);
+	// 			// set route data
+	// 			$routePart = $requestUrlParts[$i];
 				
 
-			} else if($routeParts[$i] != $requestUrlParts[$i]){
+	// 		} else if($routeParts[$i] != $requestUrlParts[$i]){
 
-				return false;
-			} 
-		}
+	// 			return false;
+	// 		} 
+	// 	}
 
-		$action = 'ajax' . ucfirst($routePart);
+	// 	$action = 'ajax' . ucfirst($routePart);
 
-		include ROOT . 'core/inc/inc.ajax.php';
+	// 	include ROOT . 'core/inc/inc.ajax.php';
 
-		exit;
-	}    
+	// 	exit;
+	// }    
 }
 
 function patch($route, $pathToInclude)
@@ -82,31 +84,22 @@ function any($route, $pathToInclude)
 	route($route, $pathToInclude);
 }
 
-function routeCheck($route)
-{
-	$requestUrl			= filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
-	$requestUrl			= rtrim($requestUrl, '/');
-	$requestUrl			= strtok($requestUrl, '?');
-	$routeParts			= explode('/', $route);
-	$requestUrlParts	= explode('/', $requestUrl);
-
-	array_shift($routeParts);
-	array_shift($requestUrlParts);
-
-	return [
-		'routeParts' 		=> $routeParts,
-		'requestUrlParts' 	=> $requestUrlParts,
-	];
-
-}
-
 function newRoute($name, $args)
 {
-	$params[$name] = $args;
+	global $mmRoutes;
 
-	$routes = new Routes($params);
+	
 
-	$routes->route($name);
+	// $routes = new Routes($params);
+
+	$mmRoutes->newRoute($name, $args);
+}
+
+function getRouteUrl($name)
+{
+	global $mmRoutes;
+
+	return $mmRoutes->getRouteUrl($name);
 }
 
 function getHeaderData()
@@ -117,10 +110,13 @@ function getHeaderData()
 // todo: add group option
 function route($route, $pathToInclude, bool $root = true, $viewData = [])
 {
+	global $mmRoutes;
+
+
 	$nArr = explode('/', $route);
 	$name = end($nArr);
 
-	$params[$name] =[
+	$args =[
 		'method'	=> 'get',
 		'route'		=> $route,
 		'include'	=> $pathToInclude,
@@ -130,20 +126,9 @@ function route($route, $pathToInclude, bool $root = true, $viewData = [])
 		'header'	=> null,
 	];
 
-	$routes = new Routes($params);
+	
+	$mmRoutes->newRoute($name, $args);
 
-	$routes->route($name);
-
-}
-
-function includePage($file)
-{
-	if(file_exists($file)) {
-		return $file;
-		// exit;
-	} else {
-		die('File: <strong>' . $file . '</strong> not found!');
-	}
 }
 
 function out($text)

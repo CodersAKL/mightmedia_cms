@@ -3,31 +3,86 @@
 // add admin pages page
 function pagesRoutes()
 {
-	// get('/' . ADMIN_DIR . '/pages/$page', ADMIN_ROOT . 'sys/pages/page.php', false);
-	$args = [
-		'method'	=> 'get',
-		'route'		=> '/' . ADMIN_DIR . '/pages/$page',
-		'include'	=> ADMIN_ROOT . 'sys/pages/page.php',
-		// 'callback'	=> 'page',
-		// 'root'		=> false,
-		'data'		=> [
-			'test' => 'Test'
-		],
-		'header'	=> [
-			'pageName' => 'Pages'
-		],
-	];
 
-	newRoute('pages', $args);
-	// TODO: post
+	$pages = dbSelect(
+		'pages'
+	);
+
+	newRoute(
+		'pages.list', 
+		[
+			'method'	=> 'get',
+			'route'		=> '/' . ADMIN_DIR . '/pages/list',
+			'include'	=> ADMIN_ROOT . 'sys/pages/list.php',
+			'data'		=> [
+				'pages' => $pages
+			],
+			'header'	=> [
+				'pageName' => 'Pages'
+			],
+		]
+	);
+
+	newRoute(
+		'pages.create', 
+		[
+			'method'	=> 'get',
+			'route'		=> '/' . ADMIN_DIR . '/pages/create',
+			'include'	=> ADMIN_ROOT . 'sys/pages/create.php',
+			'data'		=> [
+				'page' => 'create'
+			],
+			'header'	=> [
+				'pageName' => 'Pages'
+			],
+		]
+	);
+
+	newRoute(
+		'pages.createPost', 
+		[
+			'method'	=> 'post',
+			'route'		=> '/' . ADMIN_DIR . '/pages/create',
+			'callback'	=> 'pageCreate',
+		]
+	);
+	
 }
 
-// function page()
-// {
-// 	global $headerData;
+function pageCreate()
+{
+	global $headerData;
 
-// 	d($headerData);
-// }
+	unset($_POST['_token']);
+
+	if(! isset($_POST['active']) || empty($_POST['active'])) {
+		$_POST['active'] = 0;
+	}
+
+	$_POST['slug'] = slug($_POST['title']);
+
+	$_POST['description'] = decodeSafeData($_POST['description']);
+
+	if($page = dbInsert('pages', $_POST)) {
+		
+		return redirect(
+			'pages.createPost', 
+			[
+				'type' 		=> 'success',
+				'message' 	=> 'success',
+			]
+		);
+	}
+
+	return redirect(
+		'pages.createPost', 
+		[
+			'type' 		=> 'error',
+			'message' 	=> 'error',
+		]
+	);
+	
+}
 
 addAction('adminRoutes', 'pagesRoutes');
 // addAction('boot', 'pagesRoutes');

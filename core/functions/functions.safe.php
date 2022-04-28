@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * safeData
+ *
+ * @param  mixed $data
+ * @return void
+ */
 function safeData(array $data)
 {
 	foreach ($data as $kData => $vData) {
@@ -11,4 +17,15 @@ function safeData(array $data)
 	}
 	
 	return $data;
+}
+
+/**
+ * decodeSafeData
+ *
+ * @param  mixed $str
+ * @return void
+ */
+function decodeSafeData(string $str)
+{
+	return htmlspecialchars_decode($str, ENT_QUOTES);
 }

@@ -1,5 +1,11 @@
 <?php
 
+function slug($str)
+{
+	return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $str)));
+
+}
+
 function config($file, $key = null)
 {
     $config = include ROOT . 'core/configs/config.' . $file . '.php';

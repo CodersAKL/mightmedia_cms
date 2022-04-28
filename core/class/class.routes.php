@@ -9,8 +9,6 @@ class Routes {
 
 	private $requestUrlParts = [];
 
-	private $root = '';
-
 	private $name;
 
 	private $vars = [];
@@ -22,8 +20,11 @@ class Routes {
 		'patch',
 		'delete'
 	];
+	
+	public function __construct() {
 
-	public function __construct(array $routes) {
+		
+
 		$route = [
 			'gods' => [
 				'method'	=> 'get',
@@ -36,16 +37,31 @@ class Routes {
 			]
 		];
 
-		foreach ($routes as $key => $value) {
-			// check if route with same name exists
-			if(! empty($this->routes[$key])) {
-				throw new Exception('Error: route with name ' . $key . ' already exists!');
-			// if not - set the new route
-			} else {
-				// $this->routes[$key] = $value;
-				$this->setRoute($key, $value);
-			}
-		}
+		
+	}
+
+	public function newRoute($name, $params)
+	{
+		// d($name);
+		// $this->name = $name;
+		$this->setRoutes($name, $params);		
+		$this->route($name);
+	}
+
+	public function setRoutes($name, $params)
+	{
+		// foreach ($params as $key => $value) {
+		// 	// check if route with same name exists
+		// 	if(! empty($this->routes[$key])) {
+		// 		throw new Exception('Error: route with name ' . $key . ' already exists!');
+		// 	// if not - set the new route
+		// 	} else {
+		// 		// $this->routes[$key] = $value;
+		// 		$this->setRoute($key, $value);
+		// 	}
+		// }
+
+		$this->setRoute($name, $params);
 	}
 
 	private function checkMethod($method)
@@ -129,36 +145,36 @@ class Routes {
 		// 	}
 		// }
 
-		return $data['header'];
+		return isset($data['header']) && ! empty($data['header']) ? $data['header'] : [];
 	}
 
 	public function loadPages() 
 	{
 		$data = $this->getRoute($this->name);
-		// set variables
-		$vars = array_merge($data['data'], $this->vars);
 
-		// if(isset($data['data']) && ! empty($data['data'])) {
-			
-		// }
-		// d($vars); exit;
-		foreach ($vars as $kViewData => $VviewData) {
-			// create var
-			${$kViewData} = $VviewData;
-			
+		if(isset($data['data']) && ! empty($data['data'])) {
+			// set variables
+			$vars = array_merge($data['data'], $this->vars);
+
+			foreach ($vars as $kViewData => $VviewData) {
+				// create var
+				${$kViewData} = $VviewData;
+				
+			}
 		}
 
 		if(isset($data['include']) && ! empty($data['include'])) {
 			// file_exists()
-			include_once $this->includePage($this->root . $data['include']);
+			include_once $this->includePage($data['include']);
 		} else {
 			// is_callable
 			call_user_func($data['callback']);
 		}
 	}
 
-	private function loadPage()
+	private function loadPage($name)
 	{
+		$this->name = $name;
 		addAction('loadPages', [$this, 'loadPages']);
 	}
 
@@ -176,20 +192,17 @@ class Routes {
 		$data = $this->getRoute($name);
 
 		if(! $this->checkMethod($data['method'])){
-			throw new Exception('Error: bad request method!');
+			return;
 		}
 
-		if(isset($data['root']) && $data['root']) {
-			$this->root = ROOT;
-		}	
 		//
-		$this->name = $name;
+		
 
 		addFilter('loadRoute', [$this, 'loadData']);
 		//
 
 		if($name == '404'){
-			$this->loadPage();
+			$this->loadPage($name);
 			// todo: exit or smth
 		}
 		// check the route
@@ -197,7 +210,7 @@ class Routes {
 
 		if($this->routeParts[0] == '' && count($this->requestUrlParts) == 0){
 
-			$this->loadPage();
+			$this->loadPage($name);
 			
 		}
 
@@ -235,7 +248,7 @@ class Routes {
 			} 
 		}
 
-		$this->loadPage();
+		$this->loadPage($name);
 	}
 
 	private function includePage($file)
@@ -269,6 +282,13 @@ class Routes {
 	{
 
 		return self::$headerData;
+	}
+
+	public function getRouteUrl($name)
+	{
+		$data = $this->getRoute($name);
+
+		return $data['route'];
 	}
 
 	public function setRoute($name, $data)

@@ -37,7 +37,7 @@ function urlClean($rawUrl) {
 	return $url;
 }
 
-function siteUrl($trimSlash = false)
+function siteUrl($urlString = null, $trimSlash = false)
 {
 	$url = getOption('site_url');
 
@@ -45,7 +45,7 @@ function siteUrl($trimSlash = false)
 		return rtrim($url, '/\\');
 	}
 
-	return $url;
+	return ! empty($urlString) ? $urlString : '' . $url;
 }
 
 function adminMakeUrl($name = '')
@@ -56,5 +56,27 @@ function adminMakeUrl($name = '')
 function adminUrl($part = '')
 {
 	
-	return siteUrl(true) . adminMakeUrl($part);
+	return siteUrl(adminMakeUrl($part), false);
+}
+
+/**
+ * redirect
+ *
+ * @param  string $routeName
+ * @param  array $data
+ * @param  string $type
+ * 
+ */
+function redirect(string $routeName, array $data = [], string $type = 'header') 
+{
+	setFlashMessages($routeName, $data['type'], $data['message']);
+
+	$url = siteUrl(getRouteUrl($routeName), true);
+
+	if($type == 'header') {
+		header('Location: ' . $url);
+		
+		exit;
+	}
+	// TODO: add meta and script redirect
 }
