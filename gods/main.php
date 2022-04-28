@@ -5,21 +5,32 @@ $loadSysFilesArray = [
 	'custom', // ?
 	'users',
 	'media',
+	'pages',
 ];
 
 foreach ($loadSysFilesArray as $loadSysFile) {
     require_once ADMIN_ROOT . 'sys/' . $loadSysFile . '/load.php';
 }
 
+// load templates and pages
+doAction('adminRoutes');
+
+// header data
+$headerData = applyFilters('loadRoute');
+
+if(! empty($headerData)) {
+	foreach ($headerData as $keyHeaderData => $valueHeaderData) {
+		${$keyHeaderData} = $valueHeaderData;
+	}
+}
+
+// reset vars
+// unset($headerData, $keyHeaderData, $valueHeaderData);
+//
+
 routeAjax('/' . ADMIN_DIR . '/ajax/$action');
 
 require 'themes/material/form.class.php'; // todo: remove?
 require 'themes/material/table.class.php'; // todo: remove?
-
-//todo: make it safe
-if(isset($_GET['a']) && $_GET['a'] === 'ajax') {
-	require 'ajax.php';
-	exit;
-}
 
 require 'themes/material/index.php';

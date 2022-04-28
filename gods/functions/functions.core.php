@@ -3,8 +3,9 @@
 
 function adminPages()
 {
-	get('/' . ADMIN_DIR, ADMIN_ROOT . 'pages/dashboard.php', false);
-	doAction('adminRoutes');
+	// get('/' . ADMIN_DIR, ADMIN_ROOT . 'pages/dashboard.php', false);
+	// doAction('adminRoutes');
+	doAction('loadPages');
 }
 
 

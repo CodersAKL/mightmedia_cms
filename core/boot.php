@@ -93,14 +93,19 @@ foreach ($loadCoreConfigsArray as $loadCoreConfigsSlug) {
     require_once ROOT . 'core/configs/config.' . $loadCoreConfigsSlug . '.php';
 }
 
+// require_once ROOT . 'core/functions/functions.hooks.php';
+
+
+
+
 $loadCoreFunctionsArray = [
+    'hooks',
 	'safe',
 	'db',
 	'deprecated',
 	'options',
 	'url',
 	'cache',
-    'hooks',
     'http',
     'pages',
     'string',

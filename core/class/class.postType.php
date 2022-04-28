@@ -1,13 +1,32 @@
 <?php
 
+/**
+ * PostType
+ */
 class PostType {
-
+	
+	/**
+	 * params
+	 *
+	 * @var array
+	 */
 	public $params = [];
-
+	
+	/**
+	 * posTypes
+	 *
+	 * @var array
+	 */
 	public $posTypes = [];
 
-
-	public function __construct($args = [])
+	
+	/**
+	 * __construct
+	 *
+	 * @param  array $args
+	 * @return void
+	 */
+	public function __construct(array $args = [])
 	{
 		// $this–>args = $args;
 		$this->defaultArgs = [
@@ -29,23 +48,45 @@ class PostType {
 			],
 		];
 	}
-
+	
+	/**
+	 * setArgs
+	 *
+	 * @param  array $params
+	 * @return void
+	 */
 	public function setArgs(array $params = [])
 	{
 		$this->params = array_merge($this->defaultArgs, $params);
 		$this->posTypes[$this->defaultArgs['name']] = array_merge($this->defaultArgs, $params);
 	}
-
+	
+	/**
+	 * getArgs
+	 *
+	 * @return void
+	 */
 	public function getArgs()
 	{
 		return $this->params;
 	}
-
-	public function getPostType($name = [])
+	
+	/**
+	 * getPostType
+	 *
+	 * @param  array $name
+	 * @return void
+	 */
+	public function getPostType(array $name = [])
 	{
 		return ! empty($this->posTypes) ? $this->posTypes[$name] : $this->posTypes;
 	}
-
+	
+	/**
+	 * createPostType
+	 *
+	 * @return void
+	 */
 	public function createPostType()
 	{
 		
@@ -56,10 +97,10 @@ class PostType {
 		// register data
 		// addAction('adminCustomData', [$this, 'adminCustomData']);
 		// register admin pages
-		addAction('adminRoutes', [$this, 'adminCustomRoutes']);
+		addAction('adminRoutes', [$this, 'adminCustomRoutes'], 10);
 
 		// register admin menus
-		addAction('adminMenu', [$this, 'adminCustomMenu']);
+		addAction('adminMenu', [$this, 'adminCustomMenu'], 10);
 
 		// register site pages ?
 
@@ -142,7 +183,12 @@ class PostType {
 	{
 		// return $this->params;
 	}
-
+	
+	/**
+	 * adminCustomRoutes
+	 *
+	 * @return void
+	 */
 	public function adminCustomRoutes()
 	{
 		$viewData = [
@@ -153,11 +199,23 @@ class PostType {
 		get('/' . ADMIN_DIR . '/type/$type/$page', ADMIN_ROOT . 'sys/custom/page.php', false, $viewData);
 	}
 
-
+	
+	/**
+	 * adminCustomMenu
+	 *
+	 * @param  mixed $data
+	 * @return void
+	 */
 	public function adminCustomMenu($data)
 	{
 
 		$mainUrl = '/' . ADMIN_DIR . '/type/' . $this->params['name'];
+
+		if(! empty($data[$this->params['name']])) {
+			throw new \Exception($this->params['name'] . ' Already exists!');
+
+			return $data;
+		}
 
 		$data[$this->params['name']] = [
 			'url' 	=> $mainUrl,

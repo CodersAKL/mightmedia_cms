@@ -1,5 +1,6 @@
 <?php
-// todo: move to class;
+
+require_once (config('class', 'dir') . 'class.routes.php');
 
 function get($route, $pathToInclude, bool $root = true, $viewData = [])
 {
@@ -99,64 +100,40 @@ function routeCheck($route)
 
 }
 
+function newRoute($name, $args)
+{
+	$params[$name] = $args;
+
+	$routes = new Routes($params);
+
+	$routes->route($name);
+}
+
+function getHeaderData()
+{
+	return Routes::getHeaderData();
+}
+
 // todo: add group option
 function route($route, $pathToInclude, bool $root = true, $viewData = [])
 {
+	$nArr = explode('/', $route);
+	$name = end($nArr);
 
-	if($root) {
-		$root = ROOT;
-	} else {
-		$root = '';
-	}
+	$params[$name] =[
+		'method'	=> 'get',
+		'route'		=> $route,
+		'include'	=> $pathToInclude,
+		'callback'	=> null,
+		'root'		=> $root,
+		'data'		=> $viewData,
+		'header'	=> null,
+	];
 
-	if(! empty($viewData)) {
-		foreach ($viewData as $kViewData => $VviewData) {
-			// create var
-			${$kViewData} = $VviewData;
-		}
-	}
+	$routes = new Routes($params);
 
-	$file = $root . $pathToInclude;
+	$routes->route($name);
 
-	if($route == '/404'){
-		include_once includePage($file);
-	}
-	
-	$routeCheck 		= routeCheck($route);
-	$routeParts 		= $routeCheck['routeParts'];
-	$requestUrlParts	= $routeCheck['requestUrlParts'];
-
-	if( $routeParts[0] == '' && count($requestUrlParts) == 0 ){
-		include_once includePage($file);
-	}
-
-	if(count($routeParts) != count($requestUrlParts)){
-		
-		return;
-	}
-	
-	$routeParam = [];
-
-	for($i = 0; $i < count($routeParts); $i++){
-		$routePart = $routeParts[$i];
-	  
-		if(preg_match("/^[$]/", $routePart)) {
-			$routePart = ltrim($routePart, '$');
-			// set params
-			array_push($routeParam, $requestUrlParts[$i]);
-			// create var
-			${$routePart} = $requestUrlParts[$i];
-			// set route data
-			$routePart = $requestUrlParts[$i];
-			
-
-		} else if($routeParts[$i] != $requestUrlParts[$i]){
-
-			return;
-		} 
-	}
-
-	include_once includePage($file);
 }
 
 function includePage($file)

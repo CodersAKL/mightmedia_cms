@@ -3,11 +3,11 @@
 function createMyPostType()
 {
 	$params  = [
-		'name'  	=>	'pages',
-		'label'  	=>	'Pages',
-		'label_list'  	=>	'Pages list',
-		'icon'  	=>	'favorite_border',
-		'fields'    =>	[
+		'name'			=>	'custom',
+		'label'			=>	'Custom',
+		'label_list'	=>	'Custom list',
+		'icon'			=>	'favorite_border',
+		'fields'		=>	[
 			'title'     => true,
 			'editor'    => true,
 			'excerpt'	=> true,
