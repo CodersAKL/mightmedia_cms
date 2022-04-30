@@ -129,48 +129,77 @@ class Routes {
 		$this->requestUrlParts 	= $requestUrlParts;
 	}
 
+	private function checkSymbol($routeParts)
+	{
+		foreach($routeParts as $k => $v) {
+			if(preg_match("/-/", $v)) {
+				$moreRouteParts = explode('-', $v);
+
+				// $routeParts += $moreRouteParts;
+				foreach($moreRouteParts as $kM => $vM) {
+					array_push($routeParts, $vM);
+				}
+				
+				unset($routeParts[$k]);
+			}
+		}
+
+		array_shift($routeParts);
+
+		return $routeParts;
+	}
+
 	public function loadData()
 	{
 		// loadRoute
-		$data = $this->getRoute($this->name);
-		// set header data
-		// if(isset($data['header']) && ! empty($data['header'])) {
-		// 	$this->headerData[$this->name] = $data['header'];
 
-		// 	// addAction('headerData', [$this, 'setHeaderData']);
-		
-		// 	foreach ($data['header'] as $kHeaderData => $vHeaderData) {
-		// 		// create var
-		// 		${$kHeaderData} = $vHeaderData;
-		// 	}
-		// }
+		$data = $this->getRoute($this->name);
 
 		return isset($data['header']) && ! empty($data['header']) ? $data['header'] : [];
 	}
 
 	public function loadPages() 
 	{
+		
 		$data = $this->getRoute($this->name);
 
 		if(isset($data['query']) && ! empty($data['query'])) {
-			// set variables
 			
-			// load data from DB
-			$page = (int)$this->vars['page'];
 
-			// TODO: add to config default pagination
-			$limit = isset($data['query']['limit']) ? $data['query']['limit'] : 2;
+			if(isset($data['query']['where'])) {
 
-			$offset = $limit * ($page - 1);
+				foreach ($data['query']['where'] as $kWhere => $vWhere) {
+					if(preg_match("/^param/", $vWhere)) {
+						$where = ltrim($vWhere, '.param');
+						$data['query']['where'][$kWhere] = $this->vars[$where];
+					}
+				}
 
-			$totalRows = dbCount(
-				$data['query']['table'],
-				'id'
-			);
-	
-			$totalPages = ceil($totalRows / $limit);
+			}
 		
-			$query = dbSelect(
+			if(isset($data['query']['pagination']) && $data['query']['pagination']) {
+				// load data from DB
+				$page = isset($this->vars['page']) ? (int)$this->vars['page'] : 1;
+
+				// TODO: add to config default pagination
+				$limit = isset($data['query']['limit']) ? $data['query']['limit'] : 2;
+
+				$offset = $limit * ($page - 1);
+
+				$totalRows = dbCount(
+					$data['query']['table'],
+					'id'
+				);
+		
+				$totalPages = ceil($totalRows / $limit);
+			} else {
+				$limit = isset($data['query']['row']) && $data['query']['row'] ? 1 : 0;
+				$offset = null;
+			}
+
+			$funcName = isset($data['query']['row']) && $data['query']['row'] ? 'dbRow' : 'dbSelect';
+		
+			$query = $funcName(
 				$data['query']['table'],
 				isset($data['query']['where']) ? $data['query']['where'] : null,
 				isset($data['query']['columns']) ? $data['query']['columns'] : null,
@@ -194,14 +223,6 @@ class Routes {
 			// set variables
 			$vars = array_merge($data['data'], $this->vars);
 
-			d($vars); exit;
-			// load data from DB
-			if(isset($vars['query'])){
-				$query = dbSelect(
-					$vars['query']['table']
-				);
-			}
-			d($query);
 			foreach ($vars as $kViewData => $VviewData) {
 				// create var
 				${$kViewData} = $VviewData;
@@ -224,6 +245,13 @@ class Routes {
 		addAction('loadPages', [$this, 'loadPages']);
 	}
 
+
+	private function loadPageData($name)
+	{
+		// $this->name = $name;
+		addFilter('loadRoute', [$this, 'loadData']);
+	}
+
 	// todo: add group option
 	public function route($name)
 	{
@@ -234,7 +262,7 @@ class Routes {
 				// 'root'		=> false,
 				// 'data'		=> null,
 				// 'header'	=> null,
-
+// $this->name = $name;
 		$data = $this->getRoute($name);
 
 		if(! $this->checkMethod($data['method'])){
@@ -242,9 +270,7 @@ class Routes {
 		}
 
 		//
-		
-
-		addFilter('loadRoute', [$this, 'loadData']);
+		$this->loadPageData($name);
 		//
 
 		if($name == '404'){
@@ -268,25 +294,42 @@ class Routes {
 		$routeParam = [];
 
 		for($i = 0; $i < count($this->routeParts); $i++){
-			$routePart = $this->routeParts[$i];
 		
-			if(preg_match("/^[$]/", $routePart)) {
-				$routePart = ltrim($routePart, '$');
+			if(preg_match("/^[$]/", $this->routeParts[$i])) {
 				// set params
-				array_push($routeParam, $this->requestUrlParts[$i]);
-				// // create var
-				// ${$routePart} = $this->requestUrlParts[$i];
-				// // set route data
-				// $routePart = $this->requestUrlParts[$i];
+				$routePart = ltrim($this->routeParts[$i], '$');
+
+				if(preg_match("/-/", $this->routeParts[$i])) {
+					$moreRouteParts = explode('-', $this->routeParts[$i]);
+					$moreRequestParts = explode('-', $this->requestUrlParts[$i], count($moreRouteParts));
+
+					for ($iM=0; $iM < count($moreRouteParts); $iM++) { 
+						$vM = $moreRequestParts[$iM];
+						array_push($routeParam, $vM);
+
+						$this->routeParts[] = $vM;
+						$this->requestUrlParts[] = $vM;
+
+						$key = ltrim($moreRouteParts[$iM], '$');
+
+						$this->vars[$key] = $vM;
+					}
+
+				} else {
+					array_push($routeParam, $this->requestUrlParts[$i]);
+					
+					$this->vars += [
+						$routePart		=> $this->requestUrlParts[$i],
+					];
+
+				}
+
+				
 
 				$this->vars += [
 					'routeParam'	=> $routeParam,
 					'routePart'		=> $this->requestUrlParts[$i],
-					$routePart		=> $this->requestUrlParts[$i],
 				];
-
-				// array_push($this->vars, $routeVars);
-				
 
 			} else if($this->routeParts[$i] != $this->requestUrlParts[$i]){
 
@@ -314,10 +357,12 @@ class Routes {
 
 	public function getRoute($name, $params = [])
 	{
+		
 		$route = $this->routes[$name];
 
 		if(! empty($params)) {
 			$routeParts	= explode('/', $route['route']);
+			$routeParts	= $this->checkSymbol($routeParts);
 
 			for($i = 0; $i < count($routeParts); $i++){
 				$routePart = $routeParts[$i];

@@ -28,12 +28,15 @@
 						<tbody>
 							<?php if(! empty($pages)) { ?>
 								<?php foreach ($pages as $pageItem) { ?>
-									<tr>
+									<tr<?php echo (!$pageItem['active'] ? ' class=" warning"' : ''); ?> >
 										<th scope="row">
 											<?php echo $pageItem['id']; ?>
 										</th>
 										<td>
-											<?php echo $pageItem['title']; ?>
+											<?php echo getRouteUrl('pages.edit', ['id' => $pageItem['id'], 'slug' => $pageItem['slug']]); ?>
+											<a href="<?php echo getRouteUrl('pages.edit', ['id' => $pageItem['id'], 'slug' => $pageItem['slug']]); ?>">
+												<?php echo $pageItem['title']; ?>
+											</a>
 										</td>
 										<td>
 											<?php echo $pageItem['slug']; ?>

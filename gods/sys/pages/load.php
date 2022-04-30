@@ -19,7 +19,9 @@ function pagesRoutes()
 			'method'	=> 'get',
 			'route'		=> '/' . ADMIN_DIR . '/pages/list/page/$page',
 			'include'	=> ADMIN_ROOT . 'sys/pages/list.php',
-			'query'		=> $query,
+			'query'		=> $query + [
+				'pagination' => true
+			],
 			// 'data'		=> [
 			// 	'pages' => $pages
 			// ],
@@ -35,7 +37,32 @@ function pagesRoutes()
 			'method'	=> 'get',
 			'route'		=> '/' . ADMIN_DIR . '/pages/list',
 			'include'	=> ADMIN_ROOT . 'sys/pages/list.php',
-			'query'		=> $query,
+			'query'		=> $query + [
+				'pagination' => true
+			],
+			// 'data'		=> [
+			// 	'pages' => $pages
+			// ],
+			'header'	=> [
+				'pageName' => 'Pages'
+			],
+		]
+	);
+
+	// edit
+	newRoute(
+		'pages.edit', 
+		[
+			'method'	=> 'get',
+			'route'		=> '/' . ADMIN_DIR . '/pages/edit/$id-$slug',
+			'include'	=> ADMIN_ROOT . 'sys/pages/edit.php',
+			'query'		=> $query + [
+				'where' => [
+					'id' => 'param.id',
+					'slug' => 'param.slug'
+				],
+				'row' => true
+			],
 			// 'data'		=> [
 			// 	'pages' => $pages
 			// ],

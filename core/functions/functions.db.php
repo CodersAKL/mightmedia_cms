@@ -118,10 +118,11 @@ function dbSelect(string $table, array $where = null, array $columns = null, $li
 	$i 		= 0;
 
 	if (! empty($where)) {
+		
 		foreach ($where as $column => $value) {
 			$i++;
 
-			if($i = 1) {
+			if($i == 1) {
 				$string .= " WHERE `" . $column . "` = '" . $value . "'";
 			} else {
 				$string .= " AND `" . $column . "` = '" . $value . "'";
