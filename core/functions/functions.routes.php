@@ -95,11 +95,11 @@ function newRoute($name, $args)
 	$mmRoutes->newRoute($name, $args);
 }
 
-function getRouteUrl($name)
+function getRouteUrl($name, $params = [])
 {
 	global $mmRoutes;
 
-	return $mmRoutes->getRouteUrl($name);
+	return $mmRoutes->getRouteUrl($name, $params);
 }
 
 function getHeaderData()

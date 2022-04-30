@@ -4,19 +4,41 @@
 function pagesRoutes()
 {
 
-	$pages = dbSelect(
-		'pages'
-	);
+	// $pages = dbSelect(
+	// 	'pages'
+	// );
 
+	$query = [
+		'table' => 'pages'
+	];
+	
+	// pagination
+	newRoute(
+		'pages.list.pagination', 
+		[
+			'method'	=> 'get',
+			'route'		=> '/' . ADMIN_DIR . '/pages/list/page/$page',
+			'include'	=> ADMIN_ROOT . 'sys/pages/list.php',
+			'query'		=> $query,
+			// 'data'		=> [
+			// 	'pages' => $pages
+			// ],
+			'header'	=> [
+				'pageName' => 'Pages'
+			],
+		]
+	);
+	// list
 	newRoute(
 		'pages.list', 
 		[
 			'method'	=> 'get',
 			'route'		=> '/' . ADMIN_DIR . '/pages/list',
 			'include'	=> ADMIN_ROOT . 'sys/pages/list.php',
-			'data'		=> [
-				'pages' => $pages
-			],
+			'query'		=> $query,
+			// 'data'		=> [
+			// 	'pages' => $pages
+			// ],
 			'header'	=> [
 				'pageName' => 'Pages'
 			],

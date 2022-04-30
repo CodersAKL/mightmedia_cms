@@ -26,25 +26,66 @@
 							</tr>
 						</thead>
 						<tbody>
-							
-							<?php foreach ($pages as $page) { ?>
+							<?php if(! empty($pages)) { ?>
+								<?php foreach ($pages as $pageItem) { ?>
+									<tr>
+										<th scope="row">
+											<?php echo $pageItem['id']; ?>
+										</th>
+										<td>
+											<?php echo $pageItem['title']; ?>
+										</td>
+										<td>
+											<?php echo $pageItem['slug']; ?>
+										</td>
+										<td>
+											<?php echo $pageItem['active']; ?>
+										</td>
+									</tr>
+								<?php } ?>
+							<?php } else { ?>
 								<tr>
-									<th scope="row">
-										<?php echo $page['id']; ?>
-									</th>
-									<td>
-										<?php echo $page['title']; ?>
-									</td>
-									<td>
-										<?php echo $page['slug']; ?>
-									</td>
-									<td>
-										<?php echo $page['active']; ?>
+									<td colspan="4">
+										No items
 									</td>
 								</tr>
 							<?php } ?>
 						</tbody>
 					</table>
+					<!-- pagination -->
+					<nav>
+						<ul class="pagination">
+							<?php if($page != 1) { ?>
+								<li>
+									<a href="<?php echo getRouteUrl('pages.list.pagination', ['page' => ($page - 1)]); ?>" class="waves-effect">
+										<i class="material-icons">chevron_left</i>
+									</a>
+								</li>
+							<?php } ?>
+							<?php for($pag = 1; $pag <= $totalPages; $pag++) { ?>
+								<?php
+									if($page == $pag) {
+										$class = ' class="active"';
+									} else {
+										$class = '';
+									}
+								?>
+								<li<?php echo $class; ?>>
+									<a href="<?php echo getRouteUrl('pages.list.pagination', ['page' => $pag]); ?>" class="waves-effect">
+										<?php echo $pag; ?>	
+									</a>
+								</li>
+							<?php } ?>
+							
+							<?php if($page != $totalPages) { ?>
+								<li>
+									<a href="<?php echo getRouteUrl('pages.list.pagination', ['page' => ($page + 1)]); ?>" class="waves-effect">
+										<i class="material-icons">chevron_right</i>
+									</a>
+								</li>
+							<?php } ?>
+						</ul>
+					</nav>
 				</div>
 			</div>
 		</div>

@@ -152,10 +152,56 @@ class Routes {
 	{
 		$data = $this->getRoute($this->name);
 
+		if(isset($data['query']) && ! empty($data['query'])) {
+			// set variables
+			
+			// load data from DB
+			$page = (int)$this->vars['page'];
+
+			// TODO: add to config default pagination
+			$limit = isset($data['query']['limit']) ? $data['query']['limit'] : 2;
+
+			$offset = $limit * ($page - 1);
+
+			$totalRows = dbCount(
+				$data['query']['table'],
+				'id'
+			);
+	
+			$totalPages = ceil($totalRows / $limit);
+		
+			$query = dbSelect(
+				$data['query']['table'],
+				isset($data['query']['where']) ? $data['query']['where'] : null,
+				isset($data['query']['columns']) ? $data['query']['columns'] : null,
+				$limit,
+				$offset
+			);
+
+			if(isset($data['query']['returnVar']) && ! empty($data['query']['returnVar'])) {
+				${$data['query']['returnVar']} = $query;
+			} else {
+				${$data['query']['table']} = $query;
+			}
+			// foreach ($vars as $kViewData => $VviewData) {
+			// 	// create var
+			// 	${$kViewData} = $VviewData;
+				
+			// }
+		}
+
 		if(isset($data['data']) && ! empty($data['data'])) {
 			// set variables
 			$vars = array_merge($data['data'], $this->vars);
 
+			d($vars); exit;
+			// load data from DB
+			if(isset($vars['query'])){
+				$query = dbSelect(
+					$vars['query']['table']
+				);
+			}
+			d($query);
 			foreach ($vars as $kViewData => $VviewData) {
 				// create var
 				${$kViewData} = $VviewData;
@@ -266,9 +312,27 @@ class Routes {
 		echo htmlspecialchars($text);
 	}
 
-	public function getRoute($name)
+	public function getRoute($name, $params = [])
 	{
-		return $this->routes[$name];
+		$route = $this->routes[$name];
+
+		if(! empty($params)) {
+			$routeParts	= explode('/', $route['route']);
+
+			for($i = 0; $i < count($routeParts); $i++){
+				$routePart = $routeParts[$i];
+			
+				if(preg_match("/^[$]/", $routePart)) {
+					$routePart = ltrim($routePart, '$');
+
+					if(isset($params[$routePart])) {
+						$route['route'] = str_replace('$' . $routePart, $params[$routePart], $route['route']);
+					}
+				}
+			}
+		}
+
+		return $route;
 	}
 
 	public function setHeaderData($headerData)
@@ -284,9 +348,9 @@ class Routes {
 		return self::$headerData;
 	}
 
-	public function getRouteUrl($name)
+	public function getRouteUrl($name, $params = [])
 	{
-		$data = $this->getRoute($name);
+		$data = $this->getRoute($name, $params);
 
 		return $data['route'];
 	}

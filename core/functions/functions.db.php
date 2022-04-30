@@ -100,7 +100,17 @@ function dbDelete($table, $data = [])
 	return $mmdb->delete($table, $data);
 }
 
-function dbSelect(string $table, array $where = null, array $columns = null, $limit = 0)
+/**
+ * dbSelect
+ *
+ * @param  string $table
+ * @param  mixed $where
+ * @param  mixed $columns
+ * @param  int $limit
+ * @param  mixed $offset
+ * @return mixed
+ */
+function dbSelect(string $table, array $where = null, array $columns = null, $limit = 0, $offset = null)
 {
 	global $mmdb;
 
@@ -120,7 +130,11 @@ function dbSelect(string $table, array $where = null, array $columns = null, $li
 	}
 
 	if($limit) {
-		$string .= " LIMIT " . $limit;
+		if(! empty($offset)) {
+			$string .= " LIMIT " . $offset . ", " . $limit;
+		} else {
+			$string .= " LIMIT " . $limit;
+		}
 	}
 
 	$queryColumns = ! empty($columns) ? implode(', ', $columns) : '*';
@@ -141,6 +155,36 @@ function dbRow(string $table, array $where, array $columns = null)
 		return dbSelect($table, $where, $columns, 1)[0];
 	} catch (exception $e) {
 		die('dbRow: ' . $e);
+	}
+}
+
+function dbCount(string $table, string $colum = '*', array $where = null)
+{
+	global $mmdb;
+
+	$string = '';
+	$i 		= 0;
+
+	if (! empty($where)) {
+		foreach ($where as $column => $value) {
+			$i++;
+
+			if($i = 1) {
+				$string .= " WHERE `" . $column . "` = '" . $value . "'";
+			} else {
+				$string .= " AND `" . $column . "` = '" . $value . "'";
+			}
+		}
+	}
+
+	$queryColumn = ! empty($column) ? $column : '*';
+
+	$query = 'SELECT COUNT(' . $queryColumn . ') FROM `' . $table . '`' . $string;
+
+	try {
+		return $mmdb->single($query);
+	} catch (exception $e) {
+		die('dbCount: ' . $e);
 	}
 }
 
