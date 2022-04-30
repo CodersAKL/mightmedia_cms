@@ -158,14 +158,10 @@ class Routes {
 		return isset($data['header']) && ! empty($data['header']) ? $data['header'] : [];
 	}
 
-	public function loadPages() 
+	private function dbQuery($data)
 	{
-		
-		$data = $this->getRoute($this->name);
-
 		if(isset($data['query']) && ! empty($data['query'])) {
 			
-
 			if(isset($data['query']['where'])) {
 
 				foreach ($data['query']['where'] as $kWhere => $vWhere) {
@@ -191,7 +187,8 @@ class Routes {
 					'id'
 				);
 		
-				$totalPages = ceil($totalRows / $limit);
+				$this->vars['totalPages'] = ceil($totalRows / $limit);
+				$this->vars['page'] = $page;
 			} else {
 				$limit = isset($data['query']['row']) && $data['query']['row'] ? 1 : 0;
 				$offset = null;
@@ -199,44 +196,56 @@ class Routes {
 
 			$funcName = isset($data['query']['row']) && $data['query']['row'] ? 'dbRow' : 'dbSelect';
 		
-			$query = $funcName(
+			return $funcName(
 				$data['query']['table'],
 				isset($data['query']['where']) ? $data['query']['where'] : null,
 				isset($data['query']['columns']) ? $data['query']['columns'] : null,
 				$limit,
 				$offset
-			);
+			);	
 
-			if(isset($data['query']['returnVar']) && ! empty($data['query']['returnVar'])) {
-				${$data['query']['returnVar']} = $query;
-			} else {
-				${$data['query']['table']} = $query;
-			}
-			// foreach ($vars as $kViewData => $VviewData) {
-			// 	// create var
-			// 	${$kViewData} = $VviewData;
-				
-			// }
 		}
 
-		if(isset($data['data']) && ! empty($data['data'])) {
-			// set variables
-			$vars = array_merge($data['data'], $this->vars);
+		return false;
+	}
 
-			foreach ($vars as $kViewData => $VviewData) {
+	public function loadPages() 
+	{
+		
+		$data = $this->getRoute($this->name);
+
+		if($data['method'] == 'get') {
+			if($query = $this->dbQuery($data)) {
+				if(isset($data['query']['returnVar']) && ! empty($data['query']['returnVar'])) {
+					$this->vars[$data['query']['returnVar']] = $query;
+				} else {
+					$this->vars[$data['query']['table']] = $query;
+				}
+			}
+
+			if(isset($data['data']) && ! empty($data['data'])) {
+				$this->vars = array_merge($data['data'], $this->vars);
+			}
+			// set variables
+			foreach ($this->vars as $kViewData => $VviewData) {
 				// create var
 				${$kViewData} = $VviewData;
 				
 			}
-		}
 
-		if(isset($data['include']) && ! empty($data['include'])) {
-			// file_exists()
-			include_once $this->includePage($data['include']);
+			if(isset($data['include']) && ! empty($data['include'])) {
+				// file_exists()
+				include_once $this->includePage($data['include']);
+			} else {
+				// is_callable
+				call_user_func($data['callback']);
+			}
 		} else {
 			// is_callable
-			call_user_func($data['callback']);
+			call_user_func($data['callback'], $this->dbQuery($data));
 		}
+
+		
 	}
 
 	private function loadPage($name)

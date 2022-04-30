@@ -58,8 +58,8 @@ function pagesRoutes()
 			'include'	=> ADMIN_ROOT . 'sys/pages/edit.php',
 			'query'		=> $query + [
 				'where' => [
-					'id' => 'param.id',
-					'slug' => 'param.slug'
+					'id' 	=> 'param.id',
+					'slug' 	=> 'param.slug'
 				],
 				'row' => true
 			],
@@ -68,6 +68,23 @@ function pagesRoutes()
 			// ],
 			'header'	=> [
 				'pageName' => 'Pages'
+			],
+		]
+	);
+
+
+	newRoute(
+		'pages.edit.post', 
+		[
+			'method'	=> 'post',
+			'route'		=> '/' . ADMIN_DIR . '/pages/edit/$id-$slug',
+			'callback'	=> 'pageEdit',
+			'query'		=> $query + [
+				'where' => [
+					'id' 	=> 'param.id',
+					'slug' 	=> 'param.slug'
+				],
+				'row' => true
 			],
 		]
 	);
@@ -88,7 +105,7 @@ function pagesRoutes()
 	);
 
 	newRoute(
-		'pages.createPost', 
+		'pages.create.post', 
 		[
 			'method'	=> 'post',
 			'route'		=> '/' . ADMIN_DIR . '/pages/create',
@@ -97,6 +114,44 @@ function pagesRoutes()
 	);
 	
 }
+
+function pageEdit($data)
+{
+	unset($_POST['_token']);
+
+	if(! isset($_POST['active']) || empty($_POST['active'])) {
+		$_POST['active'] = 0;
+	}
+
+	$_POST['slug'] = slug($_POST['title']);
+
+	$_POST['description'] = decodeSafeData($_POST['description']);
+
+	$where = [
+		'id' => $data['id']
+	];
+
+	if($page = dbUpdate('pages', $_POST, $where)) {
+		// TODO: redirect with params
+		return redirect(
+			'pages.edit.post', 
+			[
+				'type' 		=> 'success',
+				'message' 	=> 'success',
+			]
+		);
+	}
+
+	return redirect(
+		'pages.edit.post', 
+		[
+			'type' 		=> 'error',
+			'message' 	=> 'error',
+		]
+	);
+	
+}
+
 
 function pageCreate()
 {
@@ -115,7 +170,7 @@ function pageCreate()
 	if($page = dbInsert('pages', $_POST)) {
 		
 		return redirect(
-			'pages.createPost', 
+			'pages.create.post', 
 			[
 				'type' 		=> 'success',
 				'message' 	=> 'success',
@@ -124,7 +179,7 @@ function pageCreate()
 	}
 
 	return redirect(
-		'pages.createPost', 
+		'pages.create.post', 
 		[
 			'type' 		=> 'error',
 			'message' 	=> 'error',
