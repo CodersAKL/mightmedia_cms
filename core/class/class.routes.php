@@ -151,8 +151,10 @@ class Routes {
 
 	public function loadData()
 	{
+		if(empty($this->name)) {
+			return [];
+		}
 		// loadRoute
-
 		$data = $this->getRoute($this->name);
 
 		return isset($data['header']) && ! empty($data['header']) ? $data['header'] : [];
@@ -279,7 +281,9 @@ class Routes {
 		}
 
 		//
-		$this->loadPageData($name);
+		if($data['method'] == 'get') {
+			$this->loadPageData($name);
+		}
 		//
 
 		if($name == '404'){

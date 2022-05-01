@@ -59,7 +59,7 @@ function pagesRoutes()
 			'query'		=> $query + [
 				'where' => [
 					'id' 	=> 'param.id',
-					'slug' 	=> 'param.slug'
+					// 'slug' 	=> 'param.slug'
 				],
 				'row' => true
 			],
@@ -82,7 +82,7 @@ function pagesRoutes()
 			'query'		=> $query + [
 				'where' => [
 					'id' 	=> 'param.id',
-					'slug' 	=> 'param.slug'
+					// 'slug' 	=> 'param.slug'
 				],
 				'row' => true
 			],
@@ -121,9 +121,11 @@ function pageEdit($data)
 
 	if(! isset($_POST['active']) || empty($_POST['active'])) {
 		$_POST['active'] = 0;
+	} else {
+		$_POST['active'] = 1;
 	}
 
-	$_POST['slug'] = slug($_POST['title']);
+	$_POST['slug'] = makePostSlug($_POST['title'], 'pages', $_POST['slug'], $data['slug']);
 
 	$_POST['description'] = decodeSafeData($_POST['description']);
 
@@ -131,22 +133,30 @@ function pageEdit($data)
 		'id' => $data['id']
 	];
 
-	if($page = dbUpdate('pages', $_POST, $where)) {
-		// TODO: redirect with params
+	if(dbUpdate('pages', $_POST, $where)) {
+
 		return redirect(
-			'pages.edit.post', 
+			'pages.edit', 
 			[
 				'type' 		=> 'success',
 				'message' 	=> 'success',
+			],
+			[
+				'id' 	=> $data['id'], 
+				'slug' 	=> $_POST['slug']
 			]
 		);
 	}
 
 	return redirect(
-		'pages.edit.post', 
+		'pages.edit', 
 		[
 			'type' 		=> 'error',
 			'message' 	=> 'error',
+		],
+		[
+			'id' 	=> $data['id'], 
+			'slug' 	=> $_POST['slug']
 		]
 	);
 	
@@ -161,9 +171,11 @@ function pageCreate()
 
 	if(! isset($_POST['active']) || empty($_POST['active'])) {
 		$_POST['active'] = 0;
+	} else {
+		$_POST['active'] = 1;
 	}
 
-	$_POST['slug'] = slug($_POST['title']);
+	$_POST['slug'] = makePostSlug($_POST['title'], 'pages');
 
 	$_POST['description'] = decodeSafeData($_POST['description']);
 

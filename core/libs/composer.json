@@ -1,6 +1,7 @@
 {
     "require": {
         "paragonie/easydb": "^2",
-        "kint-php/kint": "^4.1"
+        "kint-php/kint": "^4.1",
+        "cocur/slugify": "^4.1"
     }
 }

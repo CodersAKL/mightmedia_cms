@@ -9,4 +9,5 @@ return array(
     'ParagonIE\\EasyDB\\' => array($vendorDir . '/paragonie/easydb/src'),
     'ParagonIE\\Corner\\' => array($vendorDir . '/paragonie/corner/src'),
     'Kint\\' => array($vendorDir . '/kint-php/kint/src'),
+    'Cocur\\Slugify\\' => array($vendorDir . '/cocur/slugify/src'),
 );

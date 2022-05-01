@@ -33,7 +33,6 @@
 											<?php echo $pageItem['id']; ?>
 										</th>
 										<td>
-											<?php echo getRouteUrl('pages.edit', ['id' => $pageItem['id'], 'slug' => $pageItem['slug']]); ?>
 											<a href="<?php echo getRouteUrl('pages.edit', ['id' => $pageItem['id'], 'slug' => $pageItem['slug']]); ?>">
 												<?php echo $pageItem['title']; ?>
 											</a>

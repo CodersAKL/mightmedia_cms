@@ -37,15 +37,12 @@ function urlClean($rawUrl) {
 	return $url;
 }
 
-function siteUrl($urlString = null, $trimSlash = false)
+function siteUrl($urlString = null)
 {
 	$url = getOption('site_url');
+	$url = rtrim($url, '/\\');
 
-	if($trimSlash) {
-		return rtrim($url, '/\\');
-	}
-
-	return ! empty($urlString) ? $urlString : '' . $url;
+	return $url . (! empty($urlString) ? $urlString : '');
 }
 
 function adminMakeUrl($name = '')
@@ -56,22 +53,22 @@ function adminMakeUrl($name = '')
 function adminUrl($part = '')
 {
 	
-	return siteUrl(adminMakeUrl($part), false);
+	return siteUrl(adminMakeUrl($part));
 }
 
 /**
  * redirect
  *
- * @param  string $routeName
- * @param  array $data
- * @param  string $type
- * 
+ * @param  mixed $routeName
+ * @param  mixed $data
+ * @param  mixed $params
+ * @param  mixed $type
  */
-function redirect(string $routeName, array $data = [], string $type = 'header') 
+function redirect(string $routeName, array $data = [], array $params = [], string $type = 'header') 
 {
 	setFlashMessages($routeName, $data['type'], $data['message']);
 
-	$url = siteUrl(getRouteUrl($routeName), true);
+	$url = siteUrl(getRouteUrl($routeName, $params));
 
 	if($type == 'header') {
 		header('Location: ' . $url);

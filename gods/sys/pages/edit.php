@@ -22,7 +22,13 @@
 					<label for="title">Title</label>
 					<div class="form-group">
 						<div class="form-line">
-							<input type="text" id="title" name="title" class="form-control" value=<?php echo ! empty($pages['title']) ? $pages['title'] : ''; ?>">
+							<input type="text" id="title" name="title" class="form-control" value="<?php echo ! empty($pages['title']) ? $pages['title'] : ''; ?>">
+						</div>
+					</div>
+					<label for="slug">Slug</label>
+					<div class="form-group">
+						<div class="form-line">
+							<input type="text" id="slug" name="slug" class="form-control" value="<?php echo ! empty($pages['slug']) ? $pages['slug'] : ''; ?>">
 						</div>
 					</div>
 					<label for="description">Description</label>

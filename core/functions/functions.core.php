@@ -2,8 +2,33 @@
 
 function slug($str)
 {
-	return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $str)));
+	require_once (config('class', 'dir') . 'class.slugify.php');
 
+	// return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $str)));
+	$slugify = new Slugify();
+	return $slugify->slugify($str);
+
+}
+
+function makePostSlug($str, $table, $slug = null, $oldSlug = null)
+{
+	// if old slug
+	if(! empty($slug) && ! empty($oldSlug) && $slug == $oldSlug) {
+		return $slug;
+	}
+
+	if(empty($slug)) {
+		$slug = slug($str);
+	}
+
+	$i = 2; 
+	$baseSlug = $slug;
+
+	while(dbCount($table, 'slug', ['slug' => $slug]) > 0){
+		$slug = $baseSlug . "-" . $i++;        
+	}
+
+	return $slug;
 }
 
 function config($file, $key = null)

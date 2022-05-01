@@ -20,6 +20,15 @@
       ),
       'reference' => NULL,
     ),
+    'cocur/slugify' => 
+    array (
+      'pretty_version' => 'v4.1.0',
+      'version' => '4.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2611e6081dbbb05837a16ed339c0451923d4046e',
+    ),
     'kint-php/kint' => 
     array (
       'pretty_version' => '4.1.2',
