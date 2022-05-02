@@ -639,5 +639,69 @@ class Media {
 	
 }
 
+// disabled input toggle
+class InputDisabled {
+	constructor() {
+		this.els = {
+			buttons: document.querySelectorAll('[data-mm-toggle-disabled]')
+		};
+
+		this.attributes = {
+			button: 'data-mm-toggle-disabled'
+		}
+
+		if (this.els.buttons.length <= 0) {
+			return;
+		}
+
+		this.init();
+	}
+
+	init() {
+		for (var i = 0; i < this.els.buttons.length; i++) {
+			const el = this.els.buttons[i];
+			const _this = this;
+
+			el.addEventListener('click', function (e) {
+				e.preventDefault();
+
+				_this.click(this);
+			});
+		}
+	}
+
+
+	click(el) {
+		const attr = el.getAttribute(this.attributes.button);
+		const input = document.querySelector(attr);
+
+		if (!input) {
+			return;
+		}
+		
+		if (input.getAttribute('disabled')) {
+			input.removeAttribute('disabled');
+			this.moveCursorToEnd(input);
+		} else {
+			input.setAttribute('disabled', 'disabled');
+		}
+	}
+
+	moveCursorToEnd(el) {
+		el.focus()
+
+		if (typeof el.selectionStart == "number") {
+			el.selectionStart = el.selectionEnd = el.value.length;
+		} else if (typeof el.createTextRange != "undefined") {           
+			var range = el.createTextRange();
+			range.collapse(false);
+			range.select();
+		}
+	}
+
+	
+}
+
 // init
 new Media();
+new InputDisabled();

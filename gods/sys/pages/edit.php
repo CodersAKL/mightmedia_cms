@@ -26,11 +26,22 @@
 						</div>
 					</div>
 					<label for="slug">Slug</label>
-					<div class="form-group">
-						<div class="form-line">
-							<input type="text" id="slug" name="slug" class="form-control" value="<?php echo ! empty($pages['slug']) ? $pages['slug'] : ''; ?>">
+					<div class="row">
+						<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+							<div class="form-group">
+								<div class="form-line">
+									<input disabled="disabled" type="text" id="slug" name="slug" class="form-control" value="<?php echo ! empty($pages['slug']) ? $pages['slug'] : ''; ?>">
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+							 <button class="btn btn-sm bg-red" type="button" data-mm-toggle-disabled="#slug">
+								<i class="material-icons">edit</i>
+								Edit
+							</button>
 						</div>
 					</div>
+					
 					<label for="description">Description</label>
 					<div class="form-group">
 						<?php echo editor('description', $pages['description']); ?>

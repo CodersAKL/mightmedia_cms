@@ -1,15 +1,30 @@
 <?php
 
-function slug($str)
+/**
+ * makeSlug
+ *
+ * @param  mixed $str
+ * @return string
+ */
+function makeSlug($str)
 {
 	require_once (config('class', 'dir') . 'class.slugify.php');
 
 	// return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $str)));
 	$slugify = new Slugify();
-	return $slugify->slugify($str);
 
+	return $slugify->slugify($str);
 }
 
+/**
+ * makePostSlug
+ *
+ * @param  mixed $str
+ * @param  mixed $table
+ * @param  mixed $slug
+ * @param  mixed $oldSlug
+ * @return string
+ */
 function makePostSlug($str, $table, $slug = null, $oldSlug = null)
 {
 	// if old slug
@@ -18,7 +33,7 @@ function makePostSlug($str, $table, $slug = null, $oldSlug = null)
 	}
 
 	if(empty($slug)) {
-		$slug = slug($str);
+		$slug = makeSlug($str);
 	}
 
 	$i = 2; 
